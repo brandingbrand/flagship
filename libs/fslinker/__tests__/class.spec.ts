@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import {
   Inject,
   Injectable,
@@ -113,18 +114,18 @@ describe('injected class', () => {
     expect(instance?.dep2).toBeInstanceOf(Dependency2);
   });
 
-  it('should automatically provide injectable classes', () => {
+  it('should automatically provide injectable classes', async () => {
     const token = new InjectionToken<Example>('CLASS_TOKEN');
 
     @Injectable(token, injector)
     class Example {}
 
-    const instance = injector.get(token);
+    const instance = await injector.requireAsync(token);
 
     expect(instance).toBeInstanceOf(Example);
   });
 
-  it('should inject injectable classes without tokens', () => {
+  it('should inject injectable classes without tokens', async () => {
     class Dependency1 {}
     const dependencyToken1 = new InjectionToken<Dependency1>('DEPENDENCY_TOKEN_1');
     Injector.provide({ provide: dependencyToken1, useClass: Dependency1 });
@@ -140,14 +141,14 @@ describe('injected class', () => {
       ) {}
     }
 
-    const instance = injector.get(SomeOtherService);
+    const instance = await injector.requireAsync(SomeOtherService);
 
     expect(instance).toBeInstanceOf(SomeOtherService);
-    expect(instance?.service).toBeInstanceOf(SomeService);
-    expect(instance?.dep1).toBeInstanceOf(Dependency1);
+    expect(instance.service).toBeInstanceOf(SomeService);
+    expect(instance.dep1).toBeInstanceOf(Dependency1);
   });
 
-  it('should allow mixed decorated parameters and injectables', () => {
+  it('should allow mixed decorated parameters and injectables', async () => {
     @Injectable(injector)
     class SomeService {}
 
@@ -156,21 +157,10 @@ describe('injected class', () => {
       constructor(public readonly service: SomeService) {}
     }
 
-    const instance = injector.get(SomeOtherService);
+    const instance = await injector.requireAsync(SomeOtherService);
 
     expect(instance).toBeInstanceOf(SomeOtherService);
-    expect(instance?.service).toBeInstanceOf(SomeService);
-  });
-
-  it('should throw in a parameter is not an injectable or decorated', () => {
-    expect(() => {
-      @Injectable(injector)
-      class A {
-        constructor(public readonly service: number) {}
-      }
-
-      return A;
-    }).toThrow(ReferenceError);
+    expect(instance.service).toBeInstanceOf(SomeService);
   });
 
   it('should report dependencies with getDependencies()', () => {

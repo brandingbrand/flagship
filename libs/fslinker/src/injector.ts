@@ -36,6 +36,12 @@ export class Injector implements FallbackCache {
     return this.injector.require(token);
   }
 
+  public static async requireAsync<T>(
+    token: InjectedClass<T> | InjectionToken<T>
+  ): Promise<T extends undefined ? never : T> {
+    return this.injector.requireAsync(token);
+  }
+
   public static provide<D extends unknown[], T, ManyType extends 'many' | 'single' = 'single'>(
     provider: Provider<D, T, ManyType>
   ): void {
@@ -56,6 +62,8 @@ export class Injector implements FallbackCache {
 
   constructor(private readonly cache: InjectorCache) {}
 
+  private readonly providerCallbacks = new Map<AnyInjectionToken, Set<(value: unknown) => void>>();
+
   private verifyDeps(target: Function, deps: unknown[]): never | void {
     if (deps.length < target.length) {
       throw new ReferenceError(
@@ -63,6 +71,14 @@ export class Injector implements FallbackCache {
 Check that your dependency array matches your factory or classes required dependencies.`
       );
     }
+  }
+
+  private async requireDepAsync<T>(depOrToken: InjectionToken<T> | T): Promise<T> {
+    if (depOrToken instanceof InjectionToken) {
+      return this.requireAsync(depOrToken);
+    }
+
+    return depOrToken;
   }
 
   private requireDep<T>(depOrToken: InjectionToken<T> | T): T {
@@ -73,10 +89,22 @@ Check that your dependency array matches your factory or classes required depend
     return depOrToken;
   }
 
+  private provideCache<T, ManyType extends 'many' | 'single' = 'single'>(
+    token: InjectionToken<T, ManyType>,
+    value: T,
+    many?: boolean
+  ): void {
+    this.cache.provide(token, value, many);
+    const callbacks = this.providerCallbacks.get(token);
+    for (const callback of callbacks ?? []) {
+      callback(value);
+    }
+  }
+
   private provideValue<T, ManyType extends 'many' | 'single' = 'single'>(
     provider: ValueProvider<T, ManyType>
   ): void {
-    this.cache.provide(provider.provide, provider.useValue, provider.many);
+    this.provideCache(provider.provide, provider.useValue, provider.many);
   }
 
   private provideFactory<D extends unknown[], T, ManyType extends 'many' | 'single' = 'single'>(
@@ -94,18 +122,30 @@ Check that your dependency array matches your factory or classes required depend
     T,
     ManyType extends 'many' | 'single' = 'single'
   >(provider: InjectedFactoryProvider<D, T, ManyType>): void {
-    const deps = provider.deps.map((depOrToken) => this.requireDep(depOrToken));
-    this.verifyDeps(provider.useFactory, deps);
+    const provideFactory = (deps: unknown[]): void => {
+      this.verifyDeps(provider.useFactory, deps);
 
-    const value = provider.useFactory(...(deps as Parameters<typeof provider['useFactory']>));
-    this.cache.provide(provider.provide, value, provider.many);
+      const value = provider.useFactory(...(deps as Parameters<typeof provider['useFactory']>));
+      this.provideCache(provider.provide, value, provider.many);
+    };
+
+    if (provider.async) {
+      Promise.all(provider.deps.map(async (depOrToken) => this.requireDepAsync(depOrToken)))
+        .then((deps) => {
+          provideFactory(deps);
+        })
+        .catch(console.error);
+    } else {
+      const deps = provider.deps.map((depOrToken) => this.requireDep(depOrToken));
+      provideFactory(deps);
+    }
   }
 
   private provideStaticFactory<T, ManyType extends 'many' | 'single' = 'single'>(
     provider: BasicFactoryProvider<T, ManyType>
   ): void {
     const value = provider.useFactory();
-    this.cache.provide(provider.provide, value, provider.many);
+    this.provideCache(provider.provide, value, provider.many);
   }
 
   private provideClass<D extends unknown[], T, ManyType extends 'many' | 'single' = 'single'>(
@@ -122,26 +162,43 @@ Check that your dependency array matches your factory or classes required depend
     D extends unknown[],
     T,
     ManyType extends 'many' | 'single' = 'single'
-  >(provider: InjectedClassProvider<D, T, ManyType>): void {
-    const deps = provider.deps.map((depOrToken) => this.requireDep(depOrToken));
-    this.verifyDeps(provider.useClass, deps);
+  >(provider: InjectedClassProvider<D, T, ManyType>, tokensOnly?: boolean): void {
+    const provideClass = (deps: unknown[]): void => {
+      this.verifyDeps(provider.useClass, deps);
 
-    const value = new provider.useClass(
-      ...(deps as ConstructorParameters<typeof provider['useClass']>)
-    );
-    this.cache.provide(provider.provide, value, provider.many);
+      const value = new provider.useClass(
+        ...(deps as ConstructorParameters<typeof provider['useClass']>)
+      );
+      this.provideCache(provider.provide, value, provider.many);
+    };
+
+    if (provider.async) {
+      Promise.all(
+        provider.deps.map(async (depOrToken) =>
+          tokensOnly === true
+            ? this.requireAsync(depOrToken as InjectionToken)
+            : this.requireDepAsync(depOrToken)
+        )
+      )
+        .then((deps) => {
+          provideClass(deps);
+        })
+        .catch(console.error);
+    } else {
+      const deps = provider.deps.map((depOrToken) =>
+        tokensOnly === true
+          ? this.require(depOrToken as InjectionToken)
+          : this.requireDep(depOrToken)
+      );
+      provideClass(deps);
+    }
   }
 
   private provideStaticClass<D extends unknown[], T, ManyType extends 'many' | 'single' = 'single'>(
     provider: BasicClassProvider<D, T, ManyType>
   ): void {
-    const deps = getDependencies(provider.useClass).map((token) => this.require(token));
-    this.verifyDeps(provider.useClass, deps);
-
-    const value = new provider.useClass(
-      ...(deps as ConstructorParameters<typeof provider['useClass']>)
-    );
-    this.cache.provide(provider.provide, value, provider.many);
+    const dependencyTokens = getDependencies(provider.useClass);
+    this.provideClassWithDeps({ ...provider, deps: dependencyTokens }, true);
   }
 
   public get<T>(token: InjectedClass<T> | InjectionToken<T>): T | undefined {
@@ -178,6 +235,28 @@ It may be necessary to use a factory to defer your dependency to after your toke
     }
 
     return dependency as T extends undefined ? never : T;
+  }
+
+  public async requireAsync<T>(
+    token: InjectedClass<T> | InjectionToken<T>
+  ): Promise<T extends undefined ? never : T> {
+    const dependency = this.get(token) as (T extends undefined ? never : T) | undefined;
+
+    if (dependency !== undefined) {
+      return dependency;
+    }
+
+    return new Promise((resolve) => {
+      const callbacks = this.providerCallbacks.get(token as AnyInjectionToken) ?? new Set();
+      this.providerCallbacks.set(token as AnyInjectionToken, callbacks);
+
+      const callback = (value: unknown): void => {
+        callbacks.delete(callback);
+        resolve(value as T extends undefined ? never : T);
+      };
+
+      callbacks.add(callback);
+    });
   }
 
   public provide<D extends unknown[], T, ManyType extends 'many' | 'single' = 'single'>(

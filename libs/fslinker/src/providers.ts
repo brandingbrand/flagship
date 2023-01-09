@@ -1,5 +1,11 @@
 export class InjectionToken<T = unknown, ManyType extends 'many' | 'single' = 'single'> {
-  constructor(public readonly uniqueKey: string | symbol, public readonly many?: ManyType) {}
+  constructor(
+    public readonly uniqueKey: string | symbol,
+    public readonly many?: ManyType,
+    public readonly sync: 'async' | 'sync' = 'async',
+    public readonly automatic = true
+  ) {}
+
   protected readonly brand: T | undefined;
 }
 
@@ -36,11 +42,13 @@ export type BasicClassProvider<
       provide: InjectionToken<T, ManyType>;
       useClass: new (...dependencies: D) => T;
       many?: boolean;
+      async?: boolean;
     }
   : {
       provide: InjectionToken<T, ManyType>;
       useClass: new (...dependencies: D) => T;
       many?: false;
+      async?: boolean;
     };
 
 export type InjectedClassProvider<
@@ -53,12 +61,14 @@ export type InjectedClassProvider<
       useClass: new (...dependencies: D) => T;
       deps: OrToken<D>;
       many?: boolean;
+      async?: boolean;
     }
   : {
       provide: InjectionToken<T, ManyType>;
       useClass: new (...dependencies: D) => T;
       deps: OrToken<D>;
       many?: false;
+      async?: boolean;
     };
 
 export type ClassProvider<
@@ -92,12 +102,14 @@ export type InjectedFactoryProvider<
       useFactory: (...dependencies: D) => T;
       deps: OrToken<D>;
       many?: boolean;
+      async?: boolean;
     }
   : {
       provide: InjectionToken<T>;
       useFactory: (...dependencies: D) => T;
       deps: OrToken<D>;
       many?: false;
+      async?: boolean;
     };
 
 export type FactoryProvider<

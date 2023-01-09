@@ -1,6 +1,6 @@
 export { Injector } from './injector';
 export { Inject, getDependencies } from './inject';
-export { Injectable } from './injectable';
+export { Injectable, makeInjectable } from './injectable';
 export type { InjectorCache } from './cache';
 export { GlobalInjectorCache, LocalInjectorCache } from './cache';
 export type {

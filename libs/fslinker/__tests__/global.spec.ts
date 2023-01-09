@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { GlobalInjectorCache, Injectable, InjectionToken, Injector } from '../src';
 
 describe('global cache', () => {
@@ -38,18 +39,18 @@ describe('global cache', () => {
     expect(removedValue2).toBeUndefined();
   });
 
-  it('should inject injectables automatically', () => {
+  it('should inject injectables automatically', async () => {
     const token = new InjectionToken<Example>('CLASS_TOKEN');
 
     @Injectable(token)
     class Example {}
 
-    const instance = Injector.get(token);
+    const instance = await Injector.requireAsync(token);
 
     expect(instance).toBeInstanceOf(Example);
   });
 
-  it('should inject injectable classes without tokens', () => {
+  it('should inject injectable classes without tokens', async () => {
     @Injectable()
     class SomeService {}
 
@@ -58,10 +59,10 @@ describe('global cache', () => {
       constructor(public readonly service: SomeService) {}
     }
 
-    const instance = Injector.get(SomeOtherService);
+    const instance = await Injector.requireAsync(SomeOtherService);
 
     expect(instance).toBeInstanceOf(SomeOtherService);
-    expect(instance?.service).toBeInstanceOf(SomeService);
+    expect(instance.service).toBeInstanceOf(SomeService);
   });
 
   it('should provide undefined for removed tokens', () => {
