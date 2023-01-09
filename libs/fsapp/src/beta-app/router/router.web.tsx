@@ -19,9 +19,10 @@ import lazyComponent from '@loadable/component';
 import { noop } from 'lodash-es';
 import { useObservableState } from 'observable-hooks';
 import pathToRegexp from 'path-to-regexp';
-import { ReplaySubject } from 'rxjs';
+import { ReplaySubject, take } from 'rxjs';
 
 import { VersionOverlay } from '../development';
+import { useServerLayoutEffect, useServerObservableState } from '../hydratable';
 import { ModalProvider } from '../modal';
 import { WEB_SHELL_CONTEXT_TOKEN, WebShellContext, WebShellProvider } from '../shell.web';
 import { StaticImplements, buildPath } from '../utils';
@@ -207,7 +208,14 @@ const Redirect: FC<RedirectProps> = ({ id, route }) => {
 @StaticImplements<FSRouterConstructor>()
 export class FSRouter extends FSRouterBase {
   constructor(routes: Routes, private readonly options: InternalRouterConfig & RouterConfig) {
-    super(routes, new History(routes, { basename: options.basename, location: options.location }));
+    const history = new History(routes, {
+      basename: options.basename,
+      location: options.location,
+      markStable: () => {
+        this.isStable$.next(true);
+      },
+    });
+    super(routes, history);
     Injector.provide({ provide: WEB_SHELL_CONTEXT_TOKEN, useValue: WebShellContext });
     this.registerRoutes();
   }
@@ -229,27 +237,32 @@ export class FSRouter extends FSRouterBase {
   ): JSX.Element | JSX.Element[] => {
     const { id, path } = useMemo(() => buildPath(route, prefix), [prefix, route]);
     const filteredRoute$ = useMemo(() => new ReplaySubject<ActivatedRoute>(1), []);
-    const filteredRoute = useObservableState(filteredRoute$, defaultActivatedRoute);
 
-    useLayoutEffect(() => {
-      const isMatch = (): boolean => {
-        if (path === '/') {
-          return !route.exact || path === routeDetails.url;
-        } else if (!routeDetails.url) {
-          return false;
+    useServerLayoutEffect(
+      id,
+      () => {
+        const isMatch = (): boolean => {
+          if (path === '/') {
+            return !route.exact || path === routeDetails.url;
+          } else if (!routeDetails.url) {
+            return false;
+          }
+
+          return Boolean(
+            pathToRegexp(path, { end: Boolean(route.exact) }).test(
+              routeDetails.url.split('?')[0] ?? ''
+            )
+          );
+        };
+
+        if (isMatch()) {
+          filteredRoute$.next(routeDetails);
         }
+      },
+      [path, route.exact, routeDetails, filteredRoute$]
+    );
 
-        return Boolean(
-          pathToRegexp(path, { end: Boolean(route.exact) }).test(
-            routeDetails.url.split('?')[0] ?? ''
-          )
-        );
-      };
-
-      if (isMatch()) {
-        filteredRoute$.next(routeDetails);
-      }
-    }, [path, route.exact, routeDetails, filteredRoute$]);
+    const filteredRoute = useServerObservableState(filteredRoute$, defaultActivatedRoute);
 
     if ('loadComponent' in route || 'component' in route) {
       const LazyComponent = useMemo(() => {
@@ -309,7 +322,9 @@ export class FSRouter extends FSRouterBase {
 
   private readonly Outlet = (): JSX.Element => {
     const [isLoading, setIsLoading] = useState(false);
-    const [routeDetails, setRouteDetails] = useState<ActivatedRoute>(defaultActivatedRoute);
+    const [routeDetails, setRouteDetails] = useState<ActivatedRoute>(
+      () => this.history.activatedRoute ?? defaultActivatedRoute
+    );
 
     const stopListening = useMemo(() => {
       const stopDetailsListening = this.history.registerResolver('all', setRouteDetails);

@@ -5,6 +5,7 @@ import { Navigation } from 'react-native-navigation';
 
 import lazyComponent from '@loadable/component';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ReplaySubject, take } from 'rxjs';
 
 import { DEV_KEEP_SCREEN, LAST_SCREEN_KEY } from '../constants';
 import { VersionOverlay } from '../development/version-overlay.component';
@@ -42,7 +43,12 @@ Navigation.registerComponent('noop', () => () => null);
 @StaticImplements<FSRouterConstructor>()
 export class FSRouter extends FSRouterBase {
   constructor(routes: Routes, private readonly options: InternalRouterConfig & RouterConfig) {
-    super(routes, new History(routes));
+    const history = new History(routes, {
+      markStable: () => {
+        this.isStable$.next(true);
+      },
+    });
+    super(routes, history);
     this.registerRoutes(routes);
     this.trackCurrentPage();
   }

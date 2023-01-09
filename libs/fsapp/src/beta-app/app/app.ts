@@ -15,12 +15,18 @@ export {
   API_TOKEN,
   ENGAGEMENT_COMPONENT,
   ENGAGEMENT_SERVICE,
+  APP_TOKEN,
 } from './app.base';
 
 @StaticImplements<AppConstructor>()
 export class FSAppBeta extends FSAppBase {
   public async startApplication(): Promise<void> {
-    Linking.addEventListener('url', async ({ url }) => this.router.open(url));
+    Linking.addEventListener('url', ({ url }) => {
+      this.router
+        .open(url)
+        .then(() => {})
+        .catch(() => {});
+    });
 
     const url = await (this.config.getInitialURL
       ? this.config.getInitialURL()
@@ -50,6 +56,7 @@ export class FSAppBeta extends FSAppBase {
   }
 
   public stopApplication(): void {
+    this.subscriptions.unsubscribe();
     this.config.onDestroy?.();
     BackHandler.exitApp();
   }

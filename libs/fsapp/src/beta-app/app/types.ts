@@ -9,6 +9,7 @@ import type { FSNetworkRequestConfig } from '@brandingbrand/fsnetwork';
 import type FSNetwork from '@brandingbrand/fsnetwork';
 
 import type { Action, AnyAction, Store } from 'redux';
+import type { Observable, Subscription } from 'rxjs';
 
 import type { GenericState, StoreConfig } from '../legacy/store';
 import type { FSRouter, RouterConfig, Routes } from '../router';
@@ -68,6 +69,12 @@ export interface IApp {
   openUrl: (url: string) => void;
   startApplication: () => Promise<void>;
   stopApplication: () => void;
+  addStableDependency: (id: string, isStable$: Observable<boolean>) => void;
+  getInitialState: <T>(id: string) => T | undefined;
+  setInitialState: (id: string, value: unknown) => void;
+  addInitialState: (id: string, initialData$: Observable<unknown>) => void;
+  shouldRunServerEffect: (id: string, dependencies: unknown[]) => boolean;
+  addSubscription: (subscription: Subscription) => void;
 }
 
 export interface AppConstructor<T extends IApp = IApp> {

@@ -15,7 +15,16 @@ import { boundMethod } from 'autobind-decorator';
 import type { Location } from 'history';
 import type ReactDOMServer from 'react-dom/server';
 import type { Action, Store } from 'redux';
-import { BehaviorSubject, filter, lastValueFrom, take } from 'rxjs';
+import type { Observable } from 'rxjs';
+import {
+  BehaviorSubject,
+  Subscription,
+  combineLatest,
+  filter,
+  lastValueFrom,
+  map,
+  take,
+} from 'rxjs';
 
 import type { GenericState } from '../legacy/store';
 import { StoreManager } from '../legacy/store';
@@ -38,6 +47,7 @@ import { getVersion } from './utils';
 export const APP_VERSION_TOKEN = new InjectionToken<string>('APP_VERSION_TOKEN');
 export const APP_CONFIG_TOKEN = new InjectionToken<AppConfig>('APP_CONFIG_TOKEN');
 export const API_TOKEN = new InjectionToken<FSNetwork>('API_TOKEN');
+export const APP_TOKEN = new InjectionToken<IApp>('APP_TOKEN');
 export const ENGAGEMENT_SERVICE = new InjectionToken<EngagementService>('ENGAGEMENT_SERVICE');
 export const ENGAGEMENT_COMPONENT = new InjectionToken<ComponentClass<EngagementScreenProps>>(
   'ENGAGEMENT_COMPONENT'
@@ -55,22 +65,19 @@ export abstract class FSAppBase implements IApp {
     const store = await storeManager?.getReduxStore(await storeManager.updatedInitialState());
     const cargoHold = config.cargoHold ? initializeCargoHold(config.cargoHold) : undefined;
 
-    // eslint-disable-next-line prefer-const
-    let app: T | undefined;
     const router = await FSRouter.register({
       api,
       shell: config.webShell,
       analytics: config.analytics,
       screenWrap: await makeScreenWrapper({
         store,
-        app: () => app,
         provider: config.provider,
         cargoHold,
       }),
       ...config.router,
     });
 
-    app = new this(
+    const app = new this(
       version,
       config,
       router,
@@ -94,6 +101,8 @@ export abstract class FSAppBase implements IApp {
     public readonly store?: Store,
     public readonly engagement?: EngagementUtilities
   ) {
+    this.loadInitialState();
+    Injector.provide({ provide: APP_TOKEN, useValue: this });
     Injector.provide({ provide: API_TOKEN, useValue: api });
     Injector.provide({ provide: REDUX_STORE_TOKEN, useValue: store });
     Injector.provide({ provide: APP_CONFIG_TOKEN, useValue: config });
@@ -105,20 +114,79 @@ export abstract class FSAppBase implements IApp {
     Injector.provide({ provide: ENGAGEMENT_COMPONENT, useValue: engagement?.EngagementComp });
   }
 
+  public readonly injector = Injector;
   public readonly routes: Routes = this.router.routes;
   private readonly isStable = new BehaviorSubject(false);
+
+  protected readonly subscriptions = new Subscription();
+  protected readonly initialState = new Map<string, unknown>();
+  private readonly serverEffectDependencies = new Map<string, unknown[]>();
+  private readonly stableDependencies = new Map<string, Observable<boolean>>();
 
   protected markStable(): void {
     this.isStable.next(true);
   }
 
-  public async stable(): Promise<boolean> {
+  public shouldRunServerEffect(id: string, dependencies: unknown[]): boolean {
+    const currentDependencies = this.serverEffectDependencies.get(id);
+    this.serverEffectDependencies.set(id, dependencies);
+    return (
+      currentDependencies === undefined ||
+      dependencies.some((dependency, i) => dependency !== currentDependencies[i])
+    );
+  }
+
+  public setInitialState(key: string, value: unknown): void {
+    this.initialState.set(key, value);
+  }
+
+  public getInitialState<T>(key: string): T | undefined {
+    return this.initialState.get(key) as T | undefined;
+  }
+
+  public dumpInitialState(): Record<string, unknown> {
+    return Object.fromEntries(this.initialState.entries());
+  }
+
+  public loadInitialState(): void {}
+
+  public addInitialState(id: string, initialData$: Observable<unknown>): void {
+    const subscription = initialData$.subscribe({
+      next: (value) => {
+        this.setInitialState(id, value);
+      },
+    });
+
+    this.subscriptions.add(subscription);
+  }
+
+  public addStableDependency(id: string, stable$: Observable<boolean>): void {
+    if (!this.stableDependencies.has(id)) {
+      this.stableDependencies.set(id, stable$);
+    }
+  }
+
+  public async unstable(): Promise<boolean> {
     return lastValueFrom(
-      this.isStable.pipe(
-        filter((stable) => stable),
+      combineLatest([this.isStable, ...this.stableDependencies.values()]).pipe(
+        map((dependencies) => !dependencies.every(Boolean)),
         take(1)
       )
     );
+  }
+
+  public async stable(): Promise<boolean> {
+    return lastValueFrom(
+      combineLatest([this.isStable, ...this.stableDependencies.values()]).pipe(
+        map((dependencies) => dependencies.every(Boolean)),
+        filter((isStable) => isStable),
+        take(1)
+      )
+    );
+  }
+
+  public addSubscription(subscription: Subscription): void {
+    this.subscriptions.add(subscription);
   }
 
   @boundMethod

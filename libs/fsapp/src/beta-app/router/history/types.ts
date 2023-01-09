@@ -19,9 +19,12 @@ export type RequiredTitle = string | (OptionsTopBarTitle & { text: string });
 export interface HistoryOptions {
   basename?: string;
   location?: Partial<Location>;
+  markStable: () => void;
 }
 
 export interface FSRouterHistory extends History {
+  activatedRoute?: ActivatedRoute;
+
   open: ((location: LocationDescriptor) => void) & ((path: string, state?: unknown) => void);
 
   push: ((location: LocationDescriptor) => void) & ((path: string, state?: unknown) => void);

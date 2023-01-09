@@ -13,7 +13,15 @@ export {
   API_TOKEN,
   ENGAGEMENT_COMPONENT,
   ENGAGEMENT_SERVICE,
+  APP_TOKEN,
 } from './app.base';
+
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/naming-convention -- server side variable
+    __FSAPP_INITIAL_STATE__?: Record<string, unknown>;
+  }
+}
 
 @StaticImplements<AppConstructor>()
 export class FSAppBeta extends FSAppBase {
@@ -34,11 +42,18 @@ export class FSAppBeta extends FSAppBase {
   }
 
   public stopApplication(): void {
+    this.subscriptions.unsubscribe();
     this.config.onDestroy?.();
     if (this.root) {
       // React Native Web hack due to unmatched Type Definitions
       // React Native Web aliases `unmountComponentAtNode` from `react-dom`
       AppRegistry.unmountApplicationComponentAtRootTag(this.root as unknown as number);
+    }
+  }
+
+  public override loadInitialState(): void {
+    for (const [key, value] of Object.entries(window.__FSAPP_INITIAL_STATE__ ?? {})) {
+      this.setInitialState(key, value);
     }
   }
 

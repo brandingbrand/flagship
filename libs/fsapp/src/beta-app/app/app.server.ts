@@ -13,20 +13,20 @@ export {
   API_TOKEN,
   ENGAGEMENT_COMPONENT,
   ENGAGEMENT_SERVICE,
+  APP_TOKEN,
 } from './app.base';
 
 @StaticImplements<AppConstructor>()
 export class FSAppBeta extends FSAppBase {
   public async startApplication(): Promise<void> {
-    // Needs to wait for event loop to finish initialization
-    // of router
-    setTimeout(() => {
-      this.markStable();
-    }, 1000);
+    await this.router.isStable();
+    this.markStable();
   }
 
   public stopApplication(): void {
+    this.subscriptions.unsubscribe();
     this.config.onDestroy?.();
+    this.initialState.clear();
   }
 
   public async getProfile(accountId?: string): Promise<string | undefined> {

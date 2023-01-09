@@ -1,6 +1,13 @@
 import type { FC } from 'react';
-import { Fragment } from 'react';
-import React, { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  Fragment,
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 // @ts-expect-error TODO: Update `react-native-web` and replace this
@@ -10,14 +17,7 @@ import { InjectionToken } from '@brandingbrand/fslinker';
 
 import { uniqueId } from 'lodash-es';
 
-import {
-  API_CONTEXT_TOKEN,
-  APP_CONTEXT_TOKEN,
-  InjectedReduxProvider,
-  useAPI,
-  useApp,
-  useStore,
-} from '../app/context';
+import { useApp } from '../app/context';
 import { InjectedContextProvider, useDependencyContext } from '../lib/use-dependency';
 import { useNavigator } from '../router';
 import { ActivatedRouteProvider, NavigatorProvider, useActivatedRoute } from '../router/context';
@@ -59,8 +59,6 @@ const navStyle = StyleSheet.create({
 
 export const ModalProvider: FC<ModalProviderProps> = ({ children, screenWrap }) => {
   const app = useApp();
-  const api = useAPI();
-  const store = useStore();
   const navigator = useNavigator();
   const route = useActivatedRoute();
   const getApp = useCallback(() => app, [app]);

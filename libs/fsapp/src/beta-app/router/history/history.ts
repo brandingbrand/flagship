@@ -142,6 +142,7 @@ export class History implements FSRouterHistory {
                 );
                 const observer = this.activationObservers.get(matchingRoute.id);
                 observer?.(activatedRoute);
+                this.activatedRoute = activatedRoute;
                 return [matchingRoute, activatedRoute] as const;
               }
 
@@ -151,6 +152,7 @@ export class History implements FSRouterHistory {
             Promise.all(activations)
               .then(async (activated) => {
                 await Navigation.setRoot(await activateStacks(root, activated));
+                this.options?.markStable();
               })
               .then(resolve)
               .catch(reject);
@@ -174,6 +176,8 @@ export class History implements FSRouterHistory {
   private readonly destroyObservers = new Map<string, LocationListener>();
   private readonly locationObservers = new Map<string, LocationListener>();
   private readonly loadingObservers = new Map<string, LoadingListener>();
+
+  public activatedRoute?: ActivatedRoute | undefined;
 
   public get stack(): Stack | undefined {
     return this.stacks[this.activeStack];
@@ -344,6 +348,7 @@ export class History implements FSRouterHistory {
             });
             const observer = this.activationObservers.get(matchingRoute.id);
             observer?.(activatedRoute);
+            this.activatedRoute = activatedRoute;
 
             const title =
               typeof matchingRoute.title === 'function'
@@ -389,6 +394,7 @@ export class History implements FSRouterHistory {
             });
             const observer = this.activationObservers.get(matchingRoute.id);
             observer?.(activatedRoute);
+            this.activatedRoute = activatedRoute;
 
             const title =
               typeof matchingRoute.title === 'function'

@@ -68,6 +68,8 @@ export class History implements FSRouterHistory {
     key: createKey(),
   });
 
+  public activatedRoute?: ActivatedRoute | undefined;
+
   private async initialNavigation(): Promise<void> {
     const matchingRoute = await matchRoute(this.matchers, stringifyLocation(location));
 
@@ -83,6 +85,7 @@ export class History implements FSRouterHistory {
         listener(this.browserHistory.location, this.browserHistory.action);
       }
     }
+    this.options?.markStable();
   }
 
   private async activateRoute(
@@ -97,6 +100,7 @@ export class History implements FSRouterHistory {
 
     const allObserver = this.activationObservers.get('all');
     allObserver?.(activatedRoute);
+    this.activatedRoute = activatedRoute;
 
     const title =
       typeof matchingRoute.title === 'function'

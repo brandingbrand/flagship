@@ -1,5 +1,6 @@
 export * from './app';
 export * from './env';
+export * from './hydratable';
 export * from './lib/use-dependency';
 export * from './modal';
 export * from './router';

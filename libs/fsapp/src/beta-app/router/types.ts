@@ -244,6 +244,7 @@ export interface InternalRouterConfig {
 export interface FSRouter {
   readonly routes: Routes;
   open: (url: string) => Promise<void>;
+  isStable: () => Promise<boolean>;
 }
 
 export interface FSRouterConstructor<T extends FSRouter = FSRouter> {

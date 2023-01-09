@@ -2,6 +2,8 @@ import { Linking } from 'react-native';
 
 import { Injector } from '@brandingbrand/fslinker';
 
+import { ReplaySubject, filter, lastValueFrom, take } from 'rxjs';
+
 import { MODAL_CONTEXT_TOKEN, ModalContext } from '../modal';
 
 import {
@@ -58,9 +60,21 @@ export abstract class FSRouterBase implements FSRouter {
     Injector.provide({ provide: NAVIGATOR_TOKEN, useValue: history });
   }
 
+  // eslint-disable-next-line rxjs/no-exposed-subjects -- extended
+  protected readonly isStable$ = new ReplaySubject<boolean>(1);
+
+  public async isStable(): Promise<boolean> {
+    return lastValueFrom(
+      this.isStable$.pipe(
+        filter((isStable) => isStable),
+        take(1)
+      )
+    );
+  }
+
   public async open(url: string): Promise<void> {
-    const supported = await Linking.canOpenURL(url);
-    if (supported) {
+    const isSupported = await Linking.canOpenURL(url);
+    if (isSupported) {
       const path = getPath(url);
       this.history.open(path.startsWith('/') ? path : `/${path}`);
     }
