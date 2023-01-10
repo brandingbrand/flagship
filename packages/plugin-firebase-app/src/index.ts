@@ -1,5 +1,4 @@
-import xcode from "xcode";
-import { Config, fs, fsk, path } from "@brandingbrand/kernel-core";
+import { Config, fs, fsk, path, Xcode } from "@brandingbrand/kernel-core";
 
 import type { KernelPluginFirebaseApp } from "./types";
 
@@ -8,29 +7,20 @@ const ios = async (config: Config & KernelPluginFirebaseApp) => {
 
   if (ios) {
     await fs.copy(
-      path.config.resolve("assets", ios.googleServicesPath),
+      path.config.resolve(ios.googleServicesPath),
       path.resolve(
         path.ios.nativeProjectPath(config),
         "GoogleService-Info.plist"
       )
     );
 
-    const projectPath = path.ios.pbxprojFilePath(config);
-    const project = xcode.project(projectPath);
-    project.parseSync();
-    project.addResourceFile(
-      `${config.ios.name}/GoogleService-Info.plist`,
-      {
-        target:
-          Object.entries(project.hash.project.objects.PBXNativeTarget)?.find(
-            ([, value]) => value.name === config.ios.name
-          )?.[0] ?? "",
-      },
-      Object.entries(project.hash.project.objects.PBXGroup)?.find(
-        ([, value]) => value.name === config.ios.name
-      )?.[0] ?? ""
-    );
-    await fs.writeFile(projectPath, project.writeSync());
+    await new Xcode(config)
+      .addResourceFileBuilder(
+        `${config.ios.name}/GoogleService-Info.plist`,
+        config.ios.name,
+        config.ios.name
+      )
+      .build();
 
     await fsk.update(
       path.ios.appDelegatePath(config),
@@ -53,7 +43,7 @@ const android = async (config: KernelPluginFirebaseApp) => {
 
   if (android) {
     await fs.copy(
-      path.config.resolve("assets", android.googleServicesPath),
+      path.config.resolve(android.googleServicesPath),
       path.project.resolve("android", "app", "google-services.json")
     );
 

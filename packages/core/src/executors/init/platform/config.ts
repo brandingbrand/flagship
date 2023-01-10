@@ -1,7 +1,5 @@
-import xcode from "xcode";
-
-import type { Config } from "../../../types";
-import { fs, path, rename } from "../../../utils";
+import type { Config } from "../../../types/types";
+import { Xcode, fs, path, rename } from "../../../utils";
 
 export const execute = (options: any, config: Config) => {
   return {
@@ -18,9 +16,7 @@ export const execute = (options: any, config: Config) => {
       }
 
       if (config.ios.frameworks) {
-        const projectPath = path.ios.pbxprojFilePath(config);
-        const project = xcode.project(projectPath);
-        project.parseSync();
+        const xcode = new Xcode(config);
 
         for (const framework of config.ios.frameworks) {
           if (framework.path) {
@@ -32,15 +28,15 @@ export const execute = (options: any, config: Config) => {
               path.ios.nativeProjectPath(config),
               framework.framework
             );
-            fs.copySync(source, destination);
+            await fs.copy(source, destination);
 
-            project.addFramework(destination, { customFramework: true });
+            xcode.addFramework(destination, { customFramework: true });
           } else {
-            project.addFramework(framework.framework, {});
+            xcode.addFramework(framework.framework, {});
           }
         }
 
-        await fs.writeFile(projectPath, project.writeSync());
+        await xcode.build();
       }
     },
     android: async () => {

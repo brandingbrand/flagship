@@ -41,7 +41,7 @@ const android = async (config: Config & KernelPluginSplashScreen) => {
     logoPath = "./assets/splash-screen/logo.png",
     androidSize = 180,
     backgroundColor = "#333132",
-  } = {};
+  } = config.kernelPluginSplashScreen?.kernel ?? {};
 
   const inputFile = path.config.resolve(logoPath);
   const { generate } = require(path.project.resolve(
