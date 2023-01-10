@@ -26,6 +26,14 @@ const getServerSideRenderingConfig: GetWebpackConfig = (config, env) =>
           ),
           [path.join(require.resolve('react-native-web-webview'), '..', `postMock.html$`)]:
             path.resolve(__dirname, './polyfills/post-mock.polyfill.js'),
+          [path.join(
+            require.resolve('react-native-web'),
+            '..',
+            '..',
+            'modules',
+            'ImageLoader',
+            'index.js$'
+          )]: path.resolve(__dirname, './polyfills/image-loader.polyfill.js'),
         },
       },
       plugins: [
