@@ -327,11 +327,6 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
   const sentryProject = process.env[`${envPrefix}_SENTRY_PROJECT`];
   const sentryToken = process.env[`${envPrefix}_SENTRY_TOKEN`];
 
-  const isDemo =
-    typeof environment === 'object' &&
-    'configuration' in environment &&
-    environment.configuration === 'demo';
-
   const packageJson =
     options?.root !== undefined
       ? (require(join(options.root, 'package.json')) as PackageJson)
@@ -475,7 +470,7 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
           ]),
       new DefinePlugin({
         /* eslint-disable @typescript-eslint/naming-convention -- Global definitions */
-        __DEV__: !isProd || isDemo,
+        __DEV__: !isProd,
         __VERSION__: packageJson?.version !== undefined ? `"${packageJson.version}"` : '"0.0.0"',
         __DEFAULT_ENV__: undefined,
         __BASE_NAME__:
