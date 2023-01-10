@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/kernel-plugin-app-icon",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "publishConfig": {
     "access": "public"
@@ -28,7 +28,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "^0.0.4",
+    "@brandingbrand/kernel-core": "^0.0.5",
     "sharp": "^0.31.2"
   },
   "devDependencies": {

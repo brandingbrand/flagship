@@ -1,5 +1,11 @@
 # @brandingbrand/kernel-component-dev
 
+## 0.0.5
+
+### Patch Changes
+
+- 8dd377f7b: implementation fixes
+
 ## 0.0.4
 
 ### Patch Changes
