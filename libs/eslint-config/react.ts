@@ -236,7 +236,6 @@ export = {
     // plugin:react-hooks ******************************************************
     // rules URL: https://github.com/facebook/react/tree/master/packages/eslint-plugin-react-hooks
     'react-hooks/exhaustive-deps': WARN, // Checks effect dependencies
-    // TODO (@wSedlacek) [2022-12-31]: Enforce the rules of hooks as an error
     'react-hooks/rules-of-hooks': WARN, // Checks rules of Hooks
 
     // plugin:react-perf *******************************************************
