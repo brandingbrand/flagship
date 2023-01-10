@@ -2,6 +2,28 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.79.0](https://github.com/brandingbrand/flagship/compare/v11.78.0...v11.79.0) (2023-01-10)
+
+
+### Bug Fixes
+
+* **fsengagement:** add web versions of new carousels/video (09f65b8)
+
+
+### Features
+
+* **fsengagement:** component version update 2 (e1ee2be)
+* **fsengagement:** import engagement service from utils (23b6a3f)
+* **fsengagement:** revert - component version update 2 (c758ed7)
+* **fsengagement:** update fetch inbox messages endpoint (d7a8611)
+
+
+### Reverts
+
+* Revert "chore(fsengagement): remove unused linter rule" (564ee90)
+
+
+
 # [11.78.0](https://github.com/brandingbrand/flagship/compare/v11.77.1...v11.78.0) (2022-11-30)
 
 

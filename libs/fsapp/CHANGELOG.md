@@ -2,6 +2,23 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.79.0](https://github.com/brandingbrand/flagship/compare/v11.78.0...v11.79.0) (2023-01-10)
+
+
+### Bug Fixes
+
+* **fsapp:** change updateProfile method and use tokens (eb0bca9)
+* **fsapp:** fix types in utils (475a2a8)
+
+
+### Features
+
+* **fsapp:** add engagement service to fsappbetae (288d170)
+* **fsapp:** add method to update account (ece96cd)
+* **fsapp:** adding rn-app-restart and clearing cache on env change (915dbde)
+
+
+
 # [11.78.0](https://github.com/brandingbrand/flagship/compare/v11.77.1...v11.78.0) (2022-11-30)
 
 

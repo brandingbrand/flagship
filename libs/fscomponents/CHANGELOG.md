@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.79.0](https://github.com/brandingbrand/flagship/compare/v11.78.0...v11.79.0) (2023-01-10)
+
+
+### Bug Fixes
+
+* **fscomponents:** add flexBasis to host styles (919ac30)
+
+
+### Features
+
+* **fscomponents:** add autoplay support in native (0284704)
+
+
+
 # [11.78.0](https://github.com/brandingbrand/flagship/compare/v11.77.1...v11.78.0) (2022-11-30)
 
 
