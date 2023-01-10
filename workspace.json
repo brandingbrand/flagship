@@ -3,6 +3,7 @@
   "version": 2,
   "projects": {
     "create-fs-app": "libs/create-fs-app",
+    "engagement-utils": "libs/engagement-utils",
     "eslint-config": "libs/eslint-config",
     "flagship": "libs/flagship",
     "flagship-nx": "libs/flagship-nx",

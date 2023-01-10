@@ -27,6 +27,7 @@
       "@brandingbrand/cargo-hold-devtools": ["libs/shared/util-cargo-hold-devtools/src/index.ts"],
       "@brandingbrand/cargo-hold-entity": ["libs/shared/util-cargo-hold-entity/src/index.ts"],
       "@brandingbrand/create-fs-app": ["libs/create-fs-app/src/index.ts"],
+      "@brandingbrand/engagement-utils": ["libs/engagement-utils/src/index.ts"],
       "@brandingbrand/flagship": ["libs/flagship/src/index.ts"],
       "@brandingbrand/flagship-nx": ["libs/flagship-nx/src/index.ts"],
       "@brandingbrand/fsapp": ["libs/fsapp/src/index.ts"],

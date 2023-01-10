@@ -10,13 +10,23 @@
       "devDependencies": "*"
     },
     ".eslintrc.json": "*",
-    ".env": "*"
+    ".env": "*",
+    ".stylelintrc.json": "*"
   },
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "build-demo", "generate", "init", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "build-demo",
+          "generate",
+          "init",
+          "lint",
+          "test",
+          "e2e",
+          "stylelint"
+        ]
       }
     },
     "s3": {
