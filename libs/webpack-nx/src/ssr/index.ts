@@ -34,6 +34,15 @@ const getServerSideRenderingConfig: GetWebpackConfig = (config, env) =>
             'ImageLoader',
             'index.js$'
           )]: path.resolve(__dirname, './polyfills/image-loader.polyfill.js'),
+          [path.join(
+            require.resolve('react-native-web'),
+            '..',
+            '..',
+            'cjs',
+            'modules',
+            'ImageLoader',
+            'index.js$'
+          )]: path.resolve(__dirname, './polyfills/image-loader.polyfill.js'),
         },
       },
       plugins: [
