@@ -229,7 +229,10 @@ export abstract class FSAppBase implements IApp {
         ...this.config.router,
         location,
       },
-      onDestroy,
+      onDestroy: () => {
+        this.config.onDestroy?.();
+        onDestroy();
+      },
     });
   }
 
