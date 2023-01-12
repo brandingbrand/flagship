@@ -406,7 +406,9 @@ const getFlagshipWebpackConfig: GetWebpackConfig = (config, environment, platfor
           !(plugin instanceof ForkTsCheckerWebpackPlugin) &&
           !(plugin instanceof MiniCssExtractPlugin)
       ),
-      ...(platform === 'web' ? [new MiniCssExtractPlugin({filename: '[name].[hash:8].css'})] : []),
+      ...(platform === 'web'
+        ? [new MiniCssExtractPlugin({ filename: '[name].[hash:8].css' })]
+        : []),
       ...(shouldForkTsCheck
         ? [
             new ForkTsCheckerWebpackPlugin({
