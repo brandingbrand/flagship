@@ -2,6 +2,24 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.80.0](https://github.com/brandingbrand/flagship/compare/v11.79.0...v11.80.0) (2023-01-17)
+
+
+### Bug Fixes
+
+* **webpack-nx:** add hash to css filenames (0166887)
+* **webpack-nx:** override react-native-web cjs (67b68fd)
+* **webpack-nx:** replace file loader with native (02b88c5)
+
+
+### Features
+
+* **webpack-nx:** force ssr images (97f23df)
+* **webpack-nx:** ssr (8d5d7d5)
+* **webpack-nx:** stylesheet polyfill (04dd92a)
+
+
+
 # [11.79.0](https://github.com/brandingbrand/flagship/compare/v11.78.0...v11.79.0) (2023-01-10)
 
 

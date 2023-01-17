@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.80.0](https://github.com/brandingbrand/flagship/compare/v11.79.0...v11.80.0) (2023-01-17)
+
+
+### Bug Fixes
+
+* **fsapp:** persist on destroy hook from prototype (67e91a1)
+
+
+### Features
+
+* **fsapp:** ssr (6a9e747)
+* **fsapp:** ssr hydration (6691cdc)
+
+
+
 # [11.79.0](https://github.com/brandingbrand/flagship/compare/v11.78.0...v11.79.0) (2023-01-10)
 
 
