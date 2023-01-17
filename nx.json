@@ -19,7 +19,7 @@
       "options": {
         "cacheableOperations": [
           "build",
-          "build-demo",
+          "ssr",
           "generate",
           "init",
           "lint",
@@ -32,7 +32,7 @@
     "s3": {
       "runner": "@pellegrims/nx-remotecache-s3",
       "options": {
-        "cacheableOperations": ["build", "build-demo", "lint", "test", "e2e"]
+        "cacheableOperations": ["build", "ssr", "lint", "test", "e2e"]
       }
     }
   },
@@ -48,9 +48,6 @@
     },
     "build": {
       "dependsOn": ["^generate", "^build"]
-    },
-    "build-demo": {
-      "dependsOn": ["^build", "^build-demo"]
     },
     "install": {
       "dependsOn": ["^install", "build"]
