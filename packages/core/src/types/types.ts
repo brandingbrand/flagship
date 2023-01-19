@@ -1,6 +1,7 @@
-export interface Config {
+export interface Config<T = unknown> {
   android: Android;
   ios: IOS;
+  app: T;
 }
 
 export interface IOS {
@@ -21,13 +22,6 @@ export interface IOS {
    */
   entitlementsFilePath?: string;
   /**
-   * Network exception domains
-   */
-  exceptionDomains?: Array<{
-    key: string;
-    value: Array<{ key: string; value: string | boolean }>;
-  }>;
-  /**
    * Additional frameworks to embed
    */
   frameworks?: FrameworksConfig[];
@@ -42,7 +36,7 @@ export interface IOS {
   /**
    * Additional Plist values
    */
-  plist?: string[];
+  plist?: Record<string, unknown>;
   /**
    * Signing configuration
    */
@@ -282,4 +276,4 @@ interface Kernel<T> {
   kernel: T;
 }
 
-export type Plugin<T> = DeepPartial<Config> & Kernel<T>;
+export type Plugin<T, U = unknown> = DeepPartial<Config<U>> & Kernel<T>;

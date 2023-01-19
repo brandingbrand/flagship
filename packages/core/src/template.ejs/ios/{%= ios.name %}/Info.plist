@@ -24,27 +24,6 @@
 	<string><%- ios.versioning?.build || 1 %></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<% if(ios.exceptionDomains) { %>
-    <key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<% ios.exceptionDomains?.forEach(function(it) { %>
-			<key><%- it.key %></key>
-			<dict>
-				<% it.value?.forEach(function(ev) { %>
-				<key><%- ev.key %></key>
-				<% if (typeof ev.value == "boolean") { %>
-				<<%- ev.value %>/>
-				<% } else { %>
-				<string><%- ev.value %></string>
-				<% } %>
-				<% }) %>
-			</dict>
-			<% }) %>
-		</dict>
-	</dict>
-	<% } %>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -54,13 +33,8 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<% ios.plist?.forEach(function(it) { %>
-	  <%- it %>
-	<% }) %>
 </dict>
 </plist>

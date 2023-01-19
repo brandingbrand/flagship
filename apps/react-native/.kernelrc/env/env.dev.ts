@@ -1,7 +1,8 @@
 import { Config } from '@brandingbrand/kernel-core';
 import type {KernelPluginPermissions} from '@brandingbrand/kernel-plugin-permissions';
+import type {KernelPluginSplashScreen} from '@brandingbrand/kernel-plugin-splash-screen';
 
-const dev: Config & KernelPluginPermissions = {
+const dev: Config & KernelPluginPermissions & KernelPluginSplashScreen = {
   ios: {
     name: 'HelloWorld',
     bundleId: 'com.helloworld',
@@ -12,6 +13,7 @@ const dev: Config & KernelPluginPermissions = {
     displayName: 'Hello World',
     packageName: 'com.helloworld',
   },
+  app: {},
   kernelPluginPermissions: {
     kernel: {
       ios: [
@@ -25,6 +27,16 @@ const dev: Config & KernelPluginPermissions = {
         },
       ],
       android: ['ACCESS_FINE_LOCATION', 'CAMERA'],
+    },
+  },
+  kernelPluginSplashScreen: {
+    kernel: {
+      ios: {
+        type: 'generated',
+      },
+      android: {
+        type: 'generated',
+      },
     },
   },
 };
