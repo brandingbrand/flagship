@@ -25,15 +25,14 @@ export const execute = (options: any, config: any) => ({
       projectEnv = require(path.project.resolve(
         path.config.envPath(),
         "env.js"
-      ));
+      )).default;
     } catch {
       console.error("env/env.js not found, did you init your project?");
 
       process.exit(1);
     }
 
-    const buildConfig =
-      projectEnv && projectEnv.buildConfig && projectEnv.buildConfig.ios;
+    const buildConfig = projectEnv && projectEnv.ios && projectEnv.ios.signing;
 
     if (
       !(
@@ -54,8 +53,7 @@ export const execute = (options: any, config: any) => ({
 
     // add certificates and provisioning profiles to computer
     await exec.async(
-      `security import ${path.project.resolve(
-        path.config.path(),
+      `security import ${path.config.resolve(
         buildConfig.appleCert
       )} -k ${keychain} -T /usr/bin/codesign || true`
     );
@@ -63,16 +61,14 @@ export const execute = (options: any, config: any) => ({
     // add keys for internal build
     // - import distribution certificate
     await exec.async(
-      `security import ${path.project.resolve(
-        path.config.path(),
+      `security import ${path.config.resolve(
         buildConfig.distCert
       )} -k ${keychain} -T /usr/bin/codesign || true`
     );
 
     // - import private key
     await exec.async(
-      `security import ${path.project.resolve(
-        path.config.path(),
+      `security import ${path.config.resolve(
         buildConfig.distP12
       )} -k ${keychain} -P '${DISTRIBUTION_CERT_PASS}' \
 -T /usr/bin/codesign || true`
@@ -83,8 +79,7 @@ export const execute = (options: any, config: any) => ({
     );
 
     await exec.async(
-      `cp ${path.project.resolve(
-        path.config.path(),
+      `cp ${path.config.resolve(
         buildConfig.profilesDir
       )}/* ~/Library/MobileDevice/Provisioning\\ Profiles/`
     );
@@ -92,24 +87,11 @@ export const execute = (options: any, config: any) => ({
   android: async () => {
     let projectEnv = null;
 
-    const copyKeystore = async (pathName: string): Promise<void> => {
-      const filename = basename(pathName);
-      const from = path.project.resolve(path.config.path(), pathName);
-      const to = path.project.resolve("android", "app", filename);
-
-      try {
-        await fs.copy(from, to);
-      } catch {
-        console.error(`ERROR: keystore [${from}] not found`);
-        process.exit(1);
-      }
-    };
-
     try {
       projectEnv = require(path.project.resolve(
         path.config.envPath(),
         "env.js"
-      ));
+      )).default;
     } catch {
       console.error("env/env.js not found, did you init your project?");
 
@@ -132,7 +114,7 @@ export const execute = (options: any, config: any) => ({
     }
 
     const buildConfig =
-      projectEnv && projectEnv.buildConfig && projectEnv.buildConfig.android;
+      projectEnv && projectEnv.android && projectEnv.android.signing;
 
     if (!(buildConfig && buildConfig.storeFile && buildConfig.keyAlias)) {
       console.error(
@@ -141,21 +123,11 @@ export const execute = (options: any, config: any) => ({
       );
     }
 
-    const gradlePropertiesPath = path.project.resolve(
-      "android",
-      "gradle.properties"
-    );
-
-    if (buildConfig && buildConfig.storeFile) {
-      // add keystore setting to {project}/android/gradle.properties
-      await copyKeystore(buildConfig.storeFile);
+    if (buildConfig && buildConfig.storeFile && buildConfig.keyAlias) {
       await fs.appendFile(
-        gradlePropertiesPath,
+        path.android.gradlePropertiesPath(),
         `
-  MYAPP_RELEASE_STORE_FILE=${path.project.resolve(
-    path.config.path(),
-    buildConfig.storeFile
-  )}
+  MYAPP_RELEASE_STORE_FILE=${path.config.resolve(buildConfig.storeFile)}
   MYAPP_RELEASE_KEY_ALIAS=${buildConfig.keyAlias}
   MYAPP_RELEASE_STORE_PASSWORD=${STORE_PASSWORD}
   MYAPP_RELEASE_KEY_PASSWORD=${KEY_PASSWORD}`

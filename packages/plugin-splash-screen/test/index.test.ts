@@ -39,7 +39,16 @@ describe("plugin-splash-screen", () => {
     await fs.remove(path.resolve(__dirname, "fixtures", "temp_mock_project"));
   });
   it("ios", async () => {
-    await ios({ ios: { name: "HelloWorld" } } as never);
+    await ios({
+      ios: { name: "HelloWorld" },
+      kernelPluginSplashScreen: {
+        kernel: {
+          ios: {
+            type: "generated",
+          },
+        },
+      },
+    } as never);
 
     expect(spy).toHaveBeenCalledWith({
       ios: { projectPath: pathk.project.resolve("ios", "HelloWorld") },
@@ -48,6 +57,8 @@ describe("plugin-splash-screen", () => {
       logoPath: pathk.project.resolve(
         pathk.config.assetsPath(),
         "splash-screen",
+        "ios",
+        "generated",
         "logo.png"
       ),
       assetsPath: null,
@@ -71,7 +82,16 @@ describe("plugin-splash-screen", () => {
       .spyOn(pathk.android, "mainActivityPath")
       .mockReturnValue(path.resolve(pathk.project.path(), "MainActivity.java"));
 
-    await android({ android: { packageName: "com.helloworld" } } as never);
+    await android({
+      android: { packageName: "com.helloworld" },
+      kernelPluginSplashScreen: {
+        kernel: {
+          android: {
+            type: "generated",
+          },
+        },
+      },
+    } as never);
 
     expect(spy).toHaveBeenCalledWith({
       ios: null,
@@ -81,6 +101,8 @@ describe("plugin-splash-screen", () => {
       logoPath: pathk.project.resolve(
         pathk.config.assetsPath(),
         "splash-screen",
+        "android",
+        "generated",
         "logo.png"
       ),
       assetsPath: null,

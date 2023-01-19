@@ -1,22 +1,21 @@
 import {Config} from '@brandingbrand/kernel-core';
 import type {KernelPluginPermissions} from '@brandingbrand/kernel-plugin-permissions';
+import type {KernelPluginSplashScreen} from '@brandingbrand/kernel-plugin-splash-screen';
 
-const prod: Config & KernelPluginPermissions = {
+const prod: Config & KernelPluginPermissions & KernelPluginSplashScreen = {
   ios: {
     name: 'kernel',
     bundleId: 'com.kerenl',
     displayName: 'Kernel',
-    exceptionDomains: [
-      {
-        key: 'localhost',
-        value: [
-          {
-            key: 'NSExceptionAllowsInsecureHTTPLoads',
-            value: true,
+    plist: {
+      NSAppTransportSecurity: {
+        NSExceptionDomains: {
+          localhost: {
+            NSExceptionAllowsInsecureHTTPLoads: true,
           },
-        ],
+        },
       },
-    ],
+    },
     signing: {
       distCertType: 'iPhone Distribution',
     },
@@ -36,6 +35,7 @@ const prod: Config & KernelPluginPermissions = {
       },
     },
   },
+  app: {},
   kernelPluginPermissions: {
     kernel: {
       ios: [
@@ -49,6 +49,16 @@ const prod: Config & KernelPluginPermissions = {
         },
       ],
       android: ['ACCESS_FINE_LOCATION', 'CAMERA'],
+    },
+  },
+  kernelPluginSplashScreen: {
+    kernel: {
+      ios: {
+        type: 'generated',
+      },
+      android: {
+        type: 'generated',
+      },
     },
   },
 };
