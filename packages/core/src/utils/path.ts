@@ -67,14 +67,6 @@ const resolvePathFromProject = (...paths: string[]): string =>
 const getPackagePath = () => resolvePathFromProject("package.json");
 
 /**
- * Resolves a path to the package.json
- *
- * @returns A path to the package.json relative to project path
- */
-const getPathToPlugin = (pluginName: string) =>
-  path.resolve.apply(__dirname, ["..", "..", "packages", pluginName]);
-
-/**
  * Returns the path to the iOS Info.plist for the project.
  *
  * @param configuration The project configuration.
@@ -319,7 +311,6 @@ export const project = {
   path: getPathToProject,
   resolve: resolvePathFromProject,
   packagePath: getPackagePath,
-  pluginPath: getPathToPlugin,
 };
 
 export const config = {

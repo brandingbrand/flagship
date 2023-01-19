@@ -17,17 +17,9 @@ describe("plugin-fastlane", () => {
     jest
       .spyOn(path.ios, "rootDirPath")
       .mockReturnValue(path.resolve(__dirname, "__fastlane_fixtures", "ios"));
-    jest
-      .spyOn(path.project, "pluginPath")
-      .mockReturnValue(path.resolve(__dirname, ".."));
-    jest
-      .spyOn(path.ios, "fastfilePath")
-      .mockReturnValue(
-        path.resolve(__dirname, "__fastlane_fixtures", "ios", "Fastfile")
-      );
     const iosConfig = {
       ios: {
-        bundleId: "com.kerenl",
+        bundleId: "com.kernel",
         versioning: {
           version: "0.0.1",
           build: 1,
@@ -67,7 +59,13 @@ describe("plugin-fastlane", () => {
       `destinations: "${iosConfig.kernelPluginFastlane.kernel.ios.appCenter.destinations}"`,
     ];
     const result = await fs.readFile(
-      path.resolve(__dirname, "__fastlane_fixtures", "ios", "Fastfile"),
+      path.resolve(
+        __dirname,
+        "__fastlane_fixtures",
+        "ios",
+        "fastlane",
+        "Fastfile"
+      ),
       "utf8"
     );
     iosCases.forEach(function (testCase) {
@@ -81,17 +79,9 @@ describe("plugin-fastlane", () => {
       .mockReturnValue(
         path.resolve(__dirname, "__fastlane_fixtures", "android")
       );
-    jest
-      .spyOn(path.project, "pluginPath")
-      .mockReturnValue(path.resolve(__dirname, ".."));
-    jest
-      .spyOn(path.android, "fastfilePath")
-      .mockReturnValue(
-        path.resolve(__dirname, "__fastlane_fixtures", "android", "Fastfile")
-      );
     const androidConfig = {
       android: {
-        bundleId: "com.kerenl",
+        bundleId: "com.kernel",
         versioning: {
           version: "0.0.1",
           build: 1,
@@ -126,7 +116,13 @@ describe("plugin-fastlane", () => {
       `destinations: "${androidConfig.kernelPluginFastlane.kernel.android.appCenter.destinations}"`,
     ];
     const result = await fs.readFile(
-      path.resolve(__dirname, "__fastlane_fixtures", "android", "Fastfile"),
+      path.resolve(
+        __dirname,
+        "__fastlane_fixtures",
+        "android",
+        "fastlane",
+        "Fastfile"
+      ),
       "utf8"
     );
     androidCases.forEach(function (testCase) {
