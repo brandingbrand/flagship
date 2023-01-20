@@ -52,7 +52,7 @@ export const update = async (
 };
 
 /**
- * Copies files and directories from source to destination, and renders ejs data. 
+ * Copies files and directories from source to destination, and renders ejs data.
  *
  * @param source The path to copy files from.
  * @param dest The path to copy files to.

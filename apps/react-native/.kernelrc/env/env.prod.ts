@@ -2,7 +2,7 @@ import type {Config} from '@brandingbrand/kernel-core';
 import type {KernelPluginFastlane} from '@brandingbrand/kernel-plugin-fastlane';
 import type {KernelPluginPermissions} from '@brandingbrand/kernel-plugin-permissions';
 import type {KernelPluginSplashScreen} from '@brandingbrand/kernel-plugin-splash-screen';
-import type {KernelPluginTargetExtension} from "@brandingbrand/kernel-plugin-target-extension";
+import type {KernelPluginTargetExtension} from '@brandingbrand/kernel-plugin-target-extension';
 
 const prod: Config &
   KernelPluginPermissions &
@@ -28,10 +28,10 @@ const prod: Config &
     },
     signing: {
       distCertType: 'iPhone Distribution',
-      exportTeamId: "762H5V79XV",
-      exportMethod: "test",
-      provisioningProfileName: "Test Provisioning Profile",
-      profilesDir: "./xx"
+      exportTeamId: '762H5V79XV',
+      exportMethod: 'test',
+      provisioningProfileName: 'Test Provisioning Profile',
+      profilesDir: './xx',
     },
     frameworks: [
       {
@@ -88,24 +88,24 @@ const prod: Config &
           'Kernel Notifications Store Provisioning Profile',
       },
     ],
-    kernelPluginFastlane: {
-      kernel: {
-        ios: {
-          appCenter: {
-            organization: 'Branding-Brand',
-            appName: 'TestApp-iOS-Internal',
-            destinationType: 'test',
-            destinations: ['IAT', 'UAT'],
-          },
-          buildScheme: 'enterprise',
+  },
+  kernelPluginFastlane: {
+    kernel: {
+      ios: {
+        appCenter: {
+          organization: 'Branding-Brand',
+          appName: 'TestApp-iOS-Internal',
+          destinationType: 'test',
+          destinations: ['IAT', 'UAT'],
         },
-        android: {
-          appCenter: {
-            organization: 'Branding-Brand',
-            appName: 'TestApp-Android-Internal',
-            destinationType: 'test',
-            destinations: ['IAT', 'UAT'],
-          },
+        buildScheme: 'enterprise',
+      },
+      android: {
+        appCenter: {
+          organization: 'Branding-Brand',
+          appName: 'TestApp-Android-Internal',
+          destinationType: 'test',
+          destinations: ['IAT', 'UAT'],
         },
       },
     },
