@@ -83,10 +83,10 @@ export interface IOSSigning {
   /**
    * Paths to certificates
    */
-  appleCert?: string;
-  distCert?: string;
-  distP12?: string;
-  distCertType?:
+  appleCert: string;
+  distCert: string;
+  distP12: string;
+  distCertType:
     | "iPhone Development"
     | "iPhone Distribution"
     | "Apple Development"
@@ -94,16 +94,24 @@ export interface IOSSigning {
   /**
    * Export Method
    */
-  exportMethod?: string;
+  exportMethod:
+    | "app-store"
+    | "validation"
+    | "ad-hoc"
+    | "package"
+    | "enterprise"
+    | "development"
+    | "developer-id"
+    | "mac-application";
   /**
    * Development team id.
    */
-  exportTeamId?: string;
-  profilesDir?: string;
+  exportTeamId: string;
+  profilesDir: string;
   /**
    * Provisioning profile name
    */
-  provisioningProfileName?: string;
+  provisioningProfileName: string;
 }
 
 export interface FrameworksConfig {
@@ -161,8 +169,8 @@ export interface AndroidVersion {
 }
 
 export interface AndroidSigning {
-  keyAlias?: string;
-  storeFile?: string;
+  keyAlias: string;
+  storeFile: string;
 }
 
 export interface AppGradle {

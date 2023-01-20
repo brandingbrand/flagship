@@ -1,4 +1,4 @@
-import { fs, path } from "@brandingbrand/kernel-core";
+import { fs, fsk, path } from "@brandingbrand/kernel-core";
 import { ios, android } from "../src";
 
 describe("plugin-fastlane", () => {
@@ -14,6 +14,12 @@ describe("plugin-fastlane", () => {
   });
 
   it("ios", async () => {
+    jest
+      .spyOn(fsk, "update")
+      .mockImplementation(
+        (path: string, oldText: string | RegExp, newText: string) =>
+          Promise.resolve()
+      );
     jest
       .spyOn(path.ios, "rootDirPath")
       .mockReturnValue(path.resolve(__dirname, "__fastlane_fixtures", "ios"));
@@ -41,7 +47,7 @@ describe("plugin-fastlane", () => {
               destinationType: "test",
               destinations: ["IAT", "UAT"],
             },
-            buildScheme: "enterprise",
+            buildScheme: "kernel",
           },
         },
       },
@@ -54,7 +60,6 @@ describe("plugin-fastlane", () => {
       `scheme: "${iosConfig.kernelPluginFastlane.kernel.ios.buildScheme}"`,
       `export_method: "${iosConfig.ios.signing.exportMethod}"`,
       `export_team_id: "${iosConfig.ios.signing.exportTeamId}"`,
-      `provisioningProfiles: {"${iosConfig.ios.bundleId}" => "${iosConfig.ios.signing.provisioningProfileName}"`,
       `destination_type: "${iosConfig.kernelPluginFastlane.kernel.ios.appCenter.destinationType}"`,
       `destinations: "${iosConfig.kernelPluginFastlane.kernel.ios.appCenter.destinations}"`,
     ];
@@ -74,6 +79,12 @@ describe("plugin-fastlane", () => {
   });
 
   it("android", async () => {
+    jest
+      .spyOn(fsk, "update")
+      .mockImplementation(
+        (path: string, oldText: string | RegExp, newText: string) =>
+          Promise.resolve()
+      );
     jest
       .spyOn(path.android, "rootDirPath")
       .mockReturnValue(

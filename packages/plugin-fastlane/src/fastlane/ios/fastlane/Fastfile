@@ -25,10 +25,7 @@ lane :appcenter do
     scheme: "<%= kernelPluginFastlane.kernel.ios.buildScheme %>",
     clean: true,
     export_method: "<%= ios.signing.exportMethod %>",
-    export_team_id: "<%= ios.signing.exportTeamId %>",
-    export_options: {
-      provisioningProfiles: {"<%= ios.bundleId %>" => "<%= ios.signing.provisioningProfileName %>" }
-    },
+    export_team_id: "<%= ios.signing.exportTeamId %>"
   )
 
   appcenter_upload(

@@ -29,9 +29,12 @@ const prod: Config &
     signing: {
       distCertType: 'iPhone Distribution',
       exportTeamId: '762H5V79XV',
-      exportMethod: 'test',
+      exportMethod: 'app-store',
       provisioningProfileName: 'Test Provisioning Profile',
-      profilesDir: './xx',
+      profilesDir: 'xx/xx',
+      appleCert: 'xx/xx',
+      distCert: 'xx/xx',
+      distP12: 'xx/xx'
     },
     frameworks: [
       {
@@ -95,16 +98,16 @@ const prod: Config &
         appCenter: {
           organization: 'Branding-Brand',
           appName: 'TestApp-iOS-Internal',
-          destinationType: 'test',
+          destinationType: 'store',
           destinations: ['IAT', 'UAT'],
         },
-        buildScheme: 'enterprise',
+        buildScheme: 'kernel',
       },
       android: {
         appCenter: {
           organization: 'Branding-Brand',
           appName: 'TestApp-Android-Internal',
-          destinationType: 'test',
+          destinationType: 'store',
           destinations: ['IAT', 'UAT'],
         },
       },

@@ -29,6 +29,7 @@ lane :appcenter do
     app_name: "<%= kernelPluginFastlane.kernel.android.appCenter.appName %>",
     destination_type: "<%= kernelPluginFastlane.kernel.android.appCenter.destinationType %>",
     destinations: "<%= kernelPluginFastlane.kernel.android.appCenter.destinations %>"
+  )
 end
 
 lane :appcenter_bundle do
