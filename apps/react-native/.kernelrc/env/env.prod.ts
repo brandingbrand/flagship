@@ -9,7 +9,7 @@ const prod: Config &
   KernelPluginTargetExtension = {
   ios: {
     name: 'kernel',
-    bundleId: 'com.kerenl',
+    bundleId: 'com.kernel',
     displayName: 'Kernel',
     plist: {
       NSAppTransportSecurity: {

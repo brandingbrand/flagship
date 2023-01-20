@@ -1,4 +1,6 @@
-import { exec, logger, os, path } from "../../../utils";
+import spawnAsync from "@expo/spawn-async";
+
+import { logger, os } from "../../../utils";
 
 export const execute = (options: any, config: any) => ({
   ios: async () => {
@@ -10,8 +12,18 @@ export const execute = (options: any, config: any) => ({
     logger.logInfo("running pod install");
 
     try {
-      await exec.async(`cd "${path.project.resolve("ios")}" && pod install`);
-    } catch {
+      const cocoapods$ = spawnAsync("pod", [
+        "install",
+        "--project-directory=ios",
+      ]);
+
+      cocoapods$.child.stdout?.on("data", (data) => {
+        console.log(data.toString());
+      });
+
+      await cocoapods$;
+    } catch (e) {
+      logger.logError(e as any);
       logger.logError(
         "pod install failed, here are the few things you can try to fix:\n" +
           `\t1. Run "brew install cocoapods" if don't have cocoapods installed\n` +
