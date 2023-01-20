@@ -1,5 +1,14 @@
 # @brandingbrand/kernel-plugin-google-signin
 
+## 0.0.7
+
+### Patch Changes
+
+- e6770241e: implementation fixes
+- Updated dependencies [e6770241e]
+  - @brandingbrand/kernel-core@0.0.7
+  - @brandingbrand/kernel-plugin-firebase-app@0.0.7
+
 ## 0.0.6
 
 ### Patch Changes
