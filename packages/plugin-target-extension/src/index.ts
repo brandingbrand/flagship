@@ -56,6 +56,9 @@ const ios = async (config: Config & KernelPluginTargetExtension) => {
               config.ios.versioning?.build ?? "1.0",
             PRODUCT_BUNDLE_VERSION: config.ios.versioning?.version ?? 1,
             CODE_SIGN_STYLE: "Manual",
+            CODE_SIGN_IDENTITY: config.ios.signing?.distCertType
+              ? `"${config.ios.signing?.distCertType}"`
+              : undefined,
             PROVISIONING_PROFILE_SPECIFIER: `"${extension.provisioningProfileName}"`,
             DEVELOPMENT_TEAM: config.ios.signing?.exportTeamId,
             CODE_SIGN_ENTITLEMENTS: !isEmpty(entitlementsFile)

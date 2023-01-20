@@ -11,7 +11,7 @@ export interface PluginFastlane {
 interface AppCenterIOS {
   organization: string;
   appName: string;
-  destinationType: string;
+  destinationType: "group" | "store";
   destinations: string[];
 }
 
@@ -23,7 +23,7 @@ interface FastlaneIOS {
 interface AppCenterAndroid {
   organization: string;
   appName: string;
-  destinationType: string;
+  destinationType: "group" | "store";
   destinations: string[];
 }
 
