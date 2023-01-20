@@ -1,8 +1,12 @@
 import {Config} from '@brandingbrand/kernel-core';
 import type {KernelPluginPermissions} from '@brandingbrand/kernel-plugin-permissions';
 import type {KernelPluginSplashScreen} from '@brandingbrand/kernel-plugin-splash-screen';
+import type {KernelPluginTargetExtension} from '@brandingbrand/kernel-plugin-target-extension';
 
-const prod: Config & KernelPluginPermissions & KernelPluginSplashScreen = {
+const prod: Config &
+  KernelPluginPermissions &
+  KernelPluginSplashScreen &
+  KernelPluginTargetExtension = {
   ios: {
     name: 'kernel',
     bundleId: 'com.kerenl',
@@ -60,6 +64,16 @@ const prod: Config & KernelPluginPermissions & KernelPluginSplashScreen = {
         type: 'generated',
       },
     },
+  },
+  kernelPluginTargetExtension: {
+    kernel: [
+      {
+        path: 'assets/extensions/notifications',
+        bundleId: 'com.kernel.notifications',
+        provisioningProfileName:
+          'Kernel Notifications Store Provisioning Profile',
+      },
+    ],
   },
 };
 

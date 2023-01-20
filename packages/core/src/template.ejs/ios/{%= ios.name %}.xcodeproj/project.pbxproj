@@ -102,6 +102,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
 			);
+			name = Project;
 			indentWidth = 2;
 			sourceTree = "<group>";
 			tabWidth = 2;
