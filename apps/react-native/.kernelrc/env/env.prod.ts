@@ -13,6 +13,10 @@ const prod: Config &
     name: 'kernel',
     bundleId: 'com.kernel',
     displayName: 'Kernel',
+    versioning: {
+      version: '0.0.1',
+      build: 1,
+    },
     plist: {
       NSAppTransportSecurity: {
         NSExceptionDomains: {
