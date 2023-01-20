@@ -85,6 +85,13 @@ const getAppDelegatePath = (configuration: Config): string =>
   resolvePathFromProject("ios", configuration.ios.name, "AppDelegate.mm");
 
 /**
+ * Returns the path to iOS directory.
+ *
+ * @return The path
+ */
+const getRootDirPathIOS = (): string => resolvePathFromProject("ios");
+
+/**
  * Returns the path to the Podfile.
  *
  * @return The path to the Podfile.
@@ -140,6 +147,13 @@ const getMainActivityPath = (configuration: Config): string =>
     getNativeProjectPathAndriod(configuration),
     "MainActivity.java"
   );
+
+/**
+ * Returns the path to iOS directory.
+ *
+ * @return The path
+ */
+const getRootDirPathAndroid = (): string => resolvePathFromProject("android");
 
 /**
  * Returns the path to MainApplication.java
@@ -314,6 +328,7 @@ export const ios = {
   podfilePath: getPodfilePath,
   pbxprojFilePath: getPbxprojFilePath,
   nativeProjectPath: getNativeProjectPathIOS,
+  rootDirPath: getRootDirPathIOS,
   appIconSetPath: getAppIconSetPath,
 };
 
@@ -328,6 +343,7 @@ export const android = {
   debugPath: getDebugPath,
   assetsPath: getAssetsPath,
   resourcesPath: getResourcesPath,
+  rootDirPath: getRootDirPathAndroid,
   stringsPath: getStringsPath,
   stylesPath: getStylesPath,
   fastfilePath: getFastfilePathAndroid,
