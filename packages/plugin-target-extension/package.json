@@ -28,6 +28,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "^0.0.5"
+    "@brandingbrand/kernel-core": "^0.0.5",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.191"
   }
 }

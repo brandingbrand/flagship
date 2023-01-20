@@ -34,6 +34,7 @@
     "@brandingbrand/kernel-plugin-native-navigation": "*",
     "@brandingbrand/kernel-plugin-permissions": "*",
     "@brandingbrand/kernel-plugin-splash-screen": "*",
+    "@brandingbrand/kernel-plugin-target-extension": "*",
     "@react-native-community/eslint-config": "^2.0.0",
     "@tsconfig/react-native": "^2.0.2",
     "@types/jest": "^26.0.23",
@@ -116,7 +117,8 @@
       "@brandingbrand/kernel-plugin-permissions",
       "@brandingbrand/kernel-plugin-native-navigation",
       "@brandingbrand/kernel-plugin-app-icon",
-      "@brandingbrand/kernel-plugin-splash-screen"
+      "@brandingbrand/kernel-plugin-splash-screen",
+      "@brandingbrand/kernel-plugin-target-extension"
     ]
   }
 }
