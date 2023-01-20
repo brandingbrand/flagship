@@ -1,4 +1,4 @@
-#import "NotificationService.h"
+#import "notifications.h"
 
 @interface NotificationService ()
 
