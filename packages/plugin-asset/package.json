@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/kernel-plugin-asset",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "",
   "publishConfig": {
     "access": "public"
@@ -28,7 +28,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "^0.0.5",
+    "@brandingbrand/kernel-core": "^0.0.6",
     "react-native-asset": "^2.0.1"
   }
 }

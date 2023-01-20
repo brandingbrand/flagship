@@ -1,5 +1,13 @@
 # @brandingbrand/kernel-plugin-app-icon
 
+## 0.0.6
+
+### Patch Changes
+
+- 89b61f89c: implementation fixes
+- Updated dependencies [89b61f89c]
+  - @brandingbrand/kernel-core@0.0.6
+
 ## 0.0.5
 
 ### Patch Changes

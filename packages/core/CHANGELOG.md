@@ -1,5 +1,11 @@
 # @brandingbrand/kernel-core
 
+## 0.0.6
+
+### Patch Changes
+
+- 89b61f89c: implementation fixes
+
 ## 0.0.5
 
 ### Patch Changes
