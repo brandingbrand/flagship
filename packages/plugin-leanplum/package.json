@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/kernel-plugin-leanplum",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "",
   "publishConfig": {
     "access": "public"
@@ -28,10 +28,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "^0.0.5"
+    "@brandingbrand/kernel-core": "^0.0.6"
   },
   "peerDependencies": {
-    "@brandingbrand/kernel-plugin-firebase-app": "^0.0.5",
+    "@brandingbrand/kernel-plugin-firebase-app": "^0.0.6",
     "@leanplum/react-native-sdk": "^2.0.0"
   }
 }
