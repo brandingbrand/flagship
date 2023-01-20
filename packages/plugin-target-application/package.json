@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/kernel-plugin-target-application",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "",
   "publishConfig": {
     "access": "public"
@@ -28,6 +28,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "^0.0.6"
+    "@brandingbrand/kernel-core": "^0.0.7"
   }
 }

@@ -1,5 +1,13 @@
 # @brandingbrand/kernel-plugin-permissions
 
+## 0.0.7
+
+### Patch Changes
+
+- e6770241e: implementation fixes
+- Updated dependencies [e6770241e]
+  - @brandingbrand/kernel-core@0.0.7
+
 ## 0.0.6
 
 ### Patch Changes
