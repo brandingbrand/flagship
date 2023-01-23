@@ -1,5 +1,13 @@
 # @brandingbrand/kernel-plugin-asset
 
+## 0.0.8
+
+### Patch Changes
+
+- addf37d03: implementation fixes
+- Updated dependencies [addf37d03]
+  - @brandingbrand/kernel-core@0.0.8
+
 ## 0.0.7
 
 ### Patch Changes

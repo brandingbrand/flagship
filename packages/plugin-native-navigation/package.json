@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/kernel-plugin-native-navigation",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "",
   "publishConfig": {
     "access": "public"
@@ -28,7 +28,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "^0.0.7",
+    "@brandingbrand/kernel-core": "^0.0.8",
     "react-native-navigation": "^7.30.2"
   },
   "peerDependencies": {
