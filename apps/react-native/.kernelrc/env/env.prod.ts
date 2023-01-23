@@ -1,14 +1,8 @@
-import type {Config} from '@brandingbrand/kernel-core';
-import type {KernelPluginFastlane} from '@brandingbrand/kernel-plugin-fastlane';
-import type {KernelPluginPermissions} from '@brandingbrand/kernel-plugin-permissions';
-import type {KernelPluginSplashScreen} from '@brandingbrand/kernel-plugin-splash-screen';
-import type {KernelPluginTargetExtension} from '@brandingbrand/kernel-plugin-target-extension';
+/// <reference path="../../src/types/app.d.ts" />
 
-const prod: Config &
-  KernelPluginPermissions &
-  KernelPluginSplashScreen &
-  KernelPluginTargetExtension &
-  KernelPluginFastlane = {
+import {ENV} from '@brandingbrand/kernel-app';
+
+const prod: ENV = {
   ios: {
     name: 'kernel',
     bundleId: 'com.kernel',
@@ -34,7 +28,7 @@ const prod: Config &
       profilesDir: 'xx/xx',
       appleCert: 'xx/xx',
       distCert: 'xx/xx',
-      distP12: 'xx/xx'
+      distP12: 'xx/xx',
     },
     frameworks: [
       {
@@ -111,6 +105,16 @@ const prod: Config &
           destinations: ['IAT', 'UAT'],
         },
       },
+    },
+  },
+  kernelPluginAsset: {
+    kernel: {
+      assetPath: ['assets/fonts'],
+    },
+  },
+  kernelPluginAppIcon: {
+    kernel: {
+      appIconPath: 'assets/app-icon',
     },
   },
 };

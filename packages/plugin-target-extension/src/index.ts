@@ -53,8 +53,8 @@ const ios = async (config: Config & KernelPluginTargetExtension) => {
         omitBy(
           {
             PRODUCT_BUNDLE_SHORT_VERSION_STRING:
-              config.ios.versioning?.build ?? "1.0",
-            PRODUCT_BUNDLE_VERSION: config.ios.versioning?.version ?? 1,
+              config.ios.versioning?.version ?? "1.0",
+            PRODUCT_BUNDLE_VERSION: config.ios.versioning?.build ?? 1,
             CODE_SIGN_STYLE: "Manual",
             CODE_SIGN_IDENTITY: config.ios.signing?.distCertType
               ? `"${config.ios.signing?.distCertType}"`
