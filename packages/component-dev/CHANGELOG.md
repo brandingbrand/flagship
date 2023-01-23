@@ -1,5 +1,11 @@
 # @brandingbrand/kernel-component-dev
 
+## 0.0.8
+
+### Patch Changes
+
+- addf37d03: implementation fixes
+
 ## 0.0.7
 
 ### Patch Changes

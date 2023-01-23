@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/kernel-plugin-splash-screen",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "",
   "publishConfig": {
     "access": "public"
@@ -28,7 +28,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "^0.0.7",
+    "@brandingbrand/kernel-core": "^0.0.8",
     "react-native-bootsplash": "^4.3.3"
   }
 }

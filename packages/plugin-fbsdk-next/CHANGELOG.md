@@ -1,5 +1,14 @@
 # @brandingbrand/kernel-plugin-fbsdk-next
 
+## 0.0.8
+
+### Patch Changes
+
+- addf37d03: implementation fixes
+- Updated dependencies [addf37d03]
+  - @brandingbrand/kernel-core@0.0.8
+  - @brandingbrand/kernel-plugin-firebase-app@0.0.8
+
 ## 0.0.7
 
 ### Patch Changes
