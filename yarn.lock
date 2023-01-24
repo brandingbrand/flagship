@@ -1225,6 +1225,11 @@
     reflect-metadata "^0.1.13"
     tslib "^2.0.0"
 
+"@brandingbrand/kernel-plugin-local@file:./apps/react-native/.kernelrc/plugins/plugin-local":
+  version "0.0.1"
+  dependencies:
+    "@brandingbrand/kernel-core" "^0.0.8"
+
 "@brandingbrand/react-cargo-hold@11.77.1":
   version "11.77.1"
   resolved "https://registry.yarnpkg.com/@brandingbrand/react-cargo-hold/-/react-cargo-hold-11.77.1.tgz#8a7f74f7f90be16702c3790ac1b14e3199ed301d"
