@@ -168,11 +168,6 @@ buck-out/
 /ios/Pods/
 /vendor/bundle/
 
-# Demo App
-apps/react-native/ios
-apps/react-native/android
-apps/**/*/.kernelrc/env/env*.js
-
 # Yarn
 .yarn
 .yarnrc
@@ -188,3 +183,9 @@ pnpm-debug.log*
 .env
 .env.production
 .DS_Store
+
+# Demo App
+apps/react-native/ios
+apps/react-native/android
+apps/**/*/.kernelrc/env/env*.js
+!apps/**/*/.kernelrc/plugins/**/*/dist/

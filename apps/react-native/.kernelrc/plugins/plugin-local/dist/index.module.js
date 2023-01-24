@@ -1,0 +1,1 @@
+import{logger as n}from"@brandingbrand/kernel-core";const r=r=>{n.logInfo("Executing @brandingbrand/kernel-plugin-local::ios")},o=r=>{n.logInfo("Executing @brandingbrand/kernel-plugin-local::android")};export{o as android,r as ios};
