@@ -1,0 +1,43 @@
+---
+import { SIDEBAR } from "../lib/config";
+---
+
+<div
+  id="sidebar"
+  class="sticky top-20 h-0 md:h-auto max-h-[calc(100vh-80px)] flex-col justify-start overflow-y-auto bg-default pt-4 transition-colors duration-300 md:top-24 md:max-h-[calc(100vh-96px)] md:pt-0"
+>
+  <ul class="pr-4 pb-28 text-slate-900 dark:text-kernel-teal-50 md:pb-0">
+    {
+      Object.entries(SIDEBAR).map(([header, children]) => (
+        <li>
+          <div>
+            <h2 class="text-xl font-semibold transition-colors duration-300 sm:text-lg text-slate-300">
+              {header}
+            </h2>
+            <ul class="mb-2">
+              {children.map((child) => {
+                const url = Astro.site?.pathname + child.link;
+                const isActive = url === child.link;
+                return (
+                  <li>
+                    <a
+                      href={child.link}
+                      aria-current={isActive ? "page" : false}
+                      class={`text-md block py-2 text-kernel-teal-800 transition-colors [padding-inline-start:16px] hover:border-kernel-teal-300/50 hover:bg-kernel-teal-300/20 hover:text-kernel-teal-400 pr-20 border-kernel-teal-300/20 border-r-2 ${
+                        Astro.url.pathname === child.link
+                          ? "bg-kernel-teal-300/20"
+                          : ""
+                      }`}
+                    >
+                      <span>{child.text}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</div>

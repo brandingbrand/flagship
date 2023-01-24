@@ -1,0 +1,31 @@
+<div id="versions" class="mt-8 w-full h-10 flex flex-row gap-4 flex-wrap">
+</div>
+
+<script>
+  const rawFiles = new URLSearchParams(location.search).get("versions");
+
+  if (rawFiles) {
+    const files = JSON.parse(rawFiles);
+    const element = document.querySelector("#versions");
+
+    if (element) {
+      element.innerHTML += files
+        .map(
+          (it: any) =>
+            `
+    <a
+                    href="${location.href.replace(
+                      /(v[\d]+?.[\d]+?.[\d]+?\?)/,
+                      it + "?"
+                    )}"
+                    aria-current={isActive ? "page" : false}
+                    class={"text-md block py-2 text-kernel-teal-800 transition-colors [padding-inline-start:16px] hover:border-kernel-teal-300/50 hover:bg-kernel-teal-300/20 hover:text-kernel-teal-400 pr-20 border-kernel-teal-300/20 border-r-2"}
+                  >
+                    <span>${it}</span>
+                  </a>
+    `
+        )
+        .join("");
+    }
+  }
+</script>
