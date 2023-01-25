@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [11.81.0](https://github.com/brandingbrand/flagship/compare/v11.80.0...v11.81.0) (2023-01-25)
+
+
+### Bug Fixes
+
+* **fsnetwork:** cors proxy not working with dynamically delivered components (5f235bb)
+
+
+
 # [11.80.0](https://github.com/brandingbrand/flagship/compare/v11.79.0...v11.80.0) (2023-01-17)
 
 
