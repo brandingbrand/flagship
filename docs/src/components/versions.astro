@@ -9,6 +9,7 @@
     const element = document.querySelector("#versions");
 
     if (element) {
+      element.innerHTML += "<p class='text-slate-300'>Versions: </p>"
       element.innerHTML += files
         .map(
           (it: any) =>
