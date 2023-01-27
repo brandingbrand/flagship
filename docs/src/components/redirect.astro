@@ -1,0 +1,19 @@
+---
+export interface Props {
+  files: Record<string, string>[];
+}
+
+const { files } = Astro.props;
+
+const url = files[files.length - 1]?.url;
+---
+
+<div class="bg-black"></div>
+
+<script is:inline define:vars={{ url, files }}>
+  const versions = files
+    .filter((it) => it.url.match(/(v[\d]+?.[\d]+?.[\d]+?$)/))
+    .map((it) => it.url.split("/").reverse()[0]);
+
+  location.replace(url + `?versions=${JSON.stringify(versions)}`);
+</script>

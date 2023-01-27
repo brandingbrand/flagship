@@ -1,81 +1,62 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import Layout from "../layouts/layout.astro";
+import CodeCopy from "../components/code-copy.astro";
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
-	</main>
+<Layout title="Kernel">
+  <div
+    class="max-w-md px-4 py-12 mx-auto sm:py-8 md:py-12 lg:py-14 xl:py-12 2xl:py-28 xl:max-w-7xl lg:px-8 sm:max-w-2xl sm:px-6 md:max-w-3xl lg:max-w-4xl 2xl:max-w-6xl"
+  >
+    <div class="flex flex-col items-center w-full gap-8">
+      <h1
+        class="text-center text-4xl font-bold tracking-tight text-slate-300 sm:text-6xl sm:tracking-tight lg:text-[4rem] xl:text-[6rem] xl:tracking-tight 2xl:text-[6.5rem]"
+      >
+        Ultimate configuration as code
+        <span class="text-kernel-teal-300"> typesafe</span>
+        <span class="whitespace-nowrap text-[#4989EF]"> toolkit</span>
+        <span class="text-[#F7CF47]">for React Native</span>
+      </h1>
+      <div class="relative flex h-full">
+        <CodeCopy
+          args="yarn add -D @brandingbrand/kernel-core @brandingbrand/kernel-cli"
+        />
+      </div>
+      <div class="flex flex-row items-center justify-center w-full gap-10">
+        <a href="/en/introduction">
+          <button
+            class="flex flex-row items-center px-3 py-2 font-medium border-2 rounded-lg flexjustify-center border-slate-300 hover:border-kernel-teal-300 text-slate-300"
+            >Documentation <svg
+              class="stroke mt-0.5 ml-2 -mr-1 h-3 stroke-current stroke-2"
+              fill="none"
+              viewBox="0 0 10 10"
+              aria-hidden="true"
+            >
+              <path
+                class="transition opacity-0 group-hover:opacity-100"
+                d="M0 5h7"></path>
+              <path
+                class="transition group-hover:translate-x-[3px]"
+                d="M1 1l4 4-4 4"></path>
+            </svg>
+          </button>
+        </a>
+        <a
+          href="https://github.com/brandingbrand/flagship/tree/feat/flagship-12"
+        >
+          <button
+            class="flex flex-row items-center px-3 py-2 font-medium border-2 rounded-lg flexjustify-center border-slate-300 hover:border-kernel-teal-300 text-slate-300"
+            >GitHub <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+              class="h-3 ml-2 fill-slate-300"
+            >
+              <path
+                d="M256 64C256 46.33 270.3 32 288 32H415.1C415.1 32 415.1 32 415.1 32C420.3 32 424.5 32.86 428.2 34.43C431.1 35.98 435.5 38.27 438.6 41.3C438.6 41.35 438.6 41.4 438.7 41.44C444.9 47.66 447.1 55.78 448 63.9C448 63.94 448 63.97 448 64V192C448 209.7 433.7 224 416 224C398.3 224 384 209.7 384 192V141.3L214.6 310.6C202.1 323.1 181.9 323.1 169.4 310.6C156.9 298.1 156.9 277.9 169.4 265.4L338.7 96H288C270.3 96 256 81.67 256 64V64zM0 128C0 92.65 28.65 64 64 64H160C177.7 64 192 78.33 192 96C192 113.7 177.7 128 160 128H64V416H352V320C352 302.3 366.3 288 384 288C401.7 288 416 302.3 416 320V416C416 451.3 387.3 480 352 480H64C28.65 480 0 451.3 0 416V128z"
+              ></path>
+            </svg>
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
 </Layout>
-
-<style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		line-height: 1.6;
-		margin: 1rem 0;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
-		padding: 1rem;
-		border-radius: 0.4rem;
-	}
-	.instructions code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
-		padding: 0;
-	}
-</style>

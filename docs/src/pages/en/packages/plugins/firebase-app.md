@@ -1,0 +1,10 @@
+---
+title: Plugin Firebase App
+description: brandingbrand/kernel-plugin-firebase-app
+layout: ../../../../layouts/docs.astro
+lang: en
+---
+
+## Plugin Firebase App
+
+TBD...

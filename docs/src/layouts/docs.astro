@@ -1,0 +1,29 @@
+---
+import type { MarkdownHeading } from "astro";
+
+import "../styles/global.css";
+import Layout from "./layout.astro";
+import Sidebar from "../components/sidebar.astro";
+import Breadcrumbs from "../components/breadcrumbs.astro";
+import Versions from "../components/versions.astro";
+
+export interface Props {
+  headings: MarkdownHeading[];
+  title: string;
+}
+
+const { title, frontmatter, url } = Astro.props;
+---
+
+<Layout title={title}>
+  <div
+    class="px-6 md:px-16 grid w-full flex-1 grid-cols-1 gap-4 md:grid-cols-[250px_auto] lg:grid-cols-[250px_auto] markdown"
+  >
+    <Sidebar url={url} />
+    <article id="documentation" class="w-full">
+      <Breadcrumbs url={url} lang={frontmatter.lang} />
+      <slot />
+      <Versions />
+    </article>
+  </div>
+</Layout>
