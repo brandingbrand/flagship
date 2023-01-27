@@ -7,29 +7,38 @@ export const SIDEBAR = {
   Packages: [
     { text: "core", link: "/en/packages/core" },
     { text: "cli", link: "/en/packages/cli" },
-    { text: "app-icon", link: "/en/packages/plugins/app-icon" },
-    { text: "asset", link: "/en/packages/plugins/asset" },
-    { text: "fastlane", link: "/en/packages/plugins/fastlane" },
-    { text: "fbsdk-next", link: "/en/packages/plugins/fbsdk-next" },
+    { text: "plugin-app-icon", link: "/en/packages/plugins/app-icon" },
+    { text: "plugin-asset", link: "/en/packages/plugins/asset" },
+    { text: "plugin-fastlane", link: "/en/packages/plugins/fastlane" },
+    { text: "plugin-fbsdk-next", link: "/en/packages/plugins/fbsdk-next" },
     {
-      text: "firebase-analytics",
+      text: "plugin-firebase-analytics",
       link: "/en/packages/plugins/firebase-analytics",
     },
-    { text: "firebase-app", link: "/en/packages/plugins/firebase-app" },
-    { text: "google-signin", link: "/en/packages/plugins/google-signin" },
-    { text: "leanplum", link: "/en/packages/plugins/leanplum" },
+    { text: "plugin-firebase-app", link: "/en/packages/plugins/firebase-app" },
     {
-      text: "native-navigation",
+      text: "plugin-google-signin",
+      link: "/en/packages/plugins/google-signin",
+    },
+    { text: "plugin-leanplum", link: "/en/packages/plugins/leanplum" },
+    {
+      text: "plugin-native-navigation",
       link: "/en/packages/plugins/native-navigation",
     },
-    { text: "permissions", link: "/en/packages/plugins/permissions" },
-    { text: "splash-screen", link: "/en/packages/plugins/splash-screen" },
+    { text: "plugin-permissions", link: "/en/packages/plugins/permissions" },
     {
-      text: "target-application",
+      text: "plugin-splash-screen",
+      link: "/en/packages/plugins/splash-screen",
+    },
+    {
+      text: "plugin-target-application",
       link: "/en/packages/plugins/target-application",
     },
-    { text: "target-extension", link: "/en/packages/plugins/target-extension" },
-    { text: "foo", link: "/en/packages/plugins/foo" },
+    {
+      text: "plugin-target-extension",
+      link: "/en/packages/plugins/target-extension",
+    },
+    { text: "plugin-foo", link: "/en/packages/plugins/foo" },
   ],
   Usage: [
     { text: "Integration", link: "/en/usage/integration" },
@@ -37,4 +46,4 @@ export const SIDEBAR = {
   ],
 };
 
-export const IGNORE_DIRS = ["packages", "plugins"];
+export const IGNORE_DIRS = ["packages", "plugins", "usage"];

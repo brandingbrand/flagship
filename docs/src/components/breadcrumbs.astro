@@ -18,6 +18,16 @@ const lastIndex = (arr: string[]) => {
 
   return arr[length - 1];
 };
+
+const padName = (el: string, arr: string[]) => {
+  const index = arr.findIndex((it) => it === el);
+
+  if (paths[index - 1] === "plugins") {
+    return `plugin-${el}`;
+  }
+
+  return el;
+};
 ---
 
 <div class="flex flex-row items-center justify-start gap-2 mt-2 flex-wrap">
@@ -57,14 +67,14 @@ const lastIndex = (arr: string[]) => {
                 {lastIndex(paths) === it ? (
                   <a>
                     <button class="px-2 py-1 border-2 rounded-lg border-slate-300 hover:border-kernel-teal-300">
-                      <div class="text-sm text-slate-300">{it}</div>
+                      <div class="text-sm text-slate-300">{padName(it, paths)}</div>
                     </button>
                   </a>
                 ) : (
                   <>
                     <a href={path(it)}>
                       <button class="px-2 py-1 border-2 rounded-lg border-slate-300 hover:border-kernel-teal-300">
-                        <div class="text-sm text-slate-300">{it}</div>
+                        <div class="text-sm text-slate-300">{padName(it, paths)}</div>
                       </button>
                     </a>
                     <svg
