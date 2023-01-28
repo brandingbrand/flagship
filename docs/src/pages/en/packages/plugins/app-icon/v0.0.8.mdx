@@ -28,9 +28,7 @@ After adding this plugin as a dev dependency it is necessary to add it to the ke
 ```
   "kernel": {
     "plugins": [
-      ...,
-      "@brandingbrand/kernel-plugin-app-icon",
-      ...
+      "@brandingbrand/kernel-plugin-app-icon"
     ]
   },
 ```
@@ -46,6 +44,14 @@ Your Kernel environment should also be updated with the `@brandingbrand/kernel-p
     },
   },
 ```
+
+The interface in your `.kernelrc/env/env.<env>.ts` has the following props:
+
+<div class="my-4 overflow-scroll">
+| attribute        | description                                                  |
+| :--------        | :----------                                                  |
+| appIconPath      | path to your app icon assets relative to .kernelrc directory |
+</div>
 
 The assets must follow a strict naming scheme.
 

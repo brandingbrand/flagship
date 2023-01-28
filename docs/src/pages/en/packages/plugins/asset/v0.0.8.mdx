@@ -1,0 +1,54 @@
+---
+title: Plugin Asset
+description: brandingbrand/kernel-plugin-asset
+layout: ../../../../../layouts/docs.astro
+lang: en
+---
+
+import CodeCopy from "../../../../../components/code-copy.astro";
+
+## Plugin Asset
+
+`@brandingbrand/kernel-plugin-asset` is a package that links all your necessary assets i.e. fonts. This feature used to be available via `react-native link` which has been removed from React Native.
+
+### Getting Started
+
+<div class="flex w-full my-6">
+  <CodeCopy args="yarn add -D @brandingbrand/kernel-plugin-asset" />
+</div>
+
+Add the above noted package and the plugin is avaialble in the Kernel plugin ecosystem.
+
+### Usage
+
+After adding this plugin as a dev dependency it is necessary to add it to the kernel plugins configuration via the `package.json`.
+
+`package.json`
+
+```
+  "kernel": {
+    "plugins": [
+      "@brandingbrand/kernel-plugin-asset"
+    ]
+  },
+```
+
+Your Kernel environment should also be updated with the `@brandingbrand/kernel-plugin-asset` required props from the defined interface.
+
+`.kernelrc/env/env.<env>.ts`
+
+```
+  kernelPluginAsset: {
+    kernel: {
+      assetPath: ['assets/fonts'],
+    },
+  },
+```
+
+The interface in your `.kernelrc/env/env.<env>.ts` has the following props:
+
+<div class="my-4 overflow-scroll">
+| attribute        | description                                             |
+| :--------        | :----------                                             |
+| assetPath        | path to your app assets relative to .kernelrc directory |
+</div>
