@@ -1,0 +1,60 @@
+---
+title: Plugin Leanplum
+description: brandingbrand/kernel-plugin-leanplum
+layout: ../../../../../layouts/docs.astro
+lang: en
+---
+
+import CodeCopy from "../../../../../components/code-copy.astro";
+
+## Plugin Leanplum
+
+`@brandingbrand/kernel-plugin-leanplum` is a package that configures all the necessary native code for [**@leanplum/react-native-sdk**](https://github.com/Leanplum/Leanplum-ReactNative-SDK/tree/1.2.1) library.
+
+### Getting Started
+
+<div class="flex w-full my-6">
+  <CodeCopy args="yarn add -D @brandingbrand/kernel-plugin-leanplum && yarn add @leanplum/react-native-sdk@1.2.1" />
+</div>
+
+Add the above noted package and the plugin is avaialble in the Kernel plugin ecosystem.
+
+### Usage
+
+After adding this plugin as a dev dependency it is necessary to add it to the kernel plugins configuration via the `package.json`.
+
+`package.json`
+
+```
+  "kernel": {
+    "plugins": [
+      "@brandingbrand/kernel-plugin-leanplum"
+    ]
+  },
+```
+
+Your Kernel environment should also be updated with the `@brandingbrand/kernel-plugin-leanplum` required props from the defined interface.
+
+`.kernelrc/env/env.<env>.ts`
+
+```
+  kernelPluginLeanplum: {
+    kernel: {
+      ios: {
+        swizzle: false,
+      },
+      android: {
+        leanplumFCMVersion: "5.10.1",
+      },
+    },
+  },
+```
+
+The interface in your `.kernelrc/env/env.<env>.ts` has the following props:
+
+<div class="my-4 overflow-scroll">
+| attribute                            | description                                     |
+| :--------                            | :----------                                     |
+| kernel.ios.swizzle                   | enable or disable swizzling                     |
+| kernel.android.leanplumFCMVersion    | Leanplum fcm library version                    |
+</div>
