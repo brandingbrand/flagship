@@ -1,0 +1,74 @@
+---
+title: Plugin FBSDK Next
+description: brandingbrand/kernel-plugin-fbsdk-next
+layout: ../../../../../layouts/docs.astro
+lang: en
+---
+
+import CodeCopy from "../../../../../components/code-copy.astro";
+
+## Plugin FBSDK Next
+
+`@brandingbrand/kernel-plugin-fbsdk-next` is a package that configures all the necessary native code for [**react-native-fbsdk-next**](https://github.com/thebergamo/react-native-fbsdk-next) library.
+
+### Getting Started
+
+<div class="flex w-full my-6">
+  <CodeCopy args="yarn add -D @brandingbrand/kernel-plugin-fbsdk-next" />
+</div>
+
+Add the above noted package and the plugin is avaialble in the Kernel plugin ecosystem.
+
+### Usage
+
+After adding this plugin as a dev dependency it is necessary to add it to the kernel plugins configuration via the `package.json`.
+
+`package.json`
+
+```
+  "kernel": {
+    "plugins": [
+      "@brandingbrand/kernel-plugin-fbsdk-next"
+    ]
+  },
+```
+
+Your Kernel environment should also be updated with the `@brandingbrand/kernel-plugin-asset` required props from the defined interface.
+
+`.kernelrc/env/env.<env>.ts`
+
+```
+  kernelPluginFBSDKNext: {
+    kernel: {
+      ios: {
+        urlScheme: "fb12345",
+        appId: "123456789",
+        clientToken: "1a2b3c",
+        displayName: "APP",
+        queriesSchemes: [],
+      },
+      android: {
+        appId: "123456789",
+        clientToken: "1a2b3c",
+        advertisingIdOptOut: false,
+        enableSharing: false,
+      },
+    },
+  },
+```
+
+The interface in your `.kernelrc/env/env.<env>.ts` has the following props:
+
+<div class="my-4 overflow-scroll">
+| attribute                         | description                                                                                     |
+| :--------                         | :----------                                                                                     |
+| ios.urlScheme                     | url scheme                                                                                      |
+| ios.appId                         | app identifier                                                                                  |
+| ios.clientToken                   | client token                                                                                    |
+| ios.displayName                   | app display name                                                                                |
+| ios.queriesSchemes                | dialogs (e.g., Login, Share, App Invites, etc.) that can perform an app switch to Facebook apps |
+| android.appId                     | app identifier                                                                                  |
+| android.clientToken               | client token                                                                                    |
+| android.advertisingIdOptOut       | opt-out of advertising identifier                                                               |
+| android.enableSharing             | share links, images, or video from your app                                                     |
+</div>
