@@ -1,0 +1,73 @@
+---
+title: CLI
+description: brandingbrand/kernel-cli
+layout: ../../../../layouts/docs.astro
+lang: en
+---
+
+import CodeCopy from "../../../../components/code-copy.astro";
+
+## CLI
+
+Kernel's command-line interface (CLI) is a package that listens commands that will invoke initializing an iOS and/or Android React Native project, add native code-signing keys and cleaning out native code + compiled configuration files.
+
+### Getting Started
+
+<div class="flex w-full my-6">
+  <CodeCopy args="yarn add -D @brandingbrand/kernel-cli" />
+</div>
+
+Add the above noted package and the `kernel` command is now available to use via `yarn kernel`.
+
+### Usage
+
+The 3 commands that are available to use with `kernel` are: `init`, `keys` and `clean`. Each command accepts different options but do follow the same execution life-cycle hooks: pre, pre-platform, platform, post-platform, post.
+
+These explicit life-cycle hooks exist to give full customization to the execution workflow. Each execution life-cycle hook exports an array of executors which each have a use case. To learn more about executors and the execution life-cycle hooks jump over to the [**Core**](/en/packages/core) package. The CLI package doesn't know any specifics of the executors, it only knows of the life-cycle hooks to invoke.
+
+### Init
+
+Initializes a specificed platform project.
+
+To invoke this `init` command run: `yarn kernel init`. This will invoke all the execution life-cycle hooks for `init`. There are a few options that can be sent to this command.
+
+#### Options
+
+<div class="my-4">
+| Option    | Type        | Required    | Description                                        |
+| :-------- | :---------- | :---------- | :----------                                        |
+| env       | string      | No          | inital default environment (default prod)          |
+| platform  | string      | No          | ios, android or native projects (default native)   |
+| release   | boolean     | No          | compiles on the chosen environment (default false) |
+| verbose   | boolean     | No          | invokes terminal logging (default false)           |
+</div>
+
+### Keys
+
+Adds codesigning keys for a specified platform.
+
+To invoke this `keys` command run: `yarn kernel keys`. This will invoke all the execution life-cycle hooks for `keys`. There are a few options that can be sent to this command.
+
+#### Options
+
+<div class="my-4">
+| Option    | Type        | Required    | Description                              |
+| :-------- | :---------- | :---------- | :----------                              |
+| platform  | string      | No          | ios, android or native (default native)  |
+| verbose   | boolean     | No          | invokes terminal logging (default false) |
+</div>
+
+### Clean
+
+Removes compiled env files and native project files.
+
+To invoke this `clean` command run: `yarn kernel clean`. This will invoke all the execution life-cycle hooks for `clean`. There are a few options that can be sent to this command.
+
+#### Options
+
+<div class="my-4">
+| Option    | Type        | Required    | Description                              |
+| :-------- | :---------- | :---------- | :----------                              |
+| platform  | string      | No          | ios, android or native (default native)  |
+| verbose   | boolean     | No          | invokes terminal logging (default false) |
+</div>
