@@ -50,7 +50,10 @@ const prod: ENV = {
       },
     },
   },
-  app: {},
+  app: {
+    foo: 'bar',
+    bar: 123,
+  },
   kernelPluginPermissions: {
     kernel: {
       ios: [
