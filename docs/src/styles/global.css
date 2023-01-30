@@ -8,16 +8,22 @@
     @apply flex w-full flex-col items-start justify-start px-4 leading-relaxed text-slate-300 selection:bg-kernel-teal-200 selection:text-teal-400 dark:text-kernel-teal-100 dark:selection:bg-kernel-teal-100 dark:selection:text-slate-900;
   }
   .markdown h1 {
-    @apply mt-8 mb-4 text-3xl font-extrabold;
+    @apply mt-8 mb-4 text-5xl font-extrabold;
   }
   .markdown h2 {
-    @apply mt-8 mb-4 text-2xl font-semibold;
+    @apply mt-8 mb-4 text-4xl font-semibold;
   }
   .markdown h3 {
-    @apply mt-4 mb-2 text-xl font-semibold;
+    @apply mt-4 mb-2 text-3xl font-semibold;
   }
   .markdown h4 {
-    @apply mt-2 mb-1 text-base font-medium;
+    @apply mt-2 mb-1 text-2xl font-semibold;
+  }
+  .markdown h5 {
+    @apply mt-2 mb-1 text-xl font-semibold;
+  }
+  .markdown h6 {
+    @apply mt-2 mb-1 text-base font-semibold;
   }
   .markdown li {
     @apply list-none text-slate-900 dark:text-white;
