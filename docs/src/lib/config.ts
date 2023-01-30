@@ -38,7 +38,6 @@ export const SIDEBAR = {
       text: "plugin-target-extension",
       link: "/en/packages/plugins/target-extension",
     },
-    { text: "plugin-foo", link: "/en/packages/plugins/foo" },
   ],
   Usage: [
     { text: "Integration", link: "/en/usage/integration" },
