@@ -10,7 +10,7 @@ program
     "platform: ios, android or native (ios & android)",
     "native"
   )
-  .option("-r, --release", "bundle only store environment")
+  .option("-r, --release", "bundle only store environment", false)
   .option("-v, --verbose", "show stdout")
   .action(async (options) => {
     for (const e of init.pre.executors) {

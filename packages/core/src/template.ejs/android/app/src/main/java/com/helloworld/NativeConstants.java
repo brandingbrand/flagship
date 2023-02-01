@@ -20,7 +20,7 @@ public class NativeConstants extends ReactContextBaseJavaModule {
     public Map<String, Object> getConstants() {
         final Map<String, Object> constants = new HashMap<>();
         constants.put("installed", true);
-        constants.put("ShowDevMenu", "true");
+        constants.put("ShowDevMenu", "<%- !release %>");
 
         return constants;
     }
