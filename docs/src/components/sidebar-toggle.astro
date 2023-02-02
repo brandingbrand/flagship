@@ -1,5 +1,7 @@
 <button
-  class={`${Astro.url.pathname === "/" ? "invisible w-0" : "visible"} md:w-0 md:invisible`}
+  class={`${
+    Astro.url.pathname === "/" ? "invisible w-0" : "visible"
+  } md:w-0 md:invisible`}
   id="sidebar-toggle"
   type="button"
   aria-pressed="false"
@@ -30,16 +32,8 @@
     const sidebar = document.querySelector("#sidebar");
     const documentation = document.querySelector("#documentation");
 
-    if (sidebar.classList.contains("h-0")) {
-      sidebar.classList.remove("h-0");
-      sidebar.classList.add("h-auto");
-
-      documentation.classList.add("invisible");
-    } else {
-      sidebar.classList.remove("h-auto");
-      sidebar.classList.add("h-0");
-
-      documentation.classList.remove("invisible");
-    }
+    sidebar.classList.toggle("h-auto");
+    sidebar.classList.toggle("h-0");
+    documentation.classList.toggle("hidden");
   });
 </script>

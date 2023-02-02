@@ -97,14 +97,14 @@
     @apply align-top;
     @apply pr-20;
     @apply border-b-2;
-    @apply border-b-zinc-800
+    @apply border-b-zinc-800;
   }
   .markdown table > tbody > tr:last-child > td {
-    @apply border-0
+    @apply border-0;
   }
   .markdown table > thead > tr > th {
     @apply border-b-2;
-    @apply border-b-zinc-800
+    @apply border-b-zinc-800;
   }
   .markdown blockquote a {
     @apply text-slate-900 dark:text-kernel-teal-50;
