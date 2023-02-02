@@ -1,3 +1,5 @@
+import { AndroidManifestAttributes } from "./manifest";
+
 export interface Config<T = unknown> {
   android: Android;
   ios: IOS;
@@ -224,6 +226,7 @@ export interface ProjectGradle {
 }
 
 export interface Manifest {
+  manifestAttributes?: AndroidManifestAttributes;
   /**
    * Additional MainActivity attributes
    */

@@ -45,6 +45,9 @@ const prod: ENV = {
       build: 1,
     },
     manifest: {
+      manifestAttributes: {
+        "android:name": "blahblahblah"
+      },
       urlScheme: {
         scheme: 'kernel',
       },
