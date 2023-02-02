@@ -1,3 +1,12 @@
+import {
+  AndroidManifestAttributes,
+  AndroidManifestElements,
+  ManifestActivityAttributes,
+  ManifestActivityElements,
+  ManifestApplicationAttributes,
+  ManifestApplicationElements,
+} from "./manifest";
+
 export interface Config<T = unknown> {
   android: Android;
   ios: IOS;
@@ -225,25 +234,33 @@ export interface ProjectGradle {
 
 export interface Manifest {
   /**
+   * Additional Manifest attributes
+   */
+  manifestAttributes?: Partial<AndroidManifestAttributes>;
+  /**
    * Additional MainActivity attributes
    */
-  activityAttributes?: Record<string, string>;
+  mainActivityAttributes?: Partial<ManifestActivityAttributes>;
   /**
    * Additional Application attributes
    */
-  applicationAttributes?: Record<string, string>;
+  mainApplicationAttributes?: Partial<ManifestApplicationAttributes>;
   /**
    * Url Scheme for intents
    */
   urlScheme?: UrlScheme;
   /**
+   * Additional elements to add inside the <manifest> tag
+   */
+  manifestElements?: AndroidManifestElements;
+  /**
    * Additional elements to add inside the <application> tag
    */
-  applicationElements?: string[];
+  mainApplicationElements?: ManifestApplicationElements;
   /**
    * Additional elements to add inside the main <activity> tag
    */
-  mainActivityElements?: string[];
+  mainActivityElements?: ManifestActivityElements;
 }
 
 export interface UrlScheme {
