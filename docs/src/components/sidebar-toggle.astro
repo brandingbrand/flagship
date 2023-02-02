@@ -1,7 +1,5 @@
 <button
-  class={`${
-    Astro.url.pathname === "/" ? "invisible w-0" : "visible"
-  } md:w-0 md:invisible`}
+  class={`${Astro.url.pathname === "/" ? "hidden" : ""}`}
   id="sidebar-toggle"
   type="button"
   aria-pressed="false"
