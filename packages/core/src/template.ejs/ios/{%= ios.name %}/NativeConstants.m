@@ -16,7 +16,7 @@ RCT_EXPORT_MODULE();
 - (NSDictionary *)constantsToExport {
   return @{
     @"installed": @YES,
-    @"ShowDevMenu": @"true"
+    @"ShowDevMenu": @"<%- !release %>"
   };
 }
 
