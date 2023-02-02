@@ -45,6 +45,15 @@ const prod: ENV = {
       build: 1,
     },
     manifest: {
+      applicationElements: {
+        activity: [
+          {
+            $: {
+              'android:name': '.FooBar',
+            },
+          },
+        ],
+      },
       urlScheme: {
         scheme: 'kernel',
       },
