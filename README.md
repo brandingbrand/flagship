@@ -7,18 +7,18 @@
 </h1>
 
 <p align="center">
-  Flagship Kernal is a configuration as code (CaC) toolkit which focuses on naitve code generation for React Native leveraging simplicity, extensibility and typesafety.
+  Flagship Kernel is a configuration as code (CaC) toolkit which focuses on naitve code generation for React Native leveraging simplicity, extensibility and typesafety.
 </p>
 
-# Flagship Kernal
+# Flagship Kernel
 
-## About Flagship Kernal
+## About Flagship Kernel
 
 <img alt="Flagship accelerates development"
   src="https://user-images.githubusercontent.com/556070/38955661-4ff210c6-4323-11e8-960e-b568bc4b2bec.png"
   align="right">
 
-Flagship Kernel aims to solve 2 problems: typesafe build + runtime configurations and native code generation. To manage these 2 challenges a typesafe idempotnent CaC toolkit was created. This toolkit can be broken down into 3 models: core, cli and plugins.
+Flagship Kernel aims to solve two problems: typesafe build + runtime configurations and native code generation. To manage these two challenges a typesafe idempotnent CaC toolkit was created. This toolkit can be broken down into three models: core, cli and plugins.
 
 ### How It Works
 
