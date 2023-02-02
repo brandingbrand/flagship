@@ -3,7 +3,10 @@
 
 import { logger, path, rimraf } from "../../../utils";
 
-export const execute = async (options: any, config: any) => {
+import type { Config } from "../../../types/types";
+import type { CleanOptions } from "../../../types/options";
+
+export const execute = async (options: CleanOptions, config: Config) => {
   logger.logInfo("removing transpiled env files");
 
   await rimraf.async(`${path.config.envPath()}/**/*.js`, {});

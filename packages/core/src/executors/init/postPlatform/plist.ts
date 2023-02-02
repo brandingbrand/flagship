@@ -3,9 +3,11 @@ import deepmerge from "deepmerge";
 import type { PlistJsObj } from "simple-plist";
 
 import { path } from "../../../utils";
-import type { Config } from "../../../types/types";
 
-export const execute = (options: any, config: Config) => {
+import type { Config } from "../../../types/types";
+import type { InitOptions } from "../../../types/options";
+
+export const execute = (options: InitOptions, config: Config) => {
   const asyncReadFile = async (path: string) => {
     return new Promise<PlistJsObj>((res, rej) => {
       plist.readFile<PlistJsObj>(path, (err, data) => {

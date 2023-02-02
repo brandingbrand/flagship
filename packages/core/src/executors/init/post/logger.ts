@@ -3,7 +3,10 @@
 
 import { fs, fsk, path, spinner } from "../../../utils";
 
-export const execute = async (options: any, config: any) => {
+import type { Config } from "../../../types/types";
+import type { InitOptions } from "../../../types/options";
+
+export const execute = async (options: InitOptions, config: Config) => {
   if (!options.verbose) {
     if (
       await fs.pathExists(

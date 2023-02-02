@@ -1,7 +1,9 @@
-import type { Config } from "../../../types/types";
 import { Xcode, fs, path, rename } from "../../../utils";
 
-export const execute = (options: any, config: Config) => {
+import type { Config } from "../../../types/types";
+import type { InitOptions } from "../../../types/options";
+
+export const execute = (options: InitOptions, config: Config) => {
   return {
     ios: async () => {
       if (config.ios.entitlementsFilePath) {
