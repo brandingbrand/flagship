@@ -28,6 +28,9 @@
   .markdown li {
     @apply list-none text-slate-900 dark:text-white;
   }
+  .markdown #documentation > ul > li {
+    @apply list-decimal text-slate-300 ml-6;
+  }
   .markdown ol > li {
     @apply mb-2 list-none;
   }
