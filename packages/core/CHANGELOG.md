@@ -1,5 +1,11 @@
 # @brandingbrand/kernel-core
 
+## 0.0.9
+
+### Patch Changes
+
+- dfcefeb9d: hide dev menu with --release
+
 ## 0.0.8
 
 ### Patch Changes

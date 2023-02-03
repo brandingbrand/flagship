@@ -1,5 +1,14 @@
 # @brandingbrand/kernel-plugin-fbsdk-next
 
+## 0.0.9
+
+### Patch Changes
+
+- dfcefeb9d: hide dev menu with --release
+- Updated dependencies [dfcefeb9d]
+  - @brandingbrand/kernel-core@0.0.9
+  - @brandingbrand/kernel-plugin-firebase-app@0.0.9
+
 ## 0.0.8
 
 ### Patch Changes

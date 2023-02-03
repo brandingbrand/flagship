@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/kernel-plugin-target-extension",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "",
   "publishConfig": {
     "access": "public"
@@ -28,7 +28,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "^0.0.8",
+    "@brandingbrand/kernel-core": "^0.0.9",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
