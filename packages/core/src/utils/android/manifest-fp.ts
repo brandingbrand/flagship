@@ -6,6 +6,7 @@ import { withXml } from "../xml-fp";
 import type {
   AndroidManifest,
   AndroidManifestAttributes,
+  ManifestApplicationAttributes,
 } from "../../types/manifest";
 
 const arr = [
@@ -25,14 +26,12 @@ const arr = [
   "application",
 ];
 
-const withManifest = async (
-  callback: (xml: AndroidManifest) => AndroidManifest
-) =>
+const withManifest = async (callback: (xml: AndroidManifest) => void) =>
   withXml<AndroidManifest>(
     path.android.manifestPath(),
     {
-      isArray: (_tagName, jPath, _isLeafNode, _isAttribute) => {
-        if (arr.indexOf(jPath) !== -1) {
+      isArray: (tagName, _jPath, _isLeafNode, _isAttribute) => {
+        if (arr.indexOf(tagName) !== -1) {
           return true;
         }
 
@@ -42,14 +41,48 @@ const withManifest = async (
     callback
   );
 
-export const setManifestAttributes = async (
-  attributes: AndroidManifestAttributes
-) =>
+const getMainApplication = (androidManifest: AndroidManifest) =>
+  androidManifest.manifest.application?.find(
+    (it) => it.$["android:name"] === ".MainApplication"
+  );
+
+const getMainActivity = (androidManifest: AndroidManifest) =>
+  androidManifest.manifest.application
+    ?.find((it) => it.$["android:name"] === ".MainApplication")
+    ?.activity?.find((it) => it.$["android:name"] === ".MainActivity");
+
+export const setManifestAttributes = (attributes: AndroidManifestAttributes) =>
   withManifest((xml) => {
     xml.manifest.$ = {
       ...xml.manifest.$,
       ...attributes,
     };
+  });
 
-    return xml;
+export const setMainApplicationAttributes = (
+  attrbutes: ManifestApplicationAttributes
+) =>
+  withManifest((xml) => {
+    const mainApplication = getMainApplication(xml);
+
+    if (!mainApplication) return;
+
+    mainApplication.$ = {
+      ...mainApplication?.$,
+      ...attrbutes,
+    };
+  });
+
+export const setMainActivityAttributes = (
+  attrbutes: ManifestApplicationAttributes
+) =>
+  withManifest((xml) => {
+    const mainActivity = getMainActivity(xml);
+
+    if (!mainActivity) return;
+
+    mainActivity.$ = {
+      ...mainActivity?.$,
+      ...attrbutes,
+    };
   });

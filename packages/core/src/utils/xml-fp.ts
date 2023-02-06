@@ -11,15 +11,15 @@ const OPTS = {
 export const withXml = async <T>(
   path: string,
   options: X2jOptionsOptional,
-  callback: (xml: T) => T
+  callback: (xml: T) => void
 ) => {
   const contents = await fs.promises.readFile(path);
-  let xml = new XMLParser({
+  const xml = new XMLParser({
     ...OPTS,
     ...options,
   }).parse(contents);
 
-  xml = callback(xml);
+  callback(xml);
 
   await fs.promises.writeFile(
     path,

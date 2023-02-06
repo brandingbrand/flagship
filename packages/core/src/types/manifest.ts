@@ -60,7 +60,7 @@ type ManifestService = {
   "intent-filter"?: ManifestIntentFilter[];
 };
 
-type ManifestApplicationAttributes = {
+export type ManifestApplicationAttributes = {
   "android:name": string | ".MainApplication";
   "android:icon"?: string;
   "android:roundIcon"?: string;
