@@ -8,6 +8,15 @@ const OPTS = {
   attributesGroupName: "$",
 };
 
+const BUILD_OPTS = {
+  ...OPTS,
+  format: true,
+  indentBy: "    ",
+  suppressBooleanAttributes: false,
+  suppressUnpairedNode: false,
+  suppressEmptyNode: false,
+};
+
 export const withXml = async <T>(
   path: string,
   options: X2jOptionsOptional,
@@ -21,15 +30,5 @@ export const withXml = async <T>(
 
   callback(xml);
 
-  await fs.promises.writeFile(
-    path,
-    new XMLBuilder({
-      ...OPTS,
-      format: true,
-      indentBy: "    ",
-      suppressBooleanAttributes: false,
-      suppressUnpairedNode: false,
-      suppressEmptyNode: false,
-    }).build(xml)
-  );
+  await fs.promises.writeFile(path, new XMLBuilder(BUILD_OPTS).build(xml));
 };

@@ -118,7 +118,7 @@ export const addApplicationEelement = (
 
 export const addActivityElement = (
   elements: ManifestIntentFilter,
-  name: ".MainActivity"
+  name?: ".MainActivity"
 ) => {
   withManifest((xml) => {
     const mainActivity = getMainActivity(xml);
