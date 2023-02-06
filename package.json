@@ -75,7 +75,7 @@
   },
   "workspaces": {
     "packages": ["packages/*", "apps/*"],
-    "nohoist": ["**/react", "**/react/**", "**/react-native", "**/react-native/**", "**/xcode", "**/xcode/**"]
+    "nohoist": ["**/react", "**/react-native"]
   },
   "jest": {
     "preset": "ts-jest"
