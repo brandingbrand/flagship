@@ -10,8 +10,7 @@
     "clean": "kernel clean",
     "keys": "kernel keys",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "postinstall": "cp -r ./node_modules/@brandingbrand/kernel-plugin-local ../../node_modules/@brandingbrand"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "@brandingbrand/fsapp": "^11.77.1",
@@ -32,7 +31,6 @@
     "@brandingbrand/kernel-component-dev": "*",
     "@brandingbrand/kernel-plugin-app-icon": "*",
     "@brandingbrand/kernel-plugin-asset": "*",
-    "@brandingbrand/kernel-plugin-local": "file:./.kernelrc/plugins/plugin-local",
     "@brandingbrand/kernel-plugin-native-navigation": "*",
     "@brandingbrand/kernel-plugin-permissions": "*",
     "@brandingbrand/kernel-plugin-splash-screen": "*",
@@ -122,8 +120,7 @@
       "@brandingbrand/kernel-plugin-app-icon",
       "@brandingbrand/kernel-plugin-splash-screen",
       "@brandingbrand/kernel-plugin-target-extension",
-      "@brandingbrand/kernel-plugin-fastlane",
-      "@brandingbrand/kernel-plugin-local"
+      "@brandingbrand/kernel-plugin-fastlane"
     ]
   }
 }
