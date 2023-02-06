@@ -5,7 +5,10 @@
 
 import { spinner } from "../../../utils";
 
-export const execute = async (options: any, config: any) => {
+import type { Config } from "../../../types/types";
+import type { CleanOptions } from "../../../types/options";
+
+export const execute = async (options: CleanOptions, config: Config) => {
   if (!options.verbose) {
     spinner.start("Cleaning the app");
 

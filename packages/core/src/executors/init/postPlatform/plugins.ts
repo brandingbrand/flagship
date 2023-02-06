@@ -1,6 +1,9 @@
 import { plugins } from "../../../utils";
 
-export const execute = (options: any, config: any) => {
+import type { Config } from "../../../types/types";
+import type { InitOptions } from "../../../types/options";
+
+export const execute = (options: InitOptions, config: Config) => {
   const runPlugins = async (
     configuration: object,
     installedPlugins: string[],

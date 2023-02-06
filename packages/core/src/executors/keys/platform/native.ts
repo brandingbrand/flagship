@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { basename } from "path";
-
 import { exec, path, fs } from "../../../utils";
 
-export const execute = (options: any, config: any) => ({
+import type { Config } from "../../../types/types";
+import type { KeysOptions } from "../../../types/options";
+
+export const execute = (options: KeysOptions, config: Config) => ({
   ios: async () => {
     const keychainName = process.env.KEY_CHAIN || "login.keychain";
     const keychain = `~/Library/Keychains/${keychainName}`;

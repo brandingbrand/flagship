@@ -2,7 +2,10 @@ import fs from "fs-extra";
 
 import { logger, path } from "../../../utils";
 
-export const execute = async (options: any, config: any) => {
+import type { Config } from "../../../types/types";
+import type { InitOptions } from "../../../types/options";
+
+export const execute = async (options: InitOptions, config: Config) => {
   let envMatch = /env.\w+.js/;
   if (options.release) {
     envMatch = new RegExp(`env\\.${options.env}\\.js`);

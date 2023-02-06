@@ -1,5 +1,5 @@
 import { program } from "commander";
-import { clean, platforms } from "@brandingbrand/kernel-core";
+import { clean, env, platforms } from "@brandingbrand/kernel-core";
 
 program
   .command("clean")
@@ -9,21 +9,21 @@ program
     "platform: ios, android or native (ios & android)",
     "native"
   )
-  .option("-v, --verbose", "show stdout")
+  .option("-v, --verbose", "show stdout", false)
   .action(async (options) => {
     for (const e of clean.pre.executors) {
-      await e.execute(options, {});
+      await e.execute(options, await env.get());
     }
 
     for (const u of [clean.prePlatform, clean.platform, clean.postPlatform]) {
       for (const p of platforms.get(options.platform)) {
         for (const e of u.executors) {
-          await e.execute(options, {})[p]();
+          await e.execute(options, await env.get())[p]();
         }
       }
     }
 
     for (const e of clean.post.executors) {
-      await e.execute(options, {});
+      await e.execute(options, await env.get());
     }
   });

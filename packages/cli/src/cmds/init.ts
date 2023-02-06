@@ -11,7 +11,7 @@ program
     "native"
   )
   .option("-r, --release", "bundle only store environment", false)
-  .option("-v, --verbose", "show stdout")
+  .option("-v, --verbose", "show stdout", false)
   .action(async (options) => {
     for (const e of init.pre.executors) {
       await e.execute(options, await env.get());
