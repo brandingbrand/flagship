@@ -46,14 +46,10 @@ export const setManifestAttributes = async (
   attributes: AndroidManifestAttributes
 ) =>
   withManifest((xml) => {
-    return {
-      ...xml,
-      manifest: {
-        ...xml.manifest,
-        $: {
-          ...xml.manifest.$,
-          ...attributes,
-        },
-      },
+    xml.manifest.$ = {
+      ...xml.manifest.$,
+      ...attributes,
     };
+
+    return xml;
   });
