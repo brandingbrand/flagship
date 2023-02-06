@@ -2,7 +2,7 @@ import { Xcode, fs, path, rename } from "../../../utils";
 
 import type { Config } from "../../../types/types";
 import type { InitOptions } from "../../../types/options";
-import { addApplicationEelement } from "../../../utils/android/manifest-fp";
+import { addApplicationEelement } from "../../../utils/android/manifest";
 
 export const execute = (options: InitOptions, config: Config) => {
   return {

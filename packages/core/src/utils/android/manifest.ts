@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import * as path from "../path";
-import { withXml } from "../xml-fp";
+import { withXml } from "../xml";
 
 import type {
   AndroidManifest,
