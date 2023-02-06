@@ -251,7 +251,7 @@ export interface Manifest {
   /**
    * Additional elements to add inside the <application> tag
    */
-  applicationElements?: ManifestApplicationElements[];
+  applicationElements?: ManifestApplicationElements;
   /**
    * Additional elements to add inside the main <activity> tag
    */

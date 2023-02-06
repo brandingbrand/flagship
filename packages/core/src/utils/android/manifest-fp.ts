@@ -7,6 +7,8 @@ import type {
   AndroidManifest,
   AndroidManifestAttributes,
   ManifestApplicationAttributes,
+  ManifestApplicationElements,
+  ManifestIntentFilter,
 } from "../../types/manifest";
 
 const arr = [
@@ -86,3 +88,43 @@ export const setMainActivityAttributes = (
       ...attrbutes,
     };
   });
+
+export const addApplicationEelement = (
+  elements: ManifestApplicationElements,
+  name?: ".MainApplication"
+) => {
+  withManifest((xml) => {
+    const mainApplication = getMainApplication(xml);
+
+    if (!mainApplication) return;
+
+    elements.activity?.forEach((it) => {
+      mainApplication.activity?.push(it);
+    });
+
+    elements["meta-data"]?.forEach((it) =>
+      mainApplication["meta-data"]?.push(it)
+    );
+
+    elements.receiver?.forEach((it) => mainApplication.receiver?.push(it));
+
+    elements.service?.forEach((it) => mainApplication.service?.push(it));
+
+    elements["uses-library"]?.forEach((it) =>
+      mainApplication["uses-library"]?.push(it)
+    );
+  });
+};
+
+export const addActivityElement = (
+  elements: ManifestIntentFilter,
+  name: ".MainActivity"
+) => {
+  withManifest((xml) => {
+    const mainActivity = getMainActivity(xml);
+
+    if (!mainActivity) return;
+
+    mainActivity["intent-filter"]?.push(elements);
+  });
+};

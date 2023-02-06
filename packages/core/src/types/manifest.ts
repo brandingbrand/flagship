@@ -27,7 +27,7 @@ type ManifestData = {
   };
 };
 
-type ManifestReceiver = {
+export type ManifestReceiver = {
   $: AndroidManifestAttributes & {
     "android:exported"?: StringBoolean;
     "android:enabled"?: StringBoolean;
@@ -55,7 +55,7 @@ type ManifestServiceAttributes = AndroidManifestAttributes & {
   "android:permission"?: string;
 };
 
-type ManifestService = {
+export type ManifestService = {
   $: ManifestServiceAttributes;
   "intent-filter"?: ManifestIntentFilter[];
 };

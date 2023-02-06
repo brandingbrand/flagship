@@ -2,6 +2,7 @@ import { Xcode, fs, path, rename } from "../../../utils";
 
 import type { Config } from "../../../types/types";
 import type { InitOptions } from "../../../types/options";
+import { addApplicationEelement } from "../../../utils/android/manifest-fp";
 
 export const execute = (options: InitOptions, config: Config) => {
   return {
@@ -54,6 +55,10 @@ export const execute = (options: InitOptions, config: Config) => {
         path.android.debugPath(),
         "java"
       );
+
+      if (config.android.manifest?.applicationElements) {
+        addApplicationEelement(config.android.manifest.applicationElements);
+      }
     },
   };
 };
