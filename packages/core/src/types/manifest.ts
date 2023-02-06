@@ -72,24 +72,29 @@ export type ManifestApplicationAttributes = {
   [key: string]: string | undefined;
 };
 
+export type ManifestActivityAttributes = ManifestApplicationAttributes & {
+  "android:exported"?: StringBoolean;
+  "android:launchMode"?: string;
+  "android:theme"?: string;
+  "android:windowSoftInputMode"?:
+    | string
+    | "stateUnspecified"
+    | "stateUnchanged"
+    | "stateHidden"
+    | "stateAlwaysHidden"
+    | "stateVisible"
+    | "stateAlwaysVisible"
+    | "adjustUnspecified"
+    | "adjustResize"
+    | "adjustPan";
+  [key: string]: string | undefined;
+};
+
 export type ManifestActivity = {
-  $: ManifestApplicationAttributes & {
-    "android:exported"?: StringBoolean;
-    "android:launchMode"?: string;
-    "android:theme"?: string;
-    "android:windowSoftInputMode"?:
-      | string
-      | "stateUnspecified"
-      | "stateUnchanged"
-      | "stateHidden"
-      | "stateAlwaysHidden"
-      | "stateVisible"
-      | "stateAlwaysVisible"
-      | "adjustUnspecified"
-      | "adjustResize"
-      | "adjustPan";
-    [key: string]: string | undefined;
-  };
+  $: ManifestActivityAttributes;
+} & ManifestActivityElements;
+
+export type ManifestActivityElements = {
   "intent-filter"?: ManifestIntentFilter[];
 };
 
@@ -101,6 +106,9 @@ export type ManifestUsesLibrary = {
 
 export type ManifestApplication = {
   $: ManifestApplicationAttributes;
+} & ManifestApplicationElements;
+
+export type ManifestApplicationElements = {
   activity?: ManifestActivity[];
   service?: ManifestService[];
   receiver?: ManifestReceiver[];
