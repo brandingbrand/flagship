@@ -1,5 +1,11 @@
 # @brandingbrand/kernel-component-dev
 
+## 0.0.10
+
+### Patch Changes
+
+- 006db620f: initial env and android release signing
+
 ## 0.0.9
 
 ### Patch Changes

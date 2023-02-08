@@ -1,5 +1,13 @@
 # @brandingbrand/kernel-plugin-target-extension
 
+## 0.0.10
+
+### Patch Changes
+
+- 006db620f: initial env and android release signing
+- Updated dependencies [006db620f]
+  - @brandingbrand/kernel-core@0.0.10
+
 ## 0.0.9
 
 ### Patch Changes
