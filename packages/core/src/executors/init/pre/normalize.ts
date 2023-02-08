@@ -41,5 +41,6 @@ export const execute = async (options: InitOptions, config: Config) => {
     ios: normalizedIOSPlugins(),
     android: normalizedAndroidPlugins(),
     release: options.release,
+    env: options.env,
   });
 };

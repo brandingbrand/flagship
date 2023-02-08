@@ -14,7 +14,7 @@ RCT_EXPORT_MODULE();
 }
 
 - (NSDictionary *)constantsToExport {
-  NSString *initialEnvName =  @"prod"; // [EnvSwitcher initialEnvName]
+  NSString *initialEnvName =  @"<%- env %>";
   NSString *envName = [[NSUserDefaults standardUserDefaults]
                        objectForKey:@"envName"];
   return @{

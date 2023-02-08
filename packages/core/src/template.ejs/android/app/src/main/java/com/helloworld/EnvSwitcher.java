@@ -28,7 +28,7 @@ public class EnvSwitcher extends ReactContextBaseJavaModule {
 
     @Override
     public Map<String, Object> getConstants() {
-        final String initialEnvName = "prod"; // [EnvSwitcher initialEnvName]
+        final String initialEnvName = "<%- env %>";
 
         return new HashMap<String, Object>() {{
             put("envName", sharedPref.getString("envName", initialEnvName));
