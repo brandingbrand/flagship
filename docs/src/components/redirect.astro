@@ -1,9 +1,23 @@
 ---
+import semver from "semver";
+import semverRegex from "semver-regex";
+
 export interface Props {
   files: Record<string, string>[];
 }
 
 const { files } = Astro.props;
+
+files.sort((file1, file2) => {
+  const v1 =
+    semverRegex().exec(file1.url.split("/").reverse()[0])?.[0] ||
+    file1.url.split("/").reverse()[0];
+  const v2 =
+    semverRegex().exec(file2.url.split("/").reverse()[0])?.[0] ||
+    file2.url.split("/").reverse()[0];
+
+  return semver.compare(v1, v2);
+});
 
 const url = files[files.length - 1]?.url;
 ---
