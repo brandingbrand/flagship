@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/kernel-plugin-firebase-app",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "",
   "publishConfig": {
     "access": "public"
@@ -28,7 +28,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "^0.0.9"
+    "@brandingbrand/kernel-core": "^0.0.10"
   },
   "devDependencies": {
     "xcode": "^3.0.1"
