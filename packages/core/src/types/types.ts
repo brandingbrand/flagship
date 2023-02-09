@@ -1,4 +1,4 @@
-import {
+import type {
   AndroidManifestAttributes,
   AndroidManifestElements,
   ManifestActivityAttributes,
@@ -6,6 +6,7 @@ import {
   ManifestApplicationAttributes,
   ManifestApplicationElements,
 } from "./manifest";
+import type { StyleAttributes, StyleElements } from "./android";
 
 export interface Config<T = unknown> {
   android: Android;
@@ -153,6 +154,10 @@ export interface Android {
    */
   manifest?: Manifest;
   /**
+   * Android styles.xml configuration
+   */
+  styles?: Styles;
+  /**
    * App package name
    */
   packageName: string;
@@ -261,6 +266,11 @@ export interface Manifest {
    * Additional elements to add inside the main <activity> tag
    */
   mainActivityElements?: ManifestActivityElements;
+}
+
+export interface Styles {
+  appThemeAttributes?: Partial<StyleAttributes>;
+  appThemeElements?: StyleElements;
 }
 
 export interface UrlScheme {
