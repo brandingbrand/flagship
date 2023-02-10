@@ -6,7 +6,7 @@ import type {
   ManifestApplicationAttributes,
   ManifestApplicationElements,
 } from "./manifest";
-import type { StyleAttributes, StyleElements } from "./android";
+import type { StringsType, StylesType } from "./android";
 
 export interface Config<T = unknown> {
   android: Android;
@@ -158,6 +158,10 @@ export interface Android {
    */
   styles?: Styles;
   /**
+   * Android strings.xml configuration
+   */
+  strings?: StringsType.StringsElements;
+  /**
    * App package name
    */
   packageName: string;
@@ -269,8 +273,8 @@ export interface Manifest {
 }
 
 export interface Styles {
-  appThemeAttributes?: Partial<StyleAttributes>;
-  appThemeElements?: StyleElements;
+  appThemeAttributes?: Partial<StylesType.StyleAttributes>;
+  appThemeElements?: StylesType.StyleElements;
 }
 
 export interface UrlScheme {
