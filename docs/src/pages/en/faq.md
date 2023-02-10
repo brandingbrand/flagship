@@ -9,7 +9,7 @@ lang: en
 
 #### How does this help me?
 
-`Flagship Kernel` provides you a typed configuration with idempotent native code generation. This is important for scalability, managing third-party dependencies, managing build configurations, managing runtime configurations and staying up to date with the latest stable release of React Native.
+`Flagship Code` provides you a typed configuration with idempotent native code generation. This is important for scalability, managing third-party dependencies, managing build configurations, managing runtime configurations and staying up to date with the latest stable release of React Native.
 
 #### React Native Support Version?
 
