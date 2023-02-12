@@ -6,6 +6,7 @@ const OPTS = {
   ignoreAttributes: false,
   attributeNamePrefix: "",
   attributesGroupName: "$",
+  textNodeName: "_",
 };
 
 const BUILD_OPTS = {

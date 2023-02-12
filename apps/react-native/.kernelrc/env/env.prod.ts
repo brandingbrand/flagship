@@ -49,6 +49,11 @@ const prod: ENV = {
         scheme: 'kernel',
       },
     },
+    styles: {
+      appThemeAttributes: {
+        parent: 'Theme.AppCompat.Light.NoActionBar',
+      },
+    },
   },
   app: {
     foo: 'bar',
