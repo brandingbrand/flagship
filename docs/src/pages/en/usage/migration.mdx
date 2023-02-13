@@ -1,18 +1,26 @@
+---
+title: Migration
+description: Migration
+layout: ../../../layouts/docs.astro
+lang: en
+---
+# Migration
+
 Set up or confirm your development environment by reviewing the [React Native Docs for version 0.7.0](https://reactnative.dev/docs/0.70/environment-setup).
 
 Before starting the project after the FS12 upgrade, please clean your project directory: `git clean-fdx`.
 
-# Troubleshooting
+## Troubleshooting
 
-## iOS 
-- In addition to cleaning your project directory, we suggest you clear your Xcode Derived Data. To clear it, enter the following in your terminal `rm -rf ~/Library/Developer/Xcode/DerivedData`
+### iOS 
+In addition to cleaning your project directory, we suggest you clear your Xcode Derived Data. To clear it, enter the following in your terminal `rm -rf ~/Library/Developer/Xcode/DerivedData`
 
-## Android
-### White Text
+### Android
+#### White Text
 > *Note: This will be resolved in the next FS12 release (0.0.11)*
 After upgrading, all text elements in Android that do not have a value for their color will be white when the device is in dark mode. To resolve this, ASSOS patched the template style values XML file so that the application defaulted to light mode, regardless of the device’s current theme (*[See PR](https://github.com/brandingbrand/assos/pull/682)*).
 
-### Java Vesion
+#### Java Vesion
 It's possible OS updates have caused this issue when reported; however, if a Java version issue is encountered while building the Android application, you can resolve it by making sure you set the JAVA_HOME path equal to the one used by Android Studio in your path file.
 
 Open and edit your .zshrc file `code .zshrc`
@@ -22,7 +30,7 @@ Ensure the file contains the following line for Java Version
 export JAVA_HOME="/Applications/Android Studio.app/Contents/jre/Contents/Home"
 ```
 
-### Command Line Tools
+#### Command Line Tools
 If you receive an error message regarding command line tools, such as the following:
 ```
 > Cannot run program "/Users/User/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager": error=2, No such file or directory
@@ -30,17 +38,17 @@ If you receive an error message regarding command line tools, such as the follow
 
 It’s likely you need to install the Android Command-line Tools within Android Studio.
 
-1. Open Android Studio
-2. Click on the more actions drop-down in the Welcome Screen.
-3. Select SDK Manager
-4. View Appearance & Behavior > System Settings > Android SDK
-5. Make sure Android SDK Command-line Tools (latest) is selected and installed
-6. Click on Apply / Ok
+- Open Android Studio
+- Click on the more actions drop-down in the Welcome Screen.
+- Select SDK Manager
+- View Appearance & Behavior > System Settings > Android SDK
+- Make sure Android SDK Command-line Tools (latest) is selected and installed
+- Click on Apply / Ok
 
 If you note that you already have Command-line Tools installed via Android Studio, you should confirm that your path file correctly lists necessary Android development tools.
 
-1. Open and edit your .zshrc file `code .zshrc`
-2. Make sure the file contains the following lines for Android Studio.
+- Open and edit your .zshrc file `code .zshrc`
+- Make sure the file contains the following lines for Android Studio.
 
 ```
 export ANDROID_HOME=$HOME/Library/Android/sdk
