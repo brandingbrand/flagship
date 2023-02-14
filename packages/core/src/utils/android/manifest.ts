@@ -3,15 +3,7 @@
 import * as path from "../path";
 import { withXml } from "../xml";
 
-import type {
-  AndroidManifest,
-  AndroidManifestAttributes,
-  AndroidManifestElements,
-  ManifestActivityAttributes,
-  ManifestActivityElements,
-  ManifestApplicationAttributes,
-  ManifestApplicationElements,
-} from "../../types/manifest";
+import type { AndroidManifestType } from "../../types/android";
 
 const tagNames = [
   "intent-filter",
@@ -30,8 +22,10 @@ const tagNames = [
   "application",
 ];
 
-const withManifest = async (callback: (xml: AndroidManifest) => void) =>
-  withXml<AndroidManifest>(
+const withManifest = async (
+  callback: (xml: AndroidManifestType.AndroidManifest) => void
+) =>
+  withXml<AndroidManifestType.AndroidManifest>(
     path.android.manifestPath(),
     {
       isArray: (tagName, _jPath, _isLeafNode, _isAttribute) => {
@@ -46,7 +40,7 @@ const withManifest = async (callback: (xml: AndroidManifest) => void) =>
   );
 
 const getApplication = (
-  androidManifest: AndroidManifest,
+  androidManifest: AndroidManifestType.AndroidManifest,
   applicationName: string
 ) =>
   androidManifest.manifest.application?.find(
@@ -54,7 +48,7 @@ const getApplication = (
   );
 
 const getActivity = (
-  androidManifest: AndroidManifest,
+  androidManifest: AndroidManifestType.AndroidManifest,
   applicationName: string,
   activityName: string
 ) =>
@@ -63,7 +57,7 @@ const getActivity = (
     ?.activity?.find((it) => it.$["android:name"] === activityName);
 
 export const setManifestAttributes = (
-  attributes: Partial<AndroidManifestAttributes>
+  attributes: Partial<AndroidManifestType.AndroidManifestAttributes>
 ) =>
   withManifest((xml) => {
     xml.manifest.$ = {
@@ -73,7 +67,7 @@ export const setManifestAttributes = (
   });
 
 export const setApplicationAttributes = (
-  attrbutes: Partial<ManifestApplicationAttributes>,
+  attrbutes: Partial<AndroidManifestType.ManifestApplicationAttributes>,
   applicationName = ".MainApplication"
 ) =>
   withManifest((xml) => {
@@ -88,7 +82,7 @@ export const setApplicationAttributes = (
   });
 
 export const setActivityAttributes = (
-  attrbutes: Partial<ManifestActivityAttributes>,
+  attrbutes: Partial<AndroidManifestType.ManifestActivityAttributes>,
   applicationName = ".MainApplication",
   activityName = ".MainActivity"
 ) =>
@@ -104,7 +98,7 @@ export const setActivityAttributes = (
   });
 
 export const addApplicationEelements = (
-  elements: ManifestApplicationElements,
+  elements: AndroidManifestType.ManifestApplicationElements,
   applicationName = ".MainApplication"
 ) =>
   withManifest((xml) => {
@@ -130,7 +124,7 @@ export const addApplicationEelements = (
   });
 
 export const addActivityElements = (
-  elements: ManifestActivityElements,
+  elements: AndroidManifestType.ManifestActivityElements,
   applicationName = ".MainApplication",
   activityName = ".MainActivity"
 ) =>
@@ -144,7 +138,9 @@ export const addActivityElements = (
     );
   });
 
-export const addManifestElements = (elements: AndroidManifestElements) =>
+export const addManifestElements = (
+  elements: AndroidManifestType.AndroidManifestElements
+) =>
   withManifest((xml) => {
     elements.application?.forEach((it) => xml.manifest.application?.push(it));
 
