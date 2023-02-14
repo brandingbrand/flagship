@@ -1,3 +1,4 @@
+import * as clean from "./clean";
 import * as plist from "./plist";
 import * as styles from "./styles";
 import * as config from "./config";
@@ -8,6 +9,7 @@ import * as manifest from "./manifest";
 import * as cocoapods from "./cocoapods";
 
 export const executors = [
+  clean,
   template,
   config,
   manifest,
