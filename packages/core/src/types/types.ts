@@ -1,12 +1,4 @@
-import type {
-  AndroidManifestAttributes,
-  AndroidManifestElements,
-  ManifestActivityAttributes,
-  ManifestActivityElements,
-  ManifestApplicationAttributes,
-  ManifestApplicationElements,
-} from "./manifest";
-import type { StringsType, StylesType } from "./android";
+import type { AndroidManifestType, StringsType, StylesType } from "./android";
 
 export interface Config<T = unknown> {
   android: Android;
@@ -245,15 +237,15 @@ export interface Manifest {
   /**
    * Additional Manifest attributes
    */
-  manifestAttributes?: Partial<AndroidManifestAttributes>;
+  manifestAttributes?: Partial<AndroidManifestType.AndroidManifestAttributes>;
   /**
    * Additional MainActivity attributes
    */
-  mainActivityAttributes?: Partial<ManifestActivityAttributes>;
+  mainActivityAttributes?: Partial<AndroidManifestType.ManifestActivityAttributes>;
   /**
    * Additional Application attributes
    */
-  mainApplicationAttributes?: Partial<ManifestApplicationAttributes>;
+  mainApplicationAttributes?: Partial<AndroidManifestType.ManifestApplicationAttributes>;
   /**
    * Url Scheme for intents
    */
@@ -261,15 +253,15 @@ export interface Manifest {
   /**
    * Additional elements to add inside the <manifest> tag
    */
-  manifestElements?: AndroidManifestElements;
+  manifestElements?: AndroidManifestType.AndroidManifestElements;
   /**
    * Additional elements to add inside the <application> tag
    */
-  mainApplicationElements?: ManifestApplicationElements;
+  mainApplicationElements?: AndroidManifestType.ManifestApplicationElements;
   /**
    * Additional elements to add inside the main <activity> tag
    */
-  mainActivityElements?: ManifestActivityElements;
+  mainActivityElements?: AndroidManifestType.ManifestActivityElements;
 }
 
 export interface Styles {
