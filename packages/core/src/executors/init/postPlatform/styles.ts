@@ -8,11 +8,13 @@ export const execute = (options: InitOptions, config: Config) => ({
   },
   android: async () => {
     if (config.android.styles?.appThemeAttributes) {
-      styles.setAppThemeAttributes(config.android.styles.appThemeAttributes);
+      await styles.setAppThemeAttributes(
+        config.android.styles.appThemeAttributes
+      );
     }
 
     if (config.android.styles?.appThemeElements) {
-      styles.addAppThemeElements(config.android.styles.appThemeElements);
+      await styles.addAppThemeElements(config.android.styles.appThemeElements);
     }
   },
 });

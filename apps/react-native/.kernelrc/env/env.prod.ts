@@ -54,6 +54,16 @@ const prod: ENV = {
         parent: 'Theme.AppCompat.Light.NoActionBar',
       },
     },
+    strings: {
+      string: [
+        {
+          $: {
+            name: 'foo_bar',
+          },
+          _: 'Foobar',
+        },
+      ],
+    },
   },
   app: {
     foo: 'bar',
