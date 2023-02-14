@@ -19,6 +19,9 @@ const prod: ENV = {
           },
         },
       },
+      urlScheme: {
+        scheme: 'kernel',
+      },
     },
     signing: {
       distCertType: 'iPhone Distribution',
