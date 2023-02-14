@@ -1,3 +1,4 @@
+import type { InfoPlistType } from "./ios";
 import type { AndroidManifestType, StringsType, StylesType } from "./android";
 
 export interface Config<T = unknown> {
@@ -38,7 +39,7 @@ export interface IOS {
   /**
    * Additional Plist values
    */
-  plist?: Record<string, unknown>;
+  plist?: Plist & InfoPlistType.InfoPlist;
   /**
    * Signing configuration
    */
@@ -51,6 +52,10 @@ export interface IOS {
    * App version Info
    */
   versioning?: IOSVersion;
+}
+
+export interface Plist {
+  urlScheme?: UrlScheme;
 }
 
 export enum TargetedDevices {

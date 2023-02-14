@@ -1,43 +1,27 @@
-import plist from "simple-plist";
-import deepmerge from "deepmerge";
-import type { PlistJsObj } from "simple-plist";
-
-import { path } from "../../../utils";
+import { setPlist, setUrlScheme } from "../../../utils/ios/info-plist";
 
 import type { Config } from "../../../types/types";
 import type { InitOptions } from "../../../types/options";
 
 export const execute = (options: InitOptions, config: Config) => {
-  const asyncReadFile = async (path: string) => {
-    return new Promise<PlistJsObj>((res, rej) => {
-      plist.readFile<PlistJsObj>(path, (err, data) => {
-        if (err) return rej(err);
-
-        if (data) return res(data);
-      });
-    });
-  };
-
-  const asyncWriteFile = async (path: string, obj: PlistJsObj) => {
-    return new Promise<void>((res, rej) => {
-      plist.writeFile(path, obj, (err, data) => {
-        if (err) return rej(err);
-
-        res(data);
-      });
-    });
-  };
-
   return {
     ios: async () => {
       if (!config.ios.plist) return;
 
-      const data = await asyncReadFile(path.ios.infoPlistPath(config));
+      const { urlScheme, ...restPlist } = config.ios.plist;
 
-      await asyncWriteFile(
-        path.ios.infoPlistPath(config),
-        deepmerge.all([data, config.ios.plist])
-      );
+      if (urlScheme) {
+        await setUrlScheme(
+          urlScheme.host
+            ? `${urlScheme.scheme}://${urlScheme.host}`
+            : urlScheme.scheme,
+          config
+        );
+      }
+
+      if (restPlist) {
+        await setPlist(restPlist, config);
+      }
     },
     android: async () => {
       //
