@@ -1,36 +1,35 @@
 ---
-title: Migration
-description: Migration
+title: Troubleshooting
+description: Troubleshooting Development Environment Issues
 layout: ../../../layouts/docs.astro
 lang: en
 ---
-# Migration
+# Troubleshooting
+## Quick Start
+Confirm your development environment is set up for React Native CLI by reviewing the [React Native Docs for version 0.7.0](https://reactnative.dev/docs/0.70/environment-setup).
 
-Set up or confirm your development environment by reviewing the [React Native Docs for version 0.7.0](https://reactnative.dev/docs/0.70/environment-setup).
+Please create a [new issue](https://github.com/brandingbrand/flagship/issues/new) if you believe you are encountering a bug.
 
-Before starting the project after the FS12 upgrade, please clean your project directory: `git clean-fdx`.
+## iOS 
+As a first step to troubleshooting iOS, we recommend you clear your Xcode Derived Data. To clear it, enter the following in your terminal: `rm -rf ~/Library/Developer/Xcode/DerivedData`.
 
-## Troubleshooting
-
-### iOS 
-In addition to cleaning your project directory, we suggest you clear your Xcode Derived Data. To clear it, enter the following in your terminal `rm -rf ~/Library/Developer/Xcode/DerivedData`
-
-### Android
-#### White Text
+## Android
+### White Text
 > *Note: This will be resolved in the next FS12 release (0.0.11)*
-After upgrading, all text elements in Android that do not have a value for their color will be white when the device is in dark mode. To resolve this, ASSOS patched the template style values XML file so that the application defaulted to light mode, regardless of the device’s current theme (*[See PR](https://github.com/brandingbrand/assos/pull/682)*).
 
-#### Java Vesion
+If you are upgrading from a previous version of FS to FS12, all text elements in Android that do not have a value for their color will be white when the device is in dark mode. To resolve this, patch the template style values XML file so that the application defaults to light mode, regardless of the device’s current theme.
+
+### Java Vesion
 It's possible OS updates have caused this issue when reported; however, if a Java version issue is encountered while building the Android application, you can resolve it by making sure you set the JAVA_HOME path equal to the one used by Android Studio in your path file.
 
-Open and edit your .zshrc file `code .zshrc`
+Open and edit your .zshrc file `code .zshrc` 
 Ensure the file contains the following line for Java Version
 
 ```
 export JAVA_HOME="/Applications/Android Studio.app/Contents/jre/Contents/Home"
 ```
 
-#### Command Line Tools
+### Command Line Tools
 If you receive an error message regarding command line tools, such as the following:
 ```
 > Cannot run program "/Users/User/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager": error=2, No such file or directory
