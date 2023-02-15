@@ -3,6 +3,7 @@ import path from "path";
 import ejs from "ejs";
 
 import { path as pathk } from "../../../utils";
+import { withSummary } from "../../../utils/summary";
 
 import type { Config } from "../../../types/types";
 import type { InitOptions } from "../../../types/options";
@@ -53,19 +54,27 @@ export const execute = (options: InitOptions, config: Config) => {
   };
 
   return {
-    ios: async () =>
-      copyDir(
-        path.resolve(__dirname, "template"),
-        pathk.project.path(),
-        config,
-        "ios"
-      ),
-    android: async () =>
-      copyDir(
-        path.resolve(__dirname, "template"),
-        pathk.project.path(),
-        config,
-        "android"
-      ),
+    ios: withSummary(
+      async () =>
+        copyDir(
+          path.resolve(__dirname, "template"),
+          pathk.project.path(),
+          config,
+          "ios"
+        ),
+      "template",
+      "platform::ios"
+    ),
+    android: withSummary(
+      async () =>
+        copyDir(
+          path.resolve(__dirname, "template"),
+          pathk.project.path(),
+          config,
+          "android"
+        ),
+      "template",
+      "platform::android"
+    ),
   };
 };

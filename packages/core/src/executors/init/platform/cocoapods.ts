@@ -4,17 +4,18 @@ import { logger, os } from "../../../utils";
 
 import type { Config } from "../../../types/types";
 import type { InitOptions } from "../../../types/options";
+import { withSummary } from "../../../utils/summary";
 
 export const execute = (options: InitOptions, config: Config) => ({
-  ios: async () => {
-    if (os.linux) {
-      logger.logInfo("not running pod install on linux");
-      return;
-    }
+  ios: withSummary(
+    async () => {
+      if (os.linux) {
+        logger.logInfo("not running pod install on linux");
+        return;
+      }
 
-    logger.logInfo("running pod install");
+      logger.logInfo("running pod install");
 
-    try {
       const cocoapods$ = spawnAsync("pod", [
         "install",
         "--project-directory=ios",
@@ -25,16 +26,10 @@ export const execute = (options: InitOptions, config: Config) => ({
       });
 
       await cocoapods$;
-    } catch (e) {
-      logger.logError(e as any);
-      logger.logError(
-        "pod install failed, here are the few things you can try to fix:\n" +
-          `\t1. Run "brew install cocoapods" if don't have cocoapods installed\n` +
-          `\t2. Run "pod repo update" to update your local spec repos`
-      );
-      process.exit(1);
-    }
-  },
+    },
+    "cocoapods",
+    "platform::ios"
+  ),
   android: async () => {
     //
   },

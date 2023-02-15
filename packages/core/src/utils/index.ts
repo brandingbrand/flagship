@@ -10,5 +10,6 @@ export { default as fs } from "./fs";
 export * as plugins from "./plugins";
 export * as spinner from "./spinner";
 export * as exec from "./exec-async";
+export * as summary from "./summary";
 export * as platforms from "./platforms";
 export * as rimraf from "./rimraf-async";
