@@ -1,4 +1,0 @@
-{
-  "extends": "@tsconfig/react-native/tsconfig.json",
-  "exclude": ["test"]
-}
