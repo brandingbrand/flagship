@@ -41,7 +41,8 @@ export const SIDEBAR = {
   ],
   Usage: [
     { text: "Integration", link: "/en/usage/integration" },
-    { text: "Contribution", link: "/en/usage/contribution" },
+    { text: "Contribution", link: "/en/usage/contribution" }, 
+    { text: "Troubleshooting", link: "/en/usage/troubleshooting" },
   ],
 };
 
