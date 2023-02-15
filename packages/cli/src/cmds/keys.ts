@@ -13,11 +13,9 @@ program
       await e.execute(options, await env.get());
     }
 
-    for (const u of [keys.prePlatform, keys.platform, keys.postPlatform]) {
+    for (const e of keys.platform.executors) {
       for (const p of platforms.get(options.platform)) {
-        for (const e of u.executors) {
-          await e.execute(options, await env.get())[p]();
-        }
+        await e.execute(options, await env.get())[p]();
       }
     }
 
