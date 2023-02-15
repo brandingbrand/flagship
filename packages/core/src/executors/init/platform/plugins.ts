@@ -1,4 +1,5 @@
 import { plugins } from "../../../utils";
+import { withSummary } from "../../../utils/summary";
 
 import type { Config } from "../../../types/types";
 import type { InitOptions } from "../../../types/options";
@@ -17,7 +18,15 @@ export const execute = (options: InitOptions, config: Config) => {
   };
 
   return {
-    ios: async () => runPlugins(config, plugins.get(), "ios"),
-    android: async () => runPlugins(config, plugins.get(), "android"),
+    ios: withSummary(
+      async () => runPlugins(config, plugins.get(), "ios"),
+      "plugins",
+      "platform::ios"
+    ),
+    android: withSummary(
+      async () => runPlugins(config, plugins.get(), "android"),
+      "plugins",
+      "platform::android"
+    ),
   };
 };
