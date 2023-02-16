@@ -1,3 +1,4 @@
+/* eslint-disable no-control-regex */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
@@ -41,7 +42,10 @@ export const execute = async (options: InitOptions, config: Config) => {
 ${
   process.env["CI"]
     ? table.toString()
-    : table.toString().replace(/\[[\d]+?m/g, "")
+    : table
+        .toString()
+        .replace(/\[[\d]+?m/g, "")
+        .replace(//g, "")
 }
 
 
@@ -59,7 +63,7 @@ ${
         if (el === "error" && it[el as keyof Items]) errors++;
 
         if (el === "success" || el === "error") {
-          return it[el as keyof Items] ? "✓" : "✗";
+          return it[el as keyof Items] ? "✓" : "";
         }
 
         return it[el as keyof Items];
