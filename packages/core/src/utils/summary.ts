@@ -1,6 +1,6 @@
-import { SummaryType } from "../types/Summary";
+import { Items } from "../types/Summary";
 
-export const items: SummaryType[] = [];
+export const items: Items[] = [];
 
 export const withSummary =
   <TFunc, TArgs extends unknown[]>(

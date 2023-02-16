@@ -1,4 +1,4 @@
-export type SummaryType = {
+export type Items = {
   name: string;
   hook: string;
   time: string;

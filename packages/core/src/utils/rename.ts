@@ -2,7 +2,7 @@ import fs from "fs-extra";
 import { sync } from "glob";
 
 import * as path from "./path";
-import { logError, logInfo } from "./logger";
+import { logInfo } from "./logger";
 
 const getMatchingFiles = (directory: string, oldName: string): string[] => {
   const globOptions = {
@@ -42,37 +42,28 @@ export const pkgDirectory = async (
   const oldPathPart = oldPkg.replace(/\./g, "/");
   const newPathPart = newPkg.replace(/\./g, "/");
 
-  try {
-    const results = getMatchingFiles(directory, oldPathPart);
+  const results = getMatchingFiles(directory, oldPathPart);
 
-    // Rename matching paths
-    for (const oldPath of results) {
-      const newPath = oldPath.replace(oldPathPart, newPathPart);
-      await fs.move(oldPath, newPath);
-    }
-
-    // since we only moved the bottom-most directory, traverse through the old
-    // package directories to delete any empty package folders
-    for (const dir of oldPkg
-      .split(".")
-      .reduce<string[]>((parts, part, index, arr) => {
-        const pattern = [...arr.slice(0, index), part].join("/");
-        parts.push(...getMatchingFiles(directory, pattern));
-        return parts;
-      }, [])
-      .reverse()) {
-      const contents = (await fs.pathExists(dir)) && (await fs.readdir(dir));
-      if (Array.isArray(contents) && contents.length === 0) {
-        await fs.remove(dir);
-      }
-    }
-  } catch (error: unknown) {
-    if (typeof error === "string") {
-      logError("renaming project files", error);
-    }
-
-    process.exit(1);
+  // Rename matching paths
+  for (const oldPath of results) {
+    const newPath = oldPath.replace(oldPathPart, newPathPart);
+    await fs.move(oldPath, newPath);
   }
 
+  // since we only moved the bottom-most directory, traverse through the old
+  // package directories to delete any empty package folders
+  for (const dir of oldPkg
+    .split(".")
+    .reduce<string[]>((parts, part, index, arr) => {
+      const pattern = [...arr.slice(0, index), part].join("/");
+      parts.push(...getMatchingFiles(directory, pattern));
+      return parts;
+    }, [])
+    .reverse()) {
+    const contents = (await fs.pathExists(dir)) && (await fs.readdir(dir));
+    if (Array.isArray(contents) && contents.length === 0) {
+      await fs.remove(dir);
+    }
+  }
   logInfo(`renamed project files in ${directory}`);
 };

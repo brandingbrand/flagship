@@ -39,13 +39,9 @@ const ios = summary.withSummary(
 
         const outputSize = (r.size as any)[i.type] * (r.scale || 1);
 
-        try {
-          await sharp(inputFile)
-            .resize(outputSize, outputSize, { fit: "fill" })
-            .toFile(outputFilePath);
-        } catch (error: any) {
-          logger.logError(error);
-        }
+        await sharp(inputFile)
+          .resize(outputSize, outputSize, { fit: "fill" })
+          .toFile(outputFilePath);
       }
     }
 
@@ -71,25 +67,21 @@ const android = summary.withSummary(
       const inputFile = await (async function () {
         if (!i.transform) return inputFilePath;
 
-        try {
-          const { size, radius, padding } = i.transform;
-          const cutoutMask = Buffer.from(
-            `<svg><rect x="0" y="0" width="${size}" height="${size}" rx="${radius}" ry="${radius}"/></svg>`
-          );
-          return await sharp(inputFilePath)
-            .resize(size, size, { fit: "fill" })
-            .composite([{ input: cutoutMask, blend: "dest-in" }])
-            .extend({
-              top: padding,
-              bottom: padding,
-              left: padding,
-              right: padding,
-              background: { r: 0, g: 0, b: 0, alpha: 0 },
-            })
-            .toBuffer();
-        } catch (error) {
-          logger.logError(error as never);
-        }
+        const { size, radius, padding } = i.transform;
+        const cutoutMask = Buffer.from(
+          `<svg><rect x="0" y="0" width="${size}" height="${size}" rx="${radius}" ry="${radius}"/></svg>`
+        );
+        return await sharp(inputFilePath)
+          .resize(size, size, { fit: "fill" })
+          .composite([{ input: cutoutMask, blend: "dest-in" }])
+          .extend({
+            top: padding,
+            bottom: padding,
+            left: padding,
+            right: padding,
+            background: { r: 0, g: 0, b: 0, alpha: 0 },
+          })
+          .toBuffer();
       })();
 
       for (const r of rules.android) {
@@ -102,13 +94,9 @@ const android = summary.withSummary(
 
         const outputSize = (r.size as any)[i.type] * (r.scale || 1);
 
-        try {
-          await sharp(inputFile)
-            .resize(outputSize, outputSize, { fit: "fill" })
-            .toFile(outputFilePath);
-        } catch (error: any) {
-          logger.logError(error);
-        }
+        await sharp(inputFile)
+          .resize(outputSize, outputSize, { fit: "fill" })
+          .toFile(outputFilePath);
       }
     }
     await fs.mkdir(

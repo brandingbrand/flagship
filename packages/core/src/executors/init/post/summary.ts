@@ -7,9 +7,7 @@ import { exec, fs, summary } from "../../../utils";
 
 import type { Config } from "../../../types/types";
 import type { InitOptions } from "../../../types/options";
-import type { SummaryType } from "../../../types/Summary";
-
-const pkg = require("../package.json");
+import type { Items } from "../../../types/Summary";
 
 export const execute = async (options: InitOptions, config: Config) => {
   const LOG_FILE_PATH = "/tmp/kernel-core.log";
@@ -23,7 +21,10 @@ export const execute = async (options: InitOptions, config: Config) => {
     },
   });
 
-  const template = (name: string, errors: unknown[]) => {
+  const template = (errors: unknown[]) => {
+    const pkg = require("../package.json");
+
+    const name = `${pkg.name} v${pkg.version}`;
     const padding = PADDING_MAX - name.length;
 
     return `
@@ -55,13 +56,13 @@ ${
     const row = Object.keys(it)
       .filter((el) => el !== "errorMessage")
       .map((el) => {
-        if (el === "error" && it[el as keyof SummaryType]) errors++;
+        if (el === "error" && it[el as keyof Items]) errors++;
 
         if (el === "success" || el === "error") {
-          return it[el as keyof SummaryType] ? "✓" : "✗";
+          return it[el as keyof Items] ? "✓" : "✗";
         }
 
-        return it[el as keyof SummaryType];
+        return it[el as keyof Items];
       });
 
     table.push(row as []);
@@ -72,7 +73,6 @@ ${
   }
 
   const data = template(
-    `${pkg.name} v${pkg.version}`,
     summary.items.filter((it) => !!it.errorMessage).map((it) => it.errorMessage)
   );
 
