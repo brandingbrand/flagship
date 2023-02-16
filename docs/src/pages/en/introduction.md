@@ -9,13 +9,13 @@ lang: en
 
 [**Flagship Code**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12) is a configuration as code (CaC) toolkit focusing on native code generation for React Native, leveraging simplicity, extensibility, and type safety. [**React Native**](https://reactnative.dev/) and [**TypeScript**](https://typescriptlang.org/). To manage this core foundation, we created this toolkit.
 
-```
-CaC is the process of configuring services via machine-readable definition files. Our configuration files are typesafe JavaScript objects represented in TypeScript files.
-```
 
-```
-Native code generation is everything from React Native essentials to third-party dependencies that require native code changes.
-```
+> CaC is the process of configuring services via machine-readable definition files. Our configuration files are typesafe JavaScript objects represented in TypeScript files.
+
+
+
+> Native code generation is everything from React Native essentials to third-party dependencies that require native code changes.
+
 
 This toolkit can be broken into three models: Core, CLI, and Plugins.
 
