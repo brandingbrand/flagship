@@ -13,3 +13,4 @@ export * as exec from "./exec-async";
 export * as summary from "./summary";
 export * as platforms from "./platforms";
 export * as rimraf from "./rimraf-async";
+export * as packageManager from "./package-manager";

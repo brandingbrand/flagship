@@ -1,7 +1,9 @@
 import fs from "fs-extra";
 
 import { logger, path } from "../../../utils";
+import { Warning } from "../../../utils/errors";
 import { withSummary } from "../../../utils/summary";
+import { withVersion } from "../../../utils/package-manager";
 
 import type { Config } from "../../../types/types";
 import type { InitOptions } from "../../../types/options";
@@ -32,9 +34,29 @@ export const execute = withSummary(
       })
       .join(",\n")}\n}`;
 
-    await fs.writeFile(
-      path.app.resolve("src/project_env_index.js"),
-      envIndexFile
+    await withVersion(
+      "@brandingbrand/fsapp",
+      async (packageVersion: string | undefined) => {
+        if (!packageVersion) {
+          throw new Warning(
+            "@brandingbrand/fsapp v10.+ or v11.+ installed; runtime env will not be accessible. The runtime env will be accessible in a more targeted package in the future."
+          );
+        }
+
+        if (packageVersion.match(/10./)) {
+          return fs.writeFile(
+            path.app.resolve("project_env_index.js"),
+            envIndexFile
+          );
+        }
+
+        if (packageVersion.match(/11./)) {
+          return fs.writeFile(
+            path.app.resolve("src/project_env_index.js"),
+            envIndexFile
+          );
+        }
+      }
     );
   },
   "env",
