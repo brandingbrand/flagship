@@ -79,7 +79,7 @@ Will generally include files related to plugins i.e. *.png for app icons, *.png 
 ```
 
 ##### .env
-Will be your collective your environment files i.e. development, production, adhoc, etc. These are typescript files based on the `@brandingbrand/kernel-core` exported type `Config<T>`. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.kernelrc/env).
+Will be your collective your environment files i.e. development, production, adhoc, etc. These are TypeScript files based on the `@brandingbrand/kernel-core` exported type `Config<T>`. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.kernelrc/env).
 
 ```
 ./env
@@ -153,7 +153,7 @@ export default prod;
 
 The advanced approach will allow you take advantage of build + runtime configurations from a single env. 
 
-We will utiilize Typescript's [**triple-dash directive**](https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html) to solve for a single source of truth. 
+We will utilize TypeScript's [**triple-dash directive**](https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html) to solve for a single source of truth. 
 
 - Move the environment type to a common location inside the `src/types` directory. 
 - Inside the `src/types` directory create an `app.d.ts` files - a type declaration file. 
@@ -240,7 +240,7 @@ Plugins are platform-specific scripts that generate or manipulate native code fo
 
 #### Linking
 
-Plugins can be remote or local distribution allowing for ultimate flexibility.
+Plugins support remote or local distribution allowing for ultimate flexibility.
 
 Link your plugins by adding them to the `package.json` `kernel.plugins` array in priority order. Plugins are run with async / await from 0th-index to Nth-index.
 
