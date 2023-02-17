@@ -7,11 +7,11 @@ lang: en
 
 import CodeCopy from "../../../components/code-copy.astro";
 
-## Integration
+# Integration
 
-Integrating with Kernel can be broken down into: configuring assets, configuring environments and linking / generating plugins. While this seems tedious - this is a one-time setup that you will slowly grow while you get idempotent native code generation. You no longer have to worry about maintaining those native code directories i.e. ios and android - just focus on React Native. 
+Getting started with Kernel includes configuring assets and environments and linking/generating plugins. Afterward, you will no longer have to worry about maintaining those native code directories (i.e., iOS and Android). You will slowly extend your setup while you get idempotent native code generation. 
 
-First you will want to add the core and cli packages.
+## Add Core and CLI Packages
 
 <div class="flex w-full my-6">
   <CodeCopy args="yarn add -D @brandingbrand/kernel-core @brandingbrand/kernel-cli" />
@@ -19,11 +19,25 @@ First you will want to add the core and cli packages.
 
 ### Configuring Assets
 
-First create add the `ios` and `android` directories to your `.gitignore`. You can now safely remove them `rm -rf ios android`. Create `.kernelrc` directory in the root of your project. This is the Kernel runtime configuration directory where all configuration will be hosted i.e. CaC. Inside `.kernelrc` create an `env` directory - this is where all your typed envirnments will exist. These are the only 2 mandatory directories.
+At the root of your project:
+- Add `ios` and `android` directories to your project's `.gitignore` file.
+- Remove the iOS and Android directories
+  - `rm -rf ios android` 
+- Create `.kernelrcdirectory`
+  - This is the Kernel runtime configuration directory where all configurations will be hosted, i.e., CaC. 
+- Inside `.kernelrc`` create an env directory 
 
-Additional directories are recommended for separation of concerns. Inside `.kernelrc` create a `signing` directory - this will be where your native codesigning exists. For ios this would be certs and profiles and for android it will be your keystores. It will be beneficial to break down your ios codesigning assests into their respective environments i.e. enterprise, adhoc, store, etc. This way only a minimal set of profiles and certs are configured during adding of codesigning keys for ci/cd. Inside `.kernelrc` create an `assets` directory - this will be useful to host all plugin assets. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.kernelrc).
+#### Directories
+Additional directories are recommended for the separation of concerns. Inside `.kernelrc`, create a `signing` directory - this will be where your native codesigning exists. For iOS, this would be certs and profiles, and for Android, it will be your keystores. 
 
-Your `.kernelrc` directory should now look like:
+For example, it is beneficial to break down your iOS codesigning assets into their respective environments (e.g., enterprise, adhoc, store, etc.). This way, only a minimal set of profiles and certs are configured when you add codesigning keys for CI/CD. 
+
+
+##### .kernelrc
+Inside `.kernelrc` create an `assets` directory - this will be useful to host all plugin assets. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.kernelrc).
+
+
+After completing the prior steps, your `.kernelrc` directory should now resemble the following:
 
 ```
 .kernelrc
@@ -32,7 +46,8 @@ Your `.kernelrc` directory should now look like:
 └── signing
 ```
 
-Assets will generally be files related to plugins i.e. *.png for app icons, *.png for splash screen, google-services.json for firebase, etc. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.kernelrc/assets).
+##### .assets
+Will generally include files related to plugins i.e. *.png for app icons, *.png for splash screen, google-services.json for firebase, etc. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.kernelrc/assets).
 
 ```
 ./assets
@@ -63,15 +78,16 @@ Assets will generally be files related to plugins i.e. *.png for app icons, *.pn
             └── logo.png
 ```
 
-Typically organizing them by plugin is the most readable structure. Env will be your collective your environment files i.e. development, production, adhoc, etc. These are typescript files based on the `@brandingbrand/kernel-core` exported type `Config<T>`. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.kernelrc/env).
+##### .env
+Will be your collective your environment files i.e. development, production, adhoc, etc. These are typescript files based on the `@brandingbrand/kernel-core` exported type `Config<T>`. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.kernelrc/env).
 
 ```
 ./env
 ├── env.dev.ts
 └── env.prod.ts
 ```
-
-The signing folder will host all of your files related to codesigning. Android codesigning relates to your *.keystore. iOS codesigning relates to your certificates, entitlements and provisioning profiles. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.kernelrc/signing).
+##### .signing
+Will host all of your files related to codesigning. Android codesigning relates to your *.keystore. iOS codesigning relates to your certificates, entitlements and provisioning profiles. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.kernelrc/signing).
 
 ```
 ./signing
@@ -93,9 +109,13 @@ The signing folder will host all of your files related to codesigning. Android c
 
 ### Configuring Environments
 
-#### Base
+#### Basic
 
-The environments are the foundation of the Kernel - this is the Configuration as Code (CaC) content. In the `.kernelrc/env` directory create an environment file i.e. env.prod.ts. Import the `Config` from `@brandingbrand/kernel-core`. This will allow you to generate a basic build configuration of iOS Android. Plugin types can be imported and extended upon the base config i.e. `Config & KernelPluginAsset`. With this simplistic approach you get a build configuration with a plugins.
+Environments are the foundation of Kernel - this is the Configuration as Code (CaC) content. 
+
+In the `.kernelrc/env` directory create an environment file (e.g., env.prod.ts). Import the `Config` from `@brandingbrand/kernel-core`. This will allow you to generate a basic build configuration for iOS and Android. 
+
+Plugin types can be imported and extended upon the base config i.e. `Config & KernelPluginAsset`. With this simplistic approach you get a build configuration with plugins.
 
 ```
 import {Config} from '@brandingbrand/kernel-core';
@@ -131,11 +151,17 @@ export default prod;
 
 #### Advanced
 
-The advanced approach will allow you take advantage of build + runtime configurations from a single source of truth env. We will utiilize Typescript's [**triple-dash directive**](https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html) to solve for a single source of truth. 
+The advanced approach will allow you take advantage of build + runtime configurations from a single env. 
 
-Move the environment type to a common location inside the `src/types` directory. Inside the `src/types` directory create an `app.d.ts` files - a type declaration file. In this file we will define our overall app type. If you are utilizing `fsapp` we will overwrite the `any` `env` type with our defined type via `fsapp.d.ts` file - this will provide us with type-hints when utilizing runtime configurations. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/blob/feat/flagship-12/apps/react-native/src/types).
+We will utiilize Typescript's [**triple-dash directive**](https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html) to solve for a single source of truth. 
 
-In this file you will define the build + runtime configuration, where the interface `App` is your runtime configuration:
+- Move the environment type to a common location inside the `src/types` directory. 
+- Inside the `src/types` directory create an `app.d.ts` files - a type declaration file. 
+- In this file we will define our overall app type. 
+  - If you are utilizing `fsapp` we will overwrite the `any` `env` type with our defined type via `fsapp.d.ts` file - this will provide us with type-hints when utilizing runtime configurations. 
+- To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/blob/feat/flagship-12/apps/react-native/src/types).
+
+In `app.d.ts` you will define the build + runtime configuration, where the interface `App` is your runtime configuration:
 
 `app.d.ts`
 ```
@@ -210,11 +236,13 @@ If you are using `fsapp` to access the `env` object - the env is now typesafe at
 
 ### Plugins
 
-Plugins are platform specific scripts that generate or manipulate native code with respect to a specific third-party depedency. Plugins are npm packages that added as dev dependencies - only required at time of `kernel init`. They may or may not export an interface that will need to be added to your environment as shown in the previous section. Plugins are run by the `plugins` executor by auto-discovery. 
+Plugins are platform-specific scripts that generate or manipulate native code for a third-party dependency. Plugins are npm packages added as dev dependencies (only required when running the command `kernel init`). They may or may not export an interface that must be added to your environment, as shown in the previous section. Plugins are run by the `plugins` executor by auto-discovery. 
 
 #### Linking
 
-Link your plugins by adding them to the `package.json` `kernel.plugins` array in a priority order. Plugins are run with async / await from 0th-index to Nth-index.
+Plugins can be remote or local distribution allowing for ultimate flexibility.
+
+Link your plugins by adding them to the `package.json` `kernel.plugins` array in priority order. Plugins are run with async / await from 0th-index to Nth-index.
 
 `package.json`
 ```
@@ -231,11 +259,9 @@ Link your plugins by adding them to the `package.json` `kernel.plugins` array in
   }
 ```
 
-Plugins can be remote or local distribution allowing for ultimate flexibility.
-
 #### Generating
 
-Generating a plugin assumes you have familiarity with creating typescript / javascript packages. A plugin is a typescript package and must abide by the interface of having `ios` and `android` named exports that accept the `Config` type; exported from `@brandingbrand/kernel-core`. As noted by the interface below, these are async functions - all plugins are run via async / await.
+Generating a plugin assumes you have familiarity with creating JavaScript / TypeScript packages. A plugin is a TypeScript package and must abide by the interface of having `ios` and `android` named exports that accept the `Config` type; exported from `@brandingbrand/kernel-core`. As noted by the interface below, these are async functions - all plugins are run via async / await.
 
 `index.d.ts`
 ```
@@ -251,6 +277,8 @@ declare const ios: (config: Config & KernelPluginAppIcon) => Promise<void>;
 declare const android: (config: Config & KernelPluginAppIcon) => Promise<void>;
 ```
 
-There are a number of ways to compile / bundle your typescript to javascript. In this monorepo [**microbundle**](https://www.npmjs.com/package/microbundle) is utilized to compile and bundle typescript into javascript.
+There are a number of ways to compile / bundle your TypeScript to JavaScript. In this monorepo [**microbundle**](https://www.npmjs.com/package/microbundle) is utilized to compile and bundle TypeScript into JavaScript.
 
-A very simple plugin that can be used as inspiration to generate your own plugin is the local plugin [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.kernelrc/plugins/plugin-local) - the only difference being that if you are distrbuting this package to npm you would not persist the `dist` directory. If you are making a true local plugin, you would persist the `dist` directory. It's strongly recommended that each plugin have it's own set of unit tests than can be run via [**jest**](https://jestjs.io/).
+A very simple plugin that can be used as inspiration to generate your own plugin is the local plugin [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.kernelrc/plugins/plugin-local) - the only difference being that if you are distrbuting this package to npm you would not persist the `dist` directory. 
+
+If you are making a true local plugin, you would persist the `dist` directory. It's strongly recommended that each plugin have it's own set of unit tests than can be run via [**jest**](https://jestjs.io/).
