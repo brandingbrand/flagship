@@ -1,6 +1,6 @@
 import spawnAsync from "@expo/spawn-async";
 
-import { logger, os } from "../../../utils";
+import { logger, os, path } from "../../../utils";
 
 import type { Config } from "../../../types/types";
 import type { InitOptions } from "../../../types/options";
@@ -10,22 +10,19 @@ export const execute = (options: InitOptions, config: Config) => ({
   ios: withSummary(
     async () => {
       if (os.linux) {
-        logger.logInfo("not running pod install on linux");
-        return;
+        throw new Error("cannot run cocoapods on linux");
       }
 
       logger.logInfo("running pod install");
 
-      const cocoapods$ = spawnAsync("pod", [
-        "install",
-        "--project-directory=ios",
-      ]);
-
-      cocoapods$.child.stdout?.on("data", (data) => {
-        console.log(data.toString());
+      await spawnAsync("pod", ["install"], {
+        stdio: [
+          options.verbose ? "inherit" : "ignore",
+          options.verbose ? "inherit" : "ignore",
+          options.verbose ? "inherit" : "ignore",
+        ],
+        cwd: path.project.resolve("ios"),
       });
-
-      await cocoapods$;
     },
     "cocoapods",
     "platform::ios"
