@@ -1,5 +1,5 @@
 {
-  "name": "@brandingbrand/kernel-plugin-google-signin",
+  "name": "@brandingbrand/code-plugin-google-signin",
   "version": "0.0.10",
   "description": "",
   "publishConfig": {
@@ -28,9 +28,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "^0.0.10"
+    "@brandingbrand/code-core": "^0.0.10"
   },
   "peerDependencies": {
-    "@brandingbrand/kernel-plugin-firebase-app": "^0.0.10"
+    "@brandingbrand/code-plugin-firebase-app": "^0.0.10"
   }
 }

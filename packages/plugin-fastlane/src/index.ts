@@ -5,12 +5,12 @@ import {
   path as pathk,
   logger,
   summary,
-} from "@brandingbrand/kernel-core";
-import { KernelPluginFastlane } from "./types";
+} from "@brandingbrand/code-core";
+import { CodePluginFastlane } from "./types";
 
 const ios = summary.withSummary(
-  async (config: Config & KernelPluginFastlane) => {
-    if (config.kernelPluginFastlane.kernel.ios) {
+  async (config: Config & CodePluginFastlane) => {
+    if (config.codePluginFastlane.plugin.ios) {
       logger.logInfo("Adding iOS Fastfile...");
 
       const sourcePath = path.join(__dirname, "fastlane", "ios");
@@ -36,8 +36,8 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)
 );
 
 const android = summary.withSummary(
-  async (config: Config & KernelPluginFastlane) => {
-    if (config.kernelPluginFastlane.kernel.android) {
+  async (config: Config & CodePluginFastlane) => {
+    if (config.codePluginFastlane.plugin.android) {
       logger.logInfo("Adding Android Fastfile...");
 
       const sourcePath = path.join(__dirname, "fastlane", "android");

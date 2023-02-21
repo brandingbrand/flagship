@@ -1,5 +1,5 @@
 import { program } from "commander";
-import { clean, env, platforms } from "@brandingbrand/kernel-core";
+import { clean, env, platforms } from "@brandingbrand/code-core";
 
 program
   .command("clean")

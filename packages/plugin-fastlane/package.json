@@ -1,5 +1,5 @@
 {
-  "name": "@brandingbrand/kernel-plugin-fastlane",
+  "name": "@brandingbrand/code-plugin-fastlane",
   "version": "0.0.10",
   "description": "",
   "publishConfig": {
@@ -29,6 +29,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "^0.0.10"
+    "@brandingbrand/code-core": "^0.0.10"
   }
 }

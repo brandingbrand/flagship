@@ -1,10 +1,10 @@
-import { fsk, path, summary } from "@brandingbrand/kernel-core";
+import { fsk, path, summary } from "@brandingbrand/code-core";
 
-import type { KernelPluginFirebaseAnalytics } from "./types";
+import type { CodePluginFirebaseAnalytics } from "./types";
 
 const ios = summary.withSummary(
-  async (config: KernelPluginFirebaseAnalytics) => {
-    if (config.kernelPluginFirebaseAnalytics.kernel.ios?.disableAdId) {
+  async (config: CodePluginFirebaseAnalytics) => {
+    if (config.codePluginFirebaseAnalytics.plugin.ios?.disableAdId) {
       await fsk.update(
         path.ios.podfilePath(),
         /(platform :[\s\S]+?\n)/,

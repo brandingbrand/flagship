@@ -1,4 +1,4 @@
-import { fs, path } from "@brandingbrand/kernel-core";
+import { fs, path } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
@@ -29,13 +29,13 @@ describe("plugin-fbsdk-next", () => {
 
     await ios({
       ios: { name: "HelloWorld" },
-      kernelPluginFBSDKNext: {
-        kernel: {
+      codePluginFBSDKNext: {
+        plugin: {
           ios: {
-            appId: "kernel-appid-0001",
-            clientToken: "kernel-client-token-0001",
-            displayName: "kernel",
-            urlScheme: "kernel-url-scheme",
+            appId: "code-appid-0001",
+            clientToken: "code-client-token-0001",
+            displayName: "code",
+            urlScheme: "code-url-scheme",
             queriesSchemes: ["fbapp", "fbapp-sharing"],
           },
         },
@@ -54,9 +54,9 @@ describe("plugin-fbsdk-next", () => {
       )
     ).toString();
 
-    expect(infoPlist).toMatch("<string>kernel-url-scheme</string>");
-    expect(infoPlist).toMatch("<string>kernel-appid-0001</string>");
-    expect(infoPlist).toMatch("<string>kernel-client-token-0001</string>");
+    expect(infoPlist).toMatch("<string>code-url-scheme</string>");
+    expect(infoPlist).toMatch("<string>code-appid-0001</string>");
+    expect(infoPlist).toMatch("<string>code-client-token-0001</string>");
     expect(infoPlist).toMatch("<string>fbapp</string>");
     expect(infoPlist).toMatch("<string>fbapp-sharing</string>");
     expect(appDelegate).toMatch(
@@ -77,11 +77,11 @@ describe("plugin-fbsdk-next", () => {
       );
 
     await android({
-      kernelPluginFBSDKNext: {
-        kernel: {
+      codePluginFBSDKNext: {
+        plugin: {
           android: {
             appId: "0001",
-            clientToken: "kernel-client-token-0001",
+            clientToken: "code-client-token-0001",
             advertisingIdOptOut: true,
             enableSharing: true,
           },
@@ -102,7 +102,7 @@ describe("plugin-fbsdk-next", () => {
     ).toString();
 
     expect(strings).toMatch("0001");
-    expect(strings).toMatch("kernel-client-token-0001");
+    expect(strings).toMatch("code-client-token-0001");
     expect(androidManifest).toMatch(
       '<meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>'
     );

@@ -1,4 +1,4 @@
-import { Plugin } from "@brandingbrand/kernel-core";
+import { Plugin } from "@brandingbrand/code-core";
 
 interface PluginFBSDKNext {
   ios?: {
@@ -16,6 +16,6 @@ interface PluginFBSDKNext {
   };
 }
 
-export interface KernelPluginFBSDKNext {
-  kernelPluginFBSDKNext: Plugin<PluginFBSDKNext>;
+export interface CodePluginFBSDKNext {
+  codePluginFBSDKNext: Plugin<PluginFBSDKNext>;
 }

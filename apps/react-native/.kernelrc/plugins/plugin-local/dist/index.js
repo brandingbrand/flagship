@@ -1,1 +1,0 @@
-var n=require("@brandingbrand/kernel-core");exports.android=r=>{n.logger.logInfo("Executing @brandingbrand/kernel-plugin-local::android")},exports.ios=r=>{n.logger.logInfo("Executing @brandingbrand/kernel-plugin-local::ios")};

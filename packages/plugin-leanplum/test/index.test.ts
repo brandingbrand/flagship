@@ -1,4 +1,4 @@
-import { fs, path } from "@brandingbrand/kernel-core";
+import { fs, path } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
@@ -29,8 +29,8 @@ describe("plugin-leanplum", () => {
 
     await ios({
       ios: { name: "HelloWorld" },
-      kernelPluginLeanplum: {
-        kernel: {
+      codePluginLeanplum: {
+        plugin: {
           ios: {
             swizzle: false,
           },

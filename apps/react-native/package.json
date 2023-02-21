@@ -1,14 +1,14 @@
 {
-  "name": "@brandingbrand/kernel-app",
+  "name": "@brandingbrand/code-app",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "init": "kernel init",
-    "clean": "kernel clean",
-    "keys": "kernel keys",
+    "init": "code init",
+    "clean": "code clean",
+    "keys": "code keys",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
@@ -27,14 +27,14 @@
     "@babel/core": "^7.12.9",
     "@babel/preset-env": "^7.19.4",
     "@babel/runtime": "^7.12.5",
-    "@brandingbrand/kernel-cli": "*",
-    "@brandingbrand/kernel-plugin-app-icon": "*",
-    "@brandingbrand/kernel-plugin-asset": "*",
-    "@brandingbrand/kernel-plugin-native-navigation": "*",
-    "@brandingbrand/kernel-plugin-permissions": "*",
-    "@brandingbrand/kernel-plugin-splash-screen": "*",
-    "@brandingbrand/kernel-plugin-target-extension": "*",
-    "@brandingbrand/kernel-plugin-fastlane": "*",
+    "@brandingbrand/code-cli": "*",
+    "@brandingbrand/code-plugin-app-icon": "*",
+    "@brandingbrand/code-plugin-asset": "*",
+    "@brandingbrand/code-plugin-native-navigation": "*",
+    "@brandingbrand/code-plugin-permissions": "*",
+    "@brandingbrand/code-plugin-splash-screen": "*",
+    "@brandingbrand/code-plugin-target-extension": "*",
+    "@brandingbrand/code-plugin-fastlane": "*",
     "@react-native-community/eslint-config": "^2.0.0",
     "@tsconfig/react-native": "^2.0.2",
     "@types/jest": "^26.0.23",
@@ -111,15 +111,15 @@
       "**"
     ]
   },
-  "kernel": {
+  "code": {
     "plugins": [
-      "@brandingbrand/kernel-plugin-asset",
-      "@brandingbrand/kernel-plugin-permissions",
-      "@brandingbrand/kernel-plugin-native-navigation",
-      "@brandingbrand/kernel-plugin-app-icon",
-      "@brandingbrand/kernel-plugin-splash-screen",
-      "@brandingbrand/kernel-plugin-target-extension",
-      "@brandingbrand/kernel-plugin-fastlane"
+      "@brandingbrand/code-plugin-asset",
+      "@brandingbrand/code-plugin-permissions",
+      "@brandingbrand/code-plugin-native-navigation",
+      "@brandingbrand/code-plugin-app-icon",
+      "@brandingbrand/code-plugin-splash-screen",
+      "@brandingbrand/code-plugin-target-extension",
+      "@brandingbrand/code-plugin-fastlane"
     ]
   }
 }

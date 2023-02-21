@@ -1,5 +1,5 @@
 {
-  "name": "@brandingbrand/kernel-cli",
+  "name": "@brandingbrand/code-cli",
   "version": "0.0.10",
   "description": "",
   "publishConfig": {
@@ -22,7 +22,7 @@
     "dist"
   ],
   "bin": {
-    "kernel": "bin/kernel.js"
+    "code": "bin/code.js"
   },
   "scripts": {
     "build": "microbundle --target node --compress --format cjs,esm --tsconfig tsconfig.build.json --no-sourcemap",
@@ -32,7 +32,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "^0.0.10",
+    "@brandingbrand/code-core": "^0.0.10",
     "commander": "^9.4.1"
   },
   "devDependencies": {

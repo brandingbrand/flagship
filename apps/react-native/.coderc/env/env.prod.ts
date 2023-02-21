@@ -1,12 +1,12 @@
 /// <reference path="../../src/types/app.d.ts" />
 
-import {ENV} from '@brandingbrand/kernel-app';
+import {ENV} from '@brandingbrand/code-app';
 
 const prod: ENV = {
   ios: {
-    name: 'kernel',
-    bundleId: 'com.kernel',
-    displayName: 'Kernel',
+    name: 'code',
+    bundleId: 'com.code',
+    displayName: 'Code',
     versioning: {
       version: '0.0.1',
       build: 1,
@@ -20,7 +20,7 @@ const prod: ENV = {
         },
       },
       urlScheme: {
-        scheme: 'kernel',
+        scheme: 'code',
       },
     },
     signing: {
@@ -40,16 +40,16 @@ const prod: ENV = {
     ],
   },
   android: {
-    name: 'kernel',
-    displayName: 'Kernel',
-    packageName: 'com.kernel',
+    name: 'code',
+    displayName: 'Code',
+    packageName: 'com.code',
     versioning: {
       version: '0.0.1',
       build: 1,
     },
     manifest: {
       urlScheme: {
-        scheme: 'kernel',
+        scheme: 'code',
       },
     },
     styles: {
@@ -72,23 +72,23 @@ const prod: ENV = {
     foo: 'bar',
     bar: 123,
   },
-  kernelPluginPermissions: {
-    kernel: {
+  codePluginPermissions: {
+    plugin: {
       ios: [
         {
           permission: 'LOCATION_ALWAYS',
-          text: 'Kernel would like to utilze your location',
+          text: 'Code would like to utilze your location',
         },
         {
           permission: 'CAMERA',
-          text: 'Kernel would like to utilize your camera',
+          text: 'Code would like to utilize your camera',
         },
       ],
       android: ['ACCESS_FINE_LOCATION', 'CAMERA'],
     },
   },
-  kernelPluginSplashScreen: {
-    kernel: {
+  codePluginSplashScreen: {
+    plugin: {
       ios: {
         type: 'generated',
       },
@@ -97,18 +97,18 @@ const prod: ENV = {
       },
     },
   },
-  kernelPluginTargetExtension: {
-    kernel: [
+  codePluginTargetExtension: {
+    plugin: [
       {
         path: 'assets/extensions/notifications',
-        bundleId: 'com.kernel.notifications',
+        bundleId: 'com.code.notifications',
         provisioningProfileName:
-          'Kernel Notifications Store Provisioning Profile',
+          'Code Notifications Store Provisioning Profile',
       },
     ],
   },
-  kernelPluginFastlane: {
-    kernel: {
+  codePluginFastlane: {
+    plugin: {
       ios: {
         appCenter: {
           organization: 'Branding-Brand',
@@ -116,7 +116,7 @@ const prod: ENV = {
           destinationType: 'store',
           destinations: ['IAT', 'UAT'],
         },
-        buildScheme: 'kernel',
+        buildScheme: 'code',
       },
       android: {
         appCenter: {
@@ -128,13 +128,13 @@ const prod: ENV = {
       },
     },
   },
-  kernelPluginAsset: {
-    kernel: {
+  codePluginAsset: {
+    plugin: {
       assetPath: ['assets/fonts'],
     },
   },
-  kernelPluginAppIcon: {
-    kernel: {
+  codePluginAppIcon: {
+    plugin: {
       appIconPath: 'assets/app-icon',
     },
   },

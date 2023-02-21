@@ -1,4 +1,4 @@
-import { fs, fsk, path } from "@brandingbrand/kernel-core";
+import { fs, fsk, path } from "@brandingbrand/code-core";
 import { ios, android } from "../src";
 
 describe("plugin-fastlane", () => {
@@ -25,7 +25,7 @@ describe("plugin-fastlane", () => {
       .mockReturnValue(path.resolve(__dirname, "__fastlane_fixtures", "ios"));
     const iosConfig = {
       ios: {
-        bundleId: "com.kernel",
+        bundleId: "com.code",
         versioning: {
           version: "0.0.1",
           build: 1,
@@ -38,8 +38,8 @@ describe("plugin-fastlane", () => {
           profilesDir: "./xx",
         },
       },
-      kernelPluginFastlane: {
-        kernel: {
+      codePluginFastlane: {
+        plugin: {
           ios: {
             appCenter: {
               organization: "Branding-Brand",
@@ -47,21 +47,21 @@ describe("plugin-fastlane", () => {
               destinationType: "test",
               destinations: ["IAT", "UAT"],
             },
-            buildScheme: "kernel",
+            buildScheme: "code",
           },
         },
       },
     };
     await ios(iosConfig as never);
     const iosCases = [
-      `owner_name: "${iosConfig.kernelPluginFastlane.kernel.ios.appCenter.organization}"`,
-      `app_name: "${iosConfig.kernelPluginFastlane.kernel.ios.appCenter.appName}"`,
+      `owner_name: "${iosConfig.codePluginFastlane.plugin.ios.appCenter.organization}"`,
+      `app_name: "${iosConfig.codePluginFastlane.plugin.ios.appCenter.appName}"`,
       `version: "${iosConfig.ios.versioning.version}"`,
-      `scheme: "${iosConfig.kernelPluginFastlane.kernel.ios.buildScheme}"`,
+      `scheme: "${iosConfig.codePluginFastlane.plugin.ios.buildScheme}"`,
       `export_method: "${iosConfig.ios.signing.exportMethod}"`,
       `export_team_id: "${iosConfig.ios.signing.exportTeamId}"`,
-      `destination_type: "${iosConfig.kernelPluginFastlane.kernel.ios.appCenter.destinationType}"`,
-      `destinations: "${iosConfig.kernelPluginFastlane.kernel.ios.appCenter.destinations}"`,
+      `destination_type: "${iosConfig.codePluginFastlane.plugin.ios.appCenter.destinationType}"`,
+      `destinations: "${iosConfig.codePluginFastlane.plugin.ios.appCenter.destinations}"`,
     ];
     const result = await fs.readFile(
       path.resolve(
@@ -92,7 +92,7 @@ describe("plugin-fastlane", () => {
       );
     const androidConfig = {
       android: {
-        bundleId: "com.kernel",
+        bundleId: "com.code",
         versioning: {
           version: "0.0.1",
           build: 1,
@@ -105,8 +105,8 @@ describe("plugin-fastlane", () => {
           profilesDir: "./xx",
         },
       },
-      kernelPluginFastlane: {
-        kernel: {
+      codePluginFastlane: {
+        plugin: {
           android: {
             appCenter: {
               organization: "Branding-Brand",
@@ -120,11 +120,11 @@ describe("plugin-fastlane", () => {
     };
     await android(androidConfig as never);
     const androidCases = [
-      `owner_name: "${androidConfig.kernelPluginFastlane.kernel.android.appCenter.organization}"`,
-      `app_name: "${androidConfig.kernelPluginFastlane.kernel.android.appCenter.appName}"`,
+      `owner_name: "${androidConfig.codePluginFastlane.plugin.android.appCenter.organization}"`,
+      `app_name: "${androidConfig.codePluginFastlane.plugin.android.appCenter.appName}"`,
       `version: "${androidConfig.android.versioning.version}"`,
-      `destination_type: "${androidConfig.kernelPluginFastlane.kernel.android.appCenter.destinationType}"`,
-      `destinations: "${androidConfig.kernelPluginFastlane.kernel.android.appCenter.destinations}"`,
+      `destination_type: "${androidConfig.codePluginFastlane.plugin.android.appCenter.destinationType}"`,
+      `destinations: "${androidConfig.codePluginFastlane.plugin.android.appCenter.destinations}"`,
     ];
     const result = await fs.readFile(
       path.resolve(

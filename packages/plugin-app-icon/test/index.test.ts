@@ -1,5 +1,5 @@
 import path from "path";
-import { fs, path as pathk } from "@brandingbrand/kernel-core";
+import { fs, path as pathk } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
@@ -46,8 +46,8 @@ describe("plugin-app-icon", () => {
   });
 
   it("ios", async () => {
-    jest.mock("@brandingbrand/kernel-core", () => {
-      const core = jest.requireActual("@brandingbrand/kernel-core");
+    jest.mock("@brandingbrand/code-core", () => {
+      const core = jest.requireActual("@brandingbrand/code-core");
 
       return {
         ...core,
@@ -74,8 +74,8 @@ describe("plugin-app-icon", () => {
   });
 
   it("android", async () => {
-    jest.mock("@brandingbrand/kernel-core", () => {
-      const core = jest.requireActual("@brandingbrand/kernel-core");
+    jest.mock("@brandingbrand/code-core", () => {
+      const core = jest.requireActual("@brandingbrand/code-core");
 
       return {
         ...core,

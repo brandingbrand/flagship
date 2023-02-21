@@ -1,9 +1,9 @@
 import { program } from "commander";
-import { env, init, platforms } from "@brandingbrand/kernel-core";
+import { env, init, platforms } from "@brandingbrand/code-core";
 
 program
   .command("init")
-  .description("initialize Kernel for a specific environment and platform")
+  .description("initialize Code for a specific environment and platform")
   .option("-e, --env [env]", "initial environment", "prod")
   .option(
     "-p, --platform [platform]",

@@ -308,8 +308,8 @@ type DeepPartial<T> = T extends object
     }
   : T;
 
-interface Kernel<T> {
-  kernel: T;
+interface PluginType<T> {
+  plugin: T;
 }
 
-export type Plugin<T, U = unknown> = DeepPartial<Config<U>> & Kernel<T>;
+export type Plugin<T, U = unknown> = DeepPartial<Config<U>> & PluginType<T>;

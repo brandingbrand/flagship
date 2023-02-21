@@ -1,4 +1,4 @@
-import {Plugin} from '@brandingbrand/kernel-core';
+import {Plugin} from '@brandingbrand/code-core';
 
 interface PluginLocal {}
 

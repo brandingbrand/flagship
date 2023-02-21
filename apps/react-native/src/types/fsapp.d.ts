@@ -1,7 +1,7 @@
 import '@brandingbrand/fsapp';
 
 declare module '@brandingbrand/fsapp' {
-  let env: import('@brandingbrand/kernel-core').Config<
-    import('@brandingbrand/kernel-app').App
+  let env: import('@brandingbrand/code-core').Config<
+    import('@brandingbrand/code-app').App
   >;
 }

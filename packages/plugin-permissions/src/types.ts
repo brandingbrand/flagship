@@ -1,4 +1,4 @@
-import type { Plugin } from "@brandingbrand/kernel-core";
+import type { Plugin } from "@brandingbrand/code-core";
 
 import { ios, android } from "./utils";
 
@@ -17,6 +17,6 @@ interface PluginPermissions {
   android?: AndroidPermissionType;
 }
 
-export interface KernelPluginPermissions {
-  kernelPluginPermissions: Plugin<PluginPermissions>;
+export interface CodePluginPermissions {
+  codePluginPermissions: Plugin<PluginPermissions>;
 }

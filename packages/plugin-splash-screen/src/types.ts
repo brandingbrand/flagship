@@ -1,4 +1,4 @@
-import { Plugin } from "@brandingbrand/kernel-core";
+import { Plugin } from "@brandingbrand/code-core";
 
 interface PluginSplashScreen {
   ios?: {
@@ -26,6 +26,6 @@ interface PluginSplashScreen {
   };
 }
 
-export interface KernelPluginSplashScreen {
-  kernelPluginSplashScreen: Partial<Plugin<PluginSplashScreen>>;
+export interface CodePluginSplashScreen {
+  codePluginSplashScreen: Partial<Plugin<PluginSplashScreen>>;
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@brandingbrand/kernel-plugin-firebase-analytics",
+  "name": "@brandingbrand/code-plugin-firebase-analytics",
   "version": "0.0.10",
   "description": "",
   "publishConfig": {
@@ -28,10 +28,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "^0.0.10"
+    "@brandingbrand/code-core": "^0.0.10"
   },
   "peerDependencies": {
-    "@brandingbrand/kernel-plugin-firebase-app": "^0.0.10",
+    "@brandingbrand/code-plugin-firebase-app": "^0.0.10",
     "@react-native-firebase/app": "^14.12.0"
   }
 }

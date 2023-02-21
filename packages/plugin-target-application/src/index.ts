@@ -1,4 +1,4 @@
-import { summary } from "@brandingbrand/kernel-core";
+import { summary } from "@brandingbrand/code-core";
 
 const ios = summary.withSummary(
   async () => {

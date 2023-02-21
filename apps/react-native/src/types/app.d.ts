@@ -1,11 +1,11 @@
-declare module '@brandingbrand/kernel-app' {
-  type ENV = import('@brandingbrand/kernel-core').Config<App> &
-    import('@brandingbrand/kernel-plugin-asset').KernelPluginAsset &
-    import('@brandingbrand/kernel-plugin-app-icon').KernelPluginAppIcon &
-    import('@brandingbrand/kernel-plugin-fastlane').KernelPluginFastlane &
-    import('@brandingbrand/kernel-plugin-permissions').KernelPluginPermissions &
-    import('@brandingbrand/kernel-plugin-splash-screen').KernelPluginSplashScreen &
-    import('@brandingbrand/kernel-plugin-target-extension').KernelPluginTargetExtension;
+declare module '@brandingbrand/code-app' {
+  type ENV = import('@brandingbrand/code-core').Config<App> &
+    import('@brandingbrand/code-plugin-asset').CodePluginAsset &
+    import('@brandingbrand/code-plugin-app-icon').CodePluginAppIcon &
+    import('@brandingbrand/code-plugin-fastlane').CodePluginFastlane &
+    import('@brandingbrand/code-plugin-permissions').CodePluginPermissions &
+    import('@brandingbrand/code-plugin-splash-screen').CodePluginSplashScreen &
+    import('@brandingbrand/code-plugin-target-extension').CodePluginTargetExtension;
 
   interface App {
     foo: string;

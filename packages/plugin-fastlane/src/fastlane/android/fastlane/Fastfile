@@ -3,8 +3,8 @@ default_platform :android
 lane :increment_build do
   begin
     version = appcenter_fetch_version_number(
-        owner_name: "<%= kernelPluginFastlane.kernel.android.appCenter.organization %>",
-        app_name: "<%= kernelPluginFastlane.kernel.android.appCenter.appName %>",
+        owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
+        app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",
         version: "<%= android.versioning.version %>"
     )
 
@@ -25,10 +25,10 @@ lane :appcenter do
   gradle(task: "app:assembleRelease")
 
   appcenter_upload(
-    owner_name: "<%= kernelPluginFastlane.kernel.android.appCenter.organization %>",
-    app_name: "<%= kernelPluginFastlane.kernel.android.appCenter.appName %>",
-    destination_type: "<%= kernelPluginFastlane.kernel.android.appCenter.destinationType %>",
-    destinations: "<%= kernelPluginFastlane.kernel.android.appCenter.destinations %>"
+    owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
+    app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",
+    destination_type: "<%= codePluginFastlane.plugin.android.appCenter.destinationType %>",
+    destinations: "<%= codePluginFastlane.plugin.android.appCenter.destinations %>"
   )
 end
 
@@ -39,10 +39,10 @@ lane :appcenter_bundle do
   gradle(task: "bundleRelease")
 
   appcenter_upload(
-    owner_name: "<%= kernelPluginFastlane.kernel.android.appCenter.organization %>",
-    app_name: "<%= kernelPluginFastlane.kernel.android.appCenter.appName %>",
-    destination_type: "<%= kernelPluginFastlane.kernel.android.appCenter.destinationType %>",
-    destinations: "<%= kernelPluginFastlane.kernel.android.appCenter.destinations %>"
+    owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
+    app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",
+    destination_type: "<%= codePluginFastlane.plugin.android.appCenter.destinationType %>",
+    destinations: "<%= codePluginFastlane.plugin.android.appCenter.destinations %>"
   )
 end
 

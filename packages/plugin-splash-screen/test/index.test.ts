@@ -1,12 +1,12 @@
 import path from "path";
-import { fs, path as pathk } from "@brandingbrand/kernel-core";
+import { fs, path as pathk } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
 global.process.cwd = () => path.resolve(__dirname, "..", "..", "..");
 
-jest.mock("@brandingbrand/kernel-core", () => {
-  const core = jest.requireActual("@brandingbrand/kernel-core");
+jest.mock("@brandingbrand/code-core", () => {
+  const core = jest.requireActual("@brandingbrand/code-core");
 
   return {
     ...core,
@@ -41,8 +41,8 @@ describe("plugin-splash-screen", () => {
   it("ios", async () => {
     await ios({
       ios: { name: "HelloWorld" },
-      kernelPluginSplashScreen: {
-        kernel: {
+      codePluginSplashScreen: {
+        plugin: {
           ios: {
             type: "generated",
           },
@@ -84,8 +84,8 @@ describe("plugin-splash-screen", () => {
 
     await android({
       android: { packageName: "com.helloworld" },
-      kernelPluginSplashScreen: {
-        kernel: {
+      codePluginSplashScreen: {
+        plugin: {
           android: {
             type: "generated",
           },

@@ -1,11 +1,12 @@
-import type { Config } from "@brandingbrand/kernel-core";
-import { fs, fsk, path as kpath } from "@brandingbrand/kernel-core";
+import { fs, fsk, path as kpath } from "@brandingbrand/code-core";
 
-import type { KernelPluginSplashScreen } from "../../types";
+import type { Config } from "@brandingbrand/code-core";
 
-export default async (config: Config & KernelPluginSplashScreen) => {
+import type { CodePluginSplashScreen } from "../../types";
+
+export default async (config: Config & CodePluginSplashScreen) => {
   const { path = "assets/splash-screen/android/legacy" } =
-    config.kernelPluginSplashScreen.kernel?.android?.legacy ?? {};
+    config.codePluginSplashScreen.plugin?.android?.legacy ?? {};
 
   await fs.copy(kpath.config.resolve(path), kpath.android.resourcesPath(), {
     overwrite: true,

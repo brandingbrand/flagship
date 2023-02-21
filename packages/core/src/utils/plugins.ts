@@ -3,11 +3,11 @@ import camelCase from "lodash/camelCase";
 import * as path from "./path";
 
 export const get = (): string[] => {
-  const { kernel, devDependencies } = require(path.project.packagePath());
+  const { code, devDependencies } = require(path.project.packagePath());
 
-  if (!kernel?.plugins?.length) return [];
+  if (!code?.plugins?.length) return [];
 
-  return kernel.plugins.filter((it: string) =>
+  return code.plugins.filter((it: string) =>
     Object.keys(devDependencies).includes(it)
   );
 };
