@@ -32,23 +32,32 @@ export const permissions = {
 export const usageDescriptions = (requiredPermissions: IOSPermissionType[]) =>
   requiredPermissions
     .filter((it) => !!it.text)
-    .map((it) => {
-      const usageDescription = permissions[it.permission];
+    .reduce((acc, curr) => {
+      const usageDescription = permissions[curr.permission];
 
       if (typeof usageDescription === "string") {
-        return `    <key>${permissions[it.permission]}</key>
-    <string>${it.text}</string>`;
-      } else if (typeof usageDescription === "object") {
-        return usageDescription
-          .map((ir) => {
-            return `    <key>${ir}</key>
-    <string>${it.text}</string>`;
-          })
-          .join("\n");
+        return {
+          ...acc,
+          [usageDescription]: curr.text,
+        };
       }
-    })
-    .filter((it) => !!it)
-    .join("\n");
+
+      if (typeof usageDescription === "object") {
+        const obj = usageDescription.reduce((acc$, curr$) => {
+          return {
+            ...acc$,
+            [curr$]: curr.text,
+          };
+        }, {});
+
+        return {
+          ...acc,
+          ...obj,
+        };
+      }
+
+      return acc;
+    }, {});
 
 const pod = (value: string) => {
   if (value === "FACE_ID") {

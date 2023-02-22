@@ -35,6 +35,13 @@ describe("plugin-permissions", () => {
               permission: "APP_TRACKING_TRANSPARENCY",
               text: "This is a test",
             },
+            {
+              permission: "NOTIFICATIONS",
+            },
+            {
+              permission: "LOCATION_ALWAYS",
+              text: "This is a test location always",
+            },
           ],
         },
       },
@@ -66,7 +73,7 @@ describe("plugin-permissions", () => {
     await android({
       codePluginPermissions: {
         plugin: {
-          android: ["ACCESS_FINE_LOCATION"],
+          android: ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"],
         },
       },
     });
