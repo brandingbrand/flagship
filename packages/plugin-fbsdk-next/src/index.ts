@@ -1,4 +1,12 @@
-import { Config, fsk, path, summary } from "@brandingbrand/code-core";
+import {
+  Config,
+  fsk,
+  infoPlist,
+  manifest,
+  path,
+  summary,
+  strings,
+} from "@brandingbrand/code-core";
 
 import type { CodePluginFBSDKNext } from "./types";
 
@@ -6,81 +14,29 @@ const ios = summary.withSummary(
   async (config: Config & CodePluginFBSDKNext) => {
     if (!config.codePluginFBSDKNext.plugin.ios) return;
 
-    if (
-      await fsk.doesKeywordExist(
-        path.ios.infoPlistPath(config),
-        "CFBundleURLTypes"
-      )
-    ) {
-      await fsk.update(
-        path.ios.infoPlistPath(config),
-        /(CFBundleURLSchemes[\s\S]+?<array>)/,
-        `$1
-            <string>${config.codePluginFBSDKNext.plugin.ios?.urlScheme}</string>`
-      );
-    } else {
-      await fsk.update(
-        path.ios.infoPlistPath(config),
-        /(<plist[\s\S]+?<dict>)/,
-        `$1
-    <key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-        <key>CFBundleTypeRole</key>
-        <string>Editor</string>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>${config.codePluginFBSDKNext.plugin.ios?.urlScheme}</string>
-        </array>
-      </dict>
-    </array>`
-      );
-    }
+    const { urlScheme, appId, clientToken, displayName, queriesSchemes } =
+      config.codePluginFBSDKNext.plugin.ios;
 
-    await fsk.update(
-      path.ios.infoPlistPath(config),
-      /(<plist[\s\S]+?<dict>)/,
-      `$1
-    <key>FacebookAppID</key>
-    <string>${config.codePluginFBSDKNext.plugin.ios?.appId}</string>
-    <key>FacebookClientToken</key>
-    <string>${config.codePluginFBSDKNext.plugin.ios?.clientToken}</string>
-    <key>FacebookDisplayName</key>
-    <string>${config.codePluginFBSDKNext.plugin.ios?.displayName}</string>`
-    );
+    await infoPlist.setUrlScheme(urlScheme, config);
 
-    if (config.codePluginFBSDKNext.plugin.ios?.queriesSchemes) {
-      if (
-        await fsk.doesKeywordExist(
-          path.ios.infoPlistPath(config),
-          "LSApplicationQueriesSchemes"
-        )
-      ) {
-        await fsk.update(
-          path.ios.infoPlistPath(config),
-          /(LSApplicationQueriesSchemes[\s\S]+?<array>)/,
-          `$1
-        ${config.codePluginFBSDKNext.plugin.ios.queriesSchemes
-          .map((it) => {
-            return `        <string>${it}</string>`;
-          })
-          .join("\n")}`
-        );
-      } else {
-        await fsk.update(
-          path.ios.infoPlistPath(config),
-          /(<plist[\s\S]+?<dict>)/,
-          `$1
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-    ${config.codePluginFBSDKNext.plugin.ios.queriesSchemes
-      .map((it) => {
-        return `  <string>${it}</string>`;
-      })
-      .join("\n    ")}
-    </array>`
-        );
-      }
+    await infoPlist.setPlist({ FacebookAppID: appId }, config);
+
+    await infoPlist.setPlist({ FacebookClientToken: clientToken }, config);
+
+    await infoPlist.setPlist({ FacebookDisplayName: displayName }, config);
+
+    if (queriesSchemes) {
+      await infoPlist.withInfoPlist((plist) => {
+        if (plist.LSApplicationQueriesSchemes) {
+          (plist.LSApplicationQueriesSchemes as string[]).push(
+            ...queriesSchemes
+          );
+        } else {
+          plist.LSApplicationQueriesSchemes = queriesSchemes;
+        }
+
+        return plist;
+      }, config);
     }
 
     await fsk.update(
@@ -110,52 +66,65 @@ const android = summary.withSummary(
     const { appId, enableSharing, clientToken, advertisingIdOptOut } =
       config.codePluginFBSDKNext.plugin.android;
 
-    await fsk.update(
-      path.android.stringsPath(),
-      /(<resources>)/,
-      `$1
-    <string name="facebook_app_id">${appId}</string>
-    <string name="facebook_client_token">${clientToken}</string>`
-    );
+    await strings.addResourcesElements({
+      string: [
+        {
+          $: {
+            name: "facebook_app_id",
+          },
+          _: appId,
+        },
+        {
+          $: {
+            name: "facebook_client_token",
+          },
+          _: clientToken,
+        },
+      ],
+    });
 
-    await fsk.update(
-      path.android.manifestPath(),
-      /(<application[\s\S]+?>)/,
-      `$1
-      <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-      <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>`
-    );
-
-    if (
-      !(await fsk.doesKeywordExist(
-        path.android.manifestPath(),
-        'uses-permission android:name="android.permission.INTERNET"'
-      ))
-    ) {
-      await fsk.update(
-        path.android.manifestPath(),
-        /(<manifest[\s\S]+?>)/,
-        `$1
-    <uses-permission android:name="android.permission.INTERNET" />`
-      );
-    }
+    await manifest.addApplicationEelements({
+      "meta-data": [
+        {
+          $: {
+            "android:name": "com.facebook.sdk.ApplicationId",
+            "android:value": "@string/facebook_app_id",
+          },
+        },
+        {
+          $: {
+            "android:name": "com.facebook.sdk.ClientToken",
+            "android:value": "@string/facebook_client_token",
+          },
+        },
+      ],
+    });
 
     if (advertisingIdOptOut) {
-      await fsk.update(
-        path.android.manifestPath(),
-        /(<manifest[\s\S]+?>)/,
-        `$1
-    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>`
-      );
+      await manifest.addManifestElements({
+        "uses-permission": [
+          {
+            $: {
+              "android:name": "com.google.android.gms.permission.AD_ID",
+              "tools:node": "remove",
+            },
+          },
+        ],
+      });
     }
 
     if (enableSharing) {
-      await fsk.update(
-        path.android.manifestPath(),
-        /(<application[\s\S]+?>)/,
-        `$1
-      <provider android:authorities="com.facebook.app.FacebookContentProvider${appId}" android:name="com.facebook.FacebookContentProvider" android:exported="true" />`
-      );
+      await manifest.addApplicationEelements({
+        provider: [
+          {
+            $: {
+              "android:authorities": `com.facebook.app.FacebookContentProvider${appId}`,
+              "android:name": "com.facebook.FacebookContentProvider",
+              "android:exported": true,
+            },
+          },
+        ],
+      });
     }
   },
   "plugin-fbsdk-next",

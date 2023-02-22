@@ -30,12 +30,22 @@ const getPlurals = (strings: StringsType.Strings, name: string) =>
 
 export const addResourcesElements = (elements: StringsType.StringsElements) =>
   withStrings((xml) => {
-    elements.plurals?.forEach((it) => xml.resources.plurals?.push(it));
+    elements.plurals?.forEach((it) =>
+      xml.resources.plurals
+        ? xml.resources.plurals.push(it)
+        : (xml.resources.plurals = [it])
+    );
 
-    elements.string?.forEach((it) => xml.resources.string?.push(it));
+    elements.string?.forEach((it) =>
+      xml.resources.string
+        ? xml.resources.string.push(it)
+        : (xml.resources.string = [it])
+    );
 
     elements["string-array"]?.forEach((it) =>
-      xml.resources["string-array"]?.push(it)
+      xml.resources["string-array"]
+        ? xml.resources["string-array"].push(it)
+        : (xml.resources["string-array"] = [it])
     );
   });
 
@@ -46,7 +56,11 @@ export const addStringArrayElements = (
   withStrings((xml) => {
     const stringArray = getStringArray(xml, name);
 
-    elements.item.forEach((it) => stringArray?.item.push(it));
+    if (!stringArray) return;
+
+    elements.item.forEach((it) =>
+      stringArray.item ? stringArray.item.push(it) : (stringArray.item = [it])
+    );
   });
 
 export const addPluralsElements = (
@@ -56,5 +70,9 @@ export const addPluralsElements = (
   withStrings((xml) => {
     const plurals = getPlurals(xml, name);
 
-    elements.item.forEach((it) => plurals?.item.push(it));
+    if (!plurals) return;
+
+    elements.item.forEach((it) =>
+      plurals.item ? plurals.item.push(it) : (plurals.item = [it])
+    );
   });

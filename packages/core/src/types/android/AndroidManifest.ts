@@ -49,6 +49,28 @@ export type ManifestMetaData = {
   $: ManifestMetaDataAttributes;
 };
 
+export type ManifestProviderAttributes = {
+  "android:authorities": string;
+  "android:directBootAware"?: boolean;
+  "android:enabled"?: boolean;
+  "android:exported"?: boolean;
+  "android:grantUriPermissions"?: boolean;
+  "android:icon"?: string;
+  "android:initOrder"?: number;
+  "android:label"?: number;
+  "android:multiprocess"?: boolean;
+  "android:name"?: string;
+  "android:permission"?: string;
+  "android:process"?: string;
+  "android:readPermission"?: string;
+  "android:syncable"?: boolean;
+  "android:writePermission"?: string;
+};
+
+export type ManifestProvider = {
+  $: ManifestProviderAttributes;
+};
+
 type ManifestServiceAttributes = AndroidManifestAttributes & {
   "android:enabled"?: StringBoolean;
   "android:exported"?: StringBoolean;
@@ -114,6 +136,7 @@ export type ManifestApplicationElements = {
   receiver?: ManifestReceiver[];
   "meta-data"?: ManifestMetaData[];
   "uses-library"?: ManifestUsesLibrary[];
+  provider?: ManifestProvider[];
 };
 
 type ManifestPermission = {

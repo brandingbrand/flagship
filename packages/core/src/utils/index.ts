@@ -1,3 +1,4 @@
+export * from "./ios";
 export * from "./xcode";
 export * from "./android";
 export * as os from "./os";

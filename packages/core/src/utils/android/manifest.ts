@@ -106,20 +106,40 @@ export const addApplicationEelements = (
 
     if (!mainApplication) return;
 
-    elements.activity?.forEach((it) => {
-      mainApplication.activity?.push(it);
-    });
-
-    elements["meta-data"]?.forEach((it) =>
-      mainApplication["meta-data"]?.push(it)
+    elements.activity?.forEach((it) =>
+      mainApplication.activity
+        ? mainApplication.activity.push(it)
+        : (mainApplication.activity = [it])
     );
 
-    elements.receiver?.forEach((it) => mainApplication.receiver?.push(it));
+    elements["meta-data"]?.forEach((it) =>
+      mainApplication["meta-data"]
+        ? mainApplication["meta-data"].push(it)
+        : (mainApplication["meta-data"] = [it])
+    );
 
-    elements.service?.forEach((it) => mainApplication.service?.push(it));
+    elements.receiver?.forEach((it) =>
+      mainApplication.receiver
+        ? mainApplication.receiver.push(it)
+        : (mainApplication.receiver = [it])
+    );
+
+    elements.service?.forEach((it) =>
+      mainApplication.service
+        ? mainApplication.service.push(it)
+        : (mainApplication.service = [it])
+    );
 
     elements["uses-library"]?.forEach((it) =>
-      mainApplication["uses-library"]?.push(it)
+      mainApplication["uses-library"]
+        ? mainApplication["uses-library"].push(it)
+        : (mainApplication["uses-library"] = [it])
+    );
+
+    elements.provider?.forEach((it) =>
+      mainApplication.provider
+        ? mainApplication.provider.push(it)
+        : (mainApplication.provider = [it])
     );
   });
 
@@ -134,7 +154,9 @@ export const addActivityElements = (
     if (!mainActivity) return;
 
     elements["intent-filter"]?.forEach((it) =>
-      mainActivity["intent-filter"]?.push(it)
+      mainActivity["intent-filter"]
+        ? mainActivity["intent-filter"].push(it)
+        : (mainActivity["intent-filter"] = [it])
     );
   });
 
@@ -142,19 +164,33 @@ export const addManifestElements = (
   elements: AndroidManifestType.AndroidManifestElements
 ) =>
   withManifest((xml) => {
-    elements.application?.forEach((it) => xml.manifest.application?.push(it));
+    elements.application?.forEach((it) =>
+      xml.manifest.application
+        ? xml.manifest.application.push(it)
+        : (xml.manifest.application = [it])
+    );
 
-    elements.permission?.forEach((it) => xml.manifest.permission?.push(it));
+    elements.permission?.forEach((it) =>
+      xml.manifest.permission
+        ? xml.manifest.permission.push(it)
+        : (xml.manifest.permission = [it])
+    );
 
     elements["uses-feature"]?.forEach((it) =>
-      xml.manifest["uses-feature"]?.push(it)
+      xml.manifest["uses-feature"]
+        ? xml.manifest["uses-feature"].push(it)
+        : (xml.manifest["uses-feature"] = [it])
     );
 
     elements["uses-permission-sdk-23"]?.forEach((it) =>
-      xml.manifest["uses-permission-sdk-23"]?.push(it)
+      xml.manifest["uses-permission-sdk-23"]
+        ? xml.manifest["uses-permission-sdk-23"].push(it)
+        : (xml.manifest["uses-permission-sdk-23"] = [it])
     );
 
     elements["uses-permission"]?.forEach((it) =>
-      xml.manifest["uses-permission"]?.push(it)
+      xml.manifest["uses-permission"]
+        ? xml.manifest["uses-permission"].push(it)
+        : (xml.manifest["uses-permission"] = [it])
     );
   });
