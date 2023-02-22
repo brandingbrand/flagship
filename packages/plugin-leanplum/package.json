@@ -32,6 +32,6 @@
   },
   "peerDependencies": {
     "@brandingbrand/code-plugin-firebase-app": "^0.0.10",
-    "@leanplum/react-native-sdk": "^2.0.0"
+    "@leanplum/react-native-sdk": "1.3.0"
   }
 }

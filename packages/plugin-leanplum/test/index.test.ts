@@ -22,6 +22,12 @@ describe("plugin-leanplum", () => {
       );
 
     jest
+      .spyOn(path.ios, "podfilePath")
+      .mockReturnValue(
+        path.resolve(__dirname, "__leanplum_fixtures", "Podfile")
+      );
+
+    jest
       .spyOn(path.ios, "appDelegatePath")
       .mockReturnValue(
         path.resolve(__dirname, "__leanplum_fixtures", "AppDelegate.mm")
@@ -53,6 +59,26 @@ describe("plugin-leanplum", () => {
         )
       ).toString()
     ).toMatch("didRegisterForRemoteNotificationsWithDeviceToken");
+
+    expect(
+      (
+        await fs.readFile(
+          path.resolve(__dirname, "__leanplum_fixtures", "Podfile")
+        )
+      ).toString()
+    ).toMatch(`
+  dynamic_frameworks = ['Leanplum-iOS-SDK']
+  pre_install do |installer|
+    Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+    installer.pod_targets.each do |pod|
+      if dynamic_frameworks.include?(pod.name)
+        puts "Setting dynamic linking for #{pod.name}"
+        def pod.build_type;
+          Pod::BuildType.dynamic_framework
+        end
+      end
+    end
+  end`);
   });
 
   it("android", async () => {
