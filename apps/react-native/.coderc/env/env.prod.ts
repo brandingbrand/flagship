@@ -6,7 +6,7 @@ const prod: ENV = {
   ios: {
     name: 'code',
     bundleId: 'com.code',
-    displayName: 'Code',
+    displayName: 'Flagship Code',
     versioning: {
       version: '0.0.1',
       build: 1,
@@ -41,7 +41,7 @@ const prod: ENV = {
   },
   android: {
     name: 'code',
-    displayName: 'Code',
+    displayName: 'Flagship Code',
     packageName: 'com.code',
     versioning: {
       version: '0.0.1',
@@ -77,11 +77,11 @@ const prod: ENV = {
       ios: [
         {
           permission: 'LOCATION_ALWAYS',
-          text: 'Code would like to utilze your location',
+          text: 'Flagship Code would like to utilze your location',
         },
         {
           permission: 'CAMERA',
-          text: 'Code would like to utilize your camera',
+          text: 'Flagship Code would like to utilize your camera',
         },
       ],
       android: ['ACCESS_FINE_LOCATION', 'CAMERA'],
