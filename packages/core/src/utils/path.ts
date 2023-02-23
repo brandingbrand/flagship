@@ -264,11 +264,11 @@ const getFastfilePathAndroid = (): string =>
   resolvePathFromProject("android", "fastlane", "Fastfile");
 
 /**
- * Returns the path to the kernel configuration
+ * Returns the path to the code configuration
  *
- * @return The path to kernel configuration
+ * @return The path to code configuration
  */
-const getPathToConfig = (): string => resolvePathFromProject(".kernelrc");
+const getPathToConfig = (): string => resolvePathFromProject(".coderc");
 
 /**
  * Resolves a path relative to the configuration directory

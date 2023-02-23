@@ -1,12 +1,12 @@
 /* eslint-disable no-useless-escape */
 
-import { Config, fsk, path, summary } from "@brandingbrand/kernel-core";
+import { Config, fsk, path, summary } from "@brandingbrand/code-core";
 
-import type { KernelPluginLeanplum } from "./types";
+import type { CodePluginLeanplum } from "./types";
 
 const ios = summary.withSummary(
-  async (config: Config & KernelPluginLeanplum) => {
-    if (!config.kernelPluginLeanplum?.kernel.ios?.swizzle) {
+  async (config: Config & CodePluginLeanplum) => {
+    if (!config.codePluginLeanplum?.plugin?.ios?.swizzle) {
       await fsk.update(
         path.ios.infoPlistPath(config),
         /(<plist[\s\S]+?<dict>)/,
@@ -51,10 +51,9 @@ $1`
 );
 
 const android = summary.withSummary(
-  async (config: Config & KernelPluginLeanplum) => {
+  async (config: Config & CodePluginLeanplum) => {
     const version =
-      config.kernelPluginLeanplum?.kernel.android?.leanplumFCMVersion ||
-      "5.7.0";
+      config.codePluginLeanplum?.plugin?.android?.leanplumFCMVersion || "5.7.0";
 
     await fsk.update(
       path.android.gradlePath(),

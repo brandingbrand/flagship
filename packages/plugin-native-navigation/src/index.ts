@@ -1,4 +1,4 @@
-import { fs, path, summary } from "@brandingbrand/kernel-core";
+import { fs, path, summary } from "@brandingbrand/code-core";
 
 import { dependencies } from "./utils";
 

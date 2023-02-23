@@ -1,4 +1,4 @@
-import { path, fs } from "@brandingbrand/kernel-core";
+import { path, fs } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
@@ -29,10 +29,10 @@ describe("plugin-google-signin", () => {
 
     await ios({
       ios: { name: "HelloWorld" },
-      kernelPluginGoogleSignin: {
-        kernel: {
+      codePluginGoogleSignin: {
+        plugin: {
           ios: {
-            reversedClientId: "kernel-app",
+            reversedClientId: "code-app",
           },
           android: {},
         },
@@ -73,7 +73,7 @@ describe("plugin-google-signin", () => {
           path.resolve(__dirname, "__google_fixtures", "Info.plist")
         )
       ).toString()
-    ).toMatch("<string>kernel-app</string>");
+    ).toMatch("<string>code-app</string>");
   });
 
   it("android", async () => {
@@ -90,10 +90,10 @@ describe("plugin-google-signin", () => {
       );
 
     await android({
-      kernelPluginGoogleSignin: {
-        kernel: {
+      codePluginGoogleSignin: {
+        plugin: {
           ios: {
-            reversedClientId: "kernel-app",
+            reversedClientId: "code-app",
           },
           android: {},
         },

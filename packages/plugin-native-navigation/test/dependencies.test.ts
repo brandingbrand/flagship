@@ -1,5 +1,5 @@
 import path from "path";
-import { fs, path as pathk } from "@brandingbrand/kernel-core";
+import { fs, path as pathk } from "@brandingbrand/code-core";
 
 import { check, patch } from "../src/utils/dependencies";
 

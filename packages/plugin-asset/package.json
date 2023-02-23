@@ -1,5 +1,5 @@
 {
-  "name": "@brandingbrand/kernel-plugin-asset",
+  "name": "@brandingbrand/code-plugin-asset",
   "version": "0.0.10",
   "description": "",
   "publishConfig": {
@@ -28,7 +28,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "^0.0.10",
+    "@brandingbrand/code-core": "^0.0.10",
     "react-native-asset": "^2.0.1"
   }
 }

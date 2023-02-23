@@ -19,7 +19,7 @@ export const execute = withSummary(
     }
 
     const envs = (
-      await fs.readdir(path.project.resolve(".kernelrc", "env"))
+      await fs.readdir(path.config.resolve("env"))
     ).filter((f: string) => f.match(envMatch));
 
     const envIndexFile = `module.exports = {\n${envs
@@ -28,7 +28,7 @@ export const execute = withSummary(
         return (
           envName &&
           `"${envName.pop()}": require(${JSON.stringify(
-            path.project.resolve(".kernelrc", "env", env)
+            path.config.resolve("env", env)
           )}).default`
         );
       })

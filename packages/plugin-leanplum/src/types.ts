@@ -1,4 +1,4 @@
-import type { Plugin } from "@brandingbrand/kernel-core";
+import type { Plugin } from "@brandingbrand/code-core";
 
 interface PluginLeanplum {
   ios?: {
@@ -9,6 +9,6 @@ interface PluginLeanplum {
   };
 }
 
-export interface KernelPluginLeanplum {
-  kernelPluginLeanplum?: Plugin<PluginLeanplum>;
+export interface CodePluginLeanplum {
+  codePluginLeanplum?: Plugin<PluginLeanplum>;
 }

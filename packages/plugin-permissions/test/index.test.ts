@@ -1,4 +1,4 @@
-import { path, fs } from "@brandingbrand/kernel-core";
+import { path, fs } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
@@ -28,8 +28,8 @@ describe("plugin-permissions", () => {
 
     await ios({
       ios: { name: "HelloWorld" },
-      kernelPluginPermissions: {
-        kernel: {
+      codePluginPermissions: {
+        plugin: {
           ios: [
             {
               permission: "APP_TRACKING_TRANSPARENCY",
@@ -64,8 +64,8 @@ describe("plugin-permissions", () => {
       );
 
     await android({
-      kernelPluginPermissions: {
-        kernel: {
+      codePluginPermissions: {
+        plugin: {
           android: ["ACCESS_FINE_LOCATION"],
         },
       },

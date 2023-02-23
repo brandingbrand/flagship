@@ -7,5 +7,5 @@
   "access": "restricted",
   "baseBranch": "feat/flagship-12",
   "updateInternalDependencies": "patch",
-  "ignore": ["@brandingbrand/kernel-app"]
+  "ignore": ["@brandingbrand/code-app"]
 }

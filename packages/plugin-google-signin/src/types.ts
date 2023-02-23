@@ -1,4 +1,4 @@
-import { Plugin } from "@brandingbrand/kernel-core";
+import { Plugin } from "@brandingbrand/code-core";
 
 interface PluginGoogleSignin {
   ios: {
@@ -10,6 +10,6 @@ interface PluginGoogleSignin {
   };
 }
 
-export interface KernelPluginGoogleSignin {
-  kernelPluginGoogleSignin: Plugin<PluginGoogleSignin>;
+export interface CodePluginGoogleSignin {
+  codePluginGoogleSignin: Plugin<PluginGoogleSignin>;
 }

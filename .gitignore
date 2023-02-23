@@ -187,5 +187,5 @@ pnpm-debug.log*
 # Demo App
 apps/react-native/ios
 apps/react-native/android
-apps/**/*/.kernelrc/env/env*.js
-!apps/**/*/.kernelrc/plugins/**/*/dist/
+apps/**/*/.coderc/env/env*.js
+!apps/**/*/.coderc/plugins/**/*/dist/

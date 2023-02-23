@@ -1,9 +1,9 @@
-import { Plugin } from "@brandingbrand/kernel-core";
+import { Plugin } from "@brandingbrand/code-core";
 
 interface PluginAppIcon {
   appIconPath: string;
 }
 
-export interface KernelPluginAppIcon {
-  kernelPluginAppIcon: Partial<Plugin<PluginAppIcon>>;
+export interface CodePluginAppIcon {
+  codePluginAppIcon: Partial<Plugin<PluginAppIcon>>;
 }

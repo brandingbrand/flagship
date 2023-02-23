@@ -1,5 +1,5 @@
 import xcode from "xcode";
-import { fs, path, Xcode } from "@brandingbrand/kernel-core";
+import { fs, path, Xcode } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
@@ -46,8 +46,8 @@ describe("plugin-firebase-app", () => {
 
     await ios({
       ios: { name: "HelloWorld" },
-      kernelPluginFirebaseApp: {
-        kernel: {
+      codePluginFirebaseApp: {
+        plugin: {
           ios: {
             googleServicesPath: "firebase/GoogleServices-Info.plist",
           },
@@ -88,8 +88,8 @@ describe("plugin-firebase-app", () => {
       );
 
     await android({
-      kernelPluginFirebaseApp: {
-        kernel: {
+      codePluginFirebaseApp: {
+        plugin: {
           android: {
             firebaseBomVersion: "31.0.0",
             googleServicesVersion: "4.3.1",

@@ -1,7 +1,7 @@
-import type { Plugin } from "@brandingbrand/kernel-core";
+import type { Plugin } from "@brandingbrand/code-core";
 
-export interface KernelPluginFastlane {
-  kernelPluginFastlane: Plugin<PluginFastlane>;
+export interface CodePluginFastlane {
+  codePluginFastlane: Plugin<PluginFastlane>;
 }
 export interface PluginFastlane {
   ios?: FastlaneIOS;

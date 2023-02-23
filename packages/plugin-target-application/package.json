@@ -1,5 +1,5 @@
 {
-  "name": "@brandingbrand/kernel-plugin-target-application",
+  "name": "@brandingbrand/code-plugin-target-application",
   "version": "0.0.10",
   "description": "",
   "publishConfig": {
@@ -28,6 +28,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "^0.0.10"
+    "@brandingbrand/code-core": "^0.0.10"
   }
 }

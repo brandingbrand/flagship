@@ -1,10 +1,10 @@
-import { Config, fsk, path, summary } from "@brandingbrand/kernel-core";
+import { Config, fsk, path, summary } from "@brandingbrand/code-core";
 
-import type { KernelPluginFBSDKNext } from "./types";
+import type { CodePluginFBSDKNext } from "./types";
 
 const ios = summary.withSummary(
-  async (config: Config & KernelPluginFBSDKNext) => {
-    if (!config.kernelPluginFBSDKNext.kernel.ios) return;
+  async (config: Config & CodePluginFBSDKNext) => {
+    if (!config.codePluginFBSDKNext.plugin.ios) return;
 
     if (
       await fsk.doesKeywordExist(
@@ -16,7 +16,7 @@ const ios = summary.withSummary(
         path.ios.infoPlistPath(config),
         /(CFBundleURLSchemes[\s\S]+?<array>)/,
         `$1
-            <string>${config.kernelPluginFBSDKNext.kernel.ios?.urlScheme}</string>`
+            <string>${config.codePluginFBSDKNext.plugin.ios?.urlScheme}</string>`
       );
     } else {
       await fsk.update(
@@ -30,7 +30,7 @@ const ios = summary.withSummary(
         <string>Editor</string>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>${config.kernelPluginFBSDKNext.kernel.ios?.urlScheme}</string>
+          <string>${config.codePluginFBSDKNext.plugin.ios?.urlScheme}</string>
         </array>
       </dict>
     </array>`
@@ -42,14 +42,14 @@ const ios = summary.withSummary(
       /(<plist[\s\S]+?<dict>)/,
       `$1
     <key>FacebookAppID</key>
-    <string>${config.kernelPluginFBSDKNext.kernel.ios?.appId}</string>
+    <string>${config.codePluginFBSDKNext.plugin.ios?.appId}</string>
     <key>FacebookClientToken</key>
-    <string>${config.kernelPluginFBSDKNext.kernel.ios?.clientToken}</string>
+    <string>${config.codePluginFBSDKNext.plugin.ios?.clientToken}</string>
     <key>FacebookDisplayName</key>
-    <string>${config.kernelPluginFBSDKNext.kernel.ios?.displayName}</string>`
+    <string>${config.codePluginFBSDKNext.plugin.ios?.displayName}</string>`
     );
 
-    if (config.kernelPluginFBSDKNext.kernel.ios?.queriesSchemes) {
+    if (config.codePluginFBSDKNext.plugin.ios?.queriesSchemes) {
       if (
         await fsk.doesKeywordExist(
           path.ios.infoPlistPath(config),
@@ -60,7 +60,7 @@ const ios = summary.withSummary(
           path.ios.infoPlistPath(config),
           /(LSApplicationQueriesSchemes[\s\S]+?<array>)/,
           `$1
-        ${config.kernelPluginFBSDKNext.kernel.ios.queriesSchemes
+        ${config.codePluginFBSDKNext.plugin.ios.queriesSchemes
           .map((it) => {
             return `        <string>${it}</string>`;
           })
@@ -73,7 +73,7 @@ const ios = summary.withSummary(
           `$1
     <key>LSApplicationQueriesSchemes</key>
     <array>
-    ${config.kernelPluginFBSDKNext.kernel.ios.queriesSchemes
+    ${config.codePluginFBSDKNext.plugin.ios.queriesSchemes
       .map((it) => {
         return `  <string>${it}</string>`;
       })
@@ -104,11 +104,11 @@ const ios = summary.withSummary(
 );
 
 const android = summary.withSummary(
-  async (config: KernelPluginFBSDKNext) => {
-    if (!config.kernelPluginFBSDKNext.kernel.android) return;
+  async (config: CodePluginFBSDKNext) => {
+    if (!config.codePluginFBSDKNext.plugin.android) return;
 
     const { appId, enableSharing, clientToken, advertisingIdOptOut } =
-      config.kernelPluginFBSDKNext.kernel.android;
+      config.codePluginFBSDKNext.plugin.android;
 
     await fsk.update(
       path.android.stringsPath(),

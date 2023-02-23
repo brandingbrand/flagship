@@ -1,13 +1,14 @@
-import { Config, Xcode } from "@brandingbrand/kernel-core";
-import { fs, path as kpath } from "@brandingbrand/kernel-core";
+import { fs, path as kpath, Xcode } from "@brandingbrand/code-core";
 
-import type { KernelPluginSplashScreen } from "../../types";
+import type { Config } from "@brandingbrand/code-core";
 
-export default async (config: Config & KernelPluginSplashScreen) => {
+import type { CodePluginSplashScreen } from "../../types";
+
+export default async (config: Config & CodePluginSplashScreen) => {
   const {
     path = "assets/splash-screen/ios/legacy",
     xcassets = "LaunchImages.xcassets",
-  } = config.kernelPluginSplashScreen.kernel?.ios?.legacy ?? {};
+  } = config.codePluginSplashScreen.plugin?.ios?.legacy ?? {};
 
   await fs.copy(
     kpath.config.resolve(path),

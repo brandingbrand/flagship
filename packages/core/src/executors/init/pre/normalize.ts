@@ -16,10 +16,10 @@ export const execute = withSummary(
     const installedPlugins = utils.plugins.get().map(utils.plugins.normalize);
 
     const installedIOSPlugins = installedPlugins
-      .map((it: any) => omit(config?.[it as never]?.["ios"], "kernel"))
+      .map((it: any) => omit(config?.[it as never]?.["ios"], "plugin"))
       .filter((it: any) => !isEmpty(it));
     const installedAndroidPlugins = installedPlugins
-      .map((it: any) => omit(config?.[it as never]?.["android"], "kernel"))
+      .map((it: any) => omit(config?.[it as never]?.["android"], "plugin"))
       .filter((it: any) => !isEmpty(it));
 
     const normalizedIOSPlugins = () => {

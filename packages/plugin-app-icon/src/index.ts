@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import sharp from "sharp";
-import { fs, logger, path, summary } from "@brandingbrand/kernel-core";
-import type { Config } from "@brandingbrand/kernel-core";
+import { fs, path, summary } from "@brandingbrand/code-core";
+import type { Config } from "@brandingbrand/code-core";
 
 import { icons, rules } from "./utils";
-import type { KernelPluginAppIcon } from "./types";
+import type { CodePluginAppIcon } from "./types";
 
 const ios = summary.withSummary(
-  async (config: Config & KernelPluginAppIcon) => {
+  async (config: Config & CodePluginAppIcon) => {
     const { appIconPath = "./assets/app-icon" } =
-      config.kernelPluginAppIcon?.kernel ?? {};
+      config.codePluginAppIcon?.plugin ?? {};
 
     const contents = { images: [] };
 
@@ -55,9 +55,9 @@ const ios = summary.withSummary(
 );
 
 const android = summary.withSummary(
-  async (config: Config & KernelPluginAppIcon) => {
+  async (config: Config & CodePluginAppIcon) => {
     const { appIconPath = "./assets/app-icon" } =
-      config.kernelPluginAppIcon?.kernel ?? {};
+      config.codePluginAppIcon?.plugin ?? {};
 
     for (const i of icons.android) {
       const inputFilePath = path.project.resolve(

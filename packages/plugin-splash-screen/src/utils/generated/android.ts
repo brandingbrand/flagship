@@ -1,14 +1,15 @@
-import type { Config } from "@brandingbrand/kernel-core";
-import { fs, fsk, path } from "@brandingbrand/kernel-core";
+import { fs, fsk, path } from "@brandingbrand/code-core";
 
-import type { KernelPluginSplashScreen } from "../../types";
+import type { Config } from "@brandingbrand/code-core";
 
-export default async (config: Config & KernelPluginSplashScreen) => {
+import type { CodePluginSplashScreen } from "../../types";
+
+export default async (config: Config & CodePluginSplashScreen) => {
   const {
     logoPath = "./assets/splash-screen/android/generated/logo.png",
     size = 180,
     backgroundColor = "#333132",
-  } = config.kernelPluginSplashScreen?.kernel?.android?.generated ?? {};
+  } = config.codePluginSplashScreen?.plugin?.android?.generated ?? {};
 
   const inputFile = path.config.resolve(logoPath);
   const { generate } = require(path.project.resolve(

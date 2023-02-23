@@ -1,4 +1,4 @@
-import type { Plugin } from "@brandingbrand/kernel-core";
+import type { Plugin } from "@brandingbrand/code-core";
 
 interface PluginFirebaseAnalytics {
   ios?: {
@@ -6,6 +6,6 @@ interface PluginFirebaseAnalytics {
   };
 }
 
-export interface KernelPluginFirebaseAnalytics {
-  kernelPluginFirebaseAnalytics: Plugin<PluginFirebaseAnalytics>;
+export interface CodePluginFirebaseAnalytics {
+  codePluginFirebaseAnalytics: Plugin<PluginFirebaseAnalytics>;
 }

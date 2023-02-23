@@ -1,5 +1,5 @@
 {
-  "name": "@brandingbrand/kernel-plugin-app-icon",
+  "name": "@brandingbrand/code-plugin-app-icon",
   "version": "0.0.10",
   "description": "",
   "publishConfig": {
@@ -28,7 +28,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@brandingbrand/kernel-core": "^0.0.10",
+    "@brandingbrand/code-core": "^0.0.10",
     "sharp": "^0.31.2"
   },
   "devDependencies": {

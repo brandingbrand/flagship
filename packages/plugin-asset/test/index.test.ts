@@ -1,5 +1,5 @@
 import path from "path";
-import { path as pathk } from "@brandingbrand/kernel-core";
+import { path as pathk } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
@@ -10,7 +10,7 @@ describe("plugin-asset", () => {
   it("ios", async () => {
     const linkAssets = require("../../../node_modules/react-native-asset/lib");
     await ios({
-      kernelPluginAsset: { kernel: { assetPath: ["./assets/fonts"] } },
+      codePluginAsset: { plugin: { assetPath: ["./assets/fonts"] } },
     });
 
     expect(linkAssets).toBeCalledWith({
@@ -32,7 +32,7 @@ describe("plugin-asset", () => {
   it("android", async () => {
     const linkAssets = require("../../../node_modules/react-native-asset/lib");
     await android({
-      kernelPluginAsset: { kernel: { assetPath: ["./assets/fonts"] } },
+      codePluginAsset: { plugin: { assetPath: ["./assets/fonts"] } },
     });
 
     expect(linkAssets).toBeCalledWith({

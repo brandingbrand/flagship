@@ -1,9 +1,9 @@
-import { Config, fsk, path, summary } from "@brandingbrand/kernel-core";
+import { Config, fsk, path, summary } from "@brandingbrand/code-core";
 
-import { KernelPluginGoogleSignin } from "./types";
+import { CodePluginGoogleSignin } from "./types";
 
 const ios = summary.withSummary(
-  async (config: Config & KernelPluginGoogleSignin) => {
+  async (config: Config & CodePluginGoogleSignin) => {
     if (
       await fsk.doesKeywordExist(
         path.ios.infoPlistPath(config),
@@ -14,7 +14,7 @@ const ios = summary.withSummary(
         path.ios.infoPlistPath(config),
         /(CFBundleURLSchemes[\s\S]+?<array>)/,
         `$1
-            <string>${config.kernelPluginGoogleSignin.kernel.ios.reversedClientId}</string>`
+            <string>${config.codePluginGoogleSignin.plugin.ios.reversedClientId}</string>`
       );
     } else {
       await fsk.update(
@@ -28,7 +28,7 @@ const ios = summary.withSummary(
         <string>Editor</string>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>${config.kernelPluginGoogleSignin.kernel.ios.reversedClientId}</string>
+          <string>${config.codePluginGoogleSignin.plugin.ios.reversedClientId}</string>
         </array>
       </dict>
     </array>`
@@ -57,13 +57,13 @@ const ios = summary.withSummary(
 );
 
 const android = summary.withSummary(
-  async (config: KernelPluginGoogleSignin) => {
+  async (config: CodePluginGoogleSignin) => {
     await fsk.update(
       path.project.resolve("android", "build.gradle"),
       /(ext {)/,
       `$1
         googlePlayServicesAuthVersion = "${
-          config.kernelPluginGoogleSignin.kernel.android
+          config.codePluginGoogleSignin.plugin.android
             .googlePlayServicesAuthVersion || "19.2.0"
         }"`
     );
@@ -73,8 +73,8 @@ const android = summary.withSummary(
       /(dependencies {)/,
       `$1
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:${
-      config.kernelPluginGoogleSignin.kernel.android
-        .swiperefreshlayoutVersion || "1.0.0"
+      config.codePluginGoogleSignin.plugin.android.swiperefreshlayoutVersion ||
+      "1.0.0"
     }'`
     );
   },

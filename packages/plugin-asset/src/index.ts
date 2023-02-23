@@ -1,11 +1,11 @@
-import { path, summary } from "@brandingbrand/kernel-core";
+import { path, summary } from "@brandingbrand/code-core";
 
-import type { KernelPluginAsset } from "./types";
+import type { CodePluginAsset } from "./types";
 
 const ios = summary.withSummary(
-  async (config: KernelPluginAsset) => {
+  async (config: CodePluginAsset) => {
     const { assetPath = ["./assets/fonts"] } =
-      config.kernelPluginAsset?.kernel ?? {};
+      config.codePluginAsset?.plugin ?? {};
 
     const linkAsssets = require(path.project.resolve(
       "node_modules",
@@ -33,9 +33,9 @@ const ios = summary.withSummary(
 );
 
 const android = summary.withSummary(
-  async (config: KernelPluginAsset) => {
+  async (config: CodePluginAsset) => {
     const { assetPath = ["./assets/fonts"] } =
-      config.kernelPluginAsset?.kernel ?? {};
+      config.codePluginAsset?.plugin ?? {};
 
     const linkAsssets = require(path.project.resolve(
       "node_modules",

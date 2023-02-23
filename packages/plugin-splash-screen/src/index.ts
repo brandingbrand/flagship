@@ -1,15 +1,16 @@
-import { Config, summary } from "@brandingbrand/kernel-core";
+import { Config, summary } from "@brandingbrand/code-core";
 
 import { generated, legacy } from "./utils";
-import type { KernelPluginSplashScreen } from "./types";
+
+import type { CodePluginSplashScreen } from "./types";
 
 const ios = summary.withSummary(
-  async (config: Config & KernelPluginSplashScreen) => {
-    if (config.kernelPluginSplashScreen.kernel?.ios?.type === "generated") {
+  async (config: Config & CodePluginSplashScreen) => {
+    if (config.codePluginSplashScreen.plugin?.ios?.type === "generated") {
       return generated.ios(config);
     }
 
-    if (config.kernelPluginSplashScreen.kernel?.ios?.type === "legacy") {
+    if (config.codePluginSplashScreen.plugin?.ios?.type === "legacy") {
       return legacy.ios(config);
     }
   },
@@ -18,12 +19,12 @@ const ios = summary.withSummary(
 );
 
 const android = summary.withSummary(
-  async (config: Config & KernelPluginSplashScreen) => {
-    if (config.kernelPluginSplashScreen.kernel?.android?.type === "generated") {
+  async (config: Config & CodePluginSplashScreen) => {
+    if (config.codePluginSplashScreen.plugin?.android?.type === "generated") {
       return generated.android(config);
     }
 
-    if (config.kernelPluginSplashScreen.kernel?.android?.type === "legacy") {
+    if (config.codePluginSplashScreen.plugin?.android?.type === "legacy") {
       return legacy.android(config);
     }
   },

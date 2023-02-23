@@ -1,14 +1,14 @@
 import isNil from "lodash/isNil";
 import omitBy from "lodash/omitBy";
 import isEmpty from "lodash/isEmpty";
-import { Config, summary } from "@brandingbrand/kernel-core";
-import { fs, path, Xcode } from "@brandingbrand/kernel-core";
+import { Config, summary } from "@brandingbrand/code-core";
+import { fs, path, Xcode } from "@brandingbrand/code-core";
 
-import type { KernelPluginTargetExtension } from "./types";
+import type { CodePluginTargetExtension } from "./types";
 
 const ios = summary.withSummary(
-  async (config: Config & KernelPluginTargetExtension) => {
-    const extensions = config.kernelPluginTargetExtension.kernel;
+  async (config: Config & CodePluginTargetExtension) => {
+    const extensions = config.codePluginTargetExtension.plugin;
 
     for (const extension of extensions) {
       const name = path.basename(path.config.resolve(extension.path));

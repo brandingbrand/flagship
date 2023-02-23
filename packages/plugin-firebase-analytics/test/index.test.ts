@@ -1,4 +1,4 @@
-import { fs, path } from "@brandingbrand/kernel-core";
+import { fs, path } from "@brandingbrand/code-core";
 
 import { ios } from "../src";
 
@@ -20,8 +20,8 @@ describe("plugin-firebase-analytics", () => {
       .mockReturnValue(path.resolve(__dirname, "fixtures", "__Podfile"));
 
     await ios({
-      kernelPluginFirebaseAnalytics: {
-        kernel: {
+      codePluginFirebaseAnalytics: {
+        plugin: {
           ios: {
             disableAdId: true,
           },
@@ -40,8 +40,8 @@ describe("plugin-firebase-analytics", () => {
       .mockReturnValue(path.resolve(__dirname, "fixtures", "__Podfile"));
 
     await ios({
-      kernelPluginFirebaseAnalytics: {
-        kernel: {
+      codePluginFirebaseAnalytics: {
+        plugin: {
           ios: {
             disableAdId: false,
           },

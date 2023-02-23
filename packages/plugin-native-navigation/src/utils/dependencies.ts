@@ -1,11 +1,11 @@
-import { fsk, path } from "@brandingbrand/kernel-core";
+import { fsk, path } from "@brandingbrand/code-core";
 
 export const check = () => {
   const { dependencies } = require(path.project.packagePath());
 
   if (!Object.keys(dependencies).includes("react-native-navigation")) {
     throw Error(
-      "@brandingbrand/kernel-plugin-native-navigation: react-native-navigation is a require dependency, please check you package.json"
+      "@brandingbrand/code-plugin-native-navigation: react-native-navigation is a require dependency, please check you package.json"
     );
   }
 };

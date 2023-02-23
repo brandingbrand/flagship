@@ -1,9 +1,9 @@
-import { Plugin } from "@brandingbrand/kernel-core";
+import { Plugin } from "@brandingbrand/code-core";
 
 interface PluginAsset {
   assetPath: string[];
 }
 
-export interface KernelPluginAsset {
-  kernelPluginAsset: Plugin<PluginAsset>;
+export interface CodePluginAsset {
+  codePluginAsset: Plugin<PluginAsset>;
 }

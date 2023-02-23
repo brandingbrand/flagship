@@ -5,13 +5,13 @@ import {
   path,
   summary,
   Xcode,
-} from "@brandingbrand/kernel-core";
+} from "@brandingbrand/code-core";
 
-import type { KernelPluginFirebaseApp } from "./types";
+import type { CodePluginFirebaseApp } from "./types";
 
 const ios = summary.withSummary(
-  async (config: Config & KernelPluginFirebaseApp) => {
-    const { ios } = config.kernelPluginFirebaseApp?.kernel ?? {};
+  async (config: Config & CodePluginFirebaseApp) => {
+    const { ios } = config?.codePluginFirebaseApp?.plugin ?? {};
 
     if (ios) {
       await fs.copy(
@@ -50,8 +50,8 @@ const ios = summary.withSummary(
 );
 
 const android = summary.withSummary(
-  async (config: KernelPluginFirebaseApp) => {
-    const { android } = config.kernelPluginFirebaseApp?.kernel ?? {};
+  async (config: CodePluginFirebaseApp) => {
+    const { android } = config.codePluginFirebaseApp?.plugin ?? {};
 
     if (android) {
       await fs.copy(
