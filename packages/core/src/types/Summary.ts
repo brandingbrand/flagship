@@ -3,6 +3,6 @@ export type Items = {
   hook: string;
   time: string;
   success: boolean;
-  error: boolean;
-  errorMessage: unknown;
+  error: string | boolean;
+  warning: string | boolean;
 };

@@ -19,16 +19,22 @@ export const withSummary =
         time: `${((performance.now() - start) / 1000).toFixed(5)} s`,
         success: true,
         error: false,
-        errorMessage: "",
+        warning: false,
       });
-    } catch (error: any) {
-      items.push({
-        name,
-        hook,
-        time: `${((performance.now() - start) / 1000).toFixed(5)} s`,
-        success: false,
-        error: true,
-        errorMessage: error.stack ?? error.message ?? error,
-      });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        items.push({
+          name,
+          hook,
+          time: `${((performance.now() - start) / 1000).toFixed(5)} s`,
+          success: false,
+          error:
+            error.name !== "Warning" ? error.stack ?? error.message : false,
+          warning:
+            error.name === "Warning" ? error.stack ?? error.message : false,
+        });
+      } else {
+        throw error;
+      }
     }
   };

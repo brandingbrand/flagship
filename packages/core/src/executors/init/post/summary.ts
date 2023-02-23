@@ -14,15 +14,16 @@ export const execute = async (options: InitOptions, config: Config) => {
   const LOG_FILE_PATH = "/tmp/kernel-core.log";
   const PADDING_MAX = 60;
   let errors = 0;
+  let warnings = 0;
 
   const table = new Table({
-    head: ["Executor", "Hook", "Execution Time", "Success", "Error"],
+    head: ["Executor", "Hook", "Execution Time", "Success", "Error", "Warning"],
     style: {
       head: ["blue"],
     },
   });
 
-  const template = (errors: unknown[]) => {
+  const template = (errorsArr: unknown[], warningsArr: unknown[]) => {
     const pkg = require("../package.json");
 
     const name = `${pkg.name} v${pkg.version}`;
@@ -47,11 +48,17 @@ ${
         .replace(/\[[\d]+?m/g, "")
         .replace(//g, "")
 }
-
-
-${errors.length ? " Errors\n ──────────────────────────\n" : ""}
+${errorsArr.length ? "\n\n Errors\n ──────────────────────────\n" : ""}
 ${
-  errors.length ? errors.map((it: any) => ` ${it.toString()}\n`).join("\n") : ""
+  errorsArr.length
+    ? errorsArr.map((it: any) => ` ${it.toString()}\n`).join("\n")
+    : ""
+}
+${warningsArr.length ? "\n Warnings\n ──────────────────────────\n" : ""}
+${
+  warningsArr.length
+    ? warningsArr.map((it: any) => ` ${it.toString()}\n`).join("\n")
+    : ""
 }
     `;
   };
@@ -62,7 +69,9 @@ ${
       .map((el) => {
         if (el === "error" && it[el as keyof Items]) errors++;
 
-        if (el === "success" || el === "error") {
+        if (el === "warning" && it[el as keyof Items]) warnings++;
+
+        if (el === "success" || el === "error" || el === "warning") {
           return it[el as keyof Items] ? "✓" : "";
         }
 
@@ -77,7 +86,8 @@ ${
   }
 
   const data = template(
-    summary.items.filter((it) => !!it.errorMessage).map((it) => it.errorMessage)
+    summary.items.filter((it) => !!it.error).map((it) => it.error),
+    summary.items.filter((it) => !!it.warning).map((it) => it.warning)
   );
 
   if (!options.verbose) {
@@ -86,7 +96,7 @@ ${
   }
 
   process.stderr.write(
-    `⚡️ Kernel initialization complete with ${errors} error(s)\n\n`
+    `⚡️ Kernel initialization complete with ${errors} error(s) and ${warnings} warning(s)\n\n`
   );
 
   process.stderr.write(
@@ -94,6 +104,14 @@ ${
       process.env["CI"] ? "below" : "in file:///tmp/kernel-core.log"
     }\n\n`
   );
+
+  if (warnings) {
+    process.stderr.write(
+      `⚠️  See warning(s) ${
+        process.env["CI"] ? "below" : "in file:///tmp/kernel-core.log"
+      }\n\n`
+    );
+  }
 
   if (errors) {
     process.stderr.write(
