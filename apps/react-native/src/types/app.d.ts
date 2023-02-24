@@ -12,3 +12,7 @@ declare module '@brandingbrand/code-app' {
     bar: number;
   }
 }
+
+type PropsWithChildrenFunction<P = unknown, T = unknown> = P & {
+  children: (props: T) => ReactNode | undefined;
+};
