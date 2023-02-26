@@ -3,12 +3,12 @@ import { path as pathk } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
-global.process.cwd = () => path.resolve(__dirname, "..", "..", "..");
-jest.mock("../../../node_modules/react-native-asset/lib");
+global.process.cwd = () => path.resolve(__dirname, "..");
+jest.mock("../node_modules/react-native-asset/lib");
 
 describe("plugin-asset", () => {
   it("ios", async () => {
-    const linkAssets = require("../../../node_modules/react-native-asset/lib");
+    const linkAssets = require("../node_modules/react-native-asset/lib");
     await ios({
       codePluginAsset: { plugin: { assetPath: ["./assets/fonts"] } },
     });
@@ -30,7 +30,7 @@ describe("plugin-asset", () => {
   });
 
   it("android", async () => {
-    const linkAssets = require("../../../node_modules/react-native-asset/lib");
+    const linkAssets = require("../node_modules/react-native-asset/lib");
     await android({
       codePluginAsset: { plugin: { assetPath: ["./assets/fonts"] } },
     });

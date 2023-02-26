@@ -19,34 +19,13 @@
     "dist"
   ],
   "scripts": {
-    "build": "microbundle --target node --compress --format cjs,esm --tsconfig tsconfig.json --no-sourcemap",
-    "dev": "microbundle watch --target node --compress --format cjs,esm --tsconfig tsconfig.json",
-    "test": "jest --testMatch **/test/*"
+    "build": "microbundle --target node --compress --format cjs,esm --tsconfig tsconfig.build.json --no-sourcemap",
+    "dev": "microbundle watch --target node --compress --format cjs,esm --tsconfig tsconfig.build.json"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "@brandingbrand/code-core": "^0.0.8"
-  },
-  "devDependencies": {
-    "@tsconfig/node16": "^1.0.3",
-    "@types/jest": "^29.2.2",
-    "@typescript-eslint/eslint-plugin": "^5.40.1",
-    "@typescript-eslint/parser": "^5.40.1",
-    "eslint": "^8.25.0",
-    "eslint-config-eslint": "^7.0.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-jsdoc": "^39.3.12",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "jest": "^29.3.1",
-    "microbundle": "^0.15.1",
-    "prettier": "^2.7.1",
-    "ts-jest": "^29.0.3",
-    "typescript": "^4.8.4"
-  },
-  "jest": {
-    "preset": "ts-jest"
+    "@brandingbrand/code-core": "*"
   }
 }

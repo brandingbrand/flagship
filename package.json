@@ -11,7 +11,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@changesets/cli": "^2.25.2",
     "@tsconfig/node16": "^1.0.3",
@@ -75,7 +75,7 @@
   },
   "workspaces": {
     "packages": ["packages/*", "apps/*"],
-    "nohoist": ["**/react", "**/react-native"]
+    "nohoist": ["**/react", "**/react-native", "**/react-native-*"]
   },
   "jest": {
     "preset": "ts-jest"

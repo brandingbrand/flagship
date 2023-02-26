@@ -1,0 +1,1 @@
+var r=require("@brandingbrand/code-core");const a=r.summary.withSummary(async r=>{},"plugin-local","platform::ios"),o=r.summary.withSummary(async r=>{},"plugin-local","platform::android");exports.android=o,exports.ios=a;

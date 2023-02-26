@@ -1,15 +1,23 @@
-import {Config, logger} from '@brandingbrand/code-core';
+import { Config, summary } from "@brandingbrand/code-core";
 
-import {KernelPluginLocal} from './types';
+import { CodePluginLocal } from "./types";
 
-const ios = (config: Config & KernelPluginLocal) => {
-  logger.logInfo('Executing @brandingbrand/code-plugin-local::ios');
-};
+const ios = summary.withSummary(
+  async (config: Config & CodePluginLocal) => {
+    //
+  },
+  "plugin-local",
+  "platform::ios"
+);
 
-const android = (config: Config & KernelPluginLocal) => {
-  logger.logInfo('Executing @brandingbrand/code-plugin-local::android');
-};
+const android = summary.withSummary(
+  async (config: Config & CodePluginLocal) => {
+    //
+  },
+  "plugin-local",
+  "platform::android"
+);
 
-export * from './types';
+export * from "./types";
 
-export {ios, android};
+export { ios, android };
