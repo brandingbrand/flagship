@@ -6,7 +6,7 @@ const prod: ENV = {
   ios: {
     name: 'code',
     bundleId: 'com.code',
-    displayName: 'Flagship™ Code',
+    displayName: 'Flagship Code™',
     versioning: {
       version: '0.0.1',
       build: 1,
@@ -41,7 +41,7 @@ const prod: ENV = {
   },
   android: {
     name: 'code',
-    displayName: 'Flagship™ Code',
+    displayName: 'Flagship Code™',
     packageName: 'com.code',
     versioning: {
       version: '0.0.1',

@@ -22,8 +22,8 @@ export default () => {
             <View>
               <Text style={styles.app$content$title}>
                 Welcome <Text style={styles.app$content$title$$yellow}>to</Text>{' '}
-                <Text style={styles.app$content$title$$red}>Flagship™</Text>{' '}
-                <Text style={styles.app$content$title$$blue}>Code!</Text>
+                <Text style={styles.app$content$title$$red}>Flagship</Text>{' '}
+                <Text style={styles.app$content$title$$blue}>Code™!</Text>
               </Text>
               <Text style={styles.app$content$header}>
                 Typesafe Configuration as Code toolkit for React Native
