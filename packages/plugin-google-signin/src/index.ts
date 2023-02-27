@@ -1,39 +1,19 @@
-import { Config, fsk, path, summary } from "@brandingbrand/code-core";
+import {
+  Config,
+  fsk,
+  infoPlist,
+  path,
+  summary,
+} from "@brandingbrand/code-core";
 
 import { CodePluginGoogleSignin } from "./types";
 
 const ios = summary.withSummary(
   async (config: Config & CodePluginGoogleSignin) => {
-    if (
-      await fsk.doesKeywordExist(
-        path.ios.infoPlistPath(config),
-        "CFBundleURLTypes"
-      )
-    ) {
-      await fsk.update(
-        path.ios.infoPlistPath(config),
-        /(CFBundleURLSchemes[\s\S]+?<array>)/,
-        `$1
-            <string>${config.codePluginGoogleSignin.plugin.ios.reversedClientId}</string>`
-      );
-    } else {
-      await fsk.update(
-        path.ios.infoPlistPath(config),
-        /(<plist[\s\S]+?<dict>)/,
-        `$1
-    <key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-        <key>CFBundleTypeRole</key>
-        <string>Editor</string>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>${config.codePluginGoogleSignin.plugin.ios.reversedClientId}</string>
-        </array>
-      </dict>
-    </array>`
-      );
-    }
+    await infoPlist.setUrlScheme(
+      config.codePluginGoogleSignin.plugin.ios.reversedClientId,
+      config
+    );
 
     await fsk.update(
       path.ios.appDelegatePath(config),

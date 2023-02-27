@@ -1,18 +1,23 @@
 /* eslint-disable no-useless-escape */
 
-import { Config, fsk, path, summary } from "@brandingbrand/code-core";
+import {
+  Config,
+  fsk,
+  infoPlist,
+  path,
+  summary,
+} from "@brandingbrand/code-core";
 
 import type { CodePluginLeanplum } from "./types";
 
 const ios = summary.withSummary(
   async (config: Config & CodePluginLeanplum) => {
     if (!config.codePluginLeanplum?.plugin?.ios?.swizzle) {
-      await fsk.update(
-        path.ios.infoPlistPath(config),
-        /(<plist[\s\S]+?<dict>)/,
-        `$1
-    <key>LeanplumSwizzlingEnabled</key>
-    <false/>`
+      await infoPlist.setPlist(
+        {
+          LeanplumSwizzlingEnabled: false,
+        },
+        config
       );
 
       await fsk.update(
@@ -45,6 +50,26 @@ const ios = summary.withSummary(
 $1`
       );
     }
+
+    await fsk.update(
+      path.ios.podfilePath(),
+      /(post_install do \|installer\|)/,
+      `
+  dynamic_frameworks = ['Leanplum-iOS-SDK']
+  pre_install do |installer|
+    Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+    installer.pod_targets.each do |pod|
+      if dynamic_frameworks.include?(pod.name)
+        puts "Setting dynamic linking for #{pod.name}"
+        def pod.build_type;
+          Pod::BuildType.dynamic_framework
+        end
+      end
+    end
+  end
+
+  $1`
+    );
   },
   "plugin-leanplum",
   "platform::ios"

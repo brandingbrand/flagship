@@ -44,8 +44,15 @@ export const permissions = [
 ] as const;
 
 export const usesPermission = (requiredPermissions: AndroidPermissionType) =>
-  requiredPermissions
-    ?.map((it) => {
-      return `    <uses-permission android:name="android.permission.${it}" />`;
-    })
-    .join("\n");
+  requiredPermissions.reduce(
+    (acc, curr) => {
+      acc["uses-permission"].push({
+        $: {
+          "android:name": `android.permission.${curr}`,
+        },
+      });
+
+      return acc;
+    },
+    { "uses-permission": <any>[] }
+  );

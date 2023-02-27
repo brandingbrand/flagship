@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Config, fsk, path, summary } from "@brandingbrand/code-core";
+import {
+  Config,
+  fsk,
+  infoPlist,
+  manifest,
+  path,
+  summary,
+} from "@brandingbrand/code-core";
 
 import * as utils from "./utils";
 
@@ -15,12 +22,9 @@ const ios = summary.withSummary(
         `$1\n${utils.ios.pods(config.codePluginPermissions.plugin.ios)}`
       );
 
-      await fsk.update(
-        path.ios.infoPlistPath(config),
-        /(<plist[\s\S]+?<dict>)/,
-        `$1\n${utils.ios.usageDescriptions(
-          config.codePluginPermissions.plugin.ios
-        )}`
+      await infoPlist.setPlist(
+        utils.ios.usageDescriptions(config.codePluginPermissions.plugin.ios),
+        config
       );
     }
   },
@@ -31,12 +35,10 @@ const ios = summary.withSummary(
 const android = summary.withSummary(
   async (config: CodePluginPermissions) => {
     if (config.codePluginPermissions.plugin.android) {
-      await fsk.update(
-        path.android.manifestPath(),
-        /(<manifest[\s\S]+?>)/,
-        `$1\n${utils.android.usesPermission(
+      await manifest.addManifestElements(
+        utils.android.usesPermission(
           config.codePluginPermissions.plugin.android
-        )}`
+        )
       );
     }
   },

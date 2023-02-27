@@ -116,7 +116,7 @@ describe("plugin-fbsdk-next", () => {
       '<uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>'
     );
     expect(androidManifest).toMatch(
-      '<provider android:authorities="com.facebook.app.FacebookContentProvider0001" android:name="com.facebook.FacebookContentProvider" android:exported="true" />'
+      '<provider android:authorities="com.facebook.app.FacebookContentProvider0001" android:name="com.facebook.FacebookContentProvider" android:exported="true"/>'
     );
   });
 });

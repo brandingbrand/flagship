@@ -45,5 +45,7 @@ export const addAppThemeElements = (elements: StylesType.StyleElements) =>
 
     if (!style) return;
 
-    elements.item?.forEach((it) => style.item?.push(it));
+    elements.item?.forEach((it) =>
+      style.item ? style.item.push(it) : (style.item = [it])
+    );
   });
