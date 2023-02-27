@@ -8,7 +8,15 @@ declare module '@brandingbrand/code-app' {
     import('@brandingbrand/code-plugin-target-extension').CodePluginTargetExtension;
 
   interface App {
-    foo: string;
-    bar: number;
+    docs: {
+      domain: string;
+      path: {
+        plugins: string;
+      };
+    };
   }
 }
+
+type PropsWithChildrenFunction<P = unknown, T = unknown> = P & {
+  children: (props: T) => ReactNode | undefined;
+};

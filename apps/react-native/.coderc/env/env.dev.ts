@@ -2,7 +2,7 @@
 
 import {ENV} from '@brandingbrand/code-app';
 
-const prod: ENV = {
+const dev: ENV = {
   ios: {
     name: 'code',
     bundleId: 'com.code',
@@ -155,4 +155,4 @@ const prod: ENV = {
   },
 };
 
-export default prod;
+export default dev;
