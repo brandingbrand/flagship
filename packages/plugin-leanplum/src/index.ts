@@ -91,7 +91,7 @@ const android = summary.withSummary(
 
     await fsk.update(
       path.android.mainApplicationPath(config),
-      /(^package [\s\S]?;)/,
+      /(^package [\s\S]+?;)/,
       `$1
 
 import com.leanplum.Leanplum;
