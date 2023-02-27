@@ -58,6 +58,7 @@ const android = summary.withSummary(
   async (config: Config & CodePluginAppIcon) => {
     const { appIconPath = "./assets/app-icon" } =
       config.codePluginAppIcon?.plugin ?? {};
+    const { inset } = config.codePluginAppIcon?.plugin?.android ?? {};
 
     for (const i of icons.android) {
       const inputFilePath = path.project.resolve(
@@ -112,7 +113,13 @@ const android = summary.withSummary(
       `<?xml version="1.0" encoding="utf-8"?>
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
     <background android:drawable="@mipmap/ic_launcher_background"/>
-    <foreground android:drawable="@mipmap/ic_launcher_foreground"/>
+    ${
+      inset
+        ? `    <foreground>
+        <inset android:drawable="@mipmap/ic_launcher_foreground" android:inset="${inset}%"/>
+    </foreground>`
+        : `    <foreground android:drawable="@mipmap/ic_launcher_foreground"/>`
+    }
 </adaptive-icon>
 `
     );

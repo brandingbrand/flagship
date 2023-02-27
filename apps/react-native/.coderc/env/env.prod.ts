@@ -91,9 +91,17 @@ const prod: ENV = {
     plugin: {
       ios: {
         type: 'generated',
+        generated: {
+          logoPath: "assets/splash-screen/ios/generated/logo.png",
+          backgroundColor: "#1e2126",
+        }
       },
       android: {
         type: 'generated',
+        generated: {
+          logoPath: "assets/splash-screen/android/generated/logo.png",
+          backgroundColor: "#1e2126",
+        }
       },
     },
   },
@@ -136,6 +144,9 @@ const prod: ENV = {
   codePluginAppIcon: {
     plugin: {
       appIconPath: 'assets/app-icon',
+      android: {
+        inset: 20,
+      },
     },
   },
 };
