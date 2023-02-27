@@ -14,8 +14,8 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
   },
   app$content$logo: {
-    width: 114,
-    height: 37,
+    width: 150,
+    height: 50,
     resizeMode: 'contain',
   },
   app$content$title: {
