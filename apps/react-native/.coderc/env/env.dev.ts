@@ -69,8 +69,12 @@ const dev: ENV = {
     },
   },
   app: {
-    foo: 'bar',
-    bar: 456,
+    docs: {
+      domain: 'https://feat-flagship-12--whimsical-tartufo-49504f.netlify.app',
+      path: {
+        plugins: '/en/packages/plugins',
+      },
+    },
   },
   codePluginPermissions: {
     plugin: {
@@ -92,16 +96,16 @@ const dev: ENV = {
       ios: {
         type: 'generated',
         generated: {
-          logoPath: "assets/splash-screen/ios/generated/logo.png",
-          backgroundColor: "#1e2126",
-        }
+          logoPath: 'assets/splash-screen/ios/generated/logo.png',
+          backgroundColor: '#1e2126',
+        },
       },
       android: {
         type: 'generated',
         generated: {
-          logoPath: "assets/splash-screen/android/generated/logo.png",
-          backgroundColor: "#1e2126",
-        }
+          logoPath: 'assets/splash-screen/android/generated/logo.png',
+          backgroundColor: '#1e2126',
+        },
       },
     },
   },

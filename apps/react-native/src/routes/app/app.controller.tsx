@@ -1,7 +1,7 @@
 // @ts-ignore
 import openURLInBrowser from 'react-native/Libraries/Core/Devtools/openURLInBrowser';
 
-import {useNavigator} from '@brandingbrand/fsapp';
+import {env, useNavigator} from '@brandingbrand/fsapp';
 
 export default (
   props: PropsWithChildrenFunction<
@@ -13,9 +13,7 @@ export default (
   const navigator = useNavigator();
 
   const onPressDocs = () => {
-    openURLInBrowser(
-      'https://feat-flagship-12--whimsical-tartufo-49504f.netlify.app/',
-    );
+    openURLInBrowser(env.app.docs.domain);
   };
 
   const onPressLink = (link: string) => () => {
@@ -23,7 +21,7 @@ export default (
       const path = link.replace('plugin-', '');
 
       return openURLInBrowser(
-        `https://feat-flagship-12--whimsical-tartufo-49504f.netlify.app/en/packages/plugins/${path}`,
+        new URL(`${env.app.docs.path.plugins}/${path}`, env.app.docs.domain),
       );
     }
 

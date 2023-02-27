@@ -8,8 +8,12 @@ declare module '@brandingbrand/code-app' {
     import('@brandingbrand/code-plugin-target-extension').CodePluginTargetExtension;
 
   interface App {
-    foo: string;
-    bar: number;
+    docs: {
+      domain: string;
+      path: {
+        plugins: string;
+      };
+    };
   }
 }
 
