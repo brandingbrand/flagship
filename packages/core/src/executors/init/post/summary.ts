@@ -96,7 +96,7 @@ ${
   }
 
   process.stderr.write(
-    `⚡️ Flagship Code initialization complete with ${errors} error(s) and ${warnings} warning(s)\n\n`
+    `⚡️ Flagship Code™ initialization complete with ${errors} error(s) and ${warnings} warning(s)\n\n`
   );
 
   process.stderr.write(
