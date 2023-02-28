@@ -1,5 +1,8 @@
-import path from "path";
-import { fs, path as pathk } from "@brandingbrand/code-core";
+/**
+ * @jest-environment-options {"fixture": "__plugin-app-icon_fixtures", "additionalDirectory": "./fixtures"}
+ */
+
+import { fs, path } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
@@ -21,51 +24,19 @@ jest.mock("../src/utils/rules", () => ({
   ],
 }));
 
-global.process.cwd = () => path.resolve(__dirname, "fixtures", "mock_project");
-
 describe("plugin-app-icon", () => {
-  beforeAll(async () => {
-    await fs.mkdir(
-      path.resolve(__dirname, "fixtures", "mock_project", "mipmap-xxxhdpi")
-    );
-
-    await fs.mkdir(
-      path.resolve(__dirname, "fixtures", "mock_project", "AppIcon.appiconset")
-    );
-  });
-  afterAll(async () => {
-    await fs.remove(
-      path.resolve(__dirname, "fixtures", "mock_project", "mipmap-xxxhdpi")
-    );
-    await fs.remove(
-      path.resolve(__dirname, "fixtures", "mock_project", "mipmap-anydpi-v26")
-    );
-    await fs.remove(
-      path.resolve(__dirname, "fixtures", "mock_project", "AppIcon.appiconset")
-    );
-  });
-
   it("ios", async () => {
-    jest.mock("@brandingbrand/code-core", () => {
-      const core = jest.requireActual("@brandingbrand/code-core");
-
-      return {
-        ...core,
-        fs: {
-          ...core.fs,
-          writeFile: jest.fn().mockResolvedValue(undefined),
-        },
-      };
+    await ios({
+      ...global.__FLAGSHIP_CODE_CONFIG__,
+      codePluginAppIcon: {},
     });
-    jest
-      .spyOn(pathk.ios, "appIconSetPath")
-      .mockReturnValue(pathk.project.resolve("AppIcon.appiconset"));
-
-    await ios({ ios: { name: "HelloWorld" } } as never);
 
     expect(
       await fs.pathExists(
-        pathk.project.resolve(
+        path.project.resolve(
+          "ios",
+          global.__FLAGSHIP_CODE_CONFIG__.ios.name,
+          "Images.xcassets",
           "AppIcon.appiconset",
           "Icon-1024-ios-marketing.png"
         )
@@ -74,27 +45,18 @@ describe("plugin-app-icon", () => {
   });
 
   it("android", async () => {
-    jest.mock("@brandingbrand/code-core", () => {
-      const core = jest.requireActual("@brandingbrand/code-core");
-
-      return {
-        ...core,
-        fs: {
-          ...core.fs,
-          mkdir: jest.fn().mockResolvedValue(undefined),
-          writeFile: jest.fn().mockResolvedValue(undefined),
-        },
-      };
+    await android({
+      ...global.__FLAGSHIP_CODE_CONFIG__,
+      codePluginAppIcon: {},
     });
-    jest
-      .spyOn(pathk.android, "resourcesPath")
-      .mockReturnValue(pathk.project.path());
-
-    await android({} as never);
 
     expect(
       await fs.pathExists(
-        pathk.project.resolve("mipmap-xxxhdpi", "ic_launcher_background.png")
+        path.project.resolve(
+          path.android.resourcesPath(),
+          "mipmap-xxxhdpi",
+          "ic_launcher_background.png"
+        )
       )
     ).toBeTruthy();
   });

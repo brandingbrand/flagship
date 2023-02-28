@@ -1,127 +1,72 @@
-import xcode from "xcode";
-import { fs, path, Xcode } from "@brandingbrand/code-core";
+/**
+ * @jest-environment-options {"fixture": "__plugin-firebase-app_fixtures", "additionalDirectory": "./fixtures"}
+ */
+
+import { fs, path } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
 describe("plugin-firebase-app", () => {
-  beforeAll(async () => {
-    return fs.copy(
-      path.resolve(__dirname, "fixtures"),
-      path.resolve(__dirname, "__firebase_app_fixtures")
-    );
-  });
-
-  afterAll(async () => {
-    return fs.remove(path.resolve(__dirname, "__firebase_app_fixtures"));
-  });
-
   it("ios", async () => {
-    jest.spyOn(fs, "copy").mockImplementation(() => ({}));
-
-    jest
-      .spyOn(path.ios, "appDelegatePath")
-      .mockReturnValue(
-        path.resolve(__dirname, "__firebase_app_fixtures", "AppDelegate.mm")
-      );
-
-    jest
-      .spyOn(path.ios, "pbxprojFilePath")
-      .mockReturnValue(
-        path.resolve(__dirname, "__firebase_app_fixtures", "project.pbxproj")
-      );
-
-    jest
-      .spyOn(Xcode.prototype, "addResourceFileBuilder")
-      .mockImplementation(() => {
-        return {
-          build: jest.fn(),
-        } as never;
-      });
-
-    jest.spyOn(xcode, "project").mockImplementation(() => {
-      return {
-        parseSync: jest.fn(),
-      } as never;
-    });
-
     await ios({
-      ios: { name: "HelloWorld" },
+      ...global.__FLAGSHIP_CODE_CONFIG__,
       codePluginFirebaseApp: {
         plugin: {
           ios: {
-            googleServicesPath: "firebase/GoogleServices-Info.plist",
+            googleServicesPath: "assets/firebase/GoogleService-Info.plist",
           },
         },
       },
-    } as never);
+    });
 
-    expect(
-      (
-        await fs.readFile(
-          path.resolve(__dirname, "__firebase_app_fixtures", "AppDelegate.mm")
-        )
-      ).toString()
-    ).toMatch("#import <Firebase.h>");
+    const appDelegate = (
+      await fs.readFile(
+        path.ios.appDelegatePath(global.__FLAGSHIP_CODE_CONFIG__)
+      )
+    ).toString();
+    const pbxproj = (
+      await fs.readFile(
+        path.ios.pbxprojFilePath(global.__FLAGSHIP_CODE_CONFIG__)
+      )
+    ).toString();
 
-    expect(
-      (
-        await fs.readFile(
-          path.resolve(__dirname, "__firebase_app_fixtures", "AppDelegate.mm")
-        )
-      ).toString()
-    ).toMatch("[FIRApp configure];");
+    expect(appDelegate).toMatch("#import <Firebase.h>");
+    expect(appDelegate).toMatch("[FIRApp configure];");
+    expect(pbxproj).toMatch("/* GoogleService-Info.plist in Resources */");
   });
 
   it("android", async () => {
-    jest.spyOn(fs, "copy").mockImplementation(() => ({}));
-
-    jest
-      .spyOn(path.project, "resolve")
-      .mockReturnValue(
-        path.resolve(__dirname, "__firebase_app_fixtures", "pbuild.gradle")
-      );
-
-    jest
-      .spyOn(path.android, "gradlePath")
-      .mockReturnValue(
-        path.resolve(__dirname, "__firebase_app_fixtures", "mbuild.gradle")
-      );
-
     await android({
       codePluginFirebaseApp: {
         plugin: {
           android: {
             firebaseBomVersion: "31.0.0",
             googleServicesVersion: "4.3.1",
-            googleServicesPath: "firebase/google-services.json",
+            googleServicesPath: "assets/firebase/google-servies.json",
           },
         },
       },
     });
 
-    expect(
-      (
-        await fs.readFile(
-          path.resolve(__dirname, "__firebase_app_fixtures", "pbuild.gradle")
-        )
-      ).toString()
-    ).toMatch("classpath 'com.google.gms:google-services:4.3.1'");
+    const moduleGradle = (
+      await fs.readFile(path.android.gradlePath())
+    ).toString();
+    const projectGradle = (
+      await fs.readFile(path.project.resolve("android", "build.gradle"))
+    ).toString();
 
     expect(
-      (
-        await fs.readFile(
-          path.resolve(__dirname, "__firebase_app_fixtures", "mbuild.gradle")
-        )
-      ).toString()
-    ).toMatch("apply plugin: 'com.google.gms.google-services'");
-
-    expect(
-      (
-        await fs.readFile(
-          path.resolve(__dirname, "__firebase_app_fixtures", "mbuild.gradle")
-        )
-      ).toString()
-    ).toMatch(
+      await fs.pathExists(
+        path.project.resolve("android", "app", "google-services.json")
+      )
+    ).toBeTruthy();
+    expect(projectGradle).toMatch(
+      "classpath 'com.google.gms:google-services:4.3.1'"
+    );
+    expect(moduleGradle).toMatch(
+      "apply plugin: 'com.google.gms.google-services'"
+    );
+    expect(moduleGradle).toMatch(
       "implementation platform('com.google.firebase:firebase-bom:31.0.0')"
     );
   });

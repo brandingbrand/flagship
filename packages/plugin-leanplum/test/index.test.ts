@@ -1,40 +1,15 @@
+/**
+ * @jest-environment-options {"fixture": "__plugin-leanplum_fixtures"}
+ */
+
 import { fs, path } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
 describe("plugin-leanplum", () => {
-  beforeAll(async () => {
-    return fs.copy(
-      path.resolve(__dirname, "fixtures"),
-      path.resolve(__dirname, "__leanplum_fixtures")
-    );
-  });
-
-  afterAll(async () => {
-    return fs.remove(path.resolve(__dirname, "__leanplum_fixtures"));
-  });
-
   it("ios", async () => {
-    jest
-      .spyOn(path.ios, "infoPlistPath")
-      .mockReturnValue(
-        path.resolve(__dirname, "__leanplum_fixtures", "Info.plist")
-      );
-
-    jest
-      .spyOn(path.ios, "podfilePath")
-      .mockReturnValue(
-        path.resolve(__dirname, "__leanplum_fixtures", "Podfile")
-      );
-
-    jest
-      .spyOn(path.ios, "appDelegatePath")
-      .mockReturnValue(
-        path.resolve(__dirname, "__leanplum_fixtures", "AppDelegate.mm")
-      );
-
     await ios({
-      ios: { name: "HelloWorld" },
+      ...global.__FLAGSHIP_CODE_CONFIG__,
       codePluginLeanplum: {
         plugin: {
           ios: {
@@ -42,12 +17,12 @@ describe("plugin-leanplum", () => {
           },
         },
       },
-    } as never);
+    });
 
     expect(
       (
         await fs.readFile(
-          path.resolve(__dirname, "__leanplum_fixtures", "Info.plist")
+          path.ios.infoPlistPath(global.__FLAGSHIP_CODE_CONFIG__)
         )
       ).toString()
     ).toMatch("LeanplumSwizzlingEnabled");
@@ -55,18 +30,12 @@ describe("plugin-leanplum", () => {
     expect(
       (
         await fs.readFile(
-          path.resolve(__dirname, "__leanplum_fixtures", "AppDelegate.mm")
+          path.ios.appDelegatePath(global.__FLAGSHIP_CODE_CONFIG__)
         )
       ).toString()
     ).toMatch("didRegisterForRemoteNotificationsWithDeviceToken");
 
-    expect(
-      (
-        await fs.readFile(
-          path.resolve(__dirname, "__leanplum_fixtures", "Podfile")
-        )
-      ).toString()
-    ).toMatch(`
+    expect((await fs.readFile(path.ios.podfilePath())).toString()).toMatch(`
   dynamic_frameworks = ['Leanplum-iOS-SDK']
   pre_install do |installer|
     Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
@@ -82,34 +51,32 @@ describe("plugin-leanplum", () => {
   });
 
   it("android", async () => {
-    jest
-      .spyOn(path.android, "gradlePath")
-      .mockReturnValue(
-        path.resolve(__dirname, "__leanplum_fixtures", "build.gradle")
-      );
+    await android(global.__FLAGSHIP_CODE_CONFIG__);
 
-    jest
-      .spyOn(path.android, "mainApplicationPath")
-      .mockReturnValue(
-        path.resolve(__dirname, "__leanplum_fixtures", "MainApplication.java")
-      );
+    const buildGradle = (
+      await fs.readFile(path.android.gradlePath())
+    ).toString();
+    const mainApplication = (
+      await fs.readFile(
+        path.android.mainApplicationPath(global.__FLAGSHIP_CODE_CONFIG__)
+      )
+    ).toString();
 
-    await android({ android: { packageName: "com.helloworld" } } as never);
-
-    expect(
-      (
-        await fs.readFile(
-          path.resolve(__dirname, "__leanplum_fixtures", "build.gradle")
-        )
-      ).toString()
-    ).toMatch("implementation 'com.leanplum:leanplum-fcm:5.7.0'");
-
-    expect(
-      (
-        await fs.readFile(
-          path.resolve(__dirname, "__leanplum_fixtures", "build.gradle")
-        )
-      ).toString()
-    ).toMatch("implementation 'com.google.firebase:firebase-messaging'");
+    expect(buildGradle).toMatch(
+      "implementation 'com.leanplum:leanplum-fcm:5.7.0'"
+    );
+    expect(buildGradle).toMatch(
+      "implementation 'com.google.firebase:firebase-messaging'"
+    );
+    expect(mainApplication).toMatch("import com.leanplum.Leanplum;");
+    expect(mainApplication).toMatch("import com.leanplum.annotations.Parser;");
+    expect(mainApplication).toMatch(
+      "import com.leanplum.LeanplumActivityHelper;"
+    );
+    expect(mainApplication).toMatch("Leanplum.setApplicationContext(this);");
+    expect(mainApplication).toMatch("Parser.parseVariables(this);");
+    expect(mainApplication).toMatch(
+      "LeanplumActivityHelper.enableLifecycleCallbacks(this);"
+    );
   });
 });
