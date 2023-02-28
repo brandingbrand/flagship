@@ -21,9 +21,9 @@
     "dist"
   ],
   "scripts": {
-    "build": "microbundle --target node --compress --format cjs,esm --tsconfig tsconfig.build.json --no-sourcemap",
+    "build": "microbundle --target node --format cjs,esm --tsconfig tsconfig.build.json --no-sourcemap",
     "postbuild": "cp -r src/fastlane dist/fastlane",
-    "dev": "microbundle watch --target node --compress --format cjs,esm --tsconfig tsconfig.build.json"
+    "dev": "microbundle watch --target node --format cjs,esm --tsconfig tsconfig.build.json"
   },
   "keywords": [],
   "author": "",
