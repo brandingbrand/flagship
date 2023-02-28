@@ -3,7 +3,7 @@ import { fs, path as pathk } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
-global.process.cwd = () => path.resolve(__dirname, "..", "..", "..");
+global.process.cwd = () => path.resolve(__dirname, "..");
 
 jest.mock("@brandingbrand/code-core", () => {
   const core = jest.requireActual("@brandingbrand/code-core");

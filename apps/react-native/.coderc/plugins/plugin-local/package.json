@@ -19,15 +19,15 @@
     "dist"
   ],
   "scripts": {
-    "build": "microbundle --target node --compress --format cjs,esm --tsconfig tsconfig.json --no-sourcemap",
-    "dev": "microbundle watch --target node --compress --format cjs,esm --tsconfig tsconfig.json",
-    "test": "jest --testMatch **/test/*"
+    "build": "microbundle --target node --compress --format cjs,esm --tsconfig tsconfig.build.json --no-sourcemap",
+    "dev": "microbundle watch --target node --compress --format cjs,esm --tsconfig tsconfig.build.json",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "@brandingbrand/code-core": "^0.0.8"
+    "@brandingbrand/code-core": "*"
   },
   "devDependencies": {
     "@tsconfig/node16": "^1.0.3",

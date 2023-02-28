@@ -10,7 +10,8 @@
     "clean": "code clean",
     "keys": "code keys",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "postinstall": "cp -r ./node_modules/@brandingbrand/code-plugin-local ../../node_modules/@brandingbrand"
   },
   "dependencies": {
     "@brandingbrand/fsapp": "^11.77.1",
@@ -30,6 +31,7 @@
     "@brandingbrand/code-cli": "*",
     "@brandingbrand/code-plugin-app-icon": "*",
     "@brandingbrand/code-plugin-asset": "*",
+    "@brandingbrand/code-plugin-local": "file:./.coderc/plugins/plugin-local",
     "@brandingbrand/code-plugin-native-navigation": "*",
     "@brandingbrand/code-plugin-permissions": "*",
     "@brandingbrand/code-plugin-splash-screen": "*",
@@ -119,7 +121,8 @@
       "@brandingbrand/code-plugin-app-icon",
       "@brandingbrand/code-plugin-splash-screen",
       "@brandingbrand/code-plugin-target-extension",
-      "@brandingbrand/code-plugin-fastlane"
+      "@brandingbrand/code-plugin-fastlane",
+      "@brandingbrand/code-plugin-local"
     ]
   }
 }

@@ -7,3 +7,5 @@ describe('plugin-local', () => {
     expect('').toMatch('');
   });
 });
+
+export {};
