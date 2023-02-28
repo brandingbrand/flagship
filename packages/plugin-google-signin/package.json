@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-google-signin",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "",
   "publishConfig": {
     "access": "public"
@@ -28,9 +28,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@brandingbrand/code-core": "^0.0.10"
+    "@brandingbrand/code-core": "^0.0.11"
   },
   "peerDependencies": {
-    "@brandingbrand/code-plugin-firebase-app": "^0.0.10"
+    "@brandingbrand/code-plugin-firebase-app": "^0.0.11"
   }
 }

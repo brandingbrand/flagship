@@ -1,5 +1,13 @@
 # @brandingbrand/kernel-plugin-target-application
 
+## 0.0.11
+
+### Patch Changes
+
+- 66cda9942: parceable file utilities
+- Updated dependencies [66cda9942]
+  - @brandingbrand/code-core@0.0.11
+
 ## 0.0.10
 
 ### Patch Changes

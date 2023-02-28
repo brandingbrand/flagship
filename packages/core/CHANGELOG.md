@@ -1,5 +1,11 @@
 # @brandingbrand/kernel-core
 
+## 0.0.11
+
+### Patch Changes
+
+- 66cda9942: parceable file utilities
+
 ## 0.0.10
 
 ### Patch Changes
