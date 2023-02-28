@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-cli",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "",
   "publishConfig": {
     "access": "public"
@@ -32,7 +32,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@brandingbrand/code-core": "^0.0.10",
+    "@brandingbrand/code-core": "^0.0.11",
     "commander": "^9.4.1"
   },
   "devDependencies": {

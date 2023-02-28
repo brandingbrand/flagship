@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-app-icon",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "",
   "publishConfig": {
     "access": "public"
@@ -28,7 +28,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@brandingbrand/code-core": "^0.0.10",
+    "@brandingbrand/code-core": "^0.0.11",
     "sharp": "^0.31.2"
   },
   "devDependencies": {
