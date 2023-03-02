@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-target-extension",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "",
   "publishConfig": {
     "access": "public"
@@ -28,7 +28,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@brandingbrand/code-core": "^0.0.11",
+    "@brandingbrand/code-core": "^0.0.12",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
