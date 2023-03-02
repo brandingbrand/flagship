@@ -1,5 +1,13 @@
 # @brandingbrand/kernel-plugin-native-navigation
 
+## 0.0.12
+
+### Patch Changes
+
+- f783d07f3: implementation fixes
+- Updated dependencies [f783d07f3]
+  - @brandingbrand/code-core@0.0.12
+
 ## 0.0.11
 
 ### Patch Changes
