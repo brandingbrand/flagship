@@ -27,13 +27,15 @@ const ios = summary.withSummary(
       const group = xcode.getGroup("Resources");
 
       if (!group) {
-        xcode.addPbxGroup([], "Resources", "");
+        xcode
+          .addPbxGroupBuilder([], "Resources", '""')
+          .addToPbxGroupBuilder("Resources", "Project");
       }
 
       await xcode
         .addResourceFileBuilder(
           `${config.ios.name}/GoogleService-Info.plist`,
-          config.ios.name,
+          "Resources",
           config.ios.name
         )
         .build();
