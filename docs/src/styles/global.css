@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,46 +7,48 @@
 @layer base {
   /* Markdown Styling */
   .markdown {
-    @apply flex w-full flex-col items-start justify-start px-4 leading-relaxed text-slate-300 selection:bg-kernel-teal-200 selection:text-teal-400 dark:text-kernel-teal-100 dark:selection:bg-kernel-teal-100 dark:selection:text-slate-900;
+    @apply flex w-full flex-col items-start justify-start px-4 leading-relaxed text-code-grey dark:text-code-light-grey;
   }
   .markdown h1 {
-    @apply mt-8 mb-4 text-5xl font-extrabold;
+    @apply mt-8 mb-4 text-5xl font-extrabold text-code-charcoal dark:text-code-white;
   }
   .markdown h2 {
-    @apply mt-8 mb-4 text-4xl font-semibold;
+    @apply mt-8 mb-4 text-4xl font-semibold text-code-charcoal dark:text-code-white;
   }
   .markdown h3 {
-    @apply mt-4 mb-2 text-3xl font-semibold;
+    @apply mt-4 mb-2 text-3xl font-semibold text-code-charcoal dark:text-code-white;
   }
   .markdown h4 {
-    @apply mt-2 mb-1 text-2xl font-semibold;
+    @apply mt-2 mb-1 text-2xl font-semibold text-code-charcoal dark:text-code-white;
   }
   .markdown h5 {
-    @apply mt-2 mb-1 text-xl font-semibold;
+    @apply mt-2 mb-1 text-xl font-semibold text-code-charcoal dark:text-code-white;
   }
   .markdown h6 {
-    @apply mt-2 mb-1 text-base font-semibold;
+    @apply mt-2 mb-1 text-base font-semibold text-code-charcoal dark:text-code-white;
   }
   .markdown li {
-    @apply list-none text-slate-900 dark:text-white;
+    @apply list-none text-code-charcoal dark:text-code-light-grey;
   }
   .markdown #documentation > ul > li {
-    @apply list-decimal text-slate-300 ml-6;
+    @apply list-decimal text-code-charcoal dark:text-code-light-grey ml-6;
   }
   .markdown ol > li {
     @apply mb-2 list-none;
   }
   .markdown p {
-    @apply mb-4 dark:text-white;
+    @apply mb-4 text-code-charcoal dark:text-code-light-grey;
   }
   .markdown a > p {
     @apply mb-0 text-sm;
   }
+
+  .markdown code {
+    @apply text-sm;
+  }
+
   .markdown a:not(.heading-link--hidden---effects) {
-    @apply text-teal-400 underline decoration-slate-500 
-          decoration-dotted underline-offset-2  
-          hover:text-teal-600 dark:text-kernel-teal-200 
-          dark:decoration-kernel-teal-200 dark:hover:text-kernel-teal-300;
+    @apply text-code-charcoal dark:text-code-light-grey underline decoration-dotted underline-offset-2 decoration-current hover:text-code-light-blue dark:hover:text-code-light-blue;
   }
 
   :is([dir="rtl"]) .markdown a[rel~="noreferrer"] > span {
@@ -55,16 +59,12 @@
     @apply break-words [direction:ltr] [unicode-bidi:embed] lg:break-normal;
   }
 
-  .markdown .code-wrapper {
-    @apply inline rounded border border-kernel-teal-200 bg-kernel-teal-200/40 px-0.5 py-[0.5px] dark:border-kernel-teal-400/30 dark:bg-kernel-teal-400/20;
-  }
-
-  .markdown .remark-code-title {
-    @apply z-10 -mb-1 mt-3 w-full rounded-t-md border border-kernel-teal-300/80 bg-[#191724] px-2 py-1 font-mono text-kernel-teal-200;
-  }
-
   .markdown pre {
-    @apply mx-auto mb-3 rounded border border-kernel-teal-300/80 p-2 pl-3 font-mono shadow-xl sm:pt-2;
+    @apply mx-auto mb-3 rounded p-2 pl-3 font-mono sm:pt-2 border border-code-silver dark:border-code-grey bg-code-light-grey dark:bg-code-black !important;
+  }
+
+  .markdown pre > code > span > span {
+    @apply text-code-blue dark:text-code-light-blue !important;
   }
 
   .markdown ol {
@@ -72,16 +72,13 @@
   }
 
   .markdown details {
-    @apply mt-2 w-full rounded-md border border-kernel-teal-300/80 bg-[#191724] px-3 transition-all duration-300 ease-in-out;
-  }
-  .markdown details[open] {
-    @apply bg-kernel-teal-200/10;
+    @apply mt-2 w-full rounded-md border bg-[#191724] px-3 transition-all duration-300 ease-in-out;
   }
   .markdown details pre {
     @apply border-0 shadow-none;
   }
   .markdown pre > code {
-    @apply text-xs
+    @apply text-xs;
   }
   .markdown details > summary {
     @apply cursor-pointer text-[#A6ACCD];
@@ -102,18 +99,18 @@
   .markdown table > tbody > tr > td {
     @apply align-top;
     @apply pr-20;
-    @apply border-b-2;
-    @apply border-b-zinc-800;
+    @apply border-b;
+    @apply border-code-light-grey dark:border-code-grey;
   }
   .markdown table > tbody > tr:last-child > td {
     @apply border-0;
   }
   .markdown table > thead > tr > th {
-    @apply border-b-2;
-    @apply border-b-zinc-800;
+    @apply border-b;
+    @apply border-code-light-grey dark:border-code-grey;
   }
   .markdown blockquote a {
-    @apply text-slate-900 dark:text-kernel-teal-50;
+    @apply text-code-black dark:text-code-light-grey;
   }
   .DocSearch-SearchBar {
     @apply my-3 rounded-md bg-purple-400 p-2 text-sm;

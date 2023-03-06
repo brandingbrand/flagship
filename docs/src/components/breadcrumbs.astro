@@ -40,9 +40,9 @@ const padName = (el: string, arr: string[]) => {
             return (
               <>
                 <a href="/">
-                  <button class="items-center p-1 border-2 rounded-lg flexjustify-center border-slate-300 hover:border-kernel-teal-300">
+                  <button class="items-center p-1 border-2 rounded-lg flexjustify-center border-code-charcoal dark:border-slate-300 hover:border-code-light-blue dark:hover:border-code-light-blue">
                     <svg
-                      class="fill-slate-300"
+                      class="fill-code-charcoal dark:fill-code-light-grey"
                       width="20"
                       height="20"
                       viewBox="0 0 24 24"
@@ -52,7 +52,7 @@ const padName = (el: string, arr: string[]) => {
                   </button>
                 </a>
                 <svg
-                  class="fill-slate-300"
+                  class="fill-current"
                   width="16"
                   height="16"
                   viewBox="0 0 24 24"
@@ -66,19 +66,19 @@ const padName = (el: string, arr: string[]) => {
               <>
                 {lastIndex(paths) === it ? (
                   <a>
-                    <button class="px-2 py-1 border-2 rounded-lg border-slate-300 hover:border-kernel-teal-300">
-                      <div class="text-sm text-slate-300">{padName(it, paths)}</div>
+                    <button class="px-2 py-1 border-2 rounded-lg border-code-charcoal dark:border-slate-300 hover:border-code-light-blue dark:hover:border-code-light-blue">
+                      <div class="text-sm text-code-charcoal dark:text-code-light-grey">{padName(it, paths)}</div>
                     </button>
                   </a>
                 ) : (
                   <>
                     <a href={path(it)}>
-                      <button class="px-2 py-1 border-2 rounded-lg border-slate-300 hover:border-kernel-teal-300">
-                        <div class="text-sm text-slate-300">{padName(it, paths)}</div>
+                      <button class="px-2 py-1 border-2 rounded-lg border-code-charcoal dark:border-slate-300 hover:border-code-light-blue dark:hover:border-code-light-blue">
+                        <div class="text-sm text-code-charcoal dark:text-code-light-grey">{padName(it, paths)}</div>
                       </button>
                     </a>
                     <svg
-                      class="fill-slate-300"
+                      class="fill-current"
                       width="16"
                       height="16"
                       viewBox="0 0 24 24"
