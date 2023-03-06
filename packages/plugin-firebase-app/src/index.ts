@@ -27,7 +27,7 @@ const ios = summary.withSummary(
       const group = xcode.getGroup("Resources");
 
       if (!group) {
-        xcode.addPbxGroupBuilder([], "Resources", "");
+        xcode.addPbxGroup([], "Resources", "");
       }
 
       await xcode
