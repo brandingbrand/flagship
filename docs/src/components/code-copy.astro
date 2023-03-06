@@ -7,11 +7,11 @@ const { args } = Astro.props;
 ---
 
 <button
-  class="flex cursor-pointer flex-row items-center gap-4 rounded-md border px-2 py-2 text-sm md:px-3 md:py-3 md:text-md lg:px-5 lg:py-4 transition-colors duration-300 hover:border-kernel-teal-300 hover:bg-kernel-teal-100/20"
+  class="flex cursor-pointer flex-row items-center gap-4 rounded-lg border px-2 py-2 text-sm md:px-3 md:py-3 md:text-md lg:px-5 lg:py-4 transition-colors duration-300 hover:bg-code-light-grey dark:hover:bg-code-grey border-code-silver dark:border-code-grey"
   title="Copy the command to get started"
   id="command"
 >
-  <code class="text-slate-300" id="command-text">{args}</code>
+  <code class="dark:text-code-light-blue text-code-blue" id="command-text">{args}</code>
   <svg
     id="copy-icon"
     xmlns="http://www.w3.org/2000/svg"
@@ -19,10 +19,10 @@ const { args } = Astro.props;
     height="24"
     viewBox="0 0 24 24"
     fill="none"
-    stroke="#cbd5e1"
-    stroke-width="2"
+    stroke-width="1"
     stroke-linecap="round"
     stroke-linejoin="round"
+    class="dark:stroke-code-white stroke-code-grey"
     ><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path
       d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
   </svg>

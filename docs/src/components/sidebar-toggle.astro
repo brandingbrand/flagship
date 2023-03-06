@@ -1,12 +1,14 @@
 <button
-  class={`${Astro.url.pathname === "/" ? "hidden" : ""} md:hidden`}
+  class={`${
+    Astro.url.pathname === "/" ? "hidden" : ""
+  } md:hidden stroke-code-charcoal dark:stroke-code-light-grey`}
   id="sidebar-toggle"
   type="button"
   aria-pressed="false"
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    class="w-10 h-10 stroke-slate-300 fill-transparent"
+    class="w-10 h-10"
     viewBox="0 0 24 24"
   >
     <path
@@ -24,8 +26,8 @@
     button.toggleAttribute("aria-pressed");
     button.innerHTML =
       button.getAttribute("aria-pressed") === null
-        ? `<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 stroke-slate-300 fill-transparent" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg><span class="sr-only">Close sidebar</span>`
-        : `<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 stroke-slate-300 fill-transparent" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg><span class="sr-only">Toggle sidebar</span>`;
+        ? `<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`
+        : `<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>`;
 
     const sidebar = document.querySelector("#sidebar");
     const documentation = document.querySelector("#documentation");

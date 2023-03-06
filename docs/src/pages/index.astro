@@ -1,67 +1,55 @@
 ---
 import Layout from "../layouts/layout.astro";
 import CodeCopy from "../components/code-copy.astro";
+import Animation from "../components/animation.astro";
 ---
 
-<Layout title="Kernel">
+<Layout title="Code">
   <div
-    class="max-w-md mt-4 px-4 mx-auto xl:max-w-7xl lg:px-8 sm:max-w-2xl sm:px-6 md:max-w-3xl lg:max-w-4xl 2xl:max-w-6xl mb-6"
+    class="max-w-md mt-4 px-4 lg:py-20 mx-auto xl:max-w-7xl lg:px-8 sm:max-w-2xl sm:px-6 md:max-w-3xl lg:max-w-4xl 2xl:max-w-6xl mb-6 flex flex-col items-center w-full gap-6"
   >
-    <div class="flex flex-col items-center w-full gap-6">
-      <h1
-        class="py-2 text-center text-5xl sm:text-6xl font-bold tracking-tight text-slate-300 sm:tracking-tight lg:text-[4rem] xl:text-[6rem] xl:tracking-tight 2xl:text-[6.5rem] bg-clip-text text-transparent bg-gradient-to-r from-kernel-teal-300 via-[#4989EF] to-[#F7CF47]"
-      >
-        Flagship Code
-      </h1>
-      <h1
-        class="text-center text-4xl font-bold tracking-tight text-slate-300 sm:text-6xl sm:tracking-tight lg:text-[4rem] xl:text-[6rem] xl:tracking-tight 2xl:text-[6.5rem]"
-      >
-        Ultimate configuration as code
-        <span class="text-kernel-teal-300"> typesafe</span>
-        <span class="whitespace-nowrap text-[#4989EF]"> toolkit</span>
-        <span class="text-[#F7CF47]">for React Native</span>
-      </h1>
-      <div class="relative flex h-full">
-        <CodeCopy
-          args="yarn add -D @brandingbrand/kernel-core @brandingbrand/kernel-cli"
-        />
-      </div>
-      <div class="flex flex-row items-center justify-center w-full gap-10">
-        <a href="/en/introduction">
-          <button
-            class="flex flex-row items-center px-3 py-2 font-medium border-2 rounded-lg flexjustify-center border-slate-300 hover:border-kernel-teal-300 text-slate-300"
-            >Documentation <svg
-              class="stroke mt-0.5 ml-2 -mr-1 h-3 stroke-current stroke-2"
-              fill="none"
-              viewBox="0 0 10 10"
-              aria-hidden="true"
-            >
-              <path
-                class="transition opacity-0 group-hover:opacity-100"
-                d="M0 5h7"></path>
-              <path
-                class="transition group-hover:translate-x-[3px]"
-                d="M1 1l4 4-4 4"></path>
-            </svg>
-          </button>
-        </a>
-        <a
-          href="https://github.com/brandingbrand/flagship/tree/feat/flagship-12"
-        >
-          <button
-            class="flex flex-row items-center px-3 py-2 font-medium border-2 rounded-lg flexjustify-center border-slate-300 hover:border-kernel-teal-300 text-slate-300"
-            >GitHub <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 448 512"
-              class="h-3 ml-2 fill-slate-300"
-            >
-              <path
-                d="M256 64C256 46.33 270.3 32 288 32H415.1C415.1 32 415.1 32 415.1 32C420.3 32 424.5 32.86 428.2 34.43C431.1 35.98 435.5 38.27 438.6 41.3C438.6 41.35 438.6 41.4 438.7 41.44C444.9 47.66 447.1 55.78 448 63.9C448 63.94 448 63.97 448 64V192C448 209.7 433.7 224 416 224C398.3 224 384 209.7 384 192V141.3L214.6 310.6C202.1 323.1 181.9 323.1 169.4 310.6C156.9 298.1 156.9 277.9 169.4 265.4L338.7 96H288C270.3 96 256 81.67 256 64V64zM0 128C0 92.65 28.65 64 64 64H160C177.7 64 192 78.33 192 96C192 113.7 177.7 128 160 128H64V416H352V320C352 302.3 366.3 288 384 288C401.7 288 416 302.3 416 320V416C416 451.3 387.3 480 352 480H64C28.65 480 0 451.3 0 416V128z"
-              ></path>
-            </svg>
-          </button>
-        </a>
-      </div>
+    <h1
+      class="text-center text-4xl font-bold tracking-tight text-code-black dark:text-code-white sm:text-6xl sm:tracking-tight lg:text-[4rem] xl:text-[4rem] xl:tracking-tight 2xl:text-[4rem]"
+    >
+      Typesafe Configuration as Code toolkit for React Native
+    </h1>
+    <CodeCopy
+      args="yarn add -D @brandingbrand/code-core @brandingbrand/code-cli"
+    />
+    <div class="flex flex-row items-center justify-center w-full gap-10">
+      <a href="/en/introduction">
+        <button
+          class="flex flex-row items-center px-3 py-2 font-normal justify-center text-code-white dark:text-code-black rounded-full bg-code-blue dark:bg-code-light-grey"
+          >Documentation <svg
+            class="stroke mt-0.5 ml-2 -mr-1 h-3 stroke-current stroke-2"
+            fill="none"
+            viewBox="0 0 10 10"
+            aria-hidden="true"
+          >
+            <path
+              class="transition opacity-0 group-hover:opacity-100"
+              d="M0 5h7"></path>
+            <path
+              class="transition group-hover:translate-x-[3px]"
+              d="M1 1l4 4-4 4"></path>
+          </svg>
+        </button>
+      </a>
+      <a href="https://github.com/brandingbrand/flagship/tree/feat/flagship-12">
+        <button
+          class="flex flex-row items-center px-3 py-2 font-normal justify-center text-code-white dark:text-code-black rounded-full bg-code-blue dark:bg-code-light-grey"
+          >GitHub <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 448 512"
+            class="h-3 ml-2 fill-current"
+          >
+            <path
+              d="M256 64C256 46.33 270.3 32 288 32H415.1C415.1 32 415.1 32 415.1 32C420.3 32 424.5 32.86 428.2 34.43C431.1 35.98 435.5 38.27 438.6 41.3C438.6 41.35 438.6 41.4 438.7 41.44C444.9 47.66 447.1 55.78 448 63.9C448 63.94 448 63.97 448 64V192C448 209.7 433.7 224 416 224C398.3 224 384 209.7 384 192V141.3L214.6 310.6C202.1 323.1 181.9 323.1 169.4 310.6C156.9 298.1 156.9 277.9 169.4 265.4L338.7 96H288C270.3 96 256 81.67 256 64V64zM0 128C0 92.65 28.65 64 64 64H160C177.7 64 192 78.33 192 96C192 113.7 177.7 128 160 128H64V416H352V320C352 302.3 366.3 288 384 288C401.7 288 416 302.3 416 320V416C416 451.3 387.3 480 352 480H64C28.65 480 0 451.3 0 416V128z"
+            ></path>
+          </svg>
+        </button>
+      </a>
     </div>
   </div>
+  <Animation />
 </Layout>
