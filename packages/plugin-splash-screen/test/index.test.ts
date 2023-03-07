@@ -1,46 +1,39 @@
+/**
+ * @jest-environment-options {"fixture": "__plugin-splash-screen_fixtures"}
+ */
+
 import path from "path";
 import { fs, path as pathk } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
-global.process.cwd = () => path.resolve(__dirname, "..");
-
-jest.mock("@brandingbrand/code-core", () => {
-  const core = jest.requireActual("@brandingbrand/code-core");
-
-  return {
-    ...core,
-    fs: {
-      ...core.fs,
-      move: jest.fn().mockResolvedValue(undefined),
-    },
-  };
-});
-
-const bootsplash = require(pathk.project.resolve(
-  "node_modules",
-  "react-native-bootsplash",
-  "dist",
-  "commonjs",
-  "generate.js"
-));
-
-const spy = jest.spyOn(bootsplash, "generate").mockResolvedValue({});
-
 describe("plugin-splash-screen", () => {
-  beforeAll(async () => {
-    await fs.copy(
-      path.resolve(__dirname, "fixtures", "mock_project"),
-      path.resolve(__dirname, "fixtures", "temp_mock_project")
+  jest
+    .spyOn(pathk.project, "resolve")
+    .mockImplementation((...args: string[]) =>
+      path.resolve.apply(path, [path.resolve(__dirname, ".."), ...args])
     );
-  });
+  jest
+    .spyOn(fs, "move")
+    .mockImplementation((_source: string, _dest: string) => {
+      //
+    });
+  const spy = jest
+    .spyOn(
+      require(pathk.project.resolve(
+        "node_modules",
+        "react-native-bootsplash",
+        "dist",
+        "commonjs",
+        "generate.js"
+      )),
+      "generate"
+    )
+    .mockResolvedValue({});
 
-  afterAll(async () => {
-    await fs.remove(path.resolve(__dirname, "fixtures", "temp_mock_project"));
-  });
   it("ios", async () => {
     await ios({
-      ios: { name: "HelloWorld" },
+      ...global.__FLAGSHIP_CODE_CONFIG__,
       codePluginSplashScreen: {
         plugin: {
           ios: {
@@ -48,7 +41,7 @@ describe("plugin-splash-screen", () => {
           },
         },
       },
-    } as never);
+    });
 
     expect(spy).toHaveBeenCalledWith({
       ios: { projectPath: pathk.project.resolve("ios", "HelloWorld") },
@@ -68,22 +61,8 @@ describe("plugin-splash-screen", () => {
   });
 
   it("android", async () => {
-    jest
-      .spyOn(pathk.project, "path")
-      .mockReturnValue(
-        path.resolve(__dirname, "fixtures", "temp_mock_project")
-      );
-
-    jest
-      .spyOn(pathk.android, "resourcesPath")
-      .mockReturnValue(pathk.project.path());
-
-    jest
-      .spyOn(pathk.android, "mainActivityPath")
-      .mockReturnValue(path.resolve(pathk.project.path(), "MainActivity.java"));
-
     await android({
-      android: { packageName: "com.helloworld" },
+      ...global.__FLAGSHIP_CODE_CONFIG__,
       codePluginSplashScreen: {
         plugin: {
           android: {
@@ -91,7 +70,7 @@ describe("plugin-splash-screen", () => {
           },
         },
       },
-    } as never);
+    });
 
     expect(spy).toHaveBeenCalledWith({
       ios: null,
@@ -110,20 +89,20 @@ describe("plugin-splash-screen", () => {
       logoWidth: 180,
     });
 
-    expect(
-      (
-        await fs.stat(
-          pathk.project.resolve(pathk.android.resourcesPath(), "layout")
+    const layout = (
+      await fs.stat(
+        pathk.project.resolve(pathk.android.resourcesPath(), "layout")
+      )
+    ).isDirectory();
+    const mainActivity = (
+      await fs.readFile(
+        path.resolve(
+          pathk.android.mainActivityPath(global.__FLAGSHIP_CODE_CONFIG__)
         )
-      ).isDirectory()
-    ).toBeTruthy();
+      )
+    ).toString();
 
-    expect(
-      (
-        await fs.readFile(
-          path.resolve(pathk.project.path(), "MainActivity.java")
-        )
-      ).toString()
-    ).toMatch("setContentView(R.layout.splash);");
+    expect(layout).toBeTruthy();
+    expect(mainActivity).toMatch("setContentView(R.layout.splash);");
   });
 });

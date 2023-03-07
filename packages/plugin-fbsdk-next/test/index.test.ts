@@ -1,34 +1,15 @@
+/**
+ * @jest-environment-options {"fixture": "__plugin-fbsdk-next_fixtures"}
+ */
+
 import { fs, path } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
 describe("plugin-fbsdk-next", () => {
-  beforeAll(async () => {
-    return fs.copy(
-      path.resolve(__dirname, "fixtures"),
-      path.resolve(__dirname, "__facebook_fixtures")
-    );
-  });
-
-  afterAll(async () => {
-    return fs.remove(path.resolve(__dirname, "__facebook_fixtures"));
-  });
-
   it("ios", async () => {
-    jest
-      .spyOn(path.ios, "infoPlistPath")
-      .mockReturnValue(
-        path.resolve(__dirname, "__facebook_fixtures", "Info.plist")
-      );
-
-    jest
-      .spyOn(path.ios, "appDelegatePath")
-      .mockReturnValue(
-        path.resolve(__dirname, "__facebook_fixtures", "AppDelegate.mm")
-      );
-
     await ios({
-      ios: { name: "HelloWorld" },
+      ...global.__FLAGSHIP_CODE_CONFIG__,
       codePluginFBSDKNext: {
         plugin: {
           ios: {
@@ -40,17 +21,14 @@ describe("plugin-fbsdk-next", () => {
           },
         },
       },
-    } as never);
+    });
 
     const infoPlist = (
-      await fs.readFile(
-        path.resolve(__dirname, "__facebook_fixtures", "Info.plist")
-      )
+      await fs.readFile(path.ios.infoPlistPath(global.__FLAGSHIP_CODE_CONFIG__))
     ).toString();
-
     const appDelegate = (
       await fs.readFile(
-        path.resolve(__dirname, "__facebook_fixtures", "AppDelegate.mm")
+        path.ios.appDelegatePath(global.__FLAGSHIP_CODE_CONFIG__)
       )
     ).toString();
 
@@ -65,17 +43,6 @@ describe("plugin-fbsdk-next", () => {
   });
 
   it("android", async () => {
-    jest
-      .spyOn(path.android, "manifestPath")
-      .mockReturnValue(
-        path.resolve(__dirname, "__facebook_fixtures", "AndroidManifest.xml")
-      );
-    jest
-      .spyOn(path.android, "stringsPath")
-      .mockReturnValue(
-        path.resolve(__dirname, "__facebook_fixtures", "strings.xml")
-      );
-
     await android({
       codePluginFBSDKNext: {
         plugin: {
@@ -89,16 +56,9 @@ describe("plugin-fbsdk-next", () => {
       },
     });
 
-    const strings = (
-      await fs.readFile(
-        path.resolve(__dirname, "__facebook_fixtures", "strings.xml")
-      )
-    ).toString();
-
+    const strings = (await fs.readFile(path.android.stringsPath())).toString();
     const androidManifest = (
-      await fs.readFile(
-        path.resolve(__dirname, "__facebook_fixtures", "AndroidManifest.xml")
-      )
+      await fs.readFile(path.android.manifestPath())
     ).toString();
 
     expect(strings).toMatch("0001");

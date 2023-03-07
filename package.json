@@ -14,6 +14,8 @@
   "license": "MIT",
   "devDependencies": {
     "@changesets/cli": "^2.25.2",
+    "@jest/environment": "^29.4.3",
+    "@jest/types": "^29.4.3",
     "@tsconfig/node16": "^1.0.3",
     "@tsconfig/react-native": "^2.0.3",
     "@types/jest": "^29.2.2",
@@ -26,7 +28,8 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.1",
-    "jest": "^29.3.1",
+    "jest": "^29.4.3",
+    "jest-environment-node": "^29.4.3",
     "microbundle": "^0.15.1",
     "prettier": "^2.7.1",
     "ts-jest": "^29.0.3",
@@ -74,10 +77,22 @@
     }
   },
   "workspaces": {
-    "packages": ["packages/*", "apps/*", "apps/**/*/plugins/*"],
-    "nohoist": ["**/react", "**/react-native", "**/react-native-*"]
+    "packages": [
+      "packages/*",
+      "apps/*",
+      "apps/**/*/plugins/*"
+    ],
+    "nohoist": [
+      "**/react",
+      "**/react-native",
+      "**/react-native-*"
+    ]
   },
   "jest": {
-    "preset": "ts-jest"
+    "preset": "ts-jest",
+    "testEnvironment": "./packages/core/test/environment/custom-env.ts",
+    "setupFilesAfterEnv": [
+      "./packages/core/test/environment/setup-files-after-env.ts"
+    ]
   }
 }

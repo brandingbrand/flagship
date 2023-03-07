@@ -1,33 +1,15 @@
+/**
+ * @jest-environment-options {"fixture": "__plugin-permissions_fixtures"}
+ */
+
 import { path, fs } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
 describe("plugin-permissions", () => {
-  beforeAll(async () => {
-    return fs.copy(
-      path.resolve(__dirname, "fixtures"),
-      path.resolve(__dirname, "__permissions_fixtures")
-    );
-  });
-
-  afterAll(async () => {
-    return fs.remove(path.resolve(__dirname, "__permissions_fixtures"));
-  });
-
   it("ios", async () => {
-    jest
-      .spyOn(path.ios, "infoPlistPath")
-      .mockReturnValue(
-        path.resolve(__dirname, "__permissions_fixtures", "Info.plist")
-      );
-    jest
-      .spyOn(path.ios, "podfilePath")
-      .mockReturnValue(
-        path.resolve(__dirname, "__permissions_fixtures", "Podfile")
-      );
-
     await ios({
-      ios: { name: "HelloWorld" },
+      ...global.__FLAGSHIP_CODE_CONFIG__,
       codePluginPermissions: {
         plugin: {
           ios: [
@@ -45,31 +27,23 @@ describe("plugin-permissions", () => {
           ],
         },
       },
-    } as never);
+    });
 
-    expect(
-      (
-        await fs.readFile(
-          path.resolve(__dirname, "__permissions_fixtures", "Podfile")
-        )
-      ).toString()
-    ).toMatch("AppTrackingTransparency");
-    expect(
-      (
-        await fs.readFile(
-          path.resolve(__dirname, "__permissions_fixtures", "Info.plist")
-        )
-      ).toString()
-    ).toMatch("NSUserTrackingUsageDescription");
+    const podfile = (await fs.readFile(path.ios.podfilePath())).toString();
+    const infoPlist = (
+      await fs.readFile(path.ios.infoPlistPath(global.__FLAGSHIP_CODE_CONFIG__))
+    ).toString();
+
+    expect(podfile).toMatch("AppTrackingTransparency");
+    expect(podfile).toMatch("Notifications");
+    expect(podfile).toMatch("LocationAlways");
+    expect(infoPlist).toMatch("NSUserTrackingUsageDescription");
+    expect(infoPlist).toMatch("NSLocationAlwaysUsageDescription");
+    expect(infoPlist).toMatch("NSLocationWhenInUseUsageDescription");
+    expect(infoPlist).toMatch("NSLocationAlwaysAndWhenInUseUsageDescription");
   });
 
   it("android", async () => {
-    jest
-      .spyOn(path.android, "manifestPath")
-      .mockReturnValue(
-        path.resolve(__dirname, "__permissions_fixtures", "AndroidManifest.xml")
-      );
-
     await android({
       codePluginPermissions: {
         plugin: {
@@ -78,16 +52,15 @@ describe("plugin-permissions", () => {
       },
     });
 
-    expect(
-      (
-        await fs.readFile(
-          path.resolve(
-            __dirname,
-            "__permissions_fixtures",
-            "AndroidManifest.xml"
-          )
-        )
-      ).toString()
-    ).toMatch("ACCESS_FINE_LOCATION");
+    const manifest = (
+      await fs.readFile(path.android.manifestPath())
+    ).toString();
+
+    expect(manifest).toMatch(
+      '<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>'
+    );
+    expect(manifest).toMatch(
+      '<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>'
+    );
   });
 });
