@@ -55,7 +55,7 @@ $1`
       path.ios.podfilePath(),
       /(post_install do \|installer\|)/,
       `
-  dynamic_frameworks = ['Leanplum-iOS-SDK']
+  dynamic_frameworks = ['Leanplum-iOS-SDK', 'CleverTap-iOS-SDK', 'SDWebImage']
   pre_install do |installer|
     Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
     installer.pod_targets.each do |pod|
