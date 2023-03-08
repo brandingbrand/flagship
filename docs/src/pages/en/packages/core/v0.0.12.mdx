@@ -1,0 +1,220 @@
+---
+title: Core
+description: brandingbrand/code-core
+layout: ../../../../layouts/docs.astro
+lang: en
+---
+
+import CodeCopy from "../../../../components/code-copy.astro";
+
+## Core
+
+`@brandingbrand/code-core` is a foundational package that provides modules for generating native code for a React Native app.
+
+### Getting Started
+
+<div class="flex w-full my-6">
+  <CodeCopy args="yarn add -D @brandingbrand/code-core" />
+</div>
+
+Add the above noted package now provides access to core utils and executors.
+
+### Usage
+
+This package provides utilities and executors that are used as a foundation to generate native code for React Native. The utilities are not only utilized by executors but are also exposed to be utilized by plugins as well. It is important to note that this is dev dependency; it's not meant to be used in release mode - it's only be meant be used as part of the initialization process.
+
+#### Utilities
+
+This is foundational code to be used to write additional compounding complex functions to generate or manipulate native code. The current utilities include: _env_, _exec-async_, _fs_, _fsk_, _logger_, _os_, _path_, _platforms_, _plugins_, _queue_, _rename_, _rimraf-async_, _spinner_, and _xcode_.
+
+##### env
+
+The `env` utility is a static accessor to retrieve the latest env or if doesn't exist it will import the generated _env.js_ file. This env encapsulates the build and runtime normalized configurations. This typed environment references the typed [**interface**](https://github.com/brandingbrand/flagship/blob/482c1034b26db3fd98ae299428dcef6704914c52/packages/core/src/types/types.ts#L1).
+
+##### exec-async
+
+The `exec-async` utility is a promise-based `child_process.exec` function.
+
+##### fs
+
+The `fs` utility is a proxy to the `fs-extra` functionality that queues these functions with a single worker. This is queue is necessary to avoid multiple accessors of files - this is a safe-guard but ultimately won't make a difference as everything is async / await.
+
+##### fsk
+
+The `fsk` utility is an extension upon `fs-extra` functionality. The additional functionality is `copyDir`, `doesKeywordExist` and `update`. The `copyDir` function copies a source directory to a desitnation directory with inclusive `ejs` templates. The `doesKeywordExist` function checks to see if the requested keyword to update in a file exists. The `update` function updates a file with a requested keyword and updated content.
+
+##### logger
+
+The `logger` utility is a group of functions that will format logs in terms of info, warnings and errors.
+
+##### os
+
+The `os` utility is a group of conditional attributes determining if the os is linux or windows.
+
+##### path
+
+The `path` utility is a group of helper modules that provide explicit paths to directories or paths based upon the typed configuration.
+
+##### platforms
+
+The `platforms` utility normalizes _platform_ command line option to a list of native platforms that will be utilized for the executors.
+
+##### plugins
+
+The `plugins` utility retrieves and executes all the specified plugins in the `package.json`.
+
+##### queue
+
+The `queue` utility configures a queue based upon `fastq`. This queue is utilized for queue-based file access.
+
+##### rename
+
+The `rename` utility renames a package directory (i.e. android) to a different package directory. This is helpful in renaming an android folder path to a new folder path based on a new package name. This typically is not necessary as the package name can be different than the application identifier.
+
+##### rimraf-async
+
+The `rimraf-async` utility is a promise-based `rimraf` function.
+
+##### spinner
+
+The `spinner` utility starts and stops a terminal spinner with accompanied text.
+
+##### xcode
+
+The `xcode` utility provides accessors to _xcproject_ and proxy / builder functions to the `xcode` library.
+
+#### Executors
+
+Foundational standardized life-cycle functions that manipulate and generate native and non-native code. These are foundational functions because they are the base manipulations and generations needed for a React Native app. They are standardized because they all contain an exported `execute` function that contains `options` and `config` arguments. The options are the command-line options and the config is the env typed configuration. They are life-cycle functions because they are invoked at specified life-cycles: `pre`, `prePlatform`, `platform`, `postPlatform` and `post` - each with an exported priority array. This provides the utlimate generic customizable executors.
+
+Each command-line option contains this executor pattern: init, clean and keys.
+
+#### init
+
+##### pre
+
+###### logger
+
+The `logger` executor starts the spinner utility based upon the command-line option `verbose`. If `verbose` is provided the spinner will not be invoked and `stdout` will be provided in terminal. If `verbose` is not provided the spinner will be invoked and `stdout` will be disabled.
+
+###### tsc
+
+The `tsc` executor typescript compiles the typescript envs from the `.coderc/env` directory. It also copies the command-line option env compiled file to an `env.js` file to be used by downstream services.
+
+###### env
+
+The `env` executor generates a `project_env_index.js` file in the `fsapp` distribution directory so the env is exported via `fsapp` and the EnvSwitcher can be utilized.
+
+###### normalize
+
+The `normalize` executor deep-merges all plugin ios and android configs to the base ios and android config so the plugins can take advantage of some of the base config executors based upon the configuration.
+
+##### prePlatform
+
+###### noop
+
+The `noop` executor is a no-operation utility - no executor is run for this life-cycle.
+
+##### platform
+
+###### template
+
+The `template` executor copies the ios and android templates, according to the command-line option `platform`, to their source destinations with the `ejs` updates according to the configuration.
+
+###### config
+
+The `config` executor does native based updates outside of `ejs` template updates, according to the command-line option `platform`. These updates for iOS include entitlements and frameworks. These updates for Android include renaming main and debug folder structures according to the application identifier.
+
+\*\* These will be moved to the `postPlatform` life-cycle in the future.
+
+##### postPlatform
+
+###### plist
+
+The `plist` executor updates the iOS plist configuration based upon the `simple-plist` library, according to the command-line option `platform`. This deep-merges the current plist with the new object requested plist items.
+
+###### plugins
+
+The `plugins` executor gathers all the plugins specified in the `package.json` under the `code.plugins` configuration, according to the command-line option `platform`. It then executes these plugins in order according to the priority array.
+
+###### cocoapods
+
+The `cocoapods` executor invokes `pod install`, according to the command-line option `platform`.
+
+##### post
+
+###### logger
+
+The `logger` executor stops the spinner utility based upon the command-line option `verbose`.
+
+#### clean
+
+##### pre
+
+###### logger
+
+The `logger` executor starts the spinner utility based upon the command-line option `verbose`. If `verbose` is provided the spinner will not be invoked and `stdout` will be provided in terminal. If `verbose` is not provided the spinner will be invoked and `stdout` will be disabled.
+
+###### env
+
+The `env` executor removes all typescript compiled env js files in the `.coderc/env` directory.
+
+##### prePlatform
+
+###### noop
+
+The `noop` executor is a no-operation utility - no executor is run for this life-cycle.
+
+##### platform
+
+###### native
+
+The `native` executor removes native directories based upon the command-line option `platform`.
+
+##### postPlatform
+
+###### noop
+
+The `noop` executor is a no-operation utility - no executor is run for this life-cycle.
+
+##### post
+
+###### logger
+
+The `logger` executor stops the spinner utility based upon the command-line option `verbose`.
+
+#### keys
+
+##### pre
+
+###### logger
+
+The `logger` executor starts the spinner utility based upon the command-line option `verbose`. If `verbose` is provided the spinner will not be invoked and `stdout` will be provided in terminal. If `verbose` is not provided the spinner will be invoked and `stdout` will be disabled.
+
+##### prePlatform
+
+###### noop
+
+The `noop` executor is a no-operation utility - no executor is run for this life-cycle.
+
+##### platform
+
+###### native
+
+The `native` executor adds ios or android codesigning keys necessary for ci/cd based upon the command-line option `platform`.
+
+##### postPlatform
+
+###### noop
+
+The `noop` executor is a no-operation utility - no executor is run for this life-cycle.
+
+##### post
+
+###### logger
+
+The `logger` executor stops the spinner utility based upon the command-line option `verbose`.
+
+### Changelog
+
+[**322992a8f**](https://github.com/brandingbrand/flagship/pull/2517/commits/322992a8f6abbb507c547bd7c59b4eac3798f494) -- initial env and android release signing
