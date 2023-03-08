@@ -14,7 +14,7 @@ const { content, frontmatter, url } = Astro.props;
     class="px-6 md:px-16 grid w-full flex-1 grid-cols-1 gap-4 md:grid-cols-[250px_auto] lg:grid-cols-[250px_auto] markdown"
   >
     <Sidebar url={url} />
-    <article id="documentation" class="w-full">
+    <article id="documentation" class="w-full overflow-hidden">
       <Breadcrumbs url={url} lang={frontmatter.lang} />
       <slot />
       <Versions />
