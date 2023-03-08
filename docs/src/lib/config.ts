@@ -1,5 +1,5 @@
 export const SIDEBAR = {
-  Kernel: [
+  Code: [
     { text: "Introduction", link: "/en/introduction" },
     { text: "FAQ", link: "/en/faq" },
     { text: "Roadmap", link: "/en/roadmap" },
