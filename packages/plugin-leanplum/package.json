@@ -31,6 +31,7 @@
     "@brandingbrand/code-core": "^0.0.12"
   },
   "peerDependencies": {
+    "@brandingbrand/code-plugin-app-icon": "^0.0.12",
     "@brandingbrand/code-plugin-firebase-app": "^0.0.12",
     "@leanplum/react-native-sdk": "^2.0.0",
     "clevertap-react-native": "^0.9.4"

@@ -6,6 +6,7 @@ interface PluginLeanplum {
   };
   android?: {
     leanplumFCMVersion: string;
+    notificationColor: string;
   };
 }
 
