@@ -1,10 +1,11 @@
 /* eslint-disable no-control-regex */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+import ejs from "ejs";
 import Table from "cli-table";
+import noop from "lodash/noop";
 
-import { exec, fs, summary } from "../../../utils";
+import { exec, fs, path, summary } from "../../../utils";
 
 import type { Config } from "../../../types/types";
 import type { InitOptions } from "../../../types/options";
@@ -12,7 +13,6 @@ import type { Items } from "../../../types/Summary";
 
 export const execute = async (options: InitOptions, config: Config) => {
   const LOG_FILE_PATH = "/tmp/code-core.log";
-  const PADDING_MAX = 60;
   let errors = 0;
   let warnings = 0;
 
@@ -22,46 +22,6 @@ export const execute = async (options: InitOptions, config: Config) => {
       head: ["blue"],
     },
   });
-
-  const template = (errorsArr: unknown[], warningsArr: unknown[]) => {
-    const pkg = require("../package.json");
-
-    const name = `${pkg.name} v${pkg.version}`;
-    const padding = PADDING_MAX - name.length;
-
-    return `
-┌────────────────────────────────────────────────────────────┐
-│                                                            │
-│ ${name}${"│".padStart(padding)}
-│                                                            │
-└────────────────────────────────────────────────────────────┘
-
-
- Summary
- ──────────────────────────
-
-${
-  process.env["CI"]
-    ? table.toString()
-    : table
-        .toString()
-        .replace(/\[[\d]+?m/g, "")
-        .replace(//g, "")
-}
-${errorsArr.length ? "\n\n Errors\n ──────────────────────────\n" : ""}
-${
-  errorsArr.length
-    ? errorsArr.map((it: any) => ` ${it.toString()}\n`).join("\n")
-    : ""
-}
-${warningsArr.length ? "\n Warnings\n ──────────────────────────\n" : ""}
-${
-  warningsArr.length
-    ? warningsArr.map((it: any) => ` ${it.toString()}\n`).join("\n")
-    : ""
-}
-    `;
-  };
 
   summary.items.forEach((it) => {
     const row = Object.keys(it)
@@ -85,9 +45,28 @@ ${
     await fs.unlink(LOG_FILE_PATH);
   }
 
-  const data = template(
-    summary.items.filter((it) => !!it.error).map((it) => it.error),
-    summary.items.filter((it) => !!it.warning).map((it) => it.warning)
+  const data = ejs.render(
+    (
+      await fs.readFile(
+        path.resolve(__dirname, "template", "etc", "code-core.log")
+      )
+    ).toString(),
+    {
+      summary: process.env["CI"]
+        ? table.toString()
+        : table
+            .toString()
+            .replace(/\[[\d]+?m/g, "")
+            .replace(//g, ""),
+      errors: summary.items
+        .filter((it) => !!it.error)
+        .map((it) => it.error)
+        .join("\n\n "),
+      warnings: summary.items
+        .filter((it) => !!it.warning)
+        .map((it) => it.warning)
+        .join("\n\n "),
+    }
   );
 
   if (!options.verbose) {
@@ -123,13 +102,11 @@ ${
 
   if (process.env["CI"]) {
     process.stderr.write(data);
+
+    if (errors) process.exit(1);
   } else {
     await fs.appendFile(LOG_FILE_PATH, data);
-  }
 
-  if (!process.env["CI"] && errors) {
-    await exec.async("open file:///tmp/code-core.log").catch(() => {
-      //
-    });
+    if (errors) await exec.async("open file:///tmp/code-core.log").catch(noop);
   }
 };

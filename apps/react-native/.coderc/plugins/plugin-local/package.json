@@ -20,7 +20,7 @@
   ],
   "scripts": {
     "build": "microbundle --target node --format cjs,esm --tsconfig tsconfig.build.json --no-sourcemap",
-    "dev": "microbundle watch --target node --format cjs,esm --tsconfig tsconfig.build.json",
+    "dev": "microbundle watch --target node --format cjs,esm --tsconfig tsconfig.build.json --no-sourcemap",
     "test": "jest"
   },
   "keywords": [],
