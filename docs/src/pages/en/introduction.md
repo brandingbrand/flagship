@@ -35,8 +35,8 @@ Plugins are published or local native-specific scripts (e.g., iOS and/or Android
 
 ## Usage
 
-At any time in the phase of your React Native project, you can opt-in to using Flagship Code™; opting in is as easy as creating a typesafe configuration file + required plugins and adding the ios and android directories to your `.gitignore`.
+At any time in the phase of your React Native project, you can opt-in to using Flagship Code™; opting in is as easy as creating a typesafe configuration file + required plugins and adding the iOS and Android directories to your `.gitignore`.
 
-If you are already using Flagship Code™ - at any time, you can easily opt out from continuing to use Flagship Code™; opting out from Flagship Code™ is as easy as removing your configuration folder and ios and Android directories from your `.gitignore`.
+If you are already using Flagship Code™ - at any time, you can easily opt out from continuing to use Flagship Code™; opting out from Flagship Code™ is as easy as removing your configuration folder and iOS and Android directories from your `.gitignore`.
 
 Head over to the [**Integration**](/en/usage/integration) section for more detailed information.
