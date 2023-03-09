@@ -189,3 +189,6 @@ apps/react-native/ios
 apps/react-native/android
 apps/**/*/.coderc/env/env*.js
 !apps/**/*/.coderc/plugins/**/*/dist/
+
+# Flagship Code™
+!code-core.log
