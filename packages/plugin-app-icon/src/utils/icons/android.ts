@@ -27,4 +27,10 @@ export const android: Icon[] = [
     inputFile: "android-legacy.png",
     transform: { size: 944, radius: 472, padding: 40 },
   },
+  {
+    platform: "android",
+    type: "notification",
+    name: "mipmap-{dpi}/ic_notification.png",
+    inputFile: "android-notification.png",
+  },
 ];
