@@ -256,6 +256,14 @@ const getStylesPath = (): string =>
   resolvePathFromProject(getResourcesPath(), "values", "styles.xml");
 
 /**
+ * Returns the path to styles.xml.
+ *
+ * @return The path to strings.xml
+ */
+const getColorsPath = (): string =>
+  resolvePathFromProject(getResourcesPath(), "values", "colors.xml");
+
+/**
  * Returns the path to the Fastfile
  *
  * @return The path to Fastfile
@@ -346,5 +354,6 @@ export const android = {
   rootDirPath: getRootDirPathAndroid,
   stringsPath: getStringsPath,
   stylesPath: getStylesPath,
+  colorsPath: getColorsPath,
   fastfilePath: getFastfilePathAndroid,
 };

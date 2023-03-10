@@ -61,6 +61,7 @@ describe("plugin-leanplum", () => {
         path.android.mainApplicationPath(global.__FLAGSHIP_CODE_CONFIG__)
       )
     ).toString();
+    const colors = (await fs.readFile(path.android.colorsPath())).toString();
 
     expect(buildGradle).toMatch(
       "implementation 'com.leanplum:leanplum-fcm:5.7.0'"
@@ -77,6 +78,26 @@ describe("plugin-leanplum", () => {
     expect(mainApplication).toMatch("Parser.parseVariables(this);");
     expect(mainApplication).toMatch(
       "LeanplumActivityHelper.enableLifecycleCallbacks(this);"
+    );
+    expect(mainApplication).toMatch(
+      `Leanplum.setApplicationContext(this);
+    Parser.parseVariables(this);
+    LeanplumActivityHelper.enableLifecycleCallbacks(this);
+    LeanplumPushService.setCustomizer(new LeanplumPushNotificationCustomizer() {
+        @Override
+        public void customize(NotificationCompat.Builder builder, Bundle notificationPayload) {
+            builder.setSmallIcon(R.mipmap.ic_notification);
+            builder.setColor(ContextCompat.getColor(getApplicationContext(), R.color.leanplum_notification_color));
+        }
+
+        @Override
+        public void customize(Notification.Builder builder, Bundle notificationPayload, @Nullable Notification.Style notificationStyle) {
+            
+        }
+  });`
+    );
+    expect(colors).toMatch(
+      '<color name="leanplum_notification_color">#000000</color>'
     );
   });
 });

@@ -10,7 +10,7 @@ jest.mock("../src/utils/rules", () => ({
   android: [
     {
       platform: "android",
-      size: { legacy: 192, adaptive: 432 },
+      size: { legacy: 192, adaptive: 432, notification: 96 },
       dpi: "xxxhdpi",
     },
   ],
@@ -56,6 +56,15 @@ describe("plugin-app-icon", () => {
           path.android.resourcesPath(),
           "mipmap-xxxhdpi",
           "ic_launcher_background.png"
+        )
+      )
+    ).toBeTruthy();
+    expect(
+      await fs.pathExists(
+        path.project.resolve(
+          path.android.resourcesPath(),
+          "mipmap-xxxhdpi",
+          "ic_notification.png"
         )
       )
     ).toBeTruthy();

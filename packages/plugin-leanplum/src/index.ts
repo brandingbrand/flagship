@@ -6,6 +6,7 @@ import {
   infoPlist,
   path,
   summary,
+  colors,
 } from "@brandingbrand/code-core";
 
 import type { CodePluginLeanplum } from "./types";
@@ -80,6 +81,9 @@ const android = summary.withSummary(
     const version =
       config.codePluginLeanplum?.plugin?.android?.leanplumFCMVersion || "5.7.0";
 
+    const notificationColor =
+      config.codePluginLeanplum?.plugin.android?.notificationColor || "#000000";
+
     await fsk.update(
       path.android.gradlePath(),
       /(dependencies {)/,
@@ -96,6 +100,7 @@ const android = summary.withSummary(
 
 import com.leanplum.Leanplum;
 import com.leanplum.annotations.Parser;
+import com.leanplum.LeanplumPushService;
 import com.leanplum.LeanplumActivityHelper;`
     );
 
@@ -106,8 +111,22 @@ import com.leanplum.LeanplumActivityHelper;`
     Leanplum.setApplicationContext(this);
     Parser.parseVariables(this);
     LeanplumActivityHelper.enableLifecycleCallbacks(this);
+    LeanplumPushService.setCustomizer(new LeanplumPushNotificationCustomizer() {
+        @Override
+        public void customize(NotificationCompat.Builder builder, Bundle notificationPayload) {
+            builder.setSmallIcon(R.mipmap.ic_notification);
+            builder.setColor(ContextCompat.getColor(getApplicationContext(), R.color.leanplum_notification_color));
+        }
+
+        @Override
+        public void customize(Notification.Builder builder, Bundle notificationPayload, @Nullable Notification.Style notificationStyle) {
+            
+        }
+  });
 `
     );
+
+    await colors.addColor("leanplum_notification_color", notificationColor);
   },
   "plugin-leanplum",
   "platform::android"
