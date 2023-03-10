@@ -31,6 +31,7 @@
     "@brandingbrand/code-core": "^0.0.12"
   },
   "peerDependencies": {
-    "@brandingbrand/code-plugin-firebase-app": "^0.0.12"
+    "@brandingbrand/code-plugin-firebase-app": "^0.0.12",
+    "@react-native-google-signin/google-signin": "^9.0.2"
   }
 }
