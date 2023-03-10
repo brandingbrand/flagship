@@ -214,15 +214,15 @@ const prod: ENV = {
 export default prod;
 ```
 
-If you are using `fsapp` to access the `env` object - the environment configuration file is now typesafe at runtime.
+If you are using `fsapp` to access the `env` object - the environment configuration is now typesafe at runtime.
 
 ### Plugins
 
-Plugins are platform specific scripts that generate or manipulate native code with respect to a specific third-party depedency. Plugins are npm packages that added as dev dependencies - only required at time of `code init`. They may or may not export an interface that will need to be added to your environment as shown in the previous section. Plugins are run by the `plugins` executor by auto-discovery.
+Plugins are platform specific scripts that generate or manipulate native code with respect to a specific third-party depedency. Plugins are npm packages that are added as dev dependencies (only required at time of `code init`). They may or may not export an interface that will need to be added to your environment as shown in the previous section. Plugins are run by the `plugins` executor by auto-discovery.
 
 #### Linking
 
-Link your plugins by adding them to the `package.json` `code.plugins` array in a priority order. Plugins are run with async / await from 0th-index to Nth-index.
+Plugins can be remote or local for ultimate flexibility. Link your plugins by adding them to the `package.json` `code.plugins` array in a priority order. Plugins are run asynchronously from 0th-index to Nth-index (async / await).
 
 `package.json`
 
@@ -239,8 +239,6 @@ Link your plugins by adding them to the `package.json` `code.plugins` array in a
     ]
   }
 ```
-
-Plugins can be remote or local distribution allowing for ultimate flexibility.
 
 #### Generating
 
