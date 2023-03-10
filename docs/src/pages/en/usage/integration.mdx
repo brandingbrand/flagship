@@ -21,7 +21,7 @@ To get started, you will want to add the Flagship Code™ core and cli packages.
 
 First, add the `ios` and `android` directories to your `.gitignore`. Create a `.coderc` directory in the root of your project. This is the Flagship Code™ runtime configuration directory where all configurations will be hosted i.e., CaC. Inside `.coderc`, create an `env` directory - where all your typed environments will exist. These are the only two mandatory directories.
 
-Additional directories are recommended for separation of concerns. Inside `.coderc` create a `signing` directory - this will be where your native codesigning exists. For iOS, this would be certs and profiles. For Android, it will be your keystores. 
+Additional directories are recommended for separation of concerns. Inside `.coderc` create a `signing` directory - this will be where your native codesigning exists. For iOS, this would be certs and profiles. For Android, it will be your keystores.
 
 It will be beneficial to break down your iOS codesigning assets into their respective environments e.g., enterprise, adhoc, store, etc. This way only a minimal set of profiles and certs are configured during adding of codesigning keys for CI/CD. Inside `.coderc` create an `assets` directory - this will be useful to host all plugin assets. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.coderc).
 
@@ -34,7 +34,7 @@ Your `.coderc` directory should now look like:
 └── signing
 ```
 
-Assets will generally be files related to plugins i.e. _.png for app icons, _.png for splash screen, google-services.json for firebase, etc. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.coderc/assets). Typically, organizing assets by functionality is the most readable structure. 
+Assets will generally be files related to plugins e.g., _.png for app icons, _.png for splash screen, and google-services.json for Firebase, etc. Typically, organizing assets by functionality is the most readable structure. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.coderc/assets).
 
 ```
 ./assets
@@ -65,7 +65,7 @@ Assets will generally be files related to plugins i.e. _.png for app icons, _.pn
             └── logo.png
 ```
 
-Env will be contain environment files e.g., development, production, adhoc, etc. These are typescript files based on the `@brandingbrand/code-core` exported type `Config<T>`. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.coderc/env).
+Env will be contain environment files e.g., development, production, adhoc, etc. These are TypeScript files based on the `@brandingbrand/code-core` exported type `Config<T>`. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.coderc/env).
 
 ```
 ./env
@@ -97,9 +97,9 @@ The signing folder will host all of your files related to codesigning. Android c
 
 #### Base
 
-Environment configuration files are the foundation of Flagship Code™ - this is the Configuration as Code (CaC) content. 
+Environment configuration files are the foundation of Flagship Code™ - this is the Configuration as Code (CaC) content.
 
-In the `.coderc/env` directory create an environment file e.g., env.prod.ts. Next, Import `Config` from `@brandingbrand/code-core` in your environment configuration file. This will allow you to generate a basic build configuration for iOS and Android. Plugin types can be imported and extended upon the base config i.e. `Config & CodePluginAsset`. With this simplistic approach you get a build configuration with plugins.
+In the `.coderc/env` directory create an environment file e.g., env.prod.ts. Next, Import `Config` from `@brandingbrand/code-core` in your environment configuration file. This will allow you to generate a basic build configuration for iOS and Android. Plugin types can be imported and extended upon the base config e.g. `Config & CodePluginAsset`. With this simplistic approach you get a build configuration with plugins.
 
 ```
 import {Config} from '@brandingbrand/code-core';
@@ -135,9 +135,9 @@ export default prod;
 
 #### Advanced
 
-The advanced approach will allow you take advantage of build and runtime configuration from a single source of truth environment configuration file. We will utiilize TypeScript's [**triple-dash directive**](https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html) to solve for a single source of truth.
+The advanced approach will allow you take advantage of build and runtime configuration from a single environment configuration file. We will utiilize TypeScript's [**triple-dash directive**](https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html) to solve for a single source of truth.
 
-Move the environment type to a common location inside the `src/types` directory. Inside the `src/types` directory create an `app.d.ts` file. This file is a [type declaration file](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html) which we will use to define our overall app type. If you are utilizing `fsapp` we will overwrite the `any` `env` type with our defined type via `fsapp.d.ts` file -  To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/blob/feat/flagship-12/apps/react-native/src/types).
+Move the environment type to a common location inside the `src/types` directory. Inside the `src/types` directory create an `app.d.ts` file. This file is a [type declaration file](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html) which we will use to define our overall app type.
 
 In this file you will define the build and runtime configuration, where the interface `App` is your runtime configuration. This will provide us with type-hints when utilizing runtime configurations.
 
@@ -159,6 +159,8 @@ declare module '@brandingbrand/code-app' {
   }
 }
 ```
+
+If you are utilizing `fsapp` we will overwrite the `any` `env` type with our defined type via `fsapp.d.ts` file - To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/blob/feat/flagship-12/apps/react-native/src/types).
 
 `fsapp.d.ts`
 
