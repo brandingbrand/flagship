@@ -47,8 +47,12 @@
     @apply text-sm;
   }
 
-  .markdown a:not(.heading-link--hidden---effects) {
+  .markdown a:not(.heading-link--hidden---effects, .breadcrumb) {
     @apply text-code-charcoal dark:text-code-light-grey underline decoration-dotted underline-offset-2 decoration-current hover:text-code-light-blue dark:hover:text-code-light-blue;
+  }
+
+  .breadcrumb {
+    @apply text-code-charcoal dark:text-code-light-grey  hover:text-code-light-blue dark:hover:text-code-light-blue;
   }
 
   :is([dir="rtl"]) .markdown a[rel~="noreferrer"] > span {
