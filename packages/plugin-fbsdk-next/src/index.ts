@@ -43,7 +43,7 @@ const ios = summary.withSummary(
       path.ios.appDelegatePath(config),
       /(#import "AppDelegate.h")/,
       `$1
-#import <FBSDKCoreKit/FBSDKCoreKit.h>`
+#import <FBSDKCoreKit/FBSDKCoreKit-Swift.h>`
     );
 
     await fsk.update(
