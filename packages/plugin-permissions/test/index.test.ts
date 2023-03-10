@@ -1,5 +1,5 @@
 /**
- * @jest-environment-options {"fixture": "__plugin-permissions_fixtures"}
+ * @jest-environment-options {"fixture": "__plugin-permissions_fixtures", "additionalDirectory": "./fixtures"}
  */
 
 import { path, fs } from "@brandingbrand/code-core";
@@ -29,14 +29,22 @@ describe("plugin-permissions", () => {
       },
     });
 
-    const podfile = (await fs.readFile(path.ios.podfilePath())).toString();
+    const podspec = (
+      await fs.readFile(
+        path.project.resolve(
+          "node_modules",
+          "react-native-permissions",
+          "RNPermissions.podspec"
+        )
+      )
+    ).toString();
     const infoPlist = (
       await fs.readFile(path.ios.infoPlistPath(global.__FLAGSHIP_CODE_CONFIG__))
     ).toString();
 
-    expect(podfile).toMatch("AppTrackingTransparency");
-    expect(podfile).toMatch("Notifications");
-    expect(podfile).toMatch("LocationAlways");
+    expect(podspec).toMatch("ios/AppTrackingTransparency/*.{h,m,mm}");
+    expect(podspec).toMatch("ios/Notifications/*.{h,m,mm}");
+    expect(podspec).toMatch("ios/LocationAlways/*.{h,m,mm}");
     expect(infoPlist).toMatch("NSUserTrackingUsageDescription");
     expect(infoPlist).toMatch("NSLocationAlwaysUsageDescription");
     expect(infoPlist).toMatch("NSLocationWhenInUseUsageDescription");
