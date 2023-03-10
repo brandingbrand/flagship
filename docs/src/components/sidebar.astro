@@ -17,7 +17,7 @@ import ThemeToggle from "./theme-toggle.astro";
             </h2>
             <ul class="mb-2">
               {children.map((child) => {
-                const url = Astro.site?.pathname + child.link;
+                const url = Astro.site?.pathname + "/" + import.meta.env.BASE_URL + child.link;
                 const isActive = url === child.link;
                 return (
                   <li>
