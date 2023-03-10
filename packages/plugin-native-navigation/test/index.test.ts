@@ -1,13 +1,19 @@
+/**
+ * @jest-environment-options {"fixture": "__plugin-native-navigation_fixtures", "additionalDirectory": "./fixtures"}
+ */
+
 import path from "path";
 import { path as pathk } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
-global.process.cwd = () => path.resolve(__dirname, "..");
-
-jest.mock("../src/utils/dependencies");
-
 describe("plugin-native-navigation", () => {
+  jest
+    .spyOn(pathk.project, "resolve")
+    .mockImplementation((...args: string[]) =>
+      path.resolve.apply(path, [process.cwd(), "..", "..", ...args])
+    );
+
   const rnnlinkIOS = pathk.project.resolve(
     "node_modules",
     "react-native-navigation",
