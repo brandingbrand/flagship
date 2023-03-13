@@ -51,6 +51,32 @@ const dev: ENV = {
       urlScheme: {
         scheme: 'code',
       },
+      mainApplicationAttributes: {
+        'android:networkSecurityConfig': '@xml/network_security_config',
+      },
+    },
+    security: {
+      'domain-config': [
+        {
+          $: {
+            cleartextTrafficPermitted: true,
+          },
+          domain: [
+            {
+              $: {
+                includeSubdomains: true,
+              },
+              _: 'localhost',
+            },
+            {
+              $: {
+                includeSubdomains: true,
+              },
+              _: '10.0.2.2',
+            },
+          ],
+        },
+      ],
     },
     styles: {
       appThemeAttributes: {

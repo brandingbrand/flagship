@@ -1,5 +1,10 @@
 import type { InfoPlistType } from "./ios";
-import type { AndroidManifestType, StringsType, StylesType } from "./android";
+import type {
+  AndroidManifestType,
+  NetworkSecurityConfigType,
+  StringsType,
+  StylesType,
+} from "./android";
 
 export interface Config<T = unknown> {
   android: Android;
@@ -150,6 +155,10 @@ export interface Android {
    * AndroidManifest.xml configuration
    */
   manifest?: Manifest;
+  /**
+   * Android network_security_config.xml configuration
+   */
+  security?: NetworkSecurityConfigType.NetworkSecurityConfigElements;
   /**
    * Android styles.xml configuration
    */
