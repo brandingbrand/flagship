@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { fs, fsk, path, spinner } from "../../../utils";
+import { fs, fsk, path, spinner, writable } from "../../../utils";
 import { withSummary } from "../../../utils/summary";
 
 import type { Config } from "../../../types/types";
@@ -23,6 +23,8 @@ export const execute = withSummary(
       }
 
       spinner.stop();
+
+      writable.restore();
     }
   },
   "logger",

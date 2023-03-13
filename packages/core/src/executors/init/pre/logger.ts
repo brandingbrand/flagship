@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
 import { withSummary } from "../../../utils/summary";
-import { fs, fsk, path, spinner } from "../../../utils";
+import { fs, fsk, path, spinner, writable } from "../../../utils";
 
 import type { Config } from "../../../types/types";
 import type { InitOptions } from "../../../types/options";
@@ -14,8 +14,7 @@ export const execute = withSummary(
     if (!options.verbose) {
       spinner.start("Initializing the app");
 
-      //@ts-ignore
-      process.stdout.write = function () {};
+      writable.redirect();
 
       if (
         await fs.pathExists(
