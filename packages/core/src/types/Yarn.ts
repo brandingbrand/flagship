@@ -6,7 +6,7 @@ export interface List {
   };
 }
 
-interface Tree {
+export interface Tree {
   name?: string;
   children?: Tree[];
   hint?: string | null;

@@ -1,24 +1,20 @@
-import * as path from "../../path";
+import type { List, Tree } from "../../../types/Yarn";
 
-import type { List } from "../../../types/Yarn";
+export const version = (packageName: string, json: List): string | undefined =>
+  rVersion(packageName, json.data.trees);
 
-export const version = (
-  packageName: string,
-  json: List
-): string | undefined => {
-  const pkg = require(path.project.packagePath());
+const rVersion = (packageName: string, tree: Tree[]): string | undefined => {
+  const rootDependency = tree.find((it) => it.name?.match(packageName));
 
-  const res = json?.data?.trees?.find((it) => it?.name?.match(packageName));
-
-  if (res) {
-    return res.name
+  if (rootDependency) {
+    return rootDependency.name
       ?.split("@")
       ?.find((it) => it.match(/[0-9]+?.[0-9]+?.[0-9]+?$/));
   }
 
-  return json?.data?.trees
-    ?.find((it) => it?.name?.match(pkg.name))
-    ?.children?.find((it) => it?.name?.match(packageName))
-    ?.name?.split("@")
-    ?.find((it) => it.match(/[0-9]+?.[0-9]+?.[0-9]+?$/));
+  for (const leaf of tree) {
+    if (leaf.children) {
+      return rVersion(packageName, leaf.children);
+    }
+  }
 };
