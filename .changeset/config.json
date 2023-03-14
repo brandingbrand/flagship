@@ -7,5 +7,8 @@
   "access": "restricted",
   "baseBranch": "feat/flagship-12",
   "updateInternalDependencies": "patch",
-  "ignore": ["@brandingbrand/code-app"]
+  "ignore": ["@brandingbrand/code-app"],
+  "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
+    "onlyUpdatePeerDependentsWhenOutOfRange": true
+  }
 }
