@@ -192,3 +192,4 @@ apps/**/*/.coderc/env/env*.js
 
 # Flagship Code™
 !code-core.log
+!**/*/test/fixtures/node_modules

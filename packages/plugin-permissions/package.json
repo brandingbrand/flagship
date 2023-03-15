@@ -32,7 +32,7 @@
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "react-native-permissions": "^3.6.1"
+    "react-native-permissions": "^3.7.3"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.191"

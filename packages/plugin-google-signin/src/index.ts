@@ -19,8 +19,9 @@ const ios = summary.withSummary(
       path.ios.appDelegatePath(config),
       /(#import "AppDelegate.h")/,
       `$1
+
 #import <RNGoogleSignin/RNGoogleSignin.h>
-#import "RNGoogleSignin.h"`
+`
     );
 
     await fsk.update(

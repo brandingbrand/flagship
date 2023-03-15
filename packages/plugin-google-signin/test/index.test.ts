@@ -29,9 +29,7 @@ describe("plugin-google-signin", () => {
       await fs.readFile(path.ios.infoPlistPath(global.__FLAGSHIP_CODE_CONFIG__))
     ).toString();
 
-    expect(appDelegate).toMatch(
-      '#import <RNGoogleSignin/RNGoogleSignin.h>\n#import "RNGoogleSignin.h"'
-    );
+    expect(appDelegate).toMatch("#import <RNGoogleSignin/RNGoogleSignin.h>");
     expect(appDelegate).toMatch(
       "[RNGoogleSignin application:application openURL:url options:options]"
     );

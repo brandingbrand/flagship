@@ -15,18 +15,22 @@ import type { CodePluginPermissions } from "./types";
 
 const ios = summary.withSummary(
   async (config: Config & CodePluginPermissions) => {
-    if (config.codePluginPermissions.plugin.ios) {
-      await fsk.update(
-        path.ios.podfilePath(),
-        /(target[\s\S]+?do)/,
-        `$1\n${utils.ios.pods(config.codePluginPermissions.plugin.ios)}`
-      );
+    if (!config.codePluginPermissions.plugin.ios) return;
 
-      await infoPlist.setPlist(
-        utils.ios.usageDescriptions(config.codePluginPermissions.plugin.ios),
-        config
-      );
-    }
+    await infoPlist.setPlist(
+      utils.ios.usageDescriptions(config.codePluginPermissions.plugin.ios),
+      config
+    );
+
+    await fsk.update(
+      path.project.resolve(
+        "node_modules",
+        "react-native-permissions",
+        "RNPermissions.podspec"
+      ),
+      /"ios\/\*\.{h,m,mm}".*/,
+      utils.ios.podspec(config.codePluginPermissions.plugin.ios)
+    );
   },
   "plugin-permissions",
   "platform::ios"

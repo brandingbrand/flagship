@@ -29,10 +29,14 @@ describe("plugin-firebase-app", () => {
         path.ios.pbxprojFilePath(global.__FLAGSHIP_CODE_CONFIG__)
       )
     ).toString();
+    const podfile = (await fs.readFile(path.ios.podfilePath())).toString();
 
     expect(appDelegate).toMatch("#import <Firebase.h>");
     expect(appDelegate).toMatch("[FIRApp configure];");
     expect(pbxproj).toMatch("/* GoogleService-Info.plist in Resources */");
+    expect(podfile).toMatch("use_frameworks! :linkage => :static");
+    expect(podfile).toMatch("$RNFirebaseAsStaticFramework = true");
+    expect(podfile).toMatch("# :flipper_configuration");
   });
 
   it("android", async () => {

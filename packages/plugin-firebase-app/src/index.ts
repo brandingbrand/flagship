@@ -53,6 +53,21 @@ const ios = summary.withSummary(
         `$1
   [FIRApp configure];`
       );
+
+      await fsk.update(
+        path.ios.podfilePath(),
+        /(config = use_native_modules!)/,
+        `$1
+  use_frameworks! :linkage => :static
+  $RNFirebaseAsStaticFramework = true
+`
+      );
+
+      await fsk.update(
+        path.ios.podfilePath(),
+        /(:flipper_configuration[\s\S]+?\n)/,
+        `# $1`
+      );
     }
   },
   "plugin-firebase",
