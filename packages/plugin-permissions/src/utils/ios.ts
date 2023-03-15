@@ -67,13 +67,12 @@ const pod = (value: string) => {
   }
 };
 
-export const pods = (requiredPermissions: IOSPermissionType[]) =>
+export const podspec = (requiredPermissions: IOSPermissionType[]) =>
   requiredPermissions
-    ?.map((it) => {
-      return `  pod 'Permission-${pod(
-        it.permission
-      )}', :path => "../node_modules/react-native-permissions/ios/${pod(
-        it.permission
-      )}"`;
-    })
-    .join("\n");
+    .reduce(
+      (acc, curr) => {
+        return [...acc, `"ios/${pod(curr.permission)}/*.{h,m,mm}"`];
+      },
+      ['"ios/*.{h,m,mm}"']
+    )
+    .join(", ");
