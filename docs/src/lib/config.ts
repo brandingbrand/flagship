@@ -29,7 +29,7 @@ export const SIDEBAR = {
     { text: "plugin-leanplum", link: "/flagship/en/packages/plugins/leanplum" },
     {
       text: "plugin-native-navigation",
-      link: "en/packages/plugins/native-navigation",
+      link: "/flagship/en/packages/plugins/native-navigation",
     },
     {
       text: "plugin-permissions",
@@ -45,7 +45,7 @@ export const SIDEBAR = {
     },
     {
       text: "plugin-target-extension",
-      link: "en/packages/plugins/target-extension",
+      link: "/flagship/en/packages/plugins/target-extension",
     },
   ],
   Usage: [
