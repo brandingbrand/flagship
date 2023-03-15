@@ -72,7 +72,7 @@ export interface IOSVersion {
   /**
    * App build number
    */
-  build: number;
+  build?: number;
 }
 
 export interface Podfile {
@@ -180,7 +180,7 @@ export interface AndroidVersion {
   /**
    * App build i.e. versionCode
    */
-  build: number;
+  build?: number;
 }
 
 export interface AndroidSigning {

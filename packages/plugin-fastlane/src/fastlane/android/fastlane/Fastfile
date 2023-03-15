@@ -5,7 +5,9 @@ lane :increment_build do
     version = appcenter_fetch_version_number(
         owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
         app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",
-        version: "<%= android.versioning.version %>"
+        <%_ if (!release) { -%>
+        version: "<%- android.versioning?.version || "1.0.0" %>"
+        <%_ } -%>
     )
 
     if version["build_number"]
@@ -33,7 +35,9 @@ lane :appcenter do
 end
 
 lane :appcenter_bundle do
+  <%_ if (!android.versioning?.build) { -%>
   increment_build
+  <%_ } -%>
 
   # build the release variant
   gradle(task: "bundleRelease")
