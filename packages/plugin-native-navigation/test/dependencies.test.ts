@@ -1,28 +1,14 @@
+/**
+ * @jest-environment-options {"fixture": "__plugin-native-navigation_dependencies_fixtures", "additionalDirectory": "./fixtures"}
+ */
+
 import path from "path";
 import { fs, path as pathk } from "@brandingbrand/code-core";
 
 import { check, patch } from "../src/utils/dependencies";
 
-global.process.cwd = () => path.resolve(__dirname, "fixtures");
-
 describe("dependencies", () => {
-  beforeAll(async () => {
-    return fs.copyFile(
-      path.resolve(__dirname, "fixtures", "mock_path.js"),
-      path.resolve(__dirname, "fixtures", "temp_mock_path.js")
-    );
-  });
-
-  afterAll(async () => {
-    return fs.remove(path.resolve(__dirname, "fixtures", "temp_mock_path.js"));
-  });
-
   it("check", () => {
-    jest
-      .spyOn(pathk.project, "packagePath")
-      .mockReturnValue(
-        path.resolve(__dirname, "fixtures", "mock_package.json")
-      );
     const undefinedReturn = check();
 
     expect(undefinedReturn).toBe(undefined);
@@ -31,16 +17,24 @@ describe("dependencies", () => {
   it("patch", async () => {
     jest
       .spyOn(pathk.project, "resolve")
-      .mockReturnValue(
-        path.resolve(__dirname, "fixtures", "temp_mock_path.js")
+      .mockImplementation((...args: string[]) =>
+        path.resolve.apply(path, [process.cwd(), "..", "..", ...args])
       );
 
     await patch();
 
-    const body = await fs.readFile(
-      path.resolve(__dirname, "fixtures", "temp_mock_path.js")
-    );
+    const pathFile = (
+      await fs.readFile(
+        pathk.project.resolve(
+          "node_modules",
+          "react-native-navigation",
+          "autolink",
+          "postlink",
+          "path.js"
+        )
+      )
+    ).toString();
 
-    expect(body.toString()).toMatch("mainApplicationJava?.replace");
+    expect(pathFile).toMatch("mainApplicationJava?.replace");
   });
 });
