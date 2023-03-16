@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { withSummary } from "../../../utils/summary";
 import { path, packageManager, spinner, writable } from "../../../utils";
 

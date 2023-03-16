@@ -1,6 +1,3 @@
-/* eslint-disable no-control-regex */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import ejs from "ejs";
 import Table from "cli-table";
 import noop from "lodash/noop";

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-
 import * as logger from "../src/utils/logger";
 
 describe("logger", () => {
