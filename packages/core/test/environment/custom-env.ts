@@ -67,6 +67,7 @@ class CustomEnvironment extends TestEnvironment {
         },
       },
       app: {},
+      release: false,
     } as Config;
 
     await super.setup();
