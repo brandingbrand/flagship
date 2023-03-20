@@ -19,6 +19,7 @@ const prod: ENV = {
           },
         },
       },
+      UISupportedInterfaceOrientations: ['UIInterfaceOrientationPortrait'],
       urlScheme: {
         scheme: 'code',
       },
@@ -48,6 +49,9 @@ const prod: ENV = {
       build: 1,
     },
     manifest: {
+      mainActivityAttributes: {
+        "android:screenOrientation": "portrait"
+      },
       urlScheme: {
         scheme: 'code',
       },

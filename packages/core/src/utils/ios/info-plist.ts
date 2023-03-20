@@ -3,7 +3,6 @@ import { withPlist } from "./plist";
 
 import type { Config } from "../../types/types";
 import { InfoPlistType } from "../../types/ios";
-import deepmerge from "deepmerge";
 
 export const withInfoPlist = (
   callback: (plist: InfoPlistType.InfoPlist) => InfoPlistType.InfoPlist,
@@ -24,5 +23,8 @@ export const setUrlScheme = (urlScheme: string, config: Config) =>
 
 export const setPlist = (data: Record<string, unknown>, config: Config) =>
   withInfoPlist((plist) => {
-    return deepmerge.all<InfoPlistType.InfoPlist>([plist, data]);
+    return {
+      ...plist,
+      ...data,
+    };
   }, config);

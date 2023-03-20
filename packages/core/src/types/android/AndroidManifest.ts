@@ -110,6 +110,23 @@ export type ManifestActivityAttributes = ManifestApplicationAttributes & {
     | "adjustUnspecified"
     | "adjustResize"
     | "adjustPan";
+  "android:screenOrientation":
+    | "unspecified"
+    | "behind"
+    | "landscape"
+    | "portrait"
+    | "reverseLandscape"
+    | "reversePortrait"
+    | "sensorLandscape"
+    | "sensorPortrait"
+    | "userLandscape"
+    | "userPortrait"
+    | "sensor"
+    | "fullSensor"
+    | "nosensor"
+    | "user"
+    | "fullUser"
+    | "locked";
   [key: string]: string | undefined;
 };
 
