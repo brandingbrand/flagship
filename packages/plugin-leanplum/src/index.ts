@@ -1,5 +1,3 @@
-/* eslint-disable no-useless-escape */
-
 import {
   Config,
   fsk,

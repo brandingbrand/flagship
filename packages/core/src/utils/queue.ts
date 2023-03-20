@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
-
 import fastq from "fastq";
 import type { queueAsPromised } from "fastq";
 
