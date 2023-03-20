@@ -87,9 +87,9 @@
   },
   "workspaces": {
     "packages": [
-      "packages/*",
+      "docs",
       "apps/*",
-      "apps/**/*/plugins/*"
+      "packages/*"
     ],
     "nohoist": [
       "**/react",
