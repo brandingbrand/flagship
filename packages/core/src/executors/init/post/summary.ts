@@ -1,6 +1,3 @@
-/* eslint-disable no-control-regex */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import ejs from "ejs";
 import Table from "cli-table";
 import noop from "lodash/noop";
@@ -18,9 +15,6 @@ export const execute = async (options: InitOptions, config: Config) => {
 
   const table = new Table({
     head: ["Executor", "Hook", "Execution Time", "Success", "Error", "Warning"],
-    style: {
-      head: ["blue"],
-    },
   });
 
   summary.items.forEach((it) => {
@@ -74,34 +68,34 @@ export const execute = async (options: InitOptions, config: Config) => {
     process.stderr.clearLine(1);
   }
 
-  process.stderr.write(
-    `⚡️ Flagship Code™ initialization complete with ${errors} error(s) and ${warnings} warning(s)\n\n`
+  console.log(
+    `⚡️ Flagship Code™ initialization complete with ${errors} error(s) and ${warnings} warning(s)\n`
   );
 
-  process.stderr.write(
+  console.log(
     `🎉 See summary ${
       process.env["CI"] ? "below" : "in file:///tmp/code-core.log"
-    }\n\n`
+    }\n`
   );
 
   if (warnings) {
-    process.stderr.write(
+    console.log(
       `⚠️  See warning(s) ${
         process.env["CI"] ? "below" : "in file:///tmp/code-core.log"
-      }\n\n`
+      }\n`
     );
   }
 
   if (errors) {
-    process.stderr.write(
+    console.log(
       `❌ See error(s) ${
         process.env["CI"] ? "below" : "in file:///tmp/code-core.log"
-      }\n\n`
+      }\n`
     );
   }
 
   if (process.env["CI"]) {
-    process.stderr.write(data);
+    console.log(data);
 
     if (errors) process.exit(1);
   } else {

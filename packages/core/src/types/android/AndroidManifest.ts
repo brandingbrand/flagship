@@ -91,6 +91,7 @@ export type ManifestApplicationAttributes = {
   "android:largeHeap"?: StringBoolean;
   "android:requestLegacyExternalStorage"?: StringBoolean;
   "android:usesCleartextTraffic"?: StringBoolean;
+  "android:networkSecurityConfig"?: string;
   [key: string]: string | undefined;
 };
 

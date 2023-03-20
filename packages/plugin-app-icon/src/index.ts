@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import sharp from "sharp";
 import { fs, path, summary } from "@brandingbrand/code-core";
 import type { Config } from "@brandingbrand/code-core";

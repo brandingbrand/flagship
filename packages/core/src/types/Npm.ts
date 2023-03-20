@@ -4,7 +4,7 @@ export interface List {
   dependencies: Dependencies;
 }
 
-interface Dependencies {
+export interface Dependencies {
   [key: string]: {
     version: string;
     resolved: string;
