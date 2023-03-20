@@ -1,16 +1,25 @@
-import * as path from "../../path";
+import type { Dependencies, List } from "../../../types/Npm";
 
-import type { List } from "../../../types/Npm";
+export const version = (packageName: string, json: List): string | undefined =>
+  rVersion(packageName, json.dependencies);
 
-export const version = (
+export const rVersion = (
   packageName: string,
-  json: List
+  dependencies: Dependencies
 ): string | undefined => {
-  const pkg = require(path.project.packagePath());
+  const entries = Object.entries(dependencies);
 
-  const res = json.dependencies?.[packageName]?.version;
+  const rootDependency = entries.find(([key]) => key === packageName);
 
-  if (res) return res;
+  if (rootDependency) {
+    return rootDependency[1].version;
+  }
 
-  return json.dependencies?.[pkg.name]?.dependencies?.[packageName]?.version;
+  for (const entry of entries) {
+    const [, value] = entry;
+
+    if (value.dependencies) {
+      return rVersion(packageName, value.dependencies);
+    }
+  }
 };

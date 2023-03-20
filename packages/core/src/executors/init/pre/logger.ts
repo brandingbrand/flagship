@@ -1,34 +1,23 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-
 import { withSummary } from "../../../utils/summary";
-import { fs, fsk, path, spinner } from "../../../utils";
+import { path, packageManager, spinner, writable } from "../../../utils";
 
 import type { Config } from "../../../types/types";
 import type { InitOptions } from "../../../types/options";
 
 export const execute = withSummary(
   async (options: InitOptions, config: Config) => {
-    if (!options.verbose) {
-      spinner.start("Initializing the app");
+    if (options.verbose) return;
 
-      //@ts-ignore
-      process.stdout.write = function () {};
+    spinner.start("Initializing the app");
 
-      if (
-        await fs.pathExists(
-          path.project.resolve("node_modules", "npmlog", "log.js")
-        )
-      ) {
-        await fsk.update(
-          path.project.resolve("node_modules", "npmlog", "log.js"),
-          /(log.level =[\s\S]+?\n)/,
-          "log.level = 'error'\n"
-        );
-      }
-    }
+    writable.redirect();
+
+    await packageManager.withVersion("npmlog", async (packageVersion) => {
+      if (!packageVersion) return;
+
+      const log = require(path.project.resolve("node_modules", "npmlog"));
+      log.level = "silent";
+    });
   },
   "logger",
   "pre"

@@ -1,5 +1,10 @@
 import type { InfoPlistType } from "./ios";
-import type { AndroidManifestType, StringsType, StylesType } from "./android";
+import type {
+  AndroidManifestType,
+  NetworkSecurityConfigType,
+  StringsType,
+  StylesType,
+} from "./android";
 
 export interface Config<T = unknown> {
   android: Android;
@@ -72,7 +77,7 @@ export interface IOSVersion {
   /**
    * App build number
    */
-  build: number;
+  build?: number;
 }
 
 export interface Podfile {
@@ -151,6 +156,10 @@ export interface Android {
    */
   manifest?: Manifest;
   /**
+   * Android network_security_config.xml configuration
+   */
+  security?: NetworkSecurityConfigType.NetworkSecurityConfigElements;
+  /**
    * Android styles.xml configuration
    */
   styles?: Styles;
@@ -180,7 +189,7 @@ export interface AndroidVersion {
   /**
    * App build i.e. versionCode
    */
-  build: number;
+  build?: number;
 }
 
 export interface AndroidSigning {

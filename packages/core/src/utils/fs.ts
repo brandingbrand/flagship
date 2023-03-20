@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import fse from "fs-extra";
 
 import { enqueue } from "./queue";
