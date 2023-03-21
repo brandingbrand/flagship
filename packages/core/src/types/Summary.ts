@@ -6,3 +6,5 @@ export type Items = {
   error: string | boolean;
   warning: string | boolean;
 };
+
+export type Hook = `platform::${"ios" | "android"}` | "pre" | "post";
