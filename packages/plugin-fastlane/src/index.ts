@@ -13,7 +13,7 @@ const ios = summary.withSummary(
     if (config.codePluginFastlane.plugin.ios) {
       logger.logInfo("Adding iOS Fastfile...");
 
-      const sourcePath = path.join(__dirname, "fastlane", "ios");
+      const sourcePath = path.join(__dirname, "..", "assets", "ios");
       const destPath = path.join(pathk.ios.rootDirPath());
 
       await fsk.copyDir(sourcePath, destPath, config, "ios", false);
@@ -40,7 +40,7 @@ const android = summary.withSummary(
     if (config.codePluginFastlane.plugin.android) {
       logger.logInfo("Adding Android Fastfile...");
 
-      const sourcePath = path.join(__dirname, "fastlane", "android");
+      const sourcePath = path.join(__dirname, "..", "assets", "android");
       const destPath = path.join(pathk.android.rootDirPath());
 
       await fsk.copyDir(sourcePath, destPath, config, "android", false);
