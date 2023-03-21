@@ -1,8 +1,8 @@
 import { Xcode, fs, path } from "../../../utils";
 import { withSummary } from "../../../utils/summary";
 
-import type { Config } from "../../../types/types";
-import type { InitOptions } from "../../../types/options";
+import type { Config } from "../../../types/Config";
+import type { InitOptions } from "../../../types/Options";
 
 export const execute = (options: InitOptions, config: Config) => {
   return {

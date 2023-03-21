@@ -7,7 +7,7 @@ import type {
   EnvironmentContext,
   JestEnvironmentConfig,
 } from "@jest/environment";
-import type { Config } from "../../src/types/types";
+import type { Config } from "../../src/types/Config";
 
 class CustomEnvironment extends TestEnvironment {
   options: Record<string, unknown>;

@@ -3,7 +3,7 @@ import { XcodeProject } from "xcode";
 
 import fs from "./fs";
 import * as path from "./path";
-import type { Config } from "../types/types";
+import type { Config } from "../types/Config";
 
 export class Xcode {
   config: Config;

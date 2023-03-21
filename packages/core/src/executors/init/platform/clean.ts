@@ -1,7 +1,7 @@
 import { fs, logger, path, rimraf } from "../../../utils";
 
-import type { Config } from "../../../types/types";
-import type { CleanOptions } from "../../../types/options";
+import type { Config } from "../../../types/Config";
+import type { CleanOptions } from "../../../types/Options";
 import { withSummary } from "../../../utils/summary";
 
 export const execute = (options: CleanOptions, config: Config) => ({

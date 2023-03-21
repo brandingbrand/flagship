@@ -5,8 +5,8 @@ import { Warning } from "../../../utils/errors";
 import { withSummary } from "../../../utils/summary";
 import { withVersion } from "../../../utils/package-manager";
 
-import type { Config } from "../../../types/types";
-import type { InitOptions } from "../../../types/options";
+import type { Config } from "../../../types/Config";
+import type { InitOptions } from "../../../types/Options";
 
 export const execute = withSummary(
   async (options: InitOptions, config: Config) => {
