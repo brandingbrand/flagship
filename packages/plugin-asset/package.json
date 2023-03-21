@@ -29,6 +29,6 @@
   "license": "MIT",
   "dependencies": {
     "@brandingbrand/code-core": "^0.0.12",
-    "react-native-asset": "^2.0.1"
+    "react-native-asset": "^2.1.0"
   }
 }
