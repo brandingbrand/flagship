@@ -18,11 +18,11 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "assets/template"
   ],
   "scripts": {
     "build": "microbundle --target node --format cjs,esm --tsconfig tsconfig.build.json --no-sourcemap",
-    "postbuild": "cp -r src/template.ejs dist/template",
     "dev": "microbundle watch --target node --format cjs,esm --tsconfig tsconfig.build.json"
   },
   "keywords": [],

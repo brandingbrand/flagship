@@ -32,7 +32,7 @@ class CustomEnvironment extends TestEnvironment {
 
     await fs.promises.mkdir(fixturePath);
     await fse.copy(
-      path.resolve(__dirname, "..", "..", "src", "template"),
+      path.resolve(__dirname, "..", "..", "assets", "__template__"),
       fixturePath
     );
 

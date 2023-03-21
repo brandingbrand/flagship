@@ -57,7 +57,7 @@ export const execute = (options: InitOptions, config: Config) => {
     ios: withSummary(
       async () =>
         copyDir(
-          path.resolve(__dirname, "template"),
+          path.resolve(__dirname, "..", "assets", "template"),
           pathk.project.path(),
           config,
           "ios"
@@ -68,7 +68,7 @@ export const execute = (options: InitOptions, config: Config) => {
     android: withSummary(
       async () =>
         copyDir(
-          path.resolve(__dirname, "template"),
+          path.resolve(__dirname, "..", "assets", "template"),
           pathk.project.path(),
           config,
           "android"
