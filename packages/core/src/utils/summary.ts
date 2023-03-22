@@ -1,4 +1,4 @@
-import { Items } from "../types/Summary";
+import { Hook, Items } from "../types/Summary";
 
 export const items: Items[] = [];
 
@@ -6,7 +6,7 @@ export const withSummary =
   <TFunc, TArgs extends unknown[]>(
     fn: (...args: TArgs) => Promise<TFunc>,
     name: string,
-    hook: string
+    hook: Hook
   ) =>
   async (...args: TArgs) => {
     const start = performance.now();
