@@ -1,4 +1,4 @@
-import { plugins } from "../../../utils";
+import { path, plugins } from "../../../utils";
 import { withSummary } from "../../../utils/summary";
 
 import type { Config } from "../../../types/Config";
@@ -11,7 +11,10 @@ export const execute = (options: InitOptions, config: Config) => {
     platform: "ios" | "android"
   ) => {
     for (const installedPlugin of installedPlugins) {
-      const bundle = require(installedPlugin);
+      const bundle = require(path.project.resolve(
+        "node_modules",
+        installedPlugin
+      ));
 
       await bundle?.[platform]?.(configuration);
     }
