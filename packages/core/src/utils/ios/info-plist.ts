@@ -1,7 +1,7 @@
 import * as path from "../path";
 import { withPlist } from "./plist";
 
-import type { Config } from "../../types/types";
+import type { Config } from "../../types/Config";
 import { InfoPlistType } from "../../types/ios";
 
 export const withInfoPlist = (

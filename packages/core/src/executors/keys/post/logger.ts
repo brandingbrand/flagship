@@ -1,7 +1,7 @@
 import { spinner } from "../../../utils";
 
-import type { Config } from "../../../types/types";
-import type { KeysOptions } from "../../../types/options";
+import type { Config } from "../../../types/Config";
+import type { KeysOptions } from "../../../types/Options";
 
 export const execute = async (options: KeysOptions, config: Config) => {
   if (!options.verbose) {

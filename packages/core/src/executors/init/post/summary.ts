@@ -4,8 +4,8 @@ import noop from "lodash/noop";
 
 import { exec, fs, path, summary } from "../../../utils";
 
-import type { Config } from "../../../types/types";
-import type { InitOptions } from "../../../types/options";
+import type { Config } from "../../../types/Config";
+import type { InitOptions } from "../../../types/Options";
 import type { Items } from "../../../types/Summary";
 
 export const execute = async (options: InitOptions, config: Config) => {

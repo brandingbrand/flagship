@@ -2,8 +2,8 @@ import spawnAsync from "@expo/spawn-async";
 
 import { logger, os, path } from "../../../utils";
 
-import type { Config } from "../../../types/types";
-import type { InitOptions } from "../../../types/options";
+import type { Config } from "../../../types/Config";
+import type { InitOptions } from "../../../types/Options";
 import { withSummary } from "../../../utils/summary";
 
 export const execute = (options: InitOptions, config: Config) => ({

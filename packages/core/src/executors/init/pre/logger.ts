@@ -1,8 +1,8 @@
 import { withSummary } from "../../../utils/summary";
 import { path, packageManager, spinner, writable } from "../../../utils";
 
-import type { Config } from "../../../types/types";
-import type { InitOptions } from "../../../types/options";
+import type { Config } from "../../../types/Config";
+import type { InitOptions } from "../../../types/Options";
 
 export const execute = withSummary(
   async (options: InitOptions, config: Config) => {
