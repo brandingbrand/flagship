@@ -2,14 +2,13 @@
   "name": "@brandingbrand/code-cli",
   "version": "0.0.12",
   "description": "",
-  "publishConfig": {
-    "access": "public"
+  "license": "MIT",
+  "author": "",
+  "keywords": [],
+  "bin": {
+    "code": "bin/code.js"
   },
   "main": "dist/index.js",
-  "module": "dist/index.module.js",
-  "types": "dist/index.d.ts",
-  "source": "src/index.ts",
-  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -17,28 +16,29 @@
       "require": "./dist/index.js"
     }
   },
+  "module": "dist/index.module.js",
   "files": [
     "bin",
     "dist"
   ],
-  "bin": {
-    "code": "bin/code.js"
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "microbundle --target node --format cjs,esm --tsconfig tsconfig.build.json --no-sourcemap",
     "dev": "microbundle watch --target node --format cjs,esm --tsconfig tsconfig.build.json"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
+  "sideEffects": false,
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
   "dependencies": {
     "commander": "^9.4.1"
+  },
+  "peerDependencies": {
+    "@brandingbrand/code-core": "< 1.0.0"
   },
   "devDependencies": {
     "@brandingbrand/code-core": "*",
     "@types/node": "^18.11.9"
-  },
-  "peerDependencies": {
-    "@brandingbrand/code-core": "< 1.0.0"
   }
 }
