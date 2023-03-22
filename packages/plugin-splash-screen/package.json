@@ -28,7 +28,12 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@brandingbrand/code-core": "^0.0.12",
     "react-native-bootsplash": "^4.5.2"
+  },
+  "devDependencies": {
+    "@brandingbrand/code-core": "*"
+  },
+  "peerDependencies": {
+    "@brandingbrand/code-core": "< 1.0.0"
   }
 }

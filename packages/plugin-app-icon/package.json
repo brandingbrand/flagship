@@ -28,10 +28,13 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@brandingbrand/code-core": "^0.0.12",
     "sharp": "^0.31.2"
   },
   "devDependencies": {
+    "@brandingbrand/code-core": "*",
     "@types/sharp": "^0.31.0"
+  },
+  "peerDependencies": {
+    "@brandingbrand/code-core": "< 1.0.0"
   }
 }

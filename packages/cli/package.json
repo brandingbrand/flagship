@@ -32,10 +32,13 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@brandingbrand/code-core": "^0.0.12",
     "commander": "^9.4.1"
   },
   "devDependencies": {
+    "@brandingbrand/code-core": "*",
     "@types/node": "^18.11.9"
+  },
+  "peerDependencies": {
+    "@brandingbrand/code-core": "< 1.0.0"
   }
 }
