@@ -18,9 +18,9 @@ export const execute = withSummary(
       logger.logInfo("Creating index file for project envs");
     }
 
-    const envs = (
-      await fs.readdir(path.config.resolve("env"))
-    ).filter((f: string) => f.match(envMatch));
+    const envs = (await fs.readdir(path.config.resolve("env"))).filter(
+      (f: string) => f.match(envMatch)
+    );
 
     const envIndexFile = `module.exports = {\n${envs
       .map((env: string) => {
