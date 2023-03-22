@@ -2,8 +2,7 @@
  * @jest-environment-options {"fixture": "__plugin-native-navigation_dependencies_fixtures", "additionalDirectory": "./fixtures"}
  */
 
-import path from "path";
-import { fs, path as pathk } from "@brandingbrand/code-core";
+import { fs, path } from "@brandingbrand/code-core";
 
 import { check, patch } from "../src/utils/dependencies";
 
@@ -15,18 +14,11 @@ describe("dependencies", () => {
   });
 
   it("patch", async () => {
-    jest
-      .spyOn(pathk.project, "resolve")
-      .mockImplementation((...args: string[]) =>
-        path.resolve.apply(path, [process.cwd(), "..", "..", ...args])
-      );
-
     await patch();
 
     const pathFile = (
       await fs.readFile(
-        pathk.project.resolve(
-          "node_modules",
+        path.hoist.resolve(
           "react-native-navigation",
           "autolink",
           "postlink",

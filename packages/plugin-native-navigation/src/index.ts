@@ -7,13 +7,13 @@ const ios = summary.withSummary(
     dependencies.check();
     await dependencies.patch();
 
-    const scriptPath = path.project.resolve(
-      "node_modules",
+    const scriptPath = path.hoist.resolve(
       "react-native-navigation",
       "autolink",
       "postlink",
       "postLinkIOS.js"
     );
+
     await fs.chmod(scriptPath, "755");
     const rnnIOSLink = require(scriptPath);
 
@@ -28,13 +28,13 @@ const android = summary.withSummary(
     dependencies.check();
     await dependencies.patch();
 
-    const scriptPath = path.project.resolve(
-      "node_modules",
+    const scriptPath = path.hoist.resolve(
       "react-native-navigation",
       "autolink",
       "postlink",
       "postLinkAndroid.js"
     );
+
     await fs.chmod(scriptPath, "755");
     const rnnAndroidLink = require(scriptPath);
 

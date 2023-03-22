@@ -11,13 +11,13 @@ export const check = () => {
 };
 
 export const patch = async () => {
-  const rnnPath = path.project.resolve(
-    "node_modules",
+  const rnnPath = path.hoist.resolve(
     "react-native-navigation",
     "autolink",
     "postlink",
     "path.js"
   );
+
   const keyword = "mainApplicationJava.replace";
 
   const exists = await fsk.doesKeywordExist(rnnPath, keyword);

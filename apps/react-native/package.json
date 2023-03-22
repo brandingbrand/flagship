@@ -4,7 +4,10 @@
   "private": true,
   "workspaces": {
     "nohoist": [
-      "**"
+      "**/react",
+      "**/react/**",
+      "**/react-native",
+      "**/react-native/**"
     ]
   },
   "scripts": {

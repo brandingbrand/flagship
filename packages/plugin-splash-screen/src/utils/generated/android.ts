@@ -12,8 +12,7 @@ export default async (config: Config & CodePluginSplashScreen) => {
   } = config.codePluginSplashScreen?.plugin?.android?.generated ?? {};
 
   const inputFile = path.config.resolve(logoPath);
-  const { generate } = require(path.project.resolve(
-    "node_modules",
+  const { generate } = require(path.hoist.resolve(
     "react-native-bootsplash",
     "dist",
     "commonjs",

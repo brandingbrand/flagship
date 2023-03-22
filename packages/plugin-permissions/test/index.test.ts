@@ -1,5 +1,5 @@
 /**
- * @jest-environment-options {"fixture": "__plugin-permissions_fixtures", "additionalDirectory": "./fixtures"}
+ * @jest-environment-options {"fixture": "__plugin-permissions_fixtures"}
  */
 
 import { path, fs } from "@brandingbrand/code-core";
@@ -31,11 +31,7 @@ describe("plugin-permissions", () => {
 
     const podspec = (
       await fs.readFile(
-        path.project.resolve(
-          "node_modules",
-          "react-native-permissions",
-          "RNPermissions.podspec"
-        )
+        path.hoist.resolve("react-native-permissions", "RNPermissions.podspec")
       )
     ).toString();
     const infoPlist = (
