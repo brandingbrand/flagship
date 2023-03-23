@@ -55,7 +55,11 @@ describe("plugin-permissions", () => {
     await android({
       codePluginPermissions: {
         plugin: {
-          android: ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"],
+          android: [
+            "ACCESS_FINE_LOCATION",
+            "ACCESS_COARSE_LOCATION",
+            "BIND_CARRIER_SERVICES",
+          ],
         },
       },
     });
@@ -69,6 +73,9 @@ describe("plugin-permissions", () => {
     );
     expect(manifest).toMatch(
       '<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>'
+    );
+    expect(manifest).toMatch(
+      '<uses-permission android:name="android.permission.BIND_CARRIER_SERVICES"/>'
     );
   });
 });
