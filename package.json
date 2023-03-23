@@ -21,7 +21,11 @@
   },
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "build:docs": "turbo run build --filter='./docs'",
+    "build:packages": "turbo run build --filter='./packages/*'",
+    "dev": "turbo run dev --concurrency 100",
+    "dev:docs": "turbo run dev --filter='./docs' --concurrency 100",
+    "dev:packages": "turbo run dev --filter='./packages/*' --concurrency 100",
     "prepare": "husky install",
     "test": "jest"
   },
