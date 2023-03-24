@@ -1,7 +1,8 @@
 ---
 import flagshipCodeDark from "/flagship-code--dark.svg";
 import flagshipCodeLight from "/flagship-code--light.svg"
+const baseURL = import.meta.env.BASE_URL;
 ---
 
-<img class="hidden dark:block h-8" src={flagshipCodeDark} alt="Flagship Code™ Dark" />
-<img class="block dark:hidden h-8" src={flagshipCodeLight} alt="Flagship Code™ Light" />
+<img class="hidden dark:block h-8" src={baseURL+flagshipCodeDark} alt="Flagship Code™ Dark" />
+<img class="block dark:hidden h-8" src={baseURL+flagshipCodeLight} alt="Flagship Code™ Light" />
