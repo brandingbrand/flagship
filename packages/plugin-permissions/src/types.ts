@@ -3,7 +3,9 @@ import type { Plugin } from "@brandingbrand/code-core";
 import { ios, android } from "./utils";
 
 export type IOSPermission = keyof typeof ios.permissions;
-export type AndroidPermission = typeof android.permissions[number];
+export type AndroidPermission =
+  | typeof android.permissions[number]
+  | (string & {});
 
 export interface IOSPermissionType {
   permission: IOSPermission;
