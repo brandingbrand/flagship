@@ -15,14 +15,14 @@
   },
   "module": "dist/index.module.js",
   "files": [
-    "dist"
+    "dist",
+    "assets"
   ],
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
     "build": "microbundle --target node --format cjs,esm --tsconfig tsconfig.build.json --no-sourcemap",
-    "postbuild": "cp -r src/fastlane dist/fastlane",
     "dev": "microbundle watch --target node --format cjs,esm --tsconfig tsconfig.build.json"
   },
   "sideEffects": false,
