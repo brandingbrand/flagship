@@ -1,18 +1,10 @@
 import path from "path";
-import {
-  fsk,
-  Config,
-  path as pathk,
-  logger,
-  summary,
-} from "@brandingbrand/code-core";
+import { fsk, Config, path as pathk, summary } from "@brandingbrand/code-core";
 import { CodePluginFastlane } from "./types";
 
 const ios = summary.withSummary(
   async (config: Config & CodePluginFastlane) => {
     if (config.codePluginFastlane.plugin.ios) {
-      logger.logInfo("Adding iOS Fastfile...");
-
       const sourcePath = path.join(__dirname, "..", "assets", "ios");
       const destPath = path.join(pathk.ios.rootDirPath());
 
@@ -38,8 +30,6 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)
 const android = summary.withSummary(
   async (config: Config & CodePluginFastlane) => {
     if (config.codePluginFastlane.plugin.android) {
-      logger.logInfo("Adding Android Fastfile...");
-
       const sourcePath = path.join(__dirname, "..", "assets", "android");
       const destPath = path.join(pathk.android.rootDirPath());
 

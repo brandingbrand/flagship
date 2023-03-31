@@ -2,7 +2,6 @@ import fs from "fs-extra";
 import { sync } from "glob";
 
 import * as path from "./path";
-import { logInfo } from "./logger";
 
 const getMatchingFiles = (directory: string, oldName: string): string[] => {
   const globOptions = {
@@ -65,5 +64,4 @@ export const pkgDirectory = async (
       await fs.remove(dir);
     }
   }
-  logInfo(`renamed project files in ${directory}`);
 };

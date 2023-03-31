@@ -1,8 +1,9 @@
 import ejs from "ejs";
-import fs from "./fs";
 import fse from "fs-extra";
 import path from "path";
-import * as helpers from "./logger";
+
+import fs from "./fs";
+import { Warning } from "./errors";
 
 /**
  * Checks if a keyword exists in a file.
@@ -37,16 +38,10 @@ export const update = async (
   newText: string
 ): Promise<void> => {
   if (!(await doesKeywordExist(path, oldText))) {
-    helpers.logError(`Couldn't find ${oldText} in ${path}`);
-
-    return;
+    throw new Warning(`Couldn't find ${oldText} in ${path}`);
   }
 
   const fileContent = await fs.readFile(path);
-
-  helpers.logInfo(
-    `updating ${helpers.colors.Dim}${path}${helpers.colors.Reset}`
-  );
 
   await fs.writeFile(path, fileContent.toString().replace(oldText, newText));
 };

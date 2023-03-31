@@ -42,7 +42,14 @@ export const execute = async (options: InitOptions, config: Config) => {
   const data = ejs.render(
     (
       await fs.readFile(
-        path.resolve(__dirname, "..", "assets", "template", "etc", "code-core.log")
+        path.resolve(
+          __dirname,
+          "..",
+          "assets",
+          "template",
+          "etc",
+          "code-core.log"
+        )
       )
     ).toString(),
     {

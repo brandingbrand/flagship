@@ -1,6 +1,6 @@
 import fs from "fs-extra";
 
-import { exec, logger, path } from "../../../utils";
+import { exec, path } from "../../../utils";
 import { withSummary } from "../../../utils/summary";
 import { withPackageManager } from "../../../utils/package-manager";
 
@@ -9,8 +9,6 @@ import type { InitOptions } from "../../../types/Options";
 
 export const execute = withSummary(
   async (options: InitOptions, config: Config) => {
-    logger.logInfo("executing tsc compile");
-
     await withPackageManager(async (packageManager, runCommand) => {
       await exec.async(
         `${packageManager} ${runCommand} tsc ${path.config.resolve(
