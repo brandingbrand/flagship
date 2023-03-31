@@ -1,6 +1,6 @@
 import fs from "fs-extra";
 
-import { logger, path } from "../../../utils";
+import { path } from "../../../utils";
 import { Warning } from "../../../utils/errors";
 import { withSummary } from "../../../utils/summary";
 import { withVersion } from "../../../utils/package-manager";
@@ -13,9 +13,6 @@ export const execute = withSummary(
     let envMatch = /env.\w+.js/;
     if (options.release) {
       envMatch = new RegExp(`env\\.${options.env}\\.js`);
-      logger.logInfo("Creating index file for default env");
-    } else {
-      logger.logInfo("Creating index file for project envs");
     }
 
     const envs = (await fs.readdir(path.config.resolve("env"))).filter(

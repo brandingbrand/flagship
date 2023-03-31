@@ -1,6 +1,6 @@
 import spawnAsync from "@expo/spawn-async";
 
-import { logger, os, path } from "../../../utils";
+import { os, path } from "../../../utils";
 
 import type { Config } from "../../../types/Config";
 import type { InitOptions } from "../../../types/Options";
@@ -12,8 +12,6 @@ export const execute = (options: InitOptions, config: Config) => ({
       if (os.linux) {
         throw new Error("cannot run cocoapods on linux");
       }
-
-      logger.logInfo("running pod install");
 
       await spawnAsync("pod", ["install"], {
         stdio: [

@@ -8,12 +8,12 @@ export const async = (command: string) => {
       command,
       function (error: ExecException | null, stdout: string, stderr: string) {
         if (error) {
-          logger.logError(stderr);
+          process.stderr.write(stderr);
 
           return reject(error);
         }
 
-        logger.logInfo(stdout);
+        process.stdout.write(stdout);
 
         return resolve(stdout);
       }
