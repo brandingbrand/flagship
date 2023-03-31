@@ -9,7 +9,11 @@ const rVersion = (packageName: string, tree: Tree[]): string | undefined => {
   if (rootDependency) {
     return rootDependency.name
       ?.split("@")
-      ?.find((it) => it.match(/[0-9]+?.[0-9]+?.[0-9]+?$/));
+      ?.find((it) =>
+        it.match(
+          /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/gm
+        )
+      );
   }
 
   for (const leaf of tree) {

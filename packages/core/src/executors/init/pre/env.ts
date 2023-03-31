@@ -39,23 +39,27 @@ export const execute = withSummary(
       async (packageVersion: string | undefined) => {
         if (!packageVersion) {
           throw new Warning(
-            "@brandingbrand/fsapp v10.+ or v11.+ installed; runtime env will not be accessible. The runtime env will be accessible in a more targeted package in the future."
+            "@brandingbrand/fsapp v10.+, v11.+ or v12.+ is not installed; runtime env will not be accessible. The runtime env will be accessible in a more targeted package in the future."
           );
         }
 
-        if (packageVersion.match(/10./)) {
+        if (packageVersion.match(/^10./)) {
           return fs.writeFile(
             path.app.resolve("project_env_index.js"),
             envIndexFile
           );
         }
 
-        if (packageVersion.match(/11./)) {
+        if (packageVersion.match(/^11./) || packageVersion.match(/^12./)) {
           return fs.writeFile(
             path.app.resolve("src/project_env_index.js"),
             envIndexFile
           );
         }
+
+        throw new Warning(
+          `@brandingbrand/fsapp@${packageVersion} is installed but doesn't match v10.+, v11.+ or v12.+ - please install one of the matching versions to get access to the runtime env.`
+        );
       }
     );
   },
