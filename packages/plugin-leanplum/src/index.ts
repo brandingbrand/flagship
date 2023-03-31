@@ -99,7 +99,14 @@ const android = summary.withSummary(
 import com.leanplum.Leanplum;
 import com.leanplum.annotations.Parser;
 import com.leanplum.LeanplumPushService;
-import com.leanplum.LeanplumActivityHelper;`
+import com.leanplum.LeanplumActivityHelper;
+import com.leanplum.LeanplumPushNotificationCustomizer;
+import android.app.Notification;
+import android.content.Context;
+import android.os.Bundle;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
+import androidx.annotation.Nullable;`
     );
 
     await fsk.update(
