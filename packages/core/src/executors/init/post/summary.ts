@@ -1,6 +1,7 @@
 import ejs from "ejs";
 import Table from "cli-table";
 import noop from "lodash/noop";
+import readline from "readline";
 
 import { exec, fs, path, summary } from "../../../utils";
 
@@ -42,7 +43,14 @@ export const execute = async (options: InitOptions, config: Config) => {
   const data = ejs.render(
     (
       await fs.readFile(
-        path.resolve(__dirname, "..", "assets", "template", "etc", "code-core.log")
+        path.resolve(
+          __dirname,
+          "..",
+          "assets",
+          "template",
+          "etc",
+          "code-core.log"
+        )
       )
     ).toString(),
     {
@@ -64,8 +72,8 @@ export const execute = async (options: InitOptions, config: Config) => {
   );
 
   if (!options.verbose) {
-    process.stderr.moveCursor(0, -2);
-    process.stderr.clearLine(1);
+    readline.moveCursor(process.stdout, 0, -2);
+    readline.clearLine(process.stdout, 1);
   }
 
   console.log(
