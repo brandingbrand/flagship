@@ -5,23 +5,25 @@ layout: ../../../layouts/docs.astro
 lang: en
 ---
 
-import CodeCopy from "../../../components/code-copy.astro";
+import CodeCopy from '../../../components/code-copy.astro';
 
 ## Integration
 
-Integrating with Flagship Code™ can be broken down into: configuring assets, configuring environments and linking / generating plugins. While this seems tedious - this is a one-time setup that you will slowly grow while you get idempotent native code generation. You no longer have to worry about maintaining those native code directories i.e. ios and android - just focus on React Native. 
+Integrating with Flagship Code™ can be broken down into: configuring assets, configuring environments and linking / generating plugins. While this may seem tedious, it will empower you with idempotent native code generation to effortlessly collaborate on building your application. Your team will no longer have to worry about maintaining native code directories for iOS and Android - just focus on React Native.
 
-First you will want to add the core and cli packages.
+To get started, you will want to add the Flagship Code™ core and cli packages.
 
-<div class="flex w-full my-6">
-  <CodeCopy args="yarn add -D @brandingbrand/code-core @brandingbrand/code-cli" />
+<div class='flex w-full my-6'>
+  <CodeCopy args='yarn add -D @brandingbrand/code-core @brandingbrand/code-cli' />
 </div>
 
 ### Configuring Assets
 
-First create add the `ios` and `android` directories to your `.gitignore`. You can now safely remove them `rm -rf ios android`. Create `.coderc` directory in the root of your project. This is the Flagship Code™ runtime configuration directory where all configuration will be hosted i.e. CaC. Inside `.coderc` create an `env` directory - this is where all your typed envirnments will exist. These are the only 2 mandatory directories.
+First, add the `ios` and `android` directories to your `.gitignore`. Create a `.coderc` directory in the root of your project. This is the Flagship Code™ runtime configuration directory where all configurations will be hosted i.e., CaC. Inside `.coderc`, create an `env` directory - where all your typed environments will exist. These are the only two mandatory directories.
 
-Additional directories are recommended for separation of concerns. Inside `.coderc` create a `signing` directory - this will be where your native codesigning exists. For ios this would be certs and profiles and for android it will be your keystores. It will be beneficial to break down your ios codesigning assests into their respective environments i.e. enterprise, adhoc, store, etc. This way only a minimal set of profiles and certs are configured during adding of codesigning keys for ci/cd. Inside `.coderc` create an `assets` directory - this will be useful to host all plugin assets. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.coderc).
+Additional directories are recommended for separation of concerns. Inside `.coderc` create a `signing` directory - this will be where your native codesigning exists. For iOS, this would be certs and profiles. For Android, it will be your keystores.
+
+It will be beneficial to break down your iOS codesigning assets into their respective environments e.g., enterprise, adhoc, store, etc. This way only a minimal set of profiles and certs are configured during adding of codesigning keys for CI/CD. Inside `.coderc` create an `assets` directory - this will be useful to host all plugin assets. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.coderc).
 
 Your `.coderc` directory should now look like:
 
@@ -32,7 +34,7 @@ Your `.coderc` directory should now look like:
 └── signing
 ```
 
-Assets will generally be files related to plugins i.e. *.png for app icons, *.png for splash screen, google-services.json for firebase, etc. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.coderc/assets).
+Assets will generally be files related to plugins e.g., _.png for app icons, _.png for splash screen, and google-services.json for Firebase, etc. Typically, organizing assets by functionality is the most readable structure. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.coderc/assets).
 
 ```
 ./assets
@@ -63,7 +65,7 @@ Assets will generally be files related to plugins i.e. *.png for app icons, *.pn
             └── logo.png
 ```
 
-Typically organizing them by plugin is the most readable structure. Env will be your collective your environment files i.e. development, production, adhoc, etc. These are typescript files based on the `@brandingbrand/code-core` exported type `Config<T>`. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.coderc/env).
+Env will be contain environment files e.g., development, production, adhoc, etc. These are TypeScript files based on the `@brandingbrand/code-core` exported type `Config<T>`. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.coderc/env).
 
 ```
 ./env
@@ -71,7 +73,7 @@ Typically organizing them by plugin is the most readable structure. Env will be 
 └── env.prod.ts
 ```
 
-The signing folder will host all of your files related to codesigning. Android codesigning relates to your *.keystore. iOS codesigning relates to your certificates, entitlements and provisioning profiles. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.coderc/signing).
+The signing folder will host all of your files related to codesigning. Android codesigning relates to your \*.keystore. iOS codesigning relates to your certificates, entitlements and provisioning profiles. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.coderc/signing).
 
 ```
 ./signing
@@ -95,7 +97,9 @@ The signing folder will host all of your files related to codesigning. Android c
 
 #### Base
 
-The environments are the foundation of Flagship Code™ - this is the Configuration as Code (CaC) content. In the `.coderc/env` directory create an environment file i.e. env.prod.ts. Import the `Config` from `@brandingbrand/code-core`. This will allow you to generate a basic build configuration of iOS Android. Plugin types can be imported and extended upon the base config i.e. `Config & CodePluginAsset`. With this simplistic approach you get a build configuration with a plugins.
+Environment configuration files are the foundation of Flagship Code™ - this is the Configuration as Code (CaC) content.
+
+In the `.coderc/env` directory create an environment file e.g., env.prod.ts. Next, Import `Config` from `@brandingbrand/code-core` in your environment configuration file. This will allow you to generate a basic build configuration for iOS and Android. Plugin types can be imported and extended upon the base config e.g. `Config & CodePluginAsset`. With this simplistic approach you get a build configuration with plugins.
 
 ```
 import {Config} from '@brandingbrand/code-core';
@@ -131,13 +135,14 @@ export default prod;
 
 #### Advanced
 
-The advanced approach will allow you take advantage of build + runtime configurations from a single source of truth env. We will utiilize Typescript's [**triple-dash directive**](https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html) to solve for a single source of truth. 
+The advanced approach will allow you take advantage of build and runtime configuration from a single environment configuration file. We will utiilize TypeScript's [**triple-dash directive**](https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html) to solve for a single source of truth.
 
-Move the environment type to a common location inside the `src/types` directory. Inside the `src/types` directory create an `app.d.ts` files - a type declaration file. In this file we will define our overall app type. If you are utilizing `fsapp` we will overwrite the `any` `env` type with our defined type via `fsapp.d.ts` file - this will provide us with type-hints when utilizing runtime configurations. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/blob/feat/flagship-12/apps/react-native/src/types).
+Move the environment type to a common location inside the `src/types` directory. Inside the `src/types` directory create an `app.d.ts` file. This file is a [type declaration file](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html) which we will use to define our overall app type.
 
-In this file you will define the build + runtime configuration, where the interface `App` is your runtime configuration:
+In this file you will define the build and runtime configuration, where the interface `App` is your runtime configuration. This will provide us with type-hints when utilizing runtime configurations.
 
 `app.d.ts`
+
 ```
 declare module '@brandingbrand/code-app' {
   type ENV = import('@brandingbrand/code-core').Config<App> &
@@ -155,7 +160,10 @@ declare module '@brandingbrand/code-app' {
 }
 ```
 
+If you are utilizing `fsapp` we will overwrite the `any` `env` type with our defined type via `fsapp.d.ts` file - To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/blob/feat/flagship-12/apps/react-native/src/types).
+
 `fsapp.d.ts`
+
 ```
 import '@brandingbrand/fsapp';
 
@@ -168,8 +176,8 @@ declare module '@brandingbrand/fsapp' {
 
 In your env file, `.coderc/env/env.*.ts` you can now utilize the [**triple-dash directive**](https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html) to utilize this type outside the `src/` directory. To follow along, check out this [**example**](https://github.com/brandingbrand/flagship/blob/feat/flagship-12/apps/react-native/.coderc/env/env.prod.ts).
 
-
 `env.prod.ts`
+
 ```
 /// <reference path="../../src/types/app.d.ts" />
 
@@ -206,17 +214,18 @@ const prod: ENV = {
 export default prod;
 ```
 
-If you are using `fsapp` to access the `env` object - the env is now typesafe at runtime.
+If you are using `fsapp` to access the `env` object - the environment configuration is now typesafe at runtime.
 
 ### Plugins
 
-Plugins are platform specific scripts that generate or manipulate native code with respect to a specific third-party depedency. Plugins are npm packages that added as dev dependencies - only required at time of `code init`. They may or may not export an interface that will need to be added to your environment as shown in the previous section. Plugins are run by the `plugins` executor by auto-discovery. 
+Plugins are platform specific scripts that generate or manipulate native code with respect to a specific third-party depedency. Plugins are npm packages that are added as dev dependencies (only required at time of `code init`). They may or may not export an interface that will need to be added to your environment as shown in the previous section. Plugins are run by the `plugins` executor by auto-discovery.
 
 #### Linking
 
-Link your plugins by adding them to the `package.json` `code.plugins` array in a priority order. Plugins are run with async / await from 0th-index to Nth-index.
+Plugins can be remote or local for ultimate flexibility. Link your plugins by adding them to the `package.json` `code.plugins` array in a priority order. Plugins are run asynchronously from 0th-index to Nth-index (async / await).
 
 `package.json`
+
 ```
   "code": {
     "plugins": [
@@ -231,13 +240,12 @@ Link your plugins by adding them to the `package.json` `code.plugins` array in a
   }
 ```
 
-Plugins can be remote or local distribution allowing for ultimate flexibility.
-
 #### Generating
 
-Generating a plugin assumes you have familiarity with creating typescript / javascript packages. A plugin is a typescript package and must abide by the interface of having `ios` and `android` named exports that accept the `Config` type; exported from `@brandingbrand/code-core`. As noted by the interface below, these are async functions - all plugins are run via async / await.
+Generating a plugin assumes you have familiarity with creating TypeScript / JavaScript packages. A plugin is a TypeScript package and must abide by the interface of having `ios` and `android` named exports that accept the `Config` type; exported from `@brandingbrand/code-core`. As noted by the interface below, these are async functions - all plugins are run via async / await.
 
 `index.d.ts`
+
 ```
 declare const ios: (config: Config) => Promise<void>;
 declare const android: (config: Config) => Promise<void>;
@@ -246,11 +254,12 @@ declare const android: (config: Config) => Promise<void>;
 The config interface can also be an intersection type of the `Config` and the interface of the plugin i.e. `CodePluginAppIcon`.
 
 `index.d.ts`
+
 ```
 declare const ios: (config: Config & CodePluginAppIcon) => Promise<void>;
 declare const android: (config: Config & CodePluginAppIcon) => Promise<void>;
 ```
 
-There are a number of ways to compile / bundle your typescript to javascript. In this monorepo [**microbundle**](https://www.npmjs.com/package/microbundle) is utilized to compile and bundle typescript into javascript.
+There are a number of ways to compile / bundle your TypeScript to JavaScript. In this monorepo, [**microbundle**](https://www.npmjs.com/package/microbundle) is utilized to compile and bundle TypeScript into JavaScript.
 
-A very simple plugin that can be used as inspiration to generate your own plugin is the local plugin [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.coderc/plugins/plugin-local) - the only difference being that if you are distrbuting this package to npm you would not persist the `dist` directory. If you are making a true local plugin, you would persist the `dist` directory. It's strongly recommended that each plugin have it's own set of unit tests than can be run via [**jest**](https://jestjs.io/).
+A very simple plugin that can be used as inspiration to generate your own plugin is the local plugin [**example**](https://github.com/brandingbrand/flagship/tree/feat/flagship-12/apps/react-native/.coderc/plugins/plugin-local) - the only difference being that if you are distrbuting this package to npm you would not persist the `dist` directory. If you are making a local plugin, you should persist the `dist` directory. It's strongly recommended that each plugin have it's own set of unit tests than can be run via [**jest**](https://jestjs.io/).

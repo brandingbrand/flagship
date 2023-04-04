@@ -8,7 +8,7 @@ lang: en
 ## Quick Start
 Confirm your development environment is set up for React Native CLI by reviewing the [React Native Docs for version 0.70](https://reactnative.dev/docs/0.70/environment-setup).
 
-Please create a [new issue](https://github.com/brandingbrand/flagship/issues/new) if you believe you are encountering a bug.
+We encourage developers to open [**issues**](https://github.com/brandingbrand/flagship/issues) as necessary to report bugs, encourage changes, and help us establish best practices for idempotent React Native code generation.
 
 ## iOS 
 As a first step to troubleshooting iOS, we recommend you clear your Xcode Derived Data. To clear it, enter the following in your terminal: `rm -rf ~/Library/Developer/Xcode/DerivedData`.
