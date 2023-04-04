@@ -11832,10 +11832,10 @@ react-native-web-modal@^1.0.1:
   resolved "https://registry.yarnpkg.com/react-native-web-modal/-/react-native-web-modal-1.0.1.tgz#d0e1d5fa020c88edb9258409054bec73a7726ea1"
   integrity sha512-dFb6EAsayRQxS7GLsXVJn1G44xvU6/3cemoKx1Wgfiu/9DlPcqR30xCloJ3OBuwyoM+FTkWaoeK3JiibYzcCqA==
 
-react-native@0.70.6, react-native@^0.63.5:
-  version "0.70.6"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.70.6.tgz#d692f8b51baffc28e1a8bc5190cdb779de937aa8"
-  integrity sha512-xtQdImPHnwgraEx3HIZFOF+D1hJ9bC5mfpIdUGoMHRws6OmvHAjmFpO6qfdnaQ29vwbmZRq7yf14sbury74R/w==
+react-native@0.70.8, react-native@^0.63.5:
+  version "0.70.8"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.70.8.tgz#aa9aae8e6291589908db74fe69e0ec1d9a9c5490"
+  integrity sha512-O3ONJed9W/VEEVWsbZcwyMDhnEvw7v9l9enqWqgbSGLzHfh6HeIGMCNmjz+kRsHnC7AiF47fupWfgYX7hNnhoQ==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "9.3.2"

@@ -79,7 +79,7 @@
     "metro-config": "0.72.3",
     "react": "18.1.0",
     "react-dom": "18.1.0",
-    "react-native": "0.70.6",
+    "react-native": "0.70.8",
     "react-native-device-info": "^10.3.0",
     "react-native-navigation": "^7.30.2"
   },
@@ -88,7 +88,7 @@
     "@react-native-async-storage/async-storage": "^1.17.11",
     "@react-native-cookies/cookies": "^6.2.1",
     "react": "18.1.0",
-    "react-native": "0.70.6",
+    "react-native": "0.70.8",
     "react-native-device-info": "^10.3.0",
     "react-native-navigation": "^7.30.2",
     "react-native-permissions": "^3.7.3",
