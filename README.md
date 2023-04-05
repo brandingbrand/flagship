@@ -12,9 +12,8 @@
 <br>
 
 # Flagship Code™
-
-## How It Works
-
+Getting started? Please read our [documentation](https://flagship-code.netlify.app).
+## About Flagship Code™
 <img alt="Flagship™ accelerates development"
   src="https://user-images.githubusercontent.com/556070/38955661-4ff210c6-4323-11e8-960e-b568bc4b2bec.png"
   align="right">
