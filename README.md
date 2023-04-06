@@ -1,7 +1,7 @@
 <div align="center">  <a  href="https://brandingbrand.github.io/flagship/">
     <img alt="Flagship™"
       src="https://user-images.githubusercontent.com/2915629/127563134-be64905e-d429-446d-9a53-a657c9613f6f.png"
-      height="75">
+      height="80">
   </a></div>
 
 
@@ -23,19 +23,11 @@ Flagship Code™ is a configuration as code (CaC) toolkit which focuses on idemp
 <img alt="Flagship™ accelerates development"
   src="https://user-images.githubusercontent.com/556070/38955661-4ff210c6-4323-11e8-960e-b568bc4b2bec.png"
   align="right">
-Flagship App™ is a toolkit for building and scaling an ecommerce experience that comprises several ancillary modules. Flagship App can be used independently of Flagship Code™.
+Flagship App™ is a toolkit for building and scaling an ecommerce experience that comprises several packages. Flagship App can be used independently of Flagship Code™.
 
 The toolkit includes a shared stack of foundation packages that provide a unified interface for networking, analytics, commerce integrations, components, and more across each of the supported platforms. 
-### Foundation
-The foundation packages provide a normalization over their integrations, and higher-level modules do not need to implement platform-specific code. These foundation packages are built on top of one another to provide an efficient and seamless development experience.
 
-| Name | Responsibility |
-| ---- | ---- |
-| [`fscomponents`](packages/fscomponents) | reusable, cross-platform frontend components |
-| [`fscommerce`](packages/fscommerce) | product catalog, search, order and user account management, and reviews |
-| [`fsengage`](packages/fsengage) | analytics, content management, and A/B testing |
-| [`fsnetwork`](packages/fsnetwork) | networking and caching |
-| [`fsfoundation`](packages/fsfoundation) | baseline types used by other Flagship packages |
+The foundation packages provide a normalization over their integrations, and higher-level modules do not need to implement platform-specific code. These foundation packages are built on top of one another to provide an efficient and seamless development experience.
 
 ## Troubleshooting
 
