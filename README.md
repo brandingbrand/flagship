@@ -7,26 +7,34 @@
 </h1>
 
 <p align="center">
-  Flagship Code™ is a configuration as code (CaC) toolkit which focuses on naitve code generation for React Native leveraging simplicity, extensibility and typesafety.
+A modular, full solution framework for creating digital experiences shoppers love.
 </p>
 <br>
 
+
+
 # Flagship Code™
-Getting started? Please read our [documentation](https://flagship-code.netlify.app).
-## About Flagship Code™
+Flagship Code™ is a configuration as code (CaC) toolkit which focuses on idempotent native code generation for React Native leveraging simplicity, extensibility and typesafety. 
+
+[See Documentation to learn more.](https://flagship-code.netlify.app/)
+
+# Flagship App™
 <img alt="Flagship™ accelerates development"
   src="https://user-images.githubusercontent.com/556070/38955661-4ff210c6-4323-11e8-960e-b568bc4b2bec.png"
   align="right">
+Flagship App™ is a toolkit for building and scaling an ecommerce experience that comprises several ancillary modules. Flagship App can be used independently, while Flagship Code™ manages the generation of Android, iOS code. 
 
-Flagship Code™ aims to solve two problems: typesafe build + runtime configurations and native code generation. To manage these two challenges a typesafe idempotnent CaC toolkit was created. This toolkit can be broken down into three models: core, cli and plugins.
+The toolkit includes a shared stack of foundation packages that provide a unified interface for networking, analytics, commerce integrations, components, and more across each of the supported platforms. 
+### Foundation
+The foundation packages provide a normalization over their integrations, and higher-level modules do not need to implement platform-specific code. These foundation packages are built on top of one another to provide an efficient and seamless development experience.
 
-### Core
-
-The core sdk is contains utility functions, executors and a template. Utility functions are foundational functions that executors and more complex functions are built upon to manipulate or generate native code. Executors are complex functions that are executed at different native-specific lifecycles.
-### CLI
-The cli sdk is a command line interface that listens for options that conditionally run executors.
-### Plugins
-Plugins are published or local native-specific scripts i.e. iOS and/or Android, that manipulate or generate native code for a specific third-party SDK. These plugins are run generically based upon a priority list captured in the _package.json_.
+| Name | Responsibility |
+| ---- | ---- |
+| [`fscomponents`](packages/fscomponents) | reusable, cross-platform frontend components |
+| [`fscommerce`](packages/fscommerce) | product catalog, search, order and user account management, and reviews |
+| [`fsengage`](packages/fsengage) | analytics, content management, and A/B testing |
+| [`fsnetwork`](packages/fsnetwork) | networking and caching |
+| [`fsfoundation`](packages/fsfoundation) | baseline types used by other Flagship packages |
 
 ## Troubleshooting
 
