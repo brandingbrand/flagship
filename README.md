@@ -17,7 +17,7 @@
 # Flagship Code™
 Flagship Code™ is a configuration as code (CaC) toolkit which focuses on idempotent native code generation for React Native leveraging simplicity, extensibility and typesafety. 
 
-[See Documentation to learn more.](https://flagship-code.netlify.app/)
+[ℹ️ See documentation to learn more.](https://flagship-code.netlify.app/)
 
 # Flagship App™
 <img alt="Flagship™ accelerates development"
