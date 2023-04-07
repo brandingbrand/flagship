@@ -38,13 +38,13 @@ export const execute = withSummary(
       return rawAndroid;
     };
 
-    utils.env.set({
+    utils.env.set = {
       ...config,
       ios: normalizedIOSPlugins(),
       android: normalizedAndroidPlugins(),
       release: options.release,
       env: options.env,
-    });
+    };
   },
   "normalize",
   "pre"

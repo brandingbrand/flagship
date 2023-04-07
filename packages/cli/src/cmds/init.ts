@@ -16,16 +16,16 @@ program
   .option("-v, --verbose", "show stdout", false)
   .action(async (options) => {
     for (const e of init.pre.executors) {
-      await e.execute(options, await env.get());
+      await e.execute(options, env.get);
     }
 
     for (const e of init.platform.executors) {
       for (const p of platforms.get(options.platform)) {
-        await e.execute(options, await env.get())[p]();
+        await e.execute(options, env.get)[p]();
       }
     }
 
     for (const e of init.post.executors) {
-      await e.execute(options, await env.get());
+      await e.execute(options, env.get);
     }
   });
