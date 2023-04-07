@@ -12,10 +12,10 @@
   },
   "scripts": {
     "android": "react-native run-android",
-    "clean": "code clean",
-    "init": "code init",
+    "clean": "flagship-code clean",
+    "init": "flagship-code init",
     "ios": "react-native run-ios",
-    "keys": "code keys",
+    "keys": "flagship-code keys",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "start": "react-native start",
     "test": "jest"

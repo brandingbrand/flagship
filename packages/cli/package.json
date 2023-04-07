@@ -6,7 +6,7 @@
   "author": "",
   "keywords": [],
   "bin": {
-    "code": "bin/code.js"
+    "flagship-code": "bin/flagship-code.js"
   },
   "main": "dist/index.js",
   "exports": {
