@@ -1,4 +1,4 @@
-import { ios, android } from "../src";
+import {ios, android} from '../src';
 
 describe('plugin-local', () => {
   it('ios', async () => {

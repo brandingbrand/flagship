@@ -10,6 +10,7 @@
   },
   "main": "dist/index.js",
   "exports": {
+    "./package.json": "./package.json",
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
@@ -19,7 +20,8 @@
   "module": "dist/index.module.js",
   "files": [
     "bin",
-    "dist"
+    "dist",
+    "assets/template"
   ],
   "publishConfig": {
     "access": "public"
@@ -32,13 +34,22 @@
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
   "dependencies": {
-    "commander": "^9.4.1"
+    "commander": "^9.4.1",
+    "@expo/spawn-async": "^1.7.0",
+    "cli-spinners": "^2.7.0",
+    "cli-table": "^0.3.11",
+    "deepmerge": "^4.2.2",
+    "ejs": "^3.1.8",
+    "lodash": "^4.17.21"
   },
   "peerDependencies": {
     "@brandingbrand/code-core": "< 1.0.0"
   },
   "devDependencies": {
     "@brandingbrand/code-core": "*",
+    "@types/cli-table": "^0.3.1",
+    "@types/ejs": "^3.1.1",
+    "@types/lodash": "^4.14.191",
     "@types/node": "^18.11.9"
   }
 }

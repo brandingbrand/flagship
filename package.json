@@ -69,9 +69,9 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "./packages/core/test/environment/custom-env.ts",
+    "testEnvironment": "./packages/__test__/custom-env.ts",
     "setupFilesAfterEnv": [
-      "./packages/core/test/environment/setup-files-after-env.ts"
+      "./packages/__test__/setup-files-after-env.ts"
     ]
   },
   "resolutions": {

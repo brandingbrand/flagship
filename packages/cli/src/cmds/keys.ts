@@ -1,5 +1,7 @@
 import { program } from "commander";
-import { env, keys, platforms } from "@brandingbrand/code-core";
+import { env, platforms } from "@brandingbrand/code-core";
+
+import { keys } from "../executors";
 
 program
   .command("keys")

@@ -15,8 +15,7 @@
   },
   "module": "dist/index.module.js",
   "files": [
-    "dist",
-    "assets/template"
+    "dist"
   ],
   "publishConfig": {
     "access": "public"
