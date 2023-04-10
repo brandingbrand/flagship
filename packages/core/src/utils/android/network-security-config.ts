@@ -5,8 +5,18 @@ import { withXml } from "../xml";
 
 import type { NetworkSecurityConfigType } from "../../types/android";
 
+/**
+ * The list of tag names that should be handled as arrays.
+ *
+ * @type {string[]}
+ */
 const tagNames = ["certificates", "domain", "domain-config"];
 
+/**
+ * Wraps the withXml function to provide a strongly typed XML object to the callback.
+ *
+ * @param {function(xml: NetworkSecurityConfigType.NetworkSecurityConfig): void} callback - The callback function to invoke with the XML object.
+ */
 const withNetworkSecurityConfig = async (
   callback: (xml: NetworkSecurityConfigType.NetworkSecurityConfig) => void
 ) =>
@@ -28,6 +38,11 @@ const withNetworkSecurityConfig = async (
     callback
   );
 
+/**
+ * Sets the base config for the network security configuration.
+ *
+ * @param {NetworkSecurityConfigType.BaseConfig} config - The base configuration to set.
+ */
 export const setBaseConfig = (config: NetworkSecurityConfigType.BaseConfig) =>
   withNetworkSecurityConfig(async (xml) => {
     if (typeof xml["network-security-config"] === "string") {
@@ -39,6 +54,11 @@ export const setBaseConfig = (config: NetworkSecurityConfigType.BaseConfig) =>
     xml["network-security-config"]["base-config"] = config;
   });
 
+/**
+ * Sets the debug overrides for the network security configuration.
+ *
+ * @param {NetworkSecurityConfigType.DebugOverrides} config - The debug overrides to set.
+ */
 export const setDebugOverrides = (
   config: NetworkSecurityConfigType.DebugOverrides
 ) =>
@@ -52,6 +72,11 @@ export const setDebugOverrides = (
     xml["network-security-config"]["debug-overrides"] = config;
   });
 
+/**
+ * Adds domain configurations to the network security configuration.
+ *
+ * @param {NetworkSecurityConfigType.DomainConfig[]} config - An array of domain configurations to add.
+ */
 export const addDomainConfig = (
   config: NetworkSecurityConfigType.DomainConfig[]
 ) =>
