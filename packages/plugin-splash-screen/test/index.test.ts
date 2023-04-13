@@ -2,17 +2,11 @@
  * @jest-environment-options {"fixture": "__plugin-splash-screen_fixtures"}
  */
 
-import path from "path";
-import { fs, path as pathk } from "@brandingbrand/code-core";
+import { fs, path } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
 describe("plugin-splash-screen", () => {
-  jest
-    .spyOn(pathk.project, "resolve")
-    .mockImplementation((...args: string[]) =>
-      path.resolve.apply(path, [path.resolve(__dirname, ".."), ...args])
-    );
   jest
     .spyOn(fs, "move")
     .mockImplementation((_source: string, _dest: string) => {
@@ -20,8 +14,7 @@ describe("plugin-splash-screen", () => {
     });
   const spy = jest
     .spyOn(
-      require(pathk.project.resolve(
-        "node_modules",
+      require(path.hoist.resolve(
         "react-native-bootsplash",
         "dist",
         "commonjs",
@@ -44,11 +37,11 @@ describe("plugin-splash-screen", () => {
     });
 
     expect(spy).toHaveBeenCalledWith({
-      ios: { projectPath: pathk.project.resolve("ios", "HelloWorld") },
+      ios: { projectPath: path.project.resolve("ios", "HelloWorld") },
       android: null,
-      workingPath: pathk.project.path(),
-      logoPath: pathk.project.resolve(
-        pathk.config.assetsPath(),
+      workingPath: path.project.path(),
+      logoPath: path.project.resolve(
+        path.config.assetsPath(),
         "splash-screen",
         "ios",
         "generated",
@@ -74,11 +67,11 @@ describe("plugin-splash-screen", () => {
 
     expect(spy).toHaveBeenCalledWith({
       ios: null,
-      android: { sourceDir: pathk.project.resolve("android", "app") },
+      android: { sourceDir: path.project.resolve("android", "app") },
       flavor: "main",
-      workingPath: pathk.project.path(),
-      logoPath: pathk.project.resolve(
-        pathk.config.assetsPath(),
+      workingPath: path.project.path(),
+      logoPath: path.project.resolve(
+        path.config.assetsPath(),
         "splash-screen",
         "android",
         "generated",
@@ -91,13 +84,13 @@ describe("plugin-splash-screen", () => {
 
     const layout = (
       await fs.stat(
-        pathk.project.resolve(pathk.android.resourcesPath(), "layout")
+        path.project.resolve(path.android.resourcesPath(), "layout")
       )
     ).isDirectory();
     const mainActivity = (
       await fs.readFile(
         path.resolve(
-          pathk.android.mainActivityPath(global.__FLAGSHIP_CODE_CONFIG__)
+          path.android.mainActivityPath(global.__FLAGSHIP_CODE_CONFIG__)
         )
       )
     ).toString();

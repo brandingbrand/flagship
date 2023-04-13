@@ -7,8 +7,7 @@ const ios = summary.withSummary(
     const { assetPath = ["./assets/fonts"] } =
       config.codePluginAsset?.plugin ?? {};
 
-    const linkAsssets = require(path.project.resolve(
-      "node_modules",
+    const linkAsssets = require(path.hoist.resolve(
       "react-native-asset",
       "lib"
     ));
@@ -37,8 +36,7 @@ const android = summary.withSummary(
     const { assetPath = ["./assets/fonts"] } =
       config.codePluginAsset?.plugin ?? {};
 
-    const linkAsssets = require(path.project.resolve(
-      "node_modules",
+    const linkAsssets = require(path.hoist.resolve(
       "react-native-asset",
       "lib"
     ));

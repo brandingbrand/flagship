@@ -12,11 +12,6 @@
       "docs",
       "apps/*",
       "packages/*"
-    ],
-    "nohoist": [
-      "**/react",
-      "**/react-native",
-      "**/react-native-*"
     ]
   },
   "scripts": {
@@ -81,6 +76,7 @@
     "react-native": "0.70.8",
     "react-native-device-info": "^10.3.0",
     "react-native-navigation": "^7.30.2",
+    "react-native-permissions": "^3.7.3",
     "xcode": "^3.0.1"
   },
   "devDependencies": {

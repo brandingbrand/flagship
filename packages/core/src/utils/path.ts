@@ -15,11 +15,7 @@ const getPathToApp = (): string => {
     return _pathToApp;
   }
 
-  _pathToApp = resolvePathFromProject(
-    "node_modules",
-    "@brandingbrand",
-    "fsapp"
-  );
+  _pathToApp = hoist.resolve("@brandingbrand/fsapp");
 
   return _pathToApp;
 };
@@ -308,6 +304,23 @@ const getSigningPath = () => resolvePathFromConfig("signing");
  */
 const getAssetsPathConfig = () => resolvePathFromConfig("assets");
 
+/**
+ *  Resolves a path relative to specified package i.e. first index
+ *
+ * @param paths A list of path components to resolve relative to specified package.
+ * @return A resolved path relative to specified package.
+ */
+const resolveFromHoist = (...paths: string[]) => {
+  const pkg = paths[0];
+  paths.shift();
+
+  return path.resolve.apply(path, [
+    require.resolve(`${pkg}/package.json`, { paths: [process.cwd()] }),
+    "..",
+    ...paths,
+  ]);
+};
+
 export { basename, extname, normalize, resolve, sep } from "path";
 
 export const app = {
@@ -356,4 +369,8 @@ export const android = {
   stylesPath: getStylesPath,
   colorsPath: getColorsPath,
   fastfilePath: getFastfilePathAndroid,
+};
+
+export const hoist = {
+  resolve: resolveFromHoist,
 };

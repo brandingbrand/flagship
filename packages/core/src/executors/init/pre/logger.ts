@@ -15,7 +15,7 @@ export const execute = withSummary(
     await packageManager.withVersion("npmlog", async (packageVersion) => {
       if (!packageVersion) return;
 
-      const log = require(path.project.resolve("node_modules", "npmlog"));
+      const log = require(path.hoist.resolve("npmlog"));
       log.level = "silent";
     });
   },

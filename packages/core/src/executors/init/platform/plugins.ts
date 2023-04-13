@@ -11,10 +11,7 @@ export const execute = (options: InitOptions, config: Config) => {
     platform: "ios" | "android"
   ) => {
     for (const installedPlugin of installedPlugins) {
-      const bundle = require(path.project.resolve(
-        "node_modules",
-        installedPlugin
-      ));
+      const bundle = require(installedPlugin);
 
       await bundle?.[platform]?.(configuration);
     }

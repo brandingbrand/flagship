@@ -21,11 +21,7 @@ const ios = summary.withSummary(
     );
 
     await fsk.update(
-      path.project.resolve(
-        "node_modules",
-        "react-native-permissions",
-        "RNPermissions.podspec"
-      ),
+      path.hoist.resolve("react-native-permissions", "RNPermissions.podspec"),
       /"ios\/\*\.{h,m,mm}".*/,
       utils.ios.podspec(config.codePluginPermissions.plugin.ios)
     );

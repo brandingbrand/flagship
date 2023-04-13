@@ -1,25 +1,25 @@
-import path from "path";
-import { path as pathk } from "@brandingbrand/code-core";
+import { path } from "@brandingbrand/code-core";
 
 import { ios, android } from "../src";
 
-global.process.cwd = () => path.resolve(__dirname, "..");
-jest.mock("../node_modules/react-native-asset/lib");
+const linkAssetsPath = path.hoist.resolve("react-native-asset", "lib");
 
 describe("plugin-asset", () => {
+  jest.mock(linkAssetsPath);
+
   it("ios", async () => {
-    const linkAssets = require("../node_modules/react-native-asset/lib");
+    const linkAssets = require(linkAssetsPath);
     await ios({
       codePluginAsset: { plugin: { assetPath: ["./assets/fonts"] } },
     });
 
     expect(linkAssets).toBeCalledWith({
-      rootPath: pathk.project.path(),
+      rootPath: path.project.path(),
       shouldUnlink: true,
       platforms: {
         ios: {
           enabled: true,
-          assets: [pathk.config.resolve("./assets/fonts")],
+          assets: [path.config.resolve("./assets/fonts")],
         },
         android: {
           enabled: false,
@@ -30,18 +30,18 @@ describe("plugin-asset", () => {
   });
 
   it("android", async () => {
-    const linkAssets = require("../node_modules/react-native-asset/lib");
+    const linkAssets = require(linkAssetsPath);
     await android({
       codePluginAsset: { plugin: { assetPath: ["./assets/fonts"] } },
     });
 
     expect(linkAssets).toBeCalledWith({
-      rootPath: pathk.project.path(),
+      rootPath: path.project.path(),
       shouldUnlink: true,
       platforms: {
         android: {
           enabled: true,
-          assets: [pathk.config.resolve("./assets/fonts")],
+          assets: [path.config.resolve("./assets/fonts")],
         },
         ios: {
           enabled: false,

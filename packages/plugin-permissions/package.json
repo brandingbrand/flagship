@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@brandingbrand/code-core": "*",
-    "@types/lodash": "^4.14.191"
+    "@types/lodash": "^4.14.191",
+    "react-native-permissions": "^3.7.3"
   }
 }
