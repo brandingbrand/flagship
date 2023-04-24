@@ -21,6 +21,7 @@
     "dev": "turbo run dev --concurrency 100",
     "dev:docs": "turbo run dev --filter='./docs' --concurrency 100",
     "dev:packages": "turbo run dev --filter='./packages/*' --concurrency 100",
+    "postinstall": "patch-package",
     "prepare": "husky install",
     "test": "jest"
   },
@@ -69,16 +70,6 @@
       "./packages/core/test/environment/setup-files-after-env.ts"
     ]
   },
-  "resolutions": {
-    "metro-config": "0.72.3",
-    "react": "18.1.0",
-    "react-dom": "18.1.0",
-    "react-native": "0.70.8",
-    "react-native-device-info": "^10.3.0",
-    "react-native-navigation": "^7.30.2",
-    "react-native-permissions": "^3.7.3",
-    "xcode": "^3.0.1"
-  },
   "devDependencies": {
     "@changesets/cli": "^2.25.2",
     "@jest/environment": "^29.4.3",
@@ -100,6 +91,8 @@
     "jest-environment-node": "^29.4.3",
     "lint-staged": "^13.2.0",
     "microbundle": "^0.15.1",
+    "patch-package": "^6.5.1",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.7.1",
     "ts-jest": "^29.0.3",
     "turbo": "^1.8.8",

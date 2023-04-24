@@ -50,7 +50,7 @@ const prod: ENV = {
     },
     manifest: {
       mainActivityAttributes: {
-        "android:screenOrientation": "portrait"
+        'android:screenOrientation': 'portrait',
       },
       urlScheme: {
         scheme: 'code',
