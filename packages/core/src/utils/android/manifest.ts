@@ -3,6 +3,11 @@ import { withXml } from "../xml";
 
 import type { AndroidManifestType } from "../../types/android";
 
+/**
+ * List of tag names that can have an array of children
+ *
+ * @constant {Array.<string>}
+ */
 const tagNames = [
   "intent-filter",
   "action",
@@ -20,6 +25,12 @@ const tagNames = [
   "application",
 ];
 
+/**
+ * Wrapper for parsing and updating the AndroidManifest.xml file.
+ *
+ * @param {function} callback - A function to be executed with the parsed xml
+ * @returns {Promise} A promise which resolves when the xml has been parsed
+ */
 const withManifest = async (
   callback: (xml: AndroidManifestType.AndroidManifest) => void
 ) =>
@@ -37,6 +48,13 @@ const withManifest = async (
     callback
   );
 
+/**
+ * Helper function to get the application element with a given name
+ *
+ * @param {AndroidManifestType.AndroidManifest} androidManifest - Parsed AndroidManifest.xml
+ * @param {string} applicationName - Name of the application element to look for
+ * @returns {AndroidManifestType.ManifestApplication | undefined} The application element if found, undefined otherwise
+ */
 const getApplication = (
   androidManifest: AndroidManifestType.AndroidManifest,
   applicationName: string
@@ -45,6 +63,14 @@ const getApplication = (
     (it) => it.$["android:name"] === applicationName
   );
 
+/**
+ * Helper function to get the activity element with a given name
+ *
+ * @param {AndroidManifestType.AndroidManifest} androidManifest - Parsed AndroidManifest.xml
+ * @param {string} applicationName - Name of the application element that contains the activity element to look for
+ * @param {string} activityName - Name of the activity element to look for
+ * @returns {AndroidManifestType.ManifestActivity | undefined} The activity element if found, undefined otherwise
+ */
 const getActivity = (
   androidManifest: AndroidManifestType.AndroidManifest,
   applicationName: string,
@@ -54,6 +80,12 @@ const getActivity = (
     ?.find((it) => it.$["android:name"] === applicationName)
     ?.activity?.find((it) => it.$["android:name"] === activityName);
 
+/**
+ * Updates the attributes of the manifest element in AndroidManifest.xml
+ *
+ * @param {Partial<AndroidManifestType.AndroidManifestAttributes>} attributes - An object containing the attributes to update
+ * @returns {void}
+ */
 export const setManifestAttributes = (
   attributes: Partial<AndroidManifestType.AndroidManifestAttributes>
 ) =>
@@ -64,6 +96,13 @@ export const setManifestAttributes = (
     };
   });
 
+/**
+ * Updates the attributes of the application element in AndroidManifest.xml
+ *
+ * @param {Partial<AndroidManifestType.ManifestApplicationAttributes>} attrbutes - An object containing the attributes to update
+ * @param {string} [applicationName='.MainApplication'] - Name of the application element to update
+ * @returns {void}
+ */
 export const setApplicationAttributes = (
   attrbutes: Partial<AndroidManifestType.ManifestApplicationAttributes>,
   applicationName = ".MainApplication"
@@ -79,6 +118,13 @@ export const setApplicationAttributes = (
     };
   });
 
+/**
+ * Sets attributes of the specified activity in the AndroidManifest.xml file.
+ *
+ * @param {Partial<AndroidManifestType.ManifestActivityAttributes>} attributes - The attributes to set.
+ * @param {string} [applicationName='.MainApplication'] - The name of the application element.
+ * @param {string} [activityName='.MainActivity'] - The name of the activity element.
+ */
 export const setActivityAttributes = (
   attrbutes: Partial<AndroidManifestType.ManifestActivityAttributes>,
   applicationName = ".MainApplication",
@@ -95,6 +141,12 @@ export const setActivityAttributes = (
     };
   });
 
+/**
+ * Adds elements to the specified application in the AndroidManifest.xml file.
+ *
+ * @param {AndroidManifestType.ManifestApplicationElements} elements - The elements to add.
+ * @param {string} [applicationName='.MainApplication'] - The name of the application element.
+ */
 export const addApplicationEelements = (
   elements: AndroidManifestType.ManifestApplicationElements,
   applicationName = ".MainApplication"
@@ -141,6 +193,13 @@ export const addApplicationEelements = (
     );
   });
 
+/**
+ * Adds elements to the specified activity in the AndroidManifest.xml file.
+ *
+ * @param {AndroidManifestType.ManifestActivityElements} elements - The elements to add.
+ * @param {string} [applicationName='.MainApplication'] - The name of the application element.
+ * @param {string} [activityName='.MainActivity'] - The name of the activity element.
+ */
 export const addActivityElements = (
   elements: AndroidManifestType.ManifestActivityElements,
   applicationName = ".MainApplication",
@@ -158,6 +217,11 @@ export const addActivityElements = (
     );
   });
 
+/**
+ * Adds elements to the AndroidManifest.xml file.
+ *
+ * @param {AndroidManifestType.AndroidManifestElements} elements - The elements to add.
+ */
 export const addManifestElements = (
   elements: AndroidManifestType.AndroidManifestElements
 ) =>

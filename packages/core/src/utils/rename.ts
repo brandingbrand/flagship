@@ -3,6 +3,13 @@ import { sync } from "glob";
 
 import * as path from "./path";
 
+/**
+ * Returns an array of files/directories matching the provided directory and old name.
+ *
+ * @param {string} directory - The directory path to search.
+ * @param {string} oldName - The old name to match in the file/directory name.
+ * @returns {string[]} - An array of matching file/directory paths.
+ */
 const getMatchingFiles = (directory: string, oldName: string): string[] => {
   const globOptions = {
     nosort: true,

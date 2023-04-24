@@ -5,6 +5,12 @@ import { colors } from "./logger";
 
 let interval: NodeJS.Timer;
 
+/**
+ * Start a spinner in stderr with the given text.
+ *
+ * @param {string} text - The text to be displayed with the spinner.
+ * @returns {void}
+ */
 export const start = (text: string) => {
   const { dots, simpleDots } = cliSpinners;
   let i = 0;
@@ -24,6 +30,11 @@ export const start = (text: string) => {
   }, dots.interval);
 };
 
+/**
+ * Stop the currently running spinner.
+ *
+ * @returns {void}
+ */
 export const stop = () => {
   clearInterval(interval);
 };

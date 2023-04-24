@@ -1,3 +1,9 @@
+/**
+ * Returns an array of strings representing the platforms based on the provided options.
+ *
+ * @param {string} options - The options provided to get platforms.
+ * @returns {Array<string>} An array of strings representing the platforms.
+ */
 export const get = (
   options: "ios" | "android" | "native"
 ): Array<"ios" | "android"> => {

@@ -2,6 +2,11 @@ import camelCase from "lodash/camelCase";
 
 import * as path from "./path";
 
+/**
+ * Retrieves the list of plugins used in the project, if available.
+ *
+ * @returns {string[]} An array of plugin names.
+ */
 export const get = (): string[] => {
   const { code, devDependencies } = require(path.project.packagePath());
 
