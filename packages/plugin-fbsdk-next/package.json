@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-fbsdk-next",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "",
   "license": "MIT",
   "author": "",
@@ -29,7 +29,7 @@
   "types": "dist/index.d.ts",
   "peerDependencies": {
     "@brandingbrand/code-core": "< 1.0.0",
-    "@brandingbrand/code-plugin-firebase-app": "^0.0.12",
+    "@brandingbrand/code-plugin-firebase-app": "^0.0.13",
     "react-native-fbsdk-next": "^11.1.0"
   },
   "devDependencies": {

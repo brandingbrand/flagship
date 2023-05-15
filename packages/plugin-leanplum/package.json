@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-leanplum",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "",
   "license": "MIT",
   "author": "",
@@ -29,8 +29,8 @@
   "types": "dist/index.d.ts",
   "peerDependencies": {
     "@brandingbrand/code-core": "< 1.0.0",
-    "@brandingbrand/code-plugin-app-icon": "^0.0.12",
-    "@brandingbrand/code-plugin-firebase-app": "^0.0.12",
+    "@brandingbrand/code-plugin-app-icon": "^0.0.13",
+    "@brandingbrand/code-plugin-firebase-app": "^0.0.13",
     "@leanplum/react-native-sdk": "^2.0.0",
     "clevertap-react-native": "^0.9.4"
   },

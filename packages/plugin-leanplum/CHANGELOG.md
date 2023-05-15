@@ -1,5 +1,14 @@
 # @brandingbrand/kernel-plugin-leanplum
 
+## 0.0.13
+
+### Patch Changes
+
+- 62ed0c701: fsapp v12 support
+- Updated dependencies [62ed0c701]
+  - @brandingbrand/code-plugin-app-icon@0.0.13
+  - @brandingbrand/code-plugin-firebase-app@0.0.13
+
 ## 0.0.12
 
 ### Patch Changes

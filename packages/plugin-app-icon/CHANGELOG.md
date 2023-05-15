@@ -1,5 +1,11 @@
 # @brandingbrand/kernel-plugin-app-icon
 
+## 0.0.13
+
+### Patch Changes
+
+- 62ed0c701: fsapp v12 support
+
 ## 0.0.12
 
 ### Patch Changes
