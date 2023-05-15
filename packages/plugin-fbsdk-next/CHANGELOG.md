@@ -1,5 +1,13 @@
 # @brandingbrand/kernel-plugin-fbsdk-next
 
+## 0.0.13
+
+### Patch Changes
+
+- 578e7d5c7: fsapp v12 support
+- Updated dependencies [578e7d5c7]
+  - @brandingbrand/code-plugin-firebase-app@0.0.13
+
 ## 0.0.12
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @brandingbrand/kernel-plugin-target-extension
 
+## 0.0.13
+
+### Patch Changes
+
+- 578e7d5c7: fsapp v12 support
+
 ## 0.0.12
 
 ### Patch Changes
