@@ -1,11 +1,4 @@
----
-title: Contribution
-description: Contribution
-layout: ../../../layouts/docs.astro
-lang: en
----
-
-## Contribution
+# Contributing
 
 ## Technology
 
@@ -59,4 +52,3 @@ Your pull request must be approved via the Review function prior to being merged
 ## Questions
 
 Please contact the Product Team: product@brandingbrand.com
-
