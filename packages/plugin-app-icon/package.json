@@ -1,10 +1,20 @@
 {
   "name": "@brandingbrand/code-plugin-app-icon",
   "version": "0.0.13",
-  "description": "",
+  "description": "plugin for Flagship Code app icon",
   "license": "MIT",
-  "author": "",
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brandingbrand/flagship"
+  },
+  "bugs": "https://github.com/brandingbrand/flagship/issues",
+  "homepage": "https://brandingbrand.github.io/flagship/en/packages/plugins/app-icon",
+  "keywords": [
+    "react-native",
+    "flagship code",
+    "app",
+    "icon"
+  ],
   "main": "dist/index.js",
   "exports": {
     ".": {
