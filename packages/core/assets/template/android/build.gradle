@@ -2,10 +2,10 @@
 
 buildscript {
     ext {
-        buildToolsVersion = "<%- android.gradle?.projectGradle?.buildToolsVersion || "31.0.0" %>"
+        buildToolsVersion = "<%- android.gradle?.projectGradle?.buildToolsVersion || "33.0.2" %>"
         minSdkVersion = <%- android.gradle?.projectGradle?.minSdkVersion || 21 %>
-        compileSdkVersion = <%- android.gradle?.projectGradle?.compileSdkVersion || 31 %>
-        targetSdkVersion = <%- android.gradle?.projectGradle?.targetSdkVersion || 31 %>
+        compileSdkVersion = <%- android.gradle?.projectGradle?.compileSdkVersion || 33 %>
+        targetSdkVersion = <%- android.gradle?.projectGradle?.targetSdkVersion || 33 %>
         kotlinVersion = "<%- android.gradle?.projectGradle?.kotlinVersion || "1.6.0" %>"
         RNNKotlinVersion = kotlinVersion
         <% android.gradle?.projectGradle?.ext?.forEach(function(it) { %>
@@ -29,7 +29,7 @@ buildscript {
     }
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:<%- android.gradle?.projectGradle?.kotlinVersion || "1.6.0" %>")
-        classpath("com.android.tools.build:gradle:7.2.1")
+        classpath("com.android.tools.build:gradle:<%- android.gradle?.projectGradle?.androidGradlePluginVersion || "7.4.2" %>")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("de.undercouch:gradle-download-task:5.0.1")
         <% android.gradle?.projectGradle?.dependencies?.forEach(function(it) { %>
