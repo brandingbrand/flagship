@@ -1,10 +1,19 @@
 {
   "name": "@brandingbrand/code-plugin-firebase-app",
   "version": "0.0.13",
-  "description": "",
+  "description": "plugin for Flagship Code firebase app",
   "license": "MIT",
-  "author": "",
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brandingbrand/flagship"
+  },
+  "bugs": "https://github.com/brandingbrand/flagship/issues",
+  "homepage": "https://brandingbrand.github.io/flagship/en/packages/plugins/firebase-app",
+  "keywords": [
+    "flagship code",
+    "plugin",
+    "firebase"
+  ],
   "main": "dist/index.js",
   "exports": {
     ".": {
