@@ -193,3 +193,6 @@ apps/**/*/.coderc/env/env*.js
 # Flagship Code™
 !code-core.log
 !**/*/test/fixtures/node_modules
+
+# Temporary files created by Metro to check the health of the file watcher
+.metro-health-check*
