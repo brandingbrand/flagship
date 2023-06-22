@@ -31,3 +31,11 @@ buildscript {
         <% }) %>
     }
 }
+
+allprojects {
+    repositories {
+        <% android.gradle?.projectGradle?.repositories?.forEach(function(it) { %>
+        <%- it %>
+        <% }) %>
+    }
+}
