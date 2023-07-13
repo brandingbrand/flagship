@@ -1,10 +1,20 @@
 {
   "name": "@brandingbrand/code-plugin-google-signin",
   "version": "0.0.13",
-  "description": "",
+  "description": "plugin for Flagship Code google sign in",
   "license": "MIT",
-  "author": "",
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brandingbrand/flagship"
+  },
+  "bugs": "https://github.com/brandingbrand/flagship/issues",
+  "homepage": "https://brandingbrand.github.io/flagship/en/packages/plugins/google-signin",
+  "keywords": [
+    "flagship code",
+    "plugin",
+    "sign in",
+    "google"
+  ],
   "main": "dist/index.js",
   "exports": {
     ".": {

@@ -1,10 +1,19 @@
 {
   "name": "@brandingbrand/code-plugin-leanplum",
   "version": "0.0.13",
-  "description": "",
+  "description": "plugin for Flagship Code for leanplum",
   "license": "MIT",
-  "author": "",
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brandingbrand/flagship"
+  },
+  "bugs": "https://github.com/brandingbrand/flagship/issues",
+  "homepage": "https://brandingbrand.github.io/flagship/en/packages/plugins/leanplum",
+  "keywords": [
+    "flagship code",
+    "plugin",
+    "leanplum"
+  ],
   "main": "dist/index.js",
   "exports": {
     ".": {

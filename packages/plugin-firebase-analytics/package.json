@@ -1,10 +1,20 @@
 {
   "name": "@brandingbrand/code-plugin-firebase-analytics",
   "version": "0.0.13",
-  "description": "",
+  "description": "plugin for Flagship Code firebase analytics",
   "license": "MIT",
-  "author": "",
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brandingbrand/flagship"
+  },
+  "bugs": "https://github.com/brandingbrand/flagship/issues",
+  "homepage": "https://brandingbrand.github.io/flagship/en/packages/plugins/firebase-analytics",
+  "keywords": [
+    "flagship code",
+    "plugin",
+    "firebase",
+    "analytics"
+  ],
   "main": "dist/index.js",
   "exports": {
     ".": {
