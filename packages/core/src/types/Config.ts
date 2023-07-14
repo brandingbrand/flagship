@@ -206,6 +206,10 @@ export interface AppGradle {
 
 export interface ProjectGradle {
   /**
+   * Android gradle plugin version.
+   */
+  androidGradlePluginVersion?: string;
+  /**
    * Android build tools version
    */
   buildToolsVersion?: string;

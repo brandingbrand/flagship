@@ -2,7 +2,7 @@
 
 buildscript {
     ext {
-        buildToolsVersion = "<%- android.gradle?.projectGradle?.buildToolsVersion || "33.0.0" %>"
+        buildToolsVersion = "<%- android.gradle?.projectGradle?.buildToolsVersion || "33.0.2" %>"
         minSdkVersion = <%- android.gradle?.projectGradle?.minSdkVersion || 21 %>
         compileSdkVersion = <%- android.gradle?.projectGradle?.compileSdkVersion || 33 %>
         targetSdkVersion = <%- android.gradle?.projectGradle?.targetSdkVersion || 33 %>
@@ -24,7 +24,7 @@ buildscript {
     }
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:<%- android.gradle?.projectGradle?.kotlinVersion || "1.6.0" %>")
-        classpath("com.android.tools.build:gradle:7.3.1")
+        classpath("com.android.tools.build:gradle:<%- android.gradle?.projectGradle?.androidGradlePluginVersion || "7.4.2" %>")
         classpath("com.facebook.react:react-native-gradle-plugin")
         <% android.gradle?.projectGradle?.dependencies?.forEach(function(it) { %>
         <%- it %>
