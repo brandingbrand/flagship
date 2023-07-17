@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-app-icon",
-  "version": "0.0.13",
+  "version": "1.0.0",
   "description": "plugin for Flagship Code app icon",
   "license": "MIT",
   "repository": {
@@ -41,7 +41,7 @@
     "sharp": "^0.31.2"
   },
   "peerDependencies": {
-    "@brandingbrand/code-core": "< 1.0.0"
+    "@brandingbrand/code-core": "*"
   },
   "devDependencies": {
     "@brandingbrand/code-core": "*",

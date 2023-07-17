@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-splash-screen",
-  "version": "0.0.13",
+  "version": "1.0.0",
   "description": "plugin for Flagship Code for splash screens",
   "license": "MIT",
   "repository": {
@@ -40,7 +40,7 @@
     "react-native-bootsplash": "^4.5.2"
   },
   "peerDependencies": {
-    "@brandingbrand/code-core": "< 1.0.0"
+    "@brandingbrand/code-core": "*"
   },
   "devDependencies": {
     "@brandingbrand/code-core": "*"

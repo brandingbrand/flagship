@@ -1,6 +1,6 @@
 ---
 title: Plugin Permissions
-description: brandingbrand/kernel-plugin-permissions
+description: brandingbrand/code-plugin-permissions
 layout: ../../../../../layouts/docs.astro
 lang: en
 ---
@@ -9,37 +9,37 @@ import CodeCopy from "../../../../../components/code-copy.astro";
 
 ## Plugin Permissions
 
-`@brandingbrand/kernel-plugin-permissions` is a package that configures all the necessary native code for [**react-native-permissions**](https://github.com/zoontek/react-native-permissions) library.
+`@brandingbrand/code-plugin-permissions` is a package that configures all the necessary native code for [**react-native-permissions**](https://github.com/zoontek/react-native-permissions) library.
 
 ### Getting Started
 
 <div class="flex w-full my-6">
-  <CodeCopy args="yarn add -D @brandingbrand/kernel-plugin-permissions && yarn add react-native-permissions@^3.6.1" />
+  <CodeCopy args="yarn add -D @brandingbrand/code-plugin-permissions && yarn add react-native-permissions@^3.6.1" />
 </div>
 
-Add the above noted package and the plugin is avaialble in the Kernel plugin ecosystem.
+Add the above noted package and the plugin is avaialble in the Flagship Code plugin ecosystem.
 
 ### Usage
 
-After adding this plugin as a dev dependency it is necessary to add it to the kernel plugins configuration via the `package.json`.
+After adding this plugin as a dev dependency it is necessary to add it to the Flagship Code plugins configuration via the `package.json`.
 
 `package.json`
 
 ```
-  "kernel": {
+  "code": {
     "plugins": [
-      "@brandingbrand/kernel-plugin-permissions"
+      "@brandingbrand/code-plugin-permissions"
     ]
   },
 ```
 
-Your Kernel environment should also be updated with the `@brandingbrand/kernel-plugin-permissions` required props from the defined interface.
+Your Flagship Code environment should also be updated with the `@brandingbrand/code-plugin-permissions` required props from the defined interface.
 
-`.kernelrc/env/env.<env>.ts`
+`.coderc/env/env.<env>.ts`
 
 ```
-  kernelPluginPermissions: {
-    kernel: {
+  codePluginPermissions: {
+    code: {
       ios: [
         {
           permission: "LOCATION_WHEN_IN_USE",
@@ -54,13 +54,13 @@ Your Kernel environment should also be updated with the `@brandingbrand/kernel-p
   },
 ```
 
-The interface in your `.kernelrc/env/env.<env>.ts` has the following props:
+The interface in your `.coderc/env/env.<env>.ts` has the following props:
 
 <div class="my-4 overflow-scroll">
 | attribute                            | description                                                             |
 | :--------                            | :----------                                                             |
-| kernel.ios                           | a list of required permissions with their associated usage descriptions |
-| kernel.android                       | a list of required permissions                                          |
+| code.ios                           | a list of required permissions with their associated usage descriptions |
+| code.android                       | a list of required permissions                                          |
 </div>
 
 Valid permissions that can be used can be found here: [**ios**](https://github.com/brandingbrand/flagship/blob/482c1034b26db3fd98ae299428dcef6704914c52/packages/plugin-permissions/src/utils/ios.ts#L6) and [**android**](https://github.com/brandingbrand/flagship/blob/482c1034b26db3fd98ae299428dcef6704914c52/packages/plugin-permissions/src/utils/android.ts#L3).

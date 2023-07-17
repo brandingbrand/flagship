@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-firebase-analytics",
-  "version": "0.0.13",
+  "version": "1.0.0",
   "description": "plugin for Flagship Code firebase analytics",
   "license": "MIT",
   "repository": {
@@ -38,8 +38,8 @@
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
   "peerDependencies": {
-    "@brandingbrand/code-core": "< 1.0.0",
-    "@brandingbrand/code-plugin-firebase-app": "^0.0.13",
+    "@brandingbrand/code-core": "*",
+    "@brandingbrand/code-plugin-firebase-app": "*",
     "@react-native-firebase/app": "^17.3.2",
     "@react-native-firebase/analytics": "^17.3.2"
   },

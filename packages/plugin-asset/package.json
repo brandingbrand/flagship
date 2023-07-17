@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-asset",
-  "version": "0.0.13",
+  "version": "1.0.0",
   "description": "plugin for Flagship Code for assets",
   "license": "MIT",
   "repository": {
@@ -40,7 +40,7 @@
     "react-native-asset": "^2.0.1"
   },
   "peerDependencies": {
-    "@brandingbrand/code-core": "< 1.0.0"
+    "@brandingbrand/code-core": "*"
   },
   "devDependencies": {
     "@brandingbrand/code-core": "*"

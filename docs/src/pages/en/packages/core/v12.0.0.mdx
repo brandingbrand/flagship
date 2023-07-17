@@ -1,6 +1,6 @@
 ---
 title: Core
-description: brandingbrand/kernel-core
+description: brandingbrand/code-core
 layout: ../../../../layouts/docs.astro
 lang: en
 ---
@@ -9,12 +9,12 @@ import CodeCopy from "../../../../components/code-copy.astro";
 
 ## Core
 
-`@brandingbrand/kernel-core` is a foundational package that provides modules for generating native code for a React Native app.
+`@brandingbrand/code-core` is a foundational package that provides modules for generating native code for a React Native app.
 
 ### Getting Started
 
 <div class="flex w-full my-6">
-  <CodeCopy args="yarn add -D @brandingbrand/kernel-core" />
+  <CodeCopy args="yarn add -D @brandingbrand/code-core" />
 </div>
 
 Add the above noted package now provides access to core utils and executors.
@@ -99,7 +99,7 @@ The `logger` executor starts the spinner utility based upon the command-line opt
 
 ###### tsc
 
-The `tsc` executor typescript compiles the typescript envs from the `.kernelrc/env` directory. It also copies the command-line option env compiled file to an `env.js` file to be used by downstream services.
+The `tsc` executor typescript compiles the typescript envs from the `.coderc/env` directory. It also copies the command-line option env compiled file to an `env.js` file to be used by downstream services.
 
 ###### env
 
@@ -135,7 +135,7 @@ The `plist` executor updates the iOS plist configuration based upon the `simple-
 
 ###### plugins
 
-The `plugins` executor gathers all the plugins specified in the `package.json` under the `kernel.plugins` configuration, according to the command-line option `platform`. It then executes these plugins in order according to the priority array.
+The `plugins` executor gathers all the plugins specified in the `package.json` under the `code.plugins` configuration, according to the command-line option `platform`. It then executes these plugins in order according to the priority array.
 
 ###### cocoapods
 
@@ -157,7 +157,7 @@ The `logger` executor starts the spinner utility based upon the command-line opt
 
 ###### env
 
-The `env` executor removes all typescript compiled env js files in the `.kernelrc/env` directory.
+The `env` executor removes all typescript compiled env js files in the `.coderc/env` directory.
 
 ##### prePlatform
 
@@ -217,4 +217,5 @@ The `logger` executor stops the spinner utility based upon the command-line opti
 
 ### Changelog
 
-[**322992a8f**](https://github.com/brandingbrand/flagship/pull/2517/commits/322992a8f6abbb507c547bd7c59b4eac3798f494) -- initial env and android release signing
+* update to support react-native version 71.x
+* upgrade default target sdk to 33 for Android

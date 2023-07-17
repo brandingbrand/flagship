@@ -1,0 +1,61 @@
+---
+title: Plugin Extension
+description: brandingbrand/code-plugin-target-extension
+layout: ../../../../../layouts/docs.astro
+lang: en
+---
+
+import CodeCopy from "../../../../../components/code-copy.astro";
+
+## Plugin Target Extension
+
+`@brandingbrand/code-plugin-target-extension` is a package that configures all the necessary native code for generating iOS target extensions.
+
+### Getting Started
+
+<div class="flex w-full my-6">
+  <CodeCopy args="yarn add -D @brandingbrand/code-plugin-target-extension" />
+</div>
+
+Add the above noted package and the plugin is avaialble in the Flagship Code plugin ecosystem.
+
+### Usage
+
+After adding this plugin as a dev dependency it is necessary to add it to the Flagship Code plugins configuration via the `package.json`.
+
+`package.json`
+
+```
+  "code": {
+    "plugins": [
+      "@brandingbrand/code-plugin-target-extension"
+    ]
+  },
+```
+
+Your Flagship Code environment should also be updated with the `@brandingbrand/code-plugin-target-extension` required props from the defined interface.
+
+`.coderc/env/env.<env>.ts`
+
+```
+  codePluginTargetExtension: {
+    code: [
+      {
+        path: "assets/extensions/NotificationService",
+        bundleId: "com.client.myapp.notification",
+        provisioningProfileName:
+          "My App Notification Provisioning Profile",
+      },
+    ],
+  },
+```
+
+The interface in your `.coderc/env/env.<env>.ts` has the following props:
+
+<div class="my-4 overflow-scroll">
+| attribute                             | description                         |
+| :--------                             | :----------                         |
+| code.ios[i].path                    | path to extension assets            |
+| code.ios[i].bundleId                | extension bundle identifier         |
+| code.ios[i].provisioningProfileName | extension provisioning profile name |
+</div>

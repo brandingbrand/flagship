@@ -1,4 +1,8 @@
-# @brandingbrand/kernel-plugin-permissions
+# @brandingbrand/code-plugin-permissions
+
+## 1.0.0
+
+- no changes
 
 ## 0.0.13
 
@@ -28,7 +32,7 @@
 
 - 006db620f: initial env and android release signing
 - Updated dependencies [006db620f]
-  - @brandingbrand/kernel-core@0.0.10
+  - @brandingbrand/code-core@0.0.10
 
 ## 0.0.9
 
@@ -36,7 +40,7 @@
 
 - dfcefeb9d: hide dev menu with --release
 - Updated dependencies [dfcefeb9d]
-  - @brandingbrand/kernel-core@0.0.9
+  - @brandingbrand/code-core@0.0.9
 
 ## 0.0.8
 
@@ -44,7 +48,7 @@
 
 - addf37d03: implementation fixes
 - Updated dependencies [addf37d03]
-  - @brandingbrand/kernel-core@0.0.8
+  - @brandingbrand/code-core@0.0.8
 
 ## 0.0.7
 
@@ -52,7 +56,7 @@
 
 - e6770241e: implementation fixes
 - Updated dependencies [e6770241e]
-  - @brandingbrand/kernel-core@0.0.7
+  - @brandingbrand/code-core@0.0.7
 
 ## 0.0.6
 
@@ -60,7 +64,7 @@
 
 - 89b61f89c: implementation fixes
 - Updated dependencies [89b61f89c]
-  - @brandingbrand/kernel-core@0.0.6
+  - @brandingbrand/code-core@0.0.6
 
 ## 0.0.5
 
@@ -68,7 +72,7 @@
 
 - 8dd377f7b: implementation fixes
 - Updated dependencies [8dd377f7b]
-  - @brandingbrand/kernel-core@0.0.5
+  - @brandingbrand/code-core@0.0.5
 
 ## 0.0.4
 
@@ -76,7 +80,7 @@
 
 - 83b7027f6: implementation fixes
 - Updated dependencies [83b7027f6]
-  - @brandingbrand/kernel-core@0.0.4
+  - @brandingbrand/code-core@0.0.4
 
 ## 0.0.3
 
@@ -84,7 +88,7 @@
 
 - implementation fixes
 - Updated dependencies
-  - @brandingbrand/kernel-core@0.0.3
+  - @brandingbrand/code-core@0.0.3
 
 ## 0.0.2
 
@@ -92,7 +96,7 @@
 
 - 90aaec0b9: implementation fixes
 - Updated dependencies [90aaec0b9]
-  - @brandingbrand/kernel-core@0.0.2
+  - @brandingbrand/code-core@0.0.2
 
 ## 0.0.1
 
@@ -100,4 +104,4 @@
 
 - b236304ac: initial release
 - Updated dependencies [b236304ac]
-  - @brandingbrand/kernel-core@0.0.1
+  - @brandingbrand/code-core@0.0.1

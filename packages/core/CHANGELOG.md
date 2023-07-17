@@ -1,4 +1,9 @@
-# @brandingbrand/kernel-core
+# @brandingbrand/code-core
+
+## 12.0.0
+
+- react-native version 0.71.X support
+- default Android sdk bump to 33
 
 ## 0.0.13
 
