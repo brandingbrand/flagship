@@ -1,0 +1,76 @@
+---
+title: Plugin Firebase App
+description: brandingbrand/code-plugin-firebase-app
+layout: ../../../../../layouts/docs.astro
+lang: en
+---
+
+import CodeCopy from "../../../../../components/code-copy.astro";
+
+## Plugin Firebase App
+
+`@brandingbrand/code-plugin-firebase-app` is a package that configures all the necessary native code for [**@react-native-firebase/app**](https://github.com/invertase/react-native-firebase/tree/main/packages/app) library.
+
+### Getting Started
+
+<div class="flex w-full my-6">
+  <CodeCopy args="yarn add -D @brandingbrand/code-plugin-firebase-app && yarn add @react-native-firebase/app@^15.7.0" />
+</div>
+
+Add the above noted package and the plugin is avaialble in the Flagship Code plugin ecosystem.
+
+### Usage
+
+After adding this plugin as a dev dependency it is necessary to add it to the Flagship Code plugins configuration via the `package.json`.
+
+`package.json`
+
+```
+  "code": {
+    "plugins": [
+      "@brandingbrand/code-plugin-firebase-app"
+    ]
+  },
+```
+
+Your Flagship Code environment should also be updated with the `@brandingbrand/code-plugin-firebase-app` required props from the defined interface.
+
+`.coderc/env/env.<env>.ts`
+
+```
+  codePluginFirebaseApp: {
+    ios: {
+      podfile: {
+        pods: [
+          "pod 'Firebase', :modular_headers => true",
+          "pod 'FirebaseCore', :modular_headers => true",
+          "pod 'GoogleUtilities', :modular_headers => true",
+          "$RNFirebaseAsStaticFramework = true",
+        ],
+      },
+    },
+    code: {
+      ios: {
+        googleServicesPath: "assets/firebase/GoogleService-Info.dev.plist",
+      },
+      android: {
+        googleServicesPath: "assets/firebase/google-services.dev.json",
+        googleServicesVersion: "4.3.3",
+        firebaseBomVersion: "30.4.1",
+      },
+    },
+  },
+```
+
+The interface in your `.coderc/env/env.<env>.ts` has the following props:
+
+<div class="my-4 overflow-scroll">
+| attribute                            | description                                     |
+| :--------                            | :----------                                     |
+| ios.podfile.pods                     | additional ios pods necessary for firebase      |
+| code.ios.googleServicesPath          | path to the GoogleService-Info.plist            |
+| code.android.googleServicesPath      | path to the google-services.json                |
+| code.android.googleServicesVersion   | google services version                         |
+| code.android.firebaseBomVersion      | firebase BOM version                            |
+</div>
+

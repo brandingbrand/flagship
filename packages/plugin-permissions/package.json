@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-permissions",
-  "version": "0.0.13",
+  "version": "1.0.0",
   "description": "plugin for Flagship Code for react-native-permissions",
   "license": "MIT",
   "repository": {
@@ -40,7 +40,7 @@
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@brandingbrand/code-core": "< 1.0.0",
+    "@brandingbrand/code-core": "*",
     "react-native-permissions": "^3.7.3"
   },
   "devDependencies": {

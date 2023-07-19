@@ -1,0 +1,54 @@
+---
+title: Plugin Asset
+description: brandingbrand/code-plugin-asset
+layout: ../../../../../layouts/docs.astro
+lang: en
+---
+
+import CodeCopy from "../../../../../components/code-copy.astro";
+
+## Plugin Asset
+
+`@brandingbrand/code-plugin-asset` is a package that links all your necessary assets i.e. fonts. This feature used to be available via `react-native link` which has been removed from React Native.
+
+### Getting Started
+
+<div class="flex w-full my-6">
+  <CodeCopy args="yarn add -D @brandingbrand/code-plugin-asset" />
+</div>
+
+Add the above noted package and the plugin is avaialble in the Flagship Code plugin ecosystem.
+
+### Usage
+
+After adding this plugin as a dev dependency it is necessary to add it to the Flagship Code plugins configuration via the `package.json`.
+
+`package.json`
+
+```
+  "code": {
+    "plugins": [
+      "@brandingbrand/code-plugin-asset"
+    ]
+  },
+```
+
+Your Flagship Code environment should also be updated with the `@brandingbrand/code-plugin-asset` required props from the defined interface.
+
+`.coderc/env/env.<env>.ts`
+
+```
+  codePluginAsset: {
+    code: {
+      assetPath: ['assets/fonts'],
+    },
+  },
+```
+
+The interface in your `.coderc/env/env.<env>.ts` has the following props:
+
+<div class="my-4 overflow-scroll">
+| attribute        | description                                             |
+| :--------        | :----------                                             |
+| code.assetPath        | path to your app assets relative to .coderc directory |
+</div>

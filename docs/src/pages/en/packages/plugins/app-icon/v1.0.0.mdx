@@ -1,6 +1,6 @@
 ---
 title: Plugin App Icon
-description: brandingbrand/kernel-plugin-app-icon
+description: brandingbrand/code-plugin-app-icon
 layout: ../../../../../layouts/docs.astro
 lang: en
 ---
@@ -9,48 +9,48 @@ import CodeCopy from "../../../../../components/code-copy.astro";
 
 ## Plugin App Icon
 
-`@brandingbrand/kernel-plugin-app-icon` is a package that generates all the necessary app icon assets for both iOS and Android.
+`@brandingbrand/code-plugin-app-icon` is a package that generates all the necessary app icon assets for both iOS and Android.
 
 ### Getting Started
 
 <div class="flex w-full my-6">
-  <CodeCopy args="yarn add -D @brandingbrand/kernel-plugin-app-icon" />
+  <CodeCopy args="yarn add -D @brandingbrand/code-plugin-app-icon" />
 </div>
 
-Add the above noted package and the plugin is avaialble in the Kernel plugin ecosystem.
+Add the above noted package and the plugin is avaialble in the Flagship Code plugin ecosystem.
 
 ### Usage
 
-After adding this plugin as a dev dependency it is necessary to add it to the kernel plugins configuration via the `package.json`.
+After adding this plugin as a dev dependency it is necessary to add it to the Flagship Code plugins configuration via the `package.json`.
 
 `package.json`
 
 ```
-  "kernel": {
+  "code": {
     "plugins": [
-      "@brandingbrand/kernel-plugin-app-icon"
+      "@brandingbrand/code-plugin-app-icon"
     ]
   },
 ```
 
-Your Kernel environment should also be updated with the `@brandingbrand/kernel-plugin-app-icon` required props from the defined interface.
+Your Flagship Code environment should also be updated with the `@brandingbrand/code-plugin-app-icon` required props from the defined interface.
 
-`.kernelrc/env/env.<env>.ts`
+`.coderc/env/env.<env>.ts`
 
 ```
-  kernelPluginAppIcon: {
-    kernel: {
+  codePluginAppIcon: {
+    code: {
       appIconPath: 'assets/app-icon',
     },
   },
 ```
 
-The interface in your `.kernelrc/env/env.<env>.ts` has the following props:
+The interface in your `.coderc/env/env.<env>.ts` has the following props:
 
 <div class="my-4 overflow-scroll">
 | attribute        | description                                                  |
 | :--------        | :----------                                                  |
-| kernel.appIconPath      | path to your app icon assets relative to .kernelrc directory |
+| code.appIconPath      | path to your app icon assets relative to .coderc directory |
 </div>
 
 The assets must follow a strict naming scheme.
