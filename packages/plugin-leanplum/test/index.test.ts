@@ -101,7 +101,7 @@ describe("plugin-leanplum", () => {
           )
         )
       ).toString()
-    ).toMatch(", UNUserNotificationCenterDelegate>");
+    ).toMatch("<UNUserNotificationCenterDelegate>");
 
     expect((await fs.readFile(path.ios.podfilePath())).toString()).toMatch(`
   dynamic_frameworks = ['Leanplum-iOS-SDK', 'CleverTap-iOS-SDK', 'SDWebImage']
