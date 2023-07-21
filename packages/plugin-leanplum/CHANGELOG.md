@@ -1,5 +1,11 @@
 # @brandingbrand/code-plugin-leanplum
 
+## 1.0.1
+
+### Patch Changes
+
+- [pull#2627](https://github.com/brandingbrand/flagship/pull/2627)  fix for Leanplum-iOS-SDK UNUserNotificationCenter + launchOptions
+
 ## 1.0.0
 
 - no changes

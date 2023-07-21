@@ -14,7 +14,7 @@ import CodeCopy from "../../../../../components/code-copy.astro";
 ### Getting Started
 
 <div class="flex w-full my-6">
-  <CodeCopy args="yarn add -D @brandingbrand/code-plugin-leanplum && yarn add @leanplum/react-native-sdk@1.2.1" />
+  <CodeCopy args="yarn add -D @brandingbrand/code-plugin-leanplum && yarn add @leanplum/react-native-sdk@~2.0.0 clevertap-react-native@^0.9.4" />
 </div>
 
 Add the above noted package and the plugin is avaialble in the Flagship Code plugin ecosystem.
@@ -58,3 +58,9 @@ The interface in your `.coderc/env/env.<env>.ts` has the following props:
 | code.ios.swizzle                   | enable or disable swizzling                     |
 | code.android.leanplumFCMVersion    | Leanplum fcm library version                    |
 </div>
+
+## Changelog
+
+### 1.0.1
+
+[pull#2627](https://github.com/brandingbrand/flagship/pull/2627)  fix for Leanplum-iOS-SDK UNUserNotificationCenter + launchOptions
