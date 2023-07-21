@@ -35,6 +35,74 @@ describe("plugin-leanplum", () => {
       ).toString()
     ).toMatch("didRegisterForRemoteNotificationsWithDeviceToken");
 
+    expect(
+      (
+        await fs.readFile(
+          path.ios.appDelegatePath(global.__FLAGSHIP_CODE_CONFIG__)
+        )
+      ).toString()
+    ).toMatch(
+      "[[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];"
+    );
+
+    expect(
+      (
+        await fs.readFile(
+          path.ios.appDelegatePath(global.__FLAGSHIP_CODE_CONFIG__)
+        )
+      ).toString()
+    ).toMatch("[Leanplum start];");
+
+    expect(
+      (
+        await fs.readFile(
+          path.ios.appDelegatePath(global.__FLAGSHIP_CODE_CONFIG__)
+        )
+      ).toString()
+    ).toMatch(
+      "[Leanplum applicationDidFinishLaunchingWithOptions:launchOptions];"
+    );
+
+    expect(
+      (
+        await fs.readFile(
+          path.ios.appDelegatePath(global.__FLAGSHIP_CODE_CONFIG__)
+        )
+      ).toString()
+    ).toMatch("[Leanplum didReceiveNotificationResponse:response];");
+
+    expect(
+      (
+        await fs.readFile(
+          path.ios.appDelegatePath(global.__FLAGSHIP_CODE_CONFIG__)
+        )
+      ).toString()
+    ).toMatch("[Leanplum willPresentNotification:notification];");
+
+    expect(
+      (
+        await fs.readFile(
+          path.project.resolve(
+            "ios",
+            __FLAGSHIP_CODE_CONFIG__.ios.name,
+            "AppDelegate.h"
+          )
+        )
+      ).toString()
+    ).toMatch("#import <UserNotifications/UserNotifications.h>");
+
+    expect(
+      (
+        await fs.readFile(
+          path.project.resolve(
+            "ios",
+            __FLAGSHIP_CODE_CONFIG__.ios.name,
+            "AppDelegate.h"
+          )
+        )
+      ).toString()
+    ).toMatch("<UNUserNotificationCenterDelegate>");
+
     expect((await fs.readFile(path.ios.podfilePath())).toString()).toMatch(`
   dynamic_frameworks = ['Leanplum-iOS-SDK', 'CleverTap-iOS-SDK', 'SDWebImage']
   pre_install do |installer|
