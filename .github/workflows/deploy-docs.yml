@@ -4,7 +4,7 @@ name: Deploy Flagship Code™ Docs to Pages
 
 on:
   push:
-    branches: [ develop ]
+    branches: [main]
 
   workflow_dispatch:
     # No inputs
