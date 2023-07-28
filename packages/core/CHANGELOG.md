@@ -1,5 +1,11 @@
 # @brandingbrand/code-core
 
+## 12.0.1
+
+### Patch Changes
+
+- fix(Android): release builds compilation error with ReactNativeFlipper in pull https://github.com/brandingbrand/flagship/pull/2630
+
 ## 12.0.0
 
 - react-native version 0.71.X support
