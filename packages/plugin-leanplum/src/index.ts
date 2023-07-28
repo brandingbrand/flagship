@@ -27,6 +27,30 @@ const ios = summary.withSummary(
       );
 
       await fsk.update(
+        path.project.resolve("ios", config.ios.name, "AppDelegate.h"),
+        /(^#import[\s\S]+?\n)/,
+        `$1
+#import <UserNotifications/UserNotifications.h>
+`
+      );
+
+      await fsk.update(
+        path.project.resolve("ios", config.ios.name, "AppDelegate.h"),
+        /(^@interface[\s\S]+?RCTAppDelegate)\n/m,
+        `$1<UNUserNotificationCenterDelegate>`
+      );
+
+      await fsk.update(
+        path.ios.appDelegatePath(config),
+        /(^- \(BOOL\)[\s\S]+?didFinishLaunchingWithOptions[\s\S]+?{)/m,
+        `$1
+  [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
+  [Leanplum start];
+  [Leanplum applicationDidFinishLaunchingWithOptions:launchOptions];
+`
+      );
+
+      await fsk.update(
         path.ios.appDelegatePath(config),
         /(@end)(?![\s\S]*\1)/g,
         `
@@ -44,6 +68,18 @@ const ios = summary.withSummary(
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
     [Leanplum didFailToRegisterForRemoteNotificationsWithError:error];
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler
+{
+    [Leanplum didReceiveNotificationResponse:response];
+    completionHandler();
+}
+
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
+{
+    [Leanplum willPresentNotification:notification];
+    completionHandler(UNNotificationPresentationOptionNone);
 }
 
 $1`
