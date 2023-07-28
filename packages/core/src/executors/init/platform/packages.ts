@@ -23,6 +23,12 @@ export const execute = (options: InitOptions, config: Config) => {
           path.android.debugPath(),
           "java"
         );
+        await rename.pkgDirectory(
+          "com.helloworld",
+          config.android.packageName,
+          path.android.releasePath(),
+          "java"
+        );
       },
       "packages",
       "platform::android"

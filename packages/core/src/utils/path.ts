@@ -212,12 +212,20 @@ const getMainPath = (): string =>
   resolvePathFromProject("android", "app", "src", "main");
 
 /**
- * Returns the path to the main directory.
+ * Returns the path to the debug directory.
  *
- * @return The path to the main directory.
+ * @return The path to the debug directory.
  */
 const getDebugPath = (): string =>
   resolvePathFromProject("android", "app", "src", "debug");
+
+/**
+ * Returns the path to the release directory.
+ *
+ * @return The path to the release directory.
+ */
+const getReleasePath = (): string =>
+  resolvePathFromProject("android", "app", "src", "release");
 
 /**
  * Returns the path to the assets directory.
@@ -362,6 +370,7 @@ export const android = {
   gradlePropertiesPath: getGradlePropertiesPath,
   mainPath: getMainPath,
   debugPath: getDebugPath,
+  releasePath: getReleasePath,
   assetsPath: getAssetsPath,
   resourcesPath: getResourcesPath,
   rootDirPath: getRootDirPathAndroid,
