@@ -2,12 +2,12 @@
 
 name: PR Test
 
-on: [ push, pull_request ]
+on: [pull_request]
 
 jobs:
   build:
-
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # pin@v3
@@ -21,5 +21,3 @@ jobs:
         run: yarn build
       - name: Run tests
         run: yarn test
-      - name: Initialize react native app
-        run: yarn workspace @brandingbrand/code-app run init -v
