@@ -22,4 +22,4 @@ jobs:
       - name: Run tests
         run: yarn test
       - name: Initialize react native app
-        run: yarn workspace @brandingbrand/code-app run init -v
+        run: yarn workspace @brandingbrand/code-app run init -p android -v
