@@ -19,7 +19,7 @@ As a first step to troubleshooting iOS, we recommend you clear your Xcode Derive
 
 If you are upgrading from a previous version of FS to FS12, all text elements in Android that do not have a value for their color will be white when the device is in dark mode. To resolve this, patch the template style values XML file so that the application defaults to light mode, regardless of the device’s current theme.
 
-### Java Vesion
+### Java Version
 It's possible OS updates have caused this issue when reported; however, if a Java version issue is encountered while building the Android application, you can resolve it by making sure you set the JAVA_HOME path equal to the one used by Android Studio in your path file.
 
 Open and edit your .zshrc file `code .zshrc` (or .bashrc if using Linux, or WSL)
