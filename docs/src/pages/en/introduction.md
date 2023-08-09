@@ -19,17 +19,17 @@ lang: en
 
 This toolkit can be broken into three models: Core, CLI, and Plugins.
 
-### Core
+## Core
 
 The core SDK contains utility functions, executors, and a template. Utility functions are foundational functions that executors and more complex functions are built upon to manipulate or generate native code.
 
-### CLI
+## CLI
 
 The CLI SDK is a command line interface that listens for options that conditionally run executors.
 
 > Executors are complex functions that are executed at different native-specific lifecycles.
 
-### Plugins
+## Plugins
 
 Plugins are published or local native-specific scripts (e.g., iOS and/or Android) that manipulate or generate native code for a specific third-party SDK. These plugins are run generically based on a priority list captured in the package.json file.
 
