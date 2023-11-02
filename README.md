@@ -22,9 +22,9 @@ Flagship App™ is a toolkit for building and scaling an ecommerce experience th
 
 The toolkit includes a shared stack of foundation packages that provide a unified interface for networking, analytics, commerce integrations, components, and more across each of the supported platforms.
 
-# Flagship Template™
+# Flagship Accelerator™
 
-Flagship Template™ is a CLI for creating out-of-the-box experiences using Flagship Code and Flagship App.
+Flagship Accelerator™ is a CLI for creating out-of-the-box experiences using Flagship Code and Flagship App.
 
 <img alt="Troubleshooting Flagship™"
   src="https://user-images.githubusercontent.com/556070/38958560-9f7aab28-432b-11e8-8e67-68d781f5681d.png"
