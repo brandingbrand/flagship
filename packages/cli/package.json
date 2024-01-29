@@ -1,5 +1,5 @@
 {
-  "name": "@brandingbrand/flagship-code-cli",
+  "name": "@brandingbrand/code-cli",
   "version": "0.0.0",
   "private": true,
   "main": "dist/index.js",

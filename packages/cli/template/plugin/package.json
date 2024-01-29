@@ -1,12 +1,8 @@
 {
-  "name": "@brandingbrand/plugin-example",
+  "name": "@brandingbrand/code-plugin-template",
   "version": "0.0.0",
   "license": "UNLICENSED",
   "private": true,
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "npx tsc",
-    "dev": "npx tsc --watch"
-  },
-  "types": "dist/index.d.ts"
+  "main": "src/index.ts",
+  "types": "src/index.ts"
 }
