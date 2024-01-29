@@ -6,6 +6,8 @@
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
   "scripts": {
+    "build": "yarn tsc",
+    "dev": "yarn tsc --watch",
     "lint": "eslint . --max-warnings 0"
   },
   "devDependencies": {

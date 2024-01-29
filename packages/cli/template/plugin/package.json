@@ -1,0 +1,12 @@
+{
+  "name": "@brandingbrand/plugin-example",
+  "version": "0.0.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "dev": "npx tsc --watch"
+  },
+  "types": "dist/index.d.ts"
+}
