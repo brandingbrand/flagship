@@ -1,5 +1,5 @@
 {
-  "name": "flagship",
+  "name": "@brandingbrand/flagship-code",
   "private": true,
   "scripts": {
     "build": "turbo build",
