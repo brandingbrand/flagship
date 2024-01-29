@@ -4,11 +4,9 @@
   "private": true,
   "files": [
     "library.js",
-    "next.js",
     "react-internal.js"
   ],
   "devDependencies": {
-    "@vercel/style-guide": "^5.1.0",
     "eslint": "^8.56.0",
     "eslint-config-turbo": "^1.11.3",
     "eslint-config-prettier": "^9.1.0",
