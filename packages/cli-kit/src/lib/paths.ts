@@ -156,6 +156,22 @@ export const paths = {
     },
 
     /**
+     * Retrieves the absolute path to the Android network_security_config.xml file.
+     *
+     * @returns {string} The absolute path to "android/app/src/main/res/xml/network_security_config.xml".
+     */
+    networkSecurityConfig: function (): string {
+      return resolvePathFromProject(
+        "android",
+        "app",
+        "src",
+        "main",
+        "res",
+        "xml",
+        "network_security_config.xml"
+      );
+    },
+    /**
      * Retrieves the absolute path to the Android EnvSwitcher.java file.
      *
      * @param {BuildConfig} config - The Android project configuration.
