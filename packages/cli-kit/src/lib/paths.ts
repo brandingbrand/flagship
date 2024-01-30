@@ -40,6 +40,15 @@ export const paths = {
   },
 
   /**
+   * Retrieves the absolute path to the project package.json file.
+   *
+   * @returns {string} The absolute path to "package.json".
+   */
+  packageJSON: function (): string {
+    return path.resolve(projectPath, "package.json");
+  },
+
+  /**
    * Retrieves the absolute path to the iOS Info.plist file.
    *
    * @returns {string} The absolute path to "ios/app/Info.plist".

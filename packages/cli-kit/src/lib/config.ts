@@ -5,8 +5,14 @@ import type {
   BuildConfig,
   CodeConfig,
   EnvConfig,
+  PackageJson,
   PluginConfig,
 } from "@/@types";
+
+/**
+ * Import paths module to get package.json path
+ */
+import { paths } from "./paths";
 
 /**
  * Defines a configuration for code.
@@ -37,9 +43,13 @@ export function defineEnv<T>(env: EnvConfig<T>) {
  * @returns If build is a function, returns the result of invoking it with an empty object.
  *          If build is not a function, simply returns it.
  */
-export function defineBuild(build: BuildConfig | ((pkg: any) => BuildConfig)) {
+export function defineBuild(
+  build: BuildConfig | ((pkg: PackageJson) => BuildConfig)
+) {
+  const pkg: PackageJson = require(paths.packageJSON());
+
   if (typeof build === "function") {
-    return build({});
+    return build(pkg);
   }
 
   return build;
