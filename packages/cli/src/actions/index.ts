@@ -59,3 +59,10 @@ export { default as template } from "./template";
  * @module actions/transformers
  */
 export { default as transformers } from "./transformers";
+
+/**
+ * Action to run cocoapods
+ *
+ * @module actions/cocoapods
+ */
+export { default as cocoapods } from "./cocoapods";
