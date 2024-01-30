@@ -1,4 +1,4 @@
-import { type BuildConfig, withUTF8 } from "@brandingbrand/code-cli-kit";
+import { type BuildConfig, withUTF8, paths } from "@brandingbrand/code-cli-kit";
 
 import { defineTransformer } from "@/lib";
 
@@ -24,7 +24,7 @@ export default defineTransformer<
     },
   ],
   transform: async function (config: BuildConfig) {
-    return withUTF8("/path/to/build.gradle", (content: string) => {
+    return withUTF8(paths.android.buildGradle(), (content: string) => {
       return this.transforms.reduce((acc, curr) => {
         return curr(acc, config);
       }, content);

@@ -1,8 +1,10 @@
 export * from "./android-manifest-xml";
-export * from "./app-build-gradle";
+export { default as appBuildGradle } from "./app-build-gradle";
 export { default as buildGradle } from "./build-gradle";
 export * from "./colors-xml";
-export * from "./gradle-properties";
-export * from "./native-constants-java";
+export { default as gemfile } from "./gemfile";
+export { default as gradleProperties } from "./gradle-properties";
+export { default as EnvSwitcher } from "./env-switcher-java";
+export { default as nativeConstants } from "./native-constants-java";
 export * from "./strings-xml";
 export * from "./styles-xml";
