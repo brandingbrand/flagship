@@ -30,3 +30,11 @@ export type CodeConfig = {
 };
 
 export type EnvConfig<T = unknown> = T;
+
+export type PrebuildOptions = {
+  build: string;
+  env: string;
+  release: boolean;
+  verbose: boolean;
+  platform: "ios" | "android" | "native";
+};

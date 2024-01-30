@@ -1,4 +1,4 @@
-import { Option as NewOption, program } from "commander";
+import { Option, program } from "commander";
 
 /**
  * Defines a command for generating a flagship-code template using the "commander" library.
@@ -18,7 +18,7 @@ program
   .command("gen")
   .description("generate a template")
   .addOption(
-    new NewOption("-t, --type <type>", "type of template")
+    new Option("-t, --type <type>", "type of template")
       .choices(["plugin"])
       .makeOptionMandatory()
   )

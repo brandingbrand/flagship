@@ -1,4 +1,6 @@
-import { program } from "commander";
+import { Option, program } from "commander";
+
+import type { PrebuildOptions } from "@brandingbrand/code-cli-kit";
 
 /**
  * Defines a command for the "prebuild" operation using the "commander" library.
@@ -22,11 +24,14 @@ program
   )
   .requiredOption("-b, --build [build]", "build configuration")
   .requiredOption("-e, --env [env]", "initial environment")
-  .option(
-    "-p, --platform [platform]",
-    "platform: ios, android or native (ios & android)",
-    "native"
+  .addOption(
+    new Option(
+      "-p, --platform [platform]",
+      "ios, android or native (ios & android) code generation"
+    )
+      .choices(["ios", "android", "native"])
+      .defaultValue("native")
   )
   .option("-r, --release", "bundle only specified environment", false)
   .option("-v, --verbose", "show stdout", false)
-  .action(async () => {});
+  .action(async (options: PrebuildOptions) => {});
