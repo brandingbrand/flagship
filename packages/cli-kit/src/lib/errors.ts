@@ -13,10 +13,7 @@ export class FsWarning extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = `[FsWarning]: ${message}`;
+    this.name = "FsWarning";
+    this.message = `[${this.name}]: ${message}`;
   }
-}
-
-export function isWarning(error: any) {
-  return error instanceof FsWarning;
 }

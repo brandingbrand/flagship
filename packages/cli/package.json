@@ -13,6 +13,11 @@
     "dev": "yarn tsc --watch",
     "lint": "eslint . --max-warnings 0"
   },
+  "dependencies": {
+    "@brandingbrand/code-cli-kit": "*",
+    "chalk": "5.3.0",
+    "commander": "11.1.0"
+  },
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",

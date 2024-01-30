@@ -1,4 +1,4 @@
-import { FsWarning, isWarning } from ".";
+import { isWarning } from "./errors";
 
 /**
  * The array of summary items.
@@ -29,7 +29,7 @@ export function withLog<TFunc, TArgs extends unknown[]>(
         error: false,
         warning: false,
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       logs.push({
         name,
         time: `${((performance.now() - start) / 1000).toFixed(5)} s`,
