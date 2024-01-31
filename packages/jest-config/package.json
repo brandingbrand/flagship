@@ -5,6 +5,7 @@
   "files": [
     "jest.config.js"
   ],
+  "main": "./jest-preset.js",
   "devDependencies": {
     "@types/jest": "^29.5.11",
     "@types/temp": "^0.9.4",

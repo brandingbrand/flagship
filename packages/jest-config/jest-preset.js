@@ -1,18 +1,14 @@
 /**
- * Configuration for Jest using the 'ts-jest' preset.
+ * Jest configuration extended with additional options.
  *
  * @type {import('ts-jest').JestConfigWithTsJest}
  */
+
 module.exports = {
   /**
-   * Use the 'ts-jest' preset for TypeScript support in Jest.
-   *
-   * @remarks
-   * This preset provides TypeScript support for Jest.
-   *
-   * @type {string}
+   * Merge the 'ts-jest' preset configuration.
    */
-  preset: "ts-jest",
+  ...require("ts-jest/jest-preset"),
 
   /**
    * Set the test environment for Jest.
@@ -22,7 +18,7 @@ module.exports = {
    *
    * @type {string}
    */
-  testEnvironment: "@repo/jest-config/src/test-environment.ts",
+  testEnvironment: require.resolve("./src/test-environment.ts"),
 
   /**
    * Setup files to be executed after Jest environment setup.
@@ -32,7 +28,7 @@ module.exports = {
    *
    * @type {string[]}
    */
-  setupFilesAfterEnv: ["@repo/jest-config/src/setup-files-after-env.ts"],
+  setupFilesAfterEnv: [require.resolve("./src/setup-files-after-env.ts")],
 
   /**
    * Module name mapper for path aliasing in Jest.
