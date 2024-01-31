@@ -12,6 +12,7 @@ module.exports = {
   },
   env: {
     node: true,
+    jest: true,
   },
   settings: {
     "import/resolver": {
@@ -25,6 +26,9 @@ module.exports = {
     ".*.js",
     "node_modules/",
     "dist/",
+    "__tests__/",
+    "jest.config.js",
+    "template/plugin",
   ],
   overrides: [
     {
