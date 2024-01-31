@@ -11,11 +11,9 @@ declare global {
    * Global variable to store the build configuration for the project.
    *
    * @global
-   * @type {import("@brandingbrand/code-cli-kit").BuildConfig | undefined}
+   * @type {unknown}
    */
-  var __flagship_code_build_config:
-    | import("@brandingbrand/code-cli-kit").BuildConfig
-    | undefined;
+  var __flagship_code_build_config: unknown;
 }
 
 /**

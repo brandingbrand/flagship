@@ -1,3 +1,5 @@
+/// <reference types="../@types/globals.d.ts" />
+
 /**
  * Conditionally sets the current working directory to a specified fixture path for Jest tests.
  * This is useful for testing scenarios where a specific fixture path needs to be used during testing.

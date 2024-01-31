@@ -1,4 +1,4 @@
-import { replace, StringWarning } from "../src/lib";
+import { replace, StringWarning } from "../src";
 
 describe("replace function", () => {
   it("should replace occurrences of a specified substring with a new substring", () => {
