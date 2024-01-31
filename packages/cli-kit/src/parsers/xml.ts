@@ -61,7 +61,7 @@ export async function withColors(callback: (xml: Colors) => void) {
   return withXml<Colors>(
     paths.android.colors(),
     {
-      isArray: (tagName, _jPath, _isLeafNode, _isAttribute) => {
+      isArray: (tagName) => {
         if (["color"].indexOf(tagName) !== -1) {
           return true;
         }
@@ -83,7 +83,7 @@ export async function withManifest(callback: (xml: AndroidManifest) => void) {
   return withXml<AndroidManifest>(
     paths.android.androidManifest(),
     {
-      isArray: (tagName, _jPath, _isLeafNode, _isAttribute) => {
+      isArray: (tagName) => {
         if (
           [
             "intent-filter",
@@ -123,7 +123,7 @@ export async function withNetworkSecurityConfig(
   return withXml(
     paths.android.networkSecurityConfig(),
     {
-      isArray: (tagName, _jPath, _isLeafNode, _isAttribute) => {
+      isArray: (tagName) => {
         if (
           ["certificates", "domain", "domain-config"].indexOf(tagName) !== -1
         ) {
@@ -146,7 +146,7 @@ export async function withStrings(callback: (xml: Strings) => void) {
   return withXml<Strings>(
     paths.android.strings(),
     {
-      isArray: (tagName, _jPath, _isLeafNode, _isAttribute) => {
+      isArray: (tagName) => {
         if (
           ["string", "string-array", "item", "plurals"].indexOf(tagName) !== -1
         ) {
@@ -172,7 +172,7 @@ export async function withStyles(callback: (xml: Styles) => void) {
   return withXml<Styles>(
     paths.android.styles(),
     {
-      isArray: (tagName, _jPath, _isLeafNode, _isAttribute) => {
+      isArray: (tagName) => {
         if (["style", "item"].indexOf(tagName) !== -1) {
           return true;
         }

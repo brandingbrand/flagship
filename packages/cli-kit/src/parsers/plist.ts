@@ -10,7 +10,7 @@ import { paths } from "@/lib";
  * @param {string} path - The path to the plist file.
  * @returns {Promise<T>} A promise that resolves with the parsed plist file contents.
  */
-async function asyncReadFile<T>(path: string) {
+async function asyncReadFile<T>(path: string): Promise<T> {
   return new Promise<T>((res, rej) => {
     plist.readFile<T>(path, (err, data) => {
       if (err) return rej(err);
@@ -27,7 +27,7 @@ async function asyncReadFile<T>(path: string) {
  * @param {PlistJsObj} obj - The plist object to write to the file.
  * @returns {Promise<void>} A promise that resolves when the file is written.
  */
-async function asyncWriteFile(path: string, obj: PlistJsObj) {
+async function asyncWriteFile(path: string, obj: PlistJsObj): Promise<void> {
   return new Promise<void>((res, rej) => {
     plist.writeFile(path, obj, (err, data) => {
       if (err) return rej(err);
@@ -45,7 +45,10 @@ async function asyncWriteFile(path: string, obj: PlistJsObj) {
  * @param {(plist: T) => T} callback - The function that modifies the plist contents.
  * @returns {Promise<void>} A promise that resolves when the modified plist has been written to disk.
  */
-export async function withPlist<T>(path: string, callback: (plist: T) => T) {
+export async function withPlist<T>(
+  path: string,
+  callback: (plist: T) => T
+): Promise<void> {
   const plist = await asyncReadFile<T>(path);
 
   const res = callback(plist);
@@ -59,5 +62,6 @@ export async function withPlist<T>(path: string, callback: (plist: T) => T) {
  * @param {InfoPlistCallback} callback - The callback to execute.
  * @returns {Promise} - A Promise that resolves with the updated Info.plist file as an object.
  */
-export const withInfoPlist = (callback: (plist: InfoPlist) => InfoPlist) =>
-  withPlist<InfoPlist>(paths.ios.infoPlist(), callback);
+export const withInfoPlist = (
+  callback: (plist: InfoPlist) => InfoPlist
+): Promise<void> => withPlist<InfoPlist>(paths.ios.infoPlist(), callback);
