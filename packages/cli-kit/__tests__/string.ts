@@ -16,10 +16,10 @@ describe("replace function", () => {
   it("should throw a StringWarning if the original content does not contain oldText", () => {
     const originalContent = "Hello, world!";
     const invalidReplace = () =>
-      replace(originalContent, /nonexistent/i, "there");
+      replace(originalContent, "nonexistent", "there");
     expect(invalidReplace).toThrow(StringWarning);
     expect(invalidReplace).toThrow(
-      "string does not contain value: /nonexistent/i"
+      "string does not contain value: nonexistent"
     );
   });
 
