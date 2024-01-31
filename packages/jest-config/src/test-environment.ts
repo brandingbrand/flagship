@@ -25,13 +25,8 @@ class CustomEnvironment extends TestEnvironment {
     if (!requireTemplate) return super.setup();
 
     const dir = temp.mkdirSync();
-    const templatePath = path.resolve(
-      __dirname,
-      "..",
-      "packages",
-      "cli",
-      "template"
-    );
+    console.log("🚀 ~ CustomEnvironment ~ setup ~ dir:", dir);
+    const templatePath = path.join(__dirname, "..", "..", "cli", "template");
 
     if (fixtures && typeof fixtures === "string") {
       await fse.copy(path.resolve(this.testPath, fixtures), dir);
