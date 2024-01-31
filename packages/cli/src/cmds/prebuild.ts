@@ -9,7 +9,7 @@ import type { PrebuildOptions } from "@brandingbrand/code-cli-kit";
  *
  * @example
  * ```bash
- * yarn fscode prebuild --build internal --env dev
+ * yarn flagship-code prebuild --build internal --env dev
  * ```
  *
  * @remarks

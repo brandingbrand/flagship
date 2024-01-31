@@ -12,7 +12,7 @@ const projectPath = process.cwd();
  * @param {...string} paths - Path segments to be joined and resolved.
  * @returns {string} The resolved absolute path.
  */
-function resolvePathFromProject(...paths: string[]): string {
+export function resolvePathFromProject(...paths: string[]): string {
   return path.resolve(projectPath, ...paths);
 }
 
@@ -38,7 +38,12 @@ export const paths = {
   config: function (): string {
     return path.resolve(projectPath, "flagship-code.config.ts");
   },
-
+  /**
+   *
+   */
+  project: {
+    resolve: resolvePathFromProject,
+  },
   /**
    * Retrieves the absolute path to the project package.json file.
    *

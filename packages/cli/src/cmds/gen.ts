@@ -6,7 +6,7 @@ import { Option, program } from "commander";
  *
  * @example
  * ```bash
- * yarn fscode gen --type plugin --name @brandingbrand/code-plugin-myplugin --path ./plugins
+ * yarn flagship-code gen --type plugin --name @brandingbrand/code-plugin-myplugin --path ./plugins
  * ```
  *
  * @remarks

@@ -1,4 +1,4 @@
-import plist, { PlistJsObj } from "simple-plist";
+import plist, { type PlistJsObj } from "simple-plist";
 
 import type { InfoPlist } from "@/@types";
 import { paths } from "@/lib";

@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
   "bin": {
-    "fscode": "./bin/fscode"
+    "flagship-code": "./bin/flagship-code"
   },
   "scripts": {
     "build": "yarn tsc",

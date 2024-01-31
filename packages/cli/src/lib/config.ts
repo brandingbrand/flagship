@@ -1,4 +1,4 @@
-import type { BuildConfig } from "@brandingbrand/code-cli-kit";
+import type { BuildConfig, PrebuildOptions } from "@brandingbrand/code-cli-kit";
 
 import { withLog } from "./log";
 
@@ -24,6 +24,8 @@ type Transformer<T> = {
   transforms: Array<T>;
   transform: (config: BuildConfig) => Promise<void>;
 };
+
+export type Transforms<T> = (content: T, config: BuildConfig) => T;
 
 /**
  * Creates and applies a transformer function with logging using the provided Transformer definition.

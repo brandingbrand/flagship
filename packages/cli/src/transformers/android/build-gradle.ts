@@ -1,6 +1,11 @@
-import { type BuildConfig, withUTF8, paths } from "@brandingbrand/code-cli-kit";
+import {
+  type BuildConfig,
+  withUTF8,
+  paths,
+  replace,
+} from "@brandingbrand/code-cli-kit";
 
-import { defineTransformer } from "@/lib";
+import { type Transforms, defineTransformer } from "@/lib";
 
 /**
  * Defines a transformer for the Android project's "build.gradle" file.
@@ -11,15 +16,14 @@ import { defineTransformer } from "@/lib";
  * @property {Function} transform - The main transform function that applies all specified transformations.
  * @returns {Promise<string>} The updated content of the "build.gradle" file.
  */
-export default defineTransformer<
-  (content: string, config: BuildConfig) => string
->({
+export default defineTransformer<Transforms<string>>({
   file: "build.gradle",
   transforms: [
     (content: string, config: BuildConfig) => {
-      return content.replace(
-        /(compileSdkVersion)\s+".+"/gm,
-        `$1 "${config.android.gradle?.projectGradle?.compileSdkVersion}"`
+      return replace(
+        content,
+        /(compileSdkVersion\s*=\s*)[\d]+/m,
+        `$1${config.android.gradle?.projectGradle?.compileSdkVersion}$3`
       );
     },
   ],
