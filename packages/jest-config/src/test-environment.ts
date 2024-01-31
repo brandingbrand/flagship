@@ -54,7 +54,11 @@ export default class CustomEnvironment extends TestEnvironment {
 
     // Create a temporary directory
     const dir = temp.mkdirSync();
-    const templatePath = path.join(__dirname, "..", "..", "cli", "template");
+    const templatePath = path.join(
+      require.resolve("@brandingbrand/code-cli/package.json"),
+      "..",
+      "template"
+    );
 
     // Copy fixtures if provided
     if (fixtures && typeof fixtures === "string") {

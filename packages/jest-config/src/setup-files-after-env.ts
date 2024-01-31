@@ -25,13 +25,13 @@ if (global.__flagship_code_fixture_path) {
  */
 global.__flagship_code_build_config = {
   ios: {
-    name: "HelloWorld",
-    bundleId: "com.helloworld",
-    displayName: "Hello World",
+    name: "brandingbrand",
+    bundleId: "com.brandingbrand",
+    displayName: "Branding Brand",
   },
   android: {
-    name: "HelloWorld",
-    displayName: "Hello World",
-    packageName: "com.helloworld",
+    name: "brandingbrand",
+    displayName: "Branding Brand",
+    packageName: "com.brandingbrand",
   },
 };
