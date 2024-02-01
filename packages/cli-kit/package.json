@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
-    "@repo/jest-config": "*",
+    "@brandingbrand/code-jest-config": "*",
     "@repo/typescript-config": "*",
     "@types/eslint": "^8.56.1",
     "@types/fs-extra": "^11.0.4",
@@ -30,6 +30,6 @@
     "typescript": "^5.3.3"
   },
   "jest": {
-    "preset": "@repo/jest-config"
+    "preset": "@brandingbrand/code-jest-config"
   }
 }

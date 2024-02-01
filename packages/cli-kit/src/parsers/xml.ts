@@ -38,7 +38,7 @@ export async function withXml<T>(
   path: string,
   options: X2jOptions,
   callback: (xml: T) => void
-) {
+): Promise<void> {
   const contents = await fs.readFile(path);
 
   const xml = new XMLParser({
@@ -57,7 +57,9 @@ export async function withXml<T>(
  * @param {(xml: ColorsType.Colors) => void} callback - The function to apply to the `Colors` object.
  * @returns {Promise<void>} - A promise that resolves when the operation is complete.
  */
-export async function withColors(callback: (xml: Colors) => void) {
+export async function withColors(
+  callback: (xml: Colors) => void
+): Promise<void> {
   return withXml<Colors>(
     paths.android.colors(),
     {
@@ -79,7 +81,9 @@ export async function withColors(callback: (xml: Colors) => void) {
  * @param {function} callback - A function to be executed with the parsed xml
  * @returns {Promise} A promise which resolves when the xml has been parsed
  */
-export async function withManifest(callback: (xml: AndroidManifest) => void) {
+export async function withManifest(
+  callback: (xml: AndroidManifest) => void
+): Promise<any> {
   return withXml<AndroidManifest>(
     paths.android.androidManifest(),
     {
@@ -168,7 +172,9 @@ export async function withStrings(callback: (xml: Strings) => void) {
  * @param {function} callback - The callback function to invoke with the parsed XML data.
  * @returns {Promise<void>}
  */
-export async function withStyles(callback: (xml: Styles) => void) {
+export async function withStyles(
+  callback: (xml: Styles) => void
+): Promise<void> {
   return withXml<Styles>(
     paths.android.styles(),
     {
