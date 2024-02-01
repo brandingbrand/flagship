@@ -4,7 +4,6 @@
   "private": true,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "source": "src/index.ts",
   "scripts": {
     "build": "yarn tsc",
     "dev": "yarn tsc --watch",

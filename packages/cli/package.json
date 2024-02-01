@@ -4,7 +4,6 @@
   "private": true,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "source": "src/index.ts",
   "bin": {
     "flagship-code": "./bin/flagship-code"
   },
@@ -23,7 +22,6 @@
     "@repo/typescript-config": "*",
     "@types/node": "^20.10.6",
     "@types/eslint": "^8.56.1",
-    "eslint": "^8.56.0",
     "typescript": "^5.3.3"
   }
 }
