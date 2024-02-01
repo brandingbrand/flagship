@@ -10,14 +10,14 @@ import type {
 } from "@/@types";
 import { paths } from "@/lib";
 
-const OPTS = {
+export const OPTS = {
   ignoreAttributes: false,
   attributeNamePrefix: "",
   attributesGroupName: "$",
   textNodeName: "_",
 };
 
-const BUILD_OPTS = {
+export const BUILD_OPTS = {
   ...OPTS,
   format: true,
   indentBy: "    ",

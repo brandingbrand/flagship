@@ -49,11 +49,11 @@ export async function withPlist<T>(
   path: string,
   callback: (plist: T) => T
 ): Promise<void> {
-  const plist = await asyncReadFile<T>(path);
+  const plistData = plist.readFileSync<T>(path);
 
-  const res = callback(plist);
+  const res = callback(plistData);
 
-  await asyncWriteFile(path, res as PlistJsObj);
+  plist.writeFileSync(path, res as PlistJsObj);
 }
 
 /**
