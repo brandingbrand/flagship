@@ -118,7 +118,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(ndkVersion\s*=\s*")(\d|.)+(")/m,
-        `$1${config.android.gradle.projectGradle.ndkVersion}`
+        `$1${config.android.gradle.projectGradle.ndkVersion}$3`
       );
     },
   ],
