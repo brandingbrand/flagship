@@ -38,7 +38,7 @@ export default defineTransformer<Transforms<string>>({
    */
   transforms: [
     /**
-     * Transformer for updating the "buildToolsVersion" in "build.gradle".
+     * Transformer for updating the "buildToolsVersion" value in "build.gradle".
      * @param {string} content - The content of the file.
      * @param {BuildConfig} config - The build configuration.
      * @returns {string} - The updated content.
@@ -55,7 +55,7 @@ export default defineTransformer<Transforms<string>>({
     },
 
     /**
-     * Transformer for updating the "minSdkVersion" in "build.gradle".
+     * Transformer for updating the "minSdkVersion" vlaue in "build.gradle".
      * @param {string} content - The content of the file.
      * @param {BuildConfig} config - The build configuration.
      * @returns {string} - The updated content.
@@ -72,7 +72,7 @@ export default defineTransformer<Transforms<string>>({
     },
 
     /**
-     * Transformer for updating the "compileSdkVersion" in "build.gradle".
+     * Transformer for updating the "compileSdkVersion" value in "build.gradle".
      * @param {string} content - The content of the file.
      * @param {BuildConfig} config - The build configuration.
      * @returns {string} - The updated content.
@@ -89,7 +89,7 @@ export default defineTransformer<Transforms<string>>({
     },
 
     /**
-     * Transformer for updating the "targetSdkVersion" in "build.gradle".
+     * Transformer for updating the "targetSdkVersion" value in "build.gradle".
      * @param {string} content - The content of the file.
      * @param {BuildConfig} config - The build configuration.
      * @returns {string} - The updated content.
@@ -106,7 +106,7 @@ export default defineTransformer<Transforms<string>>({
     },
 
     /**
-     * Transformer for updating the "ndkVersion" in "build.gradle".
+     * Transformer for updating the "ndkVersion" value in "build.gradle".
      * @param {string} content - The content of the file.
      * @param {BuildConfig} config - The build configuration.
      * @returns {string} - The updated content.
@@ -119,6 +119,57 @@ export default defineTransformer<Transforms<string>>({
         content,
         /(ndkVersion\s*=\s*")(\d|.)+(")/m,
         `$1${config.android.gradle.projectGradle.ndkVersion}$3`
+      );
+    },
+
+    /**
+     * Transformer for updating the "ext" object in "build.gradle".
+     * @param {string} content - The content of the file.
+     * @param {BuildConfig} config - The build configuration.
+     * @returns {string} - The updated content.
+     */
+    (content: string, config: BuildConfig): string => {
+      if (config.android.gradle?.projectGradle?.ext === undefined)
+        return content;
+
+      return string.replace(
+        content,
+        /(ext\s*{[\s\S]\s+)/m,
+        `$1${config.android.gradle.projectGradle.ext.map((it) => `${it}\n        `).join("")}`
+      );
+    },
+
+    /**
+     * Transformer for updating the "repositories" object in "build.gradle".
+     * @param {string} content - The content of the file.
+     * @param {BuildConfig} config - The build configuration.
+     * @returns {string} - The updated content.
+     */
+    (content: string, config: BuildConfig): string => {
+      if (config.android.gradle?.projectGradle?.repositories === undefined)
+        return content;
+
+      return string.replace(
+        content,
+        /(repositories\s*{[\s\S]\s+)/m,
+        `$1${config.android.gradle.projectGradle.repositories.map((it) => `${it}\n        `).join("")}`
+      );
+    },
+
+    /**
+     * Transformer for updating the "dependencies" object in "build.gradle".
+     * @param {string} content - The content of the file.
+     * @param {BuildConfig} config - The build configuration.
+     * @returns {string} - The updated content.
+     */
+    (content: string, config: BuildConfig): string => {
+      if (config.android.gradle?.projectGradle?.dependencies === undefined)
+        return content;
+
+      return string.replace(
+        content,
+        /(dependencies\s*{[\s\S]\s+)/m,
+        `$1${config.android.gradle.projectGradle.dependencies.map((it) => `${it}\n        `).join("")}`
       );
     },
   ],
