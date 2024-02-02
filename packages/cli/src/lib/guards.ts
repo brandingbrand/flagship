@@ -56,5 +56,5 @@ export function defineTransformer<T>(transformer: Transformer<T>) {
    * @param {BuildConfig} config - The configuration object for the transformation.
    * @returns {Promise<T>} A Promise that resolves to the result of the transformation.
    */
-  return withLog(transformer.transform, `${transformer.file} transformer`);
+  return transformer;
 }

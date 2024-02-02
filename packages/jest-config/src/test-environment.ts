@@ -39,7 +39,7 @@ export default class CustomEnvironment extends TestEnvironment {
     this.testPath = context.testPath;
 
     // Initialize the temp directory tracker
-    temp.track();
+    // temp.track();
   }
 
   /**

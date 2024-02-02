@@ -13,7 +13,7 @@ declare global {
    * @global
    * @type {unknown}
    */
-  var __flagship_code_build_config: unknown;
+  var __flagship_code_build_config: any;
 }
 
 /**

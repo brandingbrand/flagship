@@ -71,10 +71,6 @@ export interface AppGradle {
 
 export interface ProjectGradle {
   /**
-   * Android gradle plugin version.
-   */
-  androidGradlePluginVersion?: string;
-  /**
    * Android build tools version
    */
   buildToolsVersion?: string;
@@ -82,10 +78,6 @@ export interface ProjectGradle {
    * Android compile SDK version
    */
   compileSdkVersion?: number;
-  /**
-   * Kotlin version
-   */
-  kotlinVersion?: string;
   /**
    * Min supported Android SDK
    */
@@ -110,10 +102,6 @@ export interface ProjectGradle {
    * Dependencies
    */
   dependencies?: string[];
-  /**
-   * Build repositories
-   */
-  buildRepositories?: string[];
 }
 
 export interface Gradle {

@@ -12,7 +12,6 @@ program
   .name("@brandingbrand/code-cli")
   .description("command-line interface for ephermal native code generation")
   .version(cliPkg.version, "-v, --version", "output the current version");
-
 /**
  * Handles any uncaught errors and logs a message to the console.
  * @param {Error} error - The error that was caught.

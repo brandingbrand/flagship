@@ -1,4 +1,4 @@
-import fs from "fs/promises";
+import fsPromises from "fs/promises";
 import fse from "fs-extra";
 
 import path from "./path";
@@ -13,7 +13,7 @@ export default {
    * Spread all current fs/promises functions so they can be
    * used along with new useful functions.
    */
-  ...fs,
+  ...fsPromises,
 
   /**
    * Checks if a keyword exists in a file.
@@ -26,7 +26,7 @@ export default {
     path: string,
     keyword: RegExp | string
   ): Promise<boolean> {
-    const fileContent = await fs.readFile(path, "utf-8");
+    const fileContent = await fsPromises.readFile(path, "utf-8");
 
     if (typeof keyword === "string") {
       return fileContent.includes(keyword);
@@ -56,9 +56,9 @@ export default {
       );
     }
 
-    const fileContent = await fs.readFile(path, "utf-8");
+    const fileContent = await fsPromises.readFile(path, "utf-8");
 
-    await fs.writeFile(path, fileContent.replace(oldText, newText));
+    await fsPromises.writeFile(path, fileContent.replace(oldText, newText));
   },
 
   /**
@@ -93,7 +93,8 @@ export default {
         return parts;
       }, [])
       .reverse()) {
-      const contents = (await fse.pathExists(dir)) && (await fs.readdir(dir));
+      const contents =
+        (await fse.pathExists(dir)) && (await fsPromises.readdir(dir));
       if (Array.isArray(contents) && contents.length === 0) {
         await fse.remove(dir);
       }

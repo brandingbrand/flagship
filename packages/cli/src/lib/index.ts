@@ -5,18 +5,18 @@
  */
 
 /**
- * Lib module for context containers
+ * Ctx module for context containers
  *
  * @module lib/ctx
  */
 export * from "./ctx";
 
 /**
- * Lib module for internal defined type guards
+ * Guards module for internal defined type guards
  *
- * @module lib/config
+ * @module lib/guards
  */
-export * from "./config";
+export * from "./guards";
 
 /**
  * Errors module for internal logging

@@ -11,20 +11,20 @@ import type {
  */
 export const ctx = {
   /**
-   * @property {Object} fscodeConfig - Configuration object for fscode.
+   * @property {Object} code - Configuration object for fscode.
    */
-  fscodeConfig: {} as CodeConfig,
+  codeConfig: {} as CodeConfig,
   /**
    * @property {function} fscode - Getter function for accessing fscode configuration.
    */
-  get fscode() {
-    return this.fscodeConfig;
+  get code() {
+    return this.codeConfig;
   },
   /**
    * @property {function} fsCode - Setter function for updating fscode configuration.
    */
-  set fsCode(data: CodeConfig) {
-    this.fscodeConfig = data;
+  set code(data: CodeConfig) {
+    this.codeConfig = data;
   },
   /**
    * @property {Object} optionsConfig - Configuration object for options.

@@ -8,9 +8,10 @@
     "flagship-code": "./bin/flagship-code"
   },
   "scripts": {
-    "build": "yarn tsc",
-    "dev": "yarn tsc --watch",
-    "lint": "eslint . --max-warnings 0"
+    "build": "yarn tsup src/index.ts --dts",
+    "dev": "yarn tsup src/index.ts --dts --watch",
+    "lint": "eslint . --max-warnings 0",
+    "test": "jest"
   },
   "dependencies": {
     "@brandingbrand/code-cli-kit": "*",
@@ -18,10 +19,14 @@
     "commander": "11.1.0"
   },
   "devDependencies": {
+    "@brandingbrand/code-jest-config": "*",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/node": "^20.10.6",
     "@types/eslint": "^8.56.1",
     "typescript": "^5.3.3"
+  },
+  "jest": {
+    "preset": "@brandingbrand/code-jest-config"
   }
 }
