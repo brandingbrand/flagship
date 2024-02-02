@@ -168,7 +168,7 @@ describe("xml", () => {
     );
   });
 
-  it("withManifest should parse, modify, and write styles XML file", async () => {
+  it("withManifest should parse, modify, and write android manifest XML file", async () => {
     const xmlContent = `<?xml version="1.0" encoding="utf-8"?>
     <manifest
         xmlns:android="http://schemas.android.com/apk/res/android"

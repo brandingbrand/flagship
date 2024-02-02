@@ -22,5 +22,5 @@ export function isWarning(error: Error | unknown | any): boolean {
    * Uses a regular expression to check if the 'name' property of the error
    * contains the word "warning" (case-insensitive).
    */
-  return (error.name as string).match(/.*((w|W)arning).*/) !== null;
+  return /.*((w|W)arning).*/.test(error.name);
 }
