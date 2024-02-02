@@ -1,6 +1,3 @@
-/**
- * Importing necessary type declarations from the "@/@types" module.
- */
 import type {
   BuildConfig,
   CodeConfig,
