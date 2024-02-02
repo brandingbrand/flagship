@@ -1,9 +1,9 @@
 import fs from "fs/promises";
 import fse from "fs-extra";
 
+import path from "./path";
 import { FsWarning } from "./errors";
 import { getMatchingFiles } from "./glob";
-import { paths } from "./paths";
 
 /**
  * Extended file system utility that includes additional functions.
@@ -75,7 +75,7 @@ export default {
     newPkg: string,
     ...pathComponents: string[]
   ): Promise<void> {
-    const directory = paths.project.resolve(...pathComponents);
+    const directory = path.project.resolve(...pathComponents);
     const oldPathPart = oldPkg.replace(/\./g, "/");
     const newPathPart = newPkg.replace(/\./g, "/");
 

@@ -12,7 +12,7 @@ import type {
 /**
  * Import paths module to get package.json path
  */
-import { paths } from "./paths";
+import path from "./path";
 
 /**
  * Defines a configuration for code.
@@ -46,7 +46,7 @@ export function defineEnv<T>(env: EnvConfig<T>) {
 export function defineBuild(
   build: BuildConfig | ((pkg: PackageJson) => BuildConfig)
 ) {
-  const pkg: PackageJson = require(paths.packageJSON());
+  const pkg: PackageJson = require(path.project.resolve("package.json"));
 
   if (typeof build === "function") {
     return build(pkg);

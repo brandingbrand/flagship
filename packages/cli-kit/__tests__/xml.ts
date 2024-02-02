@@ -11,7 +11,7 @@ import {
   withStyles,
   withXml,
 } from "../src/parsers/xml";
-import { paths } from "../src/lib/paths";
+import path from "../src/lib/path";
 
 jest.mock("fs/promises");
 jest.mock("fast-xml-parser");
@@ -68,12 +68,9 @@ describe("xml", () => {
 
     await withStyles(callback);
 
-    expect(fs.readFile).toHaveBeenCalledWith(paths.android.styles());
+    expect(fs.readFile).toHaveBeenCalledWith(path.android.styles);
     expect(callback).toHaveBeenCalledWith(xmlObject);
-    expect(fs.writeFile).toHaveBeenCalledWith(
-      paths.android.styles(),
-      xmlContent
-    );
+    expect(fs.writeFile).toHaveBeenCalledWith(path.android.styles, xmlContent);
   });
 
   it("withStrings should parse, modify, and write strings XML file", async () => {
@@ -100,12 +97,9 @@ describe("xml", () => {
 
     await withStrings(callback);
 
-    expect(fs.readFile).toHaveBeenCalledWith(paths.android.strings());
+    expect(fs.readFile).toHaveBeenCalledWith(path.android.strings);
     expect(callback).toHaveBeenCalledWith(xmlObject);
-    expect(fs.writeFile).toHaveBeenCalledWith(
-      paths.android.strings(),
-      xmlContent
-    );
+    expect(fs.writeFile).toHaveBeenCalledWith(path.android.strings, xmlContent);
   });
 
   it("withColors should parse, modify, and write colors XML file", async () => {
@@ -123,12 +117,9 @@ describe("xml", () => {
 
     await withColors(callback);
 
-    expect(fs.readFile).toHaveBeenCalledWith(paths.android.colors());
+    expect(fs.readFile).toHaveBeenCalledWith(path.android.colors);
     expect(callback).toHaveBeenCalledWith(xmlObject);
-    expect(fs.writeFile).toHaveBeenCalledWith(
-      paths.android.colors(),
-      xmlContent
-    );
+    expect(fs.writeFile).toHaveBeenCalledWith(path.android.colors, xmlContent);
   });
 
   it("withNetworkSecurityConfig should parse, modify, and write network security config XML file", async () => {
@@ -159,11 +150,11 @@ describe("xml", () => {
     await withNetworkSecurityConfig(callback);
 
     expect(fs.readFile).toHaveBeenCalledWith(
-      paths.android.networkSecurityConfig()
+      path.android.networkSecurityConfig
     );
     expect(callback).toHaveBeenCalledWith(xmlObject);
     expect(fs.writeFile).toHaveBeenCalledWith(
-      paths.android.networkSecurityConfig(),
+      path.android.networkSecurityConfig,
       xmlContent
     );
   });
@@ -242,10 +233,10 @@ describe("xml", () => {
 
     await withManifest(callback);
 
-    expect(fs.readFile).toHaveBeenCalledWith(paths.android.androidManifest());
+    expect(fs.readFile).toHaveBeenCalledWith(path.android.androidManifest);
     expect(callback).toHaveBeenCalledWith(xmlObject);
     expect(fs.writeFile).toHaveBeenCalledWith(
-      paths.android.androidManifest(),
+      path.android.androidManifest,
       xmlContent
     );
   });
