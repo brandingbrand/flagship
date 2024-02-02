@@ -1,5 +1,5 @@
 import fs from "fs/promises";
-import { X2jOptions, XMLParser, XMLBuilder } from "fast-xml-parser";
+import { XMLParser, XMLBuilder } from "fast-xml-parser";
 
 import {
   BUILD_OPTS,
@@ -16,16 +16,18 @@ import { paths } from "../src/lib/paths";
 jest.mock("fs/promises");
 jest.mock("fast-xml-parser");
 
-const originalXml = { root: { element: "value" } };
-const modifiedXml = { root: { element: "modifiedValue" } };
+describe("xml", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
 
-jest.spyOn(fs, "readFile").mockResolvedValue(JSON.stringify(originalXml));
-jest.spyOn(fs, "writeFile").mockResolvedValue();
-jest.spyOn(XMLParser.prototype, "parse").mockReturnValue(originalXml);
-
-describe("withXml", () => {
-  it("should parse, modify, and write XML file", async () => {
+  it("withXml should parse, modify, and write XML file", async () => {
     const path = "/path/to/xml";
+    const originalXml = { root: { element: "value" } };
+    const modifiedXml = { root: { element: "modifiedValue" } };
+
+    jest.spyOn(fs, "readFile").mockResolvedValue(JSON.stringify(originalXml));
+    jest.spyOn(XMLParser.prototype, "parse").mockReturnValue(originalXml);
 
     await withXml(path, {}, (xml: any) => {
       expect(xml).toEqual(originalXml);
@@ -42,86 +44,209 @@ describe("withXml", () => {
       new XMLBuilder({ ...BUILD_OPTS, format: true }).build(modifiedXml)
     );
   });
-});
 
-describe("withColors", () => {
-  it("should parse, modify, and write color XML file", async () => {
-    await withColors((xml: any) => {
-      expect(xml).toEqual(originalXml);
+  it("withStyles should parse, modify, and write styles XML file", async () => {
+    const xmlContent = `<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+</style>`;
+    const xmlObject = {
+      style: {
+        item: [
+          "@color/colorPrimary",
+          "@color/colorPrimaryDark",
+          "@color/colorAccent",
+        ],
+      },
+    };
 
-      xml.root.element = "modifiedValue";
-    });
+    const callback = jest.fn();
+    jest.spyOn(XMLParser.prototype, "parse").mockReturnValue(xmlObject);
+    jest.spyOn(XMLBuilder.prototype, "build").mockReturnValue(xmlContent);
 
-    expect(fs.readFile).toHaveBeenCalledWith(paths.android.colors());
-    expect(fs.writeFile).toHaveBeenCalledWith(
-      paths.android.colors(),
-      new XMLBuilder({ ...BUILD_OPTS, format: true }).build(modifiedXml)
-    );
-  });
-});
-
-describe("withStyles", () => {
-  it("should parse, modify, and write styles XML file", async () => {
-    await withStyles((xml: any) => {
-      expect(xml).toEqual(originalXml);
-
-      xml.root.element = "modifiedValue";
-    });
+    await withStyles(callback);
 
     expect(fs.readFile).toHaveBeenCalledWith(paths.android.styles());
+    expect(callback).toHaveBeenCalledWith(xmlObject);
     expect(fs.writeFile).toHaveBeenCalledWith(
       paths.android.styles(),
-      new XMLBuilder({ ...BUILD_OPTS, format: true }).build(modifiedXml)
+      xmlContent
     );
   });
-});
 
-describe("withManifest", () => {
-  it("should parse, modify, and write android manifest XML file", async () => {
-    await withManifest((xml: any) => {
-      expect(xml).toEqual(originalXml);
+  it("withStrings should parse, modify, and write strings XML file", async () => {
+    const xmlContent = `<?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <string-array name="planets_array">
+            <item>Mercury</item>
+            <item>Venus</item>
+            <item>Earth</item>
+            <item>Mars</item>
+        </string-array>
+    </resources>`;
+    const xmlObject = {
+      resources: {
+        "string-array": {
+          item: ["Mercury", "Venus", "Earth", "Mars"],
+        },
+      },
+    };
 
-      xml.root.element = "modifiedValue";
-    });
+    const callback = jest.fn();
+    jest.spyOn(XMLParser.prototype, "parse").mockReturnValue(xmlObject);
+    jest.spyOn(XMLBuilder.prototype, "build").mockReturnValue(xmlContent);
 
-    expect(fs.readFile).toHaveBeenCalledWith(paths.android.androidManifest());
+    await withStrings(callback);
+
+    expect(fs.readFile).toHaveBeenCalledWith(paths.android.strings());
+    expect(callback).toHaveBeenCalledWith(xmlObject);
     expect(fs.writeFile).toHaveBeenCalledWith(
-      paths.android.androidManifest(),
-      new XMLBuilder({ ...BUILD_OPTS, format: true }).build(modifiedXml)
+      paths.android.strings(),
+      xmlContent
     );
   });
-});
 
-describe("withNetworkSecurityConfig", () => {
-  it("should parse, modify, and write network security config XML file", async () => {
-    await withNetworkSecurityConfig((xml: any) => {
-      expect(xml).toEqual(originalXml);
+  it("withColors should parse, modify, and write colors XML file", async () => {
+    const xmlContent =
+      "<resources><color name='opaque_white'>#00000000</color></resources>";
+    const xmlObject = {
+      resources: {
+        color: "#00000000",
+      },
+    };
 
-      xml.root.element = "modifiedValue1";
-    });
+    const callback = jest.fn();
+    jest.spyOn(XMLParser.prototype, "parse").mockReturnValue(xmlObject);
+    jest.spyOn(XMLBuilder.prototype, "build").mockReturnValue(xmlContent);
+
+    await withColors(callback);
+
+    expect(fs.readFile).toHaveBeenCalledWith(paths.android.colors());
+    expect(callback).toHaveBeenCalledWith(xmlObject);
+    expect(fs.writeFile).toHaveBeenCalledWith(
+      paths.android.colors(),
+      xmlContent
+    );
+  });
+
+  it("withNetworkSecurityConfig should parse, modify, and write network security config XML file", async () => {
+    const xmlContent = `<?xml version="1.0" encoding="utf-8"?>
+    <network-security-config>
+        <domain-config>
+            <domain includeSubdomains="true">example.com</domain>
+            <trust-anchors>
+                <certificates src="@raw/my_ca"/>
+            </trust-anchors>
+        </domain-config>
+    </network-security-config>`;
+    const xmlObject = {
+      "network-security-config": {
+        "domain-config": {
+          domain: "example.com",
+          "trust-anchors": {
+            certificates: "",
+          },
+        },
+      },
+    };
+
+    const callback = jest.fn();
+    jest.spyOn(XMLParser.prototype, "parse").mockReturnValue(xmlObject);
+    jest.spyOn(XMLBuilder.prototype, "build").mockReturnValue(xmlContent);
+
+    await withNetworkSecurityConfig(callback);
 
     expect(fs.readFile).toHaveBeenCalledWith(
       paths.android.networkSecurityConfig()
     );
+    expect(callback).toHaveBeenCalledWith(xmlObject);
     expect(fs.writeFile).toHaveBeenCalledWith(
       paths.android.networkSecurityConfig(),
-      new XMLBuilder({ ...BUILD_OPTS, format: true }).build(modifiedXml)
+      xmlContent
     );
   });
-});
 
-describe("withStrings", () => {
-  it("should parse, modify, and write strings XML file", async () => {
-    await withStrings((xml: any) => {
-      expect(xml).toEqual(originalXml);
+  it("withManifest should parse, modify, and write styles XML file", async () => {
+    const xmlContent = `<?xml version="1.0" encoding="utf-8"?>
+    <manifest
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:versionCode="1"
+        android:versionName="1.0">
+    
+        <!-- Beware that these values are overridden by the build.gradle file -->
+        <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="26" />
+    
+        <application
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:label="@string/app_name"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+    
+            <!-- This name is resolved to com.example.myapp.MainActivity
+                 based on the namespace property in the build.gradle file -->
+            <activity android:name=".MainActivity">
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+                    <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>
+            </activity>
+    
+            <activity
+                android:name=".DisplayMessageActivity"
+                android:parentActivityName=".MainActivity" />
+        </application>
+    </manifest>`;
+    const xmlObject = {
+      manifest: {
+        "uses-sdk": {
+          "@_minSdkVersion": "15",
+          "@_targetSdkVersion": "26",
+        },
+        application: {
+          activity: [
+            {
+              "intent-filter": {
+                action: {
+                  "@_name": "android.intent.action.MAIN",
+                },
+                category: {
+                  "@_name": "android.intent.category.LAUNCHER",
+                },
+              },
+              "@_name": ".MainActivity",
+            },
+            {
+              "@_name": ".DisplayMessageActivity",
+              "@_parentActivityName": ".MainActivity",
+            },
+          ],
+          "@_allowBackup": "true",
+          "@_icon": "@mipmap/ic_launcher",
+          "@_roundIcon": "@mipmap/ic_launcher_round",
+          "@_label": "@string/app_name",
+          "@_supportsRtl": "true",
+          "@_theme": "@style/AppTheme",
+        },
+        "@_versionCode": "1",
+        "@_versionName": "1.0",
+      },
+    };
 
-      xml.root.element = "modifiedValue";
-    });
+    const callback = jest.fn();
+    jest.spyOn(XMLParser.prototype, "parse").mockReturnValue(xmlObject);
+    jest.spyOn(XMLBuilder.prototype, "build").mockReturnValue(xmlContent);
 
-    expect(fs.readFile).toHaveBeenCalledWith(paths.android.strings());
+    await withManifest(callback);
+
+    expect(fs.readFile).toHaveBeenCalledWith(paths.android.androidManifest());
+    expect(callback).toHaveBeenCalledWith(xmlObject);
     expect(fs.writeFile).toHaveBeenCalledWith(
-      paths.android.strings(),
-      new XMLBuilder({ ...BUILD_OPTS, format: true }).build(modifiedXml)
+      paths.android.androidManifest(),
+      xmlContent
     );
   });
 });
