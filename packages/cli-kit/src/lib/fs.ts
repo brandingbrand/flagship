@@ -12,7 +12,6 @@ export default {
   /**
    * Spread all current fs/promises functions so they can be
    * used along with new useful functions.
-   * @memberof extendedFs
    */
   ...fs,
 
