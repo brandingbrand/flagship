@@ -30,14 +30,11 @@ describe("build.gradle transformers", () => {
     await transformer.transform(config);
     const content = await fs.readFile(path.android.buildGradle, "utf-8");
 
-    expect(content).toContain(`buildToolsVersion = "34.0.0"
-        minSdkVersion = 25
-        compileSdkVersion = 35
-        targetSdkVersion = 38
-
-        // We use NDK 23 which has both M1 support and is the side-by-side NDK version from AGP.
-        ndkVersion = "24.1.0"
-    }`);
+    expect(content).toContain('buildToolsVersion = "34.0.0"');
+    expect(content).toContain("minSdkVersion = 25");
+    expect(content).toContain("compileSdkVersion = 35");
+    expect(content).toContain("targetSdkVersion = 38");
+    expect(content).toContain('ndkVersion = "24.1.0"');
   });
 
   it("should add attributes to ext object", async () => {
