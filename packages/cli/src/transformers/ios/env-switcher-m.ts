@@ -1,4 +1,4 @@
-import { type BuildConfig, withUTF8, paths } from "@brandingbrand/code-cli-kit";
+import { type BuildConfig, withUTF8, path } from "@brandingbrand/code-cli-kit";
 
 import { defineTransformer } from "@/lib";
 
@@ -21,7 +21,7 @@ export default defineTransformer<
     },
   ],
   transform: async function (config: BuildConfig) {
-    return withUTF8(paths.ios.envSwitcher(), (content: string) => {
+    return withUTF8(path.ios.envSwitcher, (content: string) => {
       return this.transforms.reduce((acc, curr) => {
         return curr(acc, config);
       }, content);

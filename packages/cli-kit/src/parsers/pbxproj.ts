@@ -1,7 +1,7 @@
 import fs from "fs/promises";
 import xcode, { XcodeProject } from "xcode";
 
-import { paths } from "@/lib";
+import { path } from "@/lib";
 
 /**
  * Reads an Xcode project file, applies a callback function to the parsed Xcode project,
@@ -26,7 +26,7 @@ export async function withPbxproj(
    *
    * @returns {XcodeProject} An instance of the parsed Xcode project.
    */
-  const project = xcode.project(paths.ios.projectPbxProj());
+  const project = xcode.project(path.ios.projectPbxProj);
   project.parseSync();
 
   /**
@@ -42,5 +42,5 @@ export async function withPbxproj(
    *
    * @returns {Promise<void>} A Promise that resolves once the write operation is complete.
    */
-  await fs.writeFile(paths.ios.projectPbxProj(), project.writeSync());
+  await fs.writeFile(path.ios.projectPbxProj, project.writeSync());
 }

@@ -1,4 +1,4 @@
-import { type BuildConfig, withUTF8, paths } from "@brandingbrand/code-cli-kit";
+import { type BuildConfig, withUTF8, path } from "@brandingbrand/code-cli-kit";
 
 import { defineTransformer } from "@/lib";
 
@@ -21,13 +21,10 @@ export default defineTransformer<
     },
   ],
   transform: async function (config: BuildConfig) {
-    return withUTF8(
-      paths.android.nativeConstants(config),
-      (content: string) => {
-        return this.transforms.reduce((acc, curr) => {
-          return curr(acc, config);
-        }, content);
-      }
-    );
+    return withUTF8(path.android.nativeConstants(config), (content: string) => {
+      return this.transforms.reduce((acc, curr) => {
+        return curr(acc, config);
+      }, content);
+    });
   },
 });

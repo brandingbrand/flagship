@@ -8,7 +8,7 @@ import type {
   Strings,
   Styles,
 } from "@/@types";
-import { paths } from "@/lib";
+import { path } from "@/lib";
 
 export const OPTS = {
   ignoreAttributes: false,
@@ -61,7 +61,7 @@ export async function withColors(
   callback: (xml: Colors) => void
 ): Promise<void> {
   return withXml<Colors>(
-    paths.android.colors(),
+    path.android.colors,
     {
       isArray: (tagName) => {
         if (["color"].indexOf(tagName) !== -1) {
@@ -85,7 +85,7 @@ export async function withManifest(
   callback: (xml: AndroidManifest) => void
 ): Promise<any> {
   return withXml<AndroidManifest>(
-    paths.android.androidManifest(),
+    path.android.androidManifest,
     {
       isArray: (tagName) => {
         if (
@@ -125,7 +125,7 @@ export async function withNetworkSecurityConfig(
   callback: (xml: NetworkSecurityConfig) => void
 ) {
   return withXml(
-    paths.android.networkSecurityConfig(),
+    path.android.networkSecurityConfig,
     {
       isArray: (tagName) => {
         if (
@@ -148,7 +148,7 @@ export async function withNetworkSecurityConfig(
  */
 export async function withStrings(callback: (xml: Strings) => void) {
   return withXml<Strings>(
-    paths.android.strings(),
+    path.android.strings,
     {
       isArray: (tagName) => {
         if (
@@ -176,7 +176,7 @@ export async function withStyles(
   callback: (xml: Styles) => void
 ): Promise<void> {
   return withXml<Styles>(
-    paths.android.styles(),
+    path.android.styles,
     {
       isArray: (tagName) => {
         if (["style", "item"].indexOf(tagName) !== -1) {

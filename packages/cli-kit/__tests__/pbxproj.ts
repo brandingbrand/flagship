@@ -3,7 +3,7 @@
 import fs from "fs/promises";
 import xcode from "xcode";
 
-import { paths } from "../src/lib/paths";
+import path from "../src/lib/path";
 import { withPbxproj } from "../src/parsers/pbxproj";
 
 jest.mock("fs/promises");
@@ -26,11 +26,11 @@ describe("withPbxproj", () => {
 
     await withPbxproj(mockCallback);
 
-    expect(xcode.project).toHaveBeenCalledWith(paths.ios.projectPbxProj());
+    expect(xcode.project).toHaveBeenCalledWith(path.ios.projectPbxProj);
     expect(mockXcodeProject.parseSync).toHaveBeenCalled();
     expect(mockCallback).toHaveBeenCalledWith(mockXcodeProject);
     expect(fs.writeFile).toHaveBeenCalledWith(
-      paths.ios.projectPbxProj(),
+      path.ios.projectPbxProj,
       undefined
     );
     expect(mockXcodeProject.writeSync).toHaveBeenCalled();

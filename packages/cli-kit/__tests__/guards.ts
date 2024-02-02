@@ -3,9 +3,9 @@ import {
   defineEnv,
   defineBuild,
   definePlugin,
-} from "../src/lib/config";
+} from "../src/lib/guards";
 
-describe("Configuration Utility Functions", () => {
+describe("Guard Utility Functions", () => {
   describe("defineConfig", () => {
     it("should return the provided configuration", () => {
       const config = {

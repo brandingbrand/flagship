@@ -1,8 +1,8 @@
 import {
   type BuildConfig,
   withUTF8,
-  paths,
-  replace,
+  path,
+  string,
 } from "@brandingbrand/code-cli-kit";
 
 import { type Transforms, defineTransformer } from "@/lib";
@@ -20,7 +20,7 @@ export default defineTransformer<Transforms<string>>({
   file: "build.gradle",
   transforms: [
     (content: string, config: BuildConfig) => {
-      return replace(
+      return string.replace(
         content,
         /(compileSdkVersion\s*=\s*)[\d]+/m,
         `$1${config.android.gradle?.projectGradle?.compileSdkVersion}$3`
@@ -28,7 +28,7 @@ export default defineTransformer<Transforms<string>>({
     },
   ],
   transform: async function (config: BuildConfig) {
-    return withUTF8(paths.android.buildGradle(), (content: string) => {
+    return withUTF8(path.android.buildGradle, (content: string) => {
       return this.transforms.reduce((acc, curr) => {
         return curr(acc, config);
       }, content);

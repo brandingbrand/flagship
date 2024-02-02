@@ -1,4 +1,4 @@
-import fs from "fs/promises";
+import { fs } from "@/lib";
 
 /**
  * Reads content from a file, applies a callback function to the content,
@@ -20,7 +20,7 @@ import fs from "fs/promises";
  */
 export async function withUTF8(
   filePath: string,
-  callback: Function
+  callback: (content: string) => string
 ): Promise<void> {
   /**
    * Reads the content of the file at the specified path using UTF-8 encoding.

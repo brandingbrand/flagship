@@ -1,7 +1,7 @@
 import plist, { type PlistJsObj } from "simple-plist";
 
 import type { InfoPlist } from "@/@types";
-import { paths } from "@/lib";
+import { path } from "@/lib";
 
 /**
  * Asynchronously reads the plist file from the given path.
@@ -64,4 +64,4 @@ export async function withPlist<T>(
  */
 export const withInfoPlist = (
   callback: (plist: InfoPlist) => InfoPlist
-): Promise<void> => withPlist<InfoPlist>(paths.ios.infoPlist(), callback);
+): Promise<void> => withPlist<InfoPlist>(path.ios.infoPlist, callback);

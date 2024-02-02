@@ -1,61 +1,61 @@
-import fs from "fs/promises";
-
-import * as localFs from "../src/lib/fs";
+import fs from "../src/lib/fs";
 import { FsWarning } from "../src/lib/errors";
 
-describe("doesKeywordExist", () => {
+jest.mock("fs/promises");
+
+describe("fs", () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
 
-  it("should return true if the keyword exists in the file content", async () => {
-    const path = "/some/file.txt";
-    const keyword = "someKeyword";
-    const fileContent = "This is someKeyword content.";
+  describe("doesKeywordExist", () => {
+    afterEach(() => {
+      jest.resetAllMocks();
+    });
 
-    const spy = jest
-      .spyOn(fs, "readFile")
-      .mockResolvedValue({ toString: () => fileContent } as string);
+    it("should return true if the keyword exists in the file content", async () => {
+      const path = "/some/file.txt";
+      const keyword = "someKeyword";
+      const fileContent = "This is someKeyword content.";
 
-    const result = await localFs.doesKeywordExist(path, keyword);
+      const spy = jest.spyOn(fs, "readFile").mockResolvedValue(fileContent);
 
-    expect(result).toBe(true);
-    expect(spy).toHaveBeenCalledWith(path);
+      const result = await fs.doesKeywordExist(path, keyword);
+
+      expect(result).toBe(true);
+      expect(spy).toHaveBeenCalledWith(path, "utf-8");
+    });
+
+    it("should not return true if the keyword exists in the file content", async () => {
+      const path = "/some/file.txt";
+      const keyword = "nonexistent";
+      const fileContent = "This is someKeyword content.";
+
+      const spy = jest.spyOn(fs, "readFile").mockResolvedValue(fileContent);
+
+      const result = await fs.doesKeywordExist(path, keyword);
+
+      expect(result).toBe(false);
+      expect(spy).toHaveBeenCalledWith(path, "utf-8");
+    });
   });
 
-  it("should not return true if the keyword exists in the file content", async () => {
-    const path = "/some/file.txt";
-    const keyword = "nonexistent";
-    const fileContent = "This is someKeyword content.";
+  describe("updateFileContent", () => {
+    afterEach(() => {
+      jest.resetAllMocks();
+    });
 
-    const spy = jest
-      .spyOn(fs, "readFile")
-      .mockResolvedValue({ toString: () => fileContent } as string);
+    it("should throw FsWarning if the keyword does not exist in the file", async () => {
+      const path = "/some/file.txt";
+      const oldText = /nonexistentKeyword/g;
 
-    const result = await localFs.doesKeywordExist(path, keyword);
+      jest.spyOn(fs, "readFile").mockResolvedValue("");
 
-    expect(result).toBe(false);
-    expect(spy).toHaveBeenCalledWith(path);
-  });
-});
+      jest.spyOn(fs, "doesKeywordExist").mockResolvedValue(false);
 
-describe("update", () => {
-  afterEach(() => {
-    jest.resetAllMocks();
-  });
-
-  it("should throw FsWarning if the keyword does not exist in the file", async () => {
-    const path = "/some/file.txt";
-    const oldText = /nonexistentKeyword/g;
-
-    jest
-      .spyOn(fs, "readFile")
-      .mockResolvedValue({ toString: () => "" } as string);
-
-    jest.spyOn(localFs, "doesKeywordExist").mockResolvedValue(false);
-
-    await expect(localFs.update(path, oldText, "newText")).rejects.toThrow(
-      FsWarning
-    );
+      await expect(fs.update(path, oldText, "newText")).rejects.toThrow(
+        FsWarning
+      );
+    });
   });
 });

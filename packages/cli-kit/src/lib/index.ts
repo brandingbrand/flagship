@@ -1,7 +1,7 @@
-export * from "./config";
+export * from "./guards";
 export * from "./errors";
-export * from "./fs";
+export { default as fs } from "./fs";
 export * from "./glob";
-export * from "./paths";
+export { default as path } from "./path";
 export * from "./platform";
 export * from "./string";
