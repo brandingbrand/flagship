@@ -2,7 +2,7 @@
  * @jest-environment-options {"requireTemplate": true}
  */
 
-/// <reference types="@brandingbrand/code-jest-config/@types/globals.d.ts" />
+/// <reference types="@brandingbrand/code-jest-config" />
 
 import { type BuildConfig, fs, path } from "@brandingbrand/code-cli-kit";
 
