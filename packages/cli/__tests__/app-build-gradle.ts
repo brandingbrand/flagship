@@ -23,7 +23,7 @@ describe("build.gradle transformers", () => {
       version: "1.3",
     };
 
-    await transformer.transform(config);
+    await transformer.transform(config, {} as any);
     const content = await fs.readFile(path.android.appBuildGradle, "utf-8");
 
     expect(content).toContain('namespace "com.brandingbrand"');
@@ -42,7 +42,7 @@ describe("build.gradle transformers", () => {
       },
     };
 
-    await transformer.transform(config);
+    await transformer.transform(config, {} as any);
     const content = await fs.readFile(path.android.appBuildGradle, "utf-8");
 
     expect(content).toContain(`dependencies {

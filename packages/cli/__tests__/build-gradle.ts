@@ -27,7 +27,7 @@ describe("build.gradle transformers", () => {
       },
     };
 
-    await transformer.transform(config);
+    await transformer.transform(config, {} as any);
     const content = await fs.readFile(path.android.buildGradle, "utf-8");
 
     expect(content).toContain('buildToolsVersion = "34.0.0"');
@@ -47,7 +47,7 @@ describe("build.gradle transformers", () => {
       },
     };
 
-    await transformer.transform(config);
+    await transformer.transform(config, {} as any);
     const content = await fs.readFile(path.android.buildGradle, "utf-8");
 
     expect(content).toContain(`ext {
@@ -65,7 +65,7 @@ describe("build.gradle transformers", () => {
       },
     };
 
-    await transformer.transform(config);
+    await transformer.transform(config, {} as any);
     const content = await fs.readFile(path.android.buildGradle, "utf-8");
 
     expect(content).toContain(`repositories {
@@ -82,7 +82,7 @@ describe("build.gradle transformers", () => {
       },
     };
 
-    await transformer.transform(config);
+    await transformer.transform(config, {} as any);
     const content = await fs.readFile(path.android.buildGradle, "utf-8");
 
     expect(content).toContain(`dependencies {

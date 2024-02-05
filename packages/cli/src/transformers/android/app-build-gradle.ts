@@ -1,11 +1,12 @@
 import {
   type BuildConfig,
+  type PrebuildOptions,
   withUTF8,
   path,
   string,
 } from "@brandingbrand/code-cli-kit";
 
-import { defineTransformer } from "@/lib";
+import { type Transforms, defineTransformer } from "@/lib";
 
 /**
  * Defines a transformer for the Android project's "app-build.gradle" file.
@@ -23,9 +24,7 @@ import { defineTransformer } from "@/lib";
  * @param {AndroidAppBuildGradleTransformer} transformerConfig - Configuration for the Android app-build.gradle transformer.
  * @returns {Transforms<string>} - The type of the transformer.
  */
-export default defineTransformer<
-  (content: string, config: BuildConfig) => string
->({
+export default defineTransformer<Transforms<string>>({
   /**
    * The name of the file to be transformed ("app-build.gradle").
    * @type {string}
@@ -158,10 +157,13 @@ export default defineTransformer<
    * @param {BuildConfig} config - The build configuration.
    * @returns {Promise<void>} - The updated content of the "app-build.gradle" file.
    */
-  transform: async function (config: BuildConfig): Promise<void> {
+  transform: async function (
+    config: BuildConfig,
+    options: PrebuildOptions
+  ): Promise<void> {
     return withUTF8(path.android.appBuildGradle, (content: string) => {
       return this.transforms.reduce((acc, curr) => {
-        return curr(acc, config);
+        return curr(acc, config, options);
       }, content);
     });
   },

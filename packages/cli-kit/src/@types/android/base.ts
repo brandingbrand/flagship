@@ -104,21 +104,58 @@ export interface ProjectGradle {
   dependencies?: string[];
 }
 
+export interface PropertiesGradle {
+  /**
+   * AndroidX package structure to make it clearer which packages are bundled with the
+   * Android operating system, and which are packaged with your app's APK
+   *
+   * @default true
+   */
+  useAndroidX?: boolean;
+  /**
+   * Automatically convert third-party libraries to use AndroidX
+   *
+   * @default true
+   */
+  enableJetifier?: boolean;
+  /**
+   * Version of flipper SDK to use with React Native
+   *
+   * @default 0.182.0
+   */
+  FLIPPER_VERSION?: string;
+  /**
+   * Use this property to specify which architecture you want to build.
+   *
+   * @default armeabi-v7a,arm64-v8a,x86,x86_64
+   */
+  reactNativeArchitectures?: string;
+  /**
+   * Use this property to enable support to the new architecture.
+   *
+   * @default false
+   */
+  newArchEnabled?: boolean;
+  /**
+   * Use this property to enable or disable the Hermes JS engine.
+   * If set to false, you will be using JSC instead.
+   *
+   * @default true
+   */
+  hermesEnabled?: boolean;
+}
+
 export interface Gradle {
   /**
    * app/build.gradle config
    */
   appGradle?: AppGradle;
   /**
-   * Gradle wrapper distribution url
-   */
-  distributionVersion?: string;
-  /**
-   * jvm args i.e. heap memory
-   */
-  jvmArgs?: string;
-  /**
    * build.gradle config
    */
   projectGradle?: ProjectGradle;
+  /**
+   * gradle.properties config
+   */
+  properties?: PropertiesGradle;
 }

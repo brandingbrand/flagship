@@ -22,10 +22,14 @@ export function defineAction(action: () => Promise<void>, name: string) {
 type Transformer<T> = {
   file: string;
   transforms: Array<T>;
-  transform: (config: BuildConfig) => Promise<void>;
+  transform: (config: BuildConfig, options: PrebuildOptions) => Promise<void>;
 };
 
-export type Transforms<T> = (content: T, config: BuildConfig) => T;
+export type Transforms<T> = (
+  content: T,
+  config: BuildConfig,
+  options: PrebuildOptions
+) => T;
 
 /**
  * Creates and applies a transformer function with logging using the provided Transformer definition.

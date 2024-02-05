@@ -3,6 +3,7 @@ import {
   withUTF8,
   path,
   string,
+  PrebuildOptions,
 } from "@brandingbrand/code-cli-kit";
 
 import { type Transforms, defineTransformer } from "@/lib";
@@ -179,10 +180,13 @@ export default defineTransformer<Transforms<string>>({
    * @param {BuildConfig} config - The build configuration.
    * @returns {Promise<void>} - The updated content of the "build.gradle" file.
    */
-  transform: async function (config: BuildConfig): Promise<void> {
+  transform: async function (
+    config: BuildConfig,
+    options: PrebuildOptions
+  ): Promise<void> {
     return withUTF8(path.android.buildGradle, (content: string) => {
       return this.transforms.reduce((acc, curr) => {
-        return curr(acc, config);
+        return curr(acc, config, options);
       }, content);
     });
   },
