@@ -136,7 +136,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(ext\s*{[\s\S]\s+)/m,
-        `$1${config.android.gradle.projectGradle.ext.map((it) => `${it}\n        `).join("")}`
+        `$1${config.android.gradle.projectGradle.ext.map((it) => it).join("\n        ")}`
       );
     },
 
@@ -153,7 +153,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(repositories\s*{[\s\S]\s+)/m,
-        `$1${config.android.gradle.projectGradle.repositories.map((it) => `${it}\n        `).join("")}`
+        `$1${config.android.gradle.projectGradle.repositories.map((it) => it).join("\n        ")}`
       );
     },
 
@@ -170,7 +170,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(dependencies\s*{[\s\S]\s+)/m,
-        `$1${config.android.gradle.projectGradle.dependencies.map((it) => `${it}\n        `).join("")}`
+        `$1${config.android.gradle.projectGradle.dependencies.map((it) => it).join("\n        ")}`
       );
     },
   ],

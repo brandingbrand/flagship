@@ -1,5 +1,5 @@
 /**
- * @jest-environment-options {"requireTemplate": true, "fixtures": "env-switcher-java_fixtures"}
+ * @jest-environment-options {"requireTemplate": true}
  */
 
 /// <reference types="@brandingbrand/code-jest-config/@types/globals.d.ts" />

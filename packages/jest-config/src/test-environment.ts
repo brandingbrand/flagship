@@ -70,6 +70,7 @@ export default class CustomEnvironment extends TestEnvironment {
       path.resolve(templatePath, "android"),
       path.resolve(dir, "android")
     );
+    await fse.copy(path.resolve(templatePath, "extras"), dir);
 
     // Copy fixtures if provided
     if (fixtures && typeof fixtures === "string") {
