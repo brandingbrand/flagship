@@ -25,7 +25,7 @@ export default defineTransformer<Transforms<string>>({
   file: "EnvSwitcher.java",
 
   /**
-   * An array of transformer functions to be applied to the Gemfile file.
+   * An array of transformer functions to be applied to the "EnvSwitcher.java" file.
    * Each function receives the content of the file and the build configuration,
    * and returns the updated content after applying specific transformations.
    * @type {Array<(content: string, config: BuildConfig) => string>}

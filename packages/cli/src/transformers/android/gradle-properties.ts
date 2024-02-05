@@ -18,7 +18,18 @@ import { type Transforms, defineTransformer } from "@/lib";
  * @returns {Promise<string>} The updated content of the "gradle.properties" file.
  */
 export default defineTransformer<Transforms<string>>({
+  /**
+   * The name of the file to be transformed ("build.gradle").
+   * @type {string}
+   */
   file: "gradle.properties",
+
+  /**
+   * An array of transformer functions to be applied to the "gradle.properties" file.
+   * Each function receives the content of the file and the build configuration,
+   * and returns the updated content after applying specific transformations.
+   * @type {Array<(content: string, config: BuildConfig) => string>}
+   */
   transforms: [
     /**
      * Transformer for updating the "android.useAndroidX" property in "gradle.properties".
