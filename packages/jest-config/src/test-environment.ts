@@ -39,7 +39,7 @@ export default class CustomEnvironment extends TestEnvironment {
     this.testPath = context.testPath;
 
     // Initialize the temp directory tracker
-    // temp.track();
+    temp.track();
   }
 
   /**
@@ -60,11 +60,6 @@ export default class CustomEnvironment extends TestEnvironment {
       "template"
     );
 
-    // Copy fixtures if provided
-    if (fixtures && typeof fixtures === "string") {
-      await fse.copy(path.resolve(this.testPath, fixtures), dir);
-    }
-
     // Create "ios" and "android" directories
     await fse.mkdir(path.resolve(dir, "ios"));
     await fse.mkdir(path.resolve(dir, "android"));
@@ -75,6 +70,11 @@ export default class CustomEnvironment extends TestEnvironment {
       path.resolve(templatePath, "android"),
       path.resolve(dir, "android")
     );
+
+    // Copy fixtures if provided
+    if (fixtures && typeof fixtures === "string") {
+      await fse.copy(path.resolve(path.dirname(this.testPath), fixtures), dir);
+    }
 
     // Set a global variable to store the fixture path
     this.global.__flagship_code_fixture_path = dir;

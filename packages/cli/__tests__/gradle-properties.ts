@@ -13,6 +13,22 @@ describe("build.gradle transformers", () => {
     jest.resetAllMocks();
   });
 
+  it("should not update useAndroidX, enableJetifier, FLIPPER_VERSION, reactNativeArchitectures, newArchEnabled and hermesEnabled", async () => {
+    const config = {
+      ...__flagship_code_build_config,
+    } as BuildConfig;
+
+    const orgininalContent = await fs.readFile(
+      path.android.gradleProperties,
+      "utf-8"
+    );
+
+    await transformer.transform(config, {} as any);
+    const content = await fs.readFile(path.android.gradleProperties, "utf-8");
+
+    expect(content).toEqual(orgininalContent);
+  });
+
   it("should update useAndroidX, enableJetifier, FLIPPER_VERSION, reactNativeArchitectures, newArchEnabled and hermesEnabled", async () => {
     const config = {
       ...__flagship_code_build_config,
@@ -38,21 +54,5 @@ describe("build.gradle transformers", () => {
     expect(content).toContain("reactNativeArchitectures=arm64");
     expect(content).toContain("newArchEnabled=true");
     expect(content).toContain("hermesEnabled=false");
-  });
-
-  it("should not update useAndroidX, enableJetifier, FLIPPER_VERSION, reactNativeArchitectures, newArchEnabled and hermesEnabled", async () => {
-    const config = {
-      ...__flagship_code_build_config,
-    } as BuildConfig;
-
-    const orgininalContent = await fs.readFile(
-      path.android.gradleProperties,
-      "utf-8"
-    );
-
-    await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.android.gradleProperties, "utf-8");
-
-    expect(content).toEqual(orgininalContent);
   });
 });

@@ -44,6 +44,10 @@ export interface Android {
    * App version
    */
   versioning?: AndroidVersion;
+  /**
+   * Gemfile dependencies
+   */
+  gemfile?: string[];
 }
 
 export interface AndroidVersion {
