@@ -51,7 +51,7 @@ export default defineTransformer<Transforms<string>>({
   /**
    * The main transform function that applies all specified transformations to the "Gemfile" file.
    * @param {BuildConfig} config - The build configuration.
-   * @returns {Promise<void>} - The updated content of the "build.gradle" file.
+   * @returns {Promise<void>} - The updated content of the "Gemfile" file.
    */
   transform: async function (
     config: BuildConfig,
