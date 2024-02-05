@@ -78,7 +78,7 @@ export default {
      *
      * @returns {string} The absolute path to "ios/app/Gemfile".
      */
-    gemfile: resolvePathFromProject("ios", "app", "Gemfile"),
+    gemfile: resolvePathFromProject("ios", "Gemfile"),
 
     /**
      * Retrieves the absolute path to the iOS EnvSwitcher.m file.

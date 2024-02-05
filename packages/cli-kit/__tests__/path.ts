@@ -31,7 +31,7 @@ describe("path", () => {
 
   it("should have an ios.gemfile function that returns the path to ios/app/Gemfile", () => {
     const gemfilePath = path.ios.gemfile;
-    expect(gemfilePath).toEqual(expect.stringMatching(/.*ios\/app\/Gemfile$/));
+    expect(gemfilePath).toEqual(expect.stringMatching(/.*ios\/Gemfile$/));
   });
 
   it("should have an ios.nativeConstants function that returns the path to ios/app/NativeConstants.m", () => {

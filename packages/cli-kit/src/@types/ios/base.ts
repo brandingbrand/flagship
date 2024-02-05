@@ -49,6 +49,10 @@ export type IOS = {
    * App version Info
    */
   versioning?: IOSVersion;
+  /**
+   * Gemfile dependencies
+   */
+  gemfile?: string[];
 };
 
 export type Plist = {

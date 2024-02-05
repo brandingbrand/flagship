@@ -32,12 +32,12 @@ export default defineTransformer<Transforms<string>>({
    */
   transforms: [
     /**
-     * Transformer for updating the "buildToolsVersion" value in "build.gradle".
+     * Transformer for updating the dependencies in the "Gemfile" file.
      * @param {string} content - The content of the file.
      * @param {BuildConfig} config - The build configuration.
      * @returns {string} - The updated content.
      */
-    (content: string, config: BuildConfig) => {
+    (content: string, config: BuildConfig): string => {
       if (!config.android.gemfile) return content;
 
       return string.replace(

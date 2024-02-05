@@ -6,9 +6,9 @@
 
 import { type BuildConfig, fs, path } from "@brandingbrand/code-cli-kit";
 
-import transformer from "../src/transformers/android/gemfile";
+import transformer from "../src/transformers/ios/gemfile";
 
-describe("gemfile transformers", () => {
+describe("ios gemfile transformers", () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
@@ -18,10 +18,10 @@ describe("gemfile transformers", () => {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
-    const originalContent = await fs.readFile(path.android.gemfile, "utf-8");
+    const originalContent = await fs.readFile(path.ios.gemfile, "utf-8");
 
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.android.gemfile, "utf-8");
+    const content = await fs.readFile(path.ios.gemfile, "utf-8");
 
     expect(content).toEqual(originalContent);
   });
@@ -31,10 +31,10 @@ describe("gemfile transformers", () => {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
-    config.android.gemfile = ["gem 'rails', '3.0.7'", "gem 'sqlite3'"];
+    config.ios.gemfile = ["gem 'rails', '3.0.7'", "gem 'sqlite3'"];
 
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.android.gemfile, "utf-8");
+    const content = await fs.readFile(path.ios.gemfile, "utf-8");
 
     expect(content).toContain("gem 'rails', '3.0.7'");
     expect(content).toContain("gem 'sqlite3'");

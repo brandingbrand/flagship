@@ -32,7 +32,7 @@ export default defineTransformer<Transforms<string>>({
    */
   transforms: [
     /**
-     * Transformer for updating the "initialEnvName" value in "NativeConstants.java".
+     * Transformer for updating the "ShowDevMenu" value in "NativeConstants.java".
      * @param {string} content - The content of the file.
      * @param {BuildConfig} config - The build configuration.
      * @returns {string} - The updated content.

@@ -15,7 +15,7 @@ RCT_EXPORT_MODULE();
 
 - (NSDictionary *)constantsToExport {
   return @{
-    @"ShowDevMenu": @"false"
+    @"ShowDevMenu": @"true"
   };
 }
 
