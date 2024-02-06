@@ -29,7 +29,7 @@ export default defineTransformer<Transforms<StylesXML, void>>({
    */
   transforms: [
     /**
-     * Function that applies URL scheme configuration to the styles.xml file.
+     * Function that applies styles configuration to the styles.xml file.
      * @param xml The StylesXML object representing the contents of the styles.xml file.
      * @param config The build configuration containing Android-specific manifest options.
      */

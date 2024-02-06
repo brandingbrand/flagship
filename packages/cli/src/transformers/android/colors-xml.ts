@@ -12,7 +12,7 @@ import { Transforms, defineTransformer } from "@/lib";
  *
  * @type {typeof defineTransformer}
  * @template {(content: ColorsXML, config: BuildConfig, options: PrebuildOptions) => void} T - Type of transformations to be applied.
- * @param {StylesTransformer} transformerConfig - Configuration for the Android colors.xml transformer.
+ * @param {ColorsTransformer} transformerConfig - Configuration for the Android colors.xml transformer.
  * @returns {Transforms<ColorsXML, void>} - The type of the transformer.
  */
 export default defineTransformer<Transforms<ColorsXML, void>>({
@@ -29,19 +29,19 @@ export default defineTransformer<Transforms<ColorsXML, void>>({
    */
   transforms: [
     /**
-     * Function that applies URL scheme configuration to the colors.xml file.
-     * @param xml The StylesXML object representing the contents of the colors.xml file.
+     * Function that applies colors configuration to the colors.xml file.
+     * @param xml The ColorsXML object representing the contents of the colors.xml file.
      * @param config The build configuration containing Android-specific manifest options.
      */
     (xml: ColorsXML, config: BuildConfig) => {
       if (!config.android.colors) return;
 
       if (!xml.resources.color) {
-        xml.resources = { color: [] };
+        xml.resources = { ...xml.resources, color: [] };
       }
 
       Object.entries(config.android.colors).forEach(([name, _]) =>
-        xml.resources.color!.push({
+        xml.resources.color?.push({
           $: { name },
           _,
         })
