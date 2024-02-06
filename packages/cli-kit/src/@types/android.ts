@@ -1,167 +1,175 @@
+import type { UrlScheme } from "./universal";
+
+/**
+ * Represents the configuration options for Android builds.
+ */
 export interface Android {
   /**
-   * App package name
+   * App package name.
    */
   packageName: string;
   /**
-   * Android app display name
+   * Android app display name.
    */
   displayName: string;
   /**
-   * Gradle configuration
+   * Gradle configuration.
    */
   gradle?: Gradle;
   /**
-   * AndroidManifest.xml configuration
+   * AndroidManifest.xml configuration.
    */
-  manifest?: any;
+  manifest?: {
+    urlScheme: UrlScheme;
+  };
   /**
-   * signing config
+   * Signing configuration.
    */
   signing?: AndroidSigning;
   /**
-   * App version
+   * App version configuration.
    */
   versioning?: AndroidVersion;
   /**
-   * Gemfile dependencies
+   * Gemfile dependencies.
    */
   gemfile?: string[];
   /**
-   * Android colors.xml configuration
-   *
-   * @example {"opaque_red": "#f00"}
+   * Android colors.xml configuration.
    */
   colors?: Colors;
   /**
-   * Android style configuration
-   *
-   * @example style: "light"
-   * @default "system"
+   * Android style configuration.
    */
   style?: "light" | "dark" | "system";
   /**
-   * Android strings.xml configuraion
-   *
-   * @example {"string": {"string_array_name": "text_string"}}
-   * @example {"stringArray": {"planets_array": ["Mercury", "Venus", "Earth", "Mars"]}}
-   * @example {"plurals": {"plural_name": [{"quantity": "zero", "value": "text_string"}]}}
+   * Android strings.xml configuration.
    */
   strings?: Strings;
 }
 
+/**
+ * Represents the version information for an Android app.
+ */
 export interface AndroidVersion {
   /**
-   * App version i.e. versionName
+   * App version (versionName).
    */
   version: string;
   /**
-   * App build i.e. versionCode
+   * App build number (versionCode).
    */
   build?: number;
 }
 
+/**
+ * Represents the signing configuration for Android.
+ */
 export interface AndroidSigning {
+  /**
+   * Key alias for signing.
+   */
   keyAlias: string;
+  /**
+   * Store file for signing.
+   */
   storeFile: string;
 }
 
-export interface AppGradle {
-  /**
-   * Additional dependencies for app/build.gradle
-   */
-  dependencies?: string[];
-}
-
-export interface ProjectGradle {
-  /**
-   * Android build tools version
-   */
-  buildToolsVersion?: string;
-  /**
-   * Android compile SDK version
-   */
-  compileSdkVersion?: number;
-  /**
-   * Min supported Android SDK
-   */
-  minSdkVersion?: number;
-  /**
-   * Specified NDK version
-   */
-  ndkVersion?: string;
-  /**
-   * Additional repository search paths
-   */
-  repositories?: string[];
-  /**
-   * Android target SDK version
-   */
-  targetSdkVersion?: number;
-  /**
-   * Ext config
-   */
-  ext?: string[];
-  /**
-   * Dependencies
-   */
-  dependencies?: string[];
-}
-
-export interface PropertiesGradle {
-  /**
-   * AndroidX package structure to make it clearer which packages are bundled with the
-   * Android operating system, and which are packaged with your app's APK
-   *
-   * @default true
-   */
-  useAndroidX?: boolean;
-  /**
-   * Automatically convert third-party libraries to use AndroidX
-   *
-   * @default true
-   */
-  enableJetifier?: boolean;
-  /**
-   * Version of flipper SDK to use with React Native
-   *
-   * @default 0.182.0
-   */
-  FLIPPER_VERSION?: string;
-  /**
-   * Use this property to specify which architecture you want to build.
-   *
-   * @default armeabi-v7a,arm64-v8a,x86,x86_64
-   */
-  reactNativeArchitectures?: string;
-  /**
-   * Use this property to enable support to the new architecture.
-   *
-   * @default false
-   */
-  newArchEnabled?: boolean;
-  /**
-   * Use this property to enable or disable the Hermes JS engine.
-   * If set to false, you will be using JSC instead.
-   *
-   * @default true
-   */
-  hermesEnabled?: boolean;
-}
-
+/**
+ * Represents the Gradle configuration options.
+ */
 export interface Gradle {
   /**
-   * app/build.gradle config
+   * Configuration options for app/build.gradle.
    */
   appGradle?: AppGradle;
   /**
-   * build.gradle config
+   * Configuration options for build.gradle.
    */
   projectGradle?: ProjectGradle;
   /**
-   * gradle.properties config
+   * Configuration options for gradle.properties.
    */
   properties?: PropertiesGradle;
+}
+
+/**
+ * Represents configuration options for app/build.gradle.
+ */
+export interface AppGradle {
+  /**
+   * Additional dependencies.
+   */
+  dependencies?: string[];
+}
+
+/**
+ * Represents configuration options for build.gradle.
+ */
+export interface ProjectGradle {
+  /**
+   * Android build tools version.
+   */
+  buildToolsVersion?: string;
+  /**
+   * Android compile SDK version.
+   */
+  compileSdkVersion?: number;
+  /**
+   * Minimum supported Android SDK version.
+   */
+  minSdkVersion?: number;
+  /**
+   * Specified NDK version.
+   */
+  ndkVersion?: string;
+  /**
+   * Additional repository search paths.
+   */
+  repositories?: string[];
+  /**
+   * Android target SDK version.
+   */
+  targetSdkVersion?: number;
+  /**
+   * Ext config.
+   */
+  ext?: string[];
+  /**
+   * Dependencies.
+   */
+  dependencies?: string[];
+}
+
+/**
+ * Represents configuration options for gradle.properties.
+ */
+export interface PropertiesGradle {
+  /**
+   * Flag to enable AndroidX package structure.
+   */
+  useAndroidX?: boolean;
+  /**
+   * Flag to enable Jetifier for third-party libraries.
+   */
+  enableJetifier?: boolean;
+  /**
+   * Version of Flipper SDK to use with React Native.
+   */
+  FLIPPER_VERSION?: string;
+  /**
+   * Architectures to build for React Native.
+   */
+  reactNativeArchitectures?: string;
+  /**
+   * Flag to enable new architecture support.
+   */
+  newArchEnabled?: boolean;
+  /**
+   * Flag to enable Hermes JS engine.
+   */
+  hermesEnabled?: boolean;
 }
 
 /**
@@ -175,13 +183,17 @@ export type Colors = {
  * Represents a collection of string resources including regular strings, string arrays, and plurals.
  */
 export type Strings = {
-  /** Regular string resources. */
+  /**
+   * Regular string resources.
+   */
   string?: { [stringName: string]: string };
-
-  /** String array resources. */
+  /**
+   * String array resources.
+   */
   stringArray?: { [stringArrayName: string]: string[] };
-
-  /** Plural resources with different quantities. */
+  /**
+   * Plural resources with different quantities.
+   */
   plurals?: {
     [pluralsName: string]: Array<{
       /** Quantity of the plural resource. */
