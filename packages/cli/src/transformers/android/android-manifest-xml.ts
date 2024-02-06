@@ -1,8 +1,8 @@
 import {
+  type AndroidManifestXML,
   type BuildConfig,
-  PrebuildOptions,
+  type PrebuildOptions,
   withManifest,
-  AndroidManifestXML,
 } from "@brandingbrand/code-cli-kit";
 
 import { Transforms, defineTransformer } from "@/lib";
