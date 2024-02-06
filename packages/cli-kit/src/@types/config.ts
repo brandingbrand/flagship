@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 import type { Android } from "./android";
 import type { IOS } from "./ios";
 

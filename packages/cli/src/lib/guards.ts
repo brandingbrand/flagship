@@ -25,11 +25,11 @@ type Transformer<T> = {
   transform: (config: BuildConfig, options: PrebuildOptions) => Promise<void>;
 };
 
-export type Transforms<T> = (
+export type Transforms<T, U = undefined> = (
   content: T,
   config: BuildConfig,
   options: PrebuildOptions
-) => T;
+) => U extends undefined ? T : U;
 
 /**
  * Creates and applies a transformer function with logging using the provided Transformer definition.

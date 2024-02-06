@@ -1,4 +1,4 @@
-export * from "./android-manifest-xml";
+export { default as androidManifest } from "./android-manifest-xml";
 export { default as appBuildGradle } from "./app-build-gradle";
 export { default as buildGradle } from "./build-gradle";
 export * from "./colors-xml";
