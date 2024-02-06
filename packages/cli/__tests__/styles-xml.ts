@@ -24,8 +24,8 @@ describe("android styles.xml transformers", () => {
     const content = await fs.readFile(path.android.styles, "utf-8");
 
     expect(content).toContain(`<resources>
-    <style name=\"AppTheme\" parent=\"Theme.AppCompat.NoActionBar\">
-        <item name=\"android:editTextBackground\">@drawable/rn_edit_text_material</item>
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
     </style>
 </resources>`);
   });
@@ -41,8 +41,8 @@ describe("android styles.xml transformers", () => {
     const content = await fs.readFile(path.android.styles, "utf-8");
 
     expect(content).toContain(`<resources>
-    <style name=\"AppTheme\" parent=\"Theme.AppCompat.Light.NoActionBar\">
-        <item name=\"android:editTextBackground\">@drawable/rn_edit_text_material</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
     </style>
 </resources>`);
   });
@@ -58,8 +58,8 @@ describe("android styles.xml transformers", () => {
     const content = await fs.readFile(path.android.styles, "utf-8");
 
     expect(content).toContain(`<resources>
-    <style name=\"AppTheme\" parent=\"Theme.AppCompat.DayNight.NoActionBar\">
-        <item name=\"android:editTextBackground\">@drawable/rn_edit_text_material</item>
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
     </style>
 </resources>`);
   });
