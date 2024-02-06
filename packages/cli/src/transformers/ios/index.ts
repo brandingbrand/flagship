@@ -10,7 +10,7 @@ export { default as iosGemfile } from "./gemfile";
 /**
  * Represents the Info.plist file transformers.
  */
-// export { default as infoPlist } from "./info-plist";
+export { default as infoPlist } from "./info-plist";
 
 /**
  * Represents the NativConstants.m file transformers.
