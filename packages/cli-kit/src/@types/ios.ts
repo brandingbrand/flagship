@@ -1,11 +1,7 @@
-import { UrlScheme } from "../universal";
-import type { InfoPlist } from "./info-plist";
+import type { InfoPlist } from "./plist";
+import type { UrlScheme } from "./universal";
 
 export type IOS = {
-  /**
-   * Application source code name
-   */
-  name: string;
   /**
    * Application Bundle ID
    */

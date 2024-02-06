@@ -38,3 +38,17 @@ export * from "./package-json";
  * @module @types/universal
  */
 export * from "./universal";
+
+/**
+ * XML types to provide types that are utilized by android platform
+ *
+ * @module @types/xml
+ */
+export * from "./xml";
+
+/**
+ * Plist types to provide types that are utilized by ios platform
+ *
+ * @module @types/plist
+ */
+export * from "./plist";

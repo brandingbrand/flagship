@@ -2,11 +2,11 @@ import fs from "fs/promises";
 import { type X2jOptions, XMLBuilder, XMLParser } from "fast-xml-parser";
 
 import type {
-  AndroidManifest,
-  Colors,
-  NetworkSecurityConfig,
-  Strings,
-  Styles,
+  AndroidManifestXML,
+  ColorsXML,
+  NetworkSecurityConfigXML,
+  StringsXML,
+  StylesXML,
 } from "@/@types";
 import { path } from "@/lib";
 
@@ -54,13 +54,13 @@ export async function withXml<T>(
 /**
  * Applies the specified `callback` function to the `Colors` object in `colors.xml` file.
  *
- * @param {(xml: ColorsType.Colors) => void} callback - The function to apply to the `Colors` object.
+ * @param {(xml: ColorsXML) => void} callback - The function to apply to the `Colors` object.
  * @returns {Promise<void>} - A promise that resolves when the operation is complete.
  */
 export async function withColors(
-  callback: (xml: Colors) => void
+  callback: (xml: ColorsXML) => void
 ): Promise<void> {
-  return withXml<Colors>(
+  return withXml<ColorsXML>(
     path.android.colors,
     {
       isArray: (tagName) => {
@@ -82,9 +82,9 @@ export async function withColors(
  * @returns {Promise} A promise which resolves when the xml has been parsed
  */
 export async function withManifest(
-  callback: (xml: AndroidManifest) => void
+  callback: (xml: AndroidManifestXML) => void
 ): Promise<any> {
-  return withXml<AndroidManifest>(
+  return withXml<AndroidManifestXML>(
     path.android.androidManifest,
     {
       isArray: (tagName) => {
@@ -122,7 +122,7 @@ export async function withManifest(
  * @param {function(xml: NetworkSecurityConfigType.NetworkSecurityConfig): void} callback - The callback function to invoke with the XML object.
  */
 export async function withNetworkSecurityConfig(
-  callback: (xml: NetworkSecurityConfig) => void
+  callback: (xml: NetworkSecurityConfigXML) => void
 ) {
   return withXml(
     path.android.networkSecurityConfig,
@@ -146,8 +146,8 @@ export async function withNetworkSecurityConfig(
  *
  * @param callback - The callback function to call with the XML object.
  */
-export async function withStrings(callback: (xml: Strings) => void) {
-  return withXml<Strings>(
+export async function withStrings(callback: (xml: StringsXML) => void) {
+  return withXml<StringsXML>(
     path.android.strings,
     {
       isArray: (tagName) => {
@@ -173,9 +173,9 @@ export async function withStrings(callback: (xml: Strings) => void) {
  * @returns {Promise<void>}
  */
 export async function withStyles(
-  callback: (xml: Styles) => void
+  callback: (xml: StylesXML) => void
 ): Promise<void> {
-  return withXml<Styles>(
+  return withXml<StylesXML>(
     path.android.styles,
     {
       isArray: (tagName) => {

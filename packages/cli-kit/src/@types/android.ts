@@ -1,13 +1,8 @@
-import type { Manifest } from "./android-manifest";
-import type { NetworkSecurityConfigElements } from "./network-security";
-import type { StringsElements } from "./strings";
-import type { Styles } from "./styles";
-
 export interface Android {
   /**
-   * Application source code name
+   * App package name
    */
-  name: string;
+  packageName: string;
   /**
    * Android app display name
    */
@@ -19,23 +14,7 @@ export interface Android {
   /**
    * AndroidManifest.xml configuration
    */
-  manifest?: Manifest;
-  /**
-   * Android network_security_config.xml configuration
-   */
-  security?: NetworkSecurityConfigElements;
-  /**
-   * Android styles.xml configuration
-   */
-  styles?: Styles;
-  /**
-   * Android strings.xml configuration
-   */
-  strings?: StringsElements;
-  /**
-   * App package name
-   */
-  packageName: string;
+  manifest?: any;
   /**
    * signing config
    */
@@ -48,6 +27,27 @@ export interface Android {
    * Gemfile dependencies
    */
   gemfile?: string[];
+  /**
+   * Android colors.xml configuration
+   *
+   * @example {"opaque_red": "#f00"}
+   */
+  colors?: Colors;
+  /**
+   * Android style configuration
+   *
+   * @example style: "light"
+   * @default "system"
+   */
+  style?: "light" | "dark" | "system";
+  /**
+   * Android strings.xml configuraion
+   *
+   * @example {"string": {"string_array_name": "text_string"}}
+   * @example {"stringArray": {"planets_array": ["Mercury", "Venus", "Earth", "Mars"]}}
+   * @example {"plurals": {"plural_name": [{"quantity": "zero", "value": "text_string"}]}}
+   */
+  strings?: Strings;
 }
 
 export interface AndroidVersion {
@@ -163,3 +163,31 @@ export interface Gradle {
    */
   properties?: PropertiesGradle;
 }
+
+/**
+ * Represents a collection of color values.
+ */
+export type Colors = {
+  [colorName: string]: string;
+};
+
+/**
+ * Represents a collection of string resources including regular strings, string arrays, and plurals.
+ */
+export type Strings = {
+  /** Regular string resources. */
+  string?: { [stringName: string]: string };
+
+  /** String array resources. */
+  stringArray?: { [stringArrayName: string]: string[] };
+
+  /** Plural resources with different quantities. */
+  plurals?: {
+    [pluralsName: string]: Array<{
+      /** Quantity of the plural resource. */
+      quantity: "zero" | "one" | "two" | "few" | "many" | "other";
+      /** Value of the plural resource. */
+      value: string;
+    }>;
+  };
+};
