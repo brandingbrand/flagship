@@ -16,7 +16,8 @@
   "dependencies": {
     "@brandingbrand/code-cli-kit": "*",
     "chalk": "5.3.0",
-    "commander": "11.1.0"
+    "commander": "11.1.0",
+    "merge-anything": "5.1.7"
   },
   "devDependencies": {
     "@brandingbrand/code-jest-config": "*",

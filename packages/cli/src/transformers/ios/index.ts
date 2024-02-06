@@ -1,6 +1,28 @@
-export * from "./env-switcher-m";
-export * from "./gemfile";
-export * from "./info-plist";
-export * from "./native-constants-m";
-export * from "./podfile";
-export * from "./project-pbxproj";
+/**
+ * Represents the EnvSwitcher.m file transformers.
+ */
+export { default as iosEnvSwitcher } from "./env-switcher-m";
+/**
+ * Represents the Gemfile transformers.
+ */
+export { default as iosGemfile } from "./gemfile";
+
+/**
+ * Represents the Info.plist file transformers.
+ */
+// export { default as infoPlist } from "./info-plist";
+
+/**
+ * Represents the NativConstants.m file transformers.
+ */
+export { default as iosNativeConstants } from "./native-constants-m";
+
+/**
+ * Represents the Podfile transformers.
+ */
+export { default as podfile } from "./podfile";
+
+/**
+ * Represents the project.pbxproj file transformers.
+ */
+// export { default as pbxproj } from "./project-pbxproj";
