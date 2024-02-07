@@ -5,11 +5,11 @@
  */
 
 /**
- * Ctx module for context containers
+ * Config module for config containers
  *
- * @module lib/ctx
+ * @module lib/config
  */
-export * from "./ctx";
+export * from "./config";
 
 /**
  * Guards module for internal defined type guards

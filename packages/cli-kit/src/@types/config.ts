@@ -33,6 +33,8 @@ export type PluginConfig<T> = {
  */
 export type CodeConfig = {
   /** The path to the environment file. */
+  buildPath: string;
+  /** The path to the environment file. */
   envPath: string;
   /** The path to the plugin file. */
   pluginPath: string;

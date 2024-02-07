@@ -6,10 +6,8 @@ import type {
 
 /**
  * Configuration object containing various settings.
- *
- * @type {Context}
  */
-export const ctx = {
+export const config = {
   /**
    * @property {Object} code - Configuration object for fscode.
    */
