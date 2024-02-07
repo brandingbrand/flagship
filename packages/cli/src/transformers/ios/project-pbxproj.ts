@@ -17,7 +17,7 @@ import { Transforms, defineTransformer } from "@/lib";
  * @property {string} file - The name of the file to be transformed ("project.pbxproj").
  * @property {Array<(content: string, XcodeProject: BuildConfig) => void>} transforms - An array of transformer functions.
  * @property {Function} transform - The main transform function that applies all specified transformations.
- * @returns {Promise<string>} The updated content of the "project.pbxproj" file.
+ * @returns {Promise<void>} The updated content of the "project.pbxproj" file.
  */
 export default defineTransformer<Transforms<XcodeProject, void>>({
   /**
@@ -119,7 +119,6 @@ export default defineTransformer<Transforms<XcodeProject, void>>({
 
     /**
      * Transformer for updating the frameworks in "project.pbxproj".
-     * The default value is 1 - iPhone.
      * @param {XcodeProject} project - The content of the file.
      * @returns {void} - The updated content.
      */
