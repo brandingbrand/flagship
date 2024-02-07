@@ -1,5 +1,5 @@
 /**
- * @jest-environment-options {"requireTemplate": true}
+ * @jest-environment-options {"requireTemplate": true, "fixtures": "project-pbxproj_fixtures"}
  */
 
 /// <reference types="@brandingbrand/code-jest-config" />
@@ -75,6 +75,45 @@ describe("ios project.pbxproj transformers", () => {
     const content = await fs.readFile(path.ios.projectPbxProj, "utf-8");
 
     expect(content).toContain('TARGETED_DEVICE_FAMILY = "1,2"');
+  });
+
+  it("should update project.pbxproj with SpriteKit.framework", async () => {
+    const config = {
+      ...__flagship_code_build_config,
+    } as BuildConfig;
+
+    config.ios.frameworks = [
+      {
+        framework: "SpriteKit.framework",
+      },
+    ];
+
+    await transformer.transform(config, {} as any);
+    const content = await fs.readFile(path.ios.projectPbxProj, "utf-8");
+
+    expect(content).toContain(
+      '/* SpriteKit.framework */ = {isa = PBXFileReference; name = "SpriteKit.framework"; path = "System/Library/Frameworks/SpriteKit.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };'
+    );
+  });
+
+  it("should update project.pbxproj with SpriteKit.framework", async () => {
+    const config = {
+      ...__flagship_code_build_config,
+    } as BuildConfig;
+
+    config.ios.frameworks = [
+      {
+        path: "./",
+        framework: "BrandingBrand.framework",
+      },
+    ];
+
+    await transformer.transform(config, {} as any);
+    const content = await fs.readFile(path.ios.projectPbxProj, "utf-8");
+
+    expect(content).toContain(
+      `/* BrandingBrand.framework */ = {isa = PBXFileReference; name = "BrandingBrand.framework"; path = "${path.project.resolve("./")}/BrandingBrand.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };`
+    );
   });
 
   it("should update project.pbxproj with product bundle identifier", async () => {

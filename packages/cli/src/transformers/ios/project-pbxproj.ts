@@ -1,8 +1,9 @@
-/// <reference types="../../../../cli-kit/src/@types/xcode.d.ts"/>
+/// <reference types="@brandingbrand/code-cli-kit/types"/>
 
 import {
   type BuildConfig,
   type PrebuildOptions,
+  path,
   withPbxproj,
 } from "@brandingbrand/code-cli-kit";
 import type { XcodeProject, PBXFile } from "xcode";
@@ -39,34 +40,26 @@ export default defineTransformer<Transforms<XcodeProject, void>>({
      * @returns {void} - The updated content.
      */
     (project: XcodeProject): void => {
-      const target = project.getTarget("com.apple.product-type.application");
+      const targetKey = project.findTargetKey("app");
 
-      if (target?.target.name !== "app") {
-        throw Error(
-          `[PbxprojTransformerError]: cannot find target "app", found ${target?.target.name}`
-        );
+      if (!targetKey) {
+        throw Error(`[PbxprojTransformerError]: cannot find target "app" uuid`);
       }
 
-      const opt = { target: target.uuid };
+      const opt = { target: targetKey };
 
-      // No available interface getObject similar to getTarget and the same
-      // approach taken by getTarget will not work to get the app group.
-      // Only getPBXGroupByKey where the key is the uuid we are attempting to retrieve.
-      // https://github.com/apache/cordova-node-xcode/blob/e594cd453e8f26d8916e4be7bdfb309b8e820e2f/lib/pbxProject.js#L1808
-      const group = Object.entries(project.hash.project.objects.PBXGroup).find(
-        ([, value]) => value.name === "app"
-      )?.[0];
+      const groupKey = project.findPBXGroupKey({ name: "app" });
 
-      if (!group) {
+      if (!groupKey) {
         throw Error(`[PbxprojTransformerError]: cannot find group "app" uuid`);
       }
 
       // These files exist as extras and need to be added to pbxproj file as
       // source files or header files
-      project.addSourceFile("app/app.swift", opt, group);
-      project.addSourceFile("app/EnvSwitcher.m", opt, group);
-      project.addSourceFile("app/NativeConstants.m", opt, group);
-      project.addHeaderFile("app/app-Bridging-Header.h", opt, group);
+      project.addSourceFile("app/app.swift", opt, groupKey);
+      project.addSourceFile("app/EnvSwitcher.m", opt, groupKey);
+      project.addSourceFile("app/NativeConstants.m", opt, groupKey);
+      project.addHeaderFile("app/app-Bridging-Header.h", opt, groupKey);
 
       // *.entitlements file can be treated same as a header file with
       // respect to "xcode" module, force lastKnownFileType and defaultEncoding
@@ -79,7 +72,7 @@ export default defineTransformer<Transforms<XcodeProject, void>>({
           lastKnownFileType: "text.plist.entitlements",
           defaultEncoding: 4,
         },
-        group
+        groupKey
       ) as PBXFile;
 
       // Required build setting when utilizing bridging header
@@ -122,6 +115,37 @@ export default defineTransformer<Transforms<XcodeProject, void>>({
         "TARGETED_DEVICE_FAMILY",
         `"${targetedDevices}"`
       );
+    },
+
+    /**
+     * Transformer for updating the frameworks in "project.pbxproj".
+     * The default value is 1 - iPhone.
+     * @param {XcodeProject} project - The content of the file.
+     * @returns {void} - The updated content.
+     */
+    (project: XcodeProject, config: BuildConfig): void => {
+      if (!config.ios.frameworks) return;
+
+      const targetKey = project.findTargetKey("app");
+
+      if (!targetKey) {
+        throw Error(`[PbxprojTransformerError]: cannot find target "app" uuid`);
+      }
+
+      config.ios.frameworks.forEach((it) => {
+        if (it.path) {
+          const fpath = path.project.resolve(it.path, it.framework);
+
+          return project.addFramework(fpath, {
+            customFramework: true,
+            target: targetKey,
+          });
+        }
+
+        return project.addFramework(it.framework, {
+          target: targetKey,
+        });
+      });
     },
 
     /**
@@ -168,7 +192,7 @@ export default defineTransformer<Transforms<XcodeProject, void>>({
    * @param {BuildConfig} config - The build configuration.
    * @returns {Promise<void>} - The updated content of the "project.pbxproj" file.
    */
-  transform: async function (
+  transform: function (
     config: BuildConfig,
     options: PrebuildOptions
   ): Promise<void> {

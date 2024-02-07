@@ -1,4 +1,4 @@
-/// <reference types="../src/@types/xcode.d.ts" />
+/// <reference types="@brandingbrand/code-cli-kit/types" />
 
 import fs from "fs/promises";
 import xcode from "xcode";
