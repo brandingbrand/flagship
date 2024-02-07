@@ -26,4 +26,9 @@ export { default as podfile } from "./podfile";
 /**
  * Represents the project.pbxproj file transformers.
  */
-// export { default as pbxproj } from "./project-pbxproj";
+export { default as pbxproj } from "./project-pbxproj";
+
+/**
+ * Represents the app.entitlements file transformers.
+ */
+export { default as entitlements } from "./app-entitlements";

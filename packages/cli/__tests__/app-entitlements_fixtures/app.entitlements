@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- App Sandbox -->
+    <key>com.apple.security.app-sandbox</key>
+    <true/>
+
+    <!-- Keychain Access Groups -->
+    <!-- Define here if your app needs to share data with other apps from the same developer -->
+    <!--<key>keychain-access-groups</key>
+    <array>
+        <string>$(AppIdentifierPrefix)com.example.app1</string>
+        <string>$(AppIdentifierPrefix)com.example.app2</string>
+    </array>-->
+
+    <!-- iCloud -->
+    <!-- Enable if your app uses iCloud services -->
+    <!--<key>com.apple.developer.ubiquity-container-identifiers</key>
+    <array>
+        <string>$(TeamIdentifierPrefix)$(CFBundleIdentifier)</string>
+    </array>-->
+
+    <!-- Push Notifications -->
+    <!-- Enable if your app uses push notifications -->
+    <!--<key>aps-environment</key>
+    <string>development</string>-->
+
+    <!-- Background Modes -->
+    <!-- Enable if your app requires background execution -->
+    <!--<key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+        <string>remote-notification</string>
+        <string>location</string>
+    </array>-->
+
+    <!-- Associated Domains -->
+    <!-- Enable if your app uses Universal Links -->
+    <!--<key>com.apple.developer.associated-domains</key>
+    <array>
+        <string>applinks:example.com</string>
+    </array>-->
+</dict>
+</plist>

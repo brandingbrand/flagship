@@ -1,4 +1,4 @@
-/// <reference types="../@types/globals.d.ts" />
+/// <reference types="../index.d.ts" />
 
 /**
  * Conditionally sets the current working directory to a specified fixture path for Jest tests.

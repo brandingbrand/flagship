@@ -19,7 +19,7 @@ import { path } from "@/lib";
  * ```
  */
 export async function withPbxproj(
-  callback: (pbxproj: XcodeProject) => Promise<void>
+  callback: (pbxproj: XcodeProject) => void
 ): Promise<void> {
   /**
    * Creates an Xcode project instance by parsing the content of the project file.
@@ -35,7 +35,7 @@ export async function withPbxproj(
    * @param {XcodeProject} project - The Xcode project instance.
    * @returns {Promise<void>} A Promise that resolves once the callback operation is complete.
    */
-  await callback(project);
+  callback(project);
 
   /**
    * Writes the updated Xcode project back to the project file.

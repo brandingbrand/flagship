@@ -1,4 +1,4 @@
-/// <reference types="../src/@types/ios/xcode.d.ts" />
+/// <reference types="../src/@types/xcode.d.ts" />
 
 import fs from "fs/promises";
 import xcode from "xcode";

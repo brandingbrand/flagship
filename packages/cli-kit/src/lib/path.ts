@@ -88,6 +88,13 @@ export default {
     envSwitcher: resolvePathFromProject("ios", "app", "EnvSwitcher.m"),
 
     /**
+     * Retrieves the absolute path to the iOS EnvSwitcher.m file.
+     *
+     * @returns {string} The absolute path to "ios/app/EnvSwitcher.m".
+     */
+    entitlements: resolvePathFromProject("ios", "app", "app.entitlements"),
+
+    /**
      * Retrieves the absolute path to the iOS NativeConstants.m file.
      *
      * @returns {string} The absolute path to "ios/app/NativeConstants.m".

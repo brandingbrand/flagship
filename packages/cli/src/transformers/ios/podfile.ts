@@ -42,7 +42,7 @@ export default defineTransformer<Transforms<string>>({
 
       return string.replace(
         content,
-        /(platform\s+:ios.*\n)/m,
+        /(^platform\s+:ios.*\n)/m,
         `$1${config.ios.podfile.config.map((it) => it).join("\n")}`
       );
     },
@@ -58,8 +58,24 @@ export default defineTransformer<Transforms<string>>({
 
       return string.replace(
         content,
-        /(target\s*'app'\s*do[\n\s]*)/m,
+        /(^target\s*'app'\s*do[\n\s]*)/m,
         `$1${config.ios.podfile.pods.map((it) => it).join("\n  ")}`
+      );
+    },
+
+    /**
+     * Transformer for updating the CocoaPods minimum iOS version  value in "Podfile".
+     * @param {string} content - The content of the file.
+     * @param {BuildConfig} config - The build configuration.
+     * @returns {string} - The updated content.
+     */
+    (content: string, config: BuildConfig): string => {
+      if (!config.ios.deploymentTarget) return content;
+
+      return string.replace(
+        content,
+        /(^platform\s+:ios,\s+).*/m,
+        `$1'${config.ios.deploymentTarget}'`
       );
     },
   ],
