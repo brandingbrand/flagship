@@ -54,6 +54,8 @@ export type EnvConfig<T = unknown> = T;
 export type PrebuildOptions = {
   /** The build version. */
   build: string;
+  /** The command */
+  command: string;
   /** The environment version. */
   env: string;
   /** Indicates whether it's a release build. */

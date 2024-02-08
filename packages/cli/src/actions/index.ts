@@ -14,9 +14,9 @@ export { default as clean } from "./clean";
 /**
  * Action to generate context of configurations
  *
- * @module actions/ctx
+ * @module actions/config
  */
-export { default as ctx } from "./ctx";
+export { default as config } from "./config";
 
 /**
  * Action to typecheck envs and write envs to fsapp
