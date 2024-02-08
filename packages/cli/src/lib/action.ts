@@ -1,16 +1,35 @@
 import mitt from "mitt";
 import { isWarning } from "./errors";
 
-// Array to store summary items
-export const logs: {
+/**
+ * Array to store summary items for actions.
+ */
+export const actions: {
+  /**
+   * The name of the action.
+   */
   name: string;
+  /**
+   * The time taken for the action to complete.
+   */
   time: string;
+  /**
+   * Indicates whether the action was successful.
+   */
   success: boolean;
+  /**
+   * Indicates whether an error occurred during the action.
+   */
   error: boolean;
+  /**
+   * Indicates whether a warning occurred during the action.
+   */
   warning: boolean;
 }[] = [];
 
-// Event emitter
+/**
+ * Event emitter for broadcasting actions.
+ */
 export const emitter = mitt();
 
 /**
@@ -20,7 +39,7 @@ export const emitter = mitt();
  * @param {(...args: TArgs) => Promise<TResult>} fn - The function to wrap.
  * @param {string} name - The name of the action.
  */
-export function withLog<TResult, TArgs extends unknown[]>(
+export function withAction<TResult, TArgs extends unknown[]>(
   fn: (...args: TArgs) => Promise<TResult>,
   name: string
 ): (...args: TArgs) => Promise<void> {
@@ -34,7 +53,7 @@ export function withLog<TResult, TArgs extends unknown[]>(
       emitter.emit("action", { action: name, actionType: "success" });
 
       // Push log entry for success
-      logs.push({
+      actions.push({
         name,
         time: `${((performance.now() - start) / 1000).toFixed(5)} s`,
         success: true,
@@ -51,7 +70,7 @@ export function withLog<TResult, TArgs extends unknown[]>(
       });
 
       // Push log entry for error or warning
-      logs.push({
+      actions.push({
         name,
         time: `${((performance.now() - start) / 1000).toFixed(5)} s`,
         success: false,

@@ -26,11 +26,11 @@ export * from "./guards";
 export * from "./errors";
 
 /**
- * Log module for generating summary
+ * Action module for executing and reporting actions
  *
  * @module lib/log
  */
-export * from "./log";
+export * from "./action";
 
 /**
  * Log module for console utilities

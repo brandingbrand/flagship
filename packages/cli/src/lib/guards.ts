@@ -1,6 +1,6 @@
 import type { BuildConfig, PrebuildOptions } from "@brandingbrand/code-cli-kit";
 
-import { withLog } from "./log";
+import { withAction } from "./action";
 
 /**
  * Defines an action and wraps it with logging functionality using the "@brandingbrand/code-cli-kit".
@@ -15,8 +15,11 @@ import { withLog } from "./log";
  * It adds logging capabilities to the provided action, allowing for better visibility into
  * the execution of asynchronous tasks.
  */
-export function defineAction(action: () => Promise<void>, name: string) {
-  return withLog(action, name);
+export function defineAction(
+  action: () => Promise<void | string>,
+  name: string
+) {
+  return withAction(action, name);
 }
 
 type Transformer<T> = {

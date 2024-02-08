@@ -1,4 +1,4 @@
-import { withLog, logs } from "../src/lib/log";
+import { withAction, actions } from "../src/lib/action";
 
 const mockPerformanceNow = jest.fn();
 (global as any).performance = { now: mockPerformanceNow };
@@ -7,9 +7,9 @@ jest.mock("./errors", () => ({
   isWarning: jest.fn(),
 }));
 
-describe("withLog function", () => {
+describe("withAction function", () => {
   beforeEach(() => {
-    logs.length = 0;
+    actions.length = 0;
   });
 
   it("should log a successful execution", async () => {
@@ -17,8 +17,8 @@ describe("withLog function", () => {
     (mockPerformanceNow as jest.Mock)
       .mockReturnValueOnce(0)
       .mockReturnValueOnce(100);
-    await withLog(mockFn, "Test Function")();
-    expect(logs).toEqual([
+    await withAction(mockFn, "Test Function")();
+    expect(actions).toEqual([
       expect.objectContaining({
         name: "Test Function",
         success: true,
@@ -36,8 +36,8 @@ describe("withLog function", () => {
       .mockReturnValueOnce(100);
     (require("./errors").isWarning as jest.Mock).mockReturnValueOnce(false);
 
-    await withLog(mockFn, "Test Function")();
-    expect(logs).toEqual([
+    await withAction(mockFn, "Test Function")();
+    expect(actions).toEqual([
       expect.objectContaining({
         name: "Test Function",
         success: false,
@@ -65,8 +65,8 @@ describe("withLog function", () => {
       .mockReturnValueOnce(100);
     (require("./errors").isWarning as jest.Mock).mockReturnValueOnce(true);
 
-    await withLog(mockFn, "Test Function")();
-    expect(logs).toEqual([
+    await withAction(mockFn, "Test Function")();
+    expect(actions).toEqual([
       expect.objectContaining({
         name: "Test Function",
         success: false,
