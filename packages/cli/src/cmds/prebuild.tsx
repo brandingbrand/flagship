@@ -1,15 +1,20 @@
+import { render } from "ink";
 import { Option, program } from "commander";
 import type { PrebuildOptions } from "@brandingbrand/code-cli-kit";
-import * as actions from "@/actions";
+
 import { config } from "@/lib";
-import { Box, Spacer, Text, render } from "ink";
-import { Action } from "@/components/Action";
-import { Reporter } from "@/components/Reporter";
+import * as actions from "@/actions";
+import { Reporter } from "@/components";
 
 /**
  * Defines a command for the "prebuild" operation using the "commander" library.
  * This command facilitates ephemeral native code generation for a specific build,
  * environment, and platform.
+ *
+ * @example
+ * ```bash
+ * yarn flagship-code prebuild --build internal --env staging
+ * ```
  *
  * @remarks
  * This command is part of a larger program defined using the "commander" library.
