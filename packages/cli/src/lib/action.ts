@@ -47,10 +47,13 @@ export function withAction<TResult, TArgs extends unknown[]>(
     const start = performance.now();
 
     try {
-      await fn(...args);
+      const ctx = await fn(...args);
 
       // Emit success action
-      emitter.emit("action", { action: name, actionType: "success" });
+      emitter.emit("action", {
+        action: name,
+        actionType: { type: "success", ctx },
+      });
 
       // Push log entry for success
       actions.push({

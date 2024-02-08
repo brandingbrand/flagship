@@ -1,4 +1,4 @@
-import { Text } from "ink";
+import { Box, Text } from "ink";
 import Spinner from "ink-spinner";
 import { useState, useEffect, useMemo } from "react";
 
@@ -17,7 +17,10 @@ type ActionProps = {
 /**
  * Type representing possible action types.
  */
-type ActionType = "running" | "success" | "error" | "warning";
+type ActionType = {
+  type: "running" | "success" | "error" | "warning";
+  ctx?: string;
+};
 
 /**
  * Action component displays an action with its status and name.
@@ -28,7 +31,7 @@ export function Action({ name }: ActionProps): JSX.Element {
   /**
    * State to manage the current action type.
    */
-  const [action, setAction] = useState<ActionType>("running");
+  const [action, setAction] = useState<ActionType>({ type: "running" });
 
   /**
    * Event handler function to update action state.
@@ -51,36 +54,60 @@ export function Action({ name }: ActionProps): JSX.Element {
   }, []);
 
   /**
-   * Memoized color value based on the action type.
+   * Memoized color, title, and icon value based on the action type.
    */
-  const color = useMemo(() => {
-    if (action === "running") {
-      return "#00FFFF"; // Cyan
+  const data = useMemo(() => {
+    if (action.type === "running") {
+      return {
+        color: "#00FFFF",
+        title: "",
+        icon: <Spinner type="dots" />,
+      };
     }
 
-    if (action === "success") {
-      return "green";
+    if (action.type === "success") {
+      return { color: "green", title: "info", icon: "✅" };
     }
 
-    if (action === "warning") {
-      return "yellow";
+    if (action.type === "warning") {
+      return {
+        color: "yellow",
+        title: "warnings",
+        icon: "⚠️",
+      };
     }
 
-    if (action === "error") {
-      return "red";
+    if (action.type === "error") {
+      return {
+        color: "red",
+        title: "errors",
+        icon: "🛑",
+      };
     }
 
-    return "white";
-  }, [action]);
+    return {
+      color: "white",
+      title: "",
+      icon: "",
+    };
+  }, [action.type]);
 
   return (
-    <Text color={color}>
-      {action === "running" && <Spinner type="dots" />}
-      {action === "error" && "🛑"}
-      {action === "success" && "✅"}
-      {action === "warning" && "⚠️"}
-      {"  "}
-      {name}
-    </Text>
+    <>
+      <Text color={data.color}>
+        {data.icon}
+        {"  "}
+        {name}
+      </Text>
+      {action.ctx && (
+        <Box flexDirection="column" marginY={1} marginLeft={4} width={50}>
+          <Text underline></Text>
+          <Text color={data.color} underline>
+            {data.title}
+          </Text>
+          <Text color={data.color}>{action.ctx}</Text>
+        </Box>
+      )}
+    </>
   );
 }
