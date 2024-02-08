@@ -37,7 +37,14 @@ import { config, defineAction, logger } from "@/lib";
  */
 export default defineAction(async () => {
   // Log cli details
-  console.log();
+  console.log(`
+███████╗██╗      █████╗  ██████╗ ███████╗██╗  ██╗██╗██████╗ 
+██╔════╝██║     ██╔══██╗██╔════╝ ██╔════╝██║  ██║██║██╔══██╗
+█████╗  ██║     ███████║██║  ███╗███████╗███████║██║██████╔╝
+██╔══╝  ██║     ██╔══██║██║   ██║╚════██║██╔══██║██║██╔═══╝ 
+██║     ███████╗██║  ██║╚██████╔╝███████║██║  ██║██║██║     
+╚═╝     ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝╚═╝     
+`);
   logger.info(`Using ${pkg.name} v${pkg.version}`);
   logger.info(`Running on platform: ${os.platform}`);
   logger.info(

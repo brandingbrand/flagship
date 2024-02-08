@@ -33,13 +33,6 @@ export { default as env } from "./env";
 export { default as info } from "./info";
 
 /**
- * Action to redirect stdout and third party libs logs
- *
- * @module actions/log
- */
-export { default as log } from "./log";
-
-/**
  * Action to require and run plugins
  *
  * @module actions/plugins

@@ -25,7 +25,7 @@ export default {
     if (this.isPaused) return;
 
     console.log();
-    console.warn("🚸 ", ...message);
+    console.warn("⚠️ ", ...message);
   },
 
   /**
