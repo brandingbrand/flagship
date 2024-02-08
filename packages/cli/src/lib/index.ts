@@ -31,3 +31,10 @@ export * from "./errors";
  * @module lib/log
  */
 export * from "./log";
+
+/**
+ * Log module for console utilities
+ *
+ * @module lib/logger
+ */
+export { default as logger } from "./logger";

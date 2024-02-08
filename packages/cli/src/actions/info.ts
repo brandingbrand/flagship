@@ -1,5 +1,5 @@
 /**
- * Imports the 'os' module from Node.js.
+ * Imports the 'os' module from Node.js for detecting runtime platform.
  */
 import os from "os";
 
@@ -26,7 +26,7 @@ import pkg from "../../package.json";
 /**
  * Imports the 'config', 'defineAction', 'logInfo', and 'logWarn' functions from the '@/lib' module.
  */
-import { config, defineAction, logInfo, logWarn } from "@/lib";
+import { config, defineAction, logger } from "@/lib";
 
 /**
  * Executes the default action, providing detailed information and performing necessary checks.
@@ -36,18 +36,24 @@ import { config, defineAction, logInfo, logWarn } from "@/lib";
  * @returns Promise<void>
  */
 export default defineAction(async () => {
-  await logInfo(`\nUsing ${pkg.name} v${pkg.version}`);
-  await logInfo(`Running command: ${config.options.command}`);
-  await logInfo(`Running on ${os.platform}`);
+  // Log cli details
+  console.log();
+  logger.info(`Using ${pkg.name} v${pkg.version}`);
+  logger.info(`Running on platform: ${os.platform}`);
+  logger.info(
+    `Using options: \n${JSON.stringify(config.options, null, 5).replace(/({|})/g, "   $1")}`
+  );
 
   // Check if the script is running on Windows, and throw an error if it is
   if (isWindows) {
+    logger.error(`${pkg.name} is unable to run on a windows machine.`);
+
     throw Error("[InfoActionError]: unable to run on windows machine");
   }
 
   // Check if the script is running in a CI environment, and log the CI server name if it is
   if (ci.isCI) {
-    await logInfo(`Running on ${ci.name} Continuous Integration server`);
+    logger.info(`Continuous Integration server: ${ci.name}`);
   }
 
   // Check for package updates
@@ -58,8 +64,15 @@ export default defineAction(async () => {
 
   // Warn for new version available
   if (update) {
-    await logWarn(
-      `\nNew version available ${pkg.name} v${pkg.version} -> ${update.latest}\n`
+    logger.warn(
+      `A new version of ${pkg.name} is available: v${pkg.version} -> ${update.latest}`
     );
+  }
+
+  logger.start("Generating native code...");
+
+  // Pause logs when not in CI in favor of react-ink
+  if (!ci.isCI || !config.options.verbose) {
+    logger.pause();
   }
 }, "info");

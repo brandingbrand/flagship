@@ -33,6 +33,7 @@ describe("config object", () => {
       release: false,
       verbose: false,
       platform: "ios",
+      command: "prebuild",
     };
 
     config.options = optionsConfig;
