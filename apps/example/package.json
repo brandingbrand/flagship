@@ -5,6 +5,8 @@
   "license": "MIT",
   "devDependencies": {
     "@brandingbrand/code-cli": "*",
-    "@brandingbrand/code-cli-kit": "*"
+    "@brandingbrand/code-cli-kit": "*",
+    "@repo/typescript-config": "*",
+    "typescript": "^5.3.3"
   }
 }

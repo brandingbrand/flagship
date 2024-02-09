@@ -100,7 +100,7 @@ export function Action({ name }: ActionProps): JSX.Element {
         {name}
       </Text>
       {action.ctx && (
-        <Box flexDirection="column" marginY={1} marginLeft={4} width={50}>
+        <Box flexDirection="column" marginY={1} marginLeft={4} width={100}>
           <Text color={data.color} underline>
             {data.title}
           </Text>

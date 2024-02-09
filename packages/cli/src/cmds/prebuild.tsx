@@ -47,7 +47,7 @@ program
     /**
      * Render the Reporter component to display progress.
      */
-    render(<Reporter />);
+    const { unmount } = render(<Reporter />);
 
     /**
      * Loop through predefined actions and execute them sequentially.
@@ -64,4 +64,9 @@ program
     ]) {
       await action();
     }
+
+    /**
+     * Unmount react ink components
+     */
+    unmount();
   });

@@ -81,6 +81,7 @@ export function isPackage(str: string): boolean {
  */
 export async function bundleRequire(packageOrFilePath: string): Promise<any> {
   // Import the 'bundle-require' esm module dynamically
+  // Due to esm and exports + types need to ignore ts for this import
   // @ts-ignore
   const { bundleRequire: _bundleRequire } = await import("bundle-require");
 

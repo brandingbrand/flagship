@@ -1,0 +1,7 @@
+{
+  "extends": "@repo/typescript-config/react-library.json",
+  "compilerOptions": {
+    "noEmit": true,
+  },
+  "exclude": ["node_modules"],
+}

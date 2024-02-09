@@ -63,13 +63,16 @@ export function withAction<TResult, TArgs extends unknown[]>(
         error: false,
         warning: false,
       });
-    } catch (error: unknown) {
+    } catch (error: any) {
       const isWarningType = isWarning(error);
 
       // Emit appropriate action based on error or warning
       emitter.emit("action", {
         action: name,
-        actionType: isWarningType ? "warning" : "error",
+        actionType: {
+          type: isWarningType ? "warning" : "error",
+          ctx: error.message,
+        },
       });
 
       // Push log entry for error or warning

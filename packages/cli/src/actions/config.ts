@@ -16,17 +16,17 @@ import { bundleRequire, config, defineAction } from "@/lib";
 export default defineAction(async () => {
   // Check if flagship-code.config.ts file exists
   if (
-    !(await fs.doesPathExist(path.project.resolve("flaghsip-code.config.ts")))
+    !(await fs.doesPathExist(path.project.resolve("flagship-code.config.ts")))
   ) {
     throw Error(
       "[ConfigActionError]: cannot find flagship-code.config.ts, be sure this exists in the root of your project."
     );
   }
 
-  // Load flagship-code.config.ts file
-  const flagshipCodeConfig = await bundleRequire(
-    path.project.resolve("flagship-code.config.ts")
-  );
+  // Load flagship-code.config.ts file with default export
+  const flagshipCodeConfig = (
+    await bundleRequire(path.project.resolve("flagship-code.config.ts"))
+  ).default;
 
   // Decode and validate flagshipCodeConfig against FlagshipCodeConfigSchema
   const decodedFlagshipCodeConfig =
@@ -45,13 +45,13 @@ export default defineAction(async () => {
   // Resolve the build path based on the configuration
   const buildPath = path.project.resolve(
     config.code.buildPath,
-    config.options.build
+    `build.${config.options.build}.ts`
   );
 
   // Check if the build path exists
   if (!(await fs.doesPathExist(buildPath))) {
     throw Error(
-      `[ConfigActionError]: cannot find build path: ${buildPath} for build ${config.options.build}`
+      `[ConfigActionError]: cannot find build path: ${buildPath} for build: ${config.options.build}`
     );
   }
 
