@@ -22,3 +22,8 @@ export * from "./parsers";
  * @Types dir serves as the entry point of the @types module
  */
 export * from "./@types";
+
+/**
+ * Schemas dir serves as the entry point of the schemas module
+ */
+export * from "./schemas";

@@ -1,5 +1,9 @@
+import * as t from "io-ts";
+
 import type { Android } from "./android";
 import type { IOS } from "./ios";
+
+import { FlagshipCodeConfigSchema } from "@/schemas";
 
 /**
  * Represents the configuration for an Android and iOS build.
@@ -28,19 +32,24 @@ export type PluginConfig<T> = {
   ) => Promise<void>;
 };
 
+// /**
+//  * Represents the configuration for code.
+//  */
+// export type CodeConfig = {
+//   /** The path to the environment file. */
+//   buildPath: string;
+//   /** The path to the environment file. */
+//   envPath: string;
+//   /** The path to the plugin file. */
+//   pluginPath: string;
+//   /** An array of plugin names. */
+//   plugins: string[];
+// };
+
 /**
- * Represents the configuration for code.
+ * Represents the runtime type of the FlagshipCodeConfig object.
  */
-export type CodeConfig = {
-  /** The path to the environment file. */
-  buildPath: string;
-  /** The path to the environment file. */
-  envPath: string;
-  /** The path to the plugin file. */
-  pluginPath: string;
-  /** An array of plugin names. */
-  plugins: string[];
-};
+export type CodeConfig = t.TypeOf<typeof FlagshipCodeConfigSchema>;
 
 /**
  * Represents the configuration for environment settings.

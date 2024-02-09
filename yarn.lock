@@ -3110,6 +3110,11 @@ foreground-child@^3.1.0:
     cross-spawn "^7.0.0"
     signal-exit "^4.0.1"
 
+fp-ts@^2.16.2:
+  version "2.16.2"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.16.2.tgz#7faa90f6fc2e8cf84c711d2c4e606afe2be9e342"
+  integrity sha512-CkqAjnIKFqvo3sCyoBTqgJvF+bHrSik584S9nhTjtBESLx26cbtVMR/T9a6ApChOcSDAaM3JydDmWDUn4EEXng==
+
 fs-constants@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs-constants/-/fs-constants-1.0.0.tgz#6be0de9be998ce16af8afc24497b9ee9b7ccd9ad"
@@ -3685,6 +3690,11 @@ inline-style-parser@0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/inline-style-parser/-/inline-style-parser-0.2.2.tgz#d498b4e6de0373458fc610ff793f6b14ebf45633"
   integrity sha512-EcKzdTHVe8wFVOGEYXiW9WmJXPjqi1T+234YpJr98RiFYKHV3cdy1+3mkTE+KHTHxFFLH51SfaGOoUdW+v7ViQ==
+
+io-ts@^2.2.21:
+  version "2.2.21"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.2.21.tgz#4ef754176f7082a1099d04c7d5c4ea53267c530a"
+  integrity sha512-zz2Z69v9ZIC3mMLYWIeoUcwWD6f+O7yP92FMVVaXEOSZH1jnVBmET/urd/uoarD1WGBY4rCj8TAyMPzsGNzMFQ==
 
 is-alphabetical@^2.0.0:
   version "2.0.1"

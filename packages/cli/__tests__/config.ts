@@ -4,7 +4,7 @@ import type {
   PrebuildOptions,
 } from "@brandingbrand/code-cli-kit";
 
-import { config, isPackage } from "../src/lib/config";
+import { bundleRequire, config, isPackage } from "../src/lib/config";
 
 describe("config object", () => {
   it("should have default values for codeConfig, optionsConfig, and buildConfig", () => {
