@@ -64,7 +64,7 @@ describe("Guard Utility Functions", () => {
         require.resolve("@brandingbrand/code-cli-kit/package.json")
       );
       const buildFunction = jest.fn(() => config);
-      defineBuild(buildFunction);
+      defineBuild<{}>(buildFunction);
 
       expect(buildFunction).toHaveBeenCalledWith(pkg);
     });

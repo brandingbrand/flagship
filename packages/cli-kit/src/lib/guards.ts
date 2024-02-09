@@ -10,6 +10,7 @@ import type {
  * Import paths module to get package.json path
  */
 import path from "./path";
+import { IntersectionType, UnknownType } from "io-ts";
 
 /**
  * Defines a configuration for code.
@@ -32,6 +33,8 @@ export function defineEnv<T>(env: EnvConfig<T>) {
   return env;
 }
 
+type InferBuild<T> = T extends undefined ? BuildConfig : BuildConfig & T;
+
 /**
  * Defines a build configuration, which can be either a BuildConfig object
  * or a function that takes a package (pkg) and returns a BuildConfig object.
@@ -40,8 +43,8 @@ export function defineEnv<T>(env: EnvConfig<T>) {
  * @returns If build is a function, returns the result of invoking it with an empty object.
  *          If build is not a function, simply returns it.
  */
-export function defineBuild<T extends BuildConfig>(
-  build: T | ((pkg: PackageJson) => T)
+export function defineBuild<T = undefined>(
+  build: InferBuild<T> | ((pkg: PackageJson) => InferBuild<T>)
 ) {
   const pkg: PackageJson = require(path.project.resolve("package.json"));
 
