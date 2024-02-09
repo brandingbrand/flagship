@@ -36,6 +36,25 @@ export default {
   },
 
   /**
+   * Checks if a path exists.
+   *
+   * @param {string} path - The path to the file to check for existence.
+   * @return {Promise<boolean>} A Promise that resolves to true if the path exists, otherwise false.
+   */
+  doesPathExist: async function (path: string): Promise<boolean> {
+    try {
+      // Attempts to access the path asynchronously
+      await fsPromises.access(path);
+
+      // If the access is successful, return true
+      return true;
+    } catch (error) {
+      // If an error occurs (e.g., file does not exist), return false
+      return false;
+    }
+  },
+
+  /**
    * Updates a file asynchronously, replacing a given string with a new one.
    *
    * @param {string} path - The path to the file to update.

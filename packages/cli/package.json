@@ -15,9 +15,11 @@
   },
   "dependencies": {
     "@brandingbrand/code-cli-kit": "*",
-    "chalk": "5.3.0",
+    "bundle-require": "^4.0.2",
+    "chalk": "^5.3.0",
     "ci-info": "^4.0.0",
     "commander": "11.1.0",
+    "esbuild": "^0.20.0",
     "ink": "^3.2.0",
     "ink-spinner": "^4.0.3",
     "merge-anything": "5.1.7",

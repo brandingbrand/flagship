@@ -58,4 +58,26 @@ describe("fs", () => {
       );
     });
   });
+
+  describe("check if path exists", () => {
+    afterEach(() => {
+      jest.resetAllMocks();
+    });
+
+    it("should throw FsWarning if the keyword does not exist in the file", async () => {
+      const path = "/some/file.txt";
+
+      jest.spyOn(fs, "access").mockResolvedValue();
+
+      await expect(fs.doesPathExist(path)).resolves.toBeTruthy();
+    });
+
+    it("should throw FsWarning if the keyword does not exist in the file", async () => {
+      const path = "/some/file.txt";
+
+      jest.spyOn(fs, "access").mockRejectedValue({});
+
+      await expect(fs.doesPathExist(path)).resolves.toBeFalsy();
+    });
+  });
 });
