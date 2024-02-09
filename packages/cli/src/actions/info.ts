@@ -72,7 +72,7 @@ export default defineAction(async () => {
   // Warn for new version available
   if (update) {
     logger.warn(
-      `A new version of ${pkg.name} is available: v${pkg.version} -> ${update.latest}`
+      `A new version of ${pkg.name} is available: v${pkg.version} -> v${update.latest}`
     );
   }
 
