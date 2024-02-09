@@ -39,3 +39,5 @@ yarn-error.log*
 
 # Astro
 .astro/
+
+!**/coderc/build

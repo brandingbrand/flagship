@@ -27,6 +27,7 @@
     "merge-anything": "5.1.7",
     "mitt": "^3.0.1",
     "react": "^17.0.0",
+    "rimraf": "^5.0.5",
     "update-check": "^1.5.4"
   },
   "devDependencies": {

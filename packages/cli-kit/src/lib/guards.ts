@@ -40,8 +40,8 @@ export function defineEnv<T>(env: EnvConfig<T>) {
  * @returns If build is a function, returns the result of invoking it with an empty object.
  *          If build is not a function, simply returns it.
  */
-export function defineBuild(
-  build: BuildConfig | ((pkg: PackageJson) => BuildConfig)
+export function defineBuild<T extends BuildConfig>(
+  build: T | ((pkg: PackageJson) => T)
 ) {
   const pkg: PackageJson = require(path.project.resolve("package.json"));
 

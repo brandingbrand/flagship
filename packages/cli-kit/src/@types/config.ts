@@ -1,17 +1,22 @@
 import * as t from "io-ts";
 
-import type { Android } from "./android";
-import type { IOS } from "./ios";
+// import type { Android } from "./android";
+// import type { IOS } from "./ios";
 
-import { FlagshipCodeConfigSchema } from "@/schemas";
+import { BuildConfigSchema, FlagshipCodeConfigSchema } from "@/schemas";
 
 /**
  * Represents the configuration for an Android and iOS build.
  */
-export type BuildConfig = {
-  android: Android;
-  ios: IOS;
-};
+// export type BuildConfig = {
+//   android: Android;
+//   ios: IOS;
+// };
+
+/**
+ * Represents the configuration for an Android and iOS build.
+ */
+export type BuildConfig = t.TypeOf<typeof BuildConfigSchema>;
 
 /**
  * Represents the configuration for a plugin.
