@@ -2,6 +2,16 @@ import * as t from "io-ts";
 
 /**
  * Defines the schema for the FlagshipCodeConfig object.
+ *
+ * @example
+ * ```
+ * {
+ *   buildPath: "./path/to/build/configs",
+ *   envPath: "./path/to/env/configs",
+ *   pluginPath: "./path/to/plugins",
+ *   plugins: ["@brandingbrand/code-plugin-app-icon"],
+ * }
+ * ```
  */
 export const FlagshipCodeConfigSchema = t.type({
   /**
