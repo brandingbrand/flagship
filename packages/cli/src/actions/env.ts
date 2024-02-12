@@ -13,19 +13,24 @@ export default defineAction(async () => {
   // Resolve the path to the project's package.json file
   const pkg = require(path.project.resolve("package.json")) as PackageJson;
 
-  // Check if the package.json file contains dependencies
-  if (pkg.dependencies) {
-    // Find the index of the '@brandingbrand/fsapp' dependency in the dependencies object
-    const index = Object.keys(pkg.dependencies).findIndex(
-      (it) => it === "@brandingbrand/fsapp"
+  // Throw warning if no dependencies object
+  if (!pkg.dependencies) {
+    throw new ActionWarning(
+      "Unable to locate dependencies object in package.json. Please note that the absence of the @brandingbrand/fsapp dependency will prevent you from leveraging the benefits of multi-tenant typed environments."
     );
+  }
 
-    // If the dependency is not found, throw a warning
-    if (index === -1) {
-      throw new ActionWarning(
-        "Unable to locate the '@brandingbrand/fsapp' dependency. Please note that the absence of this dependency will prevent you from leveraging the benefits of multi-tenant typed environments."
-      );
-    }
+  // Check if the package.json file contains dependencies
+  // Find the index of the '@brandingbrand/fsapp' dependency in the dependencies object
+  const index = Object.keys(pkg.dependencies).findIndex(
+    (it) => it === "@brandingbrand/fsapp"
+  );
+
+  // If the dependency is not found, throw a warning
+  if (index === -1) {
+    throw new ActionWarning(
+      "Unable to locate the '@brandingbrand/fsapp' dependency. Please note that the absence of this dependency will prevent you from leveraging the benefits of multi-tenant typed environments."
+    );
   }
 
   // Resolve the environment directory path based on the configuration
