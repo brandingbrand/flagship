@@ -80,13 +80,45 @@ describe("ios Info.plist transformers", () => {
     } as BuildConfig;
 
     config.ios.plist = {
-      UIStatusBarHidden: true,
+      style: "light",
     };
 
     await transformer.transform(config, {} as any);
     const content = await fs.readFile(path.ios.infoPlist, "utf-8");
 
-    expect(content).toContain(`<key>UIStatusBarHidden</key>
-    <true/>`);
+    expect(content).toContain(`<key>UIUserInterfaceStyle</key>
+    <string>Light</string>`);
+  });
+
+  it("should update Info.plist with generic value", async () => {
+    const config = {
+      ...__flagship_code_build_config,
+    } as BuildConfig;
+
+    config.ios.plist = {
+      style: "dark",
+    };
+
+    await transformer.transform(config, {} as any);
+    const content = await fs.readFile(path.ios.infoPlist, "utf-8");
+
+    expect(content).toContain(`<key>UIUserInterfaceStyle</key>
+    <string>Dark</string>`);
+  });
+
+  it("should update Info.plist with generic value", async () => {
+    const config = {
+      ...__flagship_code_build_config,
+    } as BuildConfig;
+
+    config.ios.plist = {
+      style: "system",
+    };
+
+    await transformer.transform(config, {} as any);
+    const content = await fs.readFile(path.ios.infoPlist, "utf-8");
+
+    expect(content).toContain(`<key>UIUserInterfaceStyle</key>
+    <string>Automatic</string>`);
   });
 });

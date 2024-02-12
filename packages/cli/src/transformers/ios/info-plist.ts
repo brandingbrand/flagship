@@ -66,6 +66,31 @@ export default defineTransformer<Transforms<InfoPlist>>({
     },
 
     /**
+     * Transformer for updating the style in the "Info.plist" file.
+     * @param {InfoPlist} content - The content of the file.
+     * @param {BuildConfig} config - The build configuration.
+     * @returns {InfoPlist} - The updated content.
+     */
+    (content: InfoPlist, config: BuildConfig): InfoPlist => {
+      if (!config.ios.plist?.style) return content;
+
+      function getStyle(style: "light" | "dark" | "system") {
+        switch (style) {
+          case "dark":
+            return "Dark";
+          case "light":
+            return "Light";
+          case "system":
+          default:
+            return "Automatic";
+        }
+      }
+      return mergeAndConcat<InfoPlist, InfoPlist[]>(content, {
+        UIUserInterfaceStyle: getStyle(config.ios.plist.style),
+      });
+    },
+
+    /**
      * Transformer for updating the dependencies in the "Info.plist" file.
      * @param {InfoPlist} content - The content of the file.
      * @param {BuildConfig} config - The build configuration.
