@@ -1,4 +1,4 @@
-import { Box, Text } from "ink";
+import { Text } from "ink";
 import Spinner from "ink-spinner";
 import { useState, useEffect, useMemo } from "react";
 
@@ -60,19 +60,17 @@ export function Action({ name }: ActionProps): JSX.Element {
     if (action.type === "running") {
       return {
         color: "#00FFFF",
-        title: "",
         icon: <Spinner type="dots" />,
       };
     }
 
     if (action.type === "success") {
-      return { color: "green", title: "info", icon: "✅" };
+      return { color: "green", icon: "✅" };
     }
 
     if (action.type === "warning") {
       return {
         color: "yellow",
-        title: "warnings",
         icon: "⚠️",
       };
     }
@@ -80,39 +78,21 @@ export function Action({ name }: ActionProps): JSX.Element {
     if (action.type === "error") {
       return {
         color: "red",
-        title: "errors",
         icon: "🛑",
       };
     }
 
     return {
       color: "white",
-      title: "",
       icon: "",
     };
   }, [action.type]);
 
   return (
-    <>
-      <Text color={data.color}>
-        {data.icon}
-        {"  "}
-        {name}
-      </Text>
-      {action.ctx && (
-        <Box
-          flexDirection="column"
-          marginLeft={4}
-          width={100}
-          paddingX={1}
-          borderStyle="single"
-        >
-          <Text color={data.color} underline>
-            {data.title}
-          </Text>
-          <Text color={data.color}>{action.ctx}</Text>
-        </Box>
-      )}
-    </>
+    <Text color={data.color}>
+      {data.icon}
+      {"  "}
+      {name}
+    </Text>
   );
 }

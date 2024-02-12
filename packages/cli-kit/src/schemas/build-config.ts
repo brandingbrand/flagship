@@ -138,9 +138,9 @@ const UrlSchemeSchema = t.intersection([
  * style: "system"
  */
 const StyleSchema = t.union([
-  t.literal("light"), // Light style.
-  t.literal("dark"), // Dark style.
-  t.literal("system"), // System style.
+  t.literal("light"),
+  t.literal("dark"),
+  t.literal("system"),
 ]);
 
 /**
@@ -205,7 +205,6 @@ const IOSSigningSchema = t.type({
    * Type of distrution certificate.
    */
   distCertType: t.union([
-    // Distribution certificate type.
     t.literal("iPhone Development"),
     t.literal("iPhone Distribution"),
     t.literal("Apple Development"),
@@ -216,7 +215,6 @@ const IOSSigningSchema = t.type({
    * Type of export method i.e. distribution location
    */
   exportMethod: t.union([
-    // Export method.
     t.literal("app-store"),
     t.literal("validation"),
     t.literal("ad-hoc"),
@@ -463,20 +461,20 @@ const ProjectGradleSchema = t.partial({
    *
    * @default 33
    */
-  targetSdkVersion: t.number, // Target SDK version.
+  targetSdkVersion: t.number,
 
   /**
    * Optional configuration to define the "ext" block (short for "extra properties") is often used
    * in the build.gradle file to define custom variables or properties that can be reused
    * across different parts of the build configuration.
    */
-  ext: t.array(t.string), // Array of extra configurations.
+  ext: t.array(t.string),
 
   /**
    * Optional array configuration to include external binaries or other library modules to your
    * build as dependencies.
    */
-  dependencies: t.array(t.string), // Array of dependencies.
+  dependencies: t.array(t.string),
 });
 
 /**
@@ -743,9 +741,9 @@ const StringArraySchema = t.record(t.string, t.array(t.string));
  * ```
  */
 const StringsSchema = t.partial({
-  string: t.record(t.string, t.string), // Record of string names to values.
-  stringArray: StringArraySchema, // String array information.
-  plurals: PluralsSchema, // Plurals information.
+  string: t.record(t.string, t.string),
+  stringArray: StringArraySchema,
+  plurals: PluralsSchema,
 });
 
 /**
