@@ -2,52 +2,140 @@ import * as t from "io-ts";
 
 /**
  * Represents the schema for versioning information.
+ *
+ * @example
+ * ```
+ * versioning: {
+ *   version: "1.5",
+ *   build: 3
+ * }
+ * ```
  */
 const VersioningSchema = t.intersection([
+  /**
+   * The version string.
+   * @default "1.0"
+   */
   t.type({
-    version: t.string, // The version string.
+    version: t.string,
   }),
+
+  /**
+   * Optional build number.
+   * @default 1
+   */
   t.partial({
-    build: t.number, // Optional build number.
+    build: t.number,
   }),
 ]);
 
 /**
  * Represents the schema for framework information.
+ *
+ * @example
+ * ```
+ * frameworks: {
+ *   framework: "MyFramework.framework",
+ *   path: "./path/to/framework/directory"
+ * }
+ * ```
+ *
+ * @example
+ * ```
+ * frameworks: {
+ *   framework: "Sprite.framework"
+ * }
+ * ```
  */
 const FrameworksSchema = t.array(
   t.intersection([
+    /**
+     * The name of the framework, this can be a system framework
+     * or custom framework
+     */
     t.type({
-      framework: t.string, // The name of the framework.
+      framework: t.string,
     }),
+
+    /**
+     * Path to the framework if it's a custom framework i.e. not
+     * a system framework Sprite.framework
+     */
     t.partial({
-      path: t.string, // Optional path to the framework.
+      path: t.string,
     }),
   ])
 );
 
 /**
  * Represents the schema for a Podfile.
+ *
+ * @example
+ * ```
+ * podfile: {
+ *   config: ["inhibit_all_warnings!"],
+ *   pods: ["pod 'PubNub', '~> 4.0'", "pod 'FlagshipCode', '~> 13.0'"]
+ * }
+ * ```
  */
 const PodfileSchema = t.partial({
-  config: t.array(t.string), // Array of configurations.
-  pods: t.array(t.string), // Array of pods.
+  /**
+   * Optional array of top-level configurations
+   */
+  config: t.array(t.string),
+
+  /**
+   * Optional array of pods
+   */
+  pods: t.array(t.string),
 });
 
 /**
  * Represents the schema for URL scheme information.
+ *
+ * @example
+ * ```
+ * urlScheme: {
+ *   scheme: "myapp",
+ *   host: "app"
+ * }
+ * ```
+ *
+ * @example
+ * ```
+ * urlScheme: {
+ *   scheme: "myapp",
+ * }
+ * ```
  */
 const UrlSchemeSchema = t.intersection([
+  /**
+   * URL scheme
+   */
   t.type({
-    scheme: t.string, // The URL scheme.
+    scheme: t.string,
   }),
+
+  /**
+   * Optional URL host. Most times with apps there is no
+   * need for a host.
+   */
   t.partial({
-    host: t.string, // Optional host.
+    host: t.string,
   }),
 ]);
 
 /**
  * Represents the schema for style information.
+ *
+ * @example
+ * style: "light"
+ *
+ * @example
+ * style: "dark"
+ *
+ * @example
+ * style: "system"
  */
 const StyleSchema = t.union([
   t.literal("light"), // Light style.
@@ -57,19 +145,65 @@ const StyleSchema = t.union([
 
 /**
  * Represents the schema for a property list (plist).
+ *
+ * @example
+ * plist: {
+ *   urlScheme: {
+ *     scheme: "myapp",
+ *   },
+ *   style: "light",
+ * },
  */
 const PlistSchema = t.partial({
-  urlScheme: UrlSchemeSchema, // URL scheme information.
-  style: StyleSchema, // Style information.
+  /**
+   * Optional URL Scheme information
+   */
+
+  urlScheme: UrlSchemeSchema,
+  /**
+   * Optional style configuration
+   */
+  style: StyleSchema,
 });
 
 /**
  * Represents the schema for iOS signing information.
+ * This configuration is more important for continuous integration.
+ *
+ * @example
+ * ```
+ * signing: {
+ *   appleCert: "signing/AppleWWDRCA.cer",
+ *   distCert: "signing/enterprise/enterprise.cer",
+ *   distP12: "signing/enterprise/enterprise.p12",
+ *   distCertType: "iPhone Distribution",
+ *   exportTeamId: "ABC12345",
+ *   profilesDir: "signing/enterprise",
+ *   provisioningProfileName: "In House Provisioning Profile",
+ *   exportMethod: "enterprise",
+ * }
+ * ```
  */
 const IOSSigningSchema = t.type({
-  appleCert: t.string, // Apple certificate.
-  distCert: t.string, // Distribution certificate.
-  distP12: t.string, // Distribution P12 file.
+  /**
+   * Path to Apple certificate - this can be retrieved at https://www.apple.com/certificateauthority/
+   * relative to the root of the project.
+   */
+  appleCert: t.string,
+
+  /**
+   * Path to the distribution certificate relative to the root of the project.
+   */
+  distCert: t.string,
+
+  /**
+   * Path to the distribution p12 relative to the root of the project.
+   */
+  distP12: t.string,
+
+  /**
+   * Type of distrution certificate.
+   */
   distCertType: t.union([
     // Distribution certificate type.
     t.literal("iPhone Development"),
@@ -77,6 +211,10 @@ const IOSSigningSchema = t.type({
     t.literal("Apple Development"),
     t.literal("Apple Distribution"),
   ]),
+
+  /**
+   * Type of export method i.e. distribution location
+   */
   exportMethod: t.union([
     // Export method.
     t.literal("app-store"),
@@ -88,34 +226,167 @@ const IOSSigningSchema = t.type({
     t.literal("developer-id"),
     t.literal("mac-application"),
   ]),
-  exportTeamId: t.string, // Export team ID.
-  profilesDir: t.string, // Profiles directory.
-  provisioningProfileName: t.string, // Provisioning profile name.
+
+  /**
+   * Export team identifier.
+   */
+  exportTeamId: t.string,
+
+  /**
+   * Directory of your provisioning profile(s) relative to the root of the project
+   */
+  profilesDir: t.string,
+
+  /**
+   * Provisioning profile name, not to be confused with the filename.
+   */
+  provisioningProfileName: t.string,
 });
 
 /**
  * Represents the schema for iOS configuration.
+ *
+ * @example
+ * ```
+ * ios: {
+ *   bundleId: "com.app",
+ *   displayName: "App",
+ * }
+ * ```
  */
 const IOSSchema = t.intersection([
+  /**
+   * Required attributes for the iOS configuration.
+   *
+   * @example
+   * ios: {
+   *   bundleId: "com.app",
+   *   displayName: "App",
+   * }
+   * ```
+   */
   t.type({
-    bundleId: t.string, // Bundle identifier.
-    displayName: t.string, // Display name.
+    /**
+     * Bundle identifier of your application.
+     */
+    bundleId: t.string,
+
+    /**
+     * Display name of your identifier
+     */
+    displayName: t.string,
   }),
+
+  /**
+   * Optional attributes for the iOS configuration
+   *
+   * @example
+   * ```
+   * ios: {
+   *   bundleId: "com.app",
+   *   displayName: "App",
+   *   entitlementsFilePath: "./path/to/app.entitlements",
+   *   frameworks: {
+   *     framework: "Sprite.framework",
+   *   },
+   *   deploymentTarget: "15.0",
+   *   podfile: {
+   *     config: ["inhibit_all_warnings!"],
+   *     pods: ["pod 'PubNub', '~> 4.0'", "pod 'FlagshipCode', '~> 13.0'"],
+   *   },
+   *   plist: {
+   *     urlScheme: {
+   *       scheme: "myapp"
+   *     },
+   *     style: "light",
+   *   },
+   *   signing: {
+   *     appleCert: "signing/AppleWWDRCA.cer",
+   *     distCert: "signing/enterprise/enterprise.cer",
+   *     distP12: "signing/enterprise/enterprise.p12",
+   *     distCertType: "iPhone Distribution",
+   *     exportTeamId: "ABC12345",
+   *     profilesDir: "signing/enterprise",
+   *     provisioningProfileName: "In House Provisioning Profile",
+   *     exportMethod: "enterprise",
+   *   },
+   *   targetedDevices: "1",
+   *   versioning: {
+   *     version: "1.5",
+   *     build: 3,
+   *   },
+   *   gemfile: ["gem 'sqlite3'"]
+   * }
+   * ```
+   */
   t.partial({
-    entitlementsFilePath: t.string, // Path to entitlements file.
-    frameworks: FrameworksSchema, // Frameworks information.
-    deploymentTarget: t.string, // Deployment target.
-    podfile: PodfileSchema, // Podfile information.
-    plist: PlistSchema, // Property list (plist) information.
-    signing: IOSSigningSchema, // Signing information.
+    /**
+     * Optional entitlements path relative to the root of the project.
+     */
+    entitlementsFilePath: t.string,
+
+    /**
+     * Optional frameworks.
+     *
+     * @link FrameworksSchema
+     */
+    frameworks: FrameworksSchema,
+
+    /**
+     * Optional minimum version of the iOS operating system that an app is designed to support.
+     *
+     * @default "13.4"
+     */
+    deploymentTarget: t.string,
+
+    /**
+     * Optional podfile configuration.
+     *
+     * @link PodfileSchema
+     */
+    podfile: PodfileSchema,
+
+    /**
+     * Optional Property list (plist) configuration.
+     *
+     * @link PlistSchema
+     */
+    plist: PlistSchema,
+
+    /**
+     * Optional signing configuration.
+     *
+     * @link IOSSigningSchema
+     */
+    signing: IOSSigningSchema,
+
+    /**
+     * Optional targeted devices.
+     *
+     * - iPhone: "1"
+     * - iPad: "2"
+     * - Universal: "1,2"
+     *
+     * @default "1"
+     */
     targetedDevices: t.union([
       // Targeted devices.
       t.literal("1"),
       t.literal("2"),
       t.literal("1,2"),
     ]),
-    versioning: VersioningSchema, // Versioning information.
-    gemfile: t.array(t.string), // Array of Gemfile names.
+
+    /**
+     * Optional versioning configuration.
+     *
+     * @link VersioningSchema
+     */
+    versioning: VersioningSchema,
+
+    /**
+     * Optional array of gems to add to to project.
+     */
+    gemfile: t.array(t.string),
   }),
 ]);
 
