@@ -1,5 +1,11 @@
 import fse from "fs-extra";
-import { canRunAndroid, canRunIOS, path } from "@brandingbrand/code-cli-kit";
+import {
+  fs,
+  canRunAndroid,
+  canRunIOS,
+  path,
+  globAndReplace,
+} from "@brandingbrand/code-cli-kit";
 
 import { config, defineAction } from "@/lib";
 
@@ -59,4 +65,27 @@ export default defineAction(async () => {
       return true;
     },
   });
+
+  if (canRunAndroid(config.options)) {
+    // Rename android package namespace to updated package name for both debug and main packages
+    await Promise.all(
+      ["debug", "main", "release"].map((it) =>
+        fs.renameAndCopyDirectory(
+          "com.app",
+          config.build.android.packageName,
+          path.project.resolve("android", "app", "src", it, "java")
+        )
+      )
+    );
+
+    // Replace package namespace in Java files for debug, main, and release builds
+    await globAndReplace(
+      "android/**/{debug,main,release}/**/*.java",
+      /package\s+com\.app;/,
+      `package ${config.build.android.packageName}`
+    );
+  }
+
+  // Return success message after adding native templates to the project
+  return "added native template(s) to project";
 }, "template");
