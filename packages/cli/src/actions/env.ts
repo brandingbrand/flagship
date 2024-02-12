@@ -1,6 +1,6 @@
-import { fs, path } from "@brandingbrand/code-cli-kit";
+import { PackageJson, fs, path } from "@brandingbrand/code-cli-kit";
 
-import { bundleRequire, config, defineAction } from "@/lib";
+import { ActionWarning, bundleRequire, config, defineAction } from "@/lib";
 
 /**
  * Define an action to process environment files.
@@ -10,6 +10,24 @@ import { bundleRequire, config, defineAction } from "@/lib";
  * @throws {Error} - Throws an error if the environment directory doesn't exist or if it doesn't contain any valid environment files.
  */
 export default defineAction(async () => {
+  // Resolve the path to the project's package.json file
+  const pkg = require(path.project.resolve("package.json")) as PackageJson;
+
+  // Check if the package.json file contains dependencies
+  if (pkg.dependencies) {
+    // Find the index of the '@brandingbrand/fsapp' dependency in the dependencies object
+    const index = Object.keys(pkg.dependencies).findIndex(
+      (it) => it === "@brandingbrand/fsapp"
+    );
+
+    // If the dependency is not found, throw a warning
+    if (index === -1) {
+      throw new ActionWarning(
+        "Unable to locate the '@brandingbrand/fsapp' dependency. Please note that the absence of this dependency will prevent you from leveraging the benefits of multi-tenant typed environments."
+      );
+    }
+  }
+
   // Resolve the environment directory path based on the configuration
   const envDir = path.project.resolve(config.code.envPath);
 
@@ -66,7 +84,6 @@ export default defineAction(async () => {
   });
 
   // Resolve the path of the project environment index file from @brandingbrand/fsapp
-  // If this does not exist it will throw an error
   const projectEnvIndexPath = require.resolve(
     "@brandingbrand/fsapp/src/project_env_index.js"
   );

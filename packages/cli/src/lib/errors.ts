@@ -24,3 +24,17 @@ export function isWarning(error: Error | unknown | any): boolean {
    */
   return /.*((w|W)arning).*/.test(error?.name);
 }
+
+export class ActionWarning extends Error {
+  /**
+   * Creates an instance of FsWarning.
+   *
+   * @param {string} message - The error message.
+   */
+  constructor(message: string) {
+    super(message);
+
+    this.name = "ActionWarning";
+    this.message = `[${this.name}]: ${message}`;
+  }
+}
