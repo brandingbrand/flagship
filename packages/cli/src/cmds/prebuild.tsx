@@ -60,7 +60,7 @@ program
       actions.template,
       actions.transformers,
       actions.plugins,
-      actions.cocoapods,
+      actions.packageManagers,
     ]) {
       await action();
     }

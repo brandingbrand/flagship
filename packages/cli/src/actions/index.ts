@@ -54,8 +54,8 @@ export { default as template } from "./template";
 export { default as transformers } from "./transformers";
 
 /**
- * Action to run cocoapods
+ * Action to run native package managers
  *
- * @module actions/cocoapods
+ * @module actions/package-managers
  */
-export { default as cocoapods } from "./cocoapods";
+export { default as packageManagers } from "./package-managers";
