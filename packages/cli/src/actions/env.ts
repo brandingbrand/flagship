@@ -6,7 +6,7 @@ import { ActionWarning, bundleRequire, config, defineAction } from "@/lib";
  * Define an action to process environment files.
  * @remarks
  * This action reads environment files from a specified directory, validates their names and formats, and then processes them accordingly.
- * @returns {Promise<void>} - Promise that resolves when the action completes successfully.
+ * @returns {Promise<string>} - Promise that resolves a string when the action completes successfully.
  * @throws {Error} - Throws an error if the environment directory doesn't exist or if it doesn't contain any valid environment files.
  */
 export default defineAction(async () => {
@@ -89,10 +89,14 @@ export default defineAction(async () => {
   });
 
   // Resolve the path of the project environment index file from @brandingbrand/fsapp
+  // There is a chance this could throw an error, this is fine, still even though we checked the dependencies object already
   const projectEnvIndexPath = require.resolve(
     "@brandingbrand/fsapp/src/project_env_index.js"
   );
 
   // Write the module to the project environment index file
   magicast.writeFile(mod, projectEnvIndexPath);
+
+  // Return context message for reporting
+  return `linked ${envContents.map((it) => it.name).join(", ")} to @brandingbrand/fsapp env`;
 }, "env");
