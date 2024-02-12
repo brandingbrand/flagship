@@ -19,15 +19,43 @@ export * from "./config";
 export * from "./package-json";
 
 /**
- * XML types to provide types that are utilized by android platform
- *
- * @module @types/xml
- */
-export * from "./xml";
-
-/**
  * Plist types to provide types that are utilized by ios platform
  *
- * @module @types/plist
+ * @module @types/info-plist
  */
-export * from "./plist";
+export * from "./info-plist";
+
+/**
+ * Export all types related to the Android manifest from the "android-manifest" module.
+ *
+ * @module @types/android-manifest-xml
+ */
+export * from "./android-manifest-xml";
+
+/**
+ * Export all types related to colors from the "colors" module.
+ *
+ * @module @types/colors-xml
+ */
+export * from "./colors-xml";
+
+/**
+ * Export all types related to network security configuration from the "network-security-config" module.
+ *
+ * @module @types/network-security-config-xml
+ */
+export * from "./network-security-config-xml";
+
+/**
+ * Export all types related to strings from the "strings" module.
+ *
+ * @module @types/strings-xml
+ */
+export * from "./strings-xml";
+
+/**
+ * Export all types related to styles from the "styles" module.
+ *
+ * @module @types/styles-xml
+ */
+export * from "./styles-xml";

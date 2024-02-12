@@ -3,9 +3,20 @@ import * as t from "io-ts";
 import { BuildConfigSchema, FlagshipCodeConfigSchema } from "@/schemas";
 
 /**
+ * Represents the runtime type of the FlagshipCodeConfig object.
+ */
+export type CodeConfig = t.TypeOf<typeof FlagshipCodeConfigSchema>;
+
+/**
  * Represents the configuration for an Android and iOS build.
  */
 export type BuildConfig = t.TypeOf<typeof BuildConfigSchema>;
+
+/**
+ * Represents the configuration for environment settings.
+ * @template T - The type of the environment configuration.
+ */
+export type EnvConfig<T = unknown> = T;
 
 /**
  * Represents the configuration for a plugin.
@@ -25,17 +36,6 @@ export type PluginConfig<T> = {
     plugin: T
   ) => Promise<void>;
 };
-
-/**
- * Represents the runtime type of the FlagshipCodeConfig object.
- */
-export type CodeConfig = t.TypeOf<typeof FlagshipCodeConfigSchema>;
-
-/**
- * Represents the configuration for environment settings.
- * @template T - The type of the environment configuration.
- */
-export type EnvConfig<T = unknown> = T;
 
 /**
  * Represents options for prebuilding.
