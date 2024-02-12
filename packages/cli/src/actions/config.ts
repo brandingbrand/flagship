@@ -1,4 +1,5 @@
 import {
+  BuildConfigSchema,
   FlagshipCodeConfigSchema,
   fs,
   path,
@@ -56,7 +57,21 @@ export default defineAction(async () => {
   }
 
   // Load the build configuration
-  config.build = await bundleRequire(path.project.resolve(buildPath));
+  const buildConfig = (await bundleRequire(path.project.resolve(buildPath)))
+    .default;
+
+  // Decode and validate buildConfig against BuildConfigSchema
+  const decodedBuildConfig = BuildConfigSchema.decode(buildConfig);
+
+  // Check if decoding is successful
+  if (isLeft(decodedBuildConfig)) {
+    throw new Error(
+      `[ConfigActionError]: build.${config.options.build}.ts object does not match expected types, please check for typescript errors in build.${config.options.build}.ts`
+    );
+  }
+
+  // Set the decoded configuration to the global config object
+  config.build = decodedBuildConfig.right;
 
   // Return a success message
   return `found and verified flagship-code.config.ts and build.${config.options.build}.ts`;
