@@ -82,7 +82,7 @@ export default defineAction(async () => {
     await globAndReplace(
       "android/**/{debug,main,release}/**/*.java",
       /package\s+com\.app;/,
-      `package ${config.build.android.packageName}`
+      `package ${config.build.android.packageName};`
     );
   }
 
