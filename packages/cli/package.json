@@ -24,6 +24,7 @@
     "ink": "^3.2.0",
     "ink-spinner": "^4.0.3",
     "io-ts": "^2.2.21",
+    "magicast": "^0.3.3",
     "merge-anything": "5.1.7",
     "mitt": "^3.0.1",
     "react": "^17.0.0",
