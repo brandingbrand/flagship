@@ -272,7 +272,7 @@ const IOSSchema = t.intersection([
     bundleId: t.string,
 
     /**
-     * Display name of your identifier
+     * Display name of your application.
      */
     displayName: t.string,
   }),
@@ -370,7 +370,6 @@ const IOSSchema = t.intersection([
      * @default "1"
      */
     targetedDevices: t.union([
-      // Targeted devices.
       t.literal("1"),
       t.literal("2"),
       t.literal("1,2"),
@@ -384,83 +383,310 @@ const IOSSchema = t.intersection([
     versioning: VersioningSchema,
 
     /**
-     * Optional array of gems to add to to project.
+     * Optional array of gems to add to to Gemfile.
      */
     gemfile: t.array(t.string),
   }),
 ]);
 
 /**
- * Represents the schema for App Gradle configuration.
+ * Represents the optional schema for App Gradle configuration.
+ *
+ * @example
+ * ```
+ * appGradle: {
+ *   dependencies: ["com.example.android:app-magic:12.3"],
+ * }
+ * ```
  */
 const AppGradleSchema = t.partial({
-  dependencies: t.array(t.string), // Array of dependencies.
+  /**
+   * Optional array configuration to include external binaries or other library modules to your
+   * build as dependencies.
+   */
+  dependencies: t.array(t.string),
 });
 
 /**
- * Represents the schema for Project Gradle configuration.
+ * Represents the optional schema for Project Gradle configuration.
+ *
+ * @example
+ * ```
+ * projectGradle: {
+ *   buildToolsVersion: "33.0.0",
+ *   compileSdkVersion: 33,
+ *   minSdkVersion: 21,
+ *   ndkVersion: "23.1.7779620",
+ *   repositories: ["brandingbrand()"],
+ *   targetSdkVersion: 33,
+ *   ext: ['kotlinVersion: "1.6.0"'],
+ *   dependencies: ["com.example.android:app-magic:12.3"],
+ * }
+ * ```
  */
 const ProjectGradleSchema = t.partial({
-  buildToolsVersion: t.string, // Build tools version.
-  compileSdkVersion: t.number, // Compile SDK version.
-  minSdkVersion: t.number, // Minimum SDK version.
-  ndkVersion: t.string, // NDK version.
-  repositories: t.array(t.string), // Array of repositories.
+  /**
+   * Optional Android Build Tools used by the project.
+   *
+   * @default "33.0.0"
+   */
+  buildToolsVersion: t.string,
+
+  /**
+   * Optional version of the Android SDK that the app is compiled against.
+   *
+   * @default 33
+   */
+  compileSdkVersion: t.number,
+
+  /**
+   * Optional minimum version of the Android SDK that the app supports.
+   *
+   * @default 21
+   */
+  minSdkVersion: t.number,
+
+  /**
+   * Optional version of the Android NDK (Native Development Kit) used by the project.
+   *
+   * @default "23.1.7779620"
+   */
+  ndkVersion: t.string,
+
+  /**
+   * Optional repositories from which the build system should fetch dependencies, such as libraries and plugins, during the build process.
+   */
+  repositories: t.array(t.string),
+
+  /**
+   * Optional version of the Android SDK that the app is targeting.
+   *
+   * @default 33
+   */
   targetSdkVersion: t.number, // Target SDK version.
+
+  /**
+   * Optional configuration to define the "ext" block (short for "extra properties") is often used
+   * in the build.gradle file to define custom variables or properties that can be reused
+   * across different parts of the build configuration.
+   */
   ext: t.array(t.string), // Array of extra configurations.
+
+  /**
+   * Optional array configuration to include external binaries or other library modules to your
+   * build as dependencies.
+   */
   dependencies: t.array(t.string), // Array of dependencies.
 });
 
 /**
- * Represents the schema for properties configuration.
+ * Represents the optional schema for properties configuration.
+ *
+ * @example
+ * ```
+ * properties: {
+ *   useAndroidX: true,
+ *   enableJetifier: true,
+ *   FLIPPER_VERSION: "33",
+ *   reactNativeArchitectures: "arm64-v8a",
+ *   newArchEnabled: false,
+ *   hermesEnabled: true
+ * }
+ * ```
  */
 const PropertiesSchema = t.partial({
-  useAndroidX: t.boolean, // Whether to use AndroidX.
-  enableJetifier: t.boolean, // Whether to enable Jetifier.
-  FLIPPER_VERSION: t.string, // Flipper version.
-  reactNativeArchitectures: t.string, // React Native architectures.
-  newArchEnabled: t.boolean, // Whether new architecture is enabled.
-  hermesEnabled: t.boolean, // Whether Hermes is enabled.
+  /**
+   * Optional flag to enable AndroidX package structure.
+   *
+   * @default true
+   */
+  useAndroidX: t.boolean,
+
+  /**
+   * Optional flag to enable Jetifier for third-party libraries.
+   *
+   * @default true
+   */
+  enableJetifier: t.boolean,
+
+  /**
+   * Optional version of Flipper SDK to use with React Native.
+   *
+   * @default "0.182.0"
+   */
+  FLIPPER_VERSION: t.string,
+
+  /**
+   * Optional architectures to build for React Native.
+   *
+   * @default "armeabi-v7a,arm64-v8a,x86,x86_64"
+   */
+  reactNativeArchitectures: t.string,
+
+  /**
+   * Optional flag to enable new architecture support.
+   *
+   * @default false
+   */
+  newArchEnabled: t.boolean,
+
+  /**
+   * Optional flag to enable Hermes JS engine.
+   *
+   * @default true
+   */
+  hermesEnabled: t.boolean,
 });
 
 /**
  * Represents the schema for Gradle configuration.
+ *
+ * @example
+ * ```
+ * gradle: {
+ *   appGradle: {
+ *     dependencies: ["com.example.android:app-magic:12.3"],
+ *   },
+ *   projectGradle: {
+ *     buildToolsVersion: "33.0.0",
+ *     compileSdkVersion: 33,
+ *     minSdkVersion: 21,
+ *     ndkVersion: "23.1.7779620",
+ *     repositories: ["brandingbrand()"],
+ *     targetSdkVersion: 33,
+ *     ext: ['kotlinVersion: "1.6.0"'],
+ *     dependencies: ["com.example.android:app-magic:12.3"],
+ *   },
+ *   properties: {
+ *     useAndroidX: true,
+ *     enableJetifier: true,
+ *     FLIPPER_VERSION: "33",
+ *     reactNativeArchitectures: "arm64-v8a",
+ *     newArchEnabled: false,
+ *     hermesEnabled: true,
+ *   },
+ * }
+ * ```
  */
 const GradleSchema = t.partial({
-  appGradle: AppGradleSchema, // App Gradle configuration.
-  projectGradle: ProjectGradleSchema, // Project Gradle configuration.
-  properties: PropertiesSchema, // Properties configuration.
+  /**
+   * Optional app build.gradle configuration.
+   *
+   * @link AppGradleSchema
+   */
+  appGradle: AppGradleSchema,
+
+  /**
+   * Optional project build.gradle configuration.
+   *
+   * @link ProjectGradleSchema
+   */
+  projectGradle: ProjectGradleSchema,
+
+  /**
+   * Optional gradle.properties configuration.
+   *
+   * @link PropertiesSchema
+   */
+  properties: PropertiesSchema,
 });
 
 /**
- * Represents the schema for Android manifest.
+ * Represents the optional schema for Android manifest which contains important
+ * metadata about the app, including its package name, permissions, activities,
+ * services, receivers, and more. Currently only support url scheme configuration.
+ *
+ * @example
+ * ```
+ * manifest: {
+ *   urlScheme: {
+ *     scheme: "myapp",
+ *     host: "app",
+ *   },
+ * }
+ * ```
  */
 const ManifestSchema = t.partial({
-  urlScheme: UrlSchemeSchema, // URL scheme information.
+  /**
+   * Represents the optional schema for URL scheme information.
+   *
+   * @link UrlSchemeSchema
+   */
+  urlScheme: UrlSchemeSchema,
 });
 
 /**
  * Represents the schema for Android signing information.
+ *
+ * @example
+ * ```
+ * signing: {
+ *   keyAlias: "key0",
+ *   storeFile: "./path/to/release.keystore",
+ * }
+ * ```
  */
 const AndroidSigningSchema = t.type({
-  keyAlias: t.string, // Key alias.
-  storeFile: t.string, // Store file.
+  /**
+   * Alias assigned to a cryptographic key stored in a keystore file.
+   */
+  keyAlias: t.string,
+
+  /**
+   * Path to store file relative to the project root which is used to sign the Android
+   * application package (APK) during the app signing process.
+   */
+  storeFile: t.string,
 });
 
 /**
- * Represents the schema for colors.
+ * Represents the schema for colors to be used throughout the native Android application.
+ *
+ * @example
+ * ```
+ * colors: {
+ *   opaque_red: "#f00",
+ * }
+ * ```
  */
-const ColorsSchema = t.record(t.string, t.string); // Record of color names to values.
+const ColorsSchema = t.record(t.string, t.string);
 
 /**
- * Represents the schema for plurals.
+ * Represents the schema for a collection of strings, of which, one string is provided depending on the amount of something.
+ *
+ * @example
+ * ```
+ * plurals: {
+ *   numberOfSongsAvailable: [
+ *     {
+ *       quantity: "one",
+ *       value: "1 song found.",
+ *     },
+ *     {
+ *       quantity: "other",
+ *       value: "2 songs found.",
+ *     },
+ *   ],
+ * }
+ * ```
  */
 const PluralsSchema = t.record(
+  /**
+   * Plural name, this name is used as the resource ID.
+   */
   t.string,
+
+  /**
+   * An array of plural or singular strings. The value can be a reference to another string resource
+   */
   t.array(
     t.type({
+      /**
+       * Plural quantity, for example, the quantity 1 is a special case. We write "1 book",
+       * but for any other quantity we'd write "n books". This distinction between singular
+       * and plural is very common, but other languages make finer distinctions
+       */
       quantity: t.union([
-        // Plural quantity.
         t.literal("zero"),
         t.literal("one"),
         t.literal("two"),
@@ -468,19 +694,53 @@ const PluralsSchema = t.record(
         t.literal("many"),
         t.literal("other"),
       ]),
-      // Plural value.
+      /**
+       * Pluralized value.
+       */
       value: t.string,
     })
   )
 );
 
 /**
- * Represents the schema for a string array.
+ * Represents the schema for an array of strings that can be referenced from the application.
+ *
+ * @example
+ * ```
+ * stringArray: {
+ *   planets_array: ["Mercury", "Venus", "Earth", "Mars"],
+ * }
+ * ```
  */
-const StringArraySchema = t.record(t.string, t.array(t.string)); // Record of string array names to arrays of strings.
+const StringArraySchema = t.record(t.string, t.array(t.string));
 
 /**
- * Represents the schema for strings.
+ * Represents the schema for a single string that can be referenced from the application orfrom other
+ * resource files (such as an XML layout).
+ *
+ * @example
+ * ```
+ * strings: {
+ *   string: {
+ *     appName: "App",
+ *   },
+ *   stringArray: {
+ *     planets_array: ["Mercury", "Venus", "Earth", "Mars"],
+ *   },
+ *   plurals: {
+ *     numberOfSongsAvailable: [
+ *       {
+ *         quantity: "one",
+ *         value: "1 song found.",
+ *       },
+ *       {
+ *         quantity: "other",
+ *         value: "2 songs found.",
+ *       },
+ *     ],
+ *   },
+ * }
+ * ```
  */
 const StringsSchema = t.partial({
   string: t.record(t.string, t.string), // Record of string names to values.
@@ -490,28 +750,170 @@ const StringsSchema = t.partial({
 
 /**
  * Represents the schema for Android configuration.
+ *
+ * @example
+ * ```
+ * android: {
+ *   packageName: "com.app",
+ *   displayName: "App",
+ *   gradle: {
+ *     appGradle: {
+ *       dependencies: ["com.example.android:app-magic:12.3"],
+ *     },
+ *     projectGradle: {
+ *       buildToolsVersion: "33.0.0",
+ *       compileSdkVersion: 33,
+ *       minSdkVersion: 21,
+ *       ndkVersion: "23.1.7779620",
+ *       repositories: ["brandingbrand()"],
+ *       targetSdkVersion: 33,
+ *       ext: ['kotlinVersion: "1.6.0"'],
+ *       dependencies: ["com.example.android:app-magic:12.3"],
+ *     },
+ *     properties: {
+ *       useAndroidX: true,
+ *       enableJetifier: true,
+ *       FLIPPER_VERSION: "33",
+ *       reactNativeArchitectures: "arm64-v8a",
+ *       newArchEnabled: false,
+ *       hermesEnabled: true,
+ *     },
+ *   },
+ *   manifest: {
+ *     urlScheme: {
+ *       scheme: "myapp",
+ *       host: "app",
+ *     },
+ *   },
+ *   signing: {
+ *     keyAlias: "key0",
+ *     storeFile: "./path/to/release.keystore",
+ *   },
+ *   versioning: {
+ *     version: "1.5",
+ *     build: 3,
+ *   },
+ *   gemfile: ["gem 'sqlite3'"],
+ *   colors: {
+ *     opaque_red: "#f00",
+ *   },
+ *   style: "light",
+ *   strings: {
+ *     string: {
+ *       appName: "App",
+ *     },
+ *     stringArray: {
+ *       planets_array: ["Mercury", "Venus", "Earth", "Mars"],
+ *     },
+ *     plurals: {
+ *       numberOfSongsAvailable: [
+ *         {
+ *           quantity: "one",
+ *           value: "1 song found.",
+ *         },
+ *         {
+ *           quantity: "other",
+ *           value: "2 songs found.",
+ *         },
+ *       ],
+ *     },
+ *   },
+ * }
+ * ```
  */
 const AndroidSchema = t.intersection([
+  /**
+   * Required attributes for Android configuration.
+   *
+   * @example
+   * android: {
+   *   packageName: "com.app",
+   *   displayName: "App",
+   * }
+   */
   t.type({
-    packageName: t.string, // Package name.
-    displayName: t.string, // Display name.
+    /**
+     * Package name for your application - this serves as package path and namespace.
+     */
+    packageName: t.string,
+
+    /**
+     * Display name of your application.
+     */
+    displayName: t.string,
   }),
   t.partial({
-    gradle: GradleSchema, // Gradle configuration.
-    manifest: ManifestSchema, // Manifest configuration.
-    signing: AndroidSigningSchema, // Signing information.
-    versioning: VersioningSchema, // Versioning information.
-    gemfile: t.array(t.string), // Array of Gemfile names.
-    colors: ColorsSchema, // Colors information.
-    style: StyleSchema, // Style information.
-    strings: StringsSchema, // Strings information.
+    /**
+     * Optional gradle configuration.
+     *
+     * @link GradleSchema
+     */
+    gradle: GradleSchema,
+
+    /**
+     * Optional Android manifest configuration.
+     *
+     * @link ManifestSchema
+     */
+    manifest: ManifestSchema,
+
+    /**
+     * Optional signing configuration, mostly used for continuous integration.
+     *
+     * @link AndroidSigningSchema
+     */
+    signing: AndroidSigningSchema,
+
+    /**
+     * Optional versioning configuration.
+     *
+     * @link VersioningSchema
+     */
+    versioning: VersioningSchema,
+
+    /**
+     * Optional array of gems to add to to Gemfile.
+     */
+    gemfile: t.array(t.string),
+
+    /**
+     * Optional colors configuration.
+     *
+     * @link ColorsSchema
+     */
+    colors: ColorsSchema,
+
+    /**
+     * Optional style configuration.
+     *
+     * @link StyleSchema
+     */
+    style: StyleSchema,
+
+    /**
+     * Optional strings configuration.
+     *
+     * @link StringsSchema
+     */
+    strings: StringsSchema,
   }),
 ]);
 
 /**
- * Represents the schema for the overall build configuration.
+ * Represents the required schema for the overall build configuration.
  */
 export const BuildConfigSchema = t.type({
-  ios: IOSSchema, // iOS configuration.
-  android: AndroidSchema, // Android configuration.
+  /**
+   * Required iOS configuration.
+   *
+   * @link IOSSchema
+   */
+  ios: IOSSchema,
+
+  /**
+   * Required Android Configuration.
+   *
+   * @link AndroidSchema
+   */
+  android: AndroidSchema,
 });
