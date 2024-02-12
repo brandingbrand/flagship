@@ -252,140 +252,142 @@ const IOSSigningSchema = t.type({
  * }
  * ```
  */
-const IOSSchema = t.intersection([
-  /**
-   * Required attributes for the iOS configuration.
-   *
-   * @example
-   * ios: {
-   *   bundleId: "com.app",
-   *   displayName: "App",
-   * }
-   * ```
-   */
-  t.type({
+const IOSSchema = t.exact(
+  t.intersection([
     /**
-     * Bundle identifier of your application.
-     */
-    bundleId: t.string,
-
-    /**
-     * Display name of your application.
-     */
-    displayName: t.string,
-  }),
-
-  /**
-   * Optional attributes for the iOS configuration
-   *
-   * @example
-   * ```
-   * ios: {
-   *   bundleId: "com.app",
-   *   displayName: "App",
-   *   entitlementsFilePath: "./path/to/app.entitlements",
-   *   frameworks: {
-   *     framework: "Sprite.framework",
-   *   },
-   *   deploymentTarget: "15.0",
-   *   podfile: {
-   *     config: ["inhibit_all_warnings!"],
-   *     pods: ["pod 'PubNub', '~> 4.0'", "pod 'FlagshipCode', '~> 13.0'"],
-   *   },
-   *   plist: {
-   *     urlScheme: {
-   *       scheme: "myapp"
-   *     },
-   *     style: "light",
-   *   },
-   *   signing: {
-   *     appleCert: "signing/AppleWWDRCA.cer",
-   *     distCert: "signing/enterprise/enterprise.cer",
-   *     distP12: "signing/enterprise/enterprise.p12",
-   *     distCertType: "iPhone Distribution",
-   *     exportTeamId: "ABC12345",
-   *     profilesDir: "signing/enterprise",
-   *     provisioningProfileName: "In House Provisioning Profile",
-   *     exportMethod: "enterprise",
-   *   },
-   *   targetedDevices: "1",
-   *   versioning: {
-   *     version: "1.5",
-   *     build: 3,
-   *   },
-   *   gemfile: ["gem 'sqlite3'"]
-   * }
-   * ```
-   */
-  t.partial({
-    /**
-     * Optional entitlements path relative to the root of the project.
-     */
-    entitlementsFilePath: t.string,
-
-    /**
-     * Optional frameworks.
+     * Required attributes for the iOS configuration.
      *
-     * @link FrameworksSchema
+     * @example
+     * ios: {
+     *   bundleId: "com.app",
+     *   displayName: "App",
+     * }
+     * ```
      */
-    frameworks: FrameworksSchema,
+    t.type({
+      /**
+       * Bundle identifier of your application.
+       */
+      bundleId: t.string,
+
+      /**
+       * Display name of your application.
+       */
+      displayName: t.string,
+    }),
 
     /**
-     * Optional minimum version of the iOS operating system that an app is designed to support.
+     * Optional attributes for the iOS configuration
      *
-     * @default "13.4"
+     * @example
+     * ```
+     * ios: {
+     *   bundleId: "com.app",
+     *   displayName: "App",
+     *   entitlementsFilePath: "./path/to/app.entitlements",
+     *   frameworks: {
+     *     framework: "Sprite.framework",
+     *   },
+     *   deploymentTarget: "15.0",
+     *   podfile: {
+     *     config: ["inhibit_all_warnings!"],
+     *     pods: ["pod 'PubNub', '~> 4.0'", "pod 'FlagshipCode', '~> 13.0'"],
+     *   },
+     *   plist: {
+     *     urlScheme: {
+     *       scheme: "myapp"
+     *     },
+     *     style: "light",
+     *   },
+     *   signing: {
+     *     appleCert: "signing/AppleWWDRCA.cer",
+     *     distCert: "signing/enterprise/enterprise.cer",
+     *     distP12: "signing/enterprise/enterprise.p12",
+     *     distCertType: "iPhone Distribution",
+     *     exportTeamId: "ABC12345",
+     *     profilesDir: "signing/enterprise",
+     *     provisioningProfileName: "In House Provisioning Profile",
+     *     exportMethod: "enterprise",
+     *   },
+     *   targetedDevices: "1",
+     *   versioning: {
+     *     version: "1.5",
+     *     build: 3,
+     *   },
+     *   gemfile: ["gem 'sqlite3'"]
+     * }
+     * ```
      */
-    deploymentTarget: t.string,
+    t.partial({
+      /**
+       * Optional entitlements path relative to the root of the project.
+       */
+      entitlementsFilePath: t.string,
 
-    /**
-     * Optional podfile configuration.
-     *
-     * @link PodfileSchema
-     */
-    podfile: PodfileSchema,
+      /**
+       * Optional frameworks.
+       *
+       * @link FrameworksSchema
+       */
+      frameworks: FrameworksSchema,
 
-    /**
-     * Optional Property list (plist) configuration.
-     *
-     * @link PlistSchema
-     */
-    plist: PlistSchema,
+      /**
+       * Optional minimum version of the iOS operating system that an app is designed to support.
+       *
+       * @default "13.4"
+       */
+      deploymentTarget: t.string,
 
-    /**
-     * Optional signing configuration.
-     *
-     * @link IOSSigningSchema
-     */
-    signing: IOSSigningSchema,
+      /**
+       * Optional podfile configuration.
+       *
+       * @link PodfileSchema
+       */
+      podfile: PodfileSchema,
 
-    /**
-     * Optional targeted devices.
-     *
-     * - iPhone: "1"
-     * - iPad: "2"
-     * - Universal: "1,2"
-     *
-     * @default "1"
-     */
-    targetedDevices: t.union([
-      t.literal("1"),
-      t.literal("2"),
-      t.literal("1,2"),
-    ]),
+      /**
+       * Optional Property list (plist) configuration.
+       *
+       * @link PlistSchema
+       */
+      plist: PlistSchema,
 
-    /**
-     * Optional versioning configuration.
-     *
-     * @link VersioningSchema
-     */
-    versioning: VersioningSchema,
+      /**
+       * Optional signing configuration.
+       *
+       * @link IOSSigningSchema
+       */
+      signing: IOSSigningSchema,
 
-    /**
-     * Optional array of gems to add to to Gemfile.
-     */
-    gemfile: t.array(t.string),
-  }),
-]);
+      /**
+       * Optional targeted devices.
+       *
+       * - iPhone: "1"
+       * - iPad: "2"
+       * - Universal: "1,2"
+       *
+       * @default "1"
+       */
+      targetedDevices: t.union([
+        t.literal("1"),
+        t.literal("2"),
+        t.literal("1,2"),
+      ]),
+
+      /**
+       * Optional versioning configuration.
+       *
+       * @link VersioningSchema
+       */
+      versioning: VersioningSchema,
+
+      /**
+       * Optional array of gems to add to to Gemfile.
+       */
+      gemfile: t.array(t.string),
+    }),
+  ])
+);
 
 /**
  * Represents the optional schema for App Gradle configuration.
@@ -819,83 +821,85 @@ const StringsSchema = t.partial({
  * }
  * ```
  */
-const AndroidSchema = t.intersection([
-  /**
-   * Required attributes for Android configuration.
-   *
-   * @example
-   * android: {
-   *   packageName: "com.app",
-   *   displayName: "App",
-   * }
-   */
-  t.type({
+const AndroidSchema = t.exact(
+  t.intersection([
     /**
-     * Package name for your application - this serves as package path and namespace.
-     */
-    packageName: t.string,
-
-    /**
-     * Display name of your application.
-     */
-    displayName: t.string,
-  }),
-  t.partial({
-    /**
-     * Optional gradle configuration.
+     * Required attributes for Android configuration.
      *
-     * @link GradleSchema
+     * @example
+     * android: {
+     *   packageName: "com.app",
+     *   displayName: "App",
+     * }
      */
-    gradle: GradleSchema,
+    t.type({
+      /**
+       * Package name for your application - this serves as package path and namespace.
+       */
+      packageName: t.string,
 
-    /**
-     * Optional Android manifest configuration.
-     *
-     * @link ManifestSchema
-     */
-    manifest: ManifestSchema,
+      /**
+       * Display name of your application.
+       */
+      displayName: t.string,
+    }),
+    t.partial({
+      /**
+       * Optional gradle configuration.
+       *
+       * @link GradleSchema
+       */
+      gradle: GradleSchema,
 
-    /**
-     * Optional signing configuration, mostly used for continuous integration.
-     *
-     * @link AndroidSigningSchema
-     */
-    signing: AndroidSigningSchema,
+      /**
+       * Optional Android manifest configuration.
+       *
+       * @link ManifestSchema
+       */
+      manifest: ManifestSchema,
 
-    /**
-     * Optional versioning configuration.
-     *
-     * @link VersioningSchema
-     */
-    versioning: VersioningSchema,
+      /**
+       * Optional signing configuration, mostly used for continuous integration.
+       *
+       * @link AndroidSigningSchema
+       */
+      signing: AndroidSigningSchema,
 
-    /**
-     * Optional array of gems to add to to Gemfile.
-     */
-    gemfile: t.array(t.string),
+      /**
+       * Optional versioning configuration.
+       *
+       * @link VersioningSchema
+       */
+      versioning: VersioningSchema,
 
-    /**
-     * Optional colors configuration.
-     *
-     * @link ColorsSchema
-     */
-    colors: ColorsSchema,
+      /**
+       * Optional array of gems to add to to Gemfile.
+       */
+      gemfile: t.array(t.string),
 
-    /**
-     * Optional style configuration.
-     *
-     * @link StyleSchema
-     */
-    style: StyleSchema,
+      /**
+       * Optional colors configuration.
+       *
+       * @link ColorsSchema
+       */
+      colors: ColorsSchema,
 
-    /**
-     * Optional strings configuration.
-     *
-     * @link StringsSchema
-     */
-    strings: StringsSchema,
-  }),
-]);
+      /**
+       * Optional style configuration.
+       *
+       * @link StyleSchema
+       */
+      style: StyleSchema,
+
+      /**
+       * Optional strings configuration.
+       *
+       * @link StringsSchema
+       */
+      strings: StringsSchema,
+    }),
+  ])
+);
 
 /**
  * Represents the required schema for the overall build configuration.
