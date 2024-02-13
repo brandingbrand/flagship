@@ -56,6 +56,6 @@ export { default as transformers } from "./transformers";
 /**
  * Action to run native package managers
  *
- * @module actions/package-managers
+ * @module actions/packagers
  */
-export { default as packageManagers } from "./package-managers";
+export { default as packagers } from "./packagers";

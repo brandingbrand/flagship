@@ -9,11 +9,11 @@
  *
  * @module transformers/android
  */
-export * from "./android";
+export * as androidTransformers from "./android";
 
 /**
  * iOS module for ephemeral ios code genereation
  *
  * @module transformers/ios
  */
-export * from "./ios";
+export * as iosTransformers from "./ios";

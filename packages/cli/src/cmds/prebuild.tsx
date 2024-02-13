@@ -61,7 +61,7 @@ program
       actions.template,
       actions.transformers,
       actions.plugins,
-      actions.packageManagers,
+      actions.packagers,
     ]) {
       await action();
     }

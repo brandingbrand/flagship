@@ -22,7 +22,7 @@ export function defineAction(
   return withAction(action, name);
 }
 
-type Transformer<T> = {
+export type Transformer<T> = {
   file: string;
   transforms: Array<T>;
   transform: (config: BuildConfig, options: PrebuildOptions) => Promise<void>;
