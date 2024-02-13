@@ -1,7 +1,7 @@
 import { useAsync } from "react-async";
 
 import { Action } from "./Action";
-import { promiseFn } from "./AsyncComponents";
+import { AsyncComponents } from "./AsyncComponents";
 
 import * as actions from "@/actions";
 
@@ -10,10 +10,24 @@ import * as actions from "@/actions";
  * @returns JSX.Element representing the Reporter component.
  */
 export function Reporter(): JSX.Element {
-  const { data: Components, isPending } = useAsync({ promiseFn });
+  /**
+   * Asynchronously import esm ink and ink-spinner
+   * @type {Object}
+   * @property {Object} data - The data returned by useAsync hook.
+   * @property {boolean} isPending - Boolean indicating whether the async operation is pending.
+   */
+  const { data: Components, isPending } = useAsync({
+    promiseFn: AsyncComponents,
+  });
 
   if (!Components || isPending) return <></>;
 
+  /**
+   * Destructuring components from Components object.
+   * @type {Object}
+   * @property {import("ink").Box} Box - Box component from Ink library.
+   * @property {import("ink").Text} Text - Text component from Ink library.
+   */
   const { Box, Text } = Components;
 
   return (

@@ -1,7 +1,7 @@
 import { useAsync } from "react-async";
 import { useState, useEffect, useMemo } from "react";
 
-import { promiseFn } from "./AsyncComponents";
+import { AsyncComponents } from "./AsyncComponents";
 
 import { emitter } from "@/lib";
 
@@ -29,17 +29,25 @@ type ActionType = {
  * @returns The rendered Action component.
  */
 export function Action({ name }: ActionProps): JSX.Element {
+  /**
+   * Asynchronously import esm ink and ink-spinner
+   * @type {Object}
+   * @property {Object} data - The data returned by useAsync hook.
+   * @property {boolean} isPending - Boolean indicating whether the async operation is pending.
+   */
   const { data, isPending } = useAsync({
-    promiseFn,
+    promiseFn: AsyncComponents,
   });
+
   /**
    * State to manage the current action type.
+   * @type {React.State<ActionType>}
    */
   const [action, setAction] = useState<ActionType>({ type: "running" });
 
   /**
    * Event handler function to update action state.
-   * @param e - Event object containing action details.
+   * @param {Object} e - Event object containing action details.
    */
   function handler(e: any): void {
     if (e.action === name) {
@@ -59,6 +67,7 @@ export function Action({ name }: ActionProps): JSX.Element {
 
   /**
    * Memoized color, title, and icon value based on the action type.
+   * @type {string}
    */
   const color = useMemo(() => {
     if (action.type === "running") {
