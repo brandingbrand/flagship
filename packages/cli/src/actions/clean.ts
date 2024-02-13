@@ -19,11 +19,17 @@ export default defineAction(async () => {
 
   if (doesAndroidExist && doesIOSExist) {
     // Remove both 'android' and 'ios' directories if they exist
-    await Promise.all(
-      ["android", "ios"].map((it) => {
-        return rimraf(path.project.resolve(it));
-      })
-    );
+    try {
+      await Promise.all(
+        ["android", "ios"].map((it) => {
+          return rimraf(path.project.resolve(it));
+        })
+      );
+    } catch (e: any) {
+      throw Error(
+        `[CleanActionError]: unable to remove ios and android directories, ${e.message}`
+      );
+    }
 
     // Return a success message
     return "removed ios and android native directories";
@@ -31,7 +37,13 @@ export default defineAction(async () => {
 
   if (doesIOSExist) {
     // Remove 'ios' directory if it exists
-    await rimraf(path.project.resolve("ios"));
+    try {
+      await rimraf(path.project.resolve("ios"));
+    } catch (e: any) {
+      throw Error(
+        `[CleanActionError]: unable to remove ios directory, ${e.message}`
+      );
+    }
 
     // Return a success message
     return "removed ios native directory, android does not exist";
@@ -39,7 +51,13 @@ export default defineAction(async () => {
 
   if (doesAndroidExist) {
     // Remove 'android' directory if it exists
-    await rimraf(path.project.resolve("android"));
+    try {
+      await rimraf(path.project.resolve("android"));
+    } catch (e: any) {
+      throw Error(
+        `[CleanActionError]: unable to remove android directory, ${e.message}`
+      );
+    }
 
     // Return a success message
     return "removed android native directory, ios does not exist";

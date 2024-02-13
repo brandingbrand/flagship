@@ -4,6 +4,11 @@ export default defineBuild({
   ios: {
     bundleId: "com.brandingbrand",
     displayName: "Branding Brand",
+    frameworks: [
+      {
+        framework: "SpriteKit.framework",
+      },
+    ],
   },
   android: {
     packageName: "com.brandingbrand",
