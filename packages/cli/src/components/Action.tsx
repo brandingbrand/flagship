@@ -1,6 +1,7 @@
-import { Text } from "ink";
-import Spinner from "ink-spinner";
+import { useAsync } from "react-async";
 import { useState, useEffect, useMemo } from "react";
+
+import { promiseFn } from "./AsyncComponents";
 
 import { emitter } from "@/lib";
 
@@ -28,6 +29,9 @@ type ActionType = {
  * @returns The rendered Action component.
  */
 export function Action({ name }: ActionProps): JSX.Element {
+  const { data, isPending } = useAsync({
+    promiseFn,
+  });
   /**
    * State to manage the current action type.
    */
@@ -56,41 +60,36 @@ export function Action({ name }: ActionProps): JSX.Element {
   /**
    * Memoized color, title, and icon value based on the action type.
    */
-  const data = useMemo(() => {
+  const color = useMemo(() => {
     if (action.type === "running") {
-      return {
-        color: "#00FFFF",
-        icon: <Spinner type="dots" />,
-      };
+      return "#00FFFF";
     }
 
     if (action.type === "success") {
-      return { color: "green", icon: "✅" };
+      return "green";
     }
 
     if (action.type === "warning") {
-      return {
-        color: "yellow",
-        icon: "⚠️",
-      };
+      return "yellow";
     }
 
     if (action.type === "error") {
-      return {
-        color: "red",
-        icon: "🛑",
-      };
+      return "red";
     }
 
-    return {
-      color: "white",
-      icon: "",
-    };
+    return "white";
   }, [action.type]);
 
+  if (!data || isPending) return <></>;
+
+  const { Text, Spinner } = data;
+
   return (
-    <Text color={data.color}>
-      {data.icon}
+    <Text color={color}>
+      {action.type === "running" && <Spinner />}
+      {action.type === "error" && "🛑"}
+      {action.type === "success" && "✅"}
+      {action.type === "warning" && "⚠️"}
       {"  "}
       {name}
     </Text>

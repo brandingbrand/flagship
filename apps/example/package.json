@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "react": "^18.2.0"
+  },
   "devDependencies": {
     "@brandingbrand/code-cli": "*",
     "@brandingbrand/code-cli-kit": "*",

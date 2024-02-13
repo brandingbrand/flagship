@@ -1,16 +1,8 @@
-/**
- * Imports Box and Text components from the "ink" package.
- */
-import { Box, Text } from "ink";
+import { useAsync } from "react-async";
 
-/**
- * Imports the Action component from the "./Action" file.
- */
 import { Action } from "./Action";
+import { promiseFn } from "./AsyncComponents";
 
-/**
- * Imports all actions from the "@/actions" module.
- */
 import * as actions from "@/actions";
 
 /**
@@ -18,6 +10,12 @@ import * as actions from "@/actions";
  * @returns JSX.Element representing the Reporter component.
  */
 export function Reporter(): JSX.Element {
+  const { data: Components, isPending } = useAsync({ promiseFn });
+
+  if (!Components || isPending) return <></>;
+
+  const { Box, Text } = Components;
+
   return (
     <Box flexDirection="column">
       <Text underline>Running actions</Text>

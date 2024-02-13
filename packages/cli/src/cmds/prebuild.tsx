@@ -1,4 +1,3 @@
-import { render } from "ink";
 import { Option, program } from "commander";
 import type { PrebuildOptions } from "@brandingbrand/code-cli-kit";
 
@@ -43,6 +42,8 @@ program
      * Update the configuration options with the provided options and command type.
      */
     config.options = { ...options, command: "prebuild" };
+
+    const { render } = await import("ink");
 
     /**
      * Render the Reporter component to display progress.
