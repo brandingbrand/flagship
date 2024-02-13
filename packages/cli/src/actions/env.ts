@@ -91,7 +91,8 @@ export default defineAction(async () => {
   // Resolve the path of the project environment index file from @brandingbrand/fsapp
   // There is a chance this could throw an error, this is fine, still even though we checked the dependencies object already
   const projectEnvIndexPath = require.resolve(
-    "@brandingbrand/fsapp/src/project_env_index.js"
+    "@brandingbrand/fsapp/src/project_env_index.js",
+    { paths: [process.cwd()] }
   );
 
   // Write the module to the project environment index file

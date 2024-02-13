@@ -61,7 +61,9 @@ describe("Guard Utility Functions", () => {
         },
       };
       const pkg = require(
-        require.resolve("@brandingbrand/code-cli-kit/package.json")
+        require.resolve("@brandingbrand/code-cli-kit/package.json", {
+          paths: [process.cwd()],
+        })
       );
       const buildFunction = jest.fn(() => config);
       defineBuild<{}>(buildFunction);

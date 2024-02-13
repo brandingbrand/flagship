@@ -88,7 +88,9 @@ export async function bundleRequire(packageOrFilePath: string): Promise<any> {
   // Check if the input string represents a package
   if (isPackage(packageOrFilePath)) {
     // Resolve the package name to its filepath
-    packageOrFilePath = require.resolve(packageOrFilePath);
+    packageOrFilePath = require.resolve(packageOrFilePath, {
+      paths: [process.cwd()],
+    });
   }
 
   // Use 'bundle-require' to bundle and require the specified file or package
