@@ -25,14 +25,12 @@ export default defineAction(async () => {
   /**
    * Executes transformations for an array of transformers.
    * @param {Transformer<Transforms<any, any>>[]} transformer - Array of transformers.
-   * @returns {Promise} A promise representing the completion of transformation.
+   * @returns {Promise<void>[]} A promise representing the completion of transformation.
    */
-  const getTransformers = async (
+  const getTransformers = (
     transformer: Transformer<Transforms<any, any>>[]
-  ) =>
-    Promise.all(
-      transformer.map((it) => it.transform(config.build, config.options))
-    );
+  ): Promise<void>[] =>
+    transformer.map((it) => it.transform(config.build, config.options));
 
   /**
    * Invoke both iOS and Android platform transformers
@@ -50,7 +48,7 @@ export default defineAction(async () => {
    * Invoke only Android platform transformers
    */
   if (canRunAndroid(config.options) && !canRunIOS(config.options)) {
-    await getTransformers(androidTransformersValues);
+    await Promise.all(getTransformers(androidTransformersValues));
 
     return "successfully invoked Android transformers";
   }
@@ -59,7 +57,7 @@ export default defineAction(async () => {
    * Invoke only iOS platform transformers
    */
   if (!canRunAndroid(config.options) && canRunIOS(config.options)) {
-    await getTransformers(iosTransformersValues);
+    await Promise.all(getTransformers(iosTransformersValues));
 
     return "successfully invoked iOS transformers";
   }
