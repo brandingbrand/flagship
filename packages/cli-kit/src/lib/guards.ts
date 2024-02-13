@@ -63,6 +63,6 @@ export function defineBuild<T = BuildConfig>(
  * @returns The provided plugin configuration.
  * @template T - The generic type of the plugin configuration.
  */
-export function definePlugin<T>(plugin: PluginConfig<T>) {
+export function definePlugin(plugin: PluginConfig) {
   return plugin;
 }

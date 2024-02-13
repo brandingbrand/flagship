@@ -22,19 +22,9 @@ export type EnvConfig<T = unknown> = T;
  * Represents the configuration for a plugin.
  * @template T - The type of the plugin.
  */
-export type PluginConfig<T> = {
-  ios?: (
-    build: BuildConfig,
-    env: EnvConfig,
-    options: any,
-    plugin: T
-  ) => Promise<void>;
-  android?: (
-    build: BuildConfig,
-    env: EnvConfig,
-    options: any,
-    plugin: T
-  ) => Promise<void>;
+export type PluginConfig = {
+  ios?: (build: BuildConfig, options: any) => Promise<void>;
+  android?: (build: BuildConfig, options: any) => Promise<void>;
 };
 
 /**
