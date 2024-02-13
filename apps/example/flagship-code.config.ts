@@ -1,4 +1,4 @@
-import { defineConfig } from "@brandingbrand/code-cli-kit";
+import {defineConfig} from '@brandingbrand/code-cli-kit';
 
 /**
  * Defines the configuration for the Code CLI tool.
@@ -9,20 +9,20 @@ export default defineConfig({
   /**
    * The path to the build directory.
    */
-  buildPath: "./coderc/build",
+  buildPath: './coderc/build',
 
   /**
    * The path to the environment directory.
    */
-  envPath: "./coderc/env",
+  envPath: './coderc/env',
 
   /**
    * The path to the plugin directory.
    */
-  pluginPath: "./coderc/plugins",
+  pluginPath: './coderc/plugins',
 
   /**
    * An array of plugin names.
    */
-  plugins: [],
+  plugins: ['@brandingbrand/code-plugin-native-navigation'],
 });

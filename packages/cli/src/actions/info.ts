@@ -79,7 +79,7 @@ export default defineAction(async () => {
   logger.start("Generating native code...");
 
   // Pause logs when not in CI in favor of react-ink
-  if (!ci.isCI || !config.options.verbose) {
+  if (!ci.isCI) {
     logger.pause();
   }
 }, "info");

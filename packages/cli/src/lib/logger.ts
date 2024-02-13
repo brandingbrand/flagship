@@ -1,3 +1,5 @@
+import { Writable } from "stream";
+
 /**
  * Default export representing a logging utility object.
  */
@@ -6,6 +8,26 @@ export default {
    * A boolean indicating whether logging is currently paused.
    */
   isPaused: false,
+
+  /**
+   * The original `process.stdout.write` function.
+   *
+   * @type {Function}
+   * @private
+   */
+  __stdout__: process.stdout.write,
+
+  /**
+   * A writable stream that does nothing.
+   *
+   * @type {Writable}
+   * @private
+   */
+  __stdout__redirect: new Writable({
+    write(_chunk, _encoding, callback) {
+      callback();
+    },
+  }),
 
   /**
    * Logs an information message.
@@ -62,9 +84,23 @@ export default {
   },
 
   /**
-   * Pauses logging.
+   * Pauses logging. Redirects `process.stdout.write` to the `write` method of the `__stdout__redirect` stream.
    */
   pause: function () {
     this.isPaused = true;
+
+    // @ts-ignore
+    process.stdout.write = this.__stdout__redirect.write.bind(
+      this.__stdout__redirect
+    );
+  },
+
+  /**
+   * Resumes logging. Restores the original `process.stdout.write` function.
+   */
+  resume: function () {
+    this.isPaused = false;
+
+    process.stdout.write = this.__stdout__;
   },
 };

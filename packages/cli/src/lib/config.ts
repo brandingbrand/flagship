@@ -94,7 +94,10 @@ export async function bundleRequire(packageOrFilePath: string): Promise<any> {
   }
 
   // Use 'bundle-require' to bundle and require the specified file or package
-  const { mod } = await _bundleRequire({ filepath: packageOrFilePath });
+  const { mod } = await _bundleRequire({
+    filepath: packageOrFilePath,
+    format: "cjs",
+  });
 
   // Return the required module
   return mod;
