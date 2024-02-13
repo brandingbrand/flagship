@@ -56,7 +56,7 @@ export default defineAction(async () => {
       const name = config.code.plugins?.[index] ?? "unknown plugin";
 
       // Execute the iOS action with the plugin and its name.
-      plugin.ios(config.build, config.options);
+      await withAction(plugin.ios, name)(config.build, config.options);
     }
   }
 
