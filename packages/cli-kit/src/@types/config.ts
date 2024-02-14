@@ -1,4 +1,5 @@
 import * as t from "io-ts";
+import type { PartialDeep } from "type-fest";
 
 import { BuildConfigSchema, FlagshipCodeConfigSchema } from "@/schemas";
 
@@ -29,7 +30,7 @@ export type PluginConfig<T> = {
 
 export type Plugin<T> = {
   plugin: T;
-} & Partial<BuildConfig>;
+} & PartialDeep<BuildConfig>;
 
 /**
  * Represents options for prebuilding.

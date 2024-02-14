@@ -1,12 +1,15 @@
 import {
+  BuildConfig,
   BuildConfigSchema,
   FlagshipCodeConfigSchema,
+  Plugin,
   fs,
   path,
 } from "@brandingbrand/code-cli-kit";
 import { isLeft } from "fp-ts/lib/Either";
 
 import { bundleRequire, config, defineAction } from "@/lib";
+import { mergeAndConcat } from "merge-anything";
 
 /**
  * Defines an action to handle configuration loading, decoding, and verification.
@@ -72,6 +75,33 @@ export default defineAction(async () => {
 
   // Set the decoded configuration to the global config object
   config.build = decodedBuildConfig.right;
+
+  /**
+   * Merges build configuration object excluding 'ios' and 'android' keys.
+   * Use-case for plugins extending the build configuration within their
+   * own object. This it much simpler to remove plugins when no longer used.
+   */
+  const mergedBuildConfig = Object.entries(config.build)
+    // Filter out entries with keys 'ios' and 'android'.
+    .filter(([key]) => key !== "ios" && key !== "android")
+    // Filter out entries without 'ios' or 'android' properties.
+    .filter(
+      ([_, value]) =>
+        !!(value as unknown as Plugin<unknown>).ios ||
+        !!(value as unknown as Plugin<unknown>).android
+    )
+    // Reduce the array of filtered entries to a single merged object.
+    .reduce((acc, [_, value]) => {
+      // Destructure 'plugin' property and rename remaining properties as 'pluginBuildconfig'.
+      const { plugin, ...pluginBuildconfig } =
+        value as unknown as Plugin<unknown>;
+
+      // Merge the accumulated configuration with the plugin build configuration.
+      return mergeAndConcat(acc, pluginBuildconfig) as BuildConfig;
+    }, config.build);
+
+  // Set the merged build configuration to the global config object
+  config.build = mergedBuildConfig;
 
   // Return a success message
   return `found and verified flagship-code.config.ts and build.${config.options.build}.ts`;

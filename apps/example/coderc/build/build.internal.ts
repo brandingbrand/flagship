@@ -16,6 +16,14 @@ export default defineBuild<CodePluginAsset>({
     displayName: 'Branding Brand',
   },
   codePluginAsset: {
+    ios: {
+      gemfile: ["gem 'sqlite3'"],
+      frameworks: [
+        {
+          framework: 'MyFramework.framework',
+        },
+      ],
+    },
     plugin: {
       assetPath: ['./coderc/assets/fonts'],
     },
