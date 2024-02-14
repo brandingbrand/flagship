@@ -1330,6 +1330,10 @@
     rxjs "^7.5.2"
     tslib "^2.0.0"
 
+"@brandingbrand/code-plugin-example@link:./apps/example/coderc/plugins/plugin-example":
+  version "0.0.0"
+  uid ""
+
 "@brandingbrand/engagement-utils@12.0.0-alpha.20":
   version "12.0.0-alpha.20"
   resolved "https://registry.yarnpkg.com/@brandingbrand/engagement-utils/-/engagement-utils-12.0.0-alpha.20.tgz#bda9959864da175bda5502bf43a44b8a41eda537"

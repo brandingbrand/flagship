@@ -2,6 +2,7 @@ import type {
   BuildConfig,
   PrebuildOptions,
   CodeConfig,
+  PackageJson,
 } from "@brandingbrand/code-cli-kit";
 
 /**
@@ -79,7 +80,10 @@ export function isPackage(str: string): boolean {
  * @param {string} packageOrFilePath - The name of the package or the file path to bundle and require.
  * @returns {Promise<any>} A Promise that resolves to the required module.
  */
-export async function bundleRequire(packageOrFilePath: string): Promise<any> {
+export async function bundleRequire(
+  packageOrFilePath: string,
+  format: "cjs" | "esm" = "cjs"
+): Promise<any> {
   // Import the 'bundle-require' esm module dynamically
   // Due to esm and exports + types need to ignore ts for this import
   // @ts-ignore
@@ -87,6 +91,16 @@ export async function bundleRequire(packageOrFilePath: string): Promise<any> {
 
   // Check if the input string represents a package
   if (isPackage(packageOrFilePath)) {
+    // Parse package.json contents
+    const pkg = require(
+      require.resolve(`${packageOrFilePath}/package.json`)
+    ) as PackageJson;
+
+    // Determine if the package is esm, if so reassign format
+    if (pkg.type === "module") {
+      format = "esm";
+    }
+
     // Resolve the package name to its filepath
     packageOrFilePath = require.resolve(packageOrFilePath, {
       paths: [process.cwd()],
@@ -96,7 +110,7 @@ export async function bundleRequire(packageOrFilePath: string): Promise<any> {
   // Use 'bundle-require' to bundle and require the specified file or package
   const { mod } = await _bundleRequire({
     filepath: packageOrFilePath,
-    format: "cjs",
+    format,
   });
 
   // Return the required module

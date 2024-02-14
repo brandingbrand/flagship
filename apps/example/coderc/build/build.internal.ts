@@ -1,17 +1,17 @@
-import { defineBuild } from "@brandingbrand/code-cli-kit";
+import {defineBuild} from '@brandingbrand/code-cli-kit';
 
 export default defineBuild({
   ios: {
-    bundleId: "com.brandingbrand",
-    displayName: "Branding Brand",
+    bundleId: 'com.brandingbrand',
+    displayName: 'Branding Brand',
     frameworks: [
       {
-        framework: "SpriteKit.framework",
+        framework: 'SpriteKit.framework',
       },
     ],
   },
   android: {
-    packageName: "com.brandingbrand",
-    displayName: "Branding Brand",
+    packageName: 'com.brandingbrand',
+    displayName: 'Branding Brand',
   },
 });
