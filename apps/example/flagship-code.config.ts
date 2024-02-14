@@ -24,5 +24,8 @@ export default defineConfig({
   /**
    * An array of plugin names.
    */
-  plugins: ['@brandingbrand/code-plugin-native-navigation'],
+  plugins: [
+    '@brandingbrand/code-plugin-native-navigation',
+    '@brandingbrand/code-plugin-asset',
+  ],
 });

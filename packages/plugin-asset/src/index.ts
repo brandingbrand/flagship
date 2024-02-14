@@ -33,6 +33,9 @@ export default definePlugin<CodePluginAsset>({
   ): Promise<void> {
     const { assetPath } = build.codePluginAsset.plugin;
 
+    const log = require("npmlog");
+    log.level = "silent";
+
     linkAssets({
       rootPath: path.project.resolve(),
       shouldUnlink: true,
@@ -60,6 +63,9 @@ export default definePlugin<CodePluginAsset>({
     options: PrebuildOptions
   ): Promise<void> {
     const { assetPath } = build.codePluginAsset.plugin;
+
+    const log = require("npmlog");
+    log.level = "silent";
 
     linkAssets({
       rootPath: path.project.resolve(),
