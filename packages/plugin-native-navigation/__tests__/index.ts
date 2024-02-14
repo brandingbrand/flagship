@@ -1,6 +1,6 @@
 import plugin from "../src";
 
-describe("plugin-native-navigation android", () => {
+describe("plugin-native-navigation", () => {
   const rnnLinkIOS = require.resolve(
     "react-native-navigation/autolink/postlink/postLinkIOS.js",
     { paths: [process.cwd()] }

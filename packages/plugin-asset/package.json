@@ -1,0 +1,30 @@
+{
+  "name": "@brandingbrand/code-plugin-asset",
+  "version": "0.0.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@brandingbrand/code-cli-kit": "*",
+    "@brandingbrand/code-jest-config": "*",
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/eslint": "^8.56.1",
+    "@types/react-native-asset": "^2.0.2",
+    "eslint": "^8.56.0",
+    "react-native-asset": "2.1.1",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "@brandingbrand/code-cli-kit": "*",
+    "react-native-asset": "*"
+  },
+  "jest": {
+    "preset": "@brandingbrand/code-jest-config"
+  }
+}
