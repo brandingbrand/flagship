@@ -44,7 +44,7 @@ export default defineTransformer<Transforms<string>>({
     ): string => {
       return string.replace(
         content,
-        /(new PackageList).*\s+/m,
+        /(new PackageList.*\s+)/m,
         `$1packages.add(new NativeConstantsPackage());
           packages.add(new EnvSwitcherPackage());
           `

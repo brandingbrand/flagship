@@ -31,6 +31,11 @@ export { default as gradleProperties } from "./gradle-properties";
 /**
  * Represents the EnvSwitcher.java file transformers.
  */
+export { default as mainApplication } from "./main-application-java";
+
+/**
+ * Represents the EnvSwitcher.java file transformers.
+ */
 export { default as androidEnvSwitcher } from "./env-switcher-java";
 
 /**

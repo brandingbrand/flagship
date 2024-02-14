@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import {env} from '@brandingbrand/fsapp';
 
 import {makeScreen, makeTab} from '../../../shared';
 
@@ -11,6 +12,7 @@ export default makeTab(
           <Text style={styles.title}>Profile</Text>
           <Text style={styles.paragraph}>Welcome to the Profile tab!</Text>
           <Text style={styles.paragraph}>Route: {componentId}</Text>
+          <Text style={styles.paragraph}>{JSON.stringify(env.app)}</Text>
         </View>
       );
     },

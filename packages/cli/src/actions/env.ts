@@ -81,11 +81,11 @@ export default defineAction(async () => {
   const magicast = await import("magicast");
 
   // Parse a module with an empty default export
-  const mod = magicast.parseModule("export default { }");
+  const mod = magicast.parseModule("");
 
   // Add each environment's content to the module's default export
   envContents.forEach((it) => {
-    mod.exports.default[it.name] ||= { app: it.content };
+    mod.exports[it.name] ||= { app: it.content };
   });
 
   // Resolve the path of the project environment index file from @brandingbrand/fsapp
