@@ -122,6 +122,21 @@ describe("ios Info.plist transformers", () => {
     <string>Automatic</string>`);
   });
 
+  it("should not remove NSExceptionDomains children from Info.plist not release mode", async () => {
+    const config = {
+      ...__flagship_code_build_config,
+    } as BuildConfig;
+
+    await transformer.transform(config, { release: false } as any);
+    const content = await fs.readFile(path.ios.infoPlist, "utf-8");
+
+    expect(content).toContain(`<key>localhost</key>
+        <dict>
+          <key>NSExceptionAllowsInsecureHTTPLoads</key>
+          <true/>
+        </dict>`);
+  });
+
   it("should remove NSExceptionDomains children from Info.plist in release mode", async () => {
     const config = {
       ...__flagship_code_build_config,
@@ -131,9 +146,9 @@ describe("ios Info.plist transformers", () => {
     const content = await fs.readFile(path.ios.infoPlist, "utf-8");
 
     expect(content).not.toContain(`<key>localhost</key>
-    <dict>
-      <key>NSExceptionAllowsInsecureHTTPLoads</key>
-      <true/>
-    </dict>`);
+        <dict>
+          <key>NSExceptionAllowsInsecureHTTPLoads</key>
+          <true/>
+        </dict>`);
   });
 });
