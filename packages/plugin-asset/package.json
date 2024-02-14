@@ -9,6 +9,9 @@
     "lint": "eslint . --max-warnings 0",
     "test": "jest"
   },
+  "dependencies": {
+    "react-native-asset": "2.1.1"
+  },
   "devDependencies": {
     "@brandingbrand/code-cli-kit": "*",
     "@brandingbrand/code-jest-config": "*",
@@ -17,12 +20,10 @@
     "@types/eslint": "^8.56.1",
     "@types/react-native-asset": "^2.0.2",
     "eslint": "^8.56.0",
-    "react-native-asset": "2.1.1",
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "*",
-    "react-native-asset": "*"
+    "@brandingbrand/code-cli-kit": "*"
   },
   "jest": {
     "preset": "@brandingbrand/code-jest-config"

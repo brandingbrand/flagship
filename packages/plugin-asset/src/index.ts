@@ -7,7 +7,6 @@ import {
   type BuildConfig,
   type PrebuildOptions,
   definePlugin,
-  fs,
   path,
 } from "@brandingbrand/code-cli-kit";
 import linkAssets from "react-native-asset";
@@ -33,6 +32,7 @@ export default definePlugin<CodePluginAsset>({
   ): Promise<void> {
     const { assetPath } = build.codePluginAsset.plugin;
 
+    // Change log level to silent so react ink is uninterrupted
     const log = require("npmlog");
     log.level = "silent";
 
@@ -64,6 +64,7 @@ export default definePlugin<CodePluginAsset>({
   ): Promise<void> {
     const { assetPath } = build.codePluginAsset.plugin;
 
+    // Change log level to silent so react ink is uninterrupted
     const log = require("npmlog");
     log.level = "silent";
 
