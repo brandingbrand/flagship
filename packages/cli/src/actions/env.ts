@@ -1,4 +1,5 @@
-import { PackageJson, fs, path } from "@brandingbrand/code-cli-kit";
+import type { PackageJson } from "type-fest";
+import { fs, path } from "@brandingbrand/code-cli-kit";
 
 import { ActionWarning, bundleRequire, config, defineAction } from "@/lib";
 

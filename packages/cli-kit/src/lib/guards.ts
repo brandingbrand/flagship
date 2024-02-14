@@ -1,8 +1,9 @@
+import type { PackageJson } from "type-fest";
+
 import type {
   BuildConfig,
   CodeConfig,
   EnvConfig,
-  PackageJson,
   PluginConfig,
 } from "@/@types";
 

@@ -29,6 +29,7 @@
     "mitt": "^3.0.1",
     "react-async": "^10.0.1",
     "rimraf": "^5.0.5",
+    "type-fest": "4.10.2",
     "update-check": "^1.5.4"
   },
   "devDependencies": {

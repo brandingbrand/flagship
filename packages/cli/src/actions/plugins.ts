@@ -1,9 +1,5 @@
-import {
-  PackageJson,
-  canRunAndroid,
-  canRunIOS,
-  path,
-} from "@brandingbrand/code-cli-kit";
+import type { PackageJson } from "type-fest";
+import { canRunAndroid, canRunIOS, path } from "@brandingbrand/code-cli-kit";
 
 import { bundleRequire, config, defineAction, withAction } from "@/lib";
 

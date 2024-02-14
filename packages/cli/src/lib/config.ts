@@ -2,8 +2,8 @@ import type {
   BuildConfig,
   PrebuildOptions,
   CodeConfig,
-  PackageJson,
 } from "@brandingbrand/code-cli-kit";
+import type { PackageJson } from "type-fest";
 
 /**
  * Configuration object containing various settings.

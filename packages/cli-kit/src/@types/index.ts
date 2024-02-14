@@ -12,13 +12,6 @@
 export * from "./config";
 
 /**
- * PackageJson types to provide types the package.json object
- *
- * @module @types/package-json
- */
-export * from "./package-json";
-
-/**
  * Plist types to provide types that are utilized by ios platform
  *
  * @module @types/info-plist
