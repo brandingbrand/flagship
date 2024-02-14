@@ -121,6 +121,28 @@ export default defineTransformer<Transforms<InfoPlist>>({
         CFBundleDisplayName: displayName,
       });
     },
+
+    /**
+     * Transformer for updating the NSExceptionDomains in the "Info.plist" file.
+     * @param {InfoPlist} content - The content of the file.
+     * @param {BuildConfig} config - The build configuration.
+     * @param {PrebuildOptions} options - The cli options.
+     * @returns {InfoPlist} - The updated content.
+     */
+    (
+      content: InfoPlist,
+      config: BuildConfig,
+      options: PrebuildOptions
+    ): InfoPlist => {
+      if (!options.release) return content;
+
+      return {
+        ...content,
+        NSAppTransportSecurity: {
+          NSExceptionDomains: {},
+        },
+      };
+    },
   ],
   /**
    * The main transform function that applies all specified transformations to the "Info.plist" file.

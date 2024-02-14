@@ -121,4 +121,19 @@ describe("ios Info.plist transformers", () => {
     expect(content).toContain(`<key>UIUserInterfaceStyle</key>
     <string>Automatic</string>`);
   });
+
+  it("should remove NSExceptionDomains children from Info.plist in release mode", async () => {
+    const config = {
+      ...__flagship_code_build_config,
+    } as BuildConfig;
+
+    await transformer.transform(config, { release: true } as any);
+    const content = await fs.readFile(path.ios.infoPlist, "utf-8");
+
+    expect(content).not.toContain(`<key>localhost</key>
+    <dict>
+      <key>NSExceptionAllowsInsecureHTTPLoads</key>
+      <true/>
+    </dict>`);
+  });
 });
