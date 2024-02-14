@@ -18,7 +18,7 @@ export default definePlugin({
    * @param {Object} options - The options object for iOS.
    * @returns {Promise<void>} A promise that resolves when the process completes.
    */
-  ios: async function (build, options) {
+  ios: async function (build: object, options: object): Promise<void> {
     // Resolve path to react-native-navigation postlink path module
     const rnnPath = require.resolve(
       "react-native-navigation/autolink/postlink/path.js",
@@ -50,7 +50,7 @@ export default definePlugin({
    * @param {Object} options - The options object for Android.
    * @returns {Promise<void>} A promise that resolves when the process completes.
    */
-  android: async function (build, options) {
+  android: async function (build: object, options: object): Promise<void> {
     // Resolve path to react-native-navigation postlink Android script
     const scriptPath = require.resolve(
       "react-native-navigation/autolink/postlink/postLinkAndroid.js",

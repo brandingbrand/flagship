@@ -13,9 +13,13 @@
   },
   "dependencies": {
     "@brandingbrand/fsapp": "12.0.0-alpha.20",
+    "@brandingbrand/react-native-app-restart": "0.4.0",
+    "@react-native-async-storage/async-storage": "1.21.0",
     "react": "18.2.0",
     "react-native": "0.72.10",
-    "react-native-navigation": "7.37.2"
+    "react-native-device-info": "10.12.0",
+    "react-native-navigation": "7.37.2",
+    "react-native-sensitive-info": "5.5.8"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

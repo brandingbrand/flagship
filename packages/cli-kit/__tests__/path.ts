@@ -92,6 +92,27 @@ describe("path", () => {
     );
   });
 
+  it("should have an android.mainApplication function that returns the path to android/app/src/main/java/com/example/app/MainApplication.java", () => {
+    const config = {
+      android: {
+        name: "example",
+        displayName: "Example",
+        packageName: "com.example.app",
+      },
+      ios: {
+        name: "example",
+        displayName: "Example",
+        bundleId: "com.example.app",
+      },
+    };
+    const mainApplicationPath = path.android.mainApplication(config);
+    expect(mainApplicationPath).toEqual(
+      expect.stringMatching(
+        /.*android\/app\/src\/main\/java\/com\/example\/app\/MainApplication\.java$/
+      )
+    );
+  });
+
   it("should have an android.envSwitcher function that returns the path to android/app/src/main/java/com/example/app/EnvSwitcher.java", () => {
     const config = {
       android: {
