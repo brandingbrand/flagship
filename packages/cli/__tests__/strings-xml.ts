@@ -13,6 +13,21 @@ describe("android strings.xml transformers", () => {
     jest.resetAllMocks();
   });
 
+  it("should update strings.xml with displayName", async () => {
+    const config = {
+      ...__flagship_code_build_config,
+    } as BuildConfig;
+
+    await transformer.transform(config, {} as any);
+    const content = await fs.readFile(path.android.strings, "utf-8");
+
+    expect(content).toContain(
+      `<resources>
+    <string name="app_name">Branding Brand</string>
+</resources>`
+    );
+  });
+
   it("should update strings.xml with string", async () => {
     const config = {
       ...__flagship_code_build_config,
@@ -29,7 +44,7 @@ describe("android strings.xml transformers", () => {
 
     expect(content).toContain(
       `<resources>
-    <string name="app_name">app</string>
+    <string name="app_name">Branding Brand</string>
     <string name="myKey">myValue</string>
 </resources>`
     );
@@ -50,7 +65,7 @@ describe("android strings.xml transformers", () => {
     const content = await fs.readFile(path.android.strings, "utf-8");
 
     expect(content).toContain(`<resources>
-    <string name="app_name">app</string>
+    <string name="app_name">Branding Brand</string>
     <string name="myKey">myValue</string>
     <string-array name="planets_array">
         <item>Mercury</item>
@@ -85,7 +100,7 @@ describe("android strings.xml transformers", () => {
     const content = await fs.readFile(path.android.strings, "utf-8");
 
     expect(content).toContain(`<resources>
-    <string name="app_name">app</string>
+    <string name="app_name">Branding Brand</string>
     <string name="myKey">myValue</string>
     <string-array name="planets_array">
         <item>Mercury</item>

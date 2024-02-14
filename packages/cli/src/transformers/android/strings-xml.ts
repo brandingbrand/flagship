@@ -29,6 +29,26 @@ export default defineTransformer<Transforms<StringsXML, void>>({
    */
   transforms: [
     /**
+     * Function that applies display name to the strings.xml file.
+     * @param xml The StringsXML object representing the contents of the strings.xml file.
+     * @param config The build configuration containing Android-specific manifest options.
+     */
+    (xml: StringsXML, config: BuildConfig) => {
+      if (!xml.resources.string) return;
+
+      const index = xml.resources.string.findIndex(
+        (it) => it.$.name === "app_name"
+      );
+
+      if (index > -1) {
+        xml.resources.string.splice(index, 1, {
+          $: { name: "app_name" },
+          _: config.android.displayName,
+        });
+      }
+    },
+
+    /**
      * Function that applies string configuration to the strings.xml file.
      * @param xml The StringsXML object representing the contents of the strings.xml file.
      * @param config The build configuration containing Android-specific manifest options.
