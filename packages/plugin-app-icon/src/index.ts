@@ -33,7 +33,10 @@ export default definePlugin<CodePluginAppIcon>({
     build: BuildConfig & CodePluginAppIcon,
     options: PrebuildOptions
   ): Promise<void> {
+    // Destructure appIconPath for later access
     const { appIconPath } = build.codePluginAppIcon.plugin;
+
+    // Set AppIcon.appiconset absolute path for later access
     const appIconSetPath = path.project.resolve(
       "ios",
       "app",
@@ -41,17 +44,23 @@ export default definePlugin<CodePluginAppIcon>({
       "AppIcon.appiconset"
     );
 
+    // Setup default contents object
     const contents = { images: [] };
 
+    // Iterate through all iOS icons
     for (const i of icons.ios) {
+      // Generate the absolute path for the input file
       const inputFile = path.project.resolve(appIconPath, i.inputFile);
 
+      // Iterate through all the icon rules
       for (const r of rules.ios) {
+        // Generate file based upon icon and rule object
         const outputFileName = i.name
           .replace("{size}", (r.size as any)[i.type])
           .replace("{idiom}", (r as any).idiom)
           .replace("{scale}", (r.scale as any) > 1 ? `@${r.scale}x` : "");
 
+        // Update contents object with exepected output icon
         contents.images.push({
           filename: outputFileName,
           idiom: r.idiom,
@@ -59,19 +68,23 @@ export default definePlugin<CodePluginAppIcon>({
           size: `${r.size.universal}x${r.size.universal}`,
         } as never);
 
+        // Generate the output file path based upon AppIcon.appiconset global path and output filename
         const outputFilePath = path.project.resolve(
           appIconSetPath,
           outputFileName
         );
 
+        // Calculate the output size
         const outputSize = (r.size as any)[i.type] * (r.scale || 1);
 
+        // Utilize sharp to generate the icon with initial app icon
         await sharp(inputFile)
           .resize(outputSize, outputSize, { fit: "fill" })
           .toFile(outputFilePath);
       }
     }
 
+    // Write updated contents to Contents.json
     await fs.writeFile(
       path.project.resolve(appIconSetPath, "Contents.json"),
       JSON.stringify(contents, null, 2)
@@ -88,7 +101,10 @@ export default definePlugin<CodePluginAppIcon>({
     build: BuildConfig & CodePluginAppIcon,
     options: PrebuildOptions
   ): Promise<void> {
+    // Destructure attributes for later use
     const { appIconPath, iconInsets } = build.codePluginAppIcon.plugin;
+
+    // Calculate Android resources path
     const resourcesPath = path.project.resolve(
       "android",
       "app",
@@ -97,8 +113,12 @@ export default definePlugin<CodePluginAppIcon>({
       "res"
     );
 
+    // Iterate through all Android icon types
     for (const i of icons.android) {
+      // Generate absolute path to the specific app icon
       const inputFilePath = path.project.resolve(appIconPath, i.inputFile);
+
+      // Generate buffer via sharp for app icon file
       const inputFile = await (async function () {
         if (!i.transform) return inputFilePath;
 
@@ -119,23 +139,31 @@ export default definePlugin<CodePluginAppIcon>({
           .toBuffer();
       })();
 
+      // Iterate through the icon rules for specific dpi
       for (const r of rules.android) {
+        // Generate output file name based upon dpi
         const outputFileName = i.name.replace("{dpi}", (r as any).dpi);
 
+        // Calculate absolute path of the output file
         const outputFilePath = path.project.resolve(
           resourcesPath,
           outputFileName
         );
 
+        // Calcuate the size of resized icon based on type and scale
         const outputSize = (r.size as any)[i.type] * (r.scale || 1);
 
+        // Execute sharp to resize and write the icon
         await sharp(inputFile)
           .resize(outputSize, outputSize, { fit: "fill" })
           .toFile(outputFilePath);
       }
     }
+
+    // Create a new android directory for XML files defining adaptive icons for devices running Android 8.0 (API level 26) and higher
     await fs.mkdir(path.project.resolve(resourcesPath, "mipmap-anydpi-v26"));
 
+    // Write the XML file defining the structure of an adaptive launcher icon
     await fs.writeFile(
       path.project.resolve(
         path.project.resolve("android", "app", "src", "main", "res"),
