@@ -28,6 +28,7 @@
     "@brandingbrand/code-cli": "*",
     "@brandingbrand/code-jest-config": "*",
     "@brandingbrand/code-cli-kit": "*",
+    "@brandingbrand/code-plugin-app-icon": "*",
     "@brandingbrand/code-plugin-asset": "*",
     "@brandingbrand/code-plugin-native-navigation": "*",
     "@brandingbrand/code-plugin-example": "link:./coderc/plugins/plugin-example",

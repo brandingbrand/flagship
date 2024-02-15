@@ -1,7 +1,8 @@
 import {defineBuild} from '@brandingbrand/code-cli-kit';
 import type {CodePluginAsset} from '@brandingbrand/code-plugin-asset';
+import type {CodePluginAppIcon} from '@brandingbrand/code-plugin-app-icon';
 
-export default defineBuild<CodePluginAsset>({
+export default defineBuild<CodePluginAsset & CodePluginAppIcon>({
   ios: {
     bundleId: 'com.brandingbrand',
     displayName: 'Branding Brand',
@@ -16,16 +17,14 @@ export default defineBuild<CodePluginAsset>({
     displayName: 'Branding Brand',
   },
   codePluginAsset: {
-    ios: {
-      gemfile: ["gem 'sqlite3'"],
-      frameworks: [
-        {
-          framework: 'MyFramework.framework',
-        },
-      ],
-    },
     plugin: {
       assetPath: ['./coderc/assets/fonts'],
+    },
+  },
+  codePluginAppIcon: {
+    plugin: {
+      appIconPath: './coderc/assets/app-icon',
+      iconInsets: 20,
     },
   },
 });
