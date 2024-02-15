@@ -1,0 +1,31 @@
+{
+  "name": "@brandingbrand/code-plugin-app-icon",
+  "version": "0.0.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "test": "jest"
+  },
+  "dependencies": {
+    "sharp": "0.31.2"
+  },
+  "devDependencies": {
+    "@brandingbrand/code-cli-kit": "*",
+    "@brandingbrand/code-jest-config": "*",
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/eslint": "^8.56.1",
+    "@types/sharp": "0.31.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "@brandingbrand/code-cli-kit": "*"
+  },
+  "jest": {
+    "preset": "@brandingbrand/code-jest-config"
+  }
+}

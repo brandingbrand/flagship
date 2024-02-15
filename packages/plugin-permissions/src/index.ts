@@ -54,13 +54,7 @@ export default definePlugin<CodePluginPermissions>({
         "ios/*.{h,m,mm}"
       );
 
-      const transformedContent = string.replace(
-        content,
-        /(source_files\s+=\s+).*/,
-        `$1${pods}`
-      );
-
-      return transformedContent;
+      return string.replace(content, /(source_files\s+=\s+).*/, `$1${pods}`);
     });
 
     // Update Info.plist with appropriate permissions and texts
@@ -131,3 +125,5 @@ export default definePlugin<CodePluginPermissions>({
     });
   },
 });
+
+export type { CodePluginPermissions };
