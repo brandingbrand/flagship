@@ -1,94 +1,154 @@
+/**
+ * Represents a set of iOS permissions.
+ */
 export const ios = {
+  /**
+   * Permission for accessing App Tracking Transparency.
+   */
   AppTrackingTransparency: {
     pod: "AppTrackingTransparency",
     usageKey: "NSUserTrackingUsageDescription",
     purposeKey: undefined,
   },
+  /**
+   * Permission for Bluetooth access.
+   */
   Bluetooth: {
     pod: "Blueooth",
     usageKey: "NSBluetoothAlwaysUsageDescription",
     purposeKey: undefined,
   },
+  /**
+   * Permission for Bluetooth peripheral access.
+   */
   BluetoothPeripheral: {
     pod: "Bluetooth",
     usageKey: "NSBluetoothPeripheralUsageDescription",
     purposeKey: undefined,
   },
+  /**
+   * Permission for accessing calendars.
+   */
   Calendars: {
     pod: "Calendars",
     usageKey: "NSCalendarsUsageDescription",
     purposeKey: undefined,
   },
+  /**
+   * Permission for accessing the camera.
+   */
   Camera: {
     pod: "Camera",
     usageKey: "NSCameraUsageDescription",
     purposeKey: undefined,
   },
+  /**
+   * Permission for accessing contacts.
+   */
   Contacts: {
     pod: "Contacts",
     usageKey: "NSContactsUsageDescription",
     purposeKey: undefined,
   },
+  /**
+   * Permission for accessing Face ID.
+   */
   FaceID: {
     pod: "FaceID",
     usageKey: "NSFaceIDUsageDescription",
     purposeKey: undefined,
   },
+  /**
+   * Permission for accessing precise location.
+   */
   LocationAccuracy: {
     pod: "LocationAccuracy",
     usageKey: "NSLocationTemporaryUsageDescriptionDictionary",
     purposeKey: "REQUIRED",
   },
+  /**
+   * Permission for always accessing location.
+   */
   LocationAlways: {
     pod: "LocationAlways",
     usageKey: "NSLocationAlwaysAndWhenInUseUsageDescription",
     purposeKey: undefined,
   },
+  /**
+   * Permission for accessing location when in use.
+   */
   LocationWhenInUse: {
     pod: "LocationWhenInUse",
     usageKey: "NSLocationWhenInUseUsageDescription",
     purposeKey: undefined,
   },
+  /**
+   * Permission for accessing the media library.
+   */
   MediaLibrary: {
     pod: "MediaLibrary",
     usageKey: undefined,
     purposeKey: undefined,
   },
+  /**
+   * Permission for accessing the microphone.
+   */
   Microphone: {
     pod: "Microphone",
     usageKey: "NSMicrophoneUsageDescription",
     purposeKey: undefined,
   },
+  /**
+   * Permission for accessing motion activity.
+   */
   Motion: {
     pod: "Motion",
     usageKey: "NSMotionUsageDescription",
     purposeKey: undefined,
   },
+  /**
+   * Permission for receiving notifications.
+   */
   Notifications: {
     pod: "Notifications",
     usageKey: undefined,
     purposeKey: undefined,
   },
+  /**
+   * Permission for accessing the photo library.
+   */
   PhotoLibrary: {
     pod: "PhotoLibrary",
     usageKey: "NSPhotoLibraryUsageDescription",
     purposeKey: undefined,
   },
+  /**
+   * Permission for adding photos to the photo library.
+   */
   PhotoLibraryAdd: {
     pod: "PhotoLibraryAddOnly",
     usageKey: "NSPhotoLibraryAddUsageDescription",
     purposeKey: undefined,
   },
+  /**
+   * Permission for accessing reminders.
+   */
   Reminders: {
     pod: "Reminders",
     usageKey: "NSRemindersFullAccessUsageDescription",
     purposeKey: undefined,
   },
+  /**
+   * Permission for accessing Siri.
+   */
   Siri: {
     pod: "Siri",
     usageKey: "NSSiriUsageDescription",
     purposeKey: undefined,
   },
+  /**
+   * Permission for speech recognition.
+   */
   SpeechRecognition: {
     pod: "SpeechRecognition",
     usageKey: "NSSpeechRecognitionUsageDescription",
@@ -96,6 +156,9 @@ export const ios = {
   },
 };
 
+/**
+ * Represents a set of Android permissions.
+ */
 export const android = [
   "ACCEPT_HANDOVER",
   "ACCESS_BACKGROUND_LOCATION",
