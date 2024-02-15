@@ -72,6 +72,10 @@ export default definePlugin<CodePluginPermissions>({
 
           if (!pod?.usageKey) return acc;
 
+          if (!curr.text) {
+            `[CodePermissionsPluginError]: ${pod.pod} permission requires a 'usageKey'.`;
+          }
+
           // Exception case for LocationAccuracy permission which requires a purpose key
           // https://developer.apple.com/documentation/bundleresources/information_property_list/nslocationtemporaryusagedescriptiondictionary
           if (curr.permission === "LocationAccuracy") {

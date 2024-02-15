@@ -70,6 +70,7 @@ describe("plugin-permissions", () => {
       codePluginPermissions: {
         plugin: {
           ios: [
+            // @ts-ignore
             {
               permission: "LocationAccuracy",
               text: "Let me use your precise location temporarily",

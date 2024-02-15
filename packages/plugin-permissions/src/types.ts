@@ -2,17 +2,24 @@ import type { Plugin } from "@brandingbrand/code-cli-kit";
 
 import * as permissions from "./permissions";
 
-export type IOSPermissions = Record<string, { pod: string; usageKey?: string }>;
-
-export type AndroidPermissions = string[];
-
 export type CodePluginPermissions = {
   codePluginPermissions: Plugin<{
-    ios?: {
-      permission: keyof typeof permissions.ios;
-      text?: string;
-      purposeKey?: string;
-    }[];
-    android?: ((typeof permissions.android)[number] | (string & {}))[];
+    ios?: IOSPermission[];
+    android?: AndroidPermission[];
   }>;
 };
+
+type IOSPermission = {
+  [T in keyof typeof permissions.ios]: {
+    permission: T;
+    text?: string;
+    purposeKey?: string;
+  } & ((typeof permissions.ios)[T]["usageKey"] extends undefined
+    ? {}
+    : { text: string }) &
+    ((typeof permissions.ios)[T]["purposeKey"] extends undefined
+      ? {}
+      : { purposeKey: string });
+}[keyof typeof permissions.ios];
+
+type AndroidPermission = (typeof permissions.android)[number] | {};

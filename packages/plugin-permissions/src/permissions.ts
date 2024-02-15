@@ -1,83 +1,102 @@
-import type { AndroidPermissions, IOSPermissions } from "./types";
-
-export const ios: IOSPermissions = {
+export const ios = {
   AppTrackingTransparency: {
     pod: "AppTrackingTransparency",
     usageKey: "NSUserTrackingUsageDescription",
+    purposeKey: undefined,
   },
   Bluetooth: {
     pod: "Blueooth",
     usageKey: "NSBluetoothAlwaysUsageDescription",
+    purposeKey: undefined,
   },
   BluetoothPeripheral: {
     pod: "Bluetooth",
     usageKey: "NSBluetoothPeripheralUsageDescription",
+    purposeKey: undefined,
   },
   Calendars: {
     pod: "Calendars",
     usageKey: "NSCalendarsUsageDescription",
+    purposeKey: undefined,
   },
   Camera: {
     pod: "Camera",
     usageKey: "NSCameraUsageDescription",
+    purposeKey: undefined,
   },
   Contacts: {
     pod: "Contacts",
     usageKey: "NSContactsUsageDescription",
+    purposeKey: undefined,
   },
   FaceID: {
     pod: "FaceID",
     usageKey: "NSFaceIDUsageDescription",
+    purposeKey: undefined,
   },
   LocationAccuracy: {
     pod: "LocationAccuracy",
     usageKey: "NSLocationTemporaryUsageDescriptionDictionary",
+    purposeKey: "REQUIRED",
   },
   LocationAlways: {
     pod: "LocationAlways",
     usageKey: "NSLocationAlwaysAndWhenInUseUsageDescription",
+    purposeKey: undefined,
   },
   LocationWhenInUse: {
     pod: "LocationWhenInUse",
     usageKey: "NSLocationWhenInUseUsageDescription",
+    purposeKey: undefined,
   },
   MediaLibrary: {
     pod: "MediaLibrary",
+    usageKey: undefined,
+    purposeKey: undefined,
   },
   Microphone: {
     pod: "Microphone",
     usageKey: "NSMicrophoneUsageDescription",
+    purposeKey: undefined,
   },
   Motion: {
     pod: "Motion",
     usageKey: "NSMotionUsageDescription",
+    purposeKey: undefined,
   },
   Notifications: {
     pod: "Notifications",
+    usageKey: undefined,
+    purposeKey: undefined,
   },
   PhotoLibrary: {
     pod: "PhotoLibrary",
     usageKey: "NSPhotoLibraryUsageDescription",
+    purposeKey: undefined,
   },
   PhotoLibraryAdd: {
     pod: "PhotoLibraryAddOnly",
     usageKey: "NSPhotoLibraryAddUsageDescription",
+    purposeKey: undefined,
   },
   Reminders: {
     pod: "Reminders",
     usageKey: "NSRemindersFullAccessUsageDescription",
+    purposeKey: undefined,
   },
   Siri: {
     pod: "Siri",
     usageKey: "NSSiriUsageDescription",
+    purposeKey: undefined,
   },
   SpeechRecognition: {
     pod: "SpeechRecognition",
     usageKey: "NSSpeechRecognitionUsageDescription",
+    purposeKey: undefined,
   },
 };
 
-export const android: AndroidPermissions = [
+export const android = [
   "ACCEPT_HANDOVER",
   "ACCESS_BACKGROUND_LOCATION",
   "ACCESS_COARSE_LOCATION",
