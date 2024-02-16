@@ -1,8 +1,11 @@
 import {defineBuild} from '@brandingbrand/code-cli-kit';
 import type {CodePluginAsset} from '@brandingbrand/code-plugin-asset';
 import type {CodePluginAppIcon} from '@brandingbrand/code-plugin-app-icon';
+import type {CodePluginPermissions} from '@brandingbrand/code-plugin-permissions';
 
-export default defineBuild<CodePluginAsset & CodePluginAppIcon>({
+export default defineBuild<
+  CodePluginAsset & CodePluginAppIcon & CodePluginPermissions
+>({
   ios: {
     bundleId: 'com.brandingbrand',
     displayName: 'Branding Brand',
@@ -25,6 +28,17 @@ export default defineBuild<CodePluginAsset & CodePluginAppIcon>({
     plugin: {
       appIconPath: './coderc/assets/app-icon',
       iconInsets: 20,
+    },
+  },
+  codePluginPermissions: {
+    plugin: {
+      ios: [
+        {
+          permission: 'Camera',
+          text: 'Let me use the camera',
+        },
+      ],
+      android: ['CAMERA'],
     },
   },
 });

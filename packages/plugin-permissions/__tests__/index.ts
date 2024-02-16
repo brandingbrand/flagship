@@ -42,7 +42,7 @@ describe("plugin-permissions", () => {
     expect(fs.writeFile).toHaveBeenCalledWith(
       require.resolve("react-native-permissions/RNPermissions.podspec"),
       expect.stringContaining(
-        'ios/*.{h,m,mm}, "ios/AppTrackingTransparency/*.{h,m,mm}"'
+        '"ios/*.{h,m,mm}", "ios/AppTrackingTransparency/*.{h,m,mm}"'
       ),
       "utf-8"
     );

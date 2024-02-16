@@ -28,5 +28,6 @@ export default defineConfig({
     '@brandingbrand/code-plugin-native-navigation',
     '@brandingbrand/code-plugin-asset',
     '@brandingbrand/code-plugin-app-icon',
+    '@brandingbrand/code-plugin-permissions',
   ],
 });

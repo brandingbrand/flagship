@@ -9494,7 +9494,7 @@ react-native-navigation@7.37.2:
     react-lifecycles-compat "2.0.0"
     tslib "1.9.3"
 
-react-native-permissions@^4.1.1:
+react-native-permissions@4.1.1, react-native-permissions@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-4.1.1.tgz#6c185f9ec45069fa14cf8992bed6b67fc8981478"
   integrity sha512-wdIHMwmDZ6pRVsgAgF7mn/pJEuJd5wJDGENqvFDJs2lW4BSZeN++ZFsA6FgOqUs/2276Oj7rslQgVaxdOsi6yw==

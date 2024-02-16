@@ -38,7 +38,11 @@ export default definePlugin<CodePluginPermissions>({
 
     // Resolve the path for RNPermissions.podspec file
     const filePath = require.resolve(
-      "react-native-permissions/RNPermissions.podspec"
+      "react-native-permissions/RNPermissions.podspec",
+      {
+        // eslint-disable-next-line turbo/no-undeclared-env-vars
+        ...(!process.env.JEST_WORKER_ID && { paths: [process.cwd()] }),
+      }
     );
 
     // Update podspec file with appropriate permissions
@@ -51,7 +55,7 @@ export default definePlugin<CodePluginPermissions>({
 
           return `${acc}, "ios/${pod?.pod}/*.{h,m,mm}"`;
         },
-        "ios/*.{h,m,mm}"
+        '"ios/*.{h,m,mm}"'
       );
 
       return string.replace(content, /(source_files\s+=\s+).*/, `$1${pods}`);
