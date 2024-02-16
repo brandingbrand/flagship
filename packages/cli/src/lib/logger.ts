@@ -30,6 +30,18 @@ export default {
   }),
 
   /**
+   * The original `console.log` function.
+   * @private
+   */
+  __console_log__: console.log,
+
+  /**
+   * A console.log override function that does nothing.
+   * @private
+   */
+  __console_log__redirect: function () {},
+
+  /**
    * Logs an information message.
    * @param message - The message to log.
    */
@@ -89,6 +101,8 @@ export default {
   pause: function () {
     this.isPaused = true;
 
+    console.log = this.__console_log__redirect;
+
     // @ts-ignore
     process.stdout.write = this.__stdout__redirect.write.bind(
       this.__stdout__redirect
@@ -101,6 +115,7 @@ export default {
   resume: function () {
     this.isPaused = false;
 
+    console.log = this.__console_log__;
     process.stdout.write = this.__stdout__;
   },
 };

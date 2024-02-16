@@ -2,9 +2,13 @@ import {defineBuild} from '@brandingbrand/code-cli-kit';
 import type {CodePluginAsset} from '@brandingbrand/code-plugin-asset';
 import type {CodePluginAppIcon} from '@brandingbrand/code-plugin-app-icon';
 import type {CodePluginPermissions} from '@brandingbrand/code-plugin-permissions';
+import type {CodePluginSplashScreen} from '@brandingbrand/code-plugin-splash-screen';
 
 export default defineBuild<
-  CodePluginAsset & CodePluginAppIcon & CodePluginPermissions
+  CodePluginAsset &
+    CodePluginAppIcon &
+    CodePluginPermissions &
+    CodePluginSplashScreen
 >({
   ios: {
     bundleId: 'com.brandingbrand',
@@ -39,6 +43,24 @@ export default defineBuild<
         },
       ],
       android: ['CAMERA'],
+    },
+  },
+  codePluginSplashScreen: {
+    plugin: {
+      ios: {
+        type: 'generated',
+        generated: {
+          logoPath: './coderc/assets/splash-screen/logo.png',
+          backgroundColor: '#fff',
+        },
+      },
+      android: {
+        type: 'generated',
+        generated: {
+          logoPath: './coderc/assets/splash-screen/logo.png',
+          backgroundColor: '#fff',
+        },
+      },
     },
   },
 });

@@ -1,3 +1,5 @@
+/// <reference types="@brandingbrand/code-cli-kit/types"/>
+
 import fse from "fs-extra";
 import {
   BuildConfig,
@@ -7,13 +9,13 @@ import {
   string,
 } from "@brandingbrand/code-cli-kit";
 
-import type { CodePluginSplashCreen } from "./types";
+import type { CodePluginSplashScreen } from "./types";
 
 /**
  * Generates iOS splash screen using provided configuration.
  * @param config The build configuration including splash screen settings.
  */
-export async function ios(config: BuildConfig & CodePluginSplashCreen) {
+export async function ios(config: BuildConfig & CodePluginSplashScreen) {
   // Extract xcassetsDir and xcassetsFile from the iOS legacy splash screen configuration
   const { xcassetsDir, xcassetsFile } =
     // @ts-ignore
@@ -56,7 +58,7 @@ export async function ios(config: BuildConfig & CodePluginSplashCreen) {
  * Generates Android splash screen using provided configuration.
  * @param config The build configuration including splash screen settings.
  */
-export async function android(config: BuildConfig & CodePluginSplashCreen) {
+export async function android(config: BuildConfig & CodePluginSplashScreen) {
   // Extract assetsDir from the Android legacy splash screen configuration
   // @ts-ignore
   const { assetsDir } = config.codePluginSplashScreen.plugin.android.legacy;

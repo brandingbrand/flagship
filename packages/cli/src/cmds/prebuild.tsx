@@ -1,7 +1,7 @@
 import { Option, program } from "commander";
 import type { PrebuildOptions } from "@brandingbrand/code-cli-kit";
 
-import { config } from "@/lib";
+import { config, logger } from "@/lib";
 import * as actions from "@/actions";
 import { Reporter } from "@/components";
 
@@ -70,4 +70,9 @@ program
      * Unmount react ink components
      */
     unmount();
+
+    /**
+     * Resume logging with console.log and process.stdout
+     */
+    logger.resume();
   });

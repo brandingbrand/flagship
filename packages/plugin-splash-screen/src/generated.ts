@@ -1,18 +1,23 @@
+/// <reference types="@brandingbrand/code-cli-kit/types"/>
+
+import fse from "fs-extra";
 import {
   BuildConfig,
   fs,
   path,
   string,
+  withInfoPlist,
+  withPbxproj,
   withUTF8,
 } from "@brandingbrand/code-cli-kit";
 
-import type { CodePluginSplashCreen } from "./types";
+import type { CodePluginSplashScreen } from "./types";
 
 /**
  * Generates iOS splash screen using provided configuration.
  * @param config The build configuration including splash screen settings.
  */
-export async function ios(config: BuildConfig & CodePluginSplashCreen) {
+export async function ios(config: BuildConfig & CodePluginSplashScreen) {
   // Extract logoPath and background color from the iOS splash screen configuration
   const { logoPath, backgroundColor: background } =
     // @ts-ignore
@@ -30,27 +35,62 @@ export async function ios(config: BuildConfig & CodePluginSplashCreen) {
 
   // Generate iOS splash screen using the specified configuration
   await generate({
-    ios: { projectPath: path.project.resolve("ios", "app") },
-    android: null,
-    workingPath: path.project.resolve(),
-    logoPath: inputFile,
+    logo: inputFile,
     background,
     logoWidth: 212,
     platforms: ["ios"],
+    assetsOutput: null,
+    ios: {
+      sourceDir: path.project.resolve("ios"),
+      xcodeProject: {
+        name: "app",
+        isWorkspace: true,
+      },
+    },
   });
 
   // Rename the generated BootSplash.storyboard file to LaunchScreen.storyboard
-  await fs.rename(
+  await fse.move(
     path.project.resolve("ios", "app", "BootSplash.storyboard"),
-    path.project.resolve("ios", "app", "LaunchScreen.storyboard")
+    path.project.resolve("ios", "app", "LaunchScreen.storyboard"),
+    { overwrite: true }
   );
+
+  await withPbxproj((project) => {
+    const targetKey = project.findTargetKey("app");
+
+    if (!targetKey) {
+      throw Error(
+        "[CodePluginSplashCreenError]: cannot find target 'app' uuid"
+      );
+    }
+
+    const groupKey = project.findPBXGroupKey({ name: "app" });
+
+    if (!groupKey) {
+      throw Error("[CodePluginSplashCreenError]: cannot find group 'app' uuid");
+    }
+
+    project.removeResourceFile(
+      "app/BootSplash.storyboard",
+      { target: targetKey },
+      groupKey
+    );
+  });
+
+  await withInfoPlist((plist) => {
+    return {
+      ...plist,
+      UILaunchStoryboardName: "LaunchScreen.storyboard",
+    };
+  });
 }
 
 /**
  * Generates Android splash screen using provided configuration.
  * @param config The build configuration including splash screen settings.
  */
-export async function android(config: BuildConfig & CodePluginSplashCreen) {
+export async function android(config: BuildConfig & CodePluginSplashScreen) {
   // Extract logoPath and background color from the Android splash screen configuration
   const { logoPath, backgroundColor: background } =
     // @ts-ignore
@@ -68,18 +108,21 @@ export async function android(config: BuildConfig & CodePluginSplashCreen) {
 
   // Generate Android splash screen using the specified configuration
   await generate({
-    ios: null,
-    android: { sourceDir: path.project.resolve("android", "app") },
     flavor: "main",
-    workingPath: path.project.resolve(),
-    logoPath: inputFile,
+    logo: inputFile,
     background,
     logoWidth: 180,
+    assetsOutput: null,
+    platforms: ["android"],
+    android: {
+      sourceDir: path.project.resolve("android"),
+      appName: "app",
+    },
   });
 
   // Create the necessary directory structure for the Android splash screen layout
   await fs.mkdir(
-    path.project.resolve("android", "src", "main", "res", "layout"),
+    path.project.resolve("android", "app", "src", "main", "res", "layout"),
     {
       recursive: true,
     }
@@ -89,6 +132,7 @@ export async function android(config: BuildConfig & CodePluginSplashCreen) {
   await fs.writeFile(
     path.project.resolve(
       "android",
+      "app",
       "src",
       "main",
       "res",
@@ -106,7 +150,7 @@ export async function android(config: BuildConfig & CodePluginSplashCreen) {
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@mipmap/bootsplash_logo"
+            android:background="@drawable/bootsplash_logo"
             />
     </LinearLayout>
     `

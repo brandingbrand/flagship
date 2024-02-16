@@ -9601,7 +9601,7 @@ react-native-asset@2.1.1:
     sha1-file "^1.0.4"
     xcode "^2.0.0"
 
-react-native-bootsplash@5.4.0:
+react-native-bootsplash@5.4.0, react-native-bootsplash@^5.4.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/react-native-bootsplash/-/react-native-bootsplash-5.4.0.tgz#62c8daf6d67a9802e269557eccb7d243b20c719a"
   integrity sha512-7BNFNdB7BlAMTiaKzIPOTdWznRy3FRJeCEu7dcH2FRmtGtwutUP4VwZTunRgu7IjMe2Un2pLp4HcFCbhujZ7xw==
