@@ -2,8 +2,8 @@
   "name": "@brandingbrand/flagship-code",
   "private": true,
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
+    "build": "turbo build --concurrency 100",
+    "dev": "turbo dev --concurrency 100",
     "lint": "turbo lint",
     "test": "turbo test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""

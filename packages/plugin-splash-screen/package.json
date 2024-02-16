@@ -1,0 +1,32 @@
+{
+  "name": "@brandingbrand/code-plugin-splash-screen",
+  "version": "0.0.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "test": "jest"
+  },
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "react-native-bootsplash": "5.4.0"
+  },
+  "devDependencies": {
+    "@brandingbrand/code-cli-kit": "*",
+    "@brandingbrand/code-jest-config": "*",
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/eslint": "^8.56.1",
+    "@types/sharp": "0.31.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "@brandingbrand/code-cli-kit": "*"
+  },
+  "jest": {
+    "preset": "@brandingbrand/code-jest-config"
+  }
+}

@@ -222,7 +222,7 @@ export default {
      * Retrieves the absolute path to the Android MainApplication.java file.
      *
      * @param {BuildConfig} config - The Android project configuration.
-     * @returns {string} The absolute path to the EnvSwitcher.java file.
+     * @returns {string} The absolute path to the MainApplication.java file.
      */
     mainApplication: function (config: BuildConfig): string {
       return resolvePathFromProject(
@@ -233,6 +233,24 @@ export default {
         "java",
         ...packageToPath(config.android.packageName),
         "MainApplication.java"
+      );
+    },
+
+    /**
+     * Retrieves the absolute path to the Android MainActivity.java file.
+     *
+     * @param {BuildConfig} config - The Android project configuration.
+     * @returns {string} The absolute path to the MainActivity.java file.
+     */
+    mainActivity: function (config: BuildConfig): string {
+      return resolvePathFromProject(
+        "android",
+        "app",
+        "src",
+        "main",
+        "java",
+        ...packageToPath(config.android.packageName),
+        "MainActivity.java"
       );
     },
 

@@ -113,6 +113,27 @@ describe("path", () => {
     );
   });
 
+  it("should have an android.mainActivity function that returns the path to android/app/src/main/java/com/example/app/MainActivity.java", () => {
+    const config = {
+      android: {
+        name: "example",
+        displayName: "Example",
+        packageName: "com.example.app",
+      },
+      ios: {
+        name: "example",
+        displayName: "Example",
+        bundleId: "com.example.app",
+      },
+    };
+    const mainActivityPath = path.android.mainActivity(config);
+    expect(mainActivityPath).toEqual(
+      expect.stringMatching(
+        /.*android\/app\/src\/main\/java\/com\/example\/app\/MainActivity\.java$/
+      )
+    );
+  });
+
   it("should have an android.envSwitcher function that returns the path to android/app/src/main/java/com/example/app/EnvSwitcher.java", () => {
     const config = {
       android: {
