@@ -9,6 +9,9 @@
     "lint": "eslint . --max-warnings 0",
     "test": "jest"
   },
+  "dependencies": {
+    "fs-extra": "^11.2.0"
+  },
   "devDependencies": {
     "@brandingbrand/code-cli-kit": "*",
     "@brandingbrand/code-jest-config": "*",

@@ -13,6 +13,7 @@ import {
   path,
   fs,
 } from "@brandingbrand/code-cli-kit";
+import fse from "fs-extra";
 
 import type { CodePluginTargetExtension } from "./types";
 
@@ -50,6 +51,11 @@ export default definePlugin<CodePluginTargetExtension>({
       // Filtering source files from files
       const sourceFiles = files.filter((it) => it.match(/(\w+\.(m|mm|swift))/));
 
+      await fse.copy(
+        path.project.resolve(assetsPath),
+        path.project.resolve("ios", "app")
+      );
+
       // Check to see if entitlements exists otherwise throw error as signing will file in continuous integration
       if (!entitlementsFile) {
         throw Error(
@@ -65,7 +71,7 @@ export default definePlugin<CodePluginTargetExtension>({
         // Throw error if the target key does not exist as you won't able to manipulate the target
         if (!targetKey) {
           throw Error(
-            "[CodePluginSplashCreenError]: cannot find target 'app' uuid"
+            "[CodePluginTargetExtension]: cannot find target 'app' uuid"
           );
         }
 
@@ -75,45 +81,34 @@ export default definePlugin<CodePluginTargetExtension>({
         // Throw error if group key does not exist as you won't be able to manipulate group
         if (!groupKey) {
           throw Error(
-            "[CodePluginSplashCreenError]: cannot find group 'app' uuid"
+            "[CodePluginTargetExtension]: cannot find group 'app' uuid"
           );
         }
 
         // Create new group with source files
-        project.addPbxGroup(files, name, name);
-
-        // Aggregate newly created group key for extension in format of uuid
-        const extensionGroupKey = project.findPBXGroupKey({ name });
-
-        // Throw error if group key does not exist as you won't be able to manipulate group
-        if (!extensionGroupKey) {
-          throw Error(
-            `[CodePluginSplashCreenError]: cannot find group '${name}' uuid`
-          );
-        }
+        const { uuid: extensionGroupUuid } = project.addPbxGroup(
+          files,
+          name,
+          "app"
+        );
 
         // Add the extension group to app group
-        project.addToPbxGroup(extensionGroupKey, groupKey);
+        project.addToPbxGroup(extensionGroupUuid, groupKey);
 
         // Create new target for app extension
-        project.addTarget(name, "app_extension", name, bundleId);
-
-        // Aggregate newly created target key for extension in format of uuid
-        const extensionTargetKey = project.findTargetKey(name);
-
-        // Throw error if the target key does not exist as you won't able to manipulate the target
-        if (!extensionTargetKey) {
-          throw Error(
-            `[CodePluginSplashCreenError]: cannot find target '${name}' uuid`
-          );
-        }
+        const { uuid: extensionTargetUuid } = project.addTarget(
+          name,
+          "app_extension",
+          name,
+          bundleId
+        );
 
         // Adding build phase for source files
         project.addBuildPhase(
           sourceFiles,
           "PBXSourcesBuildPhase",
           "Sources",
-          extensionTargetKey,
+          extensionTargetUuid,
           undefined,
           undefined
         );
@@ -123,7 +118,7 @@ export default definePlugin<CodePluginTargetExtension>({
           [],
           "PBXFrameworksBuildPhase",
           "Frameworks",
-          extensionTargetKey,
+          extensionTargetUuid,
           undefined,
           undefined
         );
@@ -133,11 +128,12 @@ export default definePlugin<CodePluginTargetExtension>({
           [],
           "PBXResourcesBuildPhase",
           "Resources",
-          extensionTargetKey,
+          extensionTargetUuid,
           undefined,
           undefined
         );
 
+        // Required build settings for code signing - more important for continuous integration
         const buildSettings = {
           PRODUCT_BUNDLE_SHORT_VERSION_STRING:
             build.ios.versioning?.version ?? "1.0",
@@ -153,6 +149,8 @@ export default definePlugin<CodePluginTargetExtension>({
         Object.entries(buildSettings).forEach(([key, value]) => {
           project.updateBuildProperty(key, value, null, `"${name}"`);
         });
+
+        console.log(process.cwd());
       });
     }
   },
