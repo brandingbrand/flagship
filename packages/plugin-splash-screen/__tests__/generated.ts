@@ -79,7 +79,7 @@ describe("plugin-splash-screen", () => {
         );
       }
 
-      project.addPbxGroup([], "Resources", "Resources");
+      project.addPbxGroup([], "Resources", '""');
 
       project.addResourceFile(
         "app/BootSplash.storyboard",

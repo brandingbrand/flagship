@@ -46,6 +46,8 @@ export async function ios(config: BuildConfig & CodePluginSplashScreen) {
       throw Error("[CodePluginSplashCreenError]: cannot find group 'app' uuid");
     }
 
+    project.addPbxGroup([], "Resources", '""');
+
     project.addResourceFile(
       `app/${xcassetsFile}`,
       { target: targetKey },
@@ -91,10 +93,10 @@ import androidx.annotation.Nullable;
       /(public class[\s\S]+?{)/,
       `$1
   @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
-      setContentView(R.layout.splash);
-    }
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.splash);
+  }
 `
     );
 
