@@ -149,8 +149,6 @@ export default definePlugin<CodePluginTargetExtension>({
         Object.entries(buildSettings).forEach(([key, value]) => {
           project.updateBuildProperty(key, value, null, `"${name}"`);
         });
-
-        console.log(process.cwd());
       });
     }
   },
