@@ -23,6 +23,7 @@ describe("plugin-splash-screen", () => {
           legacy: {
             xcassetsDir: "./coderc/assets/splash-screen/ios",
             xcassetsFile: "LaunchScreen.xcassets",
+            storyboardFile: "LaunchScreen.storyboard",
           },
         },
         android: {

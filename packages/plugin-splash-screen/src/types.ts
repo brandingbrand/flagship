@@ -43,6 +43,12 @@ type IOSSplash =
          * The name of the xcassets file for the legacy splash screen.
          */
         xcassetsFile: string;
+        /**
+         * The name of the storyboard file for the legacy splash screen. This is required
+         * becasue the default is LaunchScreen.storyboard which could different from the
+         * name of the file supplied.
+         */
+        storyboardFile: string;
       };
     }
   | {

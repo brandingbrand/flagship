@@ -7,6 +7,7 @@ import {
   withPbxproj,
   withUTF8,
   string,
+  withInfoPlist,
 } from "@brandingbrand/code-cli-kit";
 
 import type { CodePluginSplashScreen } from "./types";
@@ -17,7 +18,7 @@ import type { CodePluginSplashScreen } from "./types";
  */
 export async function ios(config: BuildConfig & CodePluginSplashScreen) {
   // Extract xcassetsDir and xcassetsFile from the iOS legacy splash screen configuration
-  const { xcassetsDir, xcassetsFile } =
+  const { xcassetsDir, xcassetsFile, storyboardFile } =
     // @ts-ignore
     config.codePluginSplashScreen.plugin.ios.legacy;
 
@@ -32,27 +33,81 @@ export async function ios(config: BuildConfig & CodePluginSplashScreen) {
 
   // Modify the iOS project file to include the splash screen resource
   withPbxproj((project) => {
+    /**
+     * Aggregate the target key in the format of the uuid.
+     */
     const targetKey = project.findTargetKey("app");
 
+    /**
+     * The target key in the format of a uuid is required to proceed further
+     * in order to add assets to the correct target - throw error otherwise.
+     */
     if (!targetKey) {
       throw Error(
         "[CodePluginSplashCreenError]: cannot find target 'app' uuid"
       );
     }
 
+    /**
+     * Aggregate the group key in the format of the uuid.
+     */
     const groupKey = project.findPBXGroupKey({ name: "app" });
 
+    /**
+     * The group key in the format of a uuid is required to proceed further
+     * in order to add assets to the correct group - throw error otherwise.
+     */
     if (!groupKey) {
       throw Error("[CodePluginSplashCreenError]: cannot find group 'app' uuid");
     }
 
+    /**
+     * There is no resource group by defaul so add in case another plugin has not
+     * already created it. This would otherwise error out with vague message.
+     */
     project.addPbxGroup([], "Resources", '""');
 
+    /**
+     * Add the xcassets so they can be utilized by the launch screen.
+     */
     project.addResourceFile(
       `app/${xcassetsFile}`,
       { target: targetKey },
       groupKey
     );
+
+    /**
+     * Short circuit return in case the storyboard file name doesn't change
+     * from the default value - no need to re-add it as a resource with
+     * an added side-effect.
+     */
+    if (storyboardFile === "LaunchScreen.storyboard") return;
+
+    /**
+     * Add newly named storyboard resource file.
+     */
+    project.addResourceFile(
+      `app/${storyboardFile}`,
+      { target: targetKey },
+      groupKey
+    );
+  });
+
+  /**
+   * Short circuit return in case the file storyboard file name doesn't change
+   * from the default value - no need to update the Info.plist with an
+   * added side-effect.
+   */
+  if (storyboardFile === "LaunchScreen.storyboard") return;
+
+  /**
+   * Update Info.plist with newly named storyboard.
+   */
+  await withInfoPlist((plist) => {
+    return {
+      ...plist,
+      UILaunchStoryboardName: storyboardFile,
+    };
   });
 }
 
