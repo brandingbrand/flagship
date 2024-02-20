@@ -29,7 +29,8 @@ export async function ios(config: BuildConfig & CodePluginSplashScreen) {
   // Require the generate function from react-native-bootsplash
   const { generate } = require(
     require.resolve("react-native-bootsplash/dist/commonjs/generate.js", {
-      paths: [process.cwd()],
+      // eslint-disable-next-line turbo/no-undeclared-env-vars
+      ...(!process.env.JEST_WORKER_ID && { paths: [process.cwd()] }),
     })
   );
 
@@ -102,7 +103,8 @@ export async function android(config: BuildConfig & CodePluginSplashScreen) {
   // Require the generate function from react-native-bootsplash
   const { generate } = require(
     require.resolve("react-native-bootsplash/dist/commonjs/generate.js", {
-      paths: [process.cwd()],
+      // eslint-disable-next-line turbo/no-undeclared-env-vars
+      ...(!process.env.JEST_WORKER_ID && { paths: [process.cwd()] }),
     })
   );
 
@@ -174,12 +176,11 @@ export async function android(config: BuildConfig & CodePluginSplashScreen) {
       content,
       /(public class[\s\S]+?{)/,
       `$1
-      @Override
-        protected void onCreate(@Nullable Bundle savedInstanceState) {
-          super.onCreate(savedInstanceState);
-          setContentView(R.layout.splash);
-        }
-    `
+  @Override
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.splash);
+  }`
     );
 
     return content;
