@@ -1,5 +1,5 @@
 /**
- * @jest-environment-options {"requireTemplate": true, "fixtures": "fixtures"}
+ * @jest-environment-options {"requireTemplate": true, "fixtures": "generated_fixtures"}
  */
 
 jest.mock("fs-extra");
@@ -13,7 +13,7 @@ import {
 
 import plugin, { type CodePluginSplashScreen } from "../src";
 
-describe("plugin-permissions", () => {
+describe("plugin-splash-screen", () => {
   const config: BuildConfig & CodePluginSplashScreen = {
     ios: {
       bundleId: "com.app",
@@ -137,7 +137,7 @@ describe("plugin-permissions", () => {
     ).toContain('android:background="#fff">');
     expect(await fs.readFile(path.android.mainActivity(config), "utf-8"))
       .toContain(`import android.os.Bundle;
-    import androidx.annotation.Nullable;`);
+import androidx.annotation.Nullable;`);
     expect(await fs.readFile(path.android.mainActivity(config), "utf-8"))
       .toContain(`  @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -80,8 +80,8 @@ export async function android(config: BuildConfig & CodePluginSplashScreen) {
       /(package[\s\S]+?;)/,
       `$1
     
-    import android.os.Bundle;
-    import androidx.annotation.Nullable;
+import android.os.Bundle;
+import androidx.annotation.Nullable;
     `
     );
 
@@ -90,12 +90,12 @@ export async function android(config: BuildConfig & CodePluginSplashScreen) {
       content,
       /(public class[\s\S]+?{)/,
       `$1
-      @Override
-        protected void onCreate(@Nullable Bundle savedInstanceState) {
-          super.onCreate(savedInstanceState);
-          setContentView(R.layout.splash);
-        }
-    `
+  @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.splash);
+    }
+`
     );
 
     return content;

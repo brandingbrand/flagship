@@ -142,20 +142,20 @@ export async function android(config: BuildConfig & CodePluginSplashScreen) {
       "splash.xml"
     ),
     `<?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal|center_vertical"
-        android:background="${background}">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/bootsplash_logo"
-            />
-    </LinearLayout>
-    `
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal|center_vertical"
+    android:background="${background}">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/bootsplash_logo"
+    />
+</LinearLayout>
+`
   );
 
   // Update the main activity file to set the splash screen layout
@@ -166,9 +166,9 @@ export async function android(config: BuildConfig & CodePluginSplashScreen) {
       /(package[\s\S]+?;)/,
       `$1
     
-    import android.os.Bundle;
-    import androidx.annotation.Nullable;
-    `
+import android.os.Bundle;
+import androidx.annotation.Nullable;
+`
     );
 
     // Add onCreate method to the main activity to set the splash screen layout
@@ -180,7 +180,8 @@ export async function android(config: BuildConfig & CodePluginSplashScreen) {
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.splash);
-  }`
+  }
+`
     );
 
     return content;
