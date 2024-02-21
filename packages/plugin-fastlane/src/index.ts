@@ -33,29 +33,34 @@ export default definePlugin<CodePluginFastlane>({
     build: BuildConfig & CodePluginFastlane,
     options: PrebuildOptions
   ): Promise<void> {
+    // Check if the plugin interface for iOS is defined
     if (!build.codePluginFastlane.plugin.ios) {
       throw Error(
         "[CodePluginFastlaneError]: attempted to run ios but interface is incorrect, please check your build configuration."
       );
     }
 
+    // Check if the signing interface for iOS is defined
     if (!build.ios.signing) {
       throw Error(
         "[CodePluginFastlaneError]: attempted to run ios but signing interface is incorrect, please check your build configuration."
       );
     }
 
+    // Get the path to the template directory
     const templatePath = path.join(
       require.resolve("@brandingbrand/code-plugin-fastlane/package.json"),
       "..",
       "template"
     );
 
+    // Copy iOS template files to the project directory
     await fse.copy(
       path.resolve(templatePath, "ios"),
       path.project.resolve("ios")
     );
 
+    // Update Gemfile for iOS with fastlane plugin
     await withUTF8(path.ios.gemfile, (content: string) => {
       return string.replace(
         content,
@@ -67,6 +72,7 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`
       );
     });
 
+    // Render Fastfile template for iOS
     await withUTF8(
       path.project.resolve("ios", "fastlane", "Fastfile"),
       (content) => {
@@ -74,10 +80,12 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`
       }
     );
 
+    // Get list of provisioning profiles files
     const files = await fs.readdir(
       path.project.resolve(build.ios.signing.profilesDir)
     );
 
+    // Update Fastfile with provisioning profiles
     await withUTF8(
       path.project.resolve("ios", "fastlane", "Fastfile"),
       (content) => {
@@ -98,11 +106,31 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`
           )
           .join(",");
 
-        return string.replace(
+        content = string.replace(
           content,
           /(@profiles\s+=\s+\[).*(\])/,
           `$1${profiles}$2`
         );
+
+        content = string.replace(
+          content,
+          /(certificate_path:\s+')AppleWWDRCA\.cer(')/,
+          `$1${path.project.resolve(build.ios.signing!.appleCert)}$2`
+        );
+
+        content = string.replace(
+          content,
+          /(certificate_path:\s+').*\.p12(')/,
+          `$1${path.project.resolve(build.ios.signing!.distP12)}$2`
+        );
+
+        content = string.replace(
+          content,
+          /(certificate_path:\s+').*\.cer(')/,
+          `$1${path.project.resolve(build.ios.signing!.distCert)}$2`
+        );
+
+        return content;
       }
     );
   },
@@ -117,23 +145,27 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`
     build: BuildConfig & CodePluginFastlane,
     options: PrebuildOptions
   ): Promise<void> {
+    // Check if the plugin interface for Android is defined
     if (!build.codePluginFastlane.plugin.android) {
       throw Error(
         "[CodePluginFastlaneError]: attempted to run android but interface is incorrect, please check your build configuration."
       );
     }
 
+    // Get the path to the template directory
     const templatePath = path.join(
       require.resolve("@brandingbrand/code-plugin-fastlane/package.json"),
       "..",
       "template"
     );
 
+    // Copy Android template files to the project directory
     await fse.copy(
       path.resolve(templatePath, "android"),
       path.project.resolve("android")
     );
 
+    // Update Gemfile for Android with fastlane plugin
     await withUTF8(path.android.gemfile, (content: string) => {
       return string.replace(
         content,
@@ -145,6 +177,7 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`
       );
     });
 
+    // Render Fastfile template for Android
     await withUTF8(
       path.project.resolve("android", "fastlane", "Fastfile"),
       (content) => {

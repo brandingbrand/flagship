@@ -35,12 +35,14 @@ lane :appcenter do
   )
 
   import_certificate(
-    certificate_path:
-      if !ENV['P12_KEY_PATH'].empty?
-        ENV['P12_KEY_PATH']
-      else
-        'ios-build-key.p12'
-      end,
+    certificate_path: 'AppleWWDRCA.cer',
+    keychain_name: keychain_name,
+    keychain_password: keychain_password,
+    log_output: true
+  )
+
+  import_certificate(
+    certificate_path: 'ios-build-key.p12',
     certificate_password: ENV['DISTRIBUTION_CERT_PASS'],
     keychain_name: keychain_name,
     keychain_password: keychain_password,
@@ -48,12 +50,7 @@ lane :appcenter do
   )
 
   import_certificate(
-    certificate_path:
-      if !ENV['P12_CER_PATH'].empty?
-        ENV['P12_CER_PATH']
-      else
-        'ios-build-key.cer'
-      end,
+    certificate_path: 'ios-build-key.cer',
     certificate_password: ENV['DISTRIBUTION_CERT_PASS'],
     keychain_name: keychain_name,
     keychain_password: keychain_password,
