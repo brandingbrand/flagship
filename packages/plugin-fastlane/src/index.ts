@@ -2,6 +2,7 @@
  * Defines a plugin for @brandingbrand/code-cli-kit.
  * @module Plugin
  */
+
 import ejs from "ejs";
 import fse from "fs-extra";
 import {
