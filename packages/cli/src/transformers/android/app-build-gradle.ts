@@ -104,17 +104,17 @@ export default defineTransformer<Transforms<string>>({
      * @param {BuildConfig} config - The build configuration.
      * @returns {string} - The updated content.
      */
-    (content: string, config: BuildConfig) => {
+    (content: string, config: BuildConfig): string => {
+      if (!config.android.signing) return content;
+
       return string.replace(
         content,
         /(signingConfigs\s*{\s*)/m,
         `$1release {
-            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
-                storeFile file(MYAPP_RELEASE_STORE_FILE)
-                storePassword MYAPP_RELEASE_STORE_PASSWORD
-                keyAlias MYAPP_RELEASE_KEY_ALIAS
-                keyPassword MYAPP_RELEASE_KEY_PASSWORD
-            }
+            storeFile file('release.keystore')
+            storePassword System.getenv("STORE_PASSWORD")
+            keyAlias '${config.android.signing.keyAlias}'
+            keyPassword System.getenv("KEY_PASSWORD")
         }
         `
       );
@@ -126,7 +126,7 @@ export default defineTransformer<Transforms<string>>({
      * @param {BuildConfig} config - The build configuration.
      * @returns {string} - The updated content.
      */
-    (content: string, config: BuildConfig) => {
+    (content: string, config: BuildConfig): string => {
       return string.replace(
         content,
         /(buildTypes\s*{[\s\S]*release\s*{[\s\S]*signingConfig\s+).*/m,

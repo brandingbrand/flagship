@@ -1,0 +1,57 @@
+default_platform :android
+
+lane :increment_build do
+  begin
+    version = appcenter_fetch_version_number(
+        owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
+        app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",
+        <%_ if (!release) { -%>
+        version: "<%- android.versioning?.version || "1.0.0" %>"
+        <%_ } -%>
+    )
+
+    if version["build_number"]
+      build_number = version["build_number"].to_i + 1
+      sh %Q{cd .. && echo "$(awk '{sub(/versionCode [[:digit:]]+$/,"versionCode "#{build_number})}1' app/build.gradle)" > app/build.gradle && cd -}
+
+      puts "Fastlane: updated build number to #{build_number}"
+    end
+  rescue
+    puts "Fastlane: did not find any applicable versions for appcenter_fetch_version_number"
+  end
+end
+
+lane :appcenter do
+  increment_build
+  # build the release variant
+  gradle(task: "app:assembleRelease")
+
+  appcenter_upload(
+    owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
+    app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",
+    destination_type: "<%= codePluginFastlane.plugin.android.appCenter.destinationType %>",
+    destinations: "<%= codePluginFastlane.plugin.android.appCenter.destinations %>"
+  )
+end
+
+lane :appcenter_bundle do
+  <%_ if (!android.versioning?.build) { -%>
+  increment_build
+  <%_ } -%>
+
+  # build the release variant
+  gradle(task: "bundleRelease")
+
+  appcenter_upload(
+    owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
+    app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",
+    destination_type: "<%= codePluginFastlane.plugin.android.appCenter.destinationType %>",
+    destinations: "<%= codePluginFastlane.plugin.android.appCenter.destinations %>"
+  )
+end
+
+lane :build do
+  # build the release variant
+  gradle(task: "app:assembleRelease")
+
+end

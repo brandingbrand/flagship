@@ -47,6 +47,15 @@ export default defineAction(async () => {
       path.resolve(templatePath, "android"),
       path.project.resolve("android")
     );
+
+    // Check if signing object is available
+    if (config.build.android.signing) {
+      // Copy keystore file to release.keystore in app module
+      await fse.copyFile(
+        path.project.resolve(config.build.android.signing.storeFile),
+        path.project.resolve("android", "app", "release.keystore")
+      );
+    }
   }
 
   // Copy extra template files to the project directory based on platform availability
