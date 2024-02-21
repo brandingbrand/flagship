@@ -117,13 +117,6 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`
           `$1${profiles}$2`
         );
 
-        // Replace the AppleWWDRCA certificate with the absolute path of the AppleWWDRCA certificate
-        content = string.replace(
-          content,
-          /(certificate_path:\s+')AppleWWDRCA\.cer(')/,
-          `$1${path.project.resolve(build.ios.signing!.appleCert)}$2`
-        );
-
         // Replace the distribution p12 with the absolute path of the distribution p12
         content = string.replace(
           content,
@@ -131,11 +124,20 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`
           `$1${path.project.resolve(build.ios.signing!.distP12)}$2`
         );
 
-        // Replace the distribution certificate with the absolute path of the distribution certificate
+        // Replace the distribution certificate with the absolute path of the distribution certificate.
+        // Important to note that this is not a global replace due to greedy regex it will replace first
+        // cert - the second cert is the AppleWWDRCA cert.
         content = string.replace(
           content,
           /(certificate_path:\s+').*\.cer(')/,
           `$1${path.project.resolve(build.ios.signing!.distCert)}$2`
+        );
+
+        // Replace the AppleWWDRCA certificate with the absolute path of the AppleWWDRCA certificate
+        content = string.replace(
+          content,
+          /(certificate_path:\s+')AppleWWDRCA\.cer(')/,
+          `$1${path.project.resolve(build.ios.signing!.appleCert)}$2`
         );
 
         return content;

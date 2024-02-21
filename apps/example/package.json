@@ -32,7 +32,6 @@
     "@brandingbrand/code-plugin-app-icon": "*",
     "@brandingbrand/code-plugin-asset": "*",
     "@brandingbrand/code-plugin-example": "link:./coderc/plugins/plugin-example",
-    "@brandingbrand/code-plugin-fastlane": "*",
     "@brandingbrand/code-plugin-native-navigation": "*",
     "@brandingbrand/code-plugin-permissions": "*",
     "@brandingbrand/code-plugin-splash-screen": "*",
