@@ -89,16 +89,19 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`
     await withUTF8(
       path.project.resolve("ios", "fastlane", "Fastfile"),
       (content) => {
+        // Filter out non-provisioning profiles
         const profilesFiles = files.filter((it) =>
           it.match(/(\w+\.mobileprovision)/)
         );
 
+        // Throw error if there are no available provisioning profiles
         if (!profilesFiles.length) {
           throw Error(
             `[CodePluginFastlane]: cannot find profiles that match *.mobileprovision in ${build.ios.signing!.profilesDir}`
           );
         }
 
+        // Reduce list into a string that would be reprentative of a ruby array
         const profiles = profilesFiles
           .map(
             (it) =>
@@ -106,24 +109,28 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`
           )
           .join(",");
 
+        // Replace empty profiles array with reduced profiles string in ruby file
         content = string.replace(
           content,
           /(@profiles\s+=\s+\[).*(\])/,
           `$1${profiles}$2`
         );
 
+        // Replace the AppleWWDRCA certificate with the absolute path of the AppleWWDRCA certificate
         content = string.replace(
           content,
           /(certificate_path:\s+')AppleWWDRCA\.cer(')/,
           `$1${path.project.resolve(build.ios.signing!.appleCert)}$2`
         );
 
+        // Replace the distribution p12 with the absolute path of the distribution p12
         content = string.replace(
           content,
           /(certificate_path:\s+').*\.p12(')/,
           `$1${path.project.resolve(build.ios.signing!.distP12)}$2`
         );
 
+        // Replace the distribution certificate with the absolute path of the distribution certificate
         content = string.replace(
           content,
           /(certificate_path:\s+').*\.cer(')/,
