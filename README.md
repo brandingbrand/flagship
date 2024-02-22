@@ -4,14 +4,14 @@
   <img alt="Flagship Code Banner" src="./.github/assets/flagship-code-banner.png">
 </picture>
 
-<h2 align="center">An idempotent TypeScript-based React Native configuration as code toolkit.</h2>
+<h2 align="center">A React Native Configuration as Code Toolkit.</h2>
 
 ## Features
 
 - **📱 Code Generation**: Velit qui cupidatat consequat mollit do amet dolor exercitation.
 - **🛟 Type-safe Configurations**: Lorem sint reprehenderit amet ipsum eiusmod minim duis ullamco mollit dolore non mollit ex.
 - **🔌 Plugin Ecosystem**: Esse occaecat reprehenderit veniam officia laborum aute proident incididunt dolore sit ipsum.
-- **🛠 Native Toolkit**: Nostrud culpa esse irure ea laborum ea consectetur.
+- **🛠 Development Toolkit**: Nostrud culpa esse irure ea laborum ea consectetur.
 - **🪂 Vendor Freedom**: Do officia magna consequat culpa.
 
 ## Getting Started
