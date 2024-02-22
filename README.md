@@ -20,7 +20,7 @@ Go to the [Quick Start](https://brandingbrand.github.io/flagship/) to get starte
 
 ## Contribution
 
-Please read the [contributing guide](./.github/CONTRIBUTING.md) and let's build Rspress together.
+Please read the [contributing guide](./.github/CONTRIBUTING.md) and let's build Flagship Code together.
 
 If you have any questions, you can open an issue to communicate with us.
 
