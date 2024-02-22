@@ -32,7 +32,7 @@ program
     /**
      * Update the configuration generate options with the provided options and command type.
      */
-    config.generateOptions = options;
+    config.generateOptions = { ...options, command: "generate" };
 
     const { render } = await import("ink");
 

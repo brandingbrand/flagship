@@ -26,7 +26,13 @@ import pkg from "../../package.json";
 /**
  * Imports the 'config', 'defineAction', 'logInfo', and 'logWarn' functions from the '@/lib' module.
  */
-import { config, defineAction, logger } from "@/lib";
+import {
+  config,
+  defineAction,
+  isGenerateCommand,
+  isPrebuildCommand,
+  logger,
+} from "@/lib";
 
 /**
  * Executes the default action, providing detailed information and performing necessary checks.
@@ -47,9 +53,18 @@ export default defineAction(async () => {
 `);
   logger.info(`Using ${pkg.name} v${pkg.version}`);
   logger.info(`Running on platform: ${os.platform}`);
-  logger.info(
-    `Using options: \n${JSON.stringify(config.options, null, 5).replace(/({|})/g, "   $1")}`
-  );
+
+  if (isPrebuildCommand()) {
+    logger.info(
+      `Using options: \n${JSON.stringify(config.options, null, 5).replace(/({|})/g, "   $1")}`
+    );
+  }
+
+  if (isGenerateCommand()) {
+    logger.info(
+      `Using options: \n${JSON.stringify(config.generateOptions, null, 5).replace(/({|})/g, "   $1")}`
+    );
+  }
 
   // Check if the script is running on Windows, and throw an error if it is
   if (isWindows) {

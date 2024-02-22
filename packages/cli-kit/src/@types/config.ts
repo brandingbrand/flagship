@@ -38,7 +38,7 @@ export type Plugin<T> = {
 export type PrebuildOptions = {
   /** The build version. */
   build: string;
-  /** The command */
+  /** The cli command. */
   command: string;
   /** The environment version. */
   env: string;
@@ -63,4 +63,8 @@ export type GenerateOptions = {
    * in your flagship-code.config.ts.
    */
   name: string;
+  /**
+   * The cli command.
+   */
+  command: string;
 };
