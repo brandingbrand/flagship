@@ -33,7 +33,7 @@ export type Plugin<T> = {
 } & PartialDeep<BuildConfig>;
 
 /**
- * Represents options for prebuilding.
+ * Represents options for prebuild cli command.
  */
 export type PrebuildOptions = {
   /** The build version. */
@@ -48,4 +48,19 @@ export type PrebuildOptions = {
   verbose: boolean;
   /** The target platform for prebuilding. */
   platform: "ios" | "android" | "native";
+};
+
+/**
+ * Represents options for generate cli command.
+ */
+export type GenerateOptions = {
+  /**
+   * Type of generator - only "plugin" is available currently
+   */
+  type: "plugin";
+  /**
+   * Name of your plugin. This will be reflected in your package.json and
+   * in your flagship-code.config.ts.
+   */
+  name: string;
 };

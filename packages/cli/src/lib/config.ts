@@ -1,5 +1,6 @@
 import type {
   BuildConfig,
+  GenerateOptions,
   PrebuildOptions,
   CodeConfig,
 } from "@brandingbrand/code-cli-kit";
@@ -10,23 +11,23 @@ import type { PackageJson } from "type-fest";
  */
 export const config = {
   /**
-   * @property {Object} code - Configuration object for fscode.
+   * @property {Object} __dangerously_access_code - Configuration object for fscode.
    */
   __dangerously_access_code: {} as CodeConfig,
   /**
-   * @property {function} fscode - Getter function for accessing fscode configuration.
+   * @property {function} code - Getter function for accessing fscode configuration.
    */
   get code() {
     return this.__dangerously_access_code;
   },
   /**
-   * @property {function} fsCode - Setter function for updating fscode configuration.
+   * @property {function} code - Setter function for updating fscode configuration.
    */
   set code(data: CodeConfig) {
     this.__dangerously_access_code = data;
   },
   /**
-   * @property {Object} optionsConfig - Configuration object for options.
+   * @property {Object} __dangerously_access_options - Configuration object for options.
    */
   __dangerously_access_options: {} as PrebuildOptions,
   /**
@@ -42,7 +43,23 @@ export const config = {
     this.__dangerously_access_options = data;
   },
   /**
-   * @property {Object} buildConfig - Configuration object for build settings.
+   * @property {Object} __dangerously_access_generate_options - Configuration object for generate options.
+   */
+  __dangerously_access_generate_options: {} as GenerateOptions,
+  /**
+   * @property {function} generateOptions - Getter function for accessing options configuration.
+   */
+  get generateOptions() {
+    return this.__dangerously_access_generate_options;
+  },
+  /**
+   * @property {function} generateOptions - Setter function for updating options configuration.
+   */
+  set generateOptions(data: GenerateOptions) {
+    this.__dangerously_access_generate_options = data;
+  },
+  /**
+   * @property {Object} __dangerously_access_build - Configuration object for build settings.
    */
   __dangerously_access_build: {} as BuildConfig,
   /**

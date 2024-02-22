@@ -1,4 +1,5 @@
 import { isCI } from "ci-info";
+import { detect } from "detect-package-manager";
 import { canRunAndroid, canRunIOS, path } from "@brandingbrand/code-cli-kit";
 
 import { config, defineAction } from "@/lib";
@@ -12,6 +13,18 @@ export default defineAction(async (): Promise<void> => {
    * Imports the execa esm library dynamically.
    */
   const { execa } = await import("execa");
+
+  if (Object.keys(config.generateOptions).length) {
+    try {
+      const packageManager = await detect();
+
+      await execa(packageManager, { cwd: path.project.resolve() });
+    } catch (e: any) {
+      throw Error(`[PackagersActionError]: failed to install dependencies`);
+    }
+
+    return;
+  }
 
   /**
    * Handles packagers installation for Android if running in a CI environment and Android is supported.

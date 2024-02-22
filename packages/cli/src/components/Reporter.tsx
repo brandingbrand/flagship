@@ -3,13 +3,15 @@ import { useAsync } from "react-async";
 import { Action } from "./Action";
 import { AsyncComponents } from "./AsyncComponents";
 
-import * as actions from "@/actions";
+type ReporterProps = {
+  actions: string[];
+};
 
 /**
  * Reporter component responsible for displaying running actions.
  * @returns JSX.Element representing the Reporter component.
  */
-export function Reporter(): JSX.Element {
+export function Reporter({ actions }: ReporterProps): JSX.Element {
   /**
    * Asynchronously import esm ink and ink-spinner
    * @type {Object}
@@ -34,7 +36,7 @@ export function Reporter(): JSX.Element {
     <Box flexDirection="column">
       <Text underline>Running actions</Text>
       <Box marginTop={1} marginBottom={1} flexDirection="column">
-        {Object.keys(actions)
+        {actions
           // Exclude the "info" action
           .filter((it) => it !== "info")
           .map((it) => (

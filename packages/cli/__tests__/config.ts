@@ -1,6 +1,7 @@
 import type {
   BuildConfig,
   CodeConfig,
+  GenerateOptions,
   PrebuildOptions,
 } from "@brandingbrand/code-cli-kit";
 
@@ -39,6 +40,17 @@ describe("config object", () => {
     config.options = optionsConfig;
 
     expect(config.options).toEqual(optionsConfig);
+  });
+
+  it("should be able to update generateOptions configuration", () => {
+    const generateOptionsConfig: GenerateOptions = {
+      type: "plugin",
+      name: "@brandingbrand/code-plugin-example",
+    };
+
+    config.generateOptions = generateOptionsConfig;
+
+    expect(config.generateOptions).toEqual(generateOptionsConfig);
   });
 
   it("should be able to update build configuration", () => {

@@ -59,3 +59,10 @@ export { default as transformers } from "./transformers";
  * @module actions/packagers
  */
 export { default as packagers } from "./packagers";
+
+/**
+ * Action to update generator dependencies
+ *
+ * @module actions/generator
+ */
+export { default as generator } from "./generator";

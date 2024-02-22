@@ -9,7 +9,7 @@
  *
  * @module cmds/gen
  */
-import "./gen";
+import "./generate";
 
 /**
  * Prebuild command for native code generation

@@ -25,6 +25,19 @@ export default defineAction(async () => {
     "template"
   );
 
+  // If the generate cli command was executed copy the plugin template only
+  if (Object.keys(config.generateOptions).length) {
+    const pluginPath = path.project.resolve(
+      config.code.pluginPath,
+      config.generateOptions.name
+    );
+
+    await fs.mkdir(pluginPath);
+    await fse.copy(path.resolve(templatePath, "plugin"), pluginPath);
+
+    return `successfully generated plugin at ${pluginPath}`;
+  }
+
   // Check if the configuration allows running for iOS platform
   if (canRunIOS(config.options)) {
     // Create directories for iOS platform

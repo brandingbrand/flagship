@@ -48,7 +48,14 @@ program
     /**
      * Render the Reporter component to display progress.
      */
-    const { unmount } = render(<Reporter />, { stdout: process.stderr });
+    const { unmount } = render(
+      <Reporter
+        actions={Object.keys(actions)
+          // Exclude the "info" action
+          .filter((it) => !["info", "generator"].includes(it))}
+      />,
+      { stdout: process.stderr }
+    );
 
     /**
      * Loop through predefined actions and execute them sequentially.
