@@ -20,14 +20,14 @@ Go to the [Quick Start](https://brandingbrand.github.io/flagship/) to get starte
 
 ## Contribution
 
-Please read the [contributing guide](./.github/CONTRIBUTING.md) and let's build Flagship Code together.
+Please read the [contributing guide](./CONTRIBUTING.md) and let's build Flagship Code together.
 
 If you have any questions, you can open an issue to communicate with us.
 
 ### Code of Conduct
 
-Please check [Code of Conduct](./.github/CODE_OF_CONDUCT.md) for more details.
+Please check [Code of Conduct](./CODE_OF_CONDUCT.md) for more details.
 
 ### License
 
-Rspress is licensed under the [MIT License](./.github/LICENSE).
+Rspress is licensed under the [MIT License](./LICENSE).
