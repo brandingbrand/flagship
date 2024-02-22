@@ -2,6 +2,7 @@ import { useAsync } from "react-async";
 
 import { Action } from "./Action";
 import { AsyncComponents } from "./AsyncComponents";
+import { Results } from "./Results";
 
 type ReporterProps = {
   actions: string[];
@@ -43,6 +44,7 @@ export function Reporter({ actions }: ReporterProps): JSX.Element {
             <Action key={it} name={it} />
           ))}
       </Box>
+      <Results />
     </Box>
   );
 }

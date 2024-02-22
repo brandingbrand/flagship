@@ -20,11 +20,11 @@ export const actions: {
   /**
    * Indicates whether an error occurred during the action.
    */
-  error: boolean;
+  error: boolean | string;
   /**
    * Indicates whether a warning occurred during the action.
    */
-  warning: boolean;
+  warning: boolean | string;
 }[] = [];
 
 /**
@@ -80,8 +80,8 @@ export function withAction<TResult, TArgs extends unknown[]>(
         name,
         time: `${((performance.now() - start) / 1000).toFixed(5)} s`,
         success: false,
-        error: !isWarningType,
-        warning: isWarningType,
+        error: isWarningType ? false : error.message,
+        warning: isWarningType ? error.message : false,
       });
     }
   };

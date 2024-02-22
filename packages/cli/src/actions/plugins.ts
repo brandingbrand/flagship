@@ -52,7 +52,10 @@ export default defineAction(async () => {
       const name = config.code.plugins?.[index] ?? "unknown plugin";
 
       // Execute the iOS action with the plugin and its name.
-      await withAction(plugin.ios, name)(config.build, config.options);
+      await withAction(plugin.ios, `${name} - ios`)(
+        config.build,
+        config.options
+      );
     }
   }
 
@@ -65,7 +68,10 @@ export default defineAction(async () => {
       const name = config.code.plugins?.[index] ?? "unknown plugin";
 
       // Execute the Android action with the plugin and its name.
-      await withAction(plugin.android, name)(config.build, config.options);
+      await withAction(plugin.android, `${name} - android`)(
+        config.build,
+        config.options
+      );
     }
   }
 
