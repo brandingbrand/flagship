@@ -100,6 +100,8 @@ export default defineTransformer<Transforms<string>>({
 
     /**
      * Transformer for updating the "signingConfigs" section in "app-build.gradle".
+     * This will not transform content if signing does not exist for android
+     * which means that release signing config will not exist.
      * @param {string} content - The content of the file.
      * @param {BuildConfig} config - The build configuration.
      * @returns {string} - The updated content.
@@ -122,11 +124,16 @@ export default defineTransformer<Transforms<string>>({
 
     /**
      * Transformer for updating the "buildTypes" section in "app-build.gradle".
+     * This will not transform content if signing does not exist for android
+     * which means assmebleRelease/bundleRelease will utilize the debug
+     * code-signing.
      * @param {string} content - The content of the file.
      * @param {BuildConfig} config - The build configuration.
      * @returns {string} - The updated content.
      */
     (content: string, config: BuildConfig): string => {
+      if (!config.android.signing) return content;
+
       return string.replace(
         content,
         /(buildTypes\s*{[\s\S]*release\s*{[\s\S]*signingConfig\s+).*/m,

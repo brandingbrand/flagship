@@ -1,25 +1,33 @@
-# ![flagship-code][logo]
+# Flagship Code
 
-**flagship-code** is a tool that...
+<picture>
+  <img alt="Flagship Code Banner" src="./.github/assets/flagship-code-banner.png">
+</picture>
 
-## Feature highlights
+<h2 align="center">An idempotent TypeScript-based React Native configuration as code toolkit.</h2>
 
-## Intro
+## Features
 
-## Contents
+- **📱 Code Generation**: Velit qui cupidatat consequat mollit do amet dolor exercitation.
+- **🛟 Type-safe Configurations**: Lorem sint reprehenderit amet ipsum eiusmod minim duis ullamco mollit dolore non mollit ex.
+- **🔌 Plugin Ecosystem**: Esse occaecat reprehenderit veniam officia laborum aute proident incididunt dolore sit ipsum.
+- **🛠 Native Toolkit**: Nostrud culpa esse irure ea laborum ea consectetur.
+- **🪂 Vendor Freedom**: Do officia magna consequat culpa.
 
-- [What is this?](#what-is-this)
-- [When should I use this?](#when-should-i-use-this)
-- [Compatibility](#compatibility)
-- [Contribute](#contribute)
-- [License](#license)
+## Getting Started
 
-## What is this?
+Go to the [Quick Start](https://flagshipcode.dev/guide/start/getting-started.html) to get started.
 
-## When should I use this?
+## Contribution
 
-## Compatibility
+Please read the [contributing guide](./.github/CONTRIBUTING.md) and let's build Rspress together.
 
-## Contribute
+If you have any questions, you can open an issue to communicate with us.
 
-## License
+### Code of Conduct
+
+Please check [Code of Conduct](./.github/CODE_OF_CONDUCT.md) for more details.
+
+### License
+
+Rspress is licensed under the [MIT License](./.github/LICENSE).
