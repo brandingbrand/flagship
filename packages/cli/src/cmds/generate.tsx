@@ -1,7 +1,7 @@
 import { Option, program } from "commander";
 import { type GenerateOptions } from "@brandingbrand/code-cli-kit";
 
-import { config, logger } from "@/lib";
+import { config, emitter, logger } from "@/lib";
 import * as actions from "@/actions";
 import { Reporter } from "@/components";
 
@@ -56,6 +56,13 @@ program
     ]) {
       await action();
     }
+
+    /**
+     * Emit event when actions are complete to show <Results />
+     */
+    emitter.emit("action", {
+      action: "DONE",
+    });
 
     /**
      * Unmount react ink components
