@@ -1,7 +1,7 @@
 # Flagship Code
 
 <picture>
-  <img alt="Flagship Code Banner" src="./.github/assets/flagship-code-banner.png">
+  <img alt="Flagship Code Banner" src="./.github/assets/banner.png">
 </picture>
 
 <h2 align="center">A React Native Configuration as Code Toolkit.</h2>
