@@ -7,7 +7,7 @@ import {
   globAndReplace,
 } from "@brandingbrand/code-cli-kit";
 
-import { config, defineAction } from "@/lib";
+import { config, defineAction, isGenerateCommand } from "@/lib";
 
 /**
  * Define an action to initialize a project template.
@@ -26,7 +26,8 @@ export default defineAction(async () => {
   );
 
   // If the generate cli command was executed copy the plugin template only
-  if (Object.keys(config.generateOptions).length) {
+  // WARNING: Consider moving this in future.
+  if (isGenerateCommand()) {
     const pluginPath = path.project.resolve(
       config.code.pluginPath,
       config.generateOptions.name
@@ -35,6 +36,8 @@ export default defineAction(async () => {
     await fs.mkdir(pluginPath);
     await fse.copy(path.resolve(templatePath, "plugin"), pluginPath);
 
+    // WARNING: this is meant to short-circuit the rest of the action as
+    // the rest of the action is for prebuild.
     return `successfully generated plugin at ${pluginPath}`;
   }
 

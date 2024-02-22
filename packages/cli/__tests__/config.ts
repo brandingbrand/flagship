@@ -5,7 +5,15 @@ import type {
   PrebuildOptions,
 } from "@brandingbrand/code-cli-kit";
 
-import { bundleRequire, config, isPackage } from "../src/lib/config";
+import { program } from "commander";
+
+import {
+  bundleRequire,
+  config,
+  isGenerateCommand,
+  isPackage,
+  isPrebuildCommand,
+} from "../src/lib/config";
 
 describe("config object", () => {
   it("should have default values for codeConfig, optionsConfig, and buildConfig", () => {
@@ -45,12 +53,23 @@ describe("config object", () => {
   it("should be able to update generateOptions configuration", () => {
     const generateOptionsConfig: GenerateOptions = {
       type: "plugin",
-      name: "@brandingbrand/code-plugin-example",
+      name: "code-plugin-example",
     };
 
     config.generateOptions = generateOptionsConfig;
 
     expect(config.generateOptions).toEqual(generateOptionsConfig);
+  });
+
+  it("should be able to update generateOptions configuration", () => {
+    const generateOptionsConfig: GenerateOptions = {
+      type: "plugin",
+      name: "@brandingbrand/code-plugin-example",
+    };
+
+    expect(() => {
+      config.generateOptions = generateOptionsConfig;
+    }).toThrow();
   });
 
   it("should be able to update build configuration", () => {
@@ -95,5 +114,21 @@ describe("isPackage", () => {
   it("should return false for a file path with extension", () => {
     const filePathWithExtension = "file.js";
     expect(isPackage(filePathWithExtension)).toBe(true);
+  });
+});
+
+describe("isCommand", () => {
+  it("isPrebuildCommand", () => {
+    program.args = ["prebuild"];
+
+    expect(isGenerateCommand()).not.toBeTruthy();
+    expect(isPrebuildCommand()).toBeTruthy();
+  });
+
+  it("isPrebuildCommand", () => {
+    program.args = ["generate"];
+
+    expect(isPrebuildCommand()).not.toBeTruthy();
+    expect(isGenerateCommand()).toBeTruthy();
   });
 });

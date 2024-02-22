@@ -4,6 +4,7 @@ import type {
   PrebuildOptions,
   CodeConfig,
 } from "@brandingbrand/code-cli-kit";
+import { program } from "commander";
 import type { PackageJson } from "type-fest";
 
 /**
@@ -140,4 +141,36 @@ export async function bundleRequire(
 
   // Return the required module
   return mod;
+}
+
+/**
+ * Checks if the prebuild command is present in the program arguments.
+ * @returns {boolean} Returns true if the prebuild command is present, otherwise false.
+ */
+export function isPrebuildCommand(): boolean {
+  // Check if there are no program arguments or if the first argument is missing
+  if (!program.args[0]) return false;
+
+  // Check if the first argument is "prebuild"
+  if (program.args[0] === "prebuild") {
+    return true; // Return true if the first argument is "prebuild"
+  }
+
+  return false; // Return false if the first argument is not "prebuild"
+}
+
+/**
+ * Checks if the generate command is present in the program arguments.
+ * @returns {boolean} Returns true if the generate command is present, otherwise false.
+ */
+export function isGenerateCommand(): boolean {
+  // Check if there are no program arguments or if the first argument is missing
+  if (!program.args[0]) return false;
+
+  // Check if the first argument is "generate"
+  if (program.args[0] === "generate") {
+    return true; // Return true if the first argument is "generate"
+  }
+
+  return false; // Return false if the first argument is not "generate"
 }

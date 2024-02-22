@@ -8,7 +8,7 @@ import {
 } from "@brandingbrand/code-cli-kit";
 import { isLeft } from "fp-ts/lib/Either";
 
-import { bundleRequire, config, defineAction } from "@/lib";
+import { bundleRequire, config, defineAction, isGenerateCommand } from "@/lib";
 import { mergeAndConcat } from "merge-anything";
 
 /**
@@ -45,6 +45,10 @@ export default defineAction(async () => {
 
   // Set the decoded configuration to the global config object
   config.code = decodedFlagshipCodeConfig.right;
+
+  // Short-circuit return as the rest of the action is prebuild command related
+  // WARNING: Consider moving this in future.
+  if (isGenerateCommand()) return;
 
   // Resolve the build path based on the configuration
   const buildPath = path.project.resolve(

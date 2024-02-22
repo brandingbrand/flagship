@@ -2,7 +2,7 @@ import { isCI } from "ci-info";
 import { detect } from "detect-package-manager";
 import { canRunAndroid, canRunIOS, path } from "@brandingbrand/code-cli-kit";
 
-import { config, defineAction } from "@/lib";
+import { config, defineAction, isGenerateCommand } from "@/lib";
 
 /**
  * Defines the action to handle packagers installation based on platform availability and CI environment.
@@ -14,16 +14,23 @@ export default defineAction(async (): Promise<void> => {
    */
   const { execa } = await import("execa");
 
-  if (Object.keys(config.generateOptions).length) {
+  /**
+   * Executes package installation if the generate command is configured.
+   * WARNING: Consider moving this in the furture
+   * @throws {Error} Throws an error if the package installation fails.
+   */
+  if (isGenerateCommand()) {
     try {
-      const packageManager = await detect();
+      const packageManager = await detect(); // Detect the package manager
 
+      // Execute package installation using the detected package manager
       await execa(packageManager, { cwd: path.project.resolve() });
     } catch (e: any) {
+      // Throw an error if package installation fails
       throw Error(`[PackagersActionError]: failed to install dependencies`);
     }
 
-    return;
+    return; // Return if package installation is successful
   }
 
   /**
