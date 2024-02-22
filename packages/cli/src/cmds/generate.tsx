@@ -40,7 +40,7 @@ program
      * Render the Reporter component to display progress.
      */
     const { unmount } = render(
-      <Reporter actions={["template", "generator", "packagers"]} />,
+      <Reporter actions={["config", "template", "generator", "packagers"]} />,
       { stdout: process.stderr }
     );
 
