@@ -54,12 +54,14 @@ export default defineAction(async () => {
   logger.info(`Using ${pkg.name} v${pkg.version}`);
   logger.info(`Running on platform: ${os.platform}`);
 
+  // Log to terminal prebuild cli command options
   if (isPrebuildCommand()) {
     logger.info(
       `Using options: \n${JSON.stringify(config.options, null, 5).replace(/({|})/g, "   $1")}`
     );
   }
 
+  // Log to terminal generate cli command options
   if (isGenerateCommand()) {
     logger.info(
       `Using options: \n${JSON.stringify(config.generateOptions, null, 5).replace(/({|})/g, "   $1")}`
