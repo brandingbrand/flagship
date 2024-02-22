@@ -8,11 +8,11 @@
 
 ## Features
 
-- **🏗 Code Generation**: Combination of parser and transformation modules to update and generate iOS and Android native code.
-- **🛟 Type-safe Configurations**: Build and runtime type-safe configurations empowering configuration as code.
-- **🔌 Plugin Ecosystem**: Out-of-the-box plugins to manipulate native code with the ability to plug-n-play custom transformations.
-- **🛠 Development Toolkit**: Exposed modules and generators to help develop custom plugins for specific third-party requirements.
-- **🪂 Vendor Freedom**: Don't enjoy the experience of Flagship Code? No problem, eject at any time with no left-over side-effects
+- **🏗 Code Generation**: Utilize a comprehensive suite of parser and transformation modules to efficiently update and generate iOS and Android native code.
+- **🛟 Type-safe Configurations**: Implement type-safe configurations at both build and runtime, enhancing the robustness of configuration as code practices.
+- **🔌 Plugin Ecosystem**: Benefit from a diverse range of out-of-the-box plugins designed to seamlessly manipulate native code. Easily integrate custom transformations with plug-and-play functionality.
+- **🛠 Development Toolkit**: Access exposed modules and generators tailored to facilitate the creation of custom plugins, simplifying the integration process for third-party React Native libraries.
+- **🪂 Vendor Freedom**: Experience the freedom to choose without constraints. Seamlessly transition away from Flagship Code at any time, ensuring a smooth transition with no residual side-effects.
 
 ## Getting Started
 
