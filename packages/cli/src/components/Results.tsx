@@ -29,6 +29,10 @@ export function Results(): JSX.Element | boolean {
    * @param {any} e - Event object containing action information.
    */
   function handler(e: any) {
+    /**
+     * "DONE" is only triggered from prebuild command module
+     * when the actions are complete.
+     */
     if (e.action === "DONE") {
       setShow(true);
     }
