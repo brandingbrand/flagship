@@ -56,6 +56,14 @@ export const config = {
    * @property {function} generateOptions - Setter function for updating options configuration.
    */
   set generateOptions(data: GenerateOptions) {
+    // Check if the 'name' property of the data object follows the non-scoped package names format
+    if (!/^[a-z0-9-~][a-z0-9-._~]*$/gm.test(data.name)) {
+      // Throw an error if the name does not match the specified format
+      throw Error(
+        "[GenerateCliCommandError]: name must follow non-scoped package names format"
+      );
+    }
+
     this.__dangerously_access_generate_options = data;
   },
   /**
