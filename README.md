@@ -30,4 +30,4 @@ Please check [Code of Conduct](./CODE_OF_CONDUCT.md) for more details.
 
 ### License
 
-Rspress is licensed under the [MIT License](./LICENSE).
+Flagship Code is licensed under the [MIT License](./LICENSE).
