@@ -8,15 +8,15 @@
 
 ## Features
 
-- **📱 Code Generation**: Velit qui cupidatat consequat mollit do amet dolor exercitation.
-- **🛟 Type-safe Configurations**: Lorem sint reprehenderit amet ipsum eiusmod minim duis ullamco mollit dolore non mollit ex.
-- **🔌 Plugin Ecosystem**: Esse occaecat reprehenderit veniam officia laborum aute proident incididunt dolore sit ipsum.
-- **🛠 Development Toolkit**: Nostrud culpa esse irure ea laborum ea consectetur.
-- **🪂 Vendor Freedom**: Do officia magna consequat culpa.
+- **🏗 Code Generation**: Combination of parser and transformation modules to update and generate iOS and Android native code.
+- **🛟 Type-safe Configurations**: Build and runtime type-safe configurations empowering configuration as code.
+- **🔌 Plugin Ecosystem**: Out-of-the-box plugins to manipulate native code with the ability to plug-n-play custom transformations.
+- **🛠 Development Toolkit**: Exposed modules and generators to help develop custom plugins for specific third-party requirements.
+- **🪂 Vendor Freedom**: Don't enjoy the experience of Flagship Code? No problem, eject at any time with no left-over side-effects
 
 ## Getting Started
 
-Go to the [Quick Start](https://flagshipcode.dev/guide/start/getting-started.html) to get started.
+Go to the [Quick Start](https://brandingbrand.github.io/flagship/) to get started.
 
 ## Contribution
 
