@@ -41,7 +41,7 @@ describe("withAction function", () => {
       expect.objectContaining({
         name: "Test Function",
         success: false,
-        error: true,
+        error: "Test Error",
         warning: false,
         time: `${(100 / 1000).toFixed(5)} s`,
       }),
@@ -71,7 +71,7 @@ describe("withAction function", () => {
         name: "Test Function",
         success: false,
         error: false,
-        warning: true,
+        warning: "[TestWarning]: Test Warning",
         time: `${(100 / 1000).toFixed(5)} s`,
       }),
     ]);

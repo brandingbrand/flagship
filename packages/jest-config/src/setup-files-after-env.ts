@@ -37,3 +37,5 @@ global.__flagship_code_build_config = {
     packageName: "com.brandingbrand",
   },
 };
+
+export {};

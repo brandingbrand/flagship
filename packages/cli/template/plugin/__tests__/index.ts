@@ -4,8 +4,18 @@
 
 /// <reference types="@brandingbrand/code-jest-config" />
 
-describe("plugin", () => {
-  it("ios", async () => {});
+import plugin from "../src";
 
-  it("android", async () => {});
+describe("plugin", () => {
+  it("ios", async () => {
+    await plugin.ios?.({} as any, {} as any);
+
+    expect(true).toBeTruthy();
+  });
+
+  it("android", async () => {
+    await plugin.android?.({} as any, {} as any);
+
+    expect(true).toBeTruthy();
+  });
 });
