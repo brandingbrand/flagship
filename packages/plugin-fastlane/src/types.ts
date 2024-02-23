@@ -43,12 +43,7 @@ type FastlaneIOS = {
   /**
    * Configuration for App Center for iOS.
    */
-  appCenter: AppCenterIOS; //
-
-  /**
-   * The build scheme to be used in Fastlane.
-   */
-  buildScheme: string;
+  appCenter?: AppCenterIOS;
 };
 
 /**
@@ -83,5 +78,5 @@ type FastlaneAndroid = {
   /**
    * Configuration for App Center for Android.
    */
-  appCenter: AppCenterAndroid;
+  appCenter?: AppCenterAndroid;
 };

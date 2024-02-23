@@ -1,5 +1,6 @@
 default_platform :ios
 
+<% if(codePluginFastlane.plugin.ios?.appCenter) { -%>
 lane :increment_build do
   begin
     version = appcenter_fetch_version_number(
@@ -17,10 +18,13 @@ lane :increment_build do
     puts "Fastlane: did not find any applicable versions for appcenter_fetch_version_number"
   end
 end
+<% } -%>
 
 # make a provisioned build and upload to appcenter
-lane :appcenter do
-  increment_build
+lane :build do
+  <% if(codePluginFastlane.plugin.ios?.appCenter) { -%>
+increment_build
+  <% } -%>
 
   keychain_password = SecureRandom.uuid
   keychain_name = 'ios-build.keychain'
@@ -29,7 +33,6 @@ lane :appcenter do
   create_keychain(
     name: keychain_name,
     password: keychain_password,
-    default_keychain: true,
     unlock: true,
     timeout: 3600
   )
@@ -60,26 +63,28 @@ lane :appcenter do
   @profiles.each { |profile| install_provisioning_profile(path: profile) }
 
   gym(
-    scheme: "<%= codePluginFastlane.plugin.ios.buildScheme %>",
     clean: true,
     export_method: "<%= ios.signing.exportMethod %>",
     export_team_id: "<%= ios.signing.exportTeamId %>"
-  )
-
-  appcenter_upload(
-    owner_name: "<%= codePluginFastlane.plugin.ios.appCenter.organization %>",
-    app_name: "<%= codePluginFastlane.plugin.ios.appCenter.appName %>",
-    destination_type: "<%= codePluginFastlane.plugin.ios.appCenter.destinationType %>",
-    destinations: "<%= codePluginFastlane.plugin.ios.appCenter.destinations %>"
   )
 
   delete_keychain(name: keychain_name)
 end
 
 # make an unprovisioned build
-lane :build do
-  xcodebuild(
-    scheme: "<%= codePluginFastlane.plugin.ios.buildScheme %>",
+lane :compile do
+  gym(
     xcargs: "CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED='NO' CODE_SIGN_ENTITLEMENTS='' CODE_SIGNING_ALLOWED='NO'"
   )
 end
+
+<% if(codePluginFastlane.plugin.ios?.appCenter) { -%>
+lane :appcenter do
+  appcenter_upload(
+    owner_name: "<%= codePluginFastlane.plugin.ios.appCenter.organization %>",
+    app_name: "<%= codePluginFastlane.plugin.ios.appCenter.appName %>",
+    destination_type: "<%= codePluginFastlane.plugin.ios.appCenter.destinationType %>",
+    destinations: "<%= codePluginFastlane.plugin.ios.appCenter.destinations %>"
+  )
+end
+<% } -%>

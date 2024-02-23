@@ -39,7 +39,6 @@ describe("plugin-fastlane", () => {
             destinationType: "group",
             destinations: ["IAT"],
           },
-          buildScheme: "app",
         },
         android: {
           appCenter: {

@@ -34,13 +34,6 @@ export default definePlugin<CodePluginFastlane>({
     build: BuildConfig & CodePluginFastlane,
     options: PrebuildOptions
   ): Promise<void> {
-    // Check if the plugin interface for iOS is defined
-    if (!build.codePluginFastlane.plugin.ios) {
-      throw Error(
-        "[CodePluginFastlaneError]: attempted to run ios but interface is incorrect, please check your build configuration."
-      );
-    }
-
     // Check if the signing interface for iOS is defined
     if (!build.ios.signing) {
       throw Error(
@@ -155,13 +148,6 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`
     build: BuildConfig & CodePluginFastlane,
     options: PrebuildOptions
   ): Promise<void> {
-    // Check if the plugin interface for Android is defined
-    if (!build.codePluginFastlane.plugin.android) {
-      throw Error(
-        "[CodePluginFastlaneError]: attempted to run android but interface is incorrect, please check your build configuration."
-      );
-    }
-
     // Get the path to the template directory
     const templatePath = path.join(
       require.resolve("@brandingbrand/code-plugin-fastlane/package.json"),
