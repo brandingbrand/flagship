@@ -12,7 +12,7 @@
     "build": "turbo build --concurrency 100",
     "dev": "turbo dev --concurrency 100",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "lint": "turbo lint",
+    "lint": "turbo lint --",
     "test": "turbo test"
   },
   "packageManager": "yarn@1.22.19",

@@ -1,4 +1,5 @@
 import mitt from "mitt";
+
 import { isWarning } from "./errors";
 
 /**

@@ -7,9 +7,9 @@ import {
   path,
 } from "@brandingbrand/code-cli-kit";
 import { isLeft } from "fp-ts/lib/Either";
+import { mergeAndConcat } from "merge-anything";
 
 import { bundleRequire, config, defineAction, isGenerateCommand } from "@/lib";
-import { mergeAndConcat } from "merge-anything";
 
 /**
  * Defines an action to handle configuration loading, decoding, and verification.

@@ -5,7 +5,7 @@ const project = resolve(process.cwd(), "tsconfig.json");
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   extends: ["eslint:recommended", "prettier", "eslint-config-turbo"],
-  plugins: ["only-warn"],
+  plugins: ["only-warn", "import"],
   globals: {
     React: true,
     JSX: true,
@@ -37,5 +37,7 @@ module.exports = {
   ],
   rules: {
     "no-unused-vars": "off",
+    "import/no-duplicates": ["warn", { "prefer-inline": true }],
+    "import/order": ["warn", { "newlines-between": "always" }],
   },
 };

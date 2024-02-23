@@ -1,6 +1,7 @@
 import fs from "fs/promises";
-import { glob, sync } from "glob";
 import path from "path";
+
+import { glob, sync } from "glob";
 
 /**
  * Glob files, read their content, replace a specified value, and write the updated content back to the files.

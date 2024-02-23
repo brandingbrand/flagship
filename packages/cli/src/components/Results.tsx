@@ -1,8 +1,9 @@
 import { useAsync } from "react-async";
 import { useEffect, useState } from "react";
 
-import { actions, emitter } from "@/lib";
 import { AsyncComponents } from "./AsyncComponents";
+
+import { actions, emitter } from "@/lib";
 
 /**
  * Results component responsible for displaying summarized results.

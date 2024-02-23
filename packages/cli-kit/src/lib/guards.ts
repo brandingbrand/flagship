@@ -1,5 +1,7 @@
 import type { PackageJson } from "type-fest";
 
+import path from "./path";
+
 import type {
   BuildConfig,
   CodeConfig,
@@ -10,7 +12,6 @@ import type {
 /**
  * Import paths module to get package.json path
  */
-import path from "./path";
 
 /**
  * Defines a configuration for code.

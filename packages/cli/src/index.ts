@@ -1,4 +1,5 @@
 import process from "process";
+
 import { program } from "commander";
 
 import "./cmds";

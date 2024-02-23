@@ -10,11 +10,11 @@ import {
   path,
   fs,
 } from "@brandingbrand/code-cli-kit";
+import sharp from "sharp";
 
 import * as icons from "./icons";
 import * as rules from "./rules";
 import type { CodePluginAppIcon } from "./types";
-import sharp from "sharp";
 
 /**
  * Defines a plugin with functions for both iOS and Android platforms.

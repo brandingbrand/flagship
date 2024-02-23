@@ -1,31 +1,11 @@
-/**
- * Imports the 'os' module from Node.js for detecting runtime platform.
- */
 import os from "os";
 
-/**
- * Imports the 'ci-info' module for detecting CI environments.
- */
 import ci from "ci-info";
-
-/**
- * Imports the 'update-check' module for checking package updates.
- */
 import updateCheck from "update-check";
-
-/**
- * Imports the 'isWindows' function from the '@brandingbrand/code-cli-kit' package.
- */
 import { isWindows } from "@brandingbrand/code-cli-kit";
 
-/**
- * Imports the 'pkg' object from the package.json file located at '../../package.json'.
- */
 import pkg from "../../package.json";
 
-/**
- * Imports the 'config', 'defineAction', 'logInfo', and 'logWarn' functions from the '@/lib' module.
- */
 import {
   config,
   defineAction,
