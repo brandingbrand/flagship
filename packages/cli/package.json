@@ -2,17 +2,20 @@
   "name": "@brandingbrand/code-cli",
   "version": "0.0.0",
   "private": true,
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "bin": {
     "flagship-code": "./bin/flagship-code"
   },
+  "main": "dist/index.js",
   "scripts": {
     "build": "yarn tsup src/index.ts --dts --external @brandingbrand/fsapp,@brandingbrand/code-cli",
     "dev": "yarn tsup src/index.ts --dts --external @brandingbrand/fsapp,@brandingbrand/code-cli --watch",
     "lint": "eslint . --max-warnings 0",
     "test": "jest"
   },
+  "jest": {
+    "preset": "@brandingbrand/code-jest-config"
+  },
+  "types": "dist/index.d.ts",
   "dependencies": {
     "@brandingbrand/code-cli-kit": "*",
     "bundle-require": "^4.0.2",
@@ -33,6 +36,10 @@
     "update-check": "^1.5.4",
     "write-package": "^7.0.0"
   },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-native": "~0.72.0"
+  },
   "devDependencies": {
     "@brandingbrand/code-jest-config": "*",
     "@repo/eslint-config": "*",
@@ -43,12 +50,5 @@
     "react": "^18.2.0",
     "type-fest": "^4.10.2",
     "typescript": "^5.3.3"
-  },
-  "jest": {
-    "preset": "@brandingbrand/code-jest-config"
-  },
-  "peerDependencies": {
-    "react": "^18.2.0",
-    "react-native": "~0.72.0"
   }
 }

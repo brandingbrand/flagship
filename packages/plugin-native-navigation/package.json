@@ -4,10 +4,17 @@
   "license": "UNLICENSED",
   "private": true,
   "main": "src/index.ts",
-  "types": "src/index.ts",
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "test": "jest"
+  },
+  "jest": {
+    "preset": "@brandingbrand/code-jest-config"
+  },
+  "types": "src/index.ts",
+  "peerDependencies": {
+    "@brandingbrand/code-cli-kit": "*",
+    "react-native-navigation": "*"
   },
   "devDependencies": {
     "@brandingbrand/code-cli-kit": "*",
@@ -18,12 +25,5 @@
     "eslint": "^8.56.0",
     "react-native-navigation": "7.37.2",
     "typescript": "^5.3.3"
-  },
-  "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "*",
-    "react-native-navigation": "*"
-  },
-  "jest": {
-    "preset": "@brandingbrand/code-jest-config"
   }
 }

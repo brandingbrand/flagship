@@ -4,14 +4,20 @@
   "license": "UNLICENSED",
   "private": true,
   "main": "src/index.ts",
-  "types": "src/index.ts",
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "test": "jest"
   },
+  "jest": {
+    "preset": "@brandingbrand/code-jest-config"
+  },
+  "types": "src/index.ts",
   "dependencies": {
     "fs-extra": "^11.2.0",
     "react-native-bootsplash": "5.4.0"
+  },
+  "peerDependencies": {
+    "@brandingbrand/code-cli-kit": "*"
   },
   "devDependencies": {
     "@brandingbrand/code-cli-kit": "*",
@@ -22,11 +28,5 @@
     "@types/sharp": "0.31.0",
     "eslint": "^8.56.0",
     "typescript": "^5.3.3"
-  },
-  "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "*"
-  },
-  "jest": {
-    "preset": "@brandingbrand/code-jest-config"
   }
 }

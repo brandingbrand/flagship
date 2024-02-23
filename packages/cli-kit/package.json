@@ -3,13 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "build": "yarn tsup src/index.ts --dts",
     "dev": "yarn tsup src/index.ts --dts --watch",
     "lint": "eslint . --max-warnings 0",
     "test": "jest"
   },
+  "jest": {
+    "preset": "@brandingbrand/code-jest-config"
+  },
+  "types": "dist/index.d.ts",
   "dependencies": {
     "@types/node": "^20.10.6",
     "fast-xml-parser": "^4.3.4",
@@ -30,8 +33,5 @@
     "tsup": "^8.0.1",
     "type-fest": "4.10.2",
     "typescript": "^5.3.3"
-  },
-  "jest": {
-    "preset": "@brandingbrand/code-jest-config"
   }
 }
