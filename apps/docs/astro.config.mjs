@@ -30,6 +30,7 @@ export default defineConfig({
             { label: "Build Configuration", link: "/guides/build/" },
             { label: "Env Configuration", link: "/guides/env/" },
             { label: "Plugins", link: "/guides/plugins/" },
+            { label: "Migration", link: "/guides/migration/" },
           ],
         },
         {
@@ -72,6 +73,18 @@ export default defineConfig({
               label: "code-plugin-target-extension",
               link: "/packages/plugin-target-extension/",
             },
+          ],
+        },
+        {
+          label: "Reference",
+          items: [
+            {
+              label: "Flagship Code Configuration",
+              link: "/reference/config/",
+            },
+            { label: "Build Configuration", link: "/reference/build/" },
+            { label: "Env Configuration", link: "/reference/env/" },
+            { label: "Plugin Configuration", link: "/reference/plugin/" },
           ],
         },
       ],
