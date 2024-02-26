@@ -1,0 +1,3 @@
+---
+title: plugin-permissions
+---

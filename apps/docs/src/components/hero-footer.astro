@@ -1,0 +1,13 @@
+<div id="lottie" style="position: fixed; bottom: 0; left: 0; width: 100%;" />
+
+<script>
+  import Lottie from "lottie-web";
+
+  Lottie.loadAnimation({
+    container: document.getElementById("lottie") as HTMLElement,
+    path: "data.json",
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+  });
+</script>

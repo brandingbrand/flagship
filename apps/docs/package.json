@@ -11,10 +11,11 @@
     "start": "astro dev"
   },
   "dependencies": {
+    "@astrojs/check": "^0.4.1",
     "@astrojs/starlight": "^0.17.0",
     "astro": "^4.2.1",
+    "lottie-web": "^5.12.2",
     "sharp": "^0.32.5",
-    "@astrojs/check": "^0.4.1",
     "typescript": "^5.3.3"
   }
 }
