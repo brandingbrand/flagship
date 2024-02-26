@@ -12,11 +12,11 @@ Flagship Code relies on two fundamental dependencies, namely `@brandingbrand/cod
 
 #### cli
 
-The @brandingbrand/code-cli package forms the command-line interface (CLI) component of Flagship Code, responsible for interpreting command-line arguments and executing corresponding actions to generate native projects. This pivotal component serves as the interface through which developers interact with Flagship Code, facilitating seamless project initialization and configuration.
+The `@brandingbrand/code-cli` package forms the command-line interface (CLI) component of Flagship Code, responsible for interpreting command-line arguments and executing corresponding actions to generate native projects. This pivotal component serves as the interface through which developers interact with Flagship Code, facilitating seamless project initialization and configuration.
 
 #### cli-kit
 
-Complementing the CLI functionality, the @brandingbrand/code-cli-kit package plays a pivotal role in the ecosystem by exposing shared modules and types essential for configuring native code. While the CLI handles command-line interactions, the CLI Kit package facilitates the configuration process by providing standardized modules and types utilized by both the CLI and plugin packages. This modular approach enhances code maintainability and extensibility, ensuring a cohesive development experience across different facets of Flagship Code.
+Complementing the CLI functionality, the `@brandingbrand/code-cli-kit` package plays a pivotal role in the ecosystem by exposing shared modules and types essential for configuring native code. While the CLI handles command-line interactions, the CLI Kit package facilitates the configuration process by providing standardized modules and types utilized by both the CLI and plugin packages. This modular approach enhances code maintainability and extensibility, ensuring a cohesive development experience across different facets of Flagship Code.
 
 #### Native Template Compatibility
 
