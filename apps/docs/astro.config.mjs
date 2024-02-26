@@ -12,6 +12,7 @@ export default defineConfig({
       social: {
         github: "https://github.com/brandingbrand/flagship",
       },
+      customCss: ["./src/styles.css"],
       sidebar: [
         {
           label: "Overview",
