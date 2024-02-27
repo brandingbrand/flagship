@@ -1,0 +1,245 @@
+---
+title: Plugins
+---
+
+Flagship Code introduces a comprehensive approach to augmenting the customization capabilities of native iOS and Android projects, employing the concept of a plugin system. This innovative framework extends the realm of possibilities, allowing for intricate customization and seamless integration of additional functionalities into your projects.
+
+In the context of Flagship Code, plugins can take the form of either locally stored packages or externally published ones. A notable enhancement introduced with Flagship Code version 13 is the newfound capability to maintain plugins in TypeScript without the necessity of transpiling to JavaScript. This advancement not only streamlines the development process but also fosters leaner plugins, mitigating the risk of overlooking transpilation tasks and ensuring a more seamless integration experience.
+
+### Provided Plugins
+
+Flagship Code offers a curated selection of essential plugins designed to cater to the diverse needs of most projects. These included plugins serve as indispensable tools, each addressing specific requirements crucial for robust application development:
+
+- [@brandingbrand/code-plugin-app-icon](/packages/plugin-app-icon)
+
+  - This plugin facilitates the effortless generation of all requisite app icon sizes necessary for both iOS and Android platforms.
+
+- [@brandingbrand/code-plugin-asset](/packages/plugin-asset)
+
+  - Simplifies the process of linking assets, such as fonts, ensuring seamless integration across both iOS and Android environments.
+
+- [@brandingbrand/code-plugin-fastlane](/packages/plugin-fastlane)
+
+  - Streamlines the compilation and building processes for iOS and Android applications by providing a convenient interface to fastlane.
+
+- [@brandingbrand/code-plugin-native-navigation](/packages/plugin-native-navigation)
+
+  - Empowers developers with the capability to implement necessary native code alterations to leverage the benefits of `react-native-navigation`.
+
+- [@brandingbrand/code-plugin-permissions](/packages/plugin-permissions)
+
+  - Offers a comprehensive solution for configuring essential permissions required by applications on both iOS and Android platforms leveraging `react-native-permissions`.
+
+- [@brandingbrand/code-plugin-splash-screen](/packages/plugin-splash-screen)
+
+  - Facilitates the generation of basic splash screens, leveraging either logo-based designs or pre-generated assets, ensuring a captivating user experience across iOS and Android platforms.
+
+- [@brandingbrand/code-plugin-target-extension](/packages/plugin-target-extension)
+  - Provides developers with the functionality to effortlessly generate iOS target extensions, expanding the scope and capabilities of iOS applications.
+
+### Plugin Generation
+
+Local plugins offer a streamlined setup process, benefiting from being included within the parent project and having access to all parent packages. Flagship Code simplifies the process of generating, configuring, and installing a new plugin through a user-friendly command exposed by the `@brandingbrand/cli` package. Plugin names are required to adhere to package naming standards and should not include any scoping. By specifying the `pluginPath` in the `flagship-code.config.ts` configuration file, developers can seamlessly create new plugins using the following command:
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+<Tabs>
+<TabItem label="yarn">
+
+```sh
+yarn flagship-code generate --type plugin --name plugin-vision-camera
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npx flagship-code generate --type plugin --name plugin-vision-camera
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+npx flagship-code generate --type plugin --name plugin-vision-camera
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bunx flagship-code generate --type plugin --name plugin-vision-camera
+```
+
+</TabItem>
+</Tabs>
+
+Building upon the previously provided guidelines, executing the designated command will result in the creation of the `plugin-vision-camera` package, located at the specified path `./coderc/plugins/plugin-vision-camera`. Upon generation, Flagship Code seamlessly incorporates this newly created package as a linked dependency within your `package.json` file.
+
+import { Code } from "@astrojs/starlight/components";
+
+export const title = "package.json";
+
+export const code = `{
+  "name": "my-awesome-app",
+  "version": "1.0.0",
+  "author": "Your Name <email@example.com>",
+  ...,
+  "devDependencies": {
+    ...,
+    "plugin-vision-camera": "link:./coderc/plugins/plugin-vision-camera",
+    ...
+  }
+}`;
+
+export const mark = [
+  '"plugin-vision-camera": "link:./coderc/plugins/plugin-vision-camera",',
+];
+
+<Code code={code} lang="json" title={title} mark={mark} />
+
+Furthermore, as part of the process, Flagship Code ensures the integration of the newly generated plugin into your project's configuration by automatically updating the `flagship-code.config.ts` file. This seamless synchronization ensures that the plugin is properly configured and readily available for utilization within your project environment.
+
+export const titleFSC = "flagship-code.config.ts";
+
+export const codeFSC = `
+import {defineConfig} from '@brandingbrand/code-cli-kit';
+
+export default defineConfig({
+  buildPath: "./coderc/build",
+  envPath: "./coderc/env",
+  pluginPath: "./coderc/plugins",
+  plugins: [
+    "plugin-vision-camera",
+  ],
+});
+`;
+
+export const markFSC = ['"plugin-vision-camera",'];
+
+<Code code={codeFSC} lang="ts" title={titleFSC} mark={markFSC} />
+
+Finally, Flagship Code initiates the re-installation of project dependencies to accommodate the changes made to the `package.json` file resulting from the addition of the newly generated plugin. This step ensures that your project remains in a coherent and fully functional state, with all dependencies properly configured and integrated.
+
+### Plugin Configuration
+
+The plugin interface embodies simplicity through a singular entry point, `index.ts`, which serves the dual purpose of exposing the plugin functionality alongside its associated types. In parallel with other configurations, this interface is further bolstered by a type-guard function dubbed `definePlugin`. This protective measure empowers developers to tailor entry points for both iOS and Android platforms, thereby streamlining native code adjustments managed by Flagship Code. Crucially, these entry points retain an optional nature, accommodating scenarios where a plugin is designed exclusively for a particular platform, as exemplified by `@brandingbrand/code-plugin-target-extension`.
+
+The generated `index.ts` file embodies simplicity and configurability, readily adaptable to the unique requirements of your projects.
+
+export const titlePlugin = "index.ts";
+
+export const codePlugin = `
+import {
+  definePlugin,
+  type BuildConfig,
+  type PrebuildOptions
+} from "@brandingbrand/code-cli-kit";
+
+export default definePlugin({
+  ios: async function (build: BuildConfig, options: PrebuildOptions): Promise<void> {
+    // make iOS code changes here
+  },
+  android: async function (build: BuildConfig, options: PrebuildOptions): Promise<void> {
+    // make Android code changes here
+  },
+});
+`;
+
+<Code code={codePlugin} lang="ts" title={titlePlugin} />
+
+Within these plugins, developers harness the power of the exposed `parsers` and file-system APIs to manipulate native code and configurations effectively. The provided plugins serve as invaluable sources of inspiration, offering insights into best practices and implementation strategies.
+
+It's worth noting that plugins often require a configuration object to avoid hard-coding values, which helps maintain flexibility across various build configurations. To achieve this, developers can generate a Plugin Type that extends the `build.<mode>.ts` configuration. This configuration becomes accessible as part of the `build` object within the plugin, as demonstrated earlier. Furthermore, Plugin types themselves extend the BuildConfig type, facilitating a plug-and-play experience. Developers can override the native iOS and Android configurations within the plugin type, which are then seamlessly merged with the base configurations. This approach ensures that when a plugin is removed, the additional compartmentalized configuration is also eliminated, thereby aiding in the organization of configurations.
+
+export const titlePluginType = "types.ts";
+
+export const codePluginType = `
+export type PluginVisionCamera = {
+  /**
+   * A plugin object specifying permissions required for a Code Plugin.
+   */
+  pluginVisionCamera: Plugin<{
+    /**
+     * Permissions required for the iOS platform.
+     */
+    ios: {
+      someRandomConfigValue: string;
+    };
+    /**
+     * Permissions required for the Android platform.
+     */
+    android: {
+      someRandomConfigValue: string;
+    };
+  }>;
+};
+`;
+
+<Code code={codePluginType} lang="ts" title={titlePluginType} />
+
+This can then be utilized in your `build.internal.ts`.
+
+```ts
+import { defineBuild } from "@brandingbrand/code-cli-kit";
+import { type PluginVisionCamera } from "plugin-vision-camera";
+
+export default defineBuild<PluginVisionCamera>({
+  ios: {
+    bundleId: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  android: {
+    packageName: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  pluginVisionCamera: {
+    ios: {
+      deploymentTarget: "15.0",
+    },
+    android: {
+      compileSdkVersion: "35.0.0",
+    },
+    pluginVisionCamera: {
+      ios: {
+        someRandomConfigValue: "myIOSValue",
+      },
+      android: {
+        someRandomConfigValue: "myAndroidValue",
+      },
+    },
+  },
+});
+```
+
+This capability empowers `plugin-vision-camera` to extend the fundamental BuildConfig and override native configurations that are exclusive to the functionality provided by the plugin.
+
+### Plugin Testing
+
+Generated plugins include a predefined Jest preset designed to facilitate testing of your plugin within real iOS and Android projects. These projects mirror those used by Flagship Code for generating iOS and Android native code and configurations. A unit test for both iOS and Android are included with the generated plugin.
+
+```ts
+/**
+ * @jest-environment-options {"requireTemplate": true}
+ */
+
+/// <reference types="@brandingbrand/code-jest-config" />
+
+import plugin from "../src";
+
+describe("plugin", () => {
+  it("ios", async () => {
+    await plugin.ios?.({} as any, {} as any);
+
+    expect(true).toBeTruthy();
+  });
+
+  it("android", async () => {
+    await plugin.android?.({} as any, {} as any);
+
+    expect(true).toBeTruthy();
+  });
+});
+```
+
+With the provided frontmatter `@jest-environment-options`, temporary native iOS and Android projects are at your disposal for testing your plugin.
