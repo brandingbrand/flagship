@@ -75,18 +75,6 @@ export default defineConfig({
             },
           ],
         },
-        {
-          label: "Reference",
-          items: [
-            {
-              label: "Flagship Code Configuration",
-              link: "/reference/config/",
-            },
-            { label: "Build Configuration", link: "/reference/build/" },
-            { label: "Env Configuration", link: "/reference/env/" },
-            { label: "Plugin Configuration", link: "/reference/plugin/" },
-          ],
-        },
       ],
     }),
   ],

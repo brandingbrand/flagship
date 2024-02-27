@@ -1,0 +1,294 @@
+---
+title: Getting Started
+---
+
+Flagship Code is a comprehensive Configuration as Code (CaC) toolkit designed to streamline your development process by managing your iOS and Android native code. This guide serves as your launchpad into the world of Flagship Code. Whether you are starting from the React Native CLI or if you already have an ongoing project, refer to the following instructions to seamlessly integrate Flagship Code into your existing workflow.
+
+## Quick Start
+
+#### Compatibility
+
+In your `package.json` verify you are using matching the versions of `react-native` and `react` packages noted below.
+
+import { Code } from "@astrojs/starlight/components";
+
+export const title = "package.json";
+
+export const code = `{
+  "name": "my-awesome-app",
+  "version": "1.0.0",
+  "author": "Your Name <email@example.com>",
+  ...,
+  "dependencies": {
+    ...,
+    "react": "^18.2.0",
+    "react-native": "~0.72.0",
+    ...,
+  }
+}`;
+
+export const mark = ['"react": "^18.2.0",', '"react-native": "~0.72.0",'];
+
+<Code code={code} lang="json" title={title} mark={mark} />
+
+This Flagship Code v13 currently supports React Native version 0.72.+. Each major version of Flagship Code supports a new minor version of React Native.
+
+#### Dependencies
+
+There are two core packages that Flagship Code depends on for ephermal native code generation, cli and cli-kit. Add both of these packages a development dependencies to your project.
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+<Tabs>
+<TabItem label="yarn">
+
+```sh
+yarn add --dev @brandingbrand/code-cli @brandingbrand/code-cli-kit
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npm install --save-dev @brandingbrand/code-cli @brandingbrand/code-cli-kit
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+pnpm add --save-dev @brandingbrand/code-cli @brandingbrand/code-cli-kit
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bun add --dev @brandingbrand/code-cli @brandingbrand/code-cli-kit
+```
+
+</TabItem>
+</Tabs>
+
+These should now be reflected in your `package.json`.
+
+export const titleDep = "package.json";
+
+export const codeDep = `{
+  "name": "my-awesome-app",
+  "version": "1.0.0",
+  "author": "Your Name <email@example.com>",
+  ...,
+  "dependencies": {
+    ...,
+    "react": "^18.2.0",
+    "react-native": "~0.72.0",
+    ...,
+  },
+  "devDependencies": {
+    ...,
+    "@brandingbrand/cli": "13.0.0",
+    "@brandingbrand/cli-kit": "13.0.0",
+    ...,
+  }
+}`;
+
+export const markDep = [
+  '"@brandingbrand/cli": "13.0.0",',
+  '"@brandingbrand/cli-kit": "13.0.0",',
+];
+
+<Code code={codeDep} lang="json" title={titleDep} mark={markDep} />
+
+#### Configuration
+
+Flagship Code employs three distinct configurations to facilitate the generation of your native iOS and Android projects. These configurations encompass `flagship-code.config.ts`, `build.<mode>.ts`, and `env.<mode>.ts`, with `<mode>` denoting specific build or environment settings such as internal, store, dev, staging, or prod.
+
+In a meticulous endeavor to maintain robustness, Flagship Code implements type guards across all configurations. This strategic approach minimizes potential side-effects, ensuring smooth execution when initiating actions to generate your native iOS and Android projects.
+
+##### Flagship Code Configuration
+
+Create the `flagship-code.config.ts` in the root of your project.
+
+```sh
+touch flagship-code.config.ts
+```
+
+Additionally create a directory named `coderc`. The `coderc` directory is a good location to store your Flagship Code assets. Ultimately this is completely configurable and you can put these configuration assets anywhere you would please.
+
+```sh
+mkdir coderc
+```
+
+This configuration serves as a cornerstone for project scaffolding flexibility within the realm of Flagship Code. It offers the freedom to define the locations of build configurations, environment configurations, and plugins, as well as specifying which plugins will be activated.
+
+The provided example serves as an excellent starting point for initiating a React Native project. It's worth noting that all paths specified in the configuration files are relative to the root directory of your project, ensuring clarity and ease of management.
+
+export const titleFSC = "flagship-code.config.ts";
+
+export const codeFSC = `
+import {defineConfig} from '@brandingbrand/code-cli-kit';
+
+export default defineConfig({
+  buildPath: "./coderc/build",
+  envPath: "./coderc/env",
+  pluginPath: "./coderc/plugins",
+  plugins: [],
+});
+`;
+
+<Code code={codeFSC} lang="ts" title={titleFSC} />
+
+##### Build Configuration
+
+Create a build configuration file in the directory that is denoted in your `flagship-code.config.ts` under the `buildPath` attribute.
+
+```sh
+touch ./coderc/build/build.internal.ts
+```
+
+The primary objective of the build configuration is to provide a mechanism for overriding default values within your native iOS and Android projects' configurations. At its core, it necessitates only two mandatory attributes per platform, with all other settings being optional. Moreover, this configuration serves as the hub for defining plugin-specific native code configurations.
+
+Although there may appear to be redundancy across build configurations, this redundancy is essential to accommodate potential variances in third-party dependencies' requirements. The following example showcases the minimal setup required to initialize this configuration.
+
+export const titleBuild = "build.internal.ts";
+
+export const codeBuild = `
+import {defineBuild} from '@brandingbrand/code-cli-kit';
+
+export default defineBuild({
+  ios: {
+    bundleId: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  android: {
+    packageName: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+});
+`;
+
+<Code code={codeBuild} lang="ts" title={titleBuild} />
+
+##### Env Configuration
+
+Create a build configuration file in the directory that is denoted in your `flagship-code.config.ts` under the `envPath` attribute.
+
+```sh
+touch ./coderc/env/env.dev.ts
+```
+
+The primary aim of the env configuration is to furnish developers with a type-safe runtime environment. This feature is exclusively beneficial to developers leveraging `@brandingbrand/fsapp` as their routing solution. The env configuration offers a minimal example of its functionality.
+
+export const titleEnv = "env.dev.ts";
+
+export const codeEnv = `
+import {defineEnv} from '@brandingbrand/code-cli-kit';
+
+export default defineEnv<Env>({
+  id: 'abc12345',
+  domain: 'https://dev.myexampledomain.com',
+});
+`;
+
+<Code code={codeEnv} lang="ts" title={titleEnv} />
+
+#### Native Code Generation
+
+With the dependencies and configuration requirements met, the native code is now prepared for generation. It's crucial to grasp that Flagship Code's primary objective is to manage iOS and Android code, as outlined in the Overview. Consequently, the existing iOS and Android directories will no longer be retained in your repository. Therefore, it's imperative to append the `ios` and `android` directories to your `.gitignore` file.
+
+export const titleGitignore = ".gitignore";
+
+export const codeGitignore = `
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Dependencies
+
+node_modules
+ios
+android
+
+# Other Dependencies
+
+`;
+
+export const markGitignore = ["ios", "android"];
+
+<Code
+  code={codeGitignore}
+  lang="ts"
+  title={titleGitignore}
+  mark={markGitignore}
+/>
+
+You can now safely execute the prebuild command to generate your native iOS and Android projects. Ensure to run this command from the root directory of your project.
+
+<Tabs>
+<TabItem label="yarn">
+
+```sh
+yarn flagship-code prebuild --build internal --env dev
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npx flagship-code prebuild --build internal --env dev
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+npx flagship-code prebuild --build internal --env dev
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bunx flagship-code prebuild --build internal --env dev
+```
+
+</TabItem>
+</Tabs>
+
+#### Run App
+
+The directories for both iOS and Android projects should now be available. You can proceed to utilize the standard methods for running the iOS and Android applications.
+
+<Tabs>
+<TabItem label="yarn">
+
+```sh
+yarn react-native run-ios
+yarn react-native run-android
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npx react-native run-ios
+npx react-native run-android
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+npx react-native run-ios
+npx react-native run-android
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bunx react-native run-ios
+bunx react-native run-android
+```
+
+</TabItem>
+</Tabs>

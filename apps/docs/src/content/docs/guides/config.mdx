@@ -1,0 +1,72 @@
+---
+title: Flagship Code Configuration
+---
+
+The primary objective of `flagship-code.config.ts` is to provide developers with the freedom to scaffold their configurations according to their preferences. We refrain from making assumptions regarding how developers wish to structure their apps, aiming instead to empower them with flexibility in configuration setup...
+
+...except for the location of the `flagship-code.config.ts` 😉.
+
+### Configure the `flagship-code.config.ts`
+
+Create the `flagship-code.config.ts` in the root of your project directory.
+
+```sh
+touch flagship-code.config.ts
+```
+
+Here is an example of the configuration structure but feel free to customize the paths as required.
+
+import { Code } from "@astrojs/starlight/components";
+
+export const title = "flagship-code.config.ts";
+
+export const code = `
+import {defineConfig} from '@brandingbrand/code-cli-kit';
+
+export default defineConfig({
+  buildPath: "./coderc/build",
+  envPath: "./coderc/env",
+  pluginPath: "./coderc/plugins",
+  plugins: [
+    "@brandingbrand/code-plugin-native-navigation",
+    "@brandingbrand/code-plugin-splash-screen",
+    "@brandingbrand/code-plugin-app-icon",
+  ],
+});
+`;
+
+<Code code={code} lang="ts" title={title} />
+
+You can pass the following options to the `flagship-code` configuration.
+
+#### `buildPath`
+
+**type:** `string`
+
+_required_
+
+The relative path from the root of your project to the location to where your build configurations are defined.
+
+#### `envPath`
+
+**type:** `string`
+
+_required_
+
+The relative path from the root of your project to the location where your environment configurations are defined.
+
+#### `pluginPath`
+
+**type:** `string`
+
+_required_
+
+The relative path from the root of your project to the location where your local plugin packages are defined.
+
+#### `plugins`
+
+**type:** `string`
+
+_required_
+
+A prioritized list of the plugins that Flagship Code will invoke - these correspond to the package names listed under `devDependencies` in your `package.json`.

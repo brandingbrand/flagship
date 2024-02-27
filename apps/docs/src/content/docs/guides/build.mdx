@@ -1,0 +1,697 @@
+---
+title: Build Configuration
+---
+
+The chief purpose of the build configuration is to offer an avenue for overriding native configurations. These native configurations encompass fundamental aspects such as the bundle identifier and deployment target for iOS, and the applicationId and compileSdk for Android.
+
+### Configure the `build.<mode>.ts`
+
+The `<mode>` serves as a convenient alias representing the distribution destination of the application, such as internal, adhoc, store, and so forth. For illustrative purposes, let's designate the mode as "internal." To proceed, generate the `build.internal.ts` file at the root of your project directory.
+
+```sh
+touch ./coderc/build/build.internal.ts
+```
+
+Here is an example of the minimal required configuration structure.
+
+import { Code } from "@astrojs/starlight/components";
+
+export const title = "build.internal.ts";
+
+export const code = `
+import {defineBuild} from '@brandingbrand/code-cli-kit';
+
+export default defineBuild({
+  ios: {
+    bundleId: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  android: {
+    packageName: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+});
+`;
+
+<Code code={code} lang="ts" title={title} />
+
+You can pass the following options to the build configuration.
+
+### `ios`
+
+**type:** [`IOSConfig`](#iosconfig)
+
+_required_
+
+The iOS native configuration.
+
+#### `IOSConfig`
+
+````ts
+type IOSConfig = {
+  /**
+   * Bundle identifier of your application.
+   *
+   * @example
+   * ```
+   * bundleId: "com.app",
+   * ```
+   */
+  bundleId: string;
+
+  /**
+   * Display name of your application.
+   * @example
+   * ```
+   * displayName: "App",
+   * ```
+   */
+  displayName: string;
+} /**
+ * Optional attributes for the iOS configuration
+ *
+ * @example
+ * ```
+ * ios: {
+ *   bundleId: "com.app",
+ *   displayName: "App",
+ *   entitlementsFilePath: "./path/to/app.entitlements",
+ *   frameworks: {
+ *     framework: "Sprite.framework",
+ *   },
+ *   deploymentTarget: "15.0",
+ *   podfile: {
+ *     config: ["inhibit_all_warnings!"],
+ *     pods: ["pod 'PubNub', '~> 4.0'", "pod 'FlagshipCode', '~> 13.0'"],
+ *   },
+ *   plist: {
+ *     urlScheme: {
+ *       scheme: "myapp"
+ *     },
+ *     style: "light",
+ *   },
+ *   signing: {
+ *     appleCert: "signing/AppleWWDRCA.cer",
+ *     distCert: "signing/enterprise/enterprise.cer",
+ *     distP12: "signing/enterprise/enterprise.p12",
+ *     distCertType: "iPhone Distribution",
+ *     exportTeamId: "ABC12345",
+ *     profilesDir: "signing/enterprise",
+ *     provisioningProfileName: "In House Provisioning Profile",
+ *     exportMethod: "enterprise",
+ *   },
+ *   targetedDevices: "1",
+ *   versioning: {
+ *     version: "1.5",
+ *     build: 3,
+ *   },
+ *   gemfile: ["gem 'sqlite3'"]
+ * }
+ * ```
+ */ & {
+  /**
+   * Optional entitlements path relative to the root of the project.
+   */
+  entitlementsFilePath?: string | undefined;
+
+  /**
+   * Optional frameworks.
+   */
+  frameworks?:
+    | ({
+        /**
+         * The name of the framework, this can be a system framework
+         * or custom framework
+         */
+        framework: string;
+      } & {
+        /**
+         * Path to the framework if it's a custom framework i.e. not
+         * a system framework Sprite.framework
+         */
+        path?: string | undefined;
+      })[]
+    | undefined;
+
+  /**
+   * Optional minimum version of the iOS operating system that an app is designed to support.
+   *
+   * @default "13.4"
+   */
+  deploymentTarget?: string | undefined;
+
+  /**
+   * Optional podfile configuration.
+   */
+  podfile?:
+    | {
+        /**
+         * Optional array of top-level configurations
+         */
+        config?: string[] | undefined;
+
+        /**
+         * Optional array of pods
+         */
+        pods?: string[] | undefined;
+      }
+    | undefined;
+
+  /**
+   * Optional Property list (plist) configuration.
+   */
+  plist?:
+    | {
+        /**
+         * Optional URL Scheme information
+         */
+        urlScheme?:
+          | ({
+              /**
+               * URL scheme
+               */
+              scheme: string;
+            } & {
+              /**
+               * Optional URL host. Most times with apps there is no
+               * need for a host.
+               */
+              host?: string | undefined;
+            })
+          | undefined;
+
+        /**
+         * Optional style configuration
+         */
+        style?: "light" | "dark" | "system" | undefined;
+      }
+    | undefined;
+
+  /**
+   * Optional signing configuration.
+   */
+  signing?:
+    | {
+        /**
+         * Path to Apple certificate - this can be retrieved at https://www.apple.com/certificateauthority/
+         * relative to the root of the project.
+         */
+        appleCert: string;
+
+        /**
+         * Path to the distribution certificate relative to the root of the project.
+         */
+        distCert: string;
+
+        /**
+         * Path to the distribution p12 relative to the root of the project.
+         */
+        distP12: string;
+
+        /**
+         * Type of distrution certificate.
+         */
+        distCertType:
+          | "iPhone Development"
+          | "iPhone Distribution"
+          | "Apple Development"
+          | "Apple Distribution";
+
+        /**
+         * Type of export method i.e. distribution location
+         */
+        exportMethod:
+          | "app-store"
+          | "validation"
+          | "ad-hoc"
+          | "package"
+          | "enterprise"
+          | "development"
+          | "developer-id"
+          | "mac-application";
+
+        /**
+         * Export team identifier.
+         */
+        exportTeamId: string;
+
+        /**
+         * Directory of your provisioning profile(s) relative to the root of the project
+         */
+        profilesDir: string;
+
+        /**
+         * Provisioning profile name, not to be confused with the filename.
+         */
+        provisioningProfileName: string;
+      }
+    | undefined;
+
+  /**
+   * Optional targeted devices.
+   *
+   * - iPhone: "1"
+   * - iPad: "2"
+   * - Universal: "1,2"
+   *
+   * @default "1"
+   */
+  targetedDevices?: "1" | "2" | "1,2" | undefined;
+
+  /**
+   * Optional versioning configuration.
+   *
+   * @link VersioningSchema
+   */
+  versioning?:
+    | ({
+        /**
+         * The version string.
+         *
+         * @default "1.0"
+         */
+        version: string;
+      } & {
+        /**
+         * Optional build number.
+         *
+         * @default 1
+         */
+        build?: number | undefined;
+      })
+    | undefined;
+
+  /**
+   * Optional array of gems to add to to Gemfile.
+   */
+  gemfile?: string[] | undefined;
+};
+````
+
+### `android`
+
+**type:** [`AndroidConfig`](#androidconfig)
+
+_required_
+
+The Android native configuration.
+
+#### `AndroidConfig`
+
+````ts
+type AndroidConfig = {
+  /**
+   * Package name for your application - this serves as package path and namespace.
+   *
+   * @example
+   * ```
+   * packageName: "com.brandingbrand"
+   * ```
+   */
+  packageName: string;
+
+  /**
+   * Display name of your application.
+   *
+   * @example
+   * ```
+   * displayName: "App"
+   * ```
+   */
+  displayName: string;
+} & {
+  /**
+   * Represents the schema for Gradle configuration.
+   *
+   * @example
+   * ```
+   * gradle: {
+   *   appGradle: {
+   *     dependencies: ["com.example.android:app-magic:12.3"],
+   *   },
+   *   projectGradle: {
+   *     buildToolsVersion: "33.0.0",
+   *     compileSdkVersion: 33,
+   *     minSdkVersion: 21,
+   *     ndkVersion: "23.1.7779620",
+   *     repositories: ["brandingbrand()"],
+   *     targetSdkVersion: 33,
+   *     ext: ['kotlinVersion: "1.6.0"'],
+   *     dependencies: ["com.example.android:app-magic:12.3"],
+   *   },
+   *   properties: {
+   *     useAndroidX: true,
+   *     enableJetifier: true,
+   *     FLIPPER_VERSION: "33",
+   *     reactNativeArchitectures: "arm64-v8a",
+   *     newArchEnabled: false,
+   *     hermesEnabled: true,
+   *   },
+   * }
+   * ```
+   */
+  gradle?:
+    | {
+        /**
+         * Optional app build.gradle configuration.
+         */
+        appGradle?:
+          | {
+              /**
+               * Optional array configuration to include external binaries or other library modules to your
+               * build as dependencies.
+               */
+              dependencies?: string[] | undefined;
+            }
+          | undefined;
+
+        /**
+         * Optional project build.gradle configuration.
+         */
+        projectGradle?:
+          | {
+              /**
+               * Optional Android Build Tools used by the project.
+               *
+               * @default "33.0.0"
+               */
+              buildToolsVersion?: string | undefined;
+
+              /**
+               * Optional version of the Android SDK that the app is compiled against.
+               *
+               * @default 33
+               */
+              compileSdkVersion?: number | undefined;
+
+              /**
+               * Optional minimum version of the Android SDK that the app supports.
+               *
+               * @default 21
+               */
+              minSdkVersion?: number | undefined;
+
+              /**
+               * Optional version of the Android NDK (Native Development Kit) used by the project.
+               *
+               * @default "23.1.7779620"
+               */
+              ndkVersion?: string | undefined;
+
+              /**
+               * Optional repositories from which the build system should fetch dependencies, such as libraries and plugins, during the build process.
+               */
+              repositories?: string[] | undefined;
+
+              /**
+               * Optional version of the Android SDK that the app is targeting.
+               *
+               * @default 33
+               */
+              targetSdkVersion?: number | undefined;
+
+              /**
+               * Optional configuration to define the "ext" block (short for "extra properties") is often used
+               * in the build.gradle file to define custom variables or properties that can be reused
+               * across different parts of the build configuration.
+               */
+              ext?: string[] | undefined;
+
+              /**
+               * Optional array configuration to include external binaries or other library modules to your
+               * build as dependencies.
+               */
+              dependencies?: string[] | undefined;
+            }
+          | undefined;
+
+        /**
+         * Optional gradle.properties configuration.
+         */
+        properties?:
+          | {
+              /**
+               * Optional flag to enable AndroidX package structure.
+               *
+               * @default true
+               */
+              useAndroidX?: boolean | undefined;
+
+              /**
+               * Optional flag to enable Jetifier for third-party libraries.
+               *
+               * @default true
+               */
+              enableJetifier?: boolean | undefined;
+
+              /**
+               * Optional version of Flipper SDK to use with React Native.
+               *
+               * @default "0.182.0"
+               */
+              FLIPPER_VERSION?: string | undefined;
+
+              /**
+               * Optional architectures to build for React Native.
+               *
+               * @default "armeabi-v7a,arm64-v8a,x86,x86_64"
+               */
+              reactNativeArchitectures?: string | undefined;
+
+              /**
+               * Optional flag to enable new architecture support.
+               *
+               * @default false
+               */
+              newArchEnabled?: boolean | undefined;
+
+              /**
+               * Optional flag to enable Hermes JS engine.
+               *
+               * @default true
+               */
+              hermesEnabled?: boolean | undefined;
+            }
+          | undefined;
+      }
+    | undefined;
+
+  /**
+   * Represents the optional schema for Android manifest which contains important
+   * metadata about the app, including its package name, permissions, activities,
+   * services, receivers, and more. Currently only support url scheme configuration.
+   *
+   * @example
+   * ```
+   * manifest: {
+   *   urlScheme: {
+   *     scheme: "myapp",
+   *     host: "app",
+   *   },
+   * }
+   * ```
+   */
+  manifest?:
+    | {
+        /**
+         * Represents the optional schema for URL scheme information.
+         */
+        urlScheme?:
+          | ({
+              /**
+               * URL scheme
+               */
+              scheme: string;
+            } & {
+              /**
+               * Optional URL host. Most times with apps there is no
+               * need for a host.
+               */
+              host?: string | undefined;
+            })
+          | undefined;
+      }
+    | undefined;
+
+  /**
+   * Represents the schema for Android signing information.
+   *
+   * @example
+   * ```
+   * signing: {
+   *   keyAlias: "key0",
+   *   storeFile: "./path/to/release.keystore",
+   * }
+   * ```
+   */
+  signing?:
+    | {
+        /**
+         * Alias assigned to a cryptographic key stored in a keystore file.
+         */
+        keyAlias: string;
+
+        /**
+         * Path to store file relative to the project root which is used to sign the Android
+         * application package (APK) during the app signing process.
+         */
+        storeFile: string;
+      }
+    | undefined;
+
+  /**
+   * Represents the schema for versioning information.
+   *
+   * @example
+   * ```
+   * versioning: {
+   *   version: "1.5",
+   *   build: 3
+   * }
+   * ```
+   */
+  versioning?:
+    | ({
+        version: string;
+      } & {
+        build?: number | undefined;
+      })
+    | undefined;
+
+  /**
+   * Optional array of gems to add to to Gemfile.
+   *
+   * @example
+   * ```
+   * gemfile: ["gem 'sqlite3'"]
+   * ```
+   */
+  gemfile?: string[] | undefined;
+
+  /**
+   * Represents the schema for colors to be used throughout the native Android application.
+   *
+   * @example
+   * ```
+   * colors: {
+   *   opaque_red: "#f00",
+   * }
+   * ```
+   */
+  colors?:
+    | {
+        [x: string]: string;
+      }
+    | undefined;
+
+  /**
+   * Represents the schema for style information.
+   *
+   * @example
+   * style: "light"
+   *
+   * @example
+   * style: "dark"
+   *
+   * @example
+   * style: "system"
+   */
+  style?: "light" | "dark" | "system" | undefined;
+
+  /**
+   * Represents the schema for a single string that can be referenced from the application orfrom other
+   * resource files (such as an XML layout).
+   *
+   * @example
+   * ```
+   * strings: {
+   *   string: {
+   *     appName: "App",
+   *   },
+   *   stringArray: {
+   *     planets_array: ["Mercury", "Venus", "Earth", "Mars"],
+   *   },
+   *   plurals: {
+   *     numberOfSongsAvailable: [
+   *       {
+   *         quantity: "one",
+   *         value: "1 song found.",
+   *       },
+   *       {
+   *         quantity: "other",
+   *         value: "2 songs found.",
+   *       },
+   *     ],
+   *   },
+   * }
+   * ```
+   */
+  strings?:
+    | {
+        /**
+         * Represents the schema for a string
+         */
+        string?:
+          | {
+              [x: string]: string;
+            }
+          | undefined;
+
+        /**
+         * Represents the schema for an array of strings that can be referenced from the application.
+         *
+         * @example
+         * ```
+         * stringArray: {
+         *   planets_array: ["Mercury", "Venus", "Earth", "Mars"],
+         * }
+         * ```
+         */
+        stringArray?:
+          | {
+              [x: string]: string[];
+            }
+          | undefined;
+
+        /**
+         * Represents the schema for a collection of strings, of which, one string is provided depending on the amount of something.
+         *
+         * @example
+         * ```
+         * plurals: {
+         *   numberOfSongsAvailable: [
+         *     {
+         *       quantity: "one",
+         *       value: "1 song found.",
+         *     },
+         *     {
+         *       quantity: "other",
+         *       value: "2 songs found.",
+         *     },
+         *   ],
+         * }
+         * ```
+         */
+        plurals?:
+          | {
+              /**
+               * Plural name, this name is used as the resource ID.
+               */
+              [x: string]: {
+                /**
+                 * Plural quantity, for example, the quantity 1 is a special case. We write "1 book",
+                 * but for any other quantity we'd write "n books". This distinction between singular
+                 * and plural is very common, but other languages make finer distinctions
+                 */
+                quantity: "zero" | "one" | "two" | "few" | "many" | "other";
+                /**
+                 * Pluralized value.
+                 */
+                value: string;
+              }[];
+            }
+          | undefined;
+      }
+    | undefined;
+};
+````
