@@ -1,0 +1,195 @@
+---
+title: cli
+---
+
+The command-line interface (CLI) package integral to the Flagship Code framework is denoted by `@brandingbrand/code-cli`. This sophisticated utility orchestrates the parsing of command-line arguments, facilitating the seamless execution of two pivotal commands: `prebuild` and `generate`. These commands, meticulously designed and meticulously curated, play a pivotal role in the orchestration of tasks within your esteemed React Native project. As the lifeblood of your development endeavors, their judicious utilization is imperative for the harmonious evolution of your digital endeavors. The `prebuild` command responsible for native code generation and the `generate` command is responsible for plugin package generation.
+
+### Install
+
+Add `@brandingbrand/code-cli` as a development dependency to your React Native project.
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+<Tabs>
+<TabItem label="yarn">
+
+```sh
+yarn add --dev @brandingbrand/code-cli
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npm install --save-dev @brandingbrand/code-cli
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+pnpm add --save-dev @brandingbrand/code-cli
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bun add --dev @brandingbrand/code-cli
+```
+
+</TabItem>
+</Tabs>
+
+Your package.json should now be updated, `@brandingbrand/code-cli` should be listed as a `devDependency`.
+
+```json title="package.json" ins={10}
+{
+  "name": "my-awesome-app",
+  "version": "1.0.0",
+  "author": "Your Name <email@example.com>",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-native": "~0.72.0"
+  },
+  "devDependencies": {
+    "@brandingbrand/code-cli": "13.0.0"
+  }
+}
+```
+
+### Commands
+
+#### Prebuild
+
+The `prebuild` command serves as a fundamental tool for generating native iOS and Android projects seamlessly. It is designed to cater to various scenarios, whether you require project generation for both platforms collectively or for individual platforms, such as solely iOS or Android. Its pervasive utilization stems from its integral role in managing the native code generation process within Flagship Code. Whenever new packages or plugins are installed, the execution of `prebuild` becomes imperative to ensure the coherence and integrity of the generated codebase.
+
+Here is an example on how to execute the command:
+
+<Tabs>
+<TabItem label="yarn">
+
+```sh
+yarn flagship-code prebuild --build internal --env dev
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npx flagship-code prebuild --build internal --env dev
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+npx flagship-code prebuild --build internal --env dev
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bunx flagship-code prebuild --build internal --env dev
+```
+
+</TabItem>
+</Tabs>
+
+When executed with these specified options, the command will generate native iOS and Android projects simultaneously, utilizing the `build.internal.ts` configuration and default runtime environment set as `env.dev.ts`. Additionally, all environments will be associated with `@brandingbrand/fsapp`, provided that the package is being utilized.
+
+You can pass the following options to the `prebuild` command.
+
+#### `build`
+
+**type:** `string`
+
+_required_
+
+The designated name for the build configuration consumed by Flagship Code to generate native code is derived from the `<mode>` specified in the filename of the build configuration. For instance, if the filename is `build.internal.ts`, the designated name would be `internal`.
+
+#### `env`
+
+**type:** `string`
+
+_required_
+
+The designated name for the environment configuration consumed by Flagship Code, which is set as the default environment linked to `@brandingbrand/fsapp`, is derived from the `<mode>` specified in the filename of the build configuration. For example, if the filename is `env.dev.ts`, the designated name would be `dev`.
+
+#### `platform`
+
+**type:** `native | ios | android`
+
+**default:** `native`
+
+_optional_
+
+The platform for which Flagship Code will generate native code can be specified using the `platform` option. This option accepts three values: `ios`, `android`, and `native`. Setting the value to `ios` will generate code specifically for iOS, `android` for Android, and `native` will generate code for both platforms. The `platform` option is optional, with the default value being `native`.
+
+#### `release`
+
+**type:** `boolean`
+
+**default:** `false`
+
+_optional_
+
+The option `release` determines whether to generate native code in "release" mode. When set to `true`, certain features will be toggled based on this mode. Specifically, the specified `env` option will be linked to `@brandingbrand/fsapp`, and the development menu provided by `@brandingbrand/fsapp` will be disabled. Conversely, when set to `false`, all environments will be linked to `@brandingbrand/fsapp`, and the development menu provided by `@brandingbrand/fsapp` will be enabled. If this option is not explicitly specified, the default value for `release` will be `false`.
+
+#### Generate
+
+The `generate` command is a pivotal tool for effortlessly creating new plugins. Tailored to facilitate the initiation of extended native code alterations beyond what Flagship Code offers, it provides a robust starting point. Not only does it furnish a foundation for source code, but it also furnishes a template for unit testing. This ensures thorough testing of plugins against real native iOS and Android projects, enhancing their reliability and robustness.
+
+Here is an example on how to execute the command:
+
+<Tabs>
+<TabItem label="yarn">
+
+```sh
+yarn flagship-code generate --type plugin --name plugin-vision-camera
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npx flagship-code generate --type plugin --name plugin-vision-camera
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+npx flagship-code generate --type plugin --name plugin-vision-camera
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bunx flagship-code generate --type plugin --name plugin-vision-camera
+```
+
+</TabItem>
+</Tabs>
+
+Upon execution with the provided options, the command will generate a new plugin at the designated `pluginPath` as specified in the `flagship-code.config.ts` configuration. Furthermore, it will establish linkage between the plugin and both your `package.json` and `flagship-code.config.ts` files. Additionally, it will trigger the re-installation of your packages, ensuring coherence and integration with the newly created plugin.
+
+You can pass the following options to the `generate` command.
+
+#### `type`
+
+**type:** `plugin`
+
+_required_
+
+The template type generated by Flagship Code is exclusively limited to `plugin`. There are no other template options available at present.
+
+#### `env`
+
+**type:** `name`
+
+_required_
+
+The designated name for the generated plugin serves as both the directory name within the specified `pluginPath` in `flagship-code.config.ts` and the linked name in your `package.json` and `flagship-code.config.ts`. This name must comply with the package naming convention without project scoping.

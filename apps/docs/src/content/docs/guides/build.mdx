@@ -14,12 +14,8 @@ touch ./coderc/build/build.internal.ts
 
 Here is an example of the minimal required configuration structure.
 
-import { Code } from "@astrojs/starlight/components";
-
-export const title = "build.internal.ts";
-
-export const code = `
-import {defineBuild} from '@brandingbrand/code-cli-kit';
+```ts title="build.internal.ts"
+import { defineBuild } from "@brandingbrand/code-cli-kit";
 
 export default defineBuild({
   ios: {
@@ -31,9 +27,7 @@ export default defineBuild({
     displayName: "Branding Brand",
   },
 });
-`;
-
-<Code code={code} lang="ts" title={title} />
+```
 
 You can pass the following options to the build configuration.
 

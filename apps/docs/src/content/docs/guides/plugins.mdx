@@ -78,46 +78,29 @@ Building upon the previously provided guidelines, executing the designated comma
 
 import { Code } from "@astrojs/starlight/components";
 
-export const title = "package.json";
-
-export const code = `{
+```json title="package.json" ins={6}
+{
   "name": "my-awesome-app",
   "version": "1.0.0",
   "author": "Your Name <email@example.com>",
-  ...,
   "devDependencies": {
-    ...,
-    "plugin-vision-camera": "link:./coderc/plugins/plugin-vision-camera",
-    ...
+    "plugin-vision-camera": "link:./coderc/plugins/plugin-vision-camera"
   }
-}`;
-
-export const mark = [
-  '"plugin-vision-camera": "link:./coderc/plugins/plugin-vision-camera",',
-];
-
-<Code code={code} lang="json" title={title} mark={mark} />
+}
+```
 
 Furthermore, as part of the process, Flagship Code ensures the integration of the newly generated plugin into your project's configuration by automatically updating the `flagship-code.config.ts` file. This seamless synchronization ensures that the plugin is properly configured and readily available for utilization within your project environment.
 
-export const titleFSC = "flagship-code.config.ts";
-
-export const codeFSC = `
-import {defineConfig} from '@brandingbrand/code-cli-kit';
+```ts title="flagship-code.config.ts" ins='"plugin-vision-camera"'
+import { defineConfig } from "@brandingbrand/code-cli-kit";
 
 export default defineConfig({
   buildPath: "./coderc/build",
   envPath: "./coderc/env",
   pluginPath: "./coderc/plugins",
-  plugins: [
-    "plugin-vision-camera",
-  ],
+  plugins: ["plugin-vision-camera"],
 });
-`;
-
-export const markFSC = ['"plugin-vision-camera",'];
-
-<Code code={codeFSC} lang="ts" title={titleFSC} mark={markFSC} />
+```
 
 Finally, Flagship Code initiates the re-installation of project dependencies to accommodate the changes made to the `package.json` file resulting from the addition of the newly generated plugin. This step ensures that your project remains in a coherent and fully functional state, with all dependencies properly configured and integrated.
 
@@ -127,34 +110,28 @@ The plugin interface embodies simplicity through a singular entry point, `index.
 
 The generated `index.ts` file embodies simplicity and configurability, readily adaptable to the unique requirements of your projects.
 
-export const titlePlugin = "index.ts";
-
-export const codePlugin = `
+```ts title="index.ts"
 import {
   definePlugin,
   type BuildConfig,
-  type PrebuildOptions
+  type PrebuildOptions,
 } from "@brandingbrand/code-cli-kit";
 
 export default definePlugin({
-  ios: async function (build: BuildConfig, options: PrebuildOptions): Promise<void> {
+  ios: async function (build, options): Promise<void> {
     // make iOS code changes here
   },
-  android: async function (build: BuildConfig, options: PrebuildOptions): Promise<void> {
+  android: async function (build, options): Promise<void> {
     // make Android code changes here
   },
 });
-`;
-
-<Code code={codePlugin} lang="ts" title={titlePlugin} />
+```
 
 Within these plugins, developers harness the power of the exposed `parsers` and file-system APIs to manipulate native code and configurations effectively. The provided plugins serve as invaluable sources of inspiration, offering insights into best practices and implementation strategies.
 
 It's worth noting that plugins often require a configuration object to avoid hard-coding values, which helps maintain flexibility across various build configurations. To achieve this, developers can generate a Plugin Type that extends the `build.<mode>.ts` configuration. This configuration becomes accessible as part of the `build` object within the plugin, as demonstrated earlier. Furthermore, Plugin types themselves extend the BuildConfig type, facilitating a plug-and-play experience. Developers can override the native iOS and Android configurations within the plugin type, which are then seamlessly merged with the base configurations. This approach ensures that when a plugin is removed, the additional compartmentalized configuration is also eliminated, thereby aiding in the organization of configurations.
 
-export const titlePluginType = "types.ts";
-
-export const codePluginType = `
+```ts title="types.ts"
 export type PluginVisionCamera = {
   /**
    * A plugin object specifying permissions required for a Code Plugin.
@@ -174,13 +151,32 @@ export type PluginVisionCamera = {
     };
   }>;
 };
-`;
+```
 
-<Code code={codePluginType} lang="ts" title={titlePluginType} />
+This type can be utilized in your `index.ts`.
 
-This can then be utilized in your `build.internal.ts`.
+```ts title="index.ts" ins="<PluginVisionCamera>" ins={7}
+import {
+  definePlugin,
+  type BuildConfig,
+  type PrebuildOptions,
+} from "@brandingbrand/code-cli-kit";
 
-```ts
+import { type PluginVisionCamera } from "./types";
+
+export default definePlugin<PluginVisionCamera>({
+  ios: async function (build, options): Promise<void> {
+    // make iOS code changes here
+  },
+  android: async function (build, options): Promise<void> {
+    // make Android code changes here
+  },
+});
+```
+
+Additionally, this type can be utilized in your `build.internal.ts`.
+
+```ts title="build.internal.ts" ins={13-28} ins="<PluginVisionCamera>" ins={2}
 import { defineBuild } from "@brandingbrand/code-cli-kit";
 import { type PluginVisionCamera } from "plugin-vision-camera";
 
@@ -200,7 +196,7 @@ export default defineBuild<PluginVisionCamera>({
     android: {
       compileSdkVersion: "35.0.0",
     },
-    pluginVisionCamera: {
+    plugin: {
       ios: {
         someRandomConfigValue: "myIOSValue",
       },
@@ -218,7 +214,7 @@ This capability empowers `plugin-vision-camera` to extend the fundamental BuildC
 
 Generated plugins include a predefined Jest preset designed to facilitate testing of your plugin within real iOS and Android projects. These projects mirror those used by Flagship Code for generating iOS and Android native code and configurations. A unit test for both iOS and Android are included with the generated plugin.
 
-```ts
+```ts title="__tests__/index.ts"
 /**
  * @jest-environment-options {"requireTemplate": true}
  */

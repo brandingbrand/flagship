@@ -10,26 +10,17 @@ Flagship Code is a comprehensive Configuration as Code (CaC) toolkit designed to
 
 In your `package.json` verify you are using matching the versions of `react-native` and `react` packages noted below.
 
-import { Code } from "@astrojs/starlight/components";
-
-export const title = "package.json";
-
-export const code = `{
+```json '"react": "^18.2.0",' '"react-native": "~0.72.0"' title="package.json"
+{
   "name": "my-awesome-app",
   "version": "1.0.0",
   "author": "Your Name <email@example.com>",
-  ...,
   "dependencies": {
-    ...,
     "react": "^18.2.0",
-    "react-native": "~0.72.0",
-    ...,
+    "react-native": "~0.72.0"
   }
-}`;
-
-export const mark = ['"react": "^18.2.0",', '"react-native": "~0.72.0",'];
-
-<Code code={code} lang="json" title={title} mark={mark} />
+}
+```
 
 This Flagship Code v13 currently supports React Native version 0.72.+. Each major version of Flagship Code supports a new minor version of React Native.
 
@@ -72,33 +63,21 @@ bun add --dev @brandingbrand/code-cli @brandingbrand/code-cli-kit
 
 These should now be reflected in your `package.json`.
 
-export const titleDep = "package.json";
-
-export const codeDep = `{
+```json title="package.json" ins={10-11}
+{
   "name": "my-awesome-app",
   "version": "1.0.0",
   "author": "Your Name <email@example.com>",
-  ...,
   "dependencies": {
-    ...,
     "react": "^18.2.0",
-    "react-native": "~0.72.0",
-    ...,
+    "react-native": "~0.72.0"
   },
   "devDependencies": {
-    ...,
-    "@brandingbrand/cli": "13.0.0",
-    "@brandingbrand/cli-kit": "13.0.0",
-    ...,
+    "@brandingbrand/code-cli": "13.0.0",
+    "@brandingbrand/code-cli-kit": "13.0.0"
   }
-}`;
-
-export const markDep = [
-  '"@brandingbrand/cli": "13.0.0",',
-  '"@brandingbrand/cli-kit": "13.0.0",',
-];
-
-<Code code={codeDep} lang="json" title={titleDep} mark={markDep} />
+}
+```
 
 #### Configuration
 
@@ -124,10 +103,8 @@ This configuration serves as a cornerstone for project scaffolding flexibility w
 
 The provided example serves as an excellent starting point for initiating a React Native project. It's worth noting that all paths specified in the configuration files are relative to the root directory of your project, ensuring clarity and ease of management.
 
-export const titleFSC = "flagship-code.config.ts";
-
-export const codeFSC = `
-import {defineConfig} from '@brandingbrand/code-cli-kit';
+```ts title="flagship-code.config.ts"
+import { defineConfig } from "@brandingbrand/code-cli-kit";
 
 export default defineConfig({
   buildPath: "./coderc/build",
@@ -135,9 +112,7 @@ export default defineConfig({
   pluginPath: "./coderc/plugins",
   plugins: [],
 });
-`;
-
-<Code code={codeFSC} lang="ts" title={titleFSC} />
+```
 
 ##### Build Configuration
 
@@ -151,10 +126,8 @@ The primary objective of the build configuration is to provide a mechanism for o
 
 Although there may appear to be redundancy across build configurations, this redundancy is essential to accommodate potential variances in third-party dependencies' requirements. The following example showcases the minimal setup required to initialize this configuration.
 
-export const titleBuild = "build.internal.ts";
-
-export const codeBuild = `
-import {defineBuild} from '@brandingbrand/code-cli-kit';
+```ts title="build.internal.ts"
+import { defineBuild } from "@brandingbrand/code-cli-kit";
 
 export default defineBuild({
   ios: {
@@ -166,9 +139,7 @@ export default defineBuild({
     displayName: "Branding Brand",
   },
 });
-`;
-
-<Code code={codeBuild} lang="ts" title={titleBuild} />
+```
 
 ##### Env Configuration
 
@@ -180,26 +151,20 @@ touch ./coderc/env/env.dev.ts
 
 The primary aim of the env configuration is to furnish developers with a type-safe runtime environment. This feature is exclusively beneficial to developers leveraging `@brandingbrand/fsapp` as their routing solution. The env configuration offers a minimal example of its functionality.
 
-export const titleEnv = "env.dev.ts";
-
-export const codeEnv = `
-import {defineEnv} from '@brandingbrand/code-cli-kit';
+```ts title="env.dev.ts"
+import { defineEnv } from "@brandingbrand/code-cli-kit";
 
 export default defineEnv<Env>({
-  id: 'abc12345',
-  domain: 'https://dev.myexampledomain.com',
+  id: "abc12345",
+  domain: "https://dev.myexampledomain.com",
 });
-`;
-
-<Code code={codeEnv} lang="ts" title={titleEnv} />
+```
 
 #### Native Code Generation
 
 With the dependencies and configuration requirements met, the native code is now prepared for generation. It's crucial to grasp that Flagship Code's primary objective is to manage iOS and Android code, as outlined in the Overview. Consequently, the existing iOS and Android directories will no longer be retained in your repository. Therefore, it's imperative to append the `ios` and `android` directories to your `.gitignore` file.
 
-export const titleGitignore = ".gitignore";
-
-export const codeGitignore = `
+```.gitignore title=".gitignore" ins={6-7}
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # Dependencies
@@ -207,19 +172,7 @@ export const codeGitignore = `
 node_modules
 ios
 android
-
-# Other Dependencies
-
-`;
-
-export const markGitignore = ["ios", "android"];
-
-<Code
-  code={codeGitignore}
-  lang="ts"
-  title={titleGitignore}
-  mark={markGitignore}
-/>
+```
 
 You can now safely execute the prebuild command to generate your native iOS and Android projects. Ensure to run this command from the root directory of your project.
 

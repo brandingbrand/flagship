@@ -14,14 +14,10 @@ Create the `flagship-code.config.ts` in the root of your project directory.
 touch flagship-code.config.ts
 ```
 
-Here is an example of the configuration structure but feel free to customize the paths as required.
+Here is an illustrative representation of the configuration structure, including sample paths and plugins for contextual understanding. Please feel free to adjust the paths and plugins according to your project's requirements.
 
-import { Code } from "@astrojs/starlight/components";
-
-export const title = "flagship-code.config.ts";
-
-export const code = `
-import {defineConfig} from '@brandingbrand/code-cli-kit';
+```ts title="flagship-code.config.ts"
+import { defineConfig } from "@brandingbrand/code-cli-kit";
 
 export default defineConfig({
   buildPath: "./coderc/build",
@@ -33,9 +29,11 @@ export default defineConfig({
     "@brandingbrand/code-plugin-app-icon",
   ],
 });
-`;
+```
 
-<Code code={code} lang="ts" title={title} />
+:::caution
+In the documentation and configurations provided within `flagship-code.config.ts`, `build.<mode>.ts`, and `env.<mode>.ts`, it is assumed that all paths are relative to the root directory of the project.
+:::
 
 You can pass the following options to the `flagship-code` configuration.
 

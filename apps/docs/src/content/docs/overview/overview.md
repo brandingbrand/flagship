@@ -4,7 +4,7 @@ title: Overview
 
 ## Flagship Code
 
-Flagship Code is a cutting-edge configuration as code toolkit designed specifically for React Native projects, offering seamless integration and streamlined workflows for native code generation (NGC). With Flagship Code, developers can effortlessly manage configurations in code, enabling rapid iteration and deployment of changes across projects. This innovative tool empowers teams to embrace ephemeral NGC via idempotent scripts, facilitating efficient development cycles and ensuring consistency across platforms. Whether it's fine-tuning UI components or optimizing performance, Flagship Code provides a robust toolkit - configuring React Native, allowing teams to focus on building exceptional user experiences.
+Flagship Code is a cutting-edge configuration as code toolkit designed specifically for React Native projects, offering seamless integration and streamlined workflows for idempotent ephemeral native code generation (NGC). With Flagship Code, developers can effortlessly manage configurations in code, enabling rapid iteration and deployment of changes across projects. This innovative tool empowers teams to embrace ephemeral NGC via idempotent scripts, facilitating efficient development cycles and ensuring consistency across platforms. Whether it's fine-tuning UI components or optimizing performance, Flagship Code provides a robust toolkit - configuring React Native, allowing teams to focus on building exceptional user experiences.
 
 ## Key Features
 
