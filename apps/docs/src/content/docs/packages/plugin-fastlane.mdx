@@ -57,3 +57,89 @@ Your package.json should now be updated, `@brandingbrand/code-plugin-fastlane` s
   }
 }
 ```
+
+## Configure
+
+### Flagship Code Configuration
+
+Upon installing the dependency, it is imperative to update the `flagship-code.config.ts` file. Specifically, ensure that the `plugins` array includes the newly installed dependency. This step is crucial, as Flagship Code will only invoke the plugin if it is listed within this array. By including the dependency in the `plugins` array, you enable Flagship Code to recognize and utilize the functionality provided by the plugin during project execution.
+
+```ts title="flagship-code.config.ts" ins={9}
+import { defineConfig } from "@brandingbrand/code-cli-kit";
+
+export default defineConfig({
+  buildPath: "./coderc/build",
+  envPath: "./coderc/env",
+  pluginPath: "./coderc/plugins",
+  plugins: [
+    // other plugins
+    "@brandingbrand/code-plugin-fastlane",
+  ],
+});
+```
+
+For more detailed guidance and information, please refer to the [Flagship Code Configuration](/guides/config) guide. This resource offers comprehensive instructions and insights to assist you in configuring Flagship Code effectively.
+
+### Build Configuration
+
+Depending on the plugin, there might be additional configuration required. Regarding the `plugin-fastlane`, there's an optional additional build configuration feature available to extend your Fastlane setup. Presently, the only extension supported is for AppCenter uploads. Providing the AppCenter configuration will prompt the plugin to update your Fastlane setup accordingly.
+
+For the purpose of illustration, the `build.internal.ts` configuration shall be presented as follows if you want to include AppCenter uploads:
+
+```ts title="build.internal.ts"
+import { defineBuild } from "@brandingbrand/code-cli-kit";
+import { type CodePluginFastlane } from "@brandingbrand/code-plugin-fastlane";
+
+export default defineBuild<CodePluginFastlane>({
+  ios: {
+    bundleId: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  android: {
+    packageName: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  codePluginFastlane: {
+    plugin: {
+      ios: {
+        appCenter: {
+          organization: "Branding Brand",
+          appName: "MyApp-iOS",
+          destinationType: "group",
+          destinations: ["iat"],
+        },
+      },
+      android: {
+        appCenter: {
+          organization: "Branding Brand",
+          appName: "MyApp-Android",
+          destinationType: "group",
+          destinations: ["iat"],
+        },
+      },
+    },
+  },
+});
+```
+
+#### Options
+
+##### `codePluginFastlane.plugin.ios.appCenter`
+
+**type:** [AppCenterIOS](#appcenterios)
+
+Optional iOS AppCenter configuration.
+
+###### `AppCenterIOS`
+
+##### `codePluginFastlane.plugin.android.appCenter`
+
+**type:** [AppCenterAndroid](#appcenterandroid)
+
+Optional Android AppCenter configuration.
+
+###### `AppCenterAndroid`
+
+:::note
+If you don't need AppCenter then do not include the `codePluginFastlane` configuration.
+:::

@@ -1,0 +1,139 @@
+---
+title: jest-config
+---
+
+The "jest-config" package serves as an essential component within the Flagship Code ecosystem, providing a meticulously crafted Jest configuration specifically optimized for unit testing. Its primary objective is to offer developers a comprehensive test environment that facilitates thorough testing of their plugins.
+
+Moreover, the "jest-config" package equips developers with the necessary tools and utilities to exhaustively test their plugins across various scenarios and use cases. This comprehensive testing approach helps identify potential issues early in the development lifecycle, enabling timely resolutions and fostering a robust and stable codebase.
+
+In essence, the "jest-config" package empowers developers to embrace a test-driven development approach, facilitating the creation of high-quality, thoroughly tested plugins within the Flagship Code ecosystem.
+
+## Install
+
+Add `@brandingbrand/code-jest-config` as a development dependency to your React Native project.
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+<Tabs>
+<TabItem label="yarn">
+
+```sh
+yarn add --dev @brandingbrand/code-jest-config
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npm install --save-dev @brandingbrand/code-jest-config
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+pnpm add --save-dev @brandingbrand/code-jest-config
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bun add --dev @brandingbrand/code-jest-config
+```
+
+</TabItem>
+</Tabs>
+
+Your package.json should now be updated, `@brandingbrand/code-jest-config` should be listed as a `devDependency`.
+
+```json title="package.json" ins={10}
+{
+  "name": "my-awesome-app",
+  "version": "1.0.0",
+  "author": "Your Name <email@example.com>",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-native": "~0.72.0"
+  },
+  "devDependencies": {
+    "@brandingbrand/code-jest-config": "2.0.0"
+  }
+}
+```
+
+## Usage
+
+The "jest-config" package holds significant importance in the development of Flagship Code, particularly for unit testing purposes. It serves as a foundational tool extensively utilized by developers, particularly during the creation and testing of local plugins. By integrating this package as a Jest preset, developers gain access to a powerful feature set, enabling the creation of temporary native iOS and Android projects supplemented with additional fixtures.
+
+To enable the jest preset, add the configuration to your `package.json`.
+
+```json title="package.json" ins={12-14}
+{
+  "name": "my-awesome-app",
+  "version": "1.0.0",
+  "author": "Your Name <email@example.com>",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-native": "~0.72.0"
+  },
+  "devDependencies": {
+    "@brandingbrand/code-jest-config": "2.0.0"
+  },
+  "jest": {
+    "preset": "@brandingbrand/code-jest-config"
+  }
+}
+```
+
+To unlock the usage of generating iOS and Android projects and adding custom fixtures the developer will add frontmatter to the unit test file.
+
+```ts title="__tests__/index.ts" ins={1-3}
+/**
+ * @jest-environment-options {"requireTemplate": true, "fixtures": "fixtures"}
+ */
+
+/// <reference types="@brandingbrand/code-jest-config" />
+
+import plugin from "../src";
+
+describe("plugin", () => {
+  it("ios", async () => {
+    await plugin.ios?.({} as any, {} as any);
+
+    expect(true).toBeTruthy();
+  });
+
+  it("android", async () => {
+    await plugin.android?.({} as any, {} as any);
+
+    expect(true).toBeTruthy();
+  });
+});
+```
+
+### Options
+
+#### `requireTemplate`
+
+**type:** `boolean`
+
+_required_
+
+The attribute is a boolean value used to determine whether to generate a template. When set to `false`, frontmatter is omitted from the generated template.
+
+#### `fixtures`
+
+Optional path to the unit test fixtures. This directory structure should mirror the structure of what it would be in your project. The following is an example for fixtures for the splash screen unit test.
+
+```
+fixtures
+├── coderc
+│   └── assets
+│       └── splash-screen
+│           └── logo.png
+├── ios
+│   └── app
+│       └── BootSplash.storyboard
+└── package.json
+```

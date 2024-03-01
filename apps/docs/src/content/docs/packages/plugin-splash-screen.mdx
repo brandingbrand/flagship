@@ -57,3 +57,119 @@ Your package.json should now be updated, `@brandingbrand/code-plugin-splash-scre
   }
 }
 ```
+
+## Configure
+
+### Flagship Code Configuration
+
+Upon installing the dependency, it is imperative to update the `flagship-code.config.ts` file. Specifically, ensure that the `plugins` array includes the newly installed dependency. This step is crucial, as Flagship Code will only invoke the plugin if it is listed within this array. By including the dependency in the `plugins` array, you enable Flagship Code to recognize and utilize the functionality provided by the plugin during project execution.
+
+```ts title="flagship-code.config.ts" ins={9}
+import { defineConfig } from "@brandingbrand/code-cli-kit";
+
+export default defineConfig({
+  buildPath: "./coderc/build",
+  envPath: "./coderc/env",
+  pluginPath: "./coderc/plugins",
+  plugins: [
+    // other plugins
+    "@brandingbrand/code-plugin-splash-screen",
+  ],
+});
+```
+
+For more detailed guidance and information, please refer to the [Flagship Code Configuration](/guides/config) guide. This resource offers comprehensive instructions and insights to assist you in configuring Flagship Code effectively.
+
+### Build Configuration
+
+Depending on the plugin being utilized, additional configuration may be required. In the case of the `plugin-splash-screen`, it's essential to incorporate a mandatory configuration into the build settings. This configuration involves specifying the type of splash screen assets that need to be generated.
+
+For the purpose of illustration, the `build.internal.ts` configuration shall be presented as follows with the generated splash screen:
+
+```ts title="build.internal.ts"
+import { defineBuild } from "@brandingbrand/code-cli-kit";
+import { type CodePluginSplashScreen } from "@brandingbrand/code-plugin-splash-screen";
+
+export default defineBuild<CodePluginSplashScreen>({
+  ios: {
+    bundleId: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  android: {
+    packageName: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  codePluginSplashScreen: {
+    plugin: {
+      ios: {
+        type: "generated",
+        generated: {
+          logoPath: "./coderc/assets/splash-screen/logo.png",
+          backgroundColor: "#fff",
+        },
+      },
+      android: {
+        type: "generated",
+        generated: {
+          logoPath: "./coderc/assets/splash-screen/logo.png",
+          backgroundColor: "#fff",
+        },
+      },
+    },
+  },
+});
+```
+
+For the purpose of illustration, the `build.internal.ts` configuration shall be presented as follows with the legacy splash screen:
+
+```ts title="build.internal.ts"
+import { defineBuild } from "@brandingbrand/code-cli-kit";
+import { type CodePluginSplashScreen } from "@brandingbrand/code-plugin-splash-screen";
+
+export default defineBuild<CodePluginSplashScreen>({
+  ios: {
+    bundleId: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  android: {
+    packageName: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  codePluginSplashScreen: {
+    plugin: {
+      ios: {
+        type: "legacy",
+        legacy: {
+          xcassetsDir: "",
+          xcassetsFile: "",
+          storyboardFile: "",
+        },
+      },
+      android: {
+        type: "legacy",
+        legacy: {
+          assetsDir: "",
+        },
+      },
+    },
+  },
+});
+```
+
+#### Options
+
+##### `codePluginSplashScreen.plugin.ios`
+
+**type:** [SplashScreenIOS](#splashscreenios)
+
+Optional iOS splash screen configuration.
+
+###### `SplashScreenIOS`
+
+##### `codePluginSplashScreen.plugin.android`
+
+**type:** [SplashScreenAndroid](#splashscreenandroid)
+
+Optional iOS splash screen configuration.
+
+###### `SplashScreenAndroid`

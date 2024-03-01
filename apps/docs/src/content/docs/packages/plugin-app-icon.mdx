@@ -57,3 +57,87 @@ Your package.json should now be updated, `@brandingbrand/code-plugin-app-icon` s
   }
 }
 ```
+
+## Configure
+
+### Flagship Code Configuration
+
+Upon installing the dependency, it is imperative to update the `flagship-code.config.ts` file. Specifically, ensure that the `plugins` array includes the newly installed dependency. This step is crucial, as Flagship Code will only invoke the plugin if it is listed within this array. By including the dependency in the `plugins` array, you enable Flagship Code to recognize and utilize the functionality provided by the plugin during project execution.
+
+```ts title="flagship-code.config.ts" ins={9}
+import { defineConfig } from "@brandingbrand/code-cli-kit";
+
+export default defineConfig({
+  buildPath: "./coderc/build",
+  envPath: "./coderc/env",
+  pluginPath: "./coderc/plugins",
+  plugins: [
+    // other plugins
+    "@brandingbrand/code-plugin-app-icon",
+  ],
+});
+```
+
+For more detailed guidance and information, please refer to the [Flagship Code Configuration](/guides/config) guide. This resource offers comprehensive instructions and insights to assist you in configuring Flagship Code effectively.
+
+### Build Configuration
+
+Depending on the plugin, there might be additional configuration required. Specifically, for the `plugin-app-icon`, additional build configuration is necessary to locate app icon assets.
+
+This plugin follows a standard naming convention for each app icon file. In the case of iOS, there's a single PNG file named `ios-universal.png`, which should contain a high-quality PNG image with dimensions 1024x1024. On the other hand, Android requires more complexity due to adaptive icons and notification icons. For Android, four different icons are needed: `android-adaptive-background.png` (1024x1024), `android-adaptive-foreground` (1024x1024), `android-legacy.png` (1024x1024), and `android-notification.png` (1024x1024). The plugin simplifies this by requiring you to define the path of these files relative to the project root and any necessary icon insets (Android only).
+
+For the purpose of illustration, the `build.internal.ts` configuration shall be presented as follows:
+
+```ts title="build.internal.ts"
+import { defineBuild } from "@brandingbrand/code-cli-kit";
+import { type CodePluginAppIcon } from "@brandingbrand/code-plugin-app-icon";
+
+export default defineBuild<CodePluginAppIcon>({
+  ios: {
+    bundleId: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  android: {
+    packageName: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  codePluginAppIcon: {
+    plugin: {
+      appIconPath: "./coderc/assets/app-icon",
+      iconInsets: 20,
+    },
+  },
+});
+```
+
+The layout of app-icon assets directory will take the following form:
+
+```
+├── android-adaptive-background.png
+├── android-adaptive-foreground.png
+├── android-legacy.png
+├── android-notification.png
+└── ios-universal.png
+```
+
+#### Options
+
+##### `appIconPath`
+
+**type:** `string`
+
+_required_
+
+The path to the app icons relative to the project root.
+
+##### `iconInsets`
+
+**type:** `number`
+
+_required_
+
+The icon insets for Android.
+
+:::note
+To gain a better understanding of how to integrate this plugin, I recommend examining the example app provided within the repository.
+:::

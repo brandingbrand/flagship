@@ -57,3 +57,83 @@ Your package.json should now be updated, `@brandingbrand/code-plugin-asset` shou
   }
 }
 ```
+
+## Configure
+
+### Flagship Code Configuration
+
+Upon installing the dependency, it is imperative to update the `flagship-code.config.ts` file. Specifically, ensure that the `plugins` array includes the newly installed dependency. This step is crucial, as Flagship Code will only invoke the plugin if it is listed within this array. By including the dependency in the `plugins` array, you enable Flagship Code to recognize and utilize the functionality provided by the plugin during project execution.
+
+```ts title="flagship-code.config.ts" ins={9}
+import { defineConfig } from "@brandingbrand/code-cli-kit";
+
+export default defineConfig({
+  buildPath: "./coderc/build",
+  envPath: "./coderc/env",
+  pluginPath: "./coderc/plugins",
+  plugins: [
+    // other plugins
+    "@brandingbrand/code-plugin-asset",
+  ],
+});
+```
+
+For more detailed guidance and information, please refer to the [Flagship Code Configuration](/guides/config) guide. This resource offers comprehensive instructions and insights to assist you in configuring Flagship Code effectively.
+
+### Build Configuration
+
+Depending on the plugin, there might be additional configuration required. Specifically, for the `plugin-asset`, additional build configuration is necessary to locate app assets. An exemplary type of app asset could be font files. The plugin configuration provides a list of directories where these assets are stored.
+
+For the purpose of illustration, the `build.internal.ts` configuration shall be presented as follows:
+
+```ts title="build.internal.ts"
+import { defineBuild } from "@brandingbrand/code-cli-kit";
+import { type CodePluginAsset } from "@brandingbrand/code-plugin-asset";
+
+export default defineBuild<CodePluginAsset>({
+  ios: {
+    bundleId: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  android: {
+    packageName: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  codePluginAsset: {
+    plugin: {
+      assetPath: ["./coderc/assets/fonts"],
+    },
+  },
+});
+```
+
+The layout of assets directory will take the following form:
+
+```
+├── Roboto-Black.ttf
+├── Roboto-BlackItalic.ttf
+├── Roboto-Bold.ttf
+├── Roboto-BoldItalic.ttf
+├── Roboto-Italic.ttf
+├── Roboto-Light.ttf
+├── Roboto-LightItalic.ttf
+├── Roboto-Medium.ttf
+├── Roboto-MediumItalic.ttf
+├── Roboto-Regular.ttf
+├── Roboto-Thin.ttf
+└── Roboto-ThinItalic.ttf
+```
+
+#### Options
+
+##### `assetsPath`
+
+**type:** `string[]`
+
+_required_
+
+An array of paths relative to the root of the project is expected, containing assets that require linking to your native iOS and Android projects.
+
+:::note
+To gain a better understanding of how to integrate this plugin, I recommend examining the example app provided within the repository.
+:::

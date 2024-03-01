@@ -35,41 +35,41 @@ export default defineConfig({
         {
           label: "Packages",
           items: [
-            { label: "code-cli", link: "/packages/cli/" },
+            { label: "cli", link: "/packages/cli/" },
             {
-              label: "code-cli-kit",
+              label: "cli-kit",
               link: "/packages/cli-kit/",
             },
             {
-              label: "code-jest-config",
+              label: "jest-config",
               link: "/packages/jest-config/",
             },
             {
-              label: "code-plugin-app-icon",
+              label: "plugin-app-icon",
               link: "/packages/plugin-app-icon/",
             },
             {
-              label: "code-plugin-asset",
+              label: "plugin-asset",
               link: "/packages/plugin-asset/",
             },
             {
-              label: "code-plugin-fastlane",
+              label: "plugin-fastlane",
               link: "/packages/plugin-fastlane/",
             },
             {
-              label: "code-plugin-native-navigation",
+              label: "plugin-native-navigation",
               link: "/packages/plugin-native-navigation/",
             },
             {
-              label: "code-plugin-permissions",
+              label: "plugin-permissions",
               link: "/packages/plugin-permissions/",
             },
             {
-              label: "code-plugin-splash-screen",
+              label: "plugin-splash-screen",
               link: "/packages/plugin-splash-screen/",
             },
             {
-              label: "code-plugin-target-extension",
+              label: "plugin-target-extension",
               link: "/packages/plugin-target-extension/",
             },
           ],

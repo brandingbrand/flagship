@@ -5,7 +5,7 @@ title: plugin-permissions
 The "plugin-permissions" holds a pivotal role as a plugin within the Flagship Code framework, dedicated to automating the generation of native code configurations essential for managing permissions listed in your project's build configuration. Its primary function is to streamline the integration of required permissions by leveraging the capabilities of `react-native-permissions`. As a crucial aspect of its functionality, this plugin establishes a dependency on `react-native-permissions` to ensure the proper linking of native permissions. It's important to note that react-native-permissions is a peer dependency and must be listed in your project's `package.json`. By seamlessly integrating with `react-native-permissions`, the plugin empowers developers to efficiently manage permissions within their projects, thereby enhancing the reliability and security of their applications while minimizing manual configuration overhead.
 
 :::caution
-This assumes that you are using `react-native-permissions` as your permissions handler.
+This plugin operates under the assumption that you are utilizing `react-native-permissions` as your permissions handler.
 :::
 
 ## Install
@@ -68,3 +68,76 @@ Your package.json should now be updated, `@brandingbrand/code-plugin-permissions
   }
 }
 ```
+
+## Configure
+
+### Flagship Code Configuration
+
+Upon installing the dependency, it is imperative to update the `flagship-code.config.ts` file. Specifically, ensure that the `plugins` array includes the newly installed dependency. This step is crucial, as Flagship Code will only invoke the plugin if it is listed within this array. By including the dependency in the `plugins` array, you enable Flagship Code to recognize and utilize the functionality provided by the plugin during project execution.
+
+```ts title="flagship-code.config.ts" ins={9}
+import { defineConfig } from "@brandingbrand/code-cli-kit";
+
+export default defineConfig({
+  buildPath: "./coderc/build",
+  envPath: "./coderc/env",
+  pluginPath: "./coderc/plugins",
+  plugins: [
+    // other plugins
+    "@brandingbrand/code-plugin-permissions",
+  ],
+});
+```
+
+For more detailed guidance and information, please refer to the [Flagship Code Configuration](/guides/config) guide. This resource offers comprehensive instructions and insights to assist you in configuring Flagship Code effectively.
+
+### Build Configuration
+
+Depending on the plugin in use, additional configuration might be necessary. For the `plugin-permissions`, a mandatory configuration must be incorporated into the build settings. This configuration entails specifying a list of permissions that your app necessitates.
+
+For the purpose of illustration, the `build.internal.ts` configuration shall be presented as follows:
+
+```ts title="build.internal.ts"
+import { defineBuild } from "@brandingbrand/code-cli-kit";
+import { type CodePluginPermissions } from "@brandingbrand/code-plugin-permissions";
+
+export default defineBuild<CodePluginPermissions>({
+  ios: {
+    bundleId: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  android: {
+    packageName: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  codePluginPermissions: {
+    plugin: {
+      ios: [
+        {
+          permission: "Camera",
+          text: "Let me use the camera",
+        },
+      ],
+      android: ["CAMERA"],
+    },
+  },
+});
+```
+
+#### Options
+
+##### `codePluginPermissions.plugin.ios`
+
+**type:** [PermissionsIOS](#permissionsios)
+
+Optional iOS permissions configuration.
+
+###### `PermissionsIOS`
+
+##### `codePluginPermissions.plugin.android`
+
+**type:** [PermissionsAndroid](#permissionsandroid)
+
+Optional iOS permissions configuration.
+
+###### `PermissionsAndroid`

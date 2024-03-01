@@ -1,3 +1,0 @@
----
-title: jest-config
----
