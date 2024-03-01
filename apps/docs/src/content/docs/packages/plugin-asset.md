@@ -1,3 +1,0 @@
----
-title: plugin-asset
----

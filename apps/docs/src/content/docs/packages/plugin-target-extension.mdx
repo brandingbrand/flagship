@@ -1,0 +1,63 @@
+---
+title: plugin-target-extension
+---
+
+The "plugin-target-extension" package assumes a pivotal role within the Flagship Code ecosystem, meticulously crafted to streamline the process of generating a new iOS target extension. Its comprehensive functionality encompasses various crucial tasks, including the creation of essential target requirements, linking of source and resource files, and updating code-signing configurations. By automating these intricate steps, the plugin significantly simplifies the task of integrating new target extensions into iOS projects, enhancing developer productivity and ensuring consistency across the project architecture.
+
+:::caution
+This plugin is only to be utilized for the iOS platform.
+:::
+
+## Install
+
+Add `@brandingbrand/code-plugin-target-extension` as a development dependency to your React Native project.
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+<Tabs>
+<TabItem label="yarn">
+
+```sh
+yarn add --dev @brandingbrand/code-plugin-target-extension
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npm install --save-dev @brandingbrand/code-plugin-target-extension
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+pnpm add --save-dev @brandingbrand/code-plugin-target-extension
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bun add --dev @brandingbrand/code-plugin-target-extension
+```
+
+</TabItem>
+</Tabs>
+
+Your package.json should now be updated, `@brandingbrand/code-plugin-target-extension` should be listed as a `devDependency`.
+
+```json title="package.json" ins={10}
+{
+  "name": "my-awesome-app",
+  "version": "1.0.0",
+  "author": "Your Name <email@example.com>",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-native": "~0.72.0"
+  },
+  "devDependencies": {
+    "@brandingbrand/code-plugin-target-extension": "2.0.0"
+  }
+}
+```

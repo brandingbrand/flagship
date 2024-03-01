@@ -1,0 +1,70 @@
+---
+title: plugin-native-navigation
+---
+
+The "plugin-native-navigation" package serves as an indispensable plugin within the Flagship Code ecosystem, meticulously engineered to facilitate the seamless generation of native code in adherence to the stringent native code requirements imposed by `react-native-navigation`. This plugin is strategically crafted to alleviate the complexities associated with maintaining compliance, ensuring smooth integration with `react-native-navigation`. Notably, the package includes `react-native-navigation` as a peer dependency, acknowledging React Native's prerequisite for linked native packages to be dependencies in the root project's `package.json`. This design decision ensures compatibility and facilitates seamless integration, allowing developers to leverage the full potential of `react-native-navigation` while adhering to best practices in React Native development.
+
+:::caution
+This assumes that you are using `react-native-navigation` as your navigation stack.
+:::
+
+## Install
+
+Add `@brandingbrand/code-plugin-native-navigation` as a development dependency to your React Native project.
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+<Tabs>
+<TabItem label="yarn">
+
+```sh
+yarn add --dev @brandingbrand/code-plugin-native-navigation
+yarn add react-native-navigation
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npm install --save-dev @brandingbrand/code-plugin-native-navigation
+npm install react-native-navigation
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+pnpm add --save-dev @brandingbrand/code-plugin-native-navigation
+pnpm add react-native-navigation
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bun add --dev @brandingbrand/code-plugin-native-navigation
+bun add react-native-navigation
+```
+
+</TabItem>
+</Tabs>
+
+Your package.json should now be updated, `@brandingbrand/code-plugin-native-navigation` should be listed as a `devDependency`.
+
+```json title="package.json" ins={10, 13}
+{
+  "name": "my-awesome-app",
+  "version": "1.0.0",
+  "author": "Your Name <email@example.com>",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-native": "~0.72.0"
+  },
+  "dependencies": {
+    "react-native-navigation": "7.37.2"
+  },
+  "devDependencies": {
+    "@brandingbrand/code-plugin-native-navigation": "2.0.0"
+  }
+}
+```

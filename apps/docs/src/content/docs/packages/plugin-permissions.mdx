@@ -1,0 +1,70 @@
+---
+title: plugin-permissions
+---
+
+The "plugin-permissions" holds a pivotal role as a plugin within the Flagship Code framework, dedicated to automating the generation of native code configurations essential for managing permissions listed in your project's build configuration. Its primary function is to streamline the integration of required permissions by leveraging the capabilities of `react-native-permissions`. As a crucial aspect of its functionality, this plugin establishes a dependency on `react-native-permissions` to ensure the proper linking of native permissions. It's important to note that react-native-permissions is a peer dependency and must be listed in your project's `package.json`. By seamlessly integrating with `react-native-permissions`, the plugin empowers developers to efficiently manage permissions within their projects, thereby enhancing the reliability and security of their applications while minimizing manual configuration overhead.
+
+:::caution
+This assumes that you are using `react-native-permissions` as your permissions handler.
+:::
+
+## Install
+
+Add `@brandingbrand/code-plugin-permissions` as a development dependency to your React Native project.
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+<Tabs>
+<TabItem label="yarn">
+
+```sh
+yarn add --dev @brandingbrand/code-plugin-permissions
+yarn add react-native-permissions
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npm install --save-dev @brandingbrand/code-plugin-permissions
+npm install react-native-permissions
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+pnpm add --save-dev @brandingbrand/code-plugin-permissions
+pnpm add react-native-permissions
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bun add --dev @brandingbrand/code-plugin-permissions
+bun add react-native-permissions
+```
+
+</TabItem>
+</Tabs>
+
+Your package.json should now be updated, `@brandingbrand/code-plugin-permissions` should be listed as a `devDependency`.
+
+```json title="package.json" ins={10, 13}
+{
+  "name": "my-awesome-app",
+  "version": "1.0.0",
+  "author": "Your Name <email@example.com>",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-native": "~0.72.0"
+  },
+  "dependencies": {
+    "react-native-permissions": "4.1.4"
+  },
+  "devDependencies": {
+    "@brandingbrand/code-plugin-permissions": "2.0.0"
+  }
+}
+```

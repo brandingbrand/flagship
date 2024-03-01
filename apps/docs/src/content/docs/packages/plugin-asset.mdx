@@ -1,0 +1,59 @@
+---
+title: plugin-asset
+---
+
+The "plugin-asset" package holds pivotal significance within the Flagship Code ecosystem, strategically engineered to optimize the integration of assets into native iOS and Android projects. A fundamental illustration of its utility lies in managing assets like fonts, which must be incorporated into native projects to enable their utilization. This plugin excels in automating the linking process, sparing developers the intricacies of manual configuration. By seamlessly integrating asset linking, it empowers developers to streamline their workflow, enhancing efficiency and productivity while ensuring seamless asset utilization across platforms.
+
+## Install
+
+Add `@brandingbrand/code-plugin-asset` as a development dependency to your React Native project.
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+<Tabs>
+<TabItem label="yarn">
+
+```sh
+yarn add --dev @brandingbrand/code-plugin-asset
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npm install --save-dev @brandingbrand/code-plugin-asset
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+pnpm add --save-dev @brandingbrand/code-plugin-asset
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bun add --dev @brandingbrand/code-plugin-asset
+```
+
+</TabItem>
+</Tabs>
+
+Your package.json should now be updated, `@brandingbrand/code-plugin-asset` should be listed as a `devDependency`.
+
+```json title="package.json" ins={10}
+{
+  "name": "my-awesome-app",
+  "version": "1.0.0",
+  "author": "Your Name <email@example.com>",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-native": "~0.72.0"
+  },
+  "devDependencies": {
+    "@brandingbrand/code-plugin-asset": "2.0.0"
+  }
+}
+```
