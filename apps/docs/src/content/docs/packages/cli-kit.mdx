@@ -1,0 +1,1125 @@
+---
+title: cli-kit
+---
+
+The cli-kit package furnishes a comprehensive array of utilities essential for the creation and manipulation of native code within iOS and Android projects. It offers specialized file parsers and file system APIs, facilitating seamless expansion of native functionalities beyond the foundational framework of a React Native project.
+
+## Install
+
+Add `@brandingbrand/code-cli-kit` as a development dependency to your React Native project.
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+<Tabs>
+<TabItem label="yarn">
+
+```sh
+yarn add --dev @brandingbrand/code-cli-kit
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npm install --save-dev @brandingbrand/code-cli-kit
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+pnpm add --save-dev @brandingbrand/code-cli-kit
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bun add --dev @brandingbrand/code-cli-kit
+```
+
+</TabItem>
+</Tabs>
+
+Your package.json should now be updated, `@brandingbrand/code-cli-kit` should be listed as a `devDependency`.
+
+```json title="package.json" ins={10}
+{
+  "name": "my-awesome-app",
+  "version": "1.0.0",
+  "author": "Your Name <email@example.com>",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-native": "~0.72.0"
+  },
+  "devDependencies": {
+    "@brandingbrand/code-cli-kit": "13.0.0"
+  }
+}
+```
+
+## Modules
+
+The modules provided by the cli-kit package are also leveraged by the `@brandingbrand/code-cli` package for the purpose of native code management. This collaboration ensures efficient utilization of only the essential exposed modules, with emphasis on detailing those of utmost importance.
+
+### Parsers
+
+The parsers module within cli-kit is tasked with the parsing and composition of domain-specific files into a structured object format, facilitating convenient manipulation in accordance with project requirements. Noteworthy available parsers include those for UTF-8, XML, Property List (plist), and Old-Style ASCII Property Lists (pbxproj).
+
+#### UTF-8
+
+The UTF-8 parser is designed to interpret generic files into a manipulable string format. Typical scenarios involve handling source code and configuration files such as MainActivity.java, MainApplication.java, AppDelegate.mm, AppDelegate.h, build.gradle, podfile, and similar items. Presently, there are no parsers available specifically for these types of files. However, it's worth noting that this situation might evolve in the future, particularly for configuration files, should further parsers, grammars, and lexers be developed.
+
+The exposed module for parsing UTF-8 files is `withUTF8`. It can be used with the following options.
+
+##### Function
+
+###### `withUTF8`
+
+**type:** `withUTF8(filePath: string, callback(content: string): string): Promise<Void>`
+
+##### Options
+
+###### `filePath`
+
+**type:** `string`
+
+_required_
+
+The path of the file relative to the project root to be parsed.
+
+###### `callback`
+
+**type:** `function (content: string): string`
+
+_required_
+
+A callback function is implemented to accept the parsed file as a string and anticipates a manipulated string to be returned as its output.
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the UTF-8 parser to parse the `build.gradle` file and subsequently update the `compileSdkVersion`:
+
+```ts title="build-gradle-transform.ts"
+import { path, withUTF8 } from "@brandingbrand/code-cli-kit";
+
+// config supplied by @brandingbrand/cli
+
+withUTF8(path.android.buildGradle, (content: string) => {
+  return content.replace(
+    content,
+    /(compileSdkVersion\s*=\s*)[\d]+/m,
+    `$1${config.android.gradle.projectGradle.compileSdkVersion}`
+  );
+});
+```
+
+#### XML
+
+The XML parser serves to decipher XML-formatted files into a manipulatable object tailored to meet the specific requirements of your project. Noteworthy XML files parsed within the `@brandingbrand/cli` framework include AndroidManifest.xml, colors.xml, strings.xml, styles.xml, among others. At present, this parser harnesses the capabilities of the [fast-xml-parser](https://www.npmjs.com/package/fast-xml-parser) package to accomplish its tasks efficiently.
+
+The exposed module for parsing XML files is `withXML`. It can be used with the following options.
+
+##### Function
+
+###### `withXML`
+
+**type:** `function withXML<T>(path: string, options: X2jOptions, callback: (xml: T): void): Promise<Void>`
+
+##### Options
+
+###### `path`
+
+**type:** `string`
+
+_required_
+
+The path of the XML file relative to the project root to be parsed.
+
+###### `options`
+
+**type:** [X2jOptions](https://github.com/NaturalIntelligence/fast-xml-parser/blob/072b2b0c148ae2fcb087f08d740382b9897f81cf/src/fxp.d.ts#L1)
+
+_required_
+
+The options on how to parse/write and format the XML object and file.
+
+###### `callback`
+
+**type:** `function<T>(content: T): void`
+
+_required_
+
+A callback function is implemented to accept the parsed file as a generic object, with the expectation that no explicit return value is necessary, as the object is mutable by nature.
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the XML parser to parse the `colors.xml` file and subsequently add a color:
+
+```ts title="colors-xml-transform.ts"
+import { path, withXML } from "@brandingbrand/code-cli-kit";
+
+// config supplied by @brandingbrand/cli
+
+type ColorAttributes = {
+  name: string;
+};
+
+type Color = {
+  $: ColorAttributes;
+  _: string;
+};
+
+type ColorsElements = {
+  color?: Color[];
+};
+
+export type ColorsXML = {
+  resources: ColorsElements;
+};
+
+withXml<ColorsXML>(
+  path.android.colors,
+  {
+    isArray: (tagName) => {
+      if (["color"].indexOf(tagName) !== -1) {
+        return true;
+      }
+
+      return false;
+    },
+  },
+  (xml: ColorsXML) => {
+    if (!config.android.colors) return;
+
+    if (!xml.resources.color) {
+      xml.resources = { ...xml.resources, color: [] };
+    }
+
+    Object.entries(config.android.colors).forEach(([name, _]) =>
+      xml.resources.color?.push({
+        $: { name },
+        _,
+      })
+    );
+  }
+);
+```
+
+:::note
+Domain-specific parsers for typical XML files are already accessible, including `withColors`, `withManifest`, `withNetworkSecurityConfig`, `withStrings`, and `withStyles`. These parsers cater to specific XML files commonly encountered in projects, offering enhanced functionality and ease of use.
+:::
+
+#### Property List (plist)
+
+The plist parser is specifically crafted to interpret property list files into a mutable object format. Commonly, it finds application in scenarios involving the management of iOS Info.plist files.
+
+The exposed module for parsing plist files is `withPlist`. It can be used with the following options.
+
+##### Function
+
+###### `withPlist`
+
+**type:** `function withPlist<T>(path: string, callback(content: T): T): Promise<Void>`
+
+##### Options
+
+###### `path`
+
+**type:** `string`
+
+_required_
+
+The path of the file relative to the project root to be parsed.
+
+###### `callback`
+
+**type:** `function<T>(content: T): T`
+
+_required_
+
+A callback function is implemented to accept the parsed plist file as a generic object, with the expectation that the mutated object will be returned as its output.
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the plist parser to parse the `info.plist` file and subsequently update the the bundle identifier and display name.
+
+```ts title="info-plist-transform.ts"
+import { path, withPlist } from "@brandingbrand/code-cli-kit";
+
+// config supplied by @brandingbrand/cli
+
+type InfoPlist = Record<string, unknown> & {
+  UIStatusBarHidden?: boolean;
+  UIStatusBarStyle?: string;
+  UILaunchStoryboardName?: string | "LaunchScreen";
+  CFBundleShortVersionString?: string;
+  CFBundleVersion?: string;
+  CFBundleDisplayName?: string;
+  CFBundleIdentifier?: string;
+  CFBundleName?: string;
+  // See source code for more
+};
+
+withPlist<InfoPlist>(path.ios.infoPlist, (content: InfoPlist): InfoPlist => {
+  const { displayName, bundleId } = config.ios;
+
+  return mergeAndConcat<InfoPlist, InfoPlist[]>(content, {
+    CFBundleIdentifier: bundleId,
+    CFBundleDisplayName: displayName,
+  });
+});
+```
+
+:::note
+Domain-specific parsers tailored for the Info.plist file are readily available, conveniently encapsulated under the name `withInfoPlist`. This specialized parser streamlines the process of handling Info.plist files, facilitating efficient manipulation and customization within projects.
+:::
+
+#### Old-Style ASCII Property Lists (pbxproj)
+
+The pbxproj parser is meticulously crafted to interpret pbxproj files into a mutable object format. Common scenarios involving its usage include the management of project.pbxproj files, encompassing tasks such as adding source files, resource files, updating build settings, and similar project-related operations.
+
+The exposed module for parsing UTF-8 files is `withPbxproj`. It can be used with the following options.
+
+##### Function
+
+###### `withPbxproj`
+
+**type:** `function withPbxproj(callback: (pbxproj: XcodeProject): void): Promise<Void>`
+
+##### Options
+
+###### `callback`
+
+**type:** `function (content: XcodeProject): void`
+
+_required_
+
+A callback function is established to receive the parsed file as a XcodeProject object. It expects no explicit return value, as the object is inherently mutable and intended for direct manipulation within the context of the Xcode project.
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the pbxproj parser to parse the `project.pbxproj` file and subsequently update the `IPHONEOS_DEPLOYMENT_TARGET`:
+
+```ts title="build-gradle-transform.ts"
+import { withPbxproj } from "@brandingbrand/code-cli-kit";
+
+// config supplied by @brandingbrand/cli
+
+withPbxproj((project) => {
+  if (!config.ios.deploymentTarget) return;
+
+  project.addToBuildSettings(
+    "IPHONEOS_DEPLOYMENT_TARGET",
+    config.ios.deploymentTarget
+  );
+});
+```
+
+### Libs
+
+A comprehensive array of exposed library modules is available to assist in the generation of native code, complementing the functionality of the parsers. These modules offer a versatile toolkit to facilitate efficient native code development within the project ecosystem.
+
+:::caution
+Some of the exposed library modules are not included in this documentation. This omission is due to their limited use cases, which might overshadow more crucial modules. If you encounter an exposed library module that you believe would be beneficial, we encourage you to refer to the source code, as it contains comprehensive code comments.
+:::
+
+#### fs
+
+The `fs` module builds upon the foundation provided by `fs/promises`, addressing specific gaps to enhance functionality where necessary. Within this module, four additional functions are exposed to facilitate manipulation of native code: `doesKeywordExist`, `doesPathExist`, `update`, and `renameAndCopyDirectory`. These functions serve to augment the capabilities of file system operations, offering a comprehensive toolkit for efficient native code management.
+
+##### Function
+
+###### `doesKeywordExist`
+
+This function examines a file to determine if a specified keyword exists within it. The keyword can be provided either as a regular expression or as a string format.
+
+**type:** `function doesKeywordExist(path: string, keyword: RegExp | string): Promise<boolean>`
+
+##### Options
+
+###### `path`
+
+**type:** `string`
+
+_required_
+
+The path of the file relative to the project root to examine.
+
+###### `keyword`
+
+**type:** `RegExp | string`
+
+_required_
+
+The parameter for this function represents either a string or a regular expression that is to be checked for existence within the specified file.
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `doesKeywordExist` lib.
+
+```ts
+import { fs } from "@brandingbrand/code-cli-kit";
+// file content at ./my_file.txt
+// "This is someKeyword content."
+
+const res = await fs.doesKeywordExist(
+  path.project.resolve("my_file.txt"),
+  "someKeyword"
+);
+
+/// res will be true
+
+const res1 = await fs.doesKeywordExist(path, /some/);
+
+/// res1 will be true
+```
+
+##### Function
+
+###### `doesPathExist`
+
+This function determines whether the provided file path exists within the file system.
+
+##### Options
+
+###### `path`
+
+**type:** `string`
+
+_required_
+
+The path of the file relative to the project root.
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `doesPathExist` lib.
+
+```ts
+import { fs, path } from "@brandingbrand/code-cli-kit";
+
+// file system has a file at ./ios/app/MyFile.swift
+
+const res = await fs.doesPathExist(
+  path.project.resolve("ios", "app", "MyFile.swift")
+);
+
+/// res will be true
+```
+
+##### Function
+
+###### `update`
+
+This function facilitates the updating of a text value within a file by replacing it with a new text value.
+
+**type:** `function update(path: string, oldText: RegExp | string, newText: string): Promise<void>`
+
+##### Options
+
+###### `path`
+
+**type:** `string`
+
+_required_
+
+The path of the file relative to the project root to update.
+
+###### `oldText`
+
+**type:** `RegExp | string`
+
+_required_
+
+The parameter for this function represents either a string or a regular expression that is to be replaced.
+
+###### `newText`
+
+**type:** `string`
+
+_required_
+
+The parameter for this function represents the string to replace the old string.
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `update` lib.
+
+```ts
+import { fs, path } from "@brandingbrand/code-cli-kit";
+// file content at ./my_file.txt
+// "This is someKeyword content."
+
+await fs.update(
+  path.project.resolve("my_file.txt"),
+  /(some)Keyword/,
+  `$1Example`
+);
+
+// file updated content at ./my_file.txt
+// "This is someExample content."
+```
+
+#### guards
+
+The guards module provides functions designed to strictly type-guard objects, aiming to restrict side-effects specifically for `@brandingbrand/code-cli` usage. Within Flagship Code, we extensively employ guards for various configurations, including Flagship Code configuration, build configurations, environment configurations, and plugin configurations. The exposed guard functions include `defineConfig`, `defineBuild`, `defineEnv`, and `definePlugin`.
+
+##### Function
+
+###### `defineConfig`
+
+This function type guards the `flagship-code.config.ts`, which serves as the base configuration for Flagship Code. For more detailed information, please refer to the [Flagship Code Configuration](/guides/config) guide.
+
+**type:** `function defineConfig(config: CodeConfig): CodeConfig`
+
+##### Options
+
+###### `config`
+
+**type:** [CodeConfig](/guides/config)
+
+_required_
+
+The parameter for this function represents the Flagship Code configuration, which undergoes type-guarding and is then returned.
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `defineConfig` guard.
+
+```ts title="flagship-code.config.ts"
+import { defineConfig } from "@brandingbrand/code-cli-kit";
+
+export default defineConfig({
+  buildPath: "./coderc/build",
+  envPath: "./coderc/env",
+  pluginPath: "./coderc/plugins",
+  plugins: [
+    "@brandingbrand/code-plugin-native-navigation",
+    "@brandingbrand/code-plugin-splash-screen",
+    "@brandingbrand/code-plugin-app-icon",
+  ],
+});
+```
+
+##### Function
+
+###### `defineBuild`
+
+This function type guards the `build.<mode>.ts`, which serves as defining the build configuration. For more detailed information, please refer to the [Build Configuration](/guides/build) guide.
+
+**type:** `function defineBuild<T = BuildConfig>(build: (T extends BuildConfig ? BuildConfig : BuildConfig & T) | ((pkg: PackageJson) => T extends BuildConfig ? BuildConfig : BuildConfig & T)): T`
+
+##### Options
+
+###### `build`
+
+**type:** [BuildConfig](/guides/build)
+
+_required_
+
+The parameter for this function represents the build configuration configuration, which undergoes type-guarding and is then returned.
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `defineBuild` guard. Utilizing `build.internal.ts` purely as an example.
+
+```ts title="build.internal.ts"
+import { defineBuild } from "@brandingbrand/code-cli-kit";
+
+export default defineBuild({
+  ios: {
+    bundleId: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  android: {
+    packageName: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+});
+```
+
+```ts title="build.internal.ts"
+import { defineBuild } from "@brandingbrand/code-cli-kit";
+
+export default defineBuild((pkg) => ({
+  ios: {
+    bundleId: "com.brandingbrand",
+    displayName: "Branding Brand",
+    versioning: {
+      version: pkg.version,
+      build: 1,
+    },
+  },
+  android: {
+    packageName: "com.brandingbrand",
+    displayName: "Branding Brand",
+    versioning: {
+      version: pkg.version,
+      build: 1,
+    },
+  },
+}));
+```
+
+##### Function
+
+###### `defineEnv`
+
+This function type guards the `env.<mode>.ts`, which serves as the env configuration for `@brandingbrand/fsapp`. For more detailed information, please refer to the [Environment Configuration](/guides/env) guide.
+
+**type:** `function defineEnv<T>(env: T): T`
+
+##### Options
+
+###### `env`
+
+**type:** [Env](/guides/env)
+
+_required_
+
+The parameter for this function represents the environment configuration, which undergoes type-guarding and is then returned.
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `defineEnv` guard. Utilizing `env.dev.ts` purely as an example.
+
+```ts title="env.dev.ts"
+import { defineEnv } from "@brandingbrand/code-cli-kit";
+
+export default defineEnv<Env>({
+  id: "abc12345",
+  domain: "https://dev.myexampledomain.com",
+});
+```
+
+##### Function
+
+###### `definePlugin`
+
+This function type guards your plugin entry point. For more detailed information, please refer to the [Plugins](/guides/plugins) guide.
+
+**type:** `function definePlugin<T>(plugin: PluginConfig<T>): PluginConfig<T>`
+
+##### Options
+
+###### `plugin`
+
+**type:** [PluginConfig](/guides/plugins/#plugin-configuration)
+
+_required_
+
+The parameter for this function represents the plugin configuration, which undergoes type-guarding and is then returned.
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `definePlugin` guard. Utilizing `index.ts` purely as an example.
+
+```ts title="index.ts"
+import {
+  definePlugin,
+  type BuildConfig,
+  type PrebuildOptions,
+} from "@brandingbrand/code-cli-kit";
+
+export default definePlugin({
+  ios: async function (build, options): Promise<void> {
+    // make iOS code changes here
+  },
+  android: async function (build, options): Promise<void> {
+    // make Android code changes here
+  },
+});
+```
+
+#### path
+
+The path module offers functions and constants that extend the functionality of the `path` module provided by Node.js. These extensions include convenient functions and constants designed to facilitate access to various aspects of your project's path, including iOS and Android file paths.
+
+##### Function
+
+###### `path.project.resolve`
+
+This project enables you to resolve paths relative to your project's root directory. Subsequent paths are constructed based on this function.
+
+**type:** `function (...paths: string[]): string`
+
+##### Options
+
+###### `paths`
+
+**type:** `string[]`
+
+_required_
+
+An array of strings representing a path relative to the root of the project.
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.project.resolve` to generate the absolute path to the Podfile.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+const podfilePath = path.project.resolve("ios", "Podfile");
+```
+
+##### Constant
+
+###### `path.ios.podfile`
+
+Generates the absolute path to the iOS Podfile file.
+
+**type:** `string`
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.ios.podfile` to generate the absolute path to the Podfile.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+const podfilePath = path.ios.podfile;
+```
+
+##### Constant
+
+###### `path.ios.infoPlist`
+
+Generates the absolute path to the iOS Info.plist file.
+
+**type:** `string`
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.ios.infoPlist` to generate the absolute path to the Info.plist.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+const infoPlistPath = path.ios.infoPlist;
+```
+
+##### Constant
+
+###### `path.ios.gemfile`
+
+Generates the absolute path to the iOS Gemfile.
+
+**type:** `string`
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.ios.gemfile` to generate the absolute path to the Gemfile.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+const gemfilePath = path.ios.gemfile;
+```
+
+##### Constant
+
+###### `path.ios.envSwitcher`
+
+Generates the absolute path to the iOS EnvSwitcher.m.
+
+**type:** `string`
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.ios.envSwitcher` to generate the absolute path to the EnvSwitcher.m.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+const envSwitcherPath = path.ios.envSwitcher;
+```
+
+##### Constant
+
+###### `path.ios.entitlements`
+
+Generates the absolute path to the iOS app.entitlements.
+
+**type:** `string`
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.ios.entitlements` to generate the absolute path to the app.entitlements.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+const entitlementsPath = path.ios.entitlements;
+```
+
+##### Constant
+
+###### `path.ios.nativeConstants`
+
+Generates the absolute path to the iOS NativeConstants.m.
+
+**type:** `string`
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.ios.nativeConstants` to generate the absolute path to the NativeConstants.m.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+const nativeConstantsPath = path.ios.nativeConstants;
+```
+
+##### Constant
+
+###### `path.ios.projectPbxProj`
+
+Generates the absolute path to the iOS project.pbxproj.
+
+**type:** `string`
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.ios.projectPbxProj` to generate the absolute path to the project.pbxproj.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+const projectPbxProjPath = path.ios.projectPbxProj;
+```
+
+##### Constant
+
+###### `path.android.buildGradle`
+
+Generates the absolute path to the Android build.gradle.
+
+**type:** `string`
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.android.buildGradle` to generate the absolute path to the build.gradle.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+const buildGradlePath = path.android.buildGradle;
+```
+
+##### Constant
+
+###### `path.android.gemfile`
+
+Generates the absolute path to the Android Gemfile.
+
+**type:** `string`
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.android.gemfile` to generate the absolute path to the Gemfile.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+const gemfilePath = path.android.gemfile;
+```
+
+##### Constant
+
+###### `path.android.gradleProperties`
+
+Generates the absolute path to the Android gradle.properties.
+
+**type:** `string`
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.android.gradleProperties` to generate the absolute path to the gradle.properties.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+const gradlePropertiesPath = path.android.gradleProperties;
+```
+
+##### Constant
+
+###### `path.android.appBuildGradle`
+
+Generates the absolute path to the Android app module build.gradle.
+
+**type:** `string`
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.android.appBuildGradle` to generate the absolute path to the app module build.gradle.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+const appBuildGradlePath = path.android.appBuildGradle;
+```
+
+##### Constant
+
+###### `path.android.androidManifest`
+
+Generates the absolute path to the Android AndroidManifest.xml.
+
+**type:** `string`
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.android.androidManifest` to generate the absolute path to the AndroidManifest.xml.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+const androidManifestPath = path.android.androidManifest;
+```
+
+##### Constant
+
+###### `path.android.colors`
+
+Generates the absolute path to the Android colors.xml.
+
+**type:** `string`
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.android.colors` to generate the absolute path to the colors.xml.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+const colorsPath = path.android.colors;
+```
+
+##### Constant
+
+###### `path.android.networkSecurityConfig`
+
+Generates the absolute path to the Android network_security_config.xml.
+
+**type:** `string`
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.android.networkSecurityConfig` to generate the absolute path to the network_security_config.xml.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+const networkSecurityConfigPath = path.android.networkSecurityConfig;
+```
+
+##### Constant
+
+###### `path.android.strings`
+
+Generates the absolute path to the Android strings.xml.
+
+**type:** `string`
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.android.strings` to generate the absolute path to the strings.xml.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+const stringsPath = path.android.strings;
+```
+
+##### Constant
+
+###### `path.android.styles`
+
+Generates the absolute path to the Android styles.xml.
+
+**type:** `string`
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.android.styles` to generate the absolute path to the styles.xml.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+const stylesPath = path.android.styles;
+```
+
+##### Function
+
+###### `path.android.mainApplication`
+
+Generates the absolute path to the Android MainApplication.java.
+
+**type:** `function (config: BuildConfig): string`
+
+##### Options
+
+###### `config`
+
+**type:** [BuildConfig](/guides/build)
+
+_required_
+
+The build configuration consumed by Flagship Code represented by `build.<mode>.ts`.
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.android.mainApplication` to generate the absolute path to the MainApplication.java.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+// config aggregated from @brandingbrand/cli
+
+const mainApplicationPath = path.android.mainApplication(config);
+```
+
+##### Function
+
+###### `path.android.mainActivity`
+
+Generates the absolute path to the Android MainActivity.java.
+
+**type:** `function (config: BuildConfig): string`
+
+##### Options
+
+###### `config`
+
+**type:** [BuildConfig](/guides/build)
+
+_required_
+
+The build configuration consumed by Flagship Code represented by `build.<mode>.ts`.
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.android.mainActivity` to generate the absolute path to the MainActivity.java.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+// config aggregated from @brandingbrand/cli
+
+const mainActivityPath = path.android.mainActivity(config);
+```
+
+##### Function
+
+###### `path.android.envSwitcher`
+
+Generates the absolute path to the Android EnvSwitcher.java.
+
+**type:** `function (config: BuildConfig): string`
+
+##### Options
+
+###### `config`
+
+**type:** [BuildConfig](/guides/build)
+
+_required_
+
+The build configuration consumed by Flagship Code represented by `build.<mode>.ts`.
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.android.envSwitcher` to generate the absolute path to the EnvSwitcher.java.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+// config aggregated from @brandingbrand/cli
+
+const envSwitcherPath = path.android.envSwitcher(config);
+```
+
+##### Function
+
+###### `path.android.nativeConstants`
+
+Generates the absolute path to the Android NativeConstants.java.
+
+**type:** `function (config: BuildConfig): string`
+
+##### Options
+
+###### `config`
+
+**type:** [BuildConfig](/guides/build)
+
+_required_
+
+The build configuration consumed by Flagship Code represented by `build.<mode>.ts`.
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `path.android.nativeConstants` to generate the absolute path to the NativeConstants.java.
+
+```ts
+import { path } from "@brandingbrand/code-cli-kit";
+
+// config aggregated from @brandingbrand/cli
+
+const nativeConstantsPath = path.android.nativeConstants(config);
+```
+
+#### string
+
+A comprehensive suite of string-related utility functions facilitating efficient error handling and warning notifications.
+
+##### Function
+
+###### `replace`
+
+Safely replaces and old string or regular expression statement with a new string.
+
+**type:** `function (content: string, oldText: RegExp | string, newText: string): string`
+
+##### Options
+
+###### `content`
+
+**type:** `string`
+
+_required_
+
+A string that contains text to be replaced.
+
+###### `oldText`
+
+**type:** `string | RegExp`
+
+_required_
+
+A string or regular expression statement to represent text that needs to be replaced.
+
+###### `newText`
+
+**type:** `string`
+
+_required_
+
+A string of text that will replace the old text.
+
+##### Usage
+
+Below is an illustrative example demonstrating the utilization of the `replace` to update a string.
+
+```ts
+import { string } from "@brandingbrand/code-cli-kit";
+
+const originalContent = "Hello, world!";
+const newText = replace(originalContent, /world/i, "there");
+
+console.log(newText);
+
+// Output: "Hello, there!"
+```
