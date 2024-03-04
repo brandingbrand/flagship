@@ -269,6 +269,40 @@ export default definePlugin<CodePluginExample>({
     );
   },
 });
+
+export type { CodePluginExample };
 ```
 
 In essence, the overall difference is minimal; however, there are some changes in the exposed modules. The crucial distinction lies in the fact that the export is now type-guarded by `definePlugin`. This refinement is intended to facilitate plugin development by enforcing strict guidelines, ensuring consistency and adherence to best practices throughout the plugin development process.
+
+Below is an illustrative example of the changes made to the `package.json` file to accommodate the new approach where plugins are no longer transpiled from TypeScript to JavaScript, but instead can be published solely as TypeScript packages.
+
+```json title="package.json" del={6,8-11,19} ins={7, 12-18, 20-24}
+{
+  "name": "plugin-example",
+  "version": "0.0.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "dist/index.js",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "dev": "npx tsc --watch"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "@brandingbrand/code-jest-config"
+  },
+  "types": "dist/index.d.ts",
+  "types": "src/index.ts",
+  "devDependencies": {
+    "eslint": "*",
+    "jest": "*"
+  }
+}
+```
+
+If your project maintains a `dist` or `build` directory in your local plugin, you can safely remove it. Additionally, for some developers, it might be more convenient to utilize the `generate` command from the CLI package to create plugins. Afterwards, you can copy over iOS and Android specific logic into these newly generated plugins. This approach can streamline the process of plugin creation and ensure that platform-specific code is properly integrated into the generated plugins.
