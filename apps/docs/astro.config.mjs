@@ -30,6 +30,7 @@ export default defineConfig({
             { label: "Build Configuration", link: "/guides/build/" },
             { label: "Env Configuration", link: "/guides/env/" },
             { label: "Plugins", link: "/guides/plugins/" },
+            { label: "Migration", link: "/guides/migration/" },
           ],
         },
         {

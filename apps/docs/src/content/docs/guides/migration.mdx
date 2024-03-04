@@ -1,0 +1,274 @@
+---
+title: Migration
+---
+
+The preceding documentation provides developers with insights into transitioning from a React Native CLI project to one augmented by Flagship Code, facilitating ephemeral native code generation. However, this resource may prove less pertinent for developers transitioning from Flagship Code v12 to v13. While the overarching concepts surrounding native code generation, plugin integration, and typed configuration remain consistent, notable refinements and adjustments characterize the details and implementation of the updated iteration.
+
+Flagship Code has undergone a migration to a more adaptable project structure, featuring guarded configurations, generators, TypeScript-exported plugins, and split-configurations.
+
+## Dependencies
+
+The key highlight of the latest version of Flagship Code with respect to dependencies is its support for the most recent stable release of React Native, version 0.72.+. In adherence to industry best practices, we designate the stable version as the latest version minus one, recognizing that third-party libraries require time to align with the latest release.
+
+In this update, all Flagship Code dependencies have undergone a major version upgrade, accompanied by notable deprecations. Particularly, the package `@brandingbrand/code-core` has been deprecated in favor of `@brandingbrand/code-cli-kit`. This change stems from the recognition that the former package name lacked clarity regarding its intended use-case. We believe that `code-cli-kit` better communicates that this package serves as a developer toolkit to support the CLI package.
+
+Furthermore, several plugins have been deprecated due to their inability to undergo open-source testing. Some of these plugins necessitated third-party accounts, posing a risk of exposing Branding Brand's accounts to public developers. These deprecated plugins, including `@brandingbrand/code-plugin-fbsdk-next`, `@brandingbrand/code-plugin-firebase-analytics`, `@brandingbrand/code-plugin-firebase-app`, `@brandingbrand/code-plugin-google-signin`, and `@brandingbrand/code-plugin-leanplum`, will need to be re-implemented in the new plugin format, following the guidelines outlined in the [plugin guide](/guides/plugins). While we understand that this may be frustrating for developers, we firmly believe that this approach is necessary to ensure the quality and supportability of our plugins.
+
+### Integration
+
+Below is an illustrative example of the `package.json` changes.
+
+```json title="package.json" del={7} ins={8} del={11-24} ins={25-33}
+{
+  "name": "my-awesome-app",
+  "version": "1.0.0",
+  "author": "Your Name <email@example.com>",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-native": "~0.71.0",
+    "react-native": "~0.72.0"
+  },
+  "devDependencies": {
+    "@brandingbrand/code-cli": "^12.0.0",
+    "@brandingbrand/code-core": "^12.0.0",
+    "@brandingbrand/code-plugin-app-icon": "^1.0.0",
+    "@brandingbrand/code-plugin-asset": "^1.0.0",
+    "@brandingbrand/code-plugin-fastlane": "^1.0.0",
+    "@brandingbrand/code-plugin-fbsdk-next": "^1.0.0",
+    "@brandingbrand/code-plugin-firebase-analytics": "^1.0.0",
+    "@brandingbrand/code-plugin-firebase-app": "^1.0.0",
+    "@brandingbrand/code-plugin-google-signin": "^1.0.0",
+    "@brandingbrand/code-plugin-leanplum": "^1.0.0",
+    "@brandingbrand/code-plugin-native-navigation": "^1.0.0",
+    "@brandingbrand/code-plugin-permissions": "^1.0.0",
+    "@brandingbrand/code-plugin-splash-screen": "^1.0.0",
+    "@brandingbrand/code-plugin-target-extension": "^1.0.0",
+    "@brandingbrand/code-cli": "13.0.0",
+    "@brandingbrand/code-cli-kit": "13.0.0",
+    "@brandingbrand/code-plugin-app-icon": "2.0.0",
+    "@brandingbrand/code-plugin-asset": "2.0.0",
+    "@brandingbrand/code-plugin-fastlane": "2.0.0",
+    "@brandingbrand/code-plugin-native-navigation": "2.0.0",
+    "@brandingbrand/code-plugin-permissions": "2.0.0",
+    "@brandingbrand/code-plugin-splash-screen": "2.0.0",
+    "@brandingbrand/code-plugin-target-extension": "2.0.0"
+  }
+}
+```
+
+## Flagship Code Configuration
+
+The `flagship-code.config.ts` file offers developers the ability to customize their project structure to suit their preferences. This configuration file serves as a central hub for defining the locations of builds, configurations, and locally generated plugins, as well as enumerating invokable plugins. This newfound flexibility empowers developers to tailor their project structures according to their specific needs, fostering greater alignment with their workflow preferences. Moreover, by seamlessly integrating TypeScript projects, this enhancement streamlines the development process, boosting productivity.
+
+For a comprehensive understanding of the base configuration, please refer to the [Flagship Code configuration guide](/guides/config/). Additionally, note that the list of enumerated plugins will now be relocated from the `package.json` to the `flagship-code.config.ts` file.
+
+### Integration
+
+Below is an illustrative example of migrating the plugin configuration from the `package.json` to the `flagship-code.config.ts`.
+
+```json title="package.json" del={5-15}
+{
+  "name": "my-awesome-app",
+  "version": "1.0.0",
+  "author": "Your Name <email@example.com>",
+  "code": {
+    "plugins": [
+      "@brandingbrand/code-plugin-app-icon",
+      "@brandingbrand/code-plugin-asset",
+      "@brandingbrand/code-plugin-fastlane",
+      "@brandingbrand/code-plugin-native-navigation",
+      "@brandingbrand/code-plugin-permissions",
+      "@brandingbrand/code-plugin-splash-screen",
+      "@brandingbrand/code-plugin-target-extension"
+    ]
+  }
+}
+```
+
+```ts title="flagship-code.config.ts" ins={8-14}
+import { defineConfig } from "@brandingbrand/code-cli-kit";
+
+export default defineConfig({
+  buildPath: "./coderc/build",
+  envPath: "./coderc/env",
+  pluginPath: "./coderc/plugins",
+  plugins: [
+    "@brandingbrand/code-plugin-app-icon",
+    "@brandingbrand/code-plugin-asset",
+    "@brandingbrand/code-plugin-fastlane",
+    "@brandingbrand/code-plugin-native-navigation",
+    "@brandingbrand/code-plugin-permissions",
+    "@brandingbrand/code-plugin-splash-screen",
+    "@brandingbrand/code-plugin-target-extension",
+  ],
+});
+```
+
+It's worth noting that in Flagship Code v12, the assets directory was mandated to be named `.coderc`. However, with the advancements in configuration management facilitated by `flagship-code.config.ts`, this naming convention is no longer necessary. I would suggest renaming it to `coderc` at a minimum, as this ensures automatic inclusion by your `tsconfig.json`. Otherwise, you would need to explicitly add it to the `include` section of your `tsconfig.json`. It's important to remember that hidden directories, such as those prefixed with a dot, are automatically excluded from your TypeScript project by default.
+
+## Build Configuration
+
+The new build configuration in Flagship Code is a derivative of the legacy environment files. It now exclusively incorporates settings for iOS, Android, and plugins. This modification aims to streamline configuration management by minimizing redundant settings across environment files. Integrating plugin configurations into the build configuration is justified by the potential for variations between internal and production builds for individual plugins.
+
+Looking forward, we may consider extending the configuration scope to encompass both `flagship-code.config.ts` and `build.<mode>.ts`. However, currently, all settings related to code generation are consolidated within the build configuration for the sake of consistency.
+
+### Integration
+
+Below is an illustrative example showcasing the migration process of the ios and android objects from the legacy environment file to the new build configuration.
+
+```ts title="env.dev.ts" del={4-13}
+/// <reference types="../../src/app/@types/app.d.ts" />
+
+export default {
+  ios: {
+    name: "myapp",
+    bundleId: "com.brandingbrand.myapp",
+    displayName: "My App",
+  },
+  android: {
+    name: "myapp",
+    packageName: "com.brandingbrand.myapp",
+    displayName: "My App",
+  },
+  app: {
+    id: "abc12345",
+    domain: "https://dev.myexampledomain.com",
+  },
+} satisfies FSCodeConfig;
+```
+
+```ts title="build.internal.ts" ins={4-11}
+import { defineBuild } from "@brandingbrand/code-cli-kit";
+
+export default defineBuild({
+  ios: {
+    bundleId: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  android: {
+    packageName: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+});
+```
+
+This is a very minimal example, most of the ios and android objects are transferable to the build configuration file. There have been a few changes to those interfaces.
+
+## Env Configuration
+
+The new environment configuration is designed to exclusively manage your runtime environment. Its full benefits are realized when used alongside `@brandingbrand/fsapp`, the package responsible for consuming and exporting this environment configuration based on the chosen environment. This setup accommodates multiple environments such as development, staging, and production. By separating build and environment configurations, we achieve simpler and more expressive environment management, enhancing the clarity and flexibility of your application's runtime settings.
+
+The `defineEnv` guarded function ensures strict typing of your object in accordance with the defined type. For detailed instructions on defining your environment type, please refer to the [env configuration guide](/guides/env/). This function serves to enforce type safety, thereby enhancing the reliability and maintainability of your application's environment configuration.
+
+### Integration
+
+Below is an illustrative example showcasing the migration process of the app object from the legacy environment file to the new env configuration.
+
+```ts title="env.dev.ts" del={14-17}
+/// <reference types="../../src/app/@types/app.d.ts" />
+
+export default {
+  ios: {
+    name: "myapp",
+    bundleId: "com.brandingbrand.myapp",
+    displayName: "My App",
+  },
+  android: {
+    name: "myapp",
+    packageName: "com.brandingbrand.myapp",
+    displayName: "My App",
+  },
+  app: {
+    id: "abc12345",
+    domain: "https://dev.myexampledomain.com",
+  },
+} satisfies FSCodeConfig;
+```
+
+```ts title="env.dev.ts" ins={4-5}
+import { defineEnv } from "@brandingbrand/code-cli-kit";
+
+export default defineEnv<Env>({
+  id: "abc12345",
+  domain: "https://dev.myexampledomain.com",
+});
+```
+
+This environment configuration will now be accessible through `@brandingbrand/fsapp`, adhering to the defined `Env` type. By integrating with `@brandingbrand/fsapp`, developers can seamlessly access and utilize the environment settings while benefiting from strict type enforcement for enhanced reliability and consistency in their applications.
+
+## Plugin Configuration
+
+Plugins serve as a mechanism to extend Flagship Code, enabling the generation of additional native code beyond the scope provided by the core functionality of Flagship Code. They offer developers the flexibility to customize and enhance their projects according to specific requirements or preferences, thereby expanding the capabilities and versatility of Flagship Code.
+
+In the legacy system, plugins were exposed in a relatively unrestricted manner, lacking any safeguard mechanisms. This approach resulted in a broader potential for bugs related to plugin integration. To address this concern, Flagship Code has introduced a strictly typed guarded function, aiming to streamline plugin development while enforcing adherence to type safety measures. This enhancement seeks to mitigate potential bugs and ensure a more robust and reliable plugin ecosystem within Flagship Code. The migration path includes moving ios and android exports to the type-guarded function ios and android objects.
+
+For comprehensive information and examples on how to utilize the latest plugin features, please refer to the [plugins guide](/guides/plugins/). This guide offers detailed insights into plugin development, offering valuable resources and examples to streamline the process of extending Flagship Code functionality through plugins.
+
+### Integration
+
+Below is an illustrative example demonstrating the migration process of a legacy plugin, involving updating a native configuration property to conform to the newly configured plugin interface.
+
+```ts title="index.ts" del={1} del={7-11} del={19-23}
+import { summary, fsk as fs, path } from "@brandingbrand/code-core";
+
+import { type CodePluginExample } from "./types";
+
+const ios = summary.withSummary(
+  async (config: CodePluginExample) => {
+    await fs.update(
+      path.ios.podfilePath(),
+      /(^.*:property_enabled => ).*$/m,
+      `$1${config.codePluginExample.plugin.ios.enableProperty},`
+    );
+  },
+  "plugin-apollo",
+  "platform::ios"
+);
+
+const android = summary.withSummary(
+  async (config: CodePluginApollo) => {
+    await fs.update(
+      path.android.gradlePropertiesPath(),
+      /(^.*propertyEnabled=).*$/m,
+      `$1${config.codePluginExample.plugin.android.enableProperty}`
+    );
+  },
+  "plugin-apollo",
+  "platform::android"
+);
+
+export * from "./types";
+
+export { ios, android };
+```
+
+```ts title="index.ts" ins={1-7} ins={13-17} ins={20-24}
+import {
+  fs,
+  path,
+  definePlugin,
+  type BuildConfig,
+  type PrebuildOptions,
+} from "@brandingbrand/code-cli-kit";
+
+import { type CodePluginExample } from "./types";
+
+export default definePlugin<CodePluginExample>({
+  ios: async function (build, options): Promise<void> {
+    await fs.update(
+      path.ios.podfile,
+      /(^.*:property_enabled => ).*$/m,
+      `$1${config.codePluginExample.plugin.ios.enableProperty},`
+    );
+  },
+  android: async function (build, options): Promise<void> {
+    await fs.update(
+      path.android.gradleProperties,
+      /(^.*propertyEnabled=).*$/m,
+      `$1${config.codePluginExample.plugin.android.enableProperty}`
+    );
+  },
+});
+```
+
+In essence, the overall difference is minimal; however, there are some changes in the exposed modules. The crucial distinction lies in the fact that the export is now type-guarded by `definePlugin`. This refinement is intended to facilitate plugin development by enforcing strict guidelines, ensuring consistency and adherence to best practices throughout the plugin development process.
