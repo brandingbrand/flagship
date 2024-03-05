@@ -31,3 +31,10 @@ export * from "./utf-8";
  * @module parsers/xml
  */
 export * from "./xml";
+
+/**
+ * TS parser module to update ts content
+ *
+ * @module parsers/ts
+ */
+export * from "./ts";

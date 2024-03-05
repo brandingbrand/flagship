@@ -3580,6 +3580,13 @@ ast-types@0.15.2:
   dependencies:
     tslib "^2.0.1"
 
+ast-types@^0.16.1:
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.16.1.tgz#7a9da1617c9081bc121faafe91711b4c8bb81da2"
+  integrity sha512-6t10qk83GOG8p0vKmaCr8eiilZwO171AvbROMtvvNiwrTly62t+7XkA8RdIIVbpMhCASAsxgAzdRSwh6nw/5Dg==
+  dependencies:
+    tslib "^2.0.1"
+
 astral-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/astral-regex/-/astral-regex-1.0.0.tgz#6c8c3fb827dd43ee3918f27b82782ab7658a6fd9"
@@ -10048,6 +10055,17 @@ recast@^0.21.0:
     source-map "~0.6.1"
     tslib "^2.0.1"
 
+recast@^0.23.5:
+  version "0.23.5"
+  resolved "https://registry.yarnpkg.com/recast/-/recast-0.23.5.tgz#07f5594a0d36e7754356160b70e90393cca0406d"
+  integrity sha512-M67zIddJiwXdfPQRYKJ0qZO1SLdH1I0hYeb0wzxA+pNOvAZiQHulWzuk+fYsEWRQ8VfZrgjyucqsCOtCyM01/A==
+  dependencies:
+    ast-types "^0.16.1"
+    esprima "~4.0.0"
+    source-map "~0.6.1"
+    tiny-invariant "^1.3.3"
+    tslib "^2.0.1"
+
 redux-immutable-state-invariant@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/redux-immutable-state-invariant/-/redux-immutable-state-invariant-2.1.0.tgz#308fd3cc7415a0e7f11f51ec997b6379c7055ce1"
@@ -11315,6 +11333,11 @@ tiny-invariant@^1.0.2:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.3.1.tgz#8560808c916ef02ecfd55e66090df23a4b7aa642"
   integrity sha512-AD5ih2NlSssTCwsMznbvwMZpJ1cbhkGd2uueNxzv2jDlEeZdU04JQfRnggJQ8DrcVBGjAsCKwFBbDlVNtEMlzw==
+
+tiny-invariant@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.3.3.tgz#46680b7a873a0d5d10005995eb90a70d74d60127"
+  integrity sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==
 
 tiny-warning@^1.0.0:
   version "1.0.3"

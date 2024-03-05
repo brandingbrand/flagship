@@ -1,4 +1,5 @@
-import { fs, path, string, withUTF8 } from "@brandingbrand/code-cli-kit";
+import * as recast from "recast";
+import { path, withTS } from "@brandingbrand/code-cli-kit";
 
 import { config, defineAction } from "@/lib";
 
@@ -27,12 +28,18 @@ export default defineAction(async (): Promise<void> => {
     }
   );
 
-  await withUTF8(path.project.resolve("flagship-code.config.ts"), (content) => {
-    return string.replace(
-      content,
-      /(plugins:.*\[[\s\S]*)(])/m,
-      `$1  '${config.generateOptions.name}',
-  $2`
-    );
+  await withTS(path.project.resolve("flagship-code.config.ts"), {
+    visitArrayExpression(path) {
+      if (
+        path.parentPath.value.key &&
+        path.parentPath.value.key.name === "plugins"
+      ) {
+        path.value.elements.push(
+          recast.types.builders.literal(config.generateOptions.name)
+        );
+      }
+
+      return false;
+    },
   });
 }, "generator");
