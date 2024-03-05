@@ -132,7 +132,27 @@ export default defineBuild<CodePluginPermissions>({
 
 Optional iOS permissions configuration.
 
-###### `PermissionsIOS`
+##### `PermissionsIOS`
+
+###### `permission`
+
+**type:** `string`
+
+_required_
+
+The permission key for the iOS permission.
+
+###### `text`
+
+**type:** `string`
+
+Optional text providing additional information about the permission. This property is required if the usageKey for the permission is defined.
+
+###### `purposeKey`
+
+**type:** `string`
+
+Optional purpose key for the permission. This property is required if the purposeKey for the permission is defined.
 
 ##### `codePluginPermissions.plugin.android`
 
@@ -140,4 +160,8 @@ Optional iOS permissions configuration.
 
 Optional iOS permissions configuration.
 
-###### `PermissionsAndroid`
+##### `PermissionsAndroid`
+
+**type:** `string[]`
+
+The list of permission keys for the Android permission.

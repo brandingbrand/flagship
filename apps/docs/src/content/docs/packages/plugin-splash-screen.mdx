@@ -160,16 +160,112 @@ export default defineBuild<CodePluginSplashScreen>({
 
 ##### `codePluginSplashScreen.plugin.ios`
 
-**type:** [SplashScreenIOS](#splashscreenios)
+**type:** [SplashScreenIOSLegacy](#splashscreenioslegacy) | [SplashScreenIOSGenerated](#splashscreeniosgenerated)
 
 Optional iOS splash screen configuration.
 
-###### `SplashScreenIOS`
+##### `SplashScreenIOSLegacy`
+
+###### `type`
+
+**type:** `"legacy"`
+
+_required_
+
+Specifies that the splash screen is of type "legacy".
+
+###### `legacy.xcassetsDir`
+
+**type:** `string`
+
+_required_
+
+The path to the legacy splash screen.
+
+###### `legacy.xcassetsFile`
+
+**type:** `string`
+
+_required_
+
+The name of the xcassets file for the legacy splash screen.
+
+###### `legacy.storyboardFile`
+
+The name of the storyboard file for the legacy splash screen. This is required becasue the default is LaunchScreen.storyboard which could different from the name of the file supplied.
+
+##### `SplashScreenIOSGenerated`
+
+###### `type`
+
+**type:** `"generated"`
+
+_required_
+
+Specifies that the splash screen is of type "generated".
+
+###### `generated.logoPath`
+
+**type:** `string`
+
+_required_
+
+The path to the logo image for the generated splash screen.
+
+###### `generated.backgroundColor`
+
+**type:** `string`
+
+_required_
+
+The background color for the generated splash screen.
 
 ##### `codePluginSplashScreen.plugin.android`
 
-**type:** [SplashScreenAndroid](#splashscreenandroid)
+**type:** [SplashScreenAndroidLegacy](#splashscreenandroidlegacy) | [SplashScreenAndroidGenerated](#splashscreenandroidgenerated)
 
 Optional iOS splash screen configuration.
 
-###### `SplashScreenAndroid`
+##### `SplashScreenAndroidLegacy`
+
+###### `type`
+
+**type:** `"legacy"`
+
+_required_
+
+Specifies that the splash screen is of type "legacy".
+
+###### `legacy.assetsDir`
+
+**type:** `string`
+
+_required_
+
+The path to the legacy splash screen.
+
+##### `SplashScreenAndroidGenerated`
+
+###### `type`
+
+**type:** `"generated"`
+
+_required_
+
+Specifies that the splash screen is of type "generated".
+
+###### `generated.logoPath`
+
+**type:** `string`
+
+_required_
+
+The path to the logo image for the generated splash screen.
+
+###### `generated.backgroundColor`
+
+**type:** `string`
+
+_required_
+
+The background color for the generated splash screen.

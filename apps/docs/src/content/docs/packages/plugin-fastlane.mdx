@@ -130,7 +130,39 @@ export default defineBuild<CodePluginFastlane>({
 
 Optional iOS AppCenter configuration.
 
-###### `AppCenterIOS`
+##### `AppCenterIOS`
+
+###### `organization`
+
+**type:** `string`
+
+_required_
+
+The organization name in App Center.
+
+###### `appName`
+
+**type:** `string`
+
+_required_
+
+The name of the app in App Center.
+
+###### `destinationType`
+
+**type:** `"group" | "store"`
+
+_required_
+
+The type of distribution destination.
+
+###### `destinations`
+
+**type:** `string[]`
+
+_required_
+
+Array of distribution destinations.
 
 ##### `codePluginFastlane.plugin.android.appCenter`
 
@@ -138,7 +170,39 @@ Optional iOS AppCenter configuration.
 
 Optional Android AppCenter configuration.
 
-###### `AppCenterAndroid`
+##### `AppCenterAndroid`
+
+###### `organization`
+
+**type:** `string`
+
+_required_
+
+The organization name in App Center.
+
+###### `appName`
+
+**type:** `string`
+
+_required_
+
+The name of the app in App Center.
+
+###### `destinationType`
+
+**type:** `"group" | "store"`
+
+_required_
+
+The type of distribution destination.
+
+###### `destinations`
+
+**type:** `string[]`
+
+_required_
+
+Array of distribution destinations.
 
 :::note
 If you don't need AppCenter then do not include the `codePluginFastlane` configuration.
