@@ -70,7 +70,12 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`
     await withUTF8(
       path.project.resolve("ios", "fastlane", "Fastfile"),
       (content) => {
-        return ejs.render(content, { ...build, ...options });
+        return ejs.render(content, {
+          ...build,
+          ...options,
+          //@ts-ignore
+          ...(!build.codePluginFastlane && { codePluginFastlane: {} }),
+        });
       }
     );
 
@@ -177,7 +182,12 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`
     await withUTF8(
       path.project.resolve("android", "fastlane", "Fastfile"),
       (content) => {
-        return ejs.render(content, { ...build, ...options });
+        return ejs.render(content, {
+          ...build,
+          ...options,
+          //@ts-ignore
+          ...(!build.codePluginFastlane && { codePluginFastlane: {} }),
+        });
       }
     );
   },

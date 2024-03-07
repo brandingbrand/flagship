@@ -1,14 +1,22 @@
 default_platform :android
 
-<% if(codePluginFastlane.plugin.android?.appCenter) { -%>
+lane :assemble do
+  # assemble the release variant i.e. apk
+  gradle(task: "assembleRelease")
+end
+
+lane :bundle do
+  # bundle the release variant i.e. aab
+  gradle(task: "bundleRelease")
+end
+
+<% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.appCenter) { -%>
 lane :increment_build do
   begin
     version = appcenter_fetch_version_number(
         owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
         app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",
-        <%_ if (!release) { -%>
         version: "<%- android.versioning?.version || "1.0.0" %>"
-        <%_ } -%>
     )
 
     if version["build_number"]
@@ -23,26 +31,23 @@ lane :increment_build do
 end
 <% } -%>
 
-lane :assemble do
-  <%_ if (codePluginFastlane.plugin.android?.appCenter) { -%>
+<% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.appCenter) { -%>
+lane :appcenter_assemble do
   increment_build
-  <%_ } -%>
 
-  # assemble the release variant i.e. apk
-  gradle(task: "assembleRelease")
+  assemble
+
+  appcenter_upload(
+    owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
+    app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",
+    destination_type: "<%= codePluginFastlane.plugin.android.appCenter.destinationType %>",
+    destinations: "<%= codePluginFastlane.plugin.android.appCenter.destinations %>"
+  )
 end
 
-lane :bundle do
-  <%_ if (!android.versioning?.build && codePluginFastlane.plugin.android?.appCenter) { -%>
-  increment_build
-  <%_ } -%>
+lane :appcenter_bundle do
+  bundle
 
-  # bundle the release variant i.e. aab
-  gradle(task: "bundleRelease")
-end
-
-<% if(codePluginFastlane.plugin.android?.appCenter) { -%>
-lane :appcenter do
   appcenter_upload(
     owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
     app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",

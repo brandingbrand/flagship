@@ -54,6 +54,7 @@ describe("config object", () => {
     const generateOptionsConfig: GenerateOptions = {
       type: "plugin",
       name: "code-plugin-example",
+      command: "generate",
     };
 
     config.generateOptions = generateOptionsConfig;
@@ -65,6 +66,7 @@ describe("config object", () => {
     const generateOptionsConfig: GenerateOptions = {
       type: "plugin",
       name: "@brandingbrand/code-plugin-example",
+      command: "generate",
     };
 
     expect(() => {
