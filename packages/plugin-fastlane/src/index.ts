@@ -1,5 +1,11 @@
 import path from "path";
-import { fsk, Config, path as pathk, summary } from "@brandingbrand/code-core";
+import {
+  fsk,
+  Config,
+  path as pathk,
+  summary,
+  fs,
+} from "@brandingbrand/code-core";
 import { CodePluginFastlane } from "./types";
 
 const ios = summary.withSummary(
@@ -20,6 +26,61 @@ gem 'fastlane'
 plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
 eval_gemfile(plugins_path) if File.exist?(plugins_path)
 `
+      );
+
+      if (!config.ios.signing) {
+        throw Error("[CodePluginFastlane]: missing ios fastlane configuration");
+      }
+
+      // Get list of provisioning profiles files
+      const files = await fs.readdir(
+        pathk.config.resolve(config.ios.signing.profilesDir)
+      );
+
+      const profilesFiles = files.filter((it) =>
+        it.match(/(\w+\.mobileprovision)/)
+      );
+
+      // Throw error if there are no available provisioning profiles
+      if (!profilesFiles.length) {
+        throw Error(
+          `[CodePluginFastlane]: cannot find profiles that match *.mobileprovision in ${config.ios.signing.profilesDir}`
+        );
+      }
+
+      // Reduce list into a string that would be reprentative of a ruby array
+      const profiles = profilesFiles
+        .map(
+          (it) =>
+            `'${pathk.config.resolve(
+              config.ios.signing?.profilesDir as string,
+              it
+            )}'`
+        )
+        .join(",");
+
+      await fsk.update(
+        pathk.project.resolve("ios", "fastlane", "Fastfile"),
+        /(@profiles\s+=\s+\[).*(\])/,
+        `$1${profiles}$2`
+      );
+
+      await fsk.update(
+        pathk.project.resolve("ios", "fastlane", "Fastfile"),
+        /(certificate_path:\s+').*\.p12(')/,
+        `$1${pathk.config.resolve(config.ios.signing?.distP12)}$2`
+      );
+
+      await fsk.update(
+        pathk.project.resolve("ios", "fastlane", "Fastfile"),
+        /(certificate_path:\s+').*\.cer(')/,
+        `$1${pathk.config.resolve(config.ios.signing?.distCert)}$2`
+      );
+
+      await fsk.update(
+        pathk.project.resolve("ios", "fastlane", "Fastfile"),
+        /(certificate_path:\s+')AppleWWDRCA\.cer(')/,
+        `$1${pathk.config.resolve(config.ios.signing?.appleCert)}$2`
       );
     }
   },
@@ -47,6 +108,29 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)
 `
       );
     }
+
+    if (!config.android.signing) {
+      throw Error(
+        "[CodePluginFastlane]: missing android signing configuration"
+      );
+    }
+
+    await fs.copyFile(
+      pathk.config.resolve(config.android.signing.storeFile),
+      pathk.project.resolve("android", "app", "release.keystore")
+    );
+
+    await fsk.update(
+      pathk.project.resolve("android", "app", "build.gradle"),
+      /(signingConfigs[.\s\S]+?release \{)[.\s\S]+?\}/m,
+      `$1
+            storeFile file('release.keystore')
+            storePassword System.getenv("STORE_PASSWORD")
+            keyAlias '${config.android.signing.keyAlias}'
+            keyPassword System.getenv("KEY_PASSWORD")
+        }
+        `
+    );
   },
   "plugin-fastlane",
   "platform::android"

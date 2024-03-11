@@ -1,11 +1,66 @@
 default_platform :ios
 
+# make a provisioned build and upload to appcenter
+lane :build do
+  keychain_password = SecureRandom.uuid
+  keychain_name = 'ios-build.keychain'
+  @profiles = []
+
+  create_keychain(
+    name: keychain_name,
+    password: keychain_password,
+    unlock: true,
+    timeout: 3600
+  )
+
+  import_certificate(
+    certificate_path: 'ios-build-key.p12',
+    certificate_password: ENV['DISTRIBUTION_CERT_PASS'],
+    keychain_name: keychain_name,
+    keychain_password: keychain_password,
+    log_output: true
+  )
+
+  import_certificate(
+    certificate_path: 'ios-build-key.cer',
+    certificate_password: ENV['DISTRIBUTION_CERT_PASS'],
+    keychain_name: keychain_name,
+    keychain_password: keychain_password,
+    log_output: true
+  )
+
+  import_certificate(
+    certificate_path: 'AppleWWDRCA.cer',
+    keychain_name: keychain_name,
+    keychain_password: keychain_password,
+    log_output: true
+  )
+
+  @profiles.each { |profile| install_provisioning_profile(path: profile) }
+
+  gym(
+    clean: true,
+    export_method: "<%= ios.signing.exportMethod %>",
+    export_team_id: "<%= ios.signing.exportTeamId %>"
+  )
+
+  delete_keychain(name: keychain_name)
+end
+
+# make an unprovisioned build
+lane :compile do
+  gym(
+    xcargs: "CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED='NO' CODE_SIGN_ENTITLEMENTS='' CODE_SIGNING_ALLOWED='NO'"
+  )
+end
+
+<% if(codePluginFastlane.plugin && codePluginFastlane.plugin.ios && codePluginFastlane.plugin.ios.appCenter) { -%>
 lane :increment_build do
   begin
     version = appcenter_fetch_version_number(
         owner_name: "<%= codePluginFastlane.plugin.ios.appCenter.organization %>",
         app_name: "<%= codePluginFastlane.plugin.ios.appCenter.appName %>",
-        version: "<%= ios.versioning.version %>"
+        version: "<%= ios.versioning && ios.versioning.version || "1.0.0" %>"
     )
     if version["build_number"]
       build_number = increment_build_number(
@@ -17,16 +72,13 @@ lane :increment_build do
     puts "Fastlane: did not find any applicable versions for appcenter_fetch_version_number"
   end
 end
+<% } -%>
 
-# make a provisioned build and upload to appcenter
+<% if(codePluginFastlane.plugin && codePluginFastlane.plugin.ios && codePluginFastlane.plugin.ios.appCenter) { -%>
 lane :appcenter do
   increment_build
-  gym(
-    scheme: "<%= codePluginFastlane.plugin.ios.buildScheme %>",
-    clean: true,
-    export_method: "<%= ios.signing.exportMethod %>",
-    export_team_id: "<%= ios.signing.exportTeamId %>"
-  )
+
+  build
 
   appcenter_upload(
     owner_name: "<%= codePluginFastlane.plugin.ios.appCenter.organization %>",
@@ -35,11 +87,4 @@ lane :appcenter do
     destinations: "<%= codePluginFastlane.plugin.ios.appCenter.destinations %>"
   )
 end
-
-# make an unprovisioned build
-lane :build do
-  xcodebuild(
-    scheme: "<%= codePluginFastlane.plugin.ios.buildScheme %>",
-    xcargs: "CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED='NO' CODE_SIGN_ENTITLEMENTS='' CODE_SIGNING_ALLOWED='NO'"
-  )
-end
+<% } -%>
