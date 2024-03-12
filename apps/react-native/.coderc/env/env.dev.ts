@@ -47,6 +47,10 @@ const dev: ENV = {
       version: '0.0.1',
       build: 1,
     },
+    signing: {
+      keyAlias: 'androiddebugkey',
+      storeFile: 'signing/example.keystore',
+    },
     manifest: {
       urlScheme: {
         scheme: 'code',

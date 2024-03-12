@@ -82,7 +82,7 @@
     "eslint": "^8.25.0",
     "eslint-config-eslint": "^7.0.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-jsdoc": "^39.3.12",
+    "eslint-plugin-jsdoc": "^48.2.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
     "format-package": "^7.0.0",

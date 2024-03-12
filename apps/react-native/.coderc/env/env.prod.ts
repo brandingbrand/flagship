@@ -29,10 +29,10 @@ const prod: ENV = {
       exportTeamId: '762H5V79XV',
       exportMethod: 'app-store',
       provisioningProfileName: 'Test Provisioning Profile',
-      profilesDir: 'xx/xx',
-      appleCert: 'xx/xx',
-      distCert: 'xx/xx',
-      distP12: 'xx/xx',
+      profilesDir: 'signing',
+      appleCert: 'signing/AppleWWDRCA.cert',
+      distCert: 'signing/store.cert',
+      distP12: 'signing/store.p12',
     },
     frameworks: [
       {
@@ -47,6 +47,10 @@ const prod: ENV = {
     versioning: {
       version: '0.0.1',
       build: 1,
+    },
+    signing: {
+      keyAlias: 'androiddebugkey',
+      storeFile: 'signing/example.keystore',
     },
     manifest: {
       mainActivityAttributes: {
