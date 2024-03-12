@@ -127,9 +127,7 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)
             storeFile file('release.keystore')
             storePassword System.getenv("STORE_PASSWORD")
             keyAlias '${config.android.signing.keyAlias}'
-            keyPassword System.getenv("KEY_PASSWORD")
-        }
-        `
+            keyPassword System.getenv("KEY_PASSWORD")`
     );
   },
   "plugin-fastlane",
