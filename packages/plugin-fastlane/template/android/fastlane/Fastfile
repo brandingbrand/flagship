@@ -2,12 +2,12 @@ default_platform :android
 
 lane :assemble do
   # assemble the release variant i.e. apk
-  gradle(task: "assembleRelease")
+  gradle(task: "app:assembleRelease")
 end
 
 lane :bundle do
   # bundle the release variant i.e. aab
-  gradle(task: "bundleRelease")
+  gradle(task: "app:bundleRelease")
 end
 
 <% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.appCenter) { -%>
