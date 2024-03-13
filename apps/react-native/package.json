@@ -107,7 +107,7 @@
     "@brandingbrand/code-plugin-permissions": "*",
     "@brandingbrand/code-plugin-splash-screen": "*",
     "@brandingbrand/code-plugin-target-extension": "*",
-    "@brandingbrand/code-plugin-fastlane": "2.0.0-alpha.0",
+    "@brandingbrand/code-plugin-fastlane": "2.0.0-alpha.1",
     "@react-native-community/eslint-config": "^3.2.0",
     "@tsconfig/react-native": "^2.0.2",
     "@types/jest": "^29.2.1",

@@ -21,6 +21,7 @@
     "@brandingbrand/code-plugin-target-extension": "1.0.0"
   },
   "changesets": [
+    "curly-glasses-sniff",
     "honest-windows-study"
   ]
 }
