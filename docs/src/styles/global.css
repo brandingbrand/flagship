@@ -39,6 +39,9 @@
   .markdown p {
     @apply mb-4 text-code-charcoal dark:text-code-light-grey;
   }
+  .markdown aside > p {
+    @apply mb-4 text-code-charcoal dark:text-code-charcoal;
+  }
   .markdown a > p {
     @apply mb-0 text-sm;
   }

@@ -35,6 +35,10 @@ After adding this plugin as a dev dependency it is necessary to add it to the co
 
 Your Flagship Code environment should also be updated with the `@brandingbrand/code-plugin-fastlane` required props from the defined interface.
 
+<aside class="p-2 bg-yellow-100 rounded-md mb-2">
+In the context of Continuous Integration/Continuous Deployment (CI/CD), the manual invocation of the `code keys` command becomes obsolete, as fastlane adeptly manages all aspects of codesigning.
+</aside>
+
 `.coderc/env/env.<env>.ts`
 
 ```
@@ -76,4 +80,3 @@ The interface in your `.coderc/env/env.<env>.ts` has the following props:
 | code.android.appcenter.destinationType | Destination type of distribution destination. 'group' and 'store' are supported (default: group) |
 | code.android.appcenter.destinations    | Comma separated list of destination names, use '*' for all distribution groups if destination type is 'group'. Both distribution groups and stores are supported. All names are required to be of the same destination type (default: Collaborators)         |
 </div>
-

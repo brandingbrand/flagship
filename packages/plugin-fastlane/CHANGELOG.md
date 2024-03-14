@@ -1,5 +1,27 @@
 # @brandingbrand/code-plugin-fastlane
 
+## 2.0.0
+
+### Major Changes
+
+- d6e97816b: Update fastlane plugin to use fastlane actions
+
+### Patch Changes
+
+- bfd76de16: project scope android fastfile task
+
+## 2.0.0-alpha.1
+
+### Patch Changes
+
+- project scope android fastfile task
+
+## 2.0.0-alpha.0
+
+### Major Changes
+
+- Update fastlane plugin to use fastlane actions
+
 ## 1.0.0
 
 - no changes
