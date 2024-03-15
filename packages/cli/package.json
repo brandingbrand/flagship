@@ -1,7 +1,8 @@
 {
   "name": "@brandingbrand/code-cli",
-  "version": "0.0.0",
-  "private": true,
+  "version": "13.0.0",
+  "description": "cli for Flagship Code applications",
+  "license": "MIT",
   "bin": {
     "flagship-code": "./bin/flagship-code"
   },

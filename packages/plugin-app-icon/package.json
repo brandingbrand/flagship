@@ -1,8 +1,8 @@
 {
   "name": "@brandingbrand/code-plugin-app-icon",
-  "version": "0.0.0",
-  "license": "UNLICENSED",
-  "private": true,
+  "version": "2.0.0",
+  "description": "plugin for Flagship Code app icon",
+  "license": "MIT",
   "main": "src/index.ts",
   "scripts": {
     "lint": "eslint . --max-warnings 0",

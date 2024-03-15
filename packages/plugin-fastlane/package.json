@@ -1,8 +1,8 @@
 {
   "name": "@brandingbrand/code-plugin-fastlane",
-  "version": "0.0.0",
-  "license": "UNLICENSED",
-  "private": true,
+  "version": "3.0.0",
+  "description": "plugin for Flagship Code for fastlane and app center builds",
+  "license": "MIT",
   "main": "src/index.ts",
   "scripts": {
     "lint": "eslint . --max-warnings 0",

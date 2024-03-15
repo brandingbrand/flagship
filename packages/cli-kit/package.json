@@ -1,7 +1,8 @@
 {
   "name": "@brandingbrand/code-cli-kit",
-  "version": "0.0.0",
-  "private": true,
+  "version": "13.0.0",
+  "description": "tools for Flagship Code react-native application",
+  "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
     "build": "yarn tsup src/index.ts --dts",
