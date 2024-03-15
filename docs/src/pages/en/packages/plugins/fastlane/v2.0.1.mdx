@@ -1,0 +1,82 @@
+---
+title: Plugin Fastlane
+description: brandingbrand/code-plugin-fastlane
+layout: ../../../../../layouts/docs.astro
+lang: en
+---
+
+import CodeCopy from "../../../../../components/code-copy.astro";
+
+## Plugin Fastlane
+
+`@brandingbrand/code-plugin-fastlane` is a package that will generate native fastlane code necessary for your ci/cd integrations. Right now this contains the appcenter fastlaene integration.
+
+### Getting Started
+
+<div class="flex w-full my-6">
+  <CodeCopy args="yarn add -D @brandingbrand/code-plugin-fastlane" />
+</div>
+
+Add the above noted package and the plugin is available in the Flagship Code plugin ecosystem.
+
+### Usage
+
+After adding this plugin as a dev dependency it is necessary to add it to the code plugins configuration via the `package.json`.
+
+`package.json`
+
+```
+  "code": {
+    "plugins": [
+      "@brandingbrand/code-plugin-fastlane"
+    ]
+  },
+```
+
+Your Flagship Code environment should also be updated with the `@brandingbrand/code-plugin-fastlane` required props from the defined interface.
+
+<aside class="p-2 bg-yellow-100 rounded-md mb-2">
+In the context of Continuous Integration/Continuous Deployment (CI/CD), the manual invocation of the `code keys` command becomes obsolete, as fastlane adeptly manages all aspects of codesigning.
+</aside>
+
+`.coderc/env/env.<env>.ts`
+
+```
+  codePluginFastlane: {
+    code: {
+      ios: {
+        appCenter: {
+          organization: 'Your-Org',
+          appName: 'TestApp-iOS-Internal',
+          destinationType: 'group',
+          destinations: ['IAT', 'UAT'],
+        },
+        buildScheme: 'appname',
+      },
+      android: {
+        appCenter: {
+          organization: 'Your-Org',
+          appName: 'TestApp-Android-Internal',
+          destinationType: 'group',
+          destinations: ['IAT', 'UAT'],
+        },
+      },
+    },
+  },
+```
+
+The interface in your `.coderc/env/env.<env>.ts` has the following props:
+
+<div class="my-4 overflow-scroll">
+| attribute                                | description                                                                                      |
+| :--------                                | :----------                                                                                      |
+| code.ios.appcenter.organization        | appcenter account name of the owner of the app (username or organization URL name                |
+| code.ios.appcenter.appName             | appcenter app name (as seen in app URL)                                                          |
+| code.ios.appcenter.destinationType     | Destination type of distribution destination. 'group' and 'store' are supported (default: group) |
+| code.ios.appcenter.destinations        | Comma separated list of destination names, use '*' for all distribution groups if destination type is 'group'. Both distribution groups and stores are supported. All names are required to be of the same destination type (default: Collaborators)         |
+| code.ios.buildScheme                   | xcode project name                                                                               |
+| code.android.appcenter.organization    | appcenter account name of the owner of the app (username or organization URL name                |
+| code.android.appcenter.appName         | appcenter app name (as seen in app URL)                                                          |
+| code.android.appcenter.destinationType | Destination type of distribution destination. 'group' and 'store' are supported (default: group) |
+| code.android.appcenter.destinations    | Comma separated list of destination names, use '*' for all distribution groups if destination type is 'group'. Both distribution groups and stores are supported. All names are required to be of the same destination type (default: Collaborators)         |
+</div>

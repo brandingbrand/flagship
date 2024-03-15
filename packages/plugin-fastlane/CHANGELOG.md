@@ -1,5 +1,11 @@
 # @brandingbrand/code-plugin-fastlane
 
+## 2.0.1
+
+### Patch Changes
+
+- Update ios compile lane
+
 ## 2.0.0
 
 ### Major Changes
