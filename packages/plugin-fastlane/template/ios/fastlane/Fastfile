@@ -50,7 +50,9 @@ end
 # make an unprovisioned build
 lane :compile do
   gym(
-    xcargs: "CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED='NO' CODE_SIGN_ENTITLEMENTS='' CODE_SIGNING_ALLOWED='NO'"
+    clean: true,
+    skip_archive: true,
+    skip_codesigning: true
   )
 end
 
