@@ -13,6 +13,10 @@ jobs:
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
         with:
           node-version: 20
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@5f19ec79cedfadb78ab837f95b87734d0003c899
+        with:
+          ruby-version: "3.1"
       - name: Install dependencies
         run: yarn
       - name: Build packages
