@@ -73,8 +73,7 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`
         return ejs.render(content, {
           ...build,
           ...options,
-          //@ts-ignore
-          ...(!build.codePluginFastlane && { codePluginFastlane: {} }),
+          ...(!build.codePluginFastlane ? { codePluginFastlane: {} } : {}),
         });
       }
     );
@@ -185,8 +184,7 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`
         return ejs.render(content, {
           ...build,
           ...options,
-          //@ts-ignore
-          ...(!build.codePluginFastlane && { codePluginFastlane: {} }),
+          ...(!build.codePluginFastlane ? { codePluginFastlane: {} } : {}),
         });
       }
     );
