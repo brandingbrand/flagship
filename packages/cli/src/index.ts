@@ -10,7 +10,7 @@ import cliPkg from "../package.json";
  * @type {Object}
  */
 program
-  .name("@brandingbrand/code-cli")
+  .name("flagship-code")
   .description("command-line interface for ephermal native code generation")
   .version(cliPkg.version, "-v, --version", "output the current version");
 /**
