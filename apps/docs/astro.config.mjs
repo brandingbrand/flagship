@@ -25,8 +25,14 @@ export default defineConfig({
         {
           label: "Guides",
           items: [
-            { label: "Getting Started", link: "/guides/getting-started" },
-            { label: "Flagship Code Configuration", link: "/guides/config/" },
+            {
+              label: "Getting Started",
+              link: "/guides/getting-started",
+            },
+            {
+              label: "Flagship Code Configuration",
+              link: "/guides/config/",
+            },
             { label: "Build Configuration", link: "/guides/build/" },
             { label: "Env Configuration", link: "/guides/env/" },
             { label: "Plugins", link: "/guides/plugins/" },
@@ -78,4 +84,6 @@ export default defineConfig({
       ],
     }),
   ],
+  site: "https://brandingbrand.github.io",
+  base: "flagship",
 });
