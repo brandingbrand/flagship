@@ -11,7 +11,7 @@
  * console.log(result); // Output: true
  * ```
  */
-export function isWarning(error: Error | unknown | any): boolean {
+export function isWarning(error: Error): boolean {
   /**
    * Checks if the error object has a 'name' property and if its type is a string.
    * If not, the function returns undefined, indicating that the error is not a warning.
