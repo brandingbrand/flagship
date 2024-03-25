@@ -71,7 +71,9 @@ export default definePlugin<CodePluginPermissions>({
           if (!pod?.usageKey) return acc;
 
           if (!curr.text) {
-            `[CodePermissionsPluginError]: ${pod.pod} permission requires a 'usageKey'.`;
+            throw Error(
+              `[CodePermissionsPluginError]: ${pod.pod} permission requires a 'usageKey'.`
+            );
           }
 
           // Exception case for LocationAccuracy permission which requires a purpose key
