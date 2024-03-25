@@ -18,9 +18,14 @@ import type { CodePluginSplashScreen } from "./types";
  * @param config The build configuration including splash screen settings.
  */
 export async function ios(config: BuildConfig & CodePluginSplashScreen) {
+  if (config.codePluginSplashScreen.plugin.ios?.type !== "generated") {
+    throw Error(
+      "[CodePluginSplashScreen]: generated was inadvertently executed with the incorrect config - 'type' must be 'generated'"
+    );
+  }
+
   // Extract logoPath and background color from the iOS splash screen configuration
   const { logoPath, backgroundColor: background } =
-    // @ts-ignore
     config.codePluginSplashScreen.plugin.ios.generated;
 
   // Resolve the input file path
@@ -92,9 +97,14 @@ export async function ios(config: BuildConfig & CodePluginSplashScreen) {
  * @param config The build configuration including splash screen settings.
  */
 export async function android(config: BuildConfig & CodePluginSplashScreen) {
+  if (config.codePluginSplashScreen.plugin.android?.type !== "generated") {
+    throw Error(
+      "[CodePluginSplashScreen]: generated was inadvertently executed with the incorrect config - 'type' must be 'generated'"
+    );
+  }
+
   // Extract logoPath and background color from the Android splash screen configuration
   const { logoPath, backgroundColor: background } =
-    // @ts-ignore
     config.codePluginSplashScreen.plugin.android.generated;
 
   // Resolve the input file path

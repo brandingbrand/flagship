@@ -17,9 +17,14 @@ import type { CodePluginSplashScreen } from "./types";
  * @param config The build configuration including splash screen settings.
  */
 export async function ios(config: BuildConfig & CodePluginSplashScreen) {
+  if (config.codePluginSplashScreen.plugin.ios?.type !== "legacy") {
+    throw Error(
+      "[CodePluginSplashScreen]: generated was inadvertently executed with the incorrect config - 'type' must be 'legacy'"
+    );
+  }
+
   // Extract xcassetsDir and xcassetsFile from the iOS legacy splash screen configuration
   const { xcassetsDir, xcassetsFile, storyboardFile } =
-    // @ts-ignore
     config.codePluginSplashScreen.plugin.ios.legacy;
 
   // Copy xcassetsDir to iOS app directory
@@ -116,8 +121,13 @@ export async function ios(config: BuildConfig & CodePluginSplashScreen) {
  * @param config The build configuration including splash screen settings.
  */
 export async function android(config: BuildConfig & CodePluginSplashScreen) {
+  if (config.codePluginSplashScreen.plugin.android?.type !== "legacy") {
+    throw Error(
+      "[CodePluginSplashScreen]: generated was inadvertently executed with the incorrect config - 'type' must be 'legacy'"
+    );
+  }
+
   // Extract assetsDir from the Android legacy splash screen configuration
-  // @ts-ignore
   const { assetsDir } = config.codePluginSplashScreen.plugin.android.legacy;
 
   // Copy assetsDir to Android res directory
