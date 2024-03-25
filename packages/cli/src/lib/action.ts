@@ -81,7 +81,7 @@ export function withAction<TResult, TArgs extends unknown[]>(
         name,
         time: `${((performance.now() - start) / 1000).toFixed(5)} s`,
         success: false,
-        error: isWarningType ? false : error.message,
+        error: isWarningType ? false : error.message ? error.message : true,
         warning: isWarningType ? error.message : false,
       });
     }

@@ -1,9 +1,9 @@
 import { Option, program } from "commander";
 import type { PrebuildOptions } from "@brandingbrand/code-cli-kit";
 
-import { config, emitter, logger } from "@/lib";
 import * as actions from "@/actions";
 import { Reporter } from "@/components";
+import { config, emitter, logger, actions as actionsRes } from "@/lib";
 
 /**
  * Defines a command for the "prebuild" operation using the "commander" library.
@@ -89,4 +89,12 @@ program
      * Resume logging with console.log and process.stdout
      */
     logger.resume();
+
+    /**
+     * Exit process with error if errors exist; this is important for
+     * registering errors with continuous integration.
+     */
+    if (actionsRes.some((it) => it.error)) {
+      process.exit(1);
+    }
   });
