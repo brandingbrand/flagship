@@ -30,5 +30,6 @@ export default defineConfig({
     '@brandingbrand/code-plugin-app-icon',
     '@brandingbrand/code-plugin-permissions',
     '@brandingbrand/code-plugin-splash-screen',
+    '@brandingbrand/code-plugin-example',
   ],
 });
