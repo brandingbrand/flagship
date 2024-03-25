@@ -17,6 +17,7 @@
   },
   "packageManager": "yarn@1.22.19",
   "devDependencies": {
+    "@changesets/cli": "^2.27.1",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "prettier": "^3.1.1",
