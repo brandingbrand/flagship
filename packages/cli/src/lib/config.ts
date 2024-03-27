@@ -70,7 +70,16 @@ export const config = {
   /**
    * @property {Object} __dangerously_access_build - Configuration object for build settings.
    */
-  __dangerously_access_build: {} as BuildConfig,
+  __dangerously_access_build: {
+    ios: {
+      displayName: "Default",
+      bundleId: "com.default",
+    },
+    android: {
+      displayName: "Default",
+      packageName: "com.default",
+    },
+  } as BuildConfig,
   /**
    * @property {function} build - Getter function for accessing build configuration.
    */

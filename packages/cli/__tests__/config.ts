@@ -19,7 +19,16 @@ describe("config object", () => {
   it("should have default values for codeConfig, optionsConfig, and buildConfig", () => {
     expect(config.code).toEqual({});
     expect(config.options).toEqual({});
-    expect(config.build).toEqual({});
+    expect(config.build).toEqual({
+      ios: {
+        displayName: "Default",
+        bundleId: "com.default",
+      },
+      android: {
+        displayName: "Default",
+        packageName: "com.default",
+      },
+    });
   });
 
   it("should be able to update code configuration", () => {
