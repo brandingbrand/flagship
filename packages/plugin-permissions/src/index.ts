@@ -121,11 +121,12 @@ export default definePlugin<CodePluginPermissions>({
         xml.manifest = { ...xml.manifest, "uses-permission": [] };
       }
 
-      // Filter out empty strings or objects as and object is a permissible
-      // type so that the typings can extend any permission
+      // Iterate through Android permissions, filtering out empty strings or objects.
+      // An object is a permissible type to extend any permission typings.
       build.codePluginPermissions.plugin.android
         ?.filter((it) => typeof it === "string" && !!it)
         ?.forEach((it) => {
+          // Push valid permissions to the Android manifest.
           xml.manifest["uses-permission"]?.push({
             $: {
               "android:name": `android.permission.${it}`,
