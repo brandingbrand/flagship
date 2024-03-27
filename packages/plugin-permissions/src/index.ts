@@ -121,13 +121,17 @@ export default definePlugin<CodePluginPermissions>({
         xml.manifest = { ...xml.manifest, "uses-permission": [] };
       }
 
-      build.codePluginPermissions.plugin.android?.forEach((it) => {
-        xml.manifest["uses-permission"]?.push({
-          $: {
-            "android:name": `android.permission.${it}`,
-          },
+      // Filter out empty strings or objects as and object is a permissible
+      // type so that the typings can extend any permission
+      build.codePluginPermissions.plugin.android
+        ?.filter((it) => typeof it === "string" && !!it)
+        ?.forEach((it) => {
+          xml.manifest["uses-permission"]?.push({
+            $: {
+              "android:name": `android.permission.${it}`,
+            },
+          });
         });
-      });
     });
   },
 });
