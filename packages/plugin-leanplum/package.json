@@ -1,0 +1,27 @@
+{
+  "name": "@brandingbrand/code-plugin-leanplum",
+  "version": "2.0.0",
+  "description": "plugin for Flagship Code for leanplum/react-native-sdk",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "@brandingbrand/code-jest-config"
+  },
+  "types": "src/index.ts",
+  "peerDependencies": {
+    "@brandingbrand/code-cli-kit": "*"
+  },
+  "devDependencies": {
+    "@brandingbrand/code-cli-kit": "*",
+    "@brandingbrand/code-jest-config": "*",
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/eslint": "^8.56.1",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  }
+}
