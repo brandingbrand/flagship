@@ -4,38 +4,41 @@
  */
 
 import {
-  type BuildConfig,
-  type PrebuildOptions,
   definePlugin,
   path,
+  withUTF8,
+  string,
 } from "@brandingbrand/code-cli-kit";
+
+import type { CodePluginFirebaseAnalytics } from "./types";
 
 /**
  * Defines a plugin with functions for both iOS and Android platforms.
  * @alias module:Plugin
- * @param {BuildConfig} build - The build configuration object.
+ * @param {BuildConfig & CodePluginFirebaseAnalytics} build - The build configuration object.
  * @param {PrebuildOptions} options - The options object.
  */
-export default definePlugin({
+export default definePlugin<CodePluginFirebaseAnalytics>({
   /**
    * Function to be executed for iOS platform.
-   * @param {BuildConfig} build - The build configuration object for iOS.
+   * @param {BuildConfig & CodePluginFirebaseAnalytics} build - The build configuration object for iOS.
    * @param {PrebuildOptions} options - The options object for iOS.
    * @returns {Promise<void>} A promise that resolves when the process completes.
    */
-  ios: async function (
-    build: BuildConfig,
-    options: PrebuildOptions
-  ): Promise<void> {},
+  ios: async function (build, _options): Promise<void> {
+    if (!build.codePluginFirebaseAnalytics.plugin.ios?.disableAdId) {
+      return;
+    }
 
-  /**
-   * Function to be executed for Android platform.
-   * @param {BuildConfig & CodePluginAsset} build - The build configuration object for Android.
-   * @param {PrebuildOptions} options - The options object for Android.
-   * @returns {Promise<void>} A promise that resolves when the process completes.
-   */
-  android: async function (
-    build: BuildConfig,
-    options: PrebuildOptions
-  ): Promise<void> {},
+    await withUTF8(path.ios.podfile, (content) => {
+      return string.replace(
+        content,
+        /(platform :[\s\S]+?\n)/,
+        `$1
+$RNFirebaseAnalyticsWithoutAdIdSupport = true\n`
+      );
+    });
+  },
 });
+
+export type { CodePluginFirebaseAnalytics };
