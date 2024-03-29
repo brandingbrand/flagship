@@ -103,6 +103,13 @@ export default {
     nativeConstants: resolvePathFromProject("ios", "app", "NativeConstants.m"),
 
     /**
+     * Retrieves the absolute path to the iOS AppDelegate.mm file.
+     *
+     * @returns {string} The absolute path to "ios/app/AppDelegate.mm".
+     */
+    appDelegate: resolvePathFromProject("ios", "app", "AppDelegate.mm"),
+
+    /**
      * Retrieves the absolute path to the iOS project.pbxproj file.
      *
      * @returns {string} The absolute path to "ios/app.xcodeproj/project.pbxproj".

@@ -13,6 +13,11 @@ export default defineBuild<
   ios: {
     bundleId: 'com.brandingbrand',
     displayName: 'Branding Brand',
+    plist: {
+      urlScheme: {
+        scheme: 'app',
+      },
+    },
   },
   android: {
     packageName: 'com.brandingbrand',

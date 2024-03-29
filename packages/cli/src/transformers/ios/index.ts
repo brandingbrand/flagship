@@ -32,3 +32,8 @@ export { default as pbxproj } from "./project-pbxproj";
  * Represents the app.entitlements file transformers.
  */
 export { default as entitlements } from "./app-entitlements";
+
+/**
+ * Represents the AppDelegate.mm file transformers.
+ */
+export { default as appDelegate } from "./app-delegate-mm";
