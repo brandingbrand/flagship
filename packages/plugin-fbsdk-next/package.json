@@ -12,8 +12,13 @@
     "preset": "@brandingbrand/code-jest-config"
   },
   "types": "src/index.ts",
+  "dependencies": {
+    "merge-anything": "^5.1.7"
+  },
   "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "*"
+    "@brandingbrand/code-cli-kit": "*",
+    "@brandingbrand/code-plugin-firebase-app": "*",
+    "react-native-fbsdk-next": "^11.1.0"
   },
   "devDependencies": {
     "@brandingbrand/code-cli-kit": "*",

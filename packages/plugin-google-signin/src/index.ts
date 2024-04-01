@@ -51,7 +51,7 @@ export default definePlugin<CodePluginGoogleSignin>({
           `$1
   
 #import <RNGoogleSignin/RNGoogleSignin.h>
-  `
+`
         );
       }
     );
@@ -83,6 +83,7 @@ options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 
   return NO;
 }
+
 $1`
         );
       }

@@ -140,6 +140,9 @@ type ManifestProviderAttributes = {
 
   /** "writePermission" attribute for the provider. */
   "android:writePermission"?: string;
+
+  /** "exorted" attribute for the provider. */
+  "android:exported"?: boolean;
 };
 
 /**
