@@ -41,6 +41,13 @@ describe("path", () => {
     );
   });
 
+  it("should have an ios.appDelegate function that returns the path to ios/app/AppDelegate.mm", () => {
+    const appDelegatePath = path.ios.appDelegate;
+    expect(appDelegatePath).toEqual(
+      expect.stringMatching(/.*ios\/app\/AppDelegate\.mm$/)
+    );
+  });
+
   it("should have an ios.podfile function that returns the path to ios/Podfile", () => {
     const podfilePath = path.ios.podfile;
     expect(podfilePath).toEqual(expect.stringMatching(/.*ios\/Podfile$/));

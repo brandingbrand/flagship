@@ -8,12 +8,12 @@ import { type BuildConfig, fs, path } from "@brandingbrand/code-cli-kit";
 
 import transformer from "../src/transformers/ios/env-switcher-m";
 
-describe("EnvSwitcher.java transformers", () => {
+describe("EnvSwitcher.m transformers", () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
-  it("should not update EnvSwitcher.java with initialEnvName to staging", async () => {
+  it("should not update EnvSwitcher.m with initialEnvName to staging", async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
