@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-jest-config",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "files": [
     "jest-preset.js"
   ],
