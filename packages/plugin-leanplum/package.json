@@ -13,7 +13,9 @@
   },
   "types": "src/index.ts",
   "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "*"
+    "@brandingbrand/code-cli-kit": "*",
+    "@leanplum/react-native-sdk": "^2.2.0",
+    "clevertap-react-native": "2.0.0"
   },
   "devDependencies": {
     "@brandingbrand/code-cli-kit": "*",
