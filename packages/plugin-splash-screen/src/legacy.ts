@@ -67,10 +67,17 @@ export async function ios(config: BuildConfig & CodePluginSplashScreen) {
     }
 
     /**
-     * There is no resource group by defaul so add in case another plugin has not
+     * There is no resource group by default so add in case another plugin has not
      * already created it. This would otherwise error out with vague message.
      */
-    project.addPbxGroup([], "Resources", '""');
+    if (!project.findPBXGroupKey({ name: "Resources" })) {
+      const { uuid } = project.addPbxGroup([], "Resources", '""');
+
+      project.addToPbxGroup(
+        uuid,
+        project.getFirstProject().firstProject.mainGroup
+      );
+    }
 
     /**
      * Add the xcassets so they can be utilized by the launch screen.
