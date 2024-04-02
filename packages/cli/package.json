@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-cli",
-  "version": "13.0.0",
+  "version": "13.0.0-alpha.0",
   "description": "cli for Flagship Code applications",
   "license": "MIT",
   "bin": {
@@ -18,7 +18,7 @@
   },
   "types": "dist/index.d.ts",
   "dependencies": {
-    "@brandingbrand/code-cli-kit": "*",
+    "@brandingbrand/code-cli-kit": "13.0.0-alpha.0",
     "bundle-require": "^4.0.2",
     "ci-info": "^4.0.0",
     "commander": "11.1.0",
@@ -43,7 +43,7 @@
     "react-native": "~0.72.0"
   },
   "devDependencies": {
-    "@brandingbrand/code-jest-config": "*",
+    "@brandingbrand/code-jest-config": "1.0.0-alpha.0",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/eslint": "^8.56.1",

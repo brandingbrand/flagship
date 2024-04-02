@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-cli-kit",
-  "version": "13.0.0",
+  "version": "13.0.0-alpha.0",
   "description": "tools for Flagship Code react-native application",
   "license": "MIT",
   "main": "dist/index.js",
@@ -26,7 +26,7 @@
     "xcode": "^3.0.1"
   },
   "devDependencies": {
-    "@brandingbrand/code-jest-config": "*",
+    "@brandingbrand/code-jest-config": "1.0.0-alpha.0",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/eslint": "^8.56.1",

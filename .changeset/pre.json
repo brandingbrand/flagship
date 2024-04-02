@@ -1,0 +1,23 @@
+{
+  "mode": "pre",
+  "tag": "alpha",
+  "initialVersions": {
+    "@brandingbrand/code-docs": "0.0.0",
+    "@brandingbrand/code-example": "1.0.0",
+    "@brandingbrand/code-cli": "12.0.0",
+    "@brandingbrand/code-cli-kit": "12.0.0",
+    "@repo/eslint-config": "0.0.0",
+    "@brandingbrand/code-jest-config": "0.0.1",
+    "@brandingbrand/code-plugin-app-icon": "1.0.0",
+    "@brandingbrand/code-plugin-asset": "1.0.0",
+    "@brandingbrand/code-plugin-fastlane": "2.0.1",
+    "@brandingbrand/code-plugin-native-navigation": "1.0.0",
+    "@brandingbrand/code-plugin-permissions": "1.0.0",
+    "@brandingbrand/code-plugin-splash-screen": "1.0.0",
+    "@brandingbrand/code-plugin-target-extension": "1.0.0",
+    "@repo/typescript-config": "0.0.0"
+  },
+  "changesets": [
+    "empty-parrots-joke"
+  ]
+}
