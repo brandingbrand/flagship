@@ -1,9 +1,13 @@
 {
   "name": "@brandingbrand/code-jest-config",
   "version": "1.0.0-alpha.0",
+  "license": "MIT",
   "files": [
     "jest-preset.js"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "types": "./index.d.ts",
   "devDependencies": {
     "@types/jest": "^29.5.11",

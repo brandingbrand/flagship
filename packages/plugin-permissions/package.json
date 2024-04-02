@@ -4,6 +4,9 @@
   "description": "plugin for Flagship Code for react-native-permissions",
   "license": "MIT",
   "main": "src/index.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "test": "jest"

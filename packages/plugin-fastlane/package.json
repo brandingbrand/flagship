@@ -4,6 +4,9 @@
   "description": "plugin for Flagship Code for fastlane and app center builds",
   "license": "MIT",
   "main": "src/index.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "test": "jest"

@@ -4,6 +4,9 @@
   "description": "tools for Flagship Code react-native application",
   "license": "MIT",
   "main": "dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "yarn tsup src/index.ts --dts",
     "dev": "yarn tsup src/index.ts --dts --watch",
