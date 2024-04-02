@@ -7,6 +7,9 @@
     "flagship-code": "./bin/flagship-code"
   },
   "main": "dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "yarn tsup src/index.ts --dts --external @brandingbrand/fsapp,@brandingbrand/code-cli",
     "dev": "yarn tsup src/index.ts --dts --external @brandingbrand/fsapp,@brandingbrand/code-cli --watch",
