@@ -18,7 +18,7 @@ module.exports = {
    *
    * @type {string}
    */
-  testEnvironment: require.resolve("./src/test-environment.ts"),
+  testEnvironment: require.resolve("./build/test-environment.js"),
 
   /**
    * Setup files to be executed after Jest environment setup.
@@ -28,7 +28,7 @@ module.exports = {
    *
    * @type {string[]}
    */
-  setupFilesAfterEnv: [require.resolve("./src/setup-files-after-env.ts")],
+  setupFilesAfterEnv: [require.resolve("./build/setup-files-after-env.js")],
 
   /**
    * Module name mapper for path aliasing in Jest.
