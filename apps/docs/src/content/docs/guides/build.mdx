@@ -83,6 +83,7 @@ type IOSConfig = {
  *       scheme: "myapp"
  *     },
  *     style: "light",
+ *     orientation: ["portrait"],
  *   },
  *   signing: {
  *     appleCert: "signing/AppleWWDRCA.cer",
@@ -178,6 +179,18 @@ type IOSConfig = {
          * Optional style configuration
          */
         style?: "light" | "dark" | "system" | undefined;
+
+        /**
+         * Optional orientation configuration
+         */
+        orientation?:
+          | (
+              | "portrait"
+              | "portraitUpsideDown"
+              | "landscapeLeft"
+              | "landscapeRight"
+            )[]
+          | undefined;
       }
     | undefined;
 
@@ -482,6 +495,7 @@ type AndroidConfig = {
    *     scheme: "myapp",
    *     host: "app",
    *   },
+   *   orientation: "portrait",
    * }
    * ```
    */
@@ -503,6 +517,27 @@ type AndroidConfig = {
                */
               host?: string | undefined;
             })
+          | undefined;
+        /**
+         * Represents the optional schema for orientation information.
+         */
+        orientation?:
+          | "unspecified"
+          | "behind"
+          | "landscape"
+          | "portrait"
+          | "reverseLandscape"
+          | "reversePortrait"
+          | "sensorLandscape"
+          | "sensorPortrait"
+          | "userLandscape"
+          | "userPortrait"
+          | "sensor"
+          | "fullSensor"
+          | "nosensor"
+          | "user"
+          | "fullUser"
+          | "locked"
           | undefined;
       }
     | undefined;

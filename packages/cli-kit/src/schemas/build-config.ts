@@ -144,6 +144,21 @@ const StyleSchema = t.union([
 ]);
 
 /**
+ * Represents the schema for the orientation information.
+ *
+ * @example
+ * orientation: ["portrait"]
+ */
+const IOSOrientationSchema = t.array(
+  t.union([
+    t.literal("portrait"),
+    t.literal("portraitUpsideDown"),
+    t.literal("landscapeLeft"),
+    t.literal("landscapeRight"),
+  ])
+);
+
+/**
  * Represents the schema for a property list (plist).
  *
  * @example
@@ -152,18 +167,30 @@ const StyleSchema = t.union([
  *     scheme: "myapp",
  *   },
  *   style: "light",
+ *   orientation: ["portrait"]
  * },
  */
 const PlistSchema = t.partial({
   /**
    * Optional URL Scheme information
+   *
+   * @link UrlSchemeSchema
    */
-
   urlScheme: UrlSchemeSchema,
+
   /**
    * Optional style configuration
+   *
+   * @link StyleSchema
    */
   style: StyleSchema,
+
+  /**
+   * Optional orientation configuration
+   *
+   * @link IOSOrientationSchema
+   */
+  orientation: IOSOrientationSchema,
 });
 
 /**
@@ -298,6 +325,7 @@ const IOSSchema = t.exact(
      *       scheme: "myapp"
      *     },
      *     style: "light",
+     *     orientation: ["portrait"],
      *   },
      *   signing: {
      *     appleCert: "signing/AppleWWDRCA.cer",
@@ -592,6 +620,76 @@ const GradleSchema = t.partial({
 });
 
 /**
+ * Represents the schema for the orientation information.
+ *
+ * @example
+ * orientation: "unspecified"
+ *
+ * @example
+ * orientation: "behind"
+ *
+ * @example
+ * orientation: "landscape"
+ *
+ * @example
+ * orientation: "portrait"
+ *
+ * @example
+ * orientation: "reverseLandscape"
+ *
+ * @example
+ * orientation: "reversePortrait"
+ *
+ * @example
+ * orientation: "sensorLandscape"
+ *
+ * @example
+ * orientation: "sensorPortrait"
+ *
+ * @example
+ * orientation: "userLandscape"
+ *
+ * @example
+ * orientation: "userPortrait"
+ *
+ * @example
+ * orientation: "sensor"
+ *
+ * @example
+ * orientation: "fullSensor"
+ *
+ * @example
+ * orientation: "nosensor"
+ *
+ * @example
+ * orientation: "user"
+ *
+ * @example
+ * orientation: "fullUser"
+ *
+ * @example
+ * orientation: "locked"
+ */
+const AndroidOrientationSchema = t.union([
+  t.literal("unspecified"),
+  t.literal("behind"),
+  t.literal("landscape"),
+  t.literal("portrait"),
+  t.literal("reverseLandscape"),
+  t.literal("reversePortrait"),
+  t.literal("sensorLandscape"),
+  t.literal("sensorPortrait"),
+  t.literal("userLandscape"),
+  t.literal("userPortrait"),
+  t.literal("sensor"),
+  t.literal("fullSensor"),
+  t.literal("nosensor"),
+  t.literal("user"),
+  t.literal("fullUser"),
+  t.literal("locked"),
+]);
+
+/**
  * Represents the optional schema for Android manifest which contains important
  * metadata about the app, including its package name, permissions, activities,
  * services, receivers, and more. Currently only support url scheme configuration.
@@ -613,6 +711,13 @@ const ManifestSchema = t.partial({
    * @link UrlSchemeSchema
    */
   urlScheme: UrlSchemeSchema,
+
+  /**
+   * Represents the optional schema for orientation information.
+   *
+   * @link AndroidOrientationSchema
+   */
+  orientation: AndroidOrientationSchema,
 });
 
 /**
@@ -784,6 +889,7 @@ const StringsSchema = t.partial({
  *       scheme: "myapp",
  *       host: "app",
  *     },
+ *     orientation: "portrait",
  *   },
  *   signing: {
  *     keyAlias: "key0",
