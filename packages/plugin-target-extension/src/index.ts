@@ -53,15 +53,8 @@ export default definePlugin<CodePluginTargetExtension>({
 
       await fse.copy(
         path.project.resolve(assetsPath),
-        path.project.resolve("ios", "app")
+        path.project.resolve("ios", name)
       );
-
-      // Check to see if entitlements exists otherwise throw error as signing will file in continuous integration
-      if (!entitlementsFile) {
-        throw Error(
-          `[CodePluginTargetExtensionError]: cannot find *.entitlements in ${path.project.resolve(assetsPath)}`
-        );
-      }
 
       // Performing operations with Xcode project file
       await withPbxproj((project) => {
@@ -75,25 +68,18 @@ export default definePlugin<CodePluginTargetExtension>({
           );
         }
 
-        // Finding the groupe key for 'app' in the format of uuid
-        const groupKey = project.findPBXGroupKey({ name: "app" });
-
-        // Throw error if group key does not exist as you won't be able to manipulate group
-        if (!groupKey) {
-          throw Error(
-            "[CodePluginTargetExtension]: cannot find group 'app' uuid"
-          );
-        }
-
         // Create new group with source files
         const { uuid: extensionGroupUuid } = project.addPbxGroup(
           files,
           name,
-          "app"
+          name
         );
 
         // Add the extension group to app group
-        project.addToPbxGroup(extensionGroupUuid, groupKey);
+        project.addToPbxGroup(
+          extensionGroupUuid,
+          project.getFirstProject().firstProject.mainGroup
+        );
 
         // Create new target for app extension
         const { uuid: extensionTargetUuid } = project.addTarget(
@@ -142,13 +128,21 @@ export default definePlugin<CodePluginTargetExtension>({
           CODE_SIGN_IDENTITY: `"${build.ios.signing?.distCertType}"`,
           PROVISIONING_PROFILE_SPECIFIER: `"${provisioningProfileName}"`,
           DEVELOPMENT_TEAM: build.ios.signing?.exportTeamId,
-          CODE_SIGN_ENTITLEMENTS: `${name}/${entitlementsFile[0]}`,
         };
 
         // Add code signing build properties to extension target
         Object.entries(buildSettings).forEach(([key, value]) => {
           project.updateBuildProperty(key, value, null, `"${name}"`);
         });
+
+        if (entitlementsFile) {
+          project.updateBuildProperty(
+            "CODE_SIGN_ENTITLEMENTS",
+            `${name}/${entitlementsFile}`,
+            null,
+            `"${name}"`
+          );
+        }
       });
     }
   },
