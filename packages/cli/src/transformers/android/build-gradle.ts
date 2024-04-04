@@ -124,6 +124,20 @@ export default defineTransformer<Transforms<string>>({
     },
 
     /**
+     * Transformer for updating the "kotlinVersion" value in "build.gradle".
+     * @param {string} content - The content of the file.
+     * @param {BuildConfig} config - The build configuration.
+     * @returns {string} - The updated content.
+     */
+    (content: string, config: BuildConfig): string => {
+      return string.replace(
+        content,
+        /(ext\s*{\s*?\n(\s+))/m,
+        `$1kotlinVersion = "${config.android.gradle?.projectGradle?.kotlinVersion || "1.7.10"}"\n$2`
+      );
+    },
+
+    /**
      * Transformer for updating the "ext" object in "build.gradle".
      * @param {string} content - The content of the file.
      * @param {BuildConfig} config - The build configuration.
@@ -135,8 +149,8 @@ export default defineTransformer<Transforms<string>>({
 
       return string.replace(
         content,
-        /(ext\s*{[\s\S]\s+)/m,
-        `$1${config.android.gradle.projectGradle.ext.map((it) => it).join("\n        ")}`
+        /(ext\s*{\s*?\n(\s+))/m,
+        `$1${config.android.gradle.projectGradle.ext.map((it) => it).join("\n$2")}\n$2`
       );
     },
 
@@ -152,8 +166,8 @@ export default defineTransformer<Transforms<string>>({
 
       return string.replace(
         content,
-        /(repositories\s*{[\s\S]\s+)/m,
-        `$1${config.android.gradle.projectGradle.repositories.map((it) => it).join("\n        ")}`
+        /(repositories\s*{\s*?\n(\s+))/m,
+        `$1${config.android.gradle.projectGradle.repositories.map((it) => it).join("\n$2")}\n$2`
       );
     },
 
@@ -169,8 +183,8 @@ export default defineTransformer<Transforms<string>>({
 
       return string.replace(
         content,
-        /(dependencies\s*{[\s\S]\s+)/m,
-        `$1${config.android.gradle.projectGradle.dependencies.map((it) => it).join("\n        ")}`
+        /(dependencies\s*{\s*?\n(\s+))/m,
+        `$1${config.android.gradle.projectGradle.dependencies.map((it) => it).join("\n$2")}\n$2`
       );
     },
   ],

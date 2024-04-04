@@ -43,7 +43,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(^platform\s+:ios.*\n)/m,
-        `$1${config.ios.podfile.config.map((it) => it).join("\n")}`
+        `$1${config.ios.podfile.config.map((it) => it).join("\n")}\n`
       );
     },
 
@@ -58,8 +58,8 @@ export default defineTransformer<Transforms<string>>({
 
       return string.replace(
         content,
-        /(^target\s*'app'\s*do[\n\s]*)/m,
-        `$1${config.ios.podfile.pods.map((it) => it).join("\n  ")}\n  `
+        /(target\s*'app'[\s\S]*?\n(\s+))/m,
+        `$1${config.ios.podfile.pods.map((it) => it).join("\n$2")}\n$2`
       );
     },
 

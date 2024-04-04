@@ -466,6 +466,13 @@ const ProjectGradleSchema = t.partial({
   targetSdkVersion: t.number,
 
   /**
+   * Optional version of Kotlin to use for project and potential downstream dependencies.
+   *
+   * @default "1.7.10"
+   */
+  kotlinVersion: t.string,
+
+  /**
    * Optional configuration to define the "ext" block (short for "extra properties") is often used
    * in the build.gradle file to define custom variables or properties that can be reused
    * across different parts of the build configuration.
