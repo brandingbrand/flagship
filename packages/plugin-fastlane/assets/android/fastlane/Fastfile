@@ -46,6 +46,10 @@ lane :appcenter_assemble do
 end
 
 lane :appcenter_bundle do
+  <% if(!android.versioning || android.versioning.build === undefined) { -%>
+increment_build
+  <% } -%>
+
   bundle
 
   appcenter_upload(
