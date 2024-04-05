@@ -59,7 +59,9 @@ describe("plugin-fastlane", () => {
     await android({
       ...global.__FLAGSHIP_CODE_CONFIG__,
       android: {
-        ...global.__FLAGSHIP_CODE_CONFIG__.android,
+        name: "HelloWorld",
+        packageName: "com.helloworld",
+        displayName: "Hello World",
         signing: {
           keyAlias: "key0",
           storeFile: "signing/example.keystore",
@@ -98,10 +100,45 @@ describe("plugin-fastlane", () => {
       expect(result).toMatch(testCase);
     });
 
+    expect(result).toContain(`lane :appcenter_bundle do
+  increment_build`);
+
     expect(appBuildGradle).toContain(`{
             storeFile file('release.keystore')
             storePassword System.getenv("STORE_PASSWORD")
             keyAlias 'key0'
             keyPassword System.getenv("KEY_PASSWORD")`);
+  });
+
+  it("android not include increment_build", async () => {
+    await android({
+      ...global.__FLAGSHIP_CODE_CONFIG__,
+      android: {
+        ...global.__FLAGSHIP_CODE_CONFIG__.android,
+        signing: {
+          keyAlias: "key0",
+          storeFile: "signing/example.keystore",
+        },
+      },
+      codePluginFastlane: {
+        plugin: {
+          android: {
+            appCenter: {
+              organization: "Branding-Brand",
+              appName: "FlagshipCode-Android-Internal",
+              destinationType: "group",
+              destinations: ["IAT"],
+            },
+          },
+        },
+      },
+    });
+
+    const result = (
+      await fs.readFile(path.project.resolve("android", "fastlane", "Fastfile"))
+    ).toString();
+
+    expect(result).not.toContain(`lane :appcenter_bundle do
+  increment_build`);
   });
 });

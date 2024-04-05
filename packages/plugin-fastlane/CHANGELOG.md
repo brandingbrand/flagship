@@ -1,5 +1,11 @@
 # @brandingbrand/code-plugin-fastlane
 
+## 2.0.2
+
+### Patch Changes
+
+- Increment android bundle when build number does not exist
+
 ## 2.0.1
 
 ### Patch Changes
