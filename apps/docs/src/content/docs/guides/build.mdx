@@ -328,9 +328,9 @@ type AndroidConfig = {
    *     compileSdkVersion: 33,
    *     minSdkVersion: 21,
    *     ndkVersion: "23.1.7779620",
+   *     kotlinVersion: "1.8.0",
    *     repositories: ["brandingbrand()"],
    *     targetSdkVersion: 33,
-   *     ext: ['kotlinVersion: "1.6.0"'],
    *     dependencies: ["com.example.android:app-magic:12.3"],
    *   },
    *   properties: {
@@ -391,6 +391,13 @@ type AndroidConfig = {
                * @default "23.1.7779620"
                */
               ndkVersion?: string | undefined;
+
+              /**
+               * Optional version of the Kotlin version used by the project.
+               *
+               * @default "1.7.10"
+               */
+              kotlinVersion?: string | undefined;
 
               /**
                * Optional repositories from which the build system should fetch dependencies, such as libraries and plugins, during the build process.

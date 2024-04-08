@@ -43,7 +43,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(source.*\n)/m,
-        `$1\n${config.ios.gemfile.map((it) => it).join("\n")}`
+        `$1\n${config.ios.gemfile.map((it) => it).join("\n")}\n`
       );
     },
   ],

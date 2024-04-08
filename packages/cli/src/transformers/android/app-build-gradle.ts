@@ -153,8 +153,8 @@ export default defineTransformer<Transforms<string>>({
 
       return string.replace(
         content,
-        /(dependencies\s*{[\s\S]\s+)/m,
-        `$1${config.android.gradle.appGradle.dependencies.map((it) => it).join("\n    ")}`
+        /(dependencies\s*{\s*?\n(\s+))/m,
+        `$1${config.android.gradle.appGradle.dependencies.map((it) => it).join("\n$2")}\n$2`
       );
     },
   ],

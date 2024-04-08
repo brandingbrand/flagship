@@ -13,7 +13,7 @@ describe("build.gradle transformers", () => {
     jest.resetAllMocks();
   });
 
-  it("should update buildToolsVersion, minSdkVersion, compileSdkVersion, targetSdkVersion and ndkVersion", async () => {
+  it("should update buildToolsVersion, minSdkVersion, compileSdkVersion, targetSdkVersion, ndkVersion and kotlinVersion", async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
@@ -24,6 +24,7 @@ describe("build.gradle transformers", () => {
         compileSdkVersion: 35,
         targetSdkVersion: 38,
         ndkVersion: "24.1.0",
+        kotlinVersion: "1.8.0",
       },
     };
 
@@ -35,6 +36,7 @@ describe("build.gradle transformers", () => {
     expect(content).toContain("compileSdkVersion = 35");
     expect(content).toContain("targetSdkVersion = 38");
     expect(content).toContain('ndkVersion = "24.1.0"');
+    expect(content).toContain('kotlinVersion = "1.8.0"');
   });
 
   it("should add attributes to ext object", async () => {
@@ -43,7 +45,7 @@ describe("build.gradle transformers", () => {
     } as BuildConfig;
     config.android.gradle = {
       projectGradle: {
-        ext: ['kotlinVersion = "1.6.10"', 'RNNKotlinVersion = "1.10.1"'],
+        ext: ['RNNKotlinVersion = "1.10.1"'],
       },
     };
 
@@ -51,7 +53,6 @@ describe("build.gradle transformers", () => {
     const content = await fs.readFile(path.android.buildGradle, "utf-8");
 
     expect(content).toContain(`ext {
-        kotlinVersion = "1.6.10"
         RNNKotlinVersion = "1.10.1"`);
   });
 
