@@ -1,5 +1,11 @@
 # @brandingbrand/code-jest-config
 
+## 1.0.0-alpha.1
+
+### Patch Changes
+
+- Add kotlinVersion for Android. Add device orientation for Android and iOS. Update build.gradle ext configuration formatting. Add xcode project resource group with check and add to main group.
+
 ## 1.0.0-alpha.0
 
 ### Major Changes

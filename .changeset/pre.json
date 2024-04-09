@@ -18,6 +18,7 @@
     "@repo/typescript-config": "0.0.0"
   },
   "changesets": [
-    "empty-parrots-joke"
+    "empty-parrots-joke",
+    "many-items-lie"
   ]
 }

@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-app-icon",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0-alpha.1",
   "description": "plugin for Flagship Code app icon",
   "license": "MIT",
   "main": "src/index.ts",
@@ -19,11 +19,11 @@
     "sharp": "0.31.2"
   },
   "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "13.0.0-alpha.0"
+    "@brandingbrand/code-cli-kit": "13.0.0-alpha.1"
   },
   "devDependencies": {
-    "@brandingbrand/code-cli-kit": "13.0.0-alpha.0",
-    "@brandingbrand/code-jest-config": "1.0.0-alpha.0",
+    "@brandingbrand/code-cli-kit": "13.0.0-alpha.1",
+    "@brandingbrand/code-jest-config": "1.0.0-alpha.1",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/eslint": "^8.56.1",
