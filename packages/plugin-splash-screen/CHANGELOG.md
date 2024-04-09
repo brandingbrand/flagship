@@ -1,5 +1,15 @@
 # @brandingbrand/code-plugin-splash-screen
 
+## 2.0.0-alpha.1
+
+### Patch Changes
+
+- Safely add Resources group to xcode project main group.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @brandingbrand/code-cli-kit@13.0.0-alpha.1
+
 ## 2.0.0-alpha.0
 
 ### Major Changes

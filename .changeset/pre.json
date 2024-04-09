@@ -18,6 +18,12 @@
     "@repo/typescript-config": "0.0.0"
   },
   "changesets": [
-    "empty-parrots-joke"
+    "empty-apes-attend",
+    "empty-parrots-joke",
+    "few-plants-rush",
+    "fifty-drinks-hammer",
+    "good-geese-cough",
+    "nasty-ducks-applaud",
+    "yellow-toes-mix"
   ]
 }
