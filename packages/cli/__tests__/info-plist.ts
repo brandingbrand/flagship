@@ -151,4 +151,45 @@ describe("ios Info.plist transformers", () => {
           <true/>
         </dict>`);
   });
+
+  it("should add portrait orientation to Info.plist", async () => {
+    const config = {
+      ...__flagship_code_build_config,
+      ios: {
+        ...__flagship_code_build_config.ios,
+        plist: {
+          orientation: ["portrait"],
+        },
+      },
+    } as BuildConfig;
+
+    await transformer.transform(config, {} as any);
+    const content = await fs.readFile(path.ios.infoPlist, "utf-8");
+
+    expect(content).toContain(`<key>UISupportedInterfaceOrientations</key>
+    <array>
+      <string>UIInterfaceOrientationPortrait</string>
+    </array>`);
+  });
+
+  it("should add landscapeLeft and landscapeRight orientations to Info.plist", async () => {
+    const config: BuildConfig = {
+      ...__flagship_code_build_config,
+      ios: {
+        ...__flagship_code_build_config.ios,
+        plist: {
+          orientation: ["landscapeLeft", "landscapeRight"],
+        },
+      },
+    };
+
+    await transformer.transform(config, {} as any);
+    const content = await fs.readFile(path.ios.infoPlist, "utf-8");
+
+    expect(content).toContain(`<key>UISupportedInterfaceOrientations</key>
+    <array>
+      <string>UIInterfaceOrientationLandscapeLeft</string>
+      <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>`);
+  });
 });

@@ -79,6 +79,32 @@ export default defineTransformer<Transforms<AndroidManifestXML, void>>({
           ],
         });
     },
+
+    /**
+     * Function that applies screen orientation to the AndroidManifest.xml file.
+     * @param xml The AndroidManifestXML object representing the contents of the AndroidManifest.xml file.
+     * @param config The build configuration containing Android-specific manifest options.
+     */
+    (xml: AndroidManifestXML, config: BuildConfig) => {
+      // Check if URL scheme configuration is provided in the build configuration
+      if (!config.android.manifest?.orientation) return;
+
+      // Extract scheme and host from the URL scheme configuration
+      const { orientation } = config.android.manifest;
+
+      // Find the main application activity in the manifest and update its intent filter
+      const mainActivity = xml.manifest.application
+        ?.find((it) => it.$["android:name"] === ".MainApplication")
+        ?.activity?.find((it) => it.$["android:name"] === ".MainActivity");
+
+      if (!mainActivity) {
+        throw new Error(
+          "[AndroidManifestTransformer]: cannot set screen orientation because .MainActivity not found"
+        );
+      }
+
+      mainActivity.$["android:screenOrientation"] = orientation;
+    },
   ],
 
   /**

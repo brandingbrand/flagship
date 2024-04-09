@@ -57,4 +57,19 @@ describe("android AndroidManifest.xml transformers", () => {
                 <data android:scheme="myapp" android:host="app"/>
             </intent-filter>`);
   });
+
+  it("should update AndroidManifest.xml with url scheme", async () => {
+    const config = {
+      ...__flagship_code_build_config,
+    } as BuildConfig;
+
+    config.android.manifest = {
+      orientation: "portrait",
+    };
+
+    await transformer.transform(config, {} as any);
+    const content = await fs.readFile(path.android.androidManifest, "utf-8");
+
+    expect(content).toContain(`android:screenOrientation="portrait"`);
+  });
 });

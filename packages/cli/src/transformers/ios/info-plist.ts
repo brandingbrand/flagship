@@ -143,6 +143,44 @@ export default defineTransformer<Transforms<InfoPlist>>({
         },
       };
     },
+
+    /**
+     * Transformer for updating the UISupportedInterfaceOrientations in the "Info.plist" file.
+     * @param {InfoPlist} content - The content of the file.
+     * @param {BuildConfig} config - The build configuration.
+     * @param {PrebuildOptions} options - The cli options.
+     * @returns {InfoPlist} - The updated content.
+     */
+    (
+      content: InfoPlist,
+      config: BuildConfig,
+      options: PrebuildOptions
+    ): InfoPlist => {
+      if (!config.ios.plist?.orientation) return content;
+
+      const { UISupportedInterfaceOrientations, ...newContent } = content;
+
+      const orientations = config.ios.plist.orientation.map((it) => {
+        switch (it) {
+          case "portrait":
+            return "UIInterfaceOrientationPortrait";
+          case "portraitUpsideDown":
+            return "UIInterfaceOrientationPortraitUpsideDown";
+          case "landscapeLeft":
+            return "UIInterfaceOrientationLandscapeLeft";
+          case "landscapeRight":
+            return "UIInterfaceOrientationLandscapeRight";
+          default:
+            throw new Error(
+              `[InfoPlistTransformerError]: ${it} is not a supported orientation`
+            );
+        }
+      });
+
+      return mergeAndConcat<InfoPlist, InfoPlist[]>(newContent, {
+        UISupportedInterfaceOrientations: orientations,
+      });
+    },
   ],
   /**
    * The main transform function that applies all specified transformations to the "Info.plist" file.
