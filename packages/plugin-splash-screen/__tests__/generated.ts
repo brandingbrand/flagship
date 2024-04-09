@@ -79,7 +79,14 @@ describe("plugin-splash-screen", () => {
         );
       }
 
-      project.addPbxGroup([], "Resources", '""');
+      if (!project.findPBXGroupKey({ name: "Resources" })) {
+        const { uuid } = project.addPbxGroup([], "Resources", '""');
+
+        project.addToPbxGroup(
+          uuid,
+          project.getFirstProject().firstProject.mainGroup
+        );
+      }
 
       project.addResourceFile(
         "app/BootSplash.storyboard",
