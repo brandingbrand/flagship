@@ -22,7 +22,12 @@ const withStyles = async (callback: (xml: StylesType.Styles) => void) =>
   withXml<StylesType.Styles>(
     path.android.stylesPath(),
     {
-      isArray: (tagName, _jPath, _isLeafNode, _isAttribute) => {
+      isArray: (
+        tagName: string,
+        _jPath: any,
+        _isLeafNode: any,
+        _isAttribute: any
+      ) => {
         if (tagNames.indexOf(tagName) !== -1) {
           return true;
         }

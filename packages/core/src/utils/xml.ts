@@ -1,4 +1,4 @@
-import { X2jOptionsOptional, XMLBuilder, XMLParser } from "fast-xml-parser";
+import { X2jOptions, XMLBuilder, XMLParser } from "fast-xml-parser";
 
 import fs from "./fs";
 
@@ -22,13 +22,13 @@ const BUILD_OPTS = {
  * and writes the updated XML data back to the file.
  * @template T
  * @param {string} path - Path of the XML file to be parsed.
- * @param {X2jOptionsOptional} options - Options for XML parser.
+ * @param {X2jOptions} options - Options for XML parser.
  * @param {(xml: T) => void} callback - Callback to be performed with parsed data.
  * @returns {Promise<void>} Promise that resolves after writing updated XML to the file.
  */
 export const withXml = async <T>(
   path: string,
-  options: X2jOptionsOptional,
+  options: X2jOptions,
   callback: (xml: T) => void
 ) => {
   const contents = await fs.promises.readFile(path);

@@ -27,7 +27,12 @@ const withNetworkSecurityConfig = async (
       "network_security_config.xml"
     ),
     {
-      isArray: (tagName, _jPath, _isLeafNode, _isAttribute) => {
+      isArray: (
+        tagName: string,
+        _jPath: any,
+        _isLeafNode: any,
+        _isAttribute: any
+      ) => {
         if (tagNames.indexOf(tagName) !== -1) {
           return true;
         }

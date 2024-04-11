@@ -19,7 +19,12 @@ const withStrings = async (callback: (xml: StringsType.Strings) => void) =>
   withXml<StringsType.Strings>(
     path.android.stringsPath(),
     {
-      isArray: (tagName, _jPath, _isLeafNode, _isAttribute) => {
+      isArray: (
+        tagName: string,
+        _jPath: any,
+        _isLeafNode: any,
+        _isAttribute: any
+      ) => {
         if (tagNames.indexOf(tagName) !== -1) {
           return true;
         }

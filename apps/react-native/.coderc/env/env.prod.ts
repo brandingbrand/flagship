@@ -161,13 +161,6 @@ const prod: ENV = {
       },
     },
   },
-  codePluginLeanplum: {
-    plugin: {
-      ios: {
-        swizzle: false,
-      },
-    },
-  },
 };
 
 export default prod;

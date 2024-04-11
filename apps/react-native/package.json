@@ -27,7 +27,6 @@
   },
   "code": {
     "plugins": [
-      "@brandingbrand/code-plugin-leanplum",
       "@brandingbrand/code-plugin-asset",
       "@brandingbrand/code-plugin-permissions",
       "@brandingbrand/code-plugin-native-navigation",
@@ -101,7 +100,6 @@
     "@brandingbrand/code-core": "*",
     "@brandingbrand/code-plugin-app-icon": "*",
     "@brandingbrand/code-plugin-asset": "*",
-    "@brandingbrand/code-plugin-leanplum": "*",
     "@brandingbrand/code-plugin-local": "link:./.coderc/plugins/plugin-local",
     "@brandingbrand/code-plugin-native-navigation": "*",
     "@brandingbrand/code-plugin-permissions": "*",

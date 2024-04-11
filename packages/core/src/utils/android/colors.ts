@@ -20,7 +20,12 @@ const withColors = async (callback: (xml: ColorsType.Colors) => void) =>
   withXml<ColorsType.Colors>(
     path.android.colorsPath(),
     {
-      isArray: (tagName, _jPath, _isLeafNode, _isAttribute) => {
+      isArray: (
+        tagName: string,
+        _jPath: any,
+        _isLeafNode: any,
+        _isAttribute: any
+      ) => {
         if (tagNames.indexOf(tagName) !== -1) {
           return true;
         }

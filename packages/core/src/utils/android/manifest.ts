@@ -37,7 +37,12 @@ const withManifest = async (
   withXml<AndroidManifestType.AndroidManifest>(
     path.android.manifestPath(),
     {
-      isArray: (tagName, _jPath, _isLeafNode, _isAttribute) => {
+      isArray: (
+        tagName: string,
+        _jPath: any,
+        _isLeafNode: any,
+        _isAttribute: any
+      ) => {
         if (tagNames.indexOf(tagName) !== -1) {
           return true;
         }
