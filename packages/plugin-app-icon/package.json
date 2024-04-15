@@ -16,7 +16,7 @@
   },
   "types": "src/index.ts",
   "dependencies": {
-    "sharp": "0.31.2"
+    "sharp": "^0.32.5"
   },
   "peerDependencies": {
     "@brandingbrand/code-cli-kit": "13.0.0-alpha.1"
