@@ -40,7 +40,7 @@
   "peerDependencies": {
     "@brandingbrand/code-core": "*",
     "@brandingbrand/code-plugin-firebase-app": "*",
-    "@react-native-google-signin/google-signin": "^9.0.2"
+    "@react-native-google-signin/google-signin": "^11.0.1"
   },
   "devDependencies": {
     "@brandingbrand/code-core": "*"
