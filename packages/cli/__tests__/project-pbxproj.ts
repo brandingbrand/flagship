@@ -36,6 +36,9 @@ describe("ios project.pbxproj transformers", () => {
     expect(content).toContain(
       '/* app.swift */ = {isa = PBXFileReference; name = "app.swift"; path = "app/app.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };'
     );
+    expect(content).toContain(
+      '/* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; name = "PrivacyInfo.xcprivacy"; path = "app/PrivacyInfo.xcprivacy"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };'
+    );
   });
 
   it("should update project.pbxproj with deployment target", async () => {
