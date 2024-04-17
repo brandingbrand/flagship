@@ -21,7 +21,7 @@ import { Transforms, defineTransformer } from "@/lib";
  */
 export default defineTransformer<Transforms<string>>({
   /**
-   * The name of the file to be transformed ("build.gradle").
+   * The name of the file to be transformed ("app.entitlements").
    * @type {string}
    */
   file: "app.entitlements",

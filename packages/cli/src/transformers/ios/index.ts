@@ -37,3 +37,8 @@ export { default as entitlements } from "./app-entitlements";
  * Represents the AppDelegate.mm file transformers.
  */
 export { default as appDelegate } from "./app-delegate-mm";
+
+/**
+ * Represents the PrivacyInfo.xcprivacy file transformers.
+ */
+export { default as privacyInfo } from "./privacy-info-xcprivacy";

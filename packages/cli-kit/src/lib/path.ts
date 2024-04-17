@@ -96,6 +96,17 @@ export default {
     entitlements: resolvePathFromProject("ios", "app", "app.entitlements"),
 
     /**
+     * Retrieves the absolute path to the iOS PrivacyInfo.xcprivacy file.
+     *
+     * @returns {string} The absolute path to "ios/app/PrivacyInfo.xcprivacy".
+     */
+    privacyManifest: resolvePathFromProject(
+      "ios",
+      "app",
+      "PrivacyInfo.xcprivacy"
+    ),
+
+    /**
      * Retrieves the absolute path to the iOS NativeConstants.m file.
      *
      * @returns {string} The absolute path to "ios/app/NativeConstants.m".

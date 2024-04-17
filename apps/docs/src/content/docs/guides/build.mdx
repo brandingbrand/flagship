@@ -70,6 +70,7 @@ type IOSConfig = {
  *   bundleId: "com.app",
  *   displayName: "App",
  *   entitlementsFilePath: "./path/to/app.entitlements",
+ *   privacyManifestPath: "./path/to/PrivacyInfo.xcprivacy",
  *   frameworks: {
  *     framework: "Sprite.framework",
  *   },
@@ -108,6 +109,13 @@ type IOSConfig = {
    * Optional entitlements path relative to the root of the project.
    */
   entitlementsFilePath?: string | undefined;
+
+  /**
+   * Optional PrivacyInfo.xcprivacy path relative to the root of the project.
+   *
+   * https://developer.apple.com/documentation/bundleresources/privacy_manifest_files
+   */
+  privacyManifestPath?: string | undefined;
 
   /**
    * Optional frameworks.
