@@ -43,6 +43,8 @@ const ios = summary.withSummary(
       path.ios.appDelegatePath(config),
       /(#import "AppDelegate.h")/,
       `$1
+#import <AuthenticationServices/AuthenticationServices.h>
+#import <SafariServices/SafariServices.h>
 #import <FBSDKCoreKit/FBSDKCoreKit-Swift.h>`
     );
 

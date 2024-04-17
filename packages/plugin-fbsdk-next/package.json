@@ -38,7 +38,7 @@
   "peerDependencies": {
     "@brandingbrand/code-core": "*",
     "@brandingbrand/code-plugin-firebase-app": "*",
-    "react-native-fbsdk-next": "^11.1.0"
+    "react-native-fbsdk-next": "^13.0.0"
   },
   "devDependencies": {
     "@brandingbrand/code-core": "*"

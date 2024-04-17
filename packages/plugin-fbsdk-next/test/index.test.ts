@@ -40,6 +40,10 @@ describe("plugin-fbsdk-next", () => {
     expect(appDelegate).toMatch(
       "[[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options]"
     );
+    expect(appDelegate)
+      .toContain(`#import <AuthenticationServices/AuthenticationServices.h>
+#import <SafariServices/SafariServices.h>
+#import <FBSDKCoreKit/FBSDKCoreKit-Swift.h>`);
   });
 
   it("android", async () => {
