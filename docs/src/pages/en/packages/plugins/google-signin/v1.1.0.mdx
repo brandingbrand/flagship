@@ -1,0 +1,69 @@
+---
+title: Plugin Google Signin
+description: brandingbrand/code-plugin-google-signin
+layout: ../../../../../layouts/docs.astro
+lang: en
+---
+
+import CodeCopy from "../../../../../components/code-copy.astro";
+
+## Plugin Google Signin
+
+`@brandingbrand/code-plugin-google-signin` is a package that configures all the necessary native code for [**@react-native-google-signin/google-signin**](https://github.com/react-native-google-signin/google-signin) library. Before using this plugin please configure the [**@brandingbrand/code-plugin-firebase-app**](/en/packages/plugins/firebase-app).
+
+### Getting Started
+
+<div class="flex w-full my-6">
+  <CodeCopy args="yarn add -D @brandingbrand/code-plugin-google-signin && yarn add @react-native-google-signin/google-signin@^8.0.0" />
+</div>
+
+Add the above noted package and the plugin is available in the Flagship Code plugin ecosystem.
+
+### Usage
+
+After adding this plugin as a dev dependency it is necessary to add it to the Flagship Code plugins configuration via the `package.json`.
+
+`package.json`
+
+```
+  "code": {
+    "plugins": [
+      "@brandingbrand/code-plugin-google-signin"
+    ]
+  },
+```
+
+Your Flagship Code environment should also be updated with the `@brandingbrand/code-plugin-google-signin` required props from the defined interface.
+
+`.coderc/env/env.<env>.ts`
+
+```
+  codePluginGoogleSignin: {
+    code: {
+      ios: {
+        reversedClientId:
+          "com.googleusercontent.apps.12345-abc123",
+      },
+      android: {
+        googlePlayServicesAuthVersion: "19.2.0",
+        swiperefreshlayoutVersion: "1.0.0",
+      },
+    },
+  },
+```
+
+The interface in your `.coderc/env/env.<env>.ts` has the following props:
+
+<div class="my-4 overflow-scroll">
+| attribute                                    | description                                            |
+| :--------                                    | :----------                                            |
+| code.ios.reversedClientId                  | reverse client identifier                              |
+| code.android.googlePlayServicesAuthVersion | google play services auth version                      |
+| code.android.swiperefreshlayoutVersion     | androidx.swiperefreshlayout:swiperefreshlayout version |
+</div>
+
+### Changelog
+
+#### 1.1.0
+
+* update google-signin peer deps to prepare for privacy manifest support
