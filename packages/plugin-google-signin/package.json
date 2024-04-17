@@ -1,0 +1,32 @@
+{
+  "name": "@brandingbrand/code-plugin-google-signin",
+  "version": "2.0.0",
+  "description": "plugin for Flagship Code for @react-native-google-signin/google-signin",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "@brandingbrand/code-jest-config"
+  },
+  "types": "src/index.ts",
+  "dependencies": {
+    "merge-anything": "^5.1.7"
+  },
+  "peerDependencies": {
+    "@brandingbrand/code-cli-kit": "*",
+    "@brandingbrand/code-plugin-firebase-app": "*",
+    "@react-native-google-signin/google-signin": "^9.0.2"
+  },
+  "devDependencies": {
+    "@brandingbrand/code-cli-kit": "*",
+    "@brandingbrand/code-jest-config": "*",
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/eslint": "^8.56.1",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  }
+}
