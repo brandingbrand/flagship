@@ -1,4 +1,11 @@
 # @brandingbrand/code-plugin-fbsdk-next
+
+## 1.1.0
+
+### Minor Changes
+
+- dc58adb77: update fbsdk peer dep to v13.0.0 for privacy manifest support
+
 ## 1.0.0
 
 - no changes

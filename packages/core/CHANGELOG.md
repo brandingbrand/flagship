@@ -1,5 +1,12 @@
 # @brandingbrand/code-core
 
+## 12.1.0
+
+### Minor Changes
+
+- f719c4758: add PrivacyInfo.xcprivacy privacy manifest to xcode project
+- e67647894: allow custom privacy manifest
+
 ## 12.0.1
 
 ### Patch Changes
