@@ -40,8 +40,8 @@
   "peerDependencies": {
     "@brandingbrand/code-core": "*",
     "@brandingbrand/code-plugin-firebase-app": "*",
-    "@react-native-firebase/app": "^17.3.2",
-    "@react-native-firebase/analytics": "^17.3.2"
+    "@react-native-firebase/app": "^19.2.2",
+    "@react-native-firebase/analytics": "^19.2.2"
   },
   "devDependencies": {
     "@brandingbrand/code-core": "*"
