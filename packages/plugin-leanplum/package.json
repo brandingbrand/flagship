@@ -40,8 +40,8 @@
     "@brandingbrand/code-core": "*",
     "@brandingbrand/code-plugin-app-icon": "*",
     "@brandingbrand/code-plugin-firebase-app": "*",
-    "@leanplum/react-native-sdk": "^2.0.0",
-    "clevertap-react-native": "^0.9.4"
+    "@leanplum/react-native-sdk": "^2.2.0",
+    "clevertap-react-native": "^2.2.1"
   },
   "devDependencies": {
     "@brandingbrand/code-core": "*"
