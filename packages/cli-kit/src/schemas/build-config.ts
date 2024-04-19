@@ -312,6 +312,7 @@ const IOSSchema = t.exact(
      *   bundleId: "com.app",
      *   displayName: "App",
      *   entitlementsFilePath: "./path/to/app.entitlements",
+     *   privacyManifestPath: "./path/to/PrivacyInfo.xcprivacy"
      *   frameworks: {
      *     framework: "Sprite.framework",
      *   },
@@ -351,6 +352,13 @@ const IOSSchema = t.exact(
        * Optional entitlements path relative to the root of the project.
        */
       entitlementsFilePath: t.string,
+
+      /**
+       * Optional PrivacyInfo.xcprivacy path relative to the root of the project.
+       *
+       * https://developer.apple.com/documentation/bundleresources/privacy_manifest_files
+       */
+      privacyManifestPath: t.string,
 
       /**
        * Optional frameworks.

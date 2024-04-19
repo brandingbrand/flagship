@@ -8,7 +8,7 @@ import { type BuildConfig, fs, path } from "@brandingbrand/code-cli-kit";
 
 import transformer from "../src/transformers/ios/app-entitlements";
 
-describe("ios project.pbxproj transformers", () => {
+describe("ios app.entitlements transformers", () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });

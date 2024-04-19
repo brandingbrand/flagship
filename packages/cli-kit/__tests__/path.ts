@@ -29,6 +29,20 @@ describe("path", () => {
     );
   });
 
+  it("should have an ios.entitlements function that returns the path to ios/app/app.entitlements", () => {
+    const entitlementsPath = path.ios.entitlements;
+    expect(entitlementsPath).toEqual(
+      expect.stringMatching(/.*ios\/app\/app\.entitlements$/)
+    );
+  });
+
+  it("should have an ios.privacyManifest function that returns the path to ios/app/PrivacyInfo.xcprivacy", () => {
+    const privacyManifestPath = path.ios.privacyManifest;
+    expect(privacyManifestPath).toEqual(
+      expect.stringMatching(/.*ios\/app\/PrivacyInfo\.xcprivacy$/)
+    );
+  });
+
   it("should have an ios.gemfile function that returns the path to ios/app/Gemfile", () => {
     const gemfilePath = path.ios.gemfile;
     expect(gemfilePath).toEqual(expect.stringMatching(/.*ios\/Gemfile$/));
