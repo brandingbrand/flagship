@@ -1,5 +1,11 @@
 # @brandingbrand/code-plugin-google-signin
 
+## 1.1.0
+
+### Minor Changes
+
+- 8a62279ca: update google-signin peer deps to prepare for privacy manifest support
+
 ## 1.0.0
 
 - no changes

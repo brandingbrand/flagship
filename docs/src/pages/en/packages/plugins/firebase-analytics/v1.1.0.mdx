@@ -1,0 +1,61 @@
+---
+title: Plugin Firebase Analytics
+description: brandingbrand/code-plugin-firebase-analytics
+layout: ../../../../../layouts/docs.astro
+lang: en
+---
+
+import CodeCopy from "../../../../../components/code-copy.astro";
+
+## Plugin Firebase Analytics
+
+`@brandingbrand/code-plugin-firebase-analytics` is a package that configures all the necessary native code for [**@react-native-firebase/analytics**](https://github.com/invertase/react-native-firebase/tree/main/packages/analytics) library. Before using this plugin please configure the [**@brandingbrand/code-plugin-firebase-app**](/en/packages/plugins/firebase-app).
+
+### Getting Started
+
+<div class="flex w-full my-6">
+  <CodeCopy args="yarn add -D @brandingbrand/code-plugin-firebase-analytics && yarn add @react-native-firebase/analytics@^15.7.0" />
+</div>
+
+Add the above noted package and the plugin is available in the Flagship Code plugin ecosystem.
+
+### Usage
+
+After adding this plugin as a dev dependency it is necessary to add it to the Flagship Code plugins configuration via the `package.json`.
+
+`package.json`
+
+```
+  "code": {
+    "plugins": [
+      "@brandingbrand/code-plugin-firebase-analytics"
+    ]
+  },
+```
+
+Your Flagship Code environment should also be updated with the `@brandingbrand/code-plugin-firebase-analytics` required props from the defined interface.
+
+`.coderc/env/env.<env>.ts`
+
+```
+  codePluginFirebaseAnalytics: {
+    code: {
+      ios: {
+        disableAdId: true,
+      },
+    },
+  },
+```
+
+The interface in your `.coderc/env/env.<env>.ts` has the following props:
+
+<div class="my-4 overflow-scroll">
+  | attribute | description | | :-------- | :---------- | | code.ios.disableAdId
+  | disable advertising identifier |
+</div>
+
+### Changelog
+
+#### 1.1.0
+
+- update firebase peer dependencies to support privacy manifest

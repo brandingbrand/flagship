@@ -1,5 +1,11 @@
 # @brandingbrand/code-plugin-firebase-app
 
+## 1.1.0
+
+### Minor Changes
+
+- d6a9a9d7f: update firebase peer dependencies to support privacy manifest
+
 ## 1.0.0
 
 - no chnages

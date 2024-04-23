@@ -1,5 +1,12 @@
 # @brandingbrand/code-core
 
+## 12.1.0
+
+### Minor Changes
+
+- 92d9ba115: add PrivacyInfo.xcprivacy as PBXBuildFile and PBXFileReference
+- f719c4758: add PrivacyInfo.xcprivacy privacy manifest to xcode project
+
 ## 12.0.1
 
 ### Patch Changes
