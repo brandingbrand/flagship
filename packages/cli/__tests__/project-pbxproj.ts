@@ -39,6 +39,12 @@ describe("ios project.pbxproj transformers", () => {
     expect(content).toContain(
       '/* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; name = "PrivacyInfo.xcprivacy"; path = "app/PrivacyInfo.xcprivacy"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };'
     );
+    expect(content).toMatch(
+      /\/\* PrivacyInfo\.xcprivacy in Resources \*\/ = {isa = PBXBuildFile; fileRef = \w+ \/\* PrivacyInfo\.xcprivacy \*\/; };/
+    );
+    expect(content).toMatch(
+      /\w+ \/\* PrivacyInfo\.xcprivacy in Resources \*\/,/
+    );
   });
 
   it("should update project.pbxproj with deployment target", async () => {

@@ -13261,6 +13261,14 @@ xcode@^3.0.1:
     simple-plist "^1.1.0"
     uuid "^7.0.3"
 
+xcode@^3.0.2-nightly.20240423000755527.sha.5158ec51:
+  version "3.0.2-nightly.20240423000755527.sha.5158ec51"
+  resolved "https://registry.yarnpkg.com/xcode/-/xcode-3.0.2-nightly.20240423000755527.sha.5158ec51.tgz#524341abc2076bbdbc40450bef6dbd67cc9357b6"
+  integrity sha512-TNn/jVItqQNL4aXRnu5MR0PSN921KHZy/3ksiOFXCCvIque8O73+0mEvnaQ8HzndXq4vr4+jq2QIGDcxmRgm8w==
+  dependencies:
+    simple-plist "^1.1.0"
+    uuid "^7.0.3"
+
 xml-formatter@^3.6.0:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/xml-formatter/-/xml-formatter-3.6.2.tgz#f68ad1519beef8353f8759ab6269b91265bdef4a"
