@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-fbsdk-next",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "plugin for Flagship Code for fbsdk-next",
   "license": "MIT",
   "repository": {
@@ -38,7 +38,7 @@
   "peerDependencies": {
     "@brandingbrand/code-core": "*",
     "@brandingbrand/code-plugin-firebase-app": "*",
-    "react-native-fbsdk-next": "^11.1.0"
+    "react-native-fbsdk-next": "^13.0.0"
   },
   "devDependencies": {
     "@brandingbrand/code-core": "*"

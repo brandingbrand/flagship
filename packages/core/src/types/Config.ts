@@ -57,6 +57,12 @@ export interface IOS {
    * App version Info
    */
   versioning?: IOSVersion;
+  /**
+   * Optional PrivacyInfo.xcprivacy path to override the default PrivacyInfo.xcprivacy
+   *
+   * https://developer.apple.com/documentation/bundleresources/privacy_manifest_files
+   */
+  privacyManifestPath?: string;
 }
 
 export interface Plist {

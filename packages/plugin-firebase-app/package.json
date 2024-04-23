@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-firebase-app",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "plugin for Flagship Code firebase app",
   "license": "MIT",
   "repository": {
@@ -38,7 +38,7 @@
   "types": "dist/index.d.ts",
   "peerDependencies": {
     "@brandingbrand/code-core": "*",
-    "@react-native-firebase/app": "^17.3.2"
+    "@react-native-firebase/app": "^19.2.2"
   },
   "devDependencies": {
     "@brandingbrand/code-core": "*",

@@ -1,0 +1,77 @@
+---
+title: Plugin FBSDK Next
+description: brandingbrand/code-plugin-fbsdk-next
+layout: ../../../../../layouts/docs.astro
+lang: en
+---
+
+import CodeCopy from "../../../../../components/code-copy.astro";
+
+## Plugin FBSDK Next
+
+`@brandingbrand/code-plugin-fbsdk-next` is a package that configures all the necessary native code for [**react-native-fbsdk-next**](https://github.com/thebergamo/react-native-fbsdk-next) library.
+
+### Getting Started
+
+<div class="flex w-full my-6">
+  <CodeCopy args="yarn add -D @brandingbrand/code-plugin-fbsdk-next && yarn add react-native-fbsdk-next" />
+</div>
+
+Add the above noted package and the plugin is available in the Flagship Code plugin ecosystem.
+
+### Usage
+
+After adding this plugin as a dev dependency it is necessary to add it to the Flagship Code plugins configuration via the `package.json`.
+
+`package.json`
+
+```
+  "code": {
+    "plugins": [
+      "@brandingbrand/code-plugin-fbsdk-next"
+    ]
+  },
+```
+
+Your Flagship Code environment should also be updated with the `@brandingbrand/code-plugin-fbsdk-next` required props from the defined interface.
+
+`.coderc/env/env.<env>.ts`
+
+```
+  codePluginFBSDKNext: {
+    code: {
+      ios: {
+        urlScheme: "fb12345",
+        appId: "123456789",
+        clientToken: "1a2b3c",
+        displayName: "APP",
+        queriesSchemes: [],
+      },
+      android: {
+        appId: "123456789",
+        clientToken: "1a2b3c",
+        advertisingIdOptOut: false,
+        enableSharing: false,
+      },
+    },
+  },
+```
+
+The interface in your `.coderc/env/env.<env>.ts` has the following props:
+
+<div class="my-4 overflow-scroll">
+  | attribute | description | | :-------- | :---------- | | code.ios.urlScheme |
+  url scheme | | code.ios.appId | app identifier | | code.ios.clientToken |
+  client token | | code.ios.displayName | app display name | |
+  code.ios.queriesSchemes | dialogs (e.g., Login, Share, App Invites, etc.) that
+  can perform an app switch to Facebook apps | | code.android.appId | app
+  identifier | | code.android.clientToken | client token | |
+  code.android.advertisingIdOptOut | opt-out of advertising identifier | |
+  code.android.enableSharing | share links, images, or video from your app |
+</div>
+
+### Changelog
+
+#### 1.1.0
+
+- update fbsdk peer dep to v13.0.0 for privacy manifest support

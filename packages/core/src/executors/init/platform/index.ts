@@ -10,11 +10,13 @@ import * as packages from "./packages";
 import * as cocoapods from "./cocoapods";
 import * as frameworks from "./frameworks";
 import * as entitlements from "./entitlements";
+import * as privacyManifest from "./privacyManifest";
 
 export const executors = [
   clean,
   template,
   entitlements,
+  privacyManifest,
   frameworks,
   packages,
   manifest,
