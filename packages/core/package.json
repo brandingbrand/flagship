@@ -44,7 +44,7 @@
     "deepmerge": "^4.2.2",
     "ejs": "^3.1.8",
     "fastq": "^1.13.0",
-    "fast-xml-parser": "^4.1.0",
+    "fast-xml-parser": "^4.2.5",
     "fs-extra": "^10.1.0",
     "glob": "^8.0.3",
     "lodash": "^4.17.21",
