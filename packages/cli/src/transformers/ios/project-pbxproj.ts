@@ -64,7 +64,7 @@ export default defineTransformer<Transforms<XcodeProject, void>>({
       // Add the PrivacyInfo.xcprivacy privacy manifest for React Native base usage
       // privacy requirements: https://github.com/facebook/react-native/commit/2d84d835342d58bd28b2233f18691846de6933c9
       // Requirement from Apple: https://developer.apple.com/documentation/bundleresources/privacy_manifest_files?language=objc
-      project.addHeaderFile("app/PrivacyInfo.xcprivacy", opt, groupKey);
+      project.addResourceFile("app/PrivacyInfo.xcprivacy", opt, groupKey);
 
       // *.entitlements file can be treated same as a header file with
       // respect to "xcode" module, force lastKnownFileType and defaultEncoding
