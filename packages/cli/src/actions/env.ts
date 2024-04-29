@@ -45,9 +45,13 @@ export default defineAction(async () => {
   }
 
   // Read the contents of the environment directory and filter out files matching the expected pattern
-  const envs = (await fs.readdir(envDir)).filter((it) =>
-    /env\..*\.ts/.test(it)
-  );
+  const envs = (await fs.readdir(envDir)).filter((it) => {
+    if (config.options.release) {
+      return path.basename(it) === `env.${config.options.env}.ts`;
+    }
+
+    return /env\..*\.ts/.test(it);
+  });
 
   // Throw an error if no valid environment files are found in the directory
   if (!envs.length) {
