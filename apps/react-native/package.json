@@ -52,9 +52,7 @@
           "*.tsx"
         ],
         "rules": {
-          "@typescript-eslint/no-shadow": [
-            "error"
-          ],
+          "@typescript-eslint/no-shadow": "error",
           "no-shadow": "off",
           "no-undef": "off"
         }
@@ -86,7 +84,7 @@
     "@leanplum/react-native-sdk": "2.1.0",
     "clevertap-react-native": "^1.1.1",
     "react": "18.2.0",
-    "react-native": "0.71.11",
+    "react-native": "0.71.19",
     "react-native-cookies": "^3.3.0",
     "react-native-device-info": "^10.3.0",
     "react-native-navigation": "^7.33.4",
@@ -112,7 +110,6 @@
     "@tsconfig/react-native": "^2.0.2",
     "@types/jest": "^29.2.1",
     "@types/react": "^18.0.24",
-    "@types/react-native": "^0.70.6",
     "@types/react-test-renderer": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.37.0",
     "@typescript-eslint/parser": "^5.37.0",
