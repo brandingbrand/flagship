@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-cli",
-  "version": "13.0.0-alpha.1",
+  "version": "13.0.0-alpha.2",
   "description": "cli for Flagship Code applications",
   "license": "MIT",
   "bin": {
@@ -21,7 +21,7 @@
   },
   "types": "dist/index.d.ts",
   "dependencies": {
-    "@brandingbrand/code-cli-kit": "13.0.0-alpha.1",
+    "@brandingbrand/code-cli-kit": "13.0.0-alpha.2",
     "bundle-require": "^4.0.2",
     "ci-info": "^4.0.0",
     "commander": "11.1.0",
