@@ -1,5 +1,11 @@
 # @brandingbrand/code-cli-kit
 
+## 13.0.0-alpha.2
+
+### Patch Changes
+
+- e085e57: add PrivacyInfo.xcprivacy as resource file
+
 ## 13.0.0-alpha.1
 
 ### Patch Changes
