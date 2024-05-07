@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-fastlane",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "plugin for Flagship Code for fastlane app center builds",
   "license": "MIT",
   "repository": {
