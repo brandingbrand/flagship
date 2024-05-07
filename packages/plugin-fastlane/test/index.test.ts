@@ -132,7 +132,8 @@ describe("plugin-fastlane", () => {
           },
         },
       },
-    });
+      release: true,
+    } as any);
 
     const result = (
       await fs.readFile(path.project.resolve("android", "fastlane", "Fastfile"))
@@ -140,5 +141,6 @@ describe("plugin-fastlane", () => {
 
     expect(result).not.toContain(`lane :appcenter_bundle do
   increment_build`);
+    expect(result).not.toContain("version: ");
   });
 });

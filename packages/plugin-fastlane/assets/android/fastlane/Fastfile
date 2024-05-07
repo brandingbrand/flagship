@@ -16,7 +16,9 @@ lane :increment_build do
     version = appcenter_fetch_version_number(
         owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
         app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",
+        <%_ if (!release) { -%>
         version: "<%- android.versioning && android.versioning.version || "1.0.0" %>"
+        <%_ } -%>
     )
 
     if version["build_number"]
