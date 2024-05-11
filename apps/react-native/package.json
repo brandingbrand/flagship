@@ -27,7 +27,6 @@
   },
   "code": {
     "plugins": [
-      "@brandingbrand/code-plugin-leanplum",
       "@brandingbrand/code-plugin-asset",
       "@brandingbrand/code-plugin-permissions",
       "@brandingbrand/code-plugin-native-navigation",
@@ -52,9 +51,7 @@
           "*.tsx"
         ],
         "rules": {
-          "@typescript-eslint/no-shadow": [
-            "error"
-          ],
+          "@typescript-eslint/no-shadow": "error",
           "no-shadow": "off",
           "no-undef": "off"
         }
@@ -83,13 +80,11 @@
     "@brandingbrand/fsapp": "12.0.0-alpha.9",
     "@brandingbrand/react-native-app-restart": "^0.4.0",
     "@react-native-async-storage/async-storage": "^1.17.11",
-    "@leanplum/react-native-sdk": "2.1.0",
-    "clevertap-react-native": "^1.1.1",
     "react": "18.2.0",
-    "react-native": "0.71.11",
+    "react-native": "0.71.19",
     "react-native-cookies": "^3.3.0",
     "react-native-device-info": "^10.3.0",
-    "react-native-navigation": "^7.33.4",
+    "react-native-navigation": "7.37.2",
     "react-native-permissions": "^3.7.3",
     "react-native-sensitive-info": "^5.5.0"
   },
@@ -101,7 +96,6 @@
     "@brandingbrand/code-core": "*",
     "@brandingbrand/code-plugin-app-icon": "*",
     "@brandingbrand/code-plugin-asset": "*",
-    "@brandingbrand/code-plugin-leanplum": "*",
     "@brandingbrand/code-plugin-local": "link:./.coderc/plugins/plugin-local",
     "@brandingbrand/code-plugin-native-navigation": "*",
     "@brandingbrand/code-plugin-permissions": "*",
@@ -112,7 +106,6 @@
     "@tsconfig/react-native": "^2.0.2",
     "@types/jest": "^29.2.1",
     "@types/react": "^18.0.24",
-    "@types/react-native": "^0.70.6",
     "@types/react-test-renderer": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.37.0",
     "@typescript-eslint/parser": "^5.37.0",

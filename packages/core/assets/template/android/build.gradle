@@ -2,10 +2,10 @@
 
 buildscript {
     ext {
-        buildToolsVersion = "<%- android.gradle?.projectGradle?.buildToolsVersion || "33.0.2" %>"
+        buildToolsVersion = "<%- android.gradle?.projectGradle?.buildToolsVersion || "34.0.0" %>"
         minSdkVersion = <%- android.gradle?.projectGradle?.minSdkVersion || 21 %>
-        compileSdkVersion = <%- android.gradle?.projectGradle?.compileSdkVersion || 33 %>
-        targetSdkVersion = <%- android.gradle?.projectGradle?.targetSdkVersion || 33 %>
+        compileSdkVersion = <%- android.gradle?.projectGradle?.compileSdkVersion || 34 %>
+        targetSdkVersion = <%- android.gradle?.projectGradle?.targetSdkVersion || 34 %>
         kotlinVersion = "<%- android.gradle?.projectGradle?.kotlinVersion || "1.6.0" %>"
         RNNKotlinVersion = kotlinVersion
         <% android.gradle?.projectGradle?.ext?.forEach(function(it) { %>
