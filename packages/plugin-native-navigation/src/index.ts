@@ -3,7 +3,12 @@
  * @module Plugin
  */
 
-import { type BuildConfig, type PrebuildOptions, definePlugin, fs } from "@brandingbrand/code-cli-kit";
+import {
+  type BuildConfig,
+  type PrebuildOptions,
+  definePlugin,
+  fs,
+} from "@brandingbrand/code-cli-kit";
 
 /**
  * Defines a plugin with functions for both iOS and Android platforms.
@@ -18,7 +23,10 @@ export default definePlugin({
    * @param {PrebuildOptions} options - The options object for iOS.
    * @returns {Promise<void>} A promise that resolves when the process completes.
    */
-  ios: async function (build: BuildConfig, options: PrebuildOptions): Promise<void> {
+  ios: async function (
+    build: BuildConfig,
+    options: PrebuildOptions
+  ): Promise<void> {
     // Resolve path to react-native-navigation postlink path module
     const rnnPath = require.resolve(
       "react-native-navigation/autolink/postlink/path.js",
@@ -50,7 +58,10 @@ export default definePlugin({
    * @param {PrebuildOptions} options - The options object for Android.
    * @returns {Promise<void>} A promise that resolves when the process completes.
    */
-  android: async function (build: BuildConfig, options: PrebuildOptions): Promise<void> {
+  android: async function (
+    build: BuildConfig,
+    options: PrebuildOptions
+  ): Promise<void> {
     // Resolve path to react-native-navigation postlink Android script
     const scriptPath = require.resolve(
       "react-native-navigation/autolink/postlink/postLinkAndroid.js",

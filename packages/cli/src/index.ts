@@ -1,5 +1,6 @@
 import process from "process";
 
+import chalk from "chalk";
 import { program } from "commander";
 
 import "./cmds";
@@ -18,8 +19,6 @@ program
  * @param {Error} error - The error that was caught.
  */
 program.parseAsync().catch(async (error) => {
-  const chalk = (await import("chalk")).default;
-
   console.log();
   console.log(
     chalk.red(

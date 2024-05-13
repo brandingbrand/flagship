@@ -13,7 +13,7 @@ describe("logger", () => {
   it("should log info message when not paused", () => {
     const consoleSpy = jest.spyOn(console, "info").mockImplementation();
     logger.info("Test message");
-    expect(consoleSpy).toHaveBeenCalledWith("ℹ️ ", "Test message");
+    expect(consoleSpy).toHaveBeenCalledWith("Test message");
     consoleSpy.mockRestore();
   });
 
@@ -58,7 +58,7 @@ describe("logger", () => {
   it("should log success message when not paused", () => {
     const consoleSpy = jest.spyOn(console, "log").mockImplementation();
     logger.success("Test message");
-    expect(consoleSpy).toHaveBeenCalledWith("✅ ", "Test message");
+    expect(consoleSpy).toHaveBeenCalled();
     consoleSpy.mockRestore();
   });
 

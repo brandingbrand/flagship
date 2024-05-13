@@ -8,7 +8,6 @@ import type {
 import { program } from "commander";
 
 import {
-  bundleRequire,
   config,
   isGenerateCommand,
   isPackage,
@@ -137,7 +136,7 @@ describe("isCommand", () => {
   });
 
   it("isPrebuildCommand", () => {
-    program.args = ["generate"];
+    program.args = ["plugin"];
 
     expect(isPrebuildCommand()).not.toBeTruthy();
     expect(isGenerateCommand()).toBeTruthy();

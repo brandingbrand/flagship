@@ -1,37 +1,27 @@
 import mitt from "mitt";
+import chalk from "chalk";
 
-import { isWarning } from "./errors";
+import logger from "./logger";
 
-/**
- * Array to store summary items for actions.
- */
-export const actions: {
-  /**
-   * The name of the action.
-   */
-  name: string;
-  /**
-   * The time taken for the action to complete.
-   */
-  time: string;
-  /**
-   * Indicates whether the action was successful.
-   */
-  success: boolean;
-  /**
-   * Indicates whether an error occurred during the action.
-   */
-  error: boolean | string;
-  /**
-   * Indicates whether a warning occurred during the action.
-   */
-  warning: boolean | string;
-}[] = [];
+// Represents the possible types for a group.
+export type Group = "template" | "env" | "code" | "dependencies";
 
-/**
- * Event emitter for broadcasting actions.
- */
-export const emitter = mitt();
+// Represents the possible statuses of an action.
+export type Status = "pending" | "success" | "fail";
+
+// Represents an event object containing action details.
+type Event = {
+  action: {
+    name: Group; // The name of the group associated with the action.
+    status: Status; // The status of the action within the group.
+  };
+};
+
+// Event emitter for dispatching events of type Event.
+export const emitter = mitt<Event>();
+
+// Holds the previous group name, initialized with "template".
+export let prevGroup: Group = "template";
 
 /**
  * Wraps an asynchronous function with logging capabilities.
@@ -42,48 +32,33 @@ export const emitter = mitt();
  */
 export function withAction<TResult, TArgs extends unknown[]>(
   fn: (...args: TArgs) => Promise<TResult>,
-  name: string
+  name: string,
+  group: Group
 ): (...args: TArgs) => Promise<void> {
   return async function (...args: TArgs) {
-    const start = performance.now();
-
     try {
-      const ctx = await fn(...args);
+      if (group === prevGroup) {
+        emitter.emit("action", { name: group, status: "pending" });
+      } else {
+        emitter.emit("action", { name: prevGroup, status: "success" });
+        emitter.emit("action", { name: group, status: "pending" });
 
-      // Emit success action
-      emitter.emit("action", {
-        action: name,
-        actionType: { type: "success", ctx },
-      });
+        prevGroup = group;
+      }
 
-      // Push log entry for success
-      actions.push({
-        name,
-        time: `${((performance.now() - start) / 1000).toFixed(5)} s`,
-        success: true,
-        error: false,
-        warning: false,
-      });
+      await fn(...args);
     } catch (error: any) {
-      const isWarningType = isWarning(error);
+      emitter.emit("action", { name: group, status: "fail" });
 
-      // Emit appropriate action based on error or warning
-      emitter.emit("action", {
-        action: name,
-        actionType: {
-          type: isWarningType ? "warning" : "error",
-          ctx: error.message,
-        },
-      });
+      global.unmount?.();
 
-      // Push log entry for error or warning
-      actions.push({
-        name,
-        time: `${((performance.now() - start) / 1000).toFixed(5)} s`,
-        success: false,
-        error: isWarningType ? false : error.message ? error.message : true,
-        warning: isWarningType ? error.message : false,
-      });
+      logger.resume();
+      logger.info(chalk.red`💥 Oops something went wrong! See errors below.\n`);
+      console.group();
+      logger.info(chalk.dim(error.message) + "\n");
+      console.groupEnd();
+
+      process.exit(1);
     }
   };
 }

@@ -17,9 +17,10 @@ import { withAction } from "./action";
  */
 export function defineAction(
   action: () => Promise<void | string>,
-  name: string
+  name: string,
+  group: "template" | "env" | "code" | "dependencies"
 ) {
-  return withAction(action, name);
+  return withAction(action, name, group);
 }
 
 export type Transformer<T> = {
