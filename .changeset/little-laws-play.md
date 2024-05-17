@@ -1,5 +1,5 @@
 ---
-"@brandingbrand/code-core": minor
+"@brandingbrand/code-core": patch
 ---
 
-android 14 support
+expose ndkVersion via ejs in build.gradle template
