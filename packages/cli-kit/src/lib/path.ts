@@ -2,10 +2,27 @@ import path from "path";
 
 import { BuildConfig } from "..";
 
+let _pathToProject: string;
+
 /**
  * The absolute path to the current working directory of the Node.js process.
+ * If the cached value exists, return that value otherwise cache the current
+ * working directory.
+ *
+ * @example
+ * ```ts
+ * const absolutePathToProject = projectPath();
+ * ```
+ *
+ * @return {string} The absolute path to the project.
  */
-const projectPath = process.cwd();
+function projectPath(): string {
+  if (_pathToProject) return _pathToProject;
+
+  _pathToProject = process.cwd();
+
+  return _pathToProject;
+}
 
 /**
  * Resolves a path relative to the project root directory.
@@ -14,7 +31,7 @@ const projectPath = process.cwd();
  * @returns {string} The resolved absolute path.
  */
 function resolvePathFromProject(...paths: string[]): string {
-  return path.resolve(projectPath, ...paths);
+  return path.resolve(projectPath(), ...paths);
 }
 
 /**

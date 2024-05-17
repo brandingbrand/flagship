@@ -16,6 +16,7 @@
   },
   "types": "src/index.ts",
   "dependencies": {
+    "@types/react-native-asset": "^2.0.2",
     "react-native-asset": "2.1.1"
   },
   "peerDependencies": {
@@ -27,7 +28,6 @@
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/eslint": "^8.56.1",
-    "@types/react-native-asset": "^2.0.2",
     "eslint": "^8.56.0",
     "typescript": "^5.3.3"
   }
