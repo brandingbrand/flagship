@@ -10,7 +10,7 @@ describe("defineAction function", () => {
       });
     };
 
-    const resultPromise = defineAction(mockAction, "Test Action");
+    const resultPromise = defineAction(mockAction, "Test Action", "code");
 
     await expect(resultPromise()).resolves.toBeUndefined();
   });

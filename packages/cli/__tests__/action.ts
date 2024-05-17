@@ -1,79 +1,22 @@
-import { withAction, actions } from "../src/lib/action";
+import { emitter, withAction } from "../src/lib/action";
 
-const mockPerformanceNow = jest.fn();
-(global as any).performance = { now: mockPerformanceNow };
-
-jest.mock("./errors", () => ({
-  isWarning: jest.fn(),
-}));
+jest.spyOn(process, "exit").mockImplementation(jest.fn() as any);
+jest.spyOn(console, "info").mockImplementation(jest.fn());
+jest.spyOn(emitter, "emit").mockImplementation(jest.fn());
 
 describe("withAction function", () => {
-  beforeEach(() => {
-    actions.length = 0;
-  });
-
   it("should log a successful execution", async () => {
     const mockFn = jest.fn().mockResolvedValueOnce(undefined);
-    (mockPerformanceNow as jest.Mock)
-      .mockReturnValueOnce(0)
-      .mockReturnValueOnce(100);
-    await withAction(mockFn, "Test Function")();
-    expect(actions).toEqual([
-      expect.objectContaining({
-        name: "Test Function",
-        success: true,
-        error: false,
-        warning: false,
-        time: `${(100 / 1000).toFixed(5)} s`,
-      }),
-    ]);
+    await withAction(mockFn, "Test Function", "code")();
+
+    expect(emitter.emit).toHaveBeenCalled();
   });
 
   it("should log a failed execution with error", async () => {
     const mockFn = jest.fn().mockRejectedValueOnce(new Error("Test Error"));
-    (mockPerformanceNow as jest.Mock)
-      .mockReturnValueOnce(0)
-      .mockReturnValueOnce(100);
-    (require("./errors").isWarning as jest.Mock).mockReturnValueOnce(false);
+    await withAction(mockFn, "Test Function", "code")();
 
-    await withAction(mockFn, "Test Function")();
-    expect(actions).toEqual([
-      expect.objectContaining({
-        name: "Test Function",
-        success: false,
-        error: "Test Error",
-        warning: false,
-        time: `${(100 / 1000).toFixed(5)} s`,
-      }),
-    ]);
-  });
-
-  it("should log a failed execution with warning", async () => {
-    class TestWarning extends Error {
-      constructor(message: string) {
-        super(message);
-
-        this.name = "TestWarning";
-        this.message = `[${this.name}]: ${message}`;
-      }
-    }
-    const mockFn = jest
-      .fn()
-      .mockRejectedValueOnce(new TestWarning("Test Warning"));
-    (mockPerformanceNow as jest.Mock)
-      .mockReturnValueOnce(0)
-      .mockReturnValueOnce(100);
-    (require("./errors").isWarning as jest.Mock).mockReturnValueOnce(true);
-
-    await withAction(mockFn, "Test Function")();
-    expect(actions).toEqual([
-      expect.objectContaining({
-        name: "Test Function",
-        success: false,
-        error: false,
-        warning: "[TestWarning]: Test Warning",
-        time: `${(100 / 1000).toFixed(5)} s`,
-      }),
-    ]);
+    expect(emitter.emit).toHaveBeenCalled();
+    expect(process.exit).toHaveBeenCalled();
   });
 });

@@ -177,7 +177,7 @@ export function isGenerateCommand(): boolean {
   if (!program.args[0]) return false;
 
   // Check if the first argument is "generate"
-  if (program.args[0] === "generate") {
+  if (program.args[0] === "plugin") {
     return true; // Return true if the first argument is "generate"
   }
 

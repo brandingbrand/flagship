@@ -1,7 +1,6 @@
 /**
  * @jest-environment-options {"requireTemplate": true}
  */
-import updateCheck from "update-check";
 
 import { config } from "@/lib";
 import info from "../src/actions/info";
@@ -10,6 +9,7 @@ jest.spyOn(console, "log").mockImplementation(jest.fn());
 jest.spyOn(console, "warn").mockImplementation(jest.fn());
 jest.spyOn(console, "info").mockImplementation(jest.fn());
 jest.spyOn(console, "error").mockImplementation(jest.fn());
+jest.spyOn(process, "exit").mockImplementation(jest.fn() as any);
 
 jest.mock("update-check");
 jest.mock("@brandingbrand/code-cli-kit", () => ({
@@ -30,7 +30,6 @@ describe("info action", () => {
 
     await info();
 
-    expect(console.error).toHaveBeenCalled();
-    expect(updateCheck).not.toHaveBeenCalled();
+    expect(process.exit).toHaveBeenCalled();
   });
 });

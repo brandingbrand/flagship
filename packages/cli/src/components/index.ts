@@ -1,2 +1,1 @@
-export * from "./Action";
-export * from "./Reporter";
+export * from "./Actions";

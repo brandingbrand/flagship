@@ -38,3 +38,10 @@ export * from "./action";
  * @module lib/logger
  */
 export { default as logger } from "./logger";
+
+/**
+ * Constant module for global usage
+ *
+ * @module lib/constants
+ */
+export * from "./constants";

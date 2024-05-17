@@ -11,7 +11,7 @@
   "scripts": {
     "build": "turbo build --concurrency 100",
     "dev": "turbo dev --concurrency 100",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format": "prettier --write \"**/*.{ts,tsx}\"",
     "lint": "turbo lint --",
     "test": "turbo test"
   },

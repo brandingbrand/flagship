@@ -1,7 +1,7 @@
 import type { PackageJson } from "type-fest";
 import { fs, path } from "@brandingbrand/code-cli-kit";
 
-import { ActionWarning, bundleRequire, config, defineAction } from "@/lib";
+import { bundleRequire, config, defineAction } from "@/lib";
 
 /**
  * Define an action to process environment files.
@@ -10,99 +10,103 @@ import { ActionWarning, bundleRequire, config, defineAction } from "@/lib";
  * @returns {Promise<string>} - Promise that resolves a string when the action completes successfully.
  * @throws {Error} - Throws an error if the environment directory doesn't exist or if it doesn't contain any valid environment files.
  */
-export default defineAction(async () => {
-  // Resolve the path to the project's package.json file
-  const pkg = require(path.project.resolve("package.json")) as PackageJson;
+export default defineAction(
+  async () => {
+    // Resolve the path to the project's package.json file
+    const pkg = require(path.project.resolve("package.json")) as PackageJson;
 
-  // Throw warning if no dependencies object
-  if (!pkg.dependencies) {
-    throw new ActionWarning(
-      "Unable to locate dependencies object in package.json. Please note that the absence of the @brandingbrand/fsapp dependency will prevent you from leveraging the benefits of multi-tenant typed environments."
-    );
-  }
-
-  // Check if the package.json file contains dependencies
-  // Find the index of the '@brandingbrand/fsapp' dependency in the dependencies object
-  const index = Object.keys(pkg.dependencies).findIndex(
-    (it) => it === "@brandingbrand/fsapp"
-  );
-
-  // If the dependency is not found, throw a warning
-  if (index === -1) {
-    throw new ActionWarning(
-      "Unable to locate the '@brandingbrand/fsapp' dependency. Please note that the absence of this dependency will prevent you from leveraging the benefits of multi-tenant typed environments."
-    );
-  }
-
-  // Resolve the environment directory path based on the configuration
-  const envDir = path.project.resolve(config.code.envPath);
-
-  // Check if the environment directory exists
-  if (!(await fs.doesPathExist(envDir))) {
-    throw Error(
-      `[EnvActionError]: env directory: ${envDir}, does not exist. Please check the "envPath" attribute in flagship-code.config.ts.`
-    );
-  }
-
-  // Read the contents of the environment directory and filter out files matching the expected pattern
-  const envs = (await fs.readdir(envDir)).filter((it) => {
-    if (config.options.release) {
-      return path.basename(it) === `env.${config.options.env}.ts`;
+    // Throw warning if no dependencies object
+    if (!pkg.dependencies) {
+      throw Error(
+        "Missing Configuration: Unable to locate dependencies object in package.json. Please note that the absence of the @brandingbrand/fsapp dependency will prevent you from leveraging the benefits of multi-tenant typed environments."
+      );
     }
 
-    return /env\..*\.ts/.test(it);
-  });
-
-  // Throw an error if no valid environment files are found in the directory
-  if (!envs.length) {
-    throw Error(
-      `[EnvActionError]: env directory: ${envDir}, does not contain any env files that match the pattern "env.<mode>.ts". Please move your env files to ${envDir}.`
+    // Check if the package.json file contains dependencies
+    // Find the index of the '@brandingbrand/fsapp' dependency in the dependencies object
+    const index = Object.keys(pkg.dependencies).findIndex(
+      (it) => it === "@brandingbrand/fsapp"
     );
-  }
 
-  // Read the contents of each environment file and validate its name and format
-  const envContents = await Promise.all(
-    envs.map(async (it) => {
-      const envRegExpExecArray = /env\.(.*)\.ts/.exec(it);
-      const content = (await bundleRequire(path.resolve(envDir, it))).default;
+    // If the dependency is not found, throw a warning
+    if (index === -1) {
+      throw Error(
+        "Missing Configuration: Unable to locate the '@brandingbrand/fsapp' dependency. Please note that the absence of this dependency will prevent you from leveraging the benefits of multi-tenant typed environments."
+      );
+    }
 
-      const name = envRegExpExecArray?.pop();
+    // Resolve the environment directory path based on the configuration
+    const envDir = path.project.resolve(config.code.envPath);
 
-      // Throw an error if the environment file doesn't follow the expected format
-      if (!name) {
-        throw Error(
-          `[EnvActionError]: env file ${it} does not follow expected format "env.<mode>.ts"`
-        );
+    // Check if the environment directory exists
+    if (!(await fs.doesPathExist(envDir))) {
+      throw Error(
+        `Unknown Path: env directory: ${envDir}, does not exist. Please check the "envPath" attribute in flagship-code.config.ts.`
+      );
+    }
+
+    // Read the contents of the environment directory and filter out files matching the expected pattern
+    const envs = (await fs.readdir(envDir)).filter((it) => {
+      if (config.options.release) {
+        return path.basename(it) === `env.${config.options.env}.ts`;
       }
 
-      return {
-        name,
-        content,
-      };
-    })
-  );
+      return /env\..*\.ts/.test(it);
+    });
 
-  // Import the 'magicast' module due to esm type
-  const magicast = await import("magicast");
+    // Throw an error if no valid environment files are found in the directory
+    if (!envs.length) {
+      throw Error(
+        `Missing Configuration: env directory: ${envDir}, does not contain any env files that match the pattern "env.<mode>.ts". Please move your env files to ${envDir}.`
+      );
+    }
 
-  // Parse a module with an empty default export
-  const mod = magicast.parseModule("");
+    // Read the contents of each environment file and validate its name and format
+    const envContents = await Promise.all(
+      envs.map(async (it) => {
+        const envRegExpExecArray = /env\.(.*)\.ts/.exec(it);
+        const content = (await bundleRequire(path.resolve(envDir, it))).default;
 
-  // Add each environment's content to the module's default export
-  envContents.forEach((it) => {
-    mod.exports[it.name] ||= { app: it.content };
-  });
+        const name = envRegExpExecArray?.pop();
 
-  // Resolve the path of the project environment index file from @brandingbrand/fsapp
-  // There is a chance this could throw an error, this is fine, still even though we checked the dependencies object already
-  const projectEnvIndexPath = require.resolve(
-    "@brandingbrand/fsapp/src/project_env_index.js",
-    { paths: [process.cwd()] }
-  );
+        // Throw an error if the environment file doesn't follow the expected format
+        if (!name) {
+          throw Error(
+            `Name Mismatch: env file ${it} does not follow expected format "env.<mode>.ts"`
+          );
+        }
 
-  // Write the module to the project environment index file
-  magicast.writeFile(mod, projectEnvIndexPath);
+        return {
+          name,
+          content,
+        };
+      })
+    );
 
-  // Return context message for reporting
-  return `linked ${envContents.map((it) => it.name).join(", ")} to @brandingbrand/fsapp env`;
-}, "env");
+    // Import the 'magicast' module due to esm type
+    const magicast = await import("magicast");
+
+    // Parse a module with an empty default export
+    const mod = magicast.parseModule("");
+
+    // Add each environment's content to the module's default export
+    envContents.forEach((it) => {
+      mod.exports[it.name] ||= { app: it.content };
+    });
+
+    // Resolve the path of the project environment index file from @brandingbrand/fsapp
+    // There is a chance this could throw an error, this is fine, still even though we checked the dependencies object already
+    const projectEnvIndexPath = require.resolve(
+      "@brandingbrand/fsapp/src/project_env_index.js",
+      { paths: [process.cwd()] }
+    );
+
+    // Write the module to the project environment index file
+    magicast.writeFile(mod, projectEnvIndexPath);
+
+    // Return context message for reporting
+    return `linked ${envContents.map((it) => it.name).join(", ")} to @brandingbrand/fsapp env`;
+  },
+  "env",
+  "env"
+);

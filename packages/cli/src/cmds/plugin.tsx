@@ -1,9 +1,11 @@
-import { Option, program } from "commander";
+import chalk from "chalk";
+import { program } from "commander";
+import { detect } from "detect-package-manager";
 import { type GenerateOptions } from "@brandingbrand/code-cli-kit";
 
-import { config, emitter, logger } from "@/lib";
 import * as actions from "@/actions";
-import { Reporter } from "@/components";
+import { Actions } from "@/components";
+import { config, emitter, logger } from "@/lib";
 
 /**
  * Defines a command for generating a flagship-code template using the "commander" library.
@@ -11,7 +13,7 @@ import { Reporter } from "@/components";
  *
  * @example
  * ```bash
- * yarn flagship-code generate --type plugin --name @brandingbrand/code-plugin-myplugin --path ./plugins
+ * yarn flagship-code plugin my-plugin
  * ```
  *
  * @remarks
@@ -20,29 +22,23 @@ import { Reporter } from "@/components";
  * @see {@link https://www.npmjs.com/package/commander | commander} - Command-line framework for Node.js.
  */
 program
-  .command("generate")
-  .description("generate a template")
-  .addOption(
-    new Option("-t, --type <type>", "type of template")
-      .choices(["plugin"])
-      .makeOptionMandatory()
-  )
-  .requiredOption("-n, --name <name>", "package name of your template")
-  .action(async (options: GenerateOptions) => {
+  .command("plugin")
+  .description("generate a plugin")
+  .argument("<string>", "name of generated plugin")
+  .action(async (str: string, options: GenerateOptions) => {
     /**
      * Update the configuration generate options with the provided options and command type.
      */
-    config.generateOptions = { ...options, command: "generate" };
+    config.generateOptions = { ...options, name: str, command: "generate" };
 
     const { render } = await import("ink");
 
     /**
      * Render the Reporter component to display progress.
      */
-    const { unmount } = render(
-      <Reporter actions={["config", "template", "generator", "packagers"]} />,
-      { stdout: process.stderr }
-    );
+    const { unmount } = render(<Actions />, { stdout: process.stderr });
+
+    global.unmount = unmount;
 
     /**
      * Loop through predefined actions and execute them sequentially.
@@ -58,11 +54,10 @@ program
     }
 
     /**
-     * Emit event when actions are complete to show <Results />
+     * This is the last action to be run - if the execution gets to this point
+     * it can be assumed that it was successful.
      */
-    emitter.emit("action", {
-      action: "DONE",
-    });
+    emitter.emit("action", { name: "dependencies", status: "success" });
 
     /**
      * Unmount react ink components
@@ -73,4 +68,13 @@ program
      * Resume logging with console.log and process.stdout
      */
     logger.resume();
+    logger.info(chalk.magenta`🚀 Generated ${str} plugin!\n`);
+
+    logger.info(
+      chalk.gray`Useful commands:
+
+    ${chalk.cyan((await detect()) + ` flagship-code prebuild --build <build-variant> --env <env-variant>`)}
+        Generate native code for React Native app
+`
+    );
   });

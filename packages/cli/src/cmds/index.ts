@@ -5,11 +5,11 @@
  */
 
 /**
- * Generate command for creating a templates
+ * Generate command for creating a plugin
  *
- * @module cmds/gen
+ * @module cmds/plugin
  */
-import "./generate";
+import "./plugin";
 
 /**
  * Prebuild command for native code generation

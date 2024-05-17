@@ -48,7 +48,7 @@ export default {
   info: function (...message: string[]) {
     if (this.isPaused) return;
 
-    console.info("ℹ️ ", ...message);
+    console.info(...message);
   },
 
   /**
@@ -80,7 +80,7 @@ export default {
   success: function (...message: string[]) {
     if (this.isPaused) return;
 
-    console.log("✅ ", ...message);
+    console.log("✔ ", ...message);
   },
 
   /**

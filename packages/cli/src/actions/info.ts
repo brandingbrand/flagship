@@ -1,18 +1,11 @@
-import os from "os";
-
 import ci from "ci-info";
+import chalk from "chalk";
 import updateCheck from "update-check";
 import { isWindows } from "@brandingbrand/code-cli-kit";
 
 import pkg from "../../package.json";
 
-import {
-  config,
-  defineAction,
-  isGenerateCommand,
-  isPrebuildCommand,
-  logger,
-} from "@/lib";
+import { defineAction, logger } from "@/lib";
 
 /**
  * Executes the default action, providing detailed information and performing necessary checks.
@@ -21,62 +14,68 @@ import {
  * detects if it's running in a CI environment, and checks for package updates.
  * @returns Promise<void>
  */
-export default defineAction(async () => {
-  // Log cli details
-  console.log(`
-███████╗██╗      █████╗  ██████╗ ███████╗██╗  ██╗██╗██████╗ 
-██╔════╝██║     ██╔══██╗██╔════╝ ██╔════╝██║  ██║██║██╔══██╗
-█████╗  ██║     ███████║██║  ███╗███████╗███████║██║██████╔╝
-██╔══╝  ██║     ██╔══██║██║   ██║╚════██║██╔══██║██║██╔═══╝ 
-██║     ███████╗██║  ██║╚██████╔╝███████║██║  ██║██║██║     
-╚═╝     ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝╚═╝     
+export default defineAction(
+  async () => {
+    // Log cli details
+    console.log(chalk.blue`
+
+          ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+          ▒▒                   ▒▒▒
+          ▒▒                 ▒▒▒
+          ▒▒               ▒▒▒
+          ▒▒             ▒▒▒
+          ▒▒           ▒▒▒
+          ▒▒         ▒▒▒
+          ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+          ▒▒     ▒▒▒           ▒▒▒
+          ▒▒   ▒▒▒           ▒▒▒
+          ▒▒ ▒▒▒           ▒▒▒
+          ▒▒▒▒           ▒▒▒
+          ▒▒           ▒▒▒
+          ▒▒         ▒▒▒
+          ▒▒       ▒▒▒
+          ▒▒     ▒▒▒
+          ▒▒   ▒▒▒
+          ▒▒ ▒▒▒
+          ▒▒▒▒
+
 `);
-  logger.info(`Using ${pkg.name} v${pkg.version}`);
-  logger.info(`Running on platform: ${os.platform}`);
-
-  // Log to terminal prebuild cli command options
-  if (isPrebuildCommand()) {
     logger.info(
-      `Using options: \n${JSON.stringify(config.options, null, 5).replace(/({|})/g, "   $1")}`
+      chalk.bold
+        .blue`Welcome to Flagship Code ${chalk.bold.white`v${pkg.version}`}`
     );
-  }
+    logger.info(chalk.dim`  Configurable - Extensible - Toolkit`);
 
-  // Log to terminal generate cli command options
-  if (isGenerateCommand()) {
-    logger.info(
-      `Using options: \n${JSON.stringify(config.generateOptions, null, 5).replace(/({|})/g, "   $1")}`
-    );
-  }
+    // Check if the script is running on Windows, and throw an error if it is
+    if (isWindows) {
+      logger.error(`${pkg.name} is unable to run on a windows machine.`);
 
-  // Check if the script is running on Windows, and throw an error if it is
-  if (isWindows) {
-    logger.error(`${pkg.name} is unable to run on a windows machine.`);
+      throw Error("[InfoActionError]: unable to run on windows machine");
+    }
 
-    throw Error("[InfoActionError]: unable to run on windows machine");
-  }
+    // Check if the script is running in a CI environment, and log the CI server name if it is
+    if (ci.isCI) {
+      logger.info(`Continuous Integration server: ${ci.name}`);
+    }
 
-  // Check if the script is running in a CI environment, and log the CI server name if it is
-  if (ci.isCI) {
-    logger.info(`Continuous Integration server: ${ci.name}`);
-  }
+    // Check for package updates
+    const update = await updateCheck({
+      name: pkg.name,
+      version: pkg.version,
+    });
 
-  // Check for package updates
-  const update = await updateCheck({
-    name: pkg.name,
-    version: pkg.version,
-  });
+    // Warn for new version available
+    if (update) {
+      logger.warn(
+        `A new version of ${pkg.name} is available: v${pkg.version} -> v${update.latest}`
+      );
+    }
 
-  // Warn for new version available
-  if (update) {
-    logger.warn(
-      `A new version of ${pkg.name} is available: v${pkg.version} -> v${update.latest}`
-    );
-  }
-
-  logger.start("Generating native code...");
-
-  // Pause logs when not in CI in favor of react-ink
-  if (!ci.isCI) {
-    logger.pause();
-  }
-}, "info");
+    // Pause logs when not in CI in favor of react-ink
+    if (!ci.isCI) {
+      logger.pause();
+    }
+  },
+  "info",
+  "template"
+);
