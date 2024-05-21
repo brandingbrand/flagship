@@ -113,10 +113,13 @@ export default defineAction(
     let projectEnvIndexPath;
 
     if (semver.satisfies(coercedVersion, "<11")) {
-      projectEnvIndexPath = require.resolve(
-        "@brandingbrand/fsapp/project_env_index.js",
+      // project_env_index.js doesn't exist in @brandingbrand/fsapp <v11 - it is assumed to be written to the root
+      // directory of the package. We can get the path based on the package.json and resolve to parent directory with
+      // the project_env_index.js identifier.
+      projectEnvIndexPath = path.resolve(require.resolve(
+        "@brandingbrand/fsapp/package.json",
         { paths: [process.cwd()] }
-      );
+      ), "..", "project_env_index.js");
     }
 
     if (semver.satisfies(coercedVersion, ">10")) {
