@@ -1,3 +1,4 @@
+import semver from "semver";
 import type { PackageJson } from "type-fest";
 import { fs, path } from "@brandingbrand/code-cli-kit";
 
@@ -72,7 +73,7 @@ export default defineAction(
         // Throw an error if the environment file doesn't follow the expected format
         if (!name) {
           throw Error(
-            `Name Mismatch: env file ${it} does not follow expected format "env.<mode>.ts"`
+            `Name Mismatch: env file ${it} does not follow expected format "env.<variant>.ts".`
           );
         }
 
@@ -94,12 +95,43 @@ export default defineAction(
       mod.exports[it.name] ||= { app: it.content };
     });
 
+    // Get the version of the @brandingbrand/fsapp
+    // Use require.resolve to support monorepos with the paths set to current working directory
+    const {version} = require(require.resolve('@brandingbrand/fsapp/package.json', {paths: [process.cwd()]}));
+
+    // Coerce the version to a comparable semver version i.e. 12.0.0-alpha.1 -> 12.0.0
+    const coercedVersion = semver.coerce(version);
+
+    // If semver cannot parse the version then we cannot compare versions to be able to
+    // determine where project_env_index.js is located - throw error to user
+    if (!coercedVersion) {
+      throw Error("Type Mismatch: cannot parse @brandingbrand/fsapp version");
+    }
+
     // Resolve the path of the project environment index file from @brandingbrand/fsapp
     // There is a chance this could throw an error, this is fine, still even though we checked the dependencies object already
-    const projectEnvIndexPath = require.resolve(
-      "@brandingbrand/fsapp/src/project_env_index.js",
-      { paths: [process.cwd()] }
-    );
+    let projectEnvIndexPath;
+
+    if (semver.satisfies(coercedVersion, "<11")) {
+      // project_env_index.js doesn't exist in @brandingbrand/fsapp <v11 - it is assumed to be written to the root
+      // directory of the package. We can get the path based on the package.json and resolve to parent directory with
+      // the project_env_index.js identifier.
+      projectEnvIndexPath = path.resolve(require.resolve(
+        "@brandingbrand/fsapp/package.json",
+        { paths: [process.cwd()] }
+      ), "..", "project_env_index.js");
+    }
+
+    if (semver.satisfies(coercedVersion, ">10")) {
+      projectEnvIndexPath = require.resolve(
+        "@brandingbrand/fsapp/src/project_env_index.js",
+        { paths: [process.cwd()] }
+      );
+    }
+
+    if (!projectEnvIndexPath) {
+      throw Error("Missing File: cannot find project_env_index.js in @brandingbrand/fsapp to successfully link environments.")
+    }
 
     // Write the module to the project environment index file
     magicast.writeFile(mod, projectEnvIndexPath);
