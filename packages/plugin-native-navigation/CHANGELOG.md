@@ -1,5 +1,13 @@
 # @brandingbrand/code-plugin-native-navigation
 
+## 2.0.0-alpha.3
+
+### Patch Changes
+
+- improve cli messaging
+- Updated dependencies
+  - @brandingbrand/code-cli-kit@13.0.0-alpha.3
+
 ## 2.0.0-alpha.2
 
 ### Patch Changes
