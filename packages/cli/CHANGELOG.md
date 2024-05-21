@@ -1,5 +1,18 @@
 # @brandingbrand/code-cli
 
+## 13.0.0-alpha.3
+
+### Minor Changes
+
+- 4ae1bc2: Android 14 support
+
+### Patch Changes
+
+- improve cli messaging
+- 99a9f5e: add @brandingbrand/fsapp <v11 support
+- Updated dependencies
+  - @brandingbrand/code-cli-kit@13.0.0-alpha.3
+
 ## 13.0.0-alpha.2
 
 ### Patch Changes
