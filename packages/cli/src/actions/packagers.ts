@@ -30,6 +30,7 @@ export default defineAction(
             config.code.pluginPath,
             config.generateOptions.name
           ),
+          stdout: config.options.verbose ? "inherit" : "ignore"
         });
 
         // Execute package installation using the detected package manager
@@ -49,6 +50,7 @@ export default defineAction(
       try {
         await execa("bundle", ["install"], {
           cwd: path.project.resolve("android"),
+          stdout: config.options.verbose ? "inherit" : "ignore"
         });
       } catch (e: any) {
         throw Error(
@@ -64,6 +66,7 @@ export default defineAction(
       try {
         await execa("bundle", ["install"], {
           cwd: path.project.resolve("ios"),
+          stdout: config.options.verbose ? "inherit" : "ignore"
         });
       } catch (e: any) {
         throw Error(
@@ -79,6 +82,7 @@ export default defineAction(
       try {
         await execa("pod", ["install"], {
           cwd: path.project.resolve("ios"),
+          stdout: config.options.verbose ? "inherit" : "ignore"
         });
       } catch (e: any) {
         throw Error(`Error: failed to run "pod install" for iOS: ${e.message}`);

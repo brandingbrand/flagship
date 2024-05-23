@@ -1,7 +1,7 @@
+import chalk from "chalk";
 import { Option, program } from "commander";
 import { detect } from "detect-package-manager";
 import type { PrebuildOptions } from "@brandingbrand/code-cli-kit";
-import chalk from "chalk";
 
 import * as actions from "@/actions";
 import { Actions } from "@/components";
@@ -38,7 +38,7 @@ program
       .default("native")
   )
   .option("-r, --release", "Bundle only specified environment.", false)
-  .option("-v, --verbose", "Show stdout.", false)
+  .option("--verbose", "Show stdout.", false)
   .action(async (options: PrebuildOptions) => {
     /**
      * Update the configuration options with the provided options and command type.

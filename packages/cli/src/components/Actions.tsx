@@ -11,6 +11,7 @@ import {
   Group,
   Status,
   TEMPLATE_EVENT,
+  config,
   emitter,
 } from "@/lib";
 
@@ -26,7 +27,7 @@ type Event = {
   status: Status;
 };
 
-export function Actions(): JSX.Element {
+export function Actions() {
   const [actions, setActions] = useState({});
 
   function handler(event: Event): void {
@@ -51,6 +52,8 @@ export function Actions(): JSX.Element {
   if (!Components || isPending) return <></>;
 
   const { Box } = Components;
+
+  if (config.options.verbose) return null;
 
   return (
     <Box flexDirection="column">
