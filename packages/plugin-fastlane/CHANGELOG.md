@@ -1,5 +1,11 @@
 # @brandingbrand/code-plugin-fastlane
 
+## 2.0.3
+
+### Patch Changes
+
+- 87f5fdaa3: conditionalize android app center version capture to aggregate build number
+
 ## 2.0.2
 
 ### Patch Changes
