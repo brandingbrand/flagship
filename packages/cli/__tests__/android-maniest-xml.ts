@@ -72,4 +72,15 @@ describe("android AndroidManifest.xml transformers", () => {
 
     expect(content).toContain(`android:screenOrientation="portrait"`);
   });
+
+  it("should update AndroidManifest.xml with the network security config", async () => {
+    const config = {
+      ...__flagship_code_build_config,
+    } as BuildConfig;
+
+    await transformer.transform(config, {} as any);
+    const content = await fs.readFile(path.android.androidManifest, "utf-8");
+
+    expect(content).toContain(`android:networkSecurityConfig="@xml/network_security_config"`);
+  });
 });
