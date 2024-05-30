@@ -90,11 +90,6 @@ export default defineAction(
     // Parse a module with an empty default export
     const mod = magicast.parseModule("");
 
-    // Add each environment's content to the module's default export
-    envContents.forEach((it) => {
-      mod.exports[it.name] ||= { app: it.content };
-    });
-
     // Get the version of the @brandingbrand/fsapp
     // Use require.resolve to support monorepos with the paths set to current working directory
     const {version} = require(require.resolve('@brandingbrand/fsapp/package.json', {paths: [process.cwd()]}));
@@ -120,6 +115,15 @@ export default defineAction(
         "@brandingbrand/fsapp/package.json",
         { paths: [process.cwd()] }
       ), "..", "project_env_index.js");
+
+      mod.exports.default = {};
+
+      // Add each environment's content to the module's default export
+      // In fsapp <v10 the export is expected to be a default export
+      // https://github.com/brandingbrand/flagship/blob/7b540442d2b83ad710e98981bd368039f0eb635c/packages/fsapp/src/index.ts#L6
+      envContents.forEach((it) => {
+        mod.exports.default[it.name] ||= { app: it.content };
+      });
     }
 
     if (semver.satisfies(coercedVersion, ">10")) {
@@ -127,6 +131,13 @@ export default defineAction(
         "@brandingbrand/fsapp/src/project_env_index.js",
         { paths: [process.cwd()] }
       );
+
+      // Add each environment's content to the module's named exports
+      // In fsapp v11+ the exports are expected to be named exports
+      // https://github.com/brandingbrand/shipyard/blob/d76c38edb8e6794bd0d412520e9295238fdef22f/libs/fsapp/src/beta-app/env.ts#L7
+      envContents.forEach((it) => {
+        mod.exports[it.name] ||= { app: it.content };
+      });
     }
 
     if (!projectEnvIndexPath) {
