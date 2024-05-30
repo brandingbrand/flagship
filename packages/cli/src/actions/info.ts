@@ -5,7 +5,7 @@ import { isWindows } from "@brandingbrand/code-cli-kit";
 
 import pkg from "../../package.json";
 
-import { defineAction, logger } from "@/lib";
+import { config, defineAction, logger } from "@/lib";
 
 /**
  * Executes the default action, providing detailed information and performing necessary checks.
@@ -72,7 +72,7 @@ export default defineAction(
     }
 
     // Pause logs when not in CI in favor of react-ink
-    if (!ci.isCI) {
+    if (!ci.isCI && !config.options.verbose) {
       logger.pause();
     }
   },
