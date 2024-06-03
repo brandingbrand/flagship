@@ -345,6 +345,51 @@ type ManifestUsesFeature = {
 };
 
 /**
+ * Specifies the types of intents that an activity, service, or broadcast receiver can respond to
+ * without any associated intent filter attributes.
+ */
+type ManifestQueryIntent = Omit<ManifestIntentFilter, "$">;
+
+/**
+ * Specifies the set of other apps that an app intends to interact with. These other
+ * apps are specified by package name, by intent signature, or by provider authority,
+ * as described in the following sections on this page.
+ * 
+ * {@link https://developer.android.com/guide/topics/manifest/queries-element}
+ */
+type ManifestQuery = {
+  /**
+   * Specifies a single app that your app intends to access. This other app might
+   * integrate with your app, or your app might use services that the other app provides.
+   */
+  package?: {
+    $: {
+      'android:name': string;
+    };
+  }[];
+
+  /**
+   * Specifies an intent filter signature. Your app can discover other apps that have
+   * matching <intent-filter> elements.
+   * 
+   * {@link https://developer.android.com/training/basics/intents/filters}
+   */
+  intent?: ManifestQueryIntent[];
+
+  /**
+   * Specifies one or more content provider authorities. Your app can discover other apps
+   * whose content providers use the specified authorities.
+   * 
+   * {@link https://developer.android.com/guide/topics/providers/content-provider-basics#ContentURIs}
+   */
+  provider?: {
+    $: {
+      'android:authorities': string;
+    };
+  };
+}
+
+/**
  * Represents elements within the AndroidManifest, including permissions, features, and application details.
  */
 type AndroidManifestElements = {
@@ -362,6 +407,9 @@ type AndroidManifestElements = {
 
   /** Application details within the AndroidManifest. */
   application?: ManifestApplication[];
+
+  /** Array of query configurations within the AndroidManifest. */
+  queries?: ManifestQuery[];
 };
 
 /**
