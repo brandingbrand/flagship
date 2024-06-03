@@ -43,3 +43,5 @@ yarn-error.log*
 !**/coderc/build
 apps/example/ios
 apps/example/android
+
+!**/plugin-native-navigation/__tests__/**/node_modules

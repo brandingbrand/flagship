@@ -8,6 +8,9 @@ import {
   type PrebuildOptions,
   definePlugin,
   fs,
+  withUTF8,
+  path,
+  string,
 } from "@brandingbrand/code-cli-kit";
 
 /**
@@ -62,6 +65,14 @@ export default definePlugin({
     build: BuildConfig,
     options: PrebuildOptions
   ): Promise<void> {
+    if(build.android.gradle?.projectGradle?.kotlinVersion) {
+      await withUTF8(path.android.buildGradle, content => {
+        return string.replace(content,
+          /(dependencies\s*{\s*?\n(\s+))/m,
+          `$1classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:${build.android.gradle?.projectGradle?.kotlinVersion}'\n$2`)
+      })
+    }
+
     // Resolve path to react-native-navigation postlink Android script
     const scriptPath = require.resolve(
       "react-native-navigation/autolink/postlink/postLinkAndroid.js",
