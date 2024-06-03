@@ -123,7 +123,8 @@ export default defineTransformer<Transforms<InfoPlist>>({
     },
 
     /**
-     * Transformer for updating the NSExceptionDomains in the "Info.plist" file.
+     * Transformer for updating the NSExceptionDomains in the "Info.plist" file
+     * to remove localhost in release mode.
      * @param {InfoPlist} content - The content of the file.
      * @param {BuildConfig} config - The build configuration.
      * @param {PrebuildOptions} options - The cli options.
@@ -136,10 +137,14 @@ export default defineTransformer<Transforms<InfoPlist>>({
     ): InfoPlist => {
       if (!options.release) return content;
 
+      if (!content.NSAppTransportSecurity?.NSExceptionDomains) return content;
+
+      const {localhost, ...exceptionDomainsWithoutLocalhost} = content.NSAppTransportSecurity.NSExceptionDomains;
+
       return {
         ...content,
         NSAppTransportSecurity: {
-          NSExceptionDomains: {},
+          NSExceptionDomains: exceptionDomainsWithoutLocalhost,
         },
       };
     },
