@@ -1,5 +1,18 @@
 # @brandingbrand/code-cli
 
+## 13.0.0-alpha.4
+
+### Minor Changes
+
+- 379f1bb: add default network security configuration to android configuration
+
+### Patch Changes
+
+- e24e2d4: update envs to default export for fsapp v10
+- 94f79ec: remove only localhost exception domain in release mode
+- Updated dependencies [51344be]
+  - @brandingbrand/code-cli-kit@13.0.0-alpha.4
+
 ## 13.0.0-alpha.3
 
 ### Minor Changes
