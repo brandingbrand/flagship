@@ -1,5 +1,11 @@
 # @brandingbrand/code-cli-kit
 
+## 13.0.0-alpha.4
+
+### Minor Changes
+
+- 51344be: add android manifest queries type
+
 ## 13.0.0-alpha.3
 
 ### Patch Changes

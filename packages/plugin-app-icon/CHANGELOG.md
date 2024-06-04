@@ -1,5 +1,12 @@
 # @brandingbrand/code-plugin-app-icon
 
+## 2.0.0-alpha.4
+
+### Patch Changes
+
+- Updated dependencies [51344be]
+  - @brandingbrand/code-cli-kit@13.0.0-alpha.4
+
 ## 2.0.0-alpha.3
 
 ### Patch Changes
