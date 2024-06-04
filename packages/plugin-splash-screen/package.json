@@ -16,6 +16,7 @@
   },
   "types": "src/index.ts",
   "dependencies": {
+    "@types/fs-extra": "^11.0.4",
     "fs-extra": "^11.2.0",
     "react-native-bootsplash": "5.4.0"
   },
