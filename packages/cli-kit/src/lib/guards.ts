@@ -1,13 +1,8 @@
-import type { PackageJson } from "type-fest";
+import type {PackageJson} from 'type-fest';
 
-import path from "./path";
+import path from './path';
 
-import type {
-  BuildConfig,
-  CodeConfig,
-  EnvConfig,
-  PluginConfig,
-} from "@/@types";
+import type {BuildConfig, CodeConfig, EnvConfig, PluginConfig} from '@/@types';
 
 /**
  * Import paths module to get package.json path
@@ -46,12 +41,12 @@ export function defineBuild<T = BuildConfig>(
   build:
     | (T extends BuildConfig ? BuildConfig : BuildConfig & T)
     | ((
-        pkg: PackageJson
-      ) => T extends BuildConfig ? BuildConfig : BuildConfig & T)
+        pkg: PackageJson,
+      ) => T extends BuildConfig ? BuildConfig : BuildConfig & T),
 ) {
-  const pkg: PackageJson = require(path.project.resolve("package.json"));
+  const pkg: PackageJson = require(path.project.resolve('package.json'));
 
-  if (typeof build === "function") {
+  if (typeof build === 'function') {
     return build(pkg);
   }
 

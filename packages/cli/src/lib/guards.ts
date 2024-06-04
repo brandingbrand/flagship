@@ -1,6 +1,6 @@
-import type { BuildConfig, PrebuildOptions } from "@brandingbrand/code-cli-kit";
+import type {BuildConfig, PrebuildOptions} from '@brandingbrand/code-cli-kit';
 
-import { withAction } from "./action";
+import {withAction} from './action';
 
 /**
  * Defines an action and wraps it with logging functionality using the "@brandingbrand/code-cli-kit".
@@ -18,7 +18,7 @@ import { withAction } from "./action";
 export function defineAction(
   action: () => Promise<void | string>,
   name: string,
-  group: "template" | "env" | "code" | "dependencies"
+  group: 'template' | 'env' | 'code' | 'dependencies',
 ) {
   return withAction(action, name, group);
 }
@@ -32,7 +32,7 @@ export type Transformer<T> = {
 export type Transforms<T, U = undefined> = (
   content: T,
   config: BuildConfig,
-  options: PrebuildOptions
+  options: PrebuildOptions,
 ) => U extends undefined ? T : U;
 
 /**

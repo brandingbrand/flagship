@@ -3,9 +3,9 @@ import {
   type PrebuildOptions,
   type StringsXML,
   withStrings,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import { Transforms, defineTransformer } from "@/lib";
+import {Transforms, defineTransformer} from '@/lib';
 
 /**
  * Defines a transformer for the Android project's "strings.xml" file.
@@ -19,7 +19,7 @@ export default defineTransformer<Transforms<StringsXML, void>>({
   /**
    * Specifies the file to be transformed, which is strings.xml in this case.
    */
-  file: "strings.xml",
+  file: 'strings.xml',
 
   /**
    * An array of transformer functions to be applied to the "strings.xml" file.
@@ -37,12 +37,12 @@ export default defineTransformer<Transforms<StringsXML, void>>({
       if (!xml.resources.string) return;
 
       const index = xml.resources.string.findIndex(
-        (it) => it.$.name === "app_name"
+        it => it.$.name === 'app_name',
       );
 
       if (index > -1) {
         xml.resources.string.splice(index, 1, {
-          $: { name: "app_name" },
+          $: {name: 'app_name'},
           _: config.android.displayName,
         });
       }
@@ -57,14 +57,14 @@ export default defineTransformer<Transforms<StringsXML, void>>({
       if (!config.android.strings?.string) return;
 
       if (!xml.resources.string) {
-        xml.resources = { ...xml.resources, string: [] };
+        xml.resources = {...xml.resources, string: []};
       }
 
       Object.entries(config.android.strings.string).forEach(([name, _]) =>
         xml.resources.string?.push({
-          $: { name },
+          $: {name},
           _,
-        })
+        }),
       );
     },
 
@@ -76,19 +76,19 @@ export default defineTransformer<Transforms<StringsXML, void>>({
     (xml: StringsXML, config: BuildConfig) => {
       if (!config.android.strings?.stringArray) return;
 
-      if (!xml.resources["string-array"]) {
-        xml.resources = { ...xml.resources, "string-array": [] };
+      if (!xml.resources['string-array']) {
+        xml.resources = {...xml.resources, 'string-array': []};
       }
 
       Object.entries(config.android.strings.stringArray).forEach(
         ([name, items]) => {
-          xml.resources["string-array"]?.push({
-            $: { name },
-            item: items.map((it) => ({
+          xml.resources['string-array']?.push({
+            $: {name},
+            item: items.map(it => ({
               _: it,
             })),
           });
-        }
+        },
       );
     },
 
@@ -101,21 +101,21 @@ export default defineTransformer<Transforms<StringsXML, void>>({
       if (!config.android.strings?.plurals) return;
 
       if (!xml.resources.plurals) {
-        xml.resources = { ...xml.resources, plurals: [] };
+        xml.resources = {...xml.resources, plurals: []};
       }
 
       Object.entries(config.android.strings.plurals).forEach(
         ([name, items]) => {
           xml.resources.plurals?.push({
-            $: { name },
-            item: items.map(({ value, quantity }) => ({
+            $: {name},
+            item: items.map(({value, quantity}) => ({
               _: value,
               $: {
                 quantity,
               },
             })),
           });
-        }
+        },
       );
     },
   ],
@@ -128,10 +128,10 @@ export default defineTransformer<Transforms<StringsXML, void>>({
    */
   transform: async function (
     config: BuildConfig,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
-    return withStrings((xml) => {
-      return this.transforms.forEach((it) => it(xml, config, options));
+    return withStrings(xml => {
+      return this.transforms.forEach(it => it(xml, config, options));
     });
   },
 });

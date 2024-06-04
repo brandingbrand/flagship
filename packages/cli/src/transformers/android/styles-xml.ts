@@ -3,9 +3,9 @@ import {
   type PrebuildOptions,
   type StylesXML,
   withStyles,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import { Transforms, defineTransformer } from "@/lib";
+import {Transforms, defineTransformer} from '@/lib';
 
 /**
  * Defines a transformer for the Android project's "styles.xml" file.
@@ -19,7 +19,7 @@ export default defineTransformer<Transforms<StylesXML, void>>({
   /**
    * Specifies the file to be transformed, which is styles.xml in this case.
    */
-  file: "styles.xml",
+  file: 'styles.xml',
 
   /**
    * An array of transformer functions to be applied to the "styles.xml" file.
@@ -36,18 +36,18 @@ export default defineTransformer<Transforms<StylesXML, void>>({
     (xml: StylesXML, config: BuildConfig) => {
       if (config.android.style === undefined) return;
 
-      const theme = xml.resources.style.find((it) => it.$.name === "AppTheme");
+      const theme = xml.resources.style.find(it => it.$.name === 'AppTheme');
 
       if (!theme) {
         throw Error(
-          `[StylesXMLTransformer]: cannot find AppTheme - unable to apply ${config.android.style} theme`
+          `[StylesXMLTransformer]: cannot find AppTheme - unable to apply ${config.android.style} theme`,
         );
       }
 
       const styles = {
-        light: "Theme.AppCompat.Light.NoActionBar",
-        dark: "Theme.AppCompat.NoActionBar",
-        system: "Theme.AppCompat.DayNight.NoActionBar",
+        light: 'Theme.AppCompat.Light.NoActionBar',
+        dark: 'Theme.AppCompat.NoActionBar',
+        system: 'Theme.AppCompat.DayNight.NoActionBar',
       };
 
       theme.$.parent = styles[config.android.style];
@@ -62,10 +62,10 @@ export default defineTransformer<Transforms<StylesXML, void>>({
    */
   transform: async function (
     config: BuildConfig,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
-    return withStyles((xml) => {
-      return this.transforms.forEach((it) => it(xml, config, options));
+    return withStyles(xml => {
+      return this.transforms.forEach(it => it(xml, config, options));
     });
   },
 });

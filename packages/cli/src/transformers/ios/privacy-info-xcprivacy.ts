@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from 'fs';
 
 import {
   type BuildConfig,
@@ -6,9 +6,9 @@ import {
   withUTF8,
   path,
   string,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import { Transforms, defineTransformer } from "@/lib";
+import {Transforms, defineTransformer} from '@/lib';
 
 /**
  * Defines a transformer for the iOS project's "PrivacyInfo.xcprivacy" file.
@@ -24,7 +24,7 @@ export default defineTransformer<Transforms<string>>({
    * The name of the file to be transformed ("PrivacyInfo.xcprivacy").
    * @type {string}
    */
-  file: "PrivacyInfo.xcprivacy",
+  file: 'PrivacyInfo.xcprivacy',
 
   /**
    * An array of transformer functions to be applied to the "PrivacyInfo.xcprivacy" file.
@@ -40,7 +40,7 @@ export default defineTransformer<Transforms<string>>({
      * @returns {string} - The updated content.
      */
     (content: string, config: BuildConfig): string => {
-      const { privacyManifestPath } = config.ios;
+      const {privacyManifestPath} = config.ios;
 
       if (!privacyManifestPath) return content;
 
@@ -49,13 +49,13 @@ export default defineTransformer<Transforms<string>>({
 
       if (!fs.existsSync(privacyManifestAbsolutePath)) {
         throw new Error(
-          `[PrivacyInfoXCPrivacyTransformerError]: path to privacy manifest does not exist ${privacyManifestAbsolutePath}, please update privacyManifestPath to the correct path relative to the root of your React Native project.`
+          `[PrivacyInfoXCPrivacyTransformerError]: path to privacy manifest does not exist ${privacyManifestAbsolutePath}, please update privacyManifestPath to the correct path relative to the root of your React Native project.`,
         );
       }
 
       const privacyManifestContent = fs.readFileSync(
         privacyManifestAbsolutePath,
-        "utf-8"
+        'utf-8',
       );
 
       return string.replace(content, /[\s\S]*/m, privacyManifestContent);
@@ -68,7 +68,7 @@ export default defineTransformer<Transforms<string>>({
    */
   transform: async function (
     config: BuildConfig,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
     return withUTF8(path.ios.privacyManifest, (content: string) => {
       return this.transforms.reduce((acc, curr) => {

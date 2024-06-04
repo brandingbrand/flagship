@@ -1,6 +1,6 @@
-import fs from "fs/promises";
+import fs from 'fs/promises';
 
-import { type X2jOptions, XMLBuilder, XMLParser } from "fast-xml-parser";
+import {type X2jOptions, XMLBuilder, XMLParser} from 'fast-xml-parser';
 
 import type {
   AndroidManifestXML,
@@ -8,20 +8,20 @@ import type {
   NetworkSecurityConfigXML,
   StringsXML,
   StylesXML,
-} from "@/@types";
-import { path } from "@/lib";
+} from '@/@types';
+import {path} from '@/lib';
 
 export const OPTS = {
   ignoreAttributes: false,
-  attributeNamePrefix: "",
-  attributesGroupName: "$",
-  textNodeName: "_",
+  attributeNamePrefix: '',
+  attributesGroupName: '$',
+  textNodeName: '_',
 };
 
 export const BUILD_OPTS = {
   ...OPTS,
   format: true,
-  indentBy: "    ",
+  indentBy: '    ',
   suppressBooleanAttributes: false,
   suppressEmptyNode: true,
 };
@@ -38,7 +38,7 @@ export const BUILD_OPTS = {
 export async function withXml<T>(
   path: string,
   options: X2jOptions,
-  callback: (xml: T) => void
+  callback: (xml: T) => void,
 ): Promise<void> {
   const contents = await fs.readFile(path);
 
@@ -59,20 +59,20 @@ export async function withXml<T>(
  * @returns {Promise<void>} - A promise that resolves when the operation is complete.
  */
 export async function withColors(
-  callback: (xml: ColorsXML) => void
+  callback: (xml: ColorsXML) => void,
 ): Promise<void> {
   return withXml<ColorsXML>(
     path.android.colors,
     {
-      isArray: (tagName) => {
-        if (["color"].indexOf(tagName) !== -1) {
+      isArray: tagName => {
+        if (['color'].indexOf(tagName) !== -1) {
           return true;
         }
 
         return false;
       },
     },
-    callback
+    callback,
   );
 }
 
@@ -83,28 +83,28 @@ export async function withColors(
  * @returns {Promise} A promise which resolves when the xml has been parsed
  */
 export async function withManifest(
-  callback: (xml: AndroidManifestXML) => void
+  callback: (xml: AndroidManifestXML) => void,
 ): Promise<any> {
   return withXml<AndroidManifestXML>(
     path.android.androidManifest,
     {
-      isArray: (tagName) => {
+      isArray: tagName => {
         if (
           [
-            "intent-filter",
-            "action",
-            "data",
-            "category",
-            "activity",
-            "service",
-            "receiver",
-            "meta-data",
-            "uses-library",
-            "permission",
-            "uses-permission",
-            "uses-permission-sdk-23",
-            "uses-feature",
-            "application",
+            'intent-filter',
+            'action',
+            'data',
+            'category',
+            'activity',
+            'service',
+            'receiver',
+            'meta-data',
+            'uses-library',
+            'permission',
+            'uses-permission',
+            'uses-permission-sdk-23',
+            'uses-feature',
+            'application',
           ].indexOf(tagName) !== -1
         ) {
           return true;
@@ -113,7 +113,7 @@ export async function withManifest(
         return false;
       },
     },
-    callback
+    callback,
   );
 }
 
@@ -123,14 +123,14 @@ export async function withManifest(
  * @param {function(xml: NetworkSecurityConfigType.NetworkSecurityConfig): void} callback - The callback function to invoke with the XML object.
  */
 export async function withNetworkSecurityConfig(
-  callback: (xml: NetworkSecurityConfigXML) => void
+  callback: (xml: NetworkSecurityConfigXML) => void,
 ) {
   return withXml(
     path.android.networkSecurityConfig,
     {
-      isArray: (tagName) => {
+      isArray: tagName => {
         if (
-          ["certificates", "domain", "domain-config"].indexOf(tagName) !== -1
+          ['certificates', 'domain', 'domain-config'].indexOf(tagName) !== -1
         ) {
           return true;
         }
@@ -138,7 +138,7 @@ export async function withNetworkSecurityConfig(
         return false;
       },
     },
-    callback
+    callback,
   );
 }
 
@@ -151,9 +151,9 @@ export async function withStrings(callback: (xml: StringsXML) => void) {
   return withXml<StringsXML>(
     path.android.strings,
     {
-      isArray: (tagName) => {
+      isArray: tagName => {
         if (
-          ["string", "string-array", "item", "plurals"].indexOf(tagName) !== -1
+          ['string', 'string-array', 'item', 'plurals'].indexOf(tagName) !== -1
         ) {
           return true;
         }
@@ -161,7 +161,7 @@ export async function withStrings(callback: (xml: StringsXML) => void) {
         return false;
       },
     },
-    callback
+    callback,
   );
 }
 
@@ -174,19 +174,19 @@ export async function withStrings(callback: (xml: StringsXML) => void) {
  * @returns {Promise<void>}
  */
 export async function withStyles(
-  callback: (xml: StylesXML) => void
+  callback: (xml: StylesXML) => void,
 ): Promise<void> {
   return withXml<StylesXML>(
     path.android.styles,
     {
-      isArray: (tagName) => {
-        if (["style", "item"].indexOf(tagName) !== -1) {
+      isArray: tagName => {
+        if (['style', 'item'].indexOf(tagName) !== -1) {
           return true;
         }
 
         return false;
       },
     },
-    callback
+    callback,
   );
 }

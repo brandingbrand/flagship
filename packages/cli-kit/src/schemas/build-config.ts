@@ -1,4 +1,4 @@
-import * as t from "io-ts";
+import * as t from 'io-ts';
 
 /**
  * Represents the schema for versioning information.
@@ -64,7 +64,7 @@ const FrameworksSchema = t.array(
     t.partial({
       path: t.string,
     }),
-  ])
+  ]),
 );
 
 /**
@@ -138,9 +138,9 @@ const UrlSchemeSchema = t.intersection([
  * style: "system"
  */
 const StyleSchema = t.union([
-  t.literal("light"),
-  t.literal("dark"),
-  t.literal("system"),
+  t.literal('light'),
+  t.literal('dark'),
+  t.literal('system'),
 ]);
 
 /**
@@ -151,11 +151,11 @@ const StyleSchema = t.union([
  */
 const IOSOrientationSchema = t.array(
   t.union([
-    t.literal("portrait"),
-    t.literal("portraitUpsideDown"),
-    t.literal("landscapeLeft"),
-    t.literal("landscapeRight"),
-  ])
+    t.literal('portrait'),
+    t.literal('portraitUpsideDown'),
+    t.literal('landscapeLeft'),
+    t.literal('landscapeRight'),
+  ]),
 );
 
 /**
@@ -232,24 +232,24 @@ const IOSSigningSchema = t.type({
    * Type of distrution certificate.
    */
   distCertType: t.union([
-    t.literal("iPhone Development"),
-    t.literal("iPhone Distribution"),
-    t.literal("Apple Development"),
-    t.literal("Apple Distribution"),
+    t.literal('iPhone Development'),
+    t.literal('iPhone Distribution'),
+    t.literal('Apple Development'),
+    t.literal('Apple Distribution'),
   ]),
 
   /**
    * Type of export method i.e. distribution location
    */
   exportMethod: t.union([
-    t.literal("app-store"),
-    t.literal("validation"),
-    t.literal("ad-hoc"),
-    t.literal("package"),
-    t.literal("enterprise"),
-    t.literal("development"),
-    t.literal("developer-id"),
-    t.literal("mac-application"),
+    t.literal('app-store'),
+    t.literal('validation'),
+    t.literal('ad-hoc'),
+    t.literal('package'),
+    t.literal('enterprise'),
+    t.literal('development'),
+    t.literal('developer-id'),
+    t.literal('mac-application'),
   ]),
 
   /**
@@ -405,9 +405,9 @@ const IOSSchema = t.exact(
        * @default "1"
        */
       targetedDevices: t.union([
-        t.literal("1"),
-        t.literal("2"),
-        t.literal("1,2"),
+        t.literal('1'),
+        t.literal('2'),
+        t.literal('1,2'),
       ]),
 
       /**
@@ -422,7 +422,7 @@ const IOSSchema = t.exact(
        */
       gemfile: t.array(t.string),
     }),
-  ])
+  ]),
 );
 
 /**
@@ -686,22 +686,22 @@ const GradleSchema = t.partial({
  * orientation: "locked"
  */
 const AndroidOrientationSchema = t.union([
-  t.literal("unspecified"),
-  t.literal("behind"),
-  t.literal("landscape"),
-  t.literal("portrait"),
-  t.literal("reverseLandscape"),
-  t.literal("reversePortrait"),
-  t.literal("sensorLandscape"),
-  t.literal("sensorPortrait"),
-  t.literal("userLandscape"),
-  t.literal("userPortrait"),
-  t.literal("sensor"),
-  t.literal("fullSensor"),
-  t.literal("nosensor"),
-  t.literal("user"),
-  t.literal("fullUser"),
-  t.literal("locked"),
+  t.literal('unspecified'),
+  t.literal('behind'),
+  t.literal('landscape'),
+  t.literal('portrait'),
+  t.literal('reverseLandscape'),
+  t.literal('reversePortrait'),
+  t.literal('sensorLandscape'),
+  t.literal('sensorPortrait'),
+  t.literal('userLandscape'),
+  t.literal('userPortrait'),
+  t.literal('sensor'),
+  t.literal('fullSensor'),
+  t.literal('nosensor'),
+  t.literal('user'),
+  t.literal('fullUser'),
+  t.literal('locked'),
 ]);
 
 /**
@@ -807,19 +807,19 @@ const PluralsSchema = t.record(
        * and plural is very common, but other languages make finer distinctions
        */
       quantity: t.union([
-        t.literal("zero"),
-        t.literal("one"),
-        t.literal("two"),
-        t.literal("few"),
-        t.literal("many"),
-        t.literal("other"),
+        t.literal('zero'),
+        t.literal('one'),
+        t.literal('two'),
+        t.literal('few'),
+        t.literal('many'),
+        t.literal('other'),
       ]),
       /**
        * Pluralized value.
        */
       value: t.string,
-    })
-  )
+    }),
+  ),
 );
 
 /**
@@ -1019,7 +1019,7 @@ const AndroidSchema = t.exact(
        */
       strings: StringsSchema,
     }),
-  ])
+  ]),
 );
 
 /**

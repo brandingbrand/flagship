@@ -1,6 +1,6 @@
-import path from "path";
+import path from 'path';
 
-import { BuildConfig } from "..";
+import {BuildConfig} from '..';
 
 let _pathToProject: string;
 
@@ -41,7 +41,7 @@ function resolvePathFromProject(...paths: string[]): string {
  * @returns {string[]} An array of strings obtained by splitting the input string.
  */
 function packageToPath(value: string): string[] {
-  return value.split(".");
+  return value.split('.');
 }
 
 /**
@@ -71,7 +71,7 @@ export default {
    *
    * @returns {string} The absolute path to "flagship-code.config.ts".
    */
-  config: resolvePathFromProject("flagship-code.config.ts"),
+  config: resolvePathFromProject('flagship-code.config.ts'),
 
   /**
    * iOS-speicifc path utilities
@@ -82,35 +82,35 @@ export default {
      *
      * @returns {string} The absolute path to "ios/Podfile".
      */
-    podfile: resolvePathFromProject("ios", "Podfile"),
+    podfile: resolvePathFromProject('ios', 'Podfile'),
 
     /**
      * Retrieves the absolute path to the iOS Info.plist file.
      *
      * @returns {string} The absolute path to "ios/app/Info.plist".
      */
-    infoPlist: resolvePathFromProject("ios", "app", "Info.plist"),
+    infoPlist: resolvePathFromProject('ios', 'app', 'Info.plist'),
 
     /**
      * Retrieves the absolute path to the iOS Gemfile file.
      *
      * @returns {string} The absolute path to "ios/app/Gemfile".
      */
-    gemfile: resolvePathFromProject("ios", "Gemfile"),
+    gemfile: resolvePathFromProject('ios', 'Gemfile'),
 
     /**
      * Retrieves the absolute path to the iOS EnvSwitcher.m file.
      *
      * @returns {string} The absolute path to "ios/app/EnvSwitcher.m".
      */
-    envSwitcher: resolvePathFromProject("ios", "app", "EnvSwitcher.m"),
+    envSwitcher: resolvePathFromProject('ios', 'app', 'EnvSwitcher.m'),
 
     /**
      * Retrieves the absolute path to the iOS EnvSwitcher.m file.
      *
      * @returns {string} The absolute path to "ios/app/EnvSwitcher.m".
      */
-    entitlements: resolvePathFromProject("ios", "app", "app.entitlements"),
+    entitlements: resolvePathFromProject('ios', 'app', 'app.entitlements'),
 
     /**
      * Retrieves the absolute path to the iOS PrivacyInfo.xcprivacy file.
@@ -118,9 +118,9 @@ export default {
      * @returns {string} The absolute path to "ios/app/PrivacyInfo.xcprivacy".
      */
     privacyManifest: resolvePathFromProject(
-      "ios",
-      "app",
-      "PrivacyInfo.xcprivacy"
+      'ios',
+      'app',
+      'PrivacyInfo.xcprivacy',
     ),
 
     /**
@@ -128,14 +128,14 @@ export default {
      *
      * @returns {string} The absolute path to "ios/app/NativeConstants.m".
      */
-    nativeConstants: resolvePathFromProject("ios", "app", "NativeConstants.m"),
+    nativeConstants: resolvePathFromProject('ios', 'app', 'NativeConstants.m'),
 
     /**
      * Retrieves the absolute path to the iOS AppDelegate.mm file.
      *
      * @returns {string} The absolute path to "ios/app/AppDelegate.mm".
      */
-    appDelegate: resolvePathFromProject("ios", "app", "AppDelegate.mm"),
+    appDelegate: resolvePathFromProject('ios', 'app', 'AppDelegate.mm'),
 
     /**
      * Retrieves the absolute path to the iOS project.pbxproj file.
@@ -143,9 +143,9 @@ export default {
      * @returns {string} The absolute path to "ios/app.xcodeproj/project.pbxproj".
      */
     projectPbxProj: resolvePathFromProject(
-      "ios",
-      "app.xcodeproj",
-      "project.pbxproj"
+      'ios',
+      'app.xcodeproj',
+      'project.pbxproj',
     ),
   },
 
@@ -158,28 +158,28 @@ export default {
      *
      * @returns {string} The absolute path to "android/build.gradle".
      */
-    buildGradle: resolvePathFromProject("android", "build.gradle"),
+    buildGradle: resolvePathFromProject('android', 'build.gradle'),
 
     /**
      * Retrieves the absolute path to the Android Gemfile file.
      *
      * @returns {string} The absolute path to "android/Gemfile".
      */
-    gemfile: resolvePathFromProject("android", "Gemfile"),
+    gemfile: resolvePathFromProject('android', 'Gemfile'),
 
     /**
      * Retrieves the absolute path to the Android gradle.properties file.
      *
      * @returns {string} The absolute path to "android/gradle.properties".
      */
-    gradleProperties: resolvePathFromProject("android", "gradle.properties"),
+    gradleProperties: resolvePathFromProject('android', 'gradle.properties'),
 
     /**
      * Retrieves the absolute path to the Android app/build.gradle file.
      *
      * @returns {string} The absolute path to "android/app/build.gradle".
      */
-    appBuildGradle: resolvePathFromProject("android", "app", "build.gradle"),
+    appBuildGradle: resolvePathFromProject('android', 'app', 'build.gradle'),
 
     /**
      * Retrieves the absolute path to the AndroidManifest.xml file.
@@ -187,11 +187,11 @@ export default {
      * @returns {string} The absolute path to "android/app/src/main/AndroidManifest.xml".
      */
     androidManifest: resolvePathFromProject(
-      "android",
-      "app",
-      "src",
-      "main",
-      "AndroidManifest.xml"
+      'android',
+      'app',
+      'src',
+      'main',
+      'AndroidManifest.xml',
     ),
 
     /**
@@ -200,13 +200,13 @@ export default {
      * @returns {string} The absolute path to "android/app/src/main/res/values/colors.xml".
      */
     colors: resolvePathFromProject(
-      "android",
-      "app",
-      "src",
-      "main",
-      "res",
-      "values",
-      "colors.xml"
+      'android',
+      'app',
+      'src',
+      'main',
+      'res',
+      'values',
+      'colors.xml',
     ),
 
     /**
@@ -215,13 +215,13 @@ export default {
      * @returns {string} The absolute path to "android/app/src/main/res/xml/network_security_config.xml".
      */
     networkSecurityConfig: resolvePathFromProject(
-      "android",
-      "app",
-      "src",
-      "main",
-      "res",
-      "xml",
-      "network_security_config.xml"
+      'android',
+      'app',
+      'src',
+      'main',
+      'res',
+      'xml',
+      'network_security_config.xml',
     ),
 
     /**
@@ -230,13 +230,13 @@ export default {
      * @returns {string} The absolute path to "android/app/src/main/res/values/strings.xml".
      */
     strings: resolvePathFromProject(
-      "android",
-      "app",
-      "src",
-      "main",
-      "res",
-      "values",
-      "strings.xml"
+      'android',
+      'app',
+      'src',
+      'main',
+      'res',
+      'values',
+      'strings.xml',
     ),
 
     /**
@@ -245,13 +245,13 @@ export default {
      * @returns {string} The absolute path to "android/app/src/main/res/values/styles.xml".
      */
     styles: resolvePathFromProject(
-      "android",
-      "app",
-      "src",
-      "main",
-      "res",
-      "values",
-      "styles.xml"
+      'android',
+      'app',
+      'src',
+      'main',
+      'res',
+      'values',
+      'styles.xml',
     ),
 
     /**
@@ -262,13 +262,13 @@ export default {
      */
     mainApplication: function (config: BuildConfig): string {
       return resolvePathFromProject(
-        "android",
-        "app",
-        "src",
-        "main",
-        "java",
+        'android',
+        'app',
+        'src',
+        'main',
+        'java',
         ...packageToPath(config.android.packageName),
-        "MainApplication.java"
+        'MainApplication.java',
       );
     },
 
@@ -280,13 +280,13 @@ export default {
      */
     mainActivity: function (config: BuildConfig): string {
       return resolvePathFromProject(
-        "android",
-        "app",
-        "src",
-        "main",
-        "java",
+        'android',
+        'app',
+        'src',
+        'main',
+        'java',
         ...packageToPath(config.android.packageName),
-        "MainActivity.java"
+        'MainActivity.java',
       );
     },
 
@@ -298,13 +298,13 @@ export default {
      */
     envSwitcher: function (config: BuildConfig): string {
       return resolvePathFromProject(
-        "android",
-        "app",
-        "src",
-        "main",
-        "java",
+        'android',
+        'app',
+        'src',
+        'main',
+        'java',
         ...packageToPath(config.android.packageName),
-        "EnvSwitcher.java"
+        'EnvSwitcher.java',
       );
     },
 
@@ -316,13 +316,13 @@ export default {
      */
     nativeConstants: function (config: BuildConfig): string {
       return resolvePathFromProject(
-        "android",
-        "app",
-        "src",
-        "main",
-        "java",
+        'android',
+        'app',
+        'src',
+        'main',
+        'java',
         ...packageToPath(config.android.packageName),
-        "NativeConstants.java"
+        'NativeConstants.java',
       );
     },
   },

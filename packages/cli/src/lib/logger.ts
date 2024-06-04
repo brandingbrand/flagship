@@ -1,4 +1,4 @@
-import { Writable } from "stream";
+import {Writable} from 'stream';
 
 /**
  * Default export representing a logging utility object.
@@ -59,7 +59,7 @@ export default {
     if (this.isPaused) return;
 
     console.log();
-    console.warn("⚠️ ", ...message);
+    console.warn('⚠️ ', ...message);
   },
 
   /**
@@ -70,7 +70,7 @@ export default {
     if (this.isPaused) return;
 
     console.log();
-    console.error("🛑 ", ...message);
+    console.error('🛑 ', ...message);
   },
 
   /**
@@ -80,7 +80,7 @@ export default {
   success: function (...message: string[]) {
     if (this.isPaused) return;
 
-    console.log("✔ ", ...message);
+    console.log('✔ ', ...message);
   },
 
   /**
@@ -91,7 +91,7 @@ export default {
     if (this.isPaused) return;
 
     console.log();
-    console.log("🎬 ", ...message);
+    console.log('🎬 ', ...message);
     console.log();
   },
 
@@ -105,7 +105,7 @@ export default {
 
     // @ts-ignore
     process.stdout.write = this.__stdout__redirect.write.bind(
-      this.__stdout__redirect
+      this.__stdout__redirect,
     );
   },
 

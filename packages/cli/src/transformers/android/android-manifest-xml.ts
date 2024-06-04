@@ -3,9 +3,9 @@ import {
   type BuildConfig,
   type PrebuildOptions,
   withManifest,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import { Transforms, defineTransformer } from "@/lib";
+import {Transforms, defineTransformer} from '@/lib';
 
 /**
  * Defines a transformer for the Android project's "androidmanifest.xml" file.
@@ -19,7 +19,7 @@ export default defineTransformer<Transforms<AndroidManifestXML, void>>({
   /**
    * Specifies the file to be transformed, which is AndroidManifest.xml in this case.
    */
-  file: "AndroidManifest.xml",
+  file: 'AndroidManifest.xml',
 
   /**
    * An array of transformer functions to be applied to the "AndroidManifest.xml" file.
@@ -38,18 +38,18 @@ export default defineTransformer<Transforms<AndroidManifestXML, void>>({
       if (!config.android.manifest?.urlScheme) return;
 
       // Extract scheme and host from the URL scheme configuration
-      const { scheme, host } = config.android.manifest.urlScheme;
+      const {scheme, host} = config.android.manifest.urlScheme;
 
       // Find the main application activity in the manifest and update its intent filter
       xml.manifest.application
-        ?.find((it) => it.$["android:name"] === ".MainApplication")
-        ?.activity?.find((it) => it.$["android:name"] === ".MainActivity")
-        ?.["intent-filter"]?.push({
+        ?.find(it => it.$['android:name'] === '.MainApplication')
+        ?.activity?.find(it => it.$['android:name'] === '.MainActivity')
+        ?.['intent-filter']?.push({
           // Add action for viewing content
           action: [
             {
               $: {
-                "android:name": "android.intent.action.VIEW",
+                'android:name': 'android.intent.action.VIEW',
               },
             },
           ],
@@ -57,12 +57,12 @@ export default defineTransformer<Transforms<AndroidManifestXML, void>>({
           category: [
             {
               $: {
-                "android:name": "android.intent.category.DEFAULT",
+                'android:name': 'android.intent.category.DEFAULT',
               },
             },
             {
               $: {
-                "android:name": "android.intent.category.BROWSABLE",
+                'android:name': 'android.intent.category.BROWSABLE',
               },
             },
           ],
@@ -70,9 +70,9 @@ export default defineTransformer<Transforms<AndroidManifestXML, void>>({
           data: [
             {
               $: {
-                "android:scheme": scheme,
+                'android:scheme': scheme,
                 ...(host && {
-                  "android:host": host,
+                  'android:host': host,
                 }),
               },
             },
@@ -90,20 +90,20 @@ export default defineTransformer<Transforms<AndroidManifestXML, void>>({
       if (!config.android.manifest?.orientation) return;
 
       // Extract scheme and host from the URL scheme configuration
-      const { orientation } = config.android.manifest;
+      const {orientation} = config.android.manifest;
 
       // Find the main application activity in the manifest and update its intent filter
       const mainActivity = xml.manifest.application
-        ?.find((it) => it.$["android:name"] === ".MainApplication")
-        ?.activity?.find((it) => it.$["android:name"] === ".MainActivity");
+        ?.find(it => it.$['android:name'] === '.MainApplication')
+        ?.activity?.find(it => it.$['android:name'] === '.MainActivity');
 
       if (!mainActivity) {
         throw new Error(
-          "[AndroidManifestTransformer]: cannot set screen orientation because .MainActivity not found"
+          '[AndroidManifestTransformer]: cannot set screen orientation because .MainActivity not found',
         );
       }
 
-      mainActivity.$["android:screenOrientation"] = orientation;
+      mainActivity.$['android:screenOrientation'] = orientation;
     },
 
     /**
@@ -134,10 +134,10 @@ export default defineTransformer<Transforms<AndroidManifestXML, void>>({
    */
   transform: async function (
     config: BuildConfig,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
-    return withManifest((xml) => {
-      return this.transforms.forEach((it) => it(xml, config, options));
+    return withManifest(xml => {
+      return this.transforms.forEach(it => it(xml, config, options));
     });
   },
 });

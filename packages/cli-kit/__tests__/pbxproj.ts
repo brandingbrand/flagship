@@ -1,28 +1,28 @@
 /// <reference types="@brandingbrand/code-cli-kit/types" />
 
-import fs from "fs/promises";
-import xcode from "xcode";
+import fs from 'fs/promises';
+import xcode from 'xcode';
 
-import path from "../src/lib/path";
-import { withPbxproj } from "../src/parsers/pbxproj";
+import path from '../src/lib/path';
+import {withPbxproj} from '../src/parsers/pbxproj';
 
-jest.mock("fs/promises");
-jest.mock("xcode");
+jest.mock('fs/promises');
+jest.mock('xcode');
 
-describe("withPbxproj", () => {
+describe('withPbxproj', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("should read, modify, and write Xcode project file", async () => {
+  it('should read, modify, and write Xcode project file', async () => {
     const mockCallback = jest.fn();
     const mockXcodeProject = {
       parseSync: jest.fn(),
       writeSync: jest.fn(),
     };
 
-    jest.spyOn(xcode, "project").mockReturnValue(mockXcodeProject as any);
-    jest.spyOn(fs, "writeFile").mockResolvedValue();
+    jest.spyOn(xcode, 'project').mockReturnValue(mockXcodeProject as any);
+    jest.spyOn(fs, 'writeFile').mockResolvedValue();
 
     await withPbxproj(mockCallback);
 
@@ -31,7 +31,7 @@ describe("withPbxproj", () => {
     expect(mockCallback).toHaveBeenCalledWith(mockXcodeProject);
     expect(fs.writeFile).toHaveBeenCalledWith(
       path.ios.projectPbxProj,
-      undefined
+      undefined,
     );
     expect(mockXcodeProject.writeSync).toHaveBeenCalled();
   });

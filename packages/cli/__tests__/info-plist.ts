@@ -4,22 +4,22 @@
 
 /// <reference types="@brandingbrand/code-jest-config" />
 
-import { type BuildConfig, fs, path } from "@brandingbrand/code-cli-kit";
+import {type BuildConfig, fs, path} from '@brandingbrand/code-cli-kit';
 
-import transformer from "../src/transformers/ios/info-plist";
+import transformer from '../src/transformers/ios/info-plist';
 
-describe("ios Info.plist transformers", () => {
+describe('ios Info.plist transformers', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
-  it("should update Info.plist with bundleId and displayName", async () => {
+  it('should update Info.plist with bundleId and displayName', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.ios.infoPlist, "utf-8");
+    const content = await fs.readFile(path.ios.infoPlist, 'utf-8');
 
     expect(content).toContain(`<key>CFBundleDisplayName</key>
     <string>${config.ios.displayName}</string>`);
@@ -28,18 +28,18 @@ describe("ios Info.plist transformers", () => {
     <string>${config.ios.bundleId}</string>`);
   });
 
-  it("should update Info.plist with bundle version and short version", async () => {
+  it('should update Info.plist with bundle version and short version', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
     config.ios.versioning = {
-      version: "1.5",
+      version: '1.5',
       build: 20,
     };
 
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.ios.infoPlist, "utf-8");
+    const content = await fs.readFile(path.ios.infoPlist, 'utf-8');
 
     expect(content).toContain(`<key>CFBundleShortVersionString</key>
     <string>${config.ios.versioning.version}</string>`);
@@ -48,20 +48,20 @@ describe("ios Info.plist transformers", () => {
     <string>${config.ios.versioning.build?.toString()}</string>`);
   });
 
-  it("should update Info.plist with url scheme", async () => {
+  it('should update Info.plist with url scheme', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
     config.ios.plist = {
       urlScheme: {
-        scheme: "myapp",
-        host: "app",
+        scheme: 'myapp',
+        host: 'app',
       },
     };
 
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.ios.infoPlist, "utf-8");
+    const content = await fs.readFile(path.ios.infoPlist, 'utf-8');
 
     expect(content).toContain(`<key>CFBundleURLTypes</key>
     <array>
@@ -74,61 +74,61 @@ describe("ios Info.plist transformers", () => {
     </array>`);
   });
 
-  it("should update Info.plist with generic value", async () => {
+  it('should update Info.plist with generic value', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
     config.ios.plist = {
-      style: "light",
+      style: 'light',
     };
 
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.ios.infoPlist, "utf-8");
+    const content = await fs.readFile(path.ios.infoPlist, 'utf-8');
 
     expect(content).toContain(`<key>UIUserInterfaceStyle</key>
     <string>Light</string>`);
   });
 
-  it("should update Info.plist with generic value", async () => {
+  it('should update Info.plist with generic value', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
     config.ios.plist = {
-      style: "dark",
+      style: 'dark',
     };
 
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.ios.infoPlist, "utf-8");
+    const content = await fs.readFile(path.ios.infoPlist, 'utf-8');
 
     expect(content).toContain(`<key>UIUserInterfaceStyle</key>
     <string>Dark</string>`);
   });
 
-  it("should update Info.plist with generic value", async () => {
+  it('should update Info.plist with generic value', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
     config.ios.plist = {
-      style: "system",
+      style: 'system',
     };
 
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.ios.infoPlist, "utf-8");
+    const content = await fs.readFile(path.ios.infoPlist, 'utf-8');
 
     expect(content).toContain(`<key>UIUserInterfaceStyle</key>
     <string>Automatic</string>`);
   });
 
-  it("should not remove NSExceptionDomains children from Info.plist not release mode", async () => {
+  it('should not remove NSExceptionDomains children from Info.plist not release mode', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
-    await transformer.transform(config, { release: false } as any);
-    const content = await fs.readFile(path.ios.infoPlist, "utf-8");
+    await transformer.transform(config, {release: false} as any);
+    const content = await fs.readFile(path.ios.infoPlist, 'utf-8');
 
     expect(content).toContain(`<key>localhost</key>
         <dict>
@@ -137,13 +137,13 @@ describe("ios Info.plist transformers", () => {
         </dict>`);
   });
 
-  it("should remove NSExceptionDomains children from Info.plist in release mode", async () => {
+  it('should remove NSExceptionDomains children from Info.plist in release mode', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
-    await transformer.transform(config, { release: true } as any);
-    const content = await fs.readFile(path.ios.infoPlist, "utf-8");
+    await transformer.transform(config, {release: true} as any);
+    const content = await fs.readFile(path.ios.infoPlist, 'utf-8');
 
     expect(content).not.toContain(`<key>localhost</key>
         <dict>
@@ -152,19 +152,19 @@ describe("ios Info.plist transformers", () => {
         </dict>`);
   });
 
-  it("should add portrait orientation to Info.plist", async () => {
+  it('should add portrait orientation to Info.plist', async () => {
     const config = {
       ...__flagship_code_build_config,
       ios: {
         ...__flagship_code_build_config.ios,
         plist: {
-          orientation: ["portrait"],
+          orientation: ['portrait'],
         },
       },
     } as BuildConfig;
 
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.ios.infoPlist, "utf-8");
+    const content = await fs.readFile(path.ios.infoPlist, 'utf-8');
 
     expect(content).toContain(`<key>UISupportedInterfaceOrientations</key>
     <array>
@@ -172,19 +172,19 @@ describe("ios Info.plist transformers", () => {
     </array>`);
   });
 
-  it("should add landscapeLeft and landscapeRight orientations to Info.plist", async () => {
+  it('should add landscapeLeft and landscapeRight orientations to Info.plist', async () => {
     const config: BuildConfig = {
       ...__flagship_code_build_config,
       ios: {
         ...__flagship_code_build_config.ios,
         plist: {
-          orientation: ["landscapeLeft", "landscapeRight"],
+          orientation: ['landscapeLeft', 'landscapeRight'],
         },
       },
     };
 
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.ios.infoPlist, "utf-8");
+    const content = await fs.readFile(path.ios.infoPlist, 'utf-8');
 
     expect(content).toContain(`<key>UISupportedInterfaceOrientations</key>
     <array>

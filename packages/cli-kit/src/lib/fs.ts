@@ -1,10 +1,10 @@
-import fsPromises from "fs/promises";
+import fsPromises from 'fs/promises';
 
-import fse from "fs-extra";
+import fse from 'fs-extra';
 
-import path from "./path";
-import { FsWarning } from "./errors";
-import { getMatchingFiles } from "./glob";
+import path from './path';
+import {FsWarning} from './errors';
+import {getMatchingFiles} from './glob';
 
 /**
  * Extended file system utility that includes additional functions.
@@ -25,11 +25,11 @@ export default {
    */
   doesKeywordExist: async function (
     path: string,
-    keyword: RegExp | string
+    keyword: RegExp | string,
   ): Promise<boolean> {
-    const fileContent = await fsPromises.readFile(path, "utf-8");
+    const fileContent = await fsPromises.readFile(path, 'utf-8');
 
-    if (typeof keyword === "string") {
+    if (typeof keyword === 'string') {
       return fileContent.includes(keyword);
     }
 
@@ -66,17 +66,17 @@ export default {
   update: async function (
     path: string,
     oldText: RegExp | string,
-    newText: string
+    newText: string,
   ): Promise<void> {
     const exists = await this.doesKeywordExist(path, oldText);
 
     if (!exists) {
       throw new FsWarning(
-        `cannot find keyword: ${oldText} in file path: ${path}`
+        `cannot find keyword: ${oldText} in file path: ${path}`,
       );
     }
 
-    const fileContent = await fsPromises.readFile(path, "utf-8");
+    const fileContent = await fsPromises.readFile(path, 'utf-8');
 
     await fsPromises.writeFile(path, fileContent.replace(oldText, newText));
   },
@@ -95,8 +95,8 @@ export default {
     ...pathComponents: string[]
   ): Promise<void> {
     const directory = path.project.resolve(...pathComponents);
-    const oldPathPart = oldPkg.replace(/\./g, "/");
-    const newPathPart = newPkg.replace(/\./g, "/");
+    const oldPathPart = oldPkg.replace(/\./g, '/');
+    const newPathPart = newPkg.replace(/\./g, '/');
 
     const results = getMatchingFiles(directory, oldPathPart);
 
@@ -106,9 +106,9 @@ export default {
     }
 
     for (const dir of oldPkg
-      .split(".")
+      .split('.')
       .reduce<string[]>((parts, part, index, arr) => {
-        const pattern = [...arr.slice(0, index), part].join("/");
+        const pattern = [...arr.slice(0, index), part].join('/');
         parts.push(...getMatchingFiles(directory, pattern));
         return parts;
       }, [])

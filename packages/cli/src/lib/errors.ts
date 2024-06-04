@@ -16,7 +16,7 @@ export function isWarning(error: Error): boolean {
    * Checks if the error object has a 'name' property and if its type is a string.
    * If not, the function returns undefined, indicating that the error is not a warning.
    */
-  if (!error?.name || typeof error?.name !== "string") return false;
+  if (!error?.name || typeof error?.name !== 'string') return false;
 
   /**
    * Uses a regular expression to check if the 'name' property of the error
@@ -34,7 +34,7 @@ export class ActionWarning extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = "ActionWarning";
+    this.name = 'ActionWarning';
     this.message = `[${this.name}]: ${message}`;
   }
 }

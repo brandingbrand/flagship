@@ -2,35 +2,35 @@
  * @jest-environment-options {"requireTemplate": true}
  */
 
-import { fs, type BuildConfig, path } from "@brandingbrand/code-cli-kit";
+import {fs, type BuildConfig, path} from '@brandingbrand/code-cli-kit';
 
-import plugin from "../src";
-import type { CodePluginPermissions } from "../src/types";
+import plugin from '../src';
+import type {CodePluginPermissions} from '../src/types';
 
-describe("plugin-permissions", () => {
-  jest.spyOn(fs, "writeFile").mockImplementation(jest.fn());
+describe('plugin-permissions', () => {
+  jest.spyOn(fs, 'writeFile').mockImplementation(jest.fn());
 
-  it("ios", async () => {
+  it('ios', async () => {
     const config: BuildConfig & CodePluginPermissions = {
       ios: {
-        bundleId: "com.app",
-        displayName: "App",
+        bundleId: 'com.app',
+        displayName: 'App',
       },
       android: {
-        packageName: "com.app",
-        displayName: "App",
+        packageName: 'com.app',
+        displayName: 'App',
       },
       codePluginPermissions: {
         plugin: {
           ios: [
             {
-              permission: "AppTrackingTransparency",
-              text: "Let me use your ad identifier",
+              permission: 'AppTrackingTransparency',
+              text: 'Let me use your ad identifier',
             },
             {
-              permission: "LocationAccuracy",
-              purposeKey: "full-accuracy",
-              text: "Let me use your precise location temporarily",
+              permission: 'LocationAccuracy',
+              purposeKey: 'full-accuracy',
+              text: 'Let me use your precise location temporarily',
             },
           ],
         },
@@ -40,16 +40,16 @@ describe("plugin-permissions", () => {
     await plugin.ios?.(config, {} as any);
 
     expect(fs.writeFile).toHaveBeenCalledWith(
-      require.resolve("react-native-permissions/RNPermissions.podspec"),
+      require.resolve('react-native-permissions/RNPermissions.podspec'),
       expect.stringContaining(
-        '"ios/*.{h,m,mm}", "ios/AppTrackingTransparency/*.{h,m,mm}"'
+        '"ios/*.{h,m,mm}", "ios/AppTrackingTransparency/*.{h,m,mm}"',
       ),
-      "utf-8"
+      'utf-8',
     );
-    expect(await fs.readFile(path.ios.infoPlist, "utf-8"))
+    expect(await fs.readFile(path.ios.infoPlist, 'utf-8'))
       .toContain(`<key>NSUserTrackingUsageDescription</key>
     <string>Let me use your ad identifier</string>`);
-    expect(await fs.readFile(path.ios.infoPlist, "utf-8"))
+    expect(await fs.readFile(path.ios.infoPlist, 'utf-8'))
       .toContain(`<key>NSLocationTemporaryUsageDescriptionDictionary</key>
     <dict>
       <key>full-accuracy</key>
@@ -57,23 +57,23 @@ describe("plugin-permissions", () => {
     </dict>`);
   });
 
-  it("ios throw error", async () => {
+  it('ios throw error', async () => {
     const config: BuildConfig & CodePluginPermissions = {
       ios: {
-        bundleId: "com.app",
-        displayName: "App",
+        bundleId: 'com.app',
+        displayName: 'App',
       },
       android: {
-        packageName: "com.app",
-        displayName: "App",
+        packageName: 'com.app',
+        displayName: 'App',
       },
       codePluginPermissions: {
         plugin: {
           ios: [
             // @ts-ignore
             {
-              permission: "LocationAccuracy",
-              text: "Let me use your precise location temporarily",
+              permission: 'LocationAccuracy',
+              text: 'Let me use your precise location temporarily',
             },
           ],
         },
@@ -85,31 +85,31 @@ describe("plugin-permissions", () => {
 
       expect(true).toBe(false);
     } catch (e: any) {
-      expect(e.message).toContain("[CodePermissionsPluginError]");
+      expect(e.message).toContain('[CodePermissionsPluginError]');
     }
   });
 
-  it("android", async () => {
+  it('android', async () => {
     const config: BuildConfig & CodePluginPermissions = {
       ios: {
-        bundleId: "com.app",
-        displayName: "App",
+        bundleId: 'com.app',
+        displayName: 'App',
       },
       android: {
-        packageName: "com.app",
-        displayName: "App",
+        packageName: 'com.app',
+        displayName: 'App',
       },
       codePluginPermissions: {
         plugin: {
-          android: ["CAMERA"],
+          android: ['CAMERA'],
         },
       },
     };
 
     await plugin.android?.(config, {} as any);
 
-    expect(await fs.readFile(path.android.androidManifest, "utf-8")).toContain(
-      '<uses-permission android:name="android.permission.CAMERA"/>'
+    expect(await fs.readFile(path.android.androidManifest, 'utf-8')).toContain(
+      '<uses-permission android:name="android.permission.CAMERA"/>',
     );
   });
 });

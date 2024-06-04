@@ -12,10 +12,10 @@ import {
   withPbxproj,
   path,
   fs,
-} from "@brandingbrand/code-cli-kit";
-import fse from "fs-extra";
+} from '@brandingbrand/code-cli-kit';
+import fse from 'fs-extra';
 
-import type { CodePluginTargetExtension } from "./types";
+import type {CodePluginTargetExtension} from './types';
 
 /**
  * Defines a plugin with functions for both iOS and Android platforms.
@@ -32,99 +32,99 @@ export default definePlugin<CodePluginTargetExtension>({
    */
   ios: async function (
     build: BuildConfig & CodePluginTargetExtension,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
     // Extracting the extensions from build object
     const extensions = build.codePluginTargetExtension.plugin;
 
     for (const extension of extensions) {
-      const { assetsPath, bundleId, provisioningProfileName } = extension;
+      const {assetsPath, bundleId, provisioningProfileName} = extension;
 
       // Getting the base name of the assetsPath
       const name = path.basename(assetsPath);
       // Reading files from assetsPath
       const files = await fs.readdir(path.project.resolve(assetsPath));
       // Filtering entitlements file from files
-      const entitlementsFile = files.filter((it) =>
-        it.match(/(\w+\.entitlements)/)
+      const entitlementsFile = files.filter(it =>
+        it.match(/(\w+\.entitlements)/),
       )[0];
       // Filtering source files from files
-      const sourceFiles = files.filter((it) => it.match(/(\w+\.(m|mm|swift))/));
+      const sourceFiles = files.filter(it => it.match(/(\w+\.(m|mm|swift))/));
 
       await fse.copy(
         path.project.resolve(assetsPath),
-        path.project.resolve("ios", name)
+        path.project.resolve('ios', name),
       );
 
       // Performing operations with Xcode project file
-      await withPbxproj((project) => {
+      await withPbxproj(project => {
         // Finding target key for 'app' in the format of uuid
-        const targetKey = project.findTargetKey("app");
+        const targetKey = project.findTargetKey('app');
 
         // Throw error if the target key does not exist as you won't able to manipulate the target
         if (!targetKey) {
           throw Error(
-            "[CodePluginTargetExtension]: cannot find target 'app' uuid"
+            "[CodePluginTargetExtension]: cannot find target 'app' uuid",
           );
         }
 
         // Create new group with source files
-        const { uuid: extensionGroupUuid } = project.addPbxGroup(
+        const {uuid: extensionGroupUuid} = project.addPbxGroup(
           files,
           name,
-          name
+          name,
         );
 
         // Add the extension group to app group
         project.addToPbxGroup(
           extensionGroupUuid,
-          project.getFirstProject().firstProject.mainGroup
+          project.getFirstProject().firstProject.mainGroup,
         );
 
         // Create new target for app extension
-        const { uuid: extensionTargetUuid } = project.addTarget(
+        const {uuid: extensionTargetUuid} = project.addTarget(
           name,
-          "app_extension",
+          'app_extension',
           name,
-          bundleId
+          bundleId,
         );
 
         // Adding build phase for source files
         project.addBuildPhase(
           sourceFiles,
-          "PBXSourcesBuildPhase",
-          "Sources",
+          'PBXSourcesBuildPhase',
+          'Sources',
           extensionTargetUuid,
           undefined,
-          undefined
+          undefined,
         );
 
         // Adding build pahse for frameworks
         project.addBuildPhase(
           [],
-          "PBXFrameworksBuildPhase",
-          "Frameworks",
+          'PBXFrameworksBuildPhase',
+          'Frameworks',
           extensionTargetUuid,
           undefined,
-          undefined
+          undefined,
         );
 
         // Adding build phase for resource files
         project.addBuildPhase(
           [],
-          "PBXResourcesBuildPhase",
-          "Resources",
+          'PBXResourcesBuildPhase',
+          'Resources',
           extensionTargetUuid,
           undefined,
-          undefined
+          undefined,
         );
 
         // Required build settings for code signing - more important for continuous integration
         const buildSettings = {
           PRODUCT_BUNDLE_SHORT_VERSION_STRING:
-            build.ios.versioning?.version ?? "1.0",
+            build.ios.versioning?.version ?? '1.0',
           PRODUCT_BUNDLE_VERSION: build.ios.versioning?.build ?? 1,
-          CODE_SIGN_STYLE: "Manual",
+          CODE_SIGN_STYLE: 'Manual',
           CODE_SIGN_IDENTITY: `"${build.ios.signing?.distCertType}"`,
           PROVISIONING_PROFILE_SPECIFIER: `"${provisioningProfileName}"`,
           DEVELOPMENT_TEAM: build.ios.signing?.exportTeamId,
@@ -137,10 +137,10 @@ export default definePlugin<CodePluginTargetExtension>({
 
         if (entitlementsFile) {
           project.updateBuildProperty(
-            "CODE_SIGN_ENTITLEMENTS",
+            'CODE_SIGN_ENTITLEMENTS',
             `${name}/${entitlementsFile}`,
             null,
-            `"${name}"`
+            `"${name}"`,
           );
         }
       });
@@ -148,4 +148,4 @@ export default definePlugin<CodePluginTargetExtension>({
   },
 });
 
-export type { CodePluginTargetExtension };
+export type {CodePluginTargetExtension};

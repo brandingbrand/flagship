@@ -4,9 +4,9 @@ import {
   withUTF8,
   path,
   string,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import { type Transforms, defineTransformer } from "@/lib";
+import {type Transforms, defineTransformer} from '@/lib';
 
 /**
  * Defines a transformer for the Android project's "app-build.gradle" file.
@@ -29,7 +29,7 @@ export default defineTransformer<Transforms<string>>({
    * The name of the file to be transformed ("app-build.gradle").
    * @type {string}
    */
-  file: "app-build.gradle",
+  file: 'app-build.gradle',
 
   /**
    * An array of transformer functions to be applied to the "app-build.gradle" file.
@@ -48,7 +48,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(namespace\s*")(\w|\.)+(")/m,
-        `$1${config.android.packageName}$3`
+        `$1${config.android.packageName}$3`,
       );
     },
 
@@ -62,7 +62,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(applicationId\s*")(\w|\.)+(")/m,
-        `$1${config.android.packageName}$3`
+        `$1${config.android.packageName}$3`,
       );
     },
 
@@ -78,7 +78,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(versionCode\s+)\d+/m,
-        `$1${config.android.versioning?.build}`
+        `$1${config.android.versioning?.build}`,
       );
     },
 
@@ -94,7 +94,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(versionName\s*")(\w|\.)+(")/m,
-        `$1${config.android.versioning?.version}$3`
+        `$1${config.android.versioning?.version}$3`,
       );
     },
 
@@ -118,7 +118,7 @@ export default defineTransformer<Transforms<string>>({
             keyAlias '${config.android.signing.keyAlias}'
             keyPassword System.getenv("KEY_PASSWORD")
         }
-        `
+        `,
       );
     },
 
@@ -137,7 +137,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(buildTypes\s*{[\s\S]*release\s*{[\s\S]*signingConfig\s+).*/m,
-        "$1signingConfigs.release"
+        '$1signingConfigs.release',
       );
     },
 
@@ -154,7 +154,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(dependencies\s*{\s*?\n(\s+))/m,
-        `$1${config.android.gradle.appGradle.dependencies.map((it) => it).join("\n$2")}\n$2`
+        `$1${config.android.gradle.appGradle.dependencies.map(it => it).join('\n$2')}\n$2`,
       );
     },
   ],
@@ -166,7 +166,7 @@ export default defineTransformer<Transforms<string>>({
    */
   transform: async function (
     config: BuildConfig,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
     return withUTF8(path.android.appBuildGradle, (content: string) => {
       return this.transforms.reduce((acc, curr) => {

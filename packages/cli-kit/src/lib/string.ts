@@ -1,4 +1,4 @@
-import { StringWarning } from "./errors";
+import {StringWarning} from './errors';
 
 /**
  * Collection of string-related utilities.

@@ -4,9 +4,9 @@ import {
   withUTF8,
   path,
   string,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import { Transforms, defineTransformer } from "@/lib";
+import {Transforms, defineTransformer} from '@/lib';
 
 /**
  * Defines a transformer for the iOS project's "Podfile" file.
@@ -22,7 +22,7 @@ export default defineTransformer<Transforms<string>>({
    * The name of the file to be transformed ("Podfile").
    * @type {string}
    */
-  file: "Podfile",
+  file: 'Podfile',
 
   /**
    * An array of transformer functions to be applied to the "Podfile" file.
@@ -43,7 +43,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(^platform\s+:ios.*\n)/m,
-        `$1${config.ios.podfile.config.map((it) => it).join("\n")}\n`
+        `$1${config.ios.podfile.config.map(it => it).join('\n')}\n`,
       );
     },
 
@@ -59,7 +59,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(target\s*'app'[\s\S]*?\n(\s+))/m,
-        `$1${config.ios.podfile.pods.map((it) => it).join("\n$2")}\n$2`
+        `$1${config.ios.podfile.pods.map(it => it).join('\n$2')}\n$2`,
       );
     },
 
@@ -75,7 +75,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(^platform\s+:ios,\s+).*/m,
-        `$1'${config.ios.deploymentTarget}'`
+        `$1'${config.ios.deploymentTarget}'`,
       );
     },
   ],
@@ -87,7 +87,7 @@ export default defineTransformer<Transforms<string>>({
    */
   transform: async function (
     config: BuildConfig,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
     return withUTF8(path.ios.podfile, (content: string) => {
       return this.transforms.reduce((acc, curr) => {

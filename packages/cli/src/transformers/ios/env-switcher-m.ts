@@ -4,9 +4,9 @@ import {
   withUTF8,
   path,
   string,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import { Transforms, defineTransformer } from "@/lib";
+import {Transforms, defineTransformer} from '@/lib';
 
 /**
  * Defines a transformer for the iOS project's "EnvSwitcher.m" file.
@@ -22,7 +22,7 @@ export default defineTransformer<Transforms<string>>({
    * The name of the file to be transformed ("EnvSwitcher.m").
    * @type {string}
    */
-  file: "EnvSwitcher.m",
+  file: 'EnvSwitcher.m',
 
   /**
    * An array of transformer functions to be applied to the "EnvSwitcher.m" file.
@@ -40,12 +40,12 @@ export default defineTransformer<Transforms<string>>({
     (
       content: string,
       config: BuildConfig,
-      options: PrebuildOptions
+      options: PrebuildOptions,
     ): string => {
       return string.replace(
         content,
         /(\*initialEnvName\s+=\s+@").*(")/m,
-        `$1${options.env}$2`
+        `$1${options.env}$2`,
       );
     },
   ],
@@ -57,7 +57,7 @@ export default defineTransformer<Transforms<string>>({
    */
   transform: async function (
     config: BuildConfig,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
     return withUTF8(path.ios.envSwitcher, (content: string) => {
       return this.transforms.reduce((acc, curr) => {

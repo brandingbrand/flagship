@@ -10,7 +10,7 @@
  *
  * @module schemas/build-config
  */
-export * from "./build-config";
+export * from './build-config';
 
 /**
  * Importing all named exports from the "flagship-code-config" module.
@@ -18,4 +18,4 @@ export * from "./build-config";
  *
  * @module schemas/flagship-code-config
  */
-export * from "./flagship-code-config";
+export * from './flagship-code-config';

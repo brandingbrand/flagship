@@ -1,6 +1,6 @@
 /// <reference types="@brandingbrand/code-cli-kit/types"/>
 
-import fse from "fs-extra";
+import fse from 'fs-extra';
 import {
   BuildConfig,
   path,
@@ -8,40 +8,40 @@ import {
   withUTF8,
   string,
   withInfoPlist,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import type { CodePluginSplashScreen } from "./types";
+import type {CodePluginSplashScreen} from './types';
 
 /**
  * Generates iOS splash screen using provided configuration.
  * @param config The build configuration including splash screen settings.
  */
 export async function ios(config: BuildConfig & CodePluginSplashScreen) {
-  if (config.codePluginSplashScreen.plugin.ios?.type !== "legacy") {
+  if (config.codePluginSplashScreen.plugin.ios?.type !== 'legacy') {
     throw Error(
-      "[CodePluginSplashScreen]: generated was inadvertently executed with the incorrect config - 'type' must be 'legacy'"
+      "[CodePluginSplashScreen]: generated was inadvertently executed with the incorrect config - 'type' must be 'legacy'",
     );
   }
 
   // Extract xcassetsDir and xcassetsFile from the iOS legacy splash screen configuration
-  const { xcassetsDir, xcassetsFile, storyboardFile } =
+  const {xcassetsDir, xcassetsFile, storyboardFile} =
     config.codePluginSplashScreen.plugin.ios.legacy;
 
   // Copy xcassetsDir to iOS app directory
   await fse.copy(
     path.project.resolve(xcassetsDir),
-    path.project.resolve("ios", "app"),
+    path.project.resolve('ios', 'app'),
     {
       overwrite: true,
-    }
+    },
   );
 
   // Modify the iOS project file to include the splash screen resource
-  withPbxproj((project) => {
+  withPbxproj(project => {
     /**
      * Aggregate the target key in the format of the uuid.
      */
-    const targetKey = project.findTargetKey("app");
+    const targetKey = project.findTargetKey('app');
 
     /**
      * The target key in the format of a uuid is required to proceed further
@@ -49,14 +49,14 @@ export async function ios(config: BuildConfig & CodePluginSplashScreen) {
      */
     if (!targetKey) {
       throw Error(
-        "[CodePluginSplashCreenError]: cannot find target 'app' uuid"
+        "[CodePluginSplashCreenError]: cannot find target 'app' uuid",
       );
     }
 
     /**
      * Aggregate the group key in the format of the uuid.
      */
-    const groupKey = project.findPBXGroupKey({ name: "app" });
+    const groupKey = project.findPBXGroupKey({name: 'app'});
 
     /**
      * The group key in the format of a uuid is required to proceed further
@@ -70,12 +70,12 @@ export async function ios(config: BuildConfig & CodePluginSplashScreen) {
      * There is no resource group by default so add in case another plugin has not
      * already created it. This would otherwise error out with vague message.
      */
-    if (!project.findPBXGroupKey({ name: "Resources" })) {
-      const { uuid } = project.addPbxGroup([], "Resources", '""');
+    if (!project.findPBXGroupKey({name: 'Resources'})) {
+      const {uuid} = project.addPbxGroup([], 'Resources', '""');
 
       project.addToPbxGroup(
         uuid,
-        project.getFirstProject().firstProject.mainGroup
+        project.getFirstProject().firstProject.mainGroup,
       );
     }
 
@@ -84,8 +84,8 @@ export async function ios(config: BuildConfig & CodePluginSplashScreen) {
      */
     project.addResourceFile(
       `app/${xcassetsFile}`,
-      { target: targetKey },
-      groupKey
+      {target: targetKey},
+      groupKey,
     );
 
     /**
@@ -93,15 +93,15 @@ export async function ios(config: BuildConfig & CodePluginSplashScreen) {
      * from the default value - no need to re-add it as a resource with
      * an added side-effect.
      */
-    if (storyboardFile === "LaunchScreen.storyboard") return;
+    if (storyboardFile === 'LaunchScreen.storyboard') return;
 
     /**
      * Add newly named storyboard resource file.
      */
     project.addResourceFile(
       `app/${storyboardFile}`,
-      { target: targetKey },
-      groupKey
+      {target: targetKey},
+      groupKey,
     );
   });
 
@@ -110,12 +110,12 @@ export async function ios(config: BuildConfig & CodePluginSplashScreen) {
    * from the default value - no need to update the Info.plist with an
    * added side-effect.
    */
-  if (storyboardFile === "LaunchScreen.storyboard") return;
+  if (storyboardFile === 'LaunchScreen.storyboard') return;
 
   /**
    * Update Info.plist with newly named storyboard.
    */
-  await withInfoPlist((plist) => {
+  await withInfoPlist(plist => {
     return {
       ...plist,
       UILaunchStoryboardName: storyboardFile,
@@ -128,26 +128,26 @@ export async function ios(config: BuildConfig & CodePluginSplashScreen) {
  * @param config The build configuration including splash screen settings.
  */
 export async function android(config: BuildConfig & CodePluginSplashScreen) {
-  if (config.codePluginSplashScreen.plugin.android?.type !== "legacy") {
+  if (config.codePluginSplashScreen.plugin.android?.type !== 'legacy') {
     throw Error(
-      "[CodePluginSplashScreen]: generated was inadvertently executed with the incorrect config - 'type' must be 'legacy'"
+      "[CodePluginSplashScreen]: generated was inadvertently executed with the incorrect config - 'type' must be 'legacy'",
     );
   }
 
   // Extract assetsDir from the Android legacy splash screen configuration
-  const { assetsDir } = config.codePluginSplashScreen.plugin.android.legacy;
+  const {assetsDir} = config.codePluginSplashScreen.plugin.android.legacy;
 
   // Copy assetsDir to Android res directory
   await fse.copy(
     path.project.resolve(assetsDir),
-    path.project.resolve("android", "app", "src", "main", "res"),
+    path.project.resolve('android', 'app', 'src', 'main', 'res'),
     {
       overwrite: true,
-    }
+    },
   );
 
   // Update the main activity file to set the splash screen layout
-  await withUTF8(path.android.mainActivity(config), (content) => {
+  await withUTF8(path.android.mainActivity(config), content => {
     // Add package imports to the main activity
     content = string.replace(
       content,
@@ -156,7 +156,7 @@ export async function android(config: BuildConfig & CodePluginSplashScreen) {
     
 import android.os.Bundle;
 import androidx.annotation.Nullable;
-    `
+    `,
     );
 
     // Add onCreate method to the main activity to set the splash screen layout
@@ -169,7 +169,7 @@ import androidx.annotation.Nullable;
     super.onCreate(savedInstanceState);
     setContentView(R.layout.splash);
   }
-`
+`,
     );
 
     return content;

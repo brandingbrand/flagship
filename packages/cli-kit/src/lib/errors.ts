@@ -13,7 +13,7 @@ export class FsWarning extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = "FsWarning";
+    this.name = 'FsWarning';
     this.message = `[${this.name}]: ${message}`;
   }
 }
@@ -27,7 +27,7 @@ export class StringWarning extends Error {
   constructor(message: string) {
     super(message);
 
-    this.name = "StringWarning";
+    this.name = 'StringWarning';
     this.message = `[${this.name}]: ${message}`;
   }
 }

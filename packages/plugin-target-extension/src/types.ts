@@ -1,4 +1,4 @@
-import type { Plugin } from "@brandingbrand/code-cli-kit";
+import type {Plugin} from '@brandingbrand/code-cli-kit';
 
 /**
  * Represents the target extension configuration for a code plugin.

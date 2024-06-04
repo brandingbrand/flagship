@@ -8,10 +8,10 @@ import {
   type PrebuildOptions,
   definePlugin,
   path,
-} from "@brandingbrand/code-cli-kit";
-import linkAssets from "react-native-asset";
+} from '@brandingbrand/code-cli-kit';
+import linkAssets from 'react-native-asset';
 
-import type { CodePluginAsset } from "./types";
+import type {CodePluginAsset} from './types';
 
 /**
  * Defines a plugin with functions for both iOS and Android platforms.
@@ -28,13 +28,13 @@ export default definePlugin<CodePluginAsset>({
    */
   ios: async function (
     build: BuildConfig & CodePluginAsset,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
-    const { assetPath } = build.codePluginAsset.plugin;
+    const {assetPath} = build.codePluginAsset.plugin;
 
     // Change log level to silent so react ink is uninterrupted
-    const log = require("npmlog");
-    log.level = "silent";
+    const log = require('npmlog');
+    log.level = 'silent';
 
     linkAssets({
       rootPath: path.project.resolve(),
@@ -42,11 +42,11 @@ export default definePlugin<CodePluginAsset>({
       platforms: {
         ios: {
           enabled: true,
-          assets: assetPath.map((it) => path.project.resolve(it)),
+          assets: assetPath.map(it => path.project.resolve(it)),
         },
         android: {
           enabled: false,
-          assets: assetPath.map((it) => path.project.resolve(it)),
+          assets: assetPath.map(it => path.project.resolve(it)),
         },
       },
     });
@@ -60,13 +60,13 @@ export default definePlugin<CodePluginAsset>({
    */
   android: async function (
     build: BuildConfig & CodePluginAsset,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
-    const { assetPath } = build.codePluginAsset.plugin;
+    const {assetPath} = build.codePluginAsset.plugin;
 
     // Change log level to silent so react ink is uninterrupted
-    const log = require("npmlog");
-    log.level = "silent";
+    const log = require('npmlog');
+    log.level = 'silent';
 
     linkAssets({
       rootPath: path.project.resolve(),
@@ -74,15 +74,15 @@ export default definePlugin<CodePluginAsset>({
       platforms: {
         ios: {
           enabled: false,
-          assets: assetPath.map((it) => path.project.resolve(it)),
+          assets: assetPath.map(it => path.project.resolve(it)),
         },
         android: {
           enabled: true,
-          assets: assetPath.map((it) => path.project.resolve(it)),
+          assets: assetPath.map(it => path.project.resolve(it)),
         },
       },
     });
   },
 });
 
-export type { CodePluginAsset };
+export type {CodePluginAsset};

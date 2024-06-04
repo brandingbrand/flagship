@@ -18,7 +18,7 @@ if (global.__flagship_code_fixture_path) {
    * @type {jest.SpyInstance<string, []>}
    */
   jest
-    .spyOn(process, "cwd")
+    .spyOn(process, 'cwd')
     .mockReturnValue(global.__flagship_code_fixture_path);
 }
 
@@ -27,14 +27,14 @@ if (global.__flagship_code_fixture_path) {
  */
 global.__flagship_code_build_config = {
   ios: {
-    name: "brandingbrand",
-    bundleId: "com.brandingbrand",
-    displayName: "Branding Brand",
+    name: 'brandingbrand',
+    bundleId: 'com.brandingbrand',
+    displayName: 'Branding Brand',
   },
   android: {
-    name: "brandingbrand",
-    displayName: "Branding Brand",
-    packageName: "com.brandingbrand",
+    name: 'brandingbrand',
+    displayName: 'Branding Brand',
+    packageName: 'com.brandingbrand',
   },
 };
 

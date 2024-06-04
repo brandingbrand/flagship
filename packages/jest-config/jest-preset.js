@@ -8,7 +8,7 @@ module.exports = {
   /**
    * Merge the 'ts-jest' preset configuration.
    */
-  ...require("ts-jest/jest-preset"),
+  ...require('ts-jest/jest-preset'),
 
   /**
    * Set the test environment for Jest.
@@ -18,7 +18,7 @@ module.exports = {
    *
    * @type {string}
    */
-  testEnvironment: require.resolve("./build/test-environment.js"),
+  testEnvironment: require.resolve('./build/test-environment.js'),
 
   /**
    * Setup files to be executed after Jest environment setup.
@@ -28,7 +28,7 @@ module.exports = {
    *
    * @type {string[]}
    */
-  setupFilesAfterEnv: [require.resolve("./build/setup-files-after-env.js")],
+  setupFilesAfterEnv: [require.resolve('./build/setup-files-after-env.js')],
 
   /**
    * Module name mapper for path aliasing in Jest.
@@ -48,6 +48,6 @@ module.exports = {
      * "^@/(.*)$": "./src/$1",
      * ```
      */
-    "^@/(.*)$": "<rootDir>/src/$1",
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
 };

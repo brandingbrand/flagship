@@ -1,11 +1,11 @@
-import chalk from "chalk";
-import { program } from "commander";
-import { detect } from "detect-package-manager";
-import { type GenerateOptions } from "@brandingbrand/code-cli-kit";
+import chalk from 'chalk';
+import {program} from 'commander';
+import {detect} from 'detect-package-manager';
+import {type GenerateOptions} from '@brandingbrand/code-cli-kit';
 
-import * as actions from "@/actions";
-import { Actions } from "@/components";
-import { config, emitter, logger } from "@/lib";
+import * as actions from '@/actions';
+import {Actions} from '@/components';
+import {config, emitter, logger} from '@/lib';
 
 /**
  * Defines a command for generating a flagship-code template using the "commander" library.
@@ -22,21 +22,21 @@ import { config, emitter, logger } from "@/lib";
  * @see {@link https://www.npmjs.com/package/commander | commander} - Command-line framework for Node.js.
  */
 program
-  .command("plugin")
-  .description("generate a plugin")
-  .argument("<string>", "name of generated plugin")
+  .command('plugin')
+  .description('generate a plugin')
+  .argument('<string>', 'name of generated plugin')
   .action(async (str: string, options: GenerateOptions) => {
     /**
      * Update the configuration generate options with the provided options and command type.
      */
-    config.generateOptions = { ...options, name: str, command: "generate" };
+    config.generateOptions = {...options, name: str, command: 'generate'};
 
-    const { render } = await import("ink");
+    const {render} = await import('ink');
 
     /**
      * Render the Reporter component to display progress.
      */
-    const { unmount } = render(<Actions />, { stdout: process.stderr });
+    const {unmount} = render(<Actions />, {stdout: process.stderr});
 
     global.unmount = unmount;
 
@@ -57,7 +57,7 @@ program
      * This is the last action to be run - if the execution gets to this point
      * it can be assumed that it was successful.
      */
-    emitter.emit("action", { name: "dependencies", status: "success" });
+    emitter.emit('action', {name: 'dependencies', status: 'success'});
 
     /**
      * Unmount react ink components
@@ -75,6 +75,6 @@ program
 
     ${chalk.cyan((await detect()) + ` flagship-code prebuild --build <build-variant> --env <env-variant>`)}
         Generate native code for React Native app
-`
+`,
     );
   });

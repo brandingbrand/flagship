@@ -1,8 +1,8 @@
-import { useAsync } from "react-async";
-import { useEffect, useState } from "react";
+import {useAsync} from 'react-async';
+import {useEffect, useState} from 'react';
 
-import { Action } from "./Action";
-import { AsyncComponents } from "./AsyncComponents";
+import {Action} from './Action';
+import {AsyncComponents} from './AsyncComponents';
 
 import {
   CODE_EVENT,
@@ -13,7 +13,7 @@ import {
   TEMPLATE_EVENT,
   config,
   emitter,
-} from "@/lib";
+} from '@/lib';
 
 const groups: Record<Group, string> = {
   template: TEMPLATE_EVENT,
@@ -31,34 +31,34 @@ export function Actions() {
   const [actions, setActions] = useState({});
 
   function handler(event: Event): void {
-    setActions((prevState) => ({
+    setActions(prevState => ({
       ...prevState,
       [event.name]: event.status,
     }));
   }
 
   useEffect(() => {
-    emitter.on("action", handler as any);
+    emitter.on('action', handler as any);
 
     return () => {
-      emitter.off("action", handler as any);
+      emitter.off('action', handler as any);
     };
   }, []);
 
-  const { data: Components, isPending } = useAsync({
+  const {data: Components, isPending} = useAsync({
     promiseFn: AsyncComponents,
   });
 
   if (!Components || isPending) return <></>;
 
-  const { Box } = Components;
+  const {Box} = Components;
 
   if (config.options.verbose) return null;
 
   return (
     <Box flexDirection="column">
       <Box marginTop={1} marginBottom={1} flexDirection="column">
-        {Object.keys(actions).map((it) => (
+        {Object.keys(actions).map(it => (
           <Action
             key={it}
             status={(actions as any)[it]}

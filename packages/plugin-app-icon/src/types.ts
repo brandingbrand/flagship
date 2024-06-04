@@ -1,4 +1,4 @@
-import type { Plugin } from "@brandingbrand/code-cli-kit";
+import type {Plugin} from '@brandingbrand/code-cli-kit';
 
 /**
  * Type definition for the code plugin app icon.
@@ -24,12 +24,12 @@ export type Icon = {
   /**
    * The platform of the icon.
    */
-  platform: "ios" | "android";
+  platform: 'ios' | 'android';
 
   /**
    * The type of the icon.
    */
-  type: "universal" | "legacy" | "adaptive" | "notification";
+  type: 'universal' | 'legacy' | 'adaptive' | 'notification';
 
   /**
    * The name of the icon.
@@ -69,7 +69,7 @@ export type Rule = {
   /**
    * The platform of the rule.
    */
-  platform: "ios" | "android";
+  platform: 'ios' | 'android';
 
   /**
    * The size of the rule.
@@ -104,7 +104,7 @@ export type Rule = {
   /**
    * The idiom of the rule (optional).
    */
-  idiom?: "ios-marketing" | "ipad" | "iphone";
+  idiom?: 'ios-marketing' | 'ipad' | 'iphone';
 
   /**
    * The DPI of the rule (optional).

@@ -1,17 +1,17 @@
 /**
  * Represents a string value that can only be "true" or "false".
  */
-type StringBoolean = "true" | "false";
+type StringBoolean = 'true' | 'false';
 
 /**
  * Represents the attributes of metadata in the AndroidManifest.
  */
 type ManifestMetaDataAttributes = AndroidManifestAttributes & {
   /** Value attribute for metadata. */
-  "android:value"?: string;
+  'android:value'?: string;
 
   /** Resource attribute for metadata. */
-  "android:resource"?: string;
+  'android:resource'?: string;
 };
 
 /**
@@ -19,10 +19,10 @@ type ManifestMetaDataAttributes = AndroidManifestAttributes & {
  */
 type AndroidManifestAttributes = {
   /** Name attribute in the AndroidManifest. */
-  "android:name": string | "android.intent.action.VIEW";
+  'android:name': string | 'android.intent.action.VIEW';
 
   /** Node attribute in the AndroidManifest. */
-  "tools:node"?: string | "remove";
+  'tools:node'?: string | 'remove';
 };
 
 /**
@@ -45,9 +45,9 @@ type ManifestCategory = {
 type ManifestData = {
   $: {
     [key: string]: string | undefined;
-    "android:host"?: string;
-    "android:pathPrefix"?: string;
-    "android:scheme"?: string;
+    'android:host'?: string;
+    'android:pathPrefix'?: string;
+    'android:scheme'?: string;
   };
 };
 
@@ -57,13 +57,13 @@ type ManifestData = {
 type ManifestReceiver = {
   $: AndroidManifestAttributes & {
     /** "ed" attribute for the receiver. */
-    "android:ed"?: StringBoolean;
+    'android:ed'?: StringBoolean;
 
     /** "enabled" attribute for the receiver. */
-    "android:enabled"?: StringBoolean;
+    'android:enabled'?: StringBoolean;
   };
   /** Intent filter for the receiver. */
-  "intent-filter"?: ManifestIntentFilter[];
+  'intent-filter'?: ManifestIntentFilter[];
 };
 
 /**
@@ -72,10 +72,10 @@ type ManifestReceiver = {
 type ManifestIntentFilter = {
   $?: {
     /** "autoVerify" attribute for the intent filter. */
-    "android:autoVerify"?: StringBoolean;
+    'android:autoVerify'?: StringBoolean;
 
     /** "data-generated" attribute for the intent filter. */
-    "data-generated"?: StringBoolean;
+    'data-generated'?: StringBoolean;
   };
   /** Action elements within the intent filter. */
   action?: ManifestAction[];
@@ -97,52 +97,52 @@ type ManifestMetaData = {
  */
 type ManifestProviderAttributes = {
   /** "authorities" attribute for the provider. */
-  "android:authorities": string;
+  'android:authorities': string;
 
   /** "directBootAware" attribute for the provider. */
-  "android:directBootAware"?: boolean;
+  'android:directBootAware'?: boolean;
 
   /** "enabled" attribute for the provider. */
-  "android:enabled"?: boolean;
+  'android:enabled'?: boolean;
 
   /** "ed" attribute for the provider. */
-  "android:ed"?: boolean;
+  'android:ed'?: boolean;
 
   /** "grantUriPermissions" attribute for the provider. */
-  "android:grantUriPermissions"?: boolean;
+  'android:grantUriPermissions'?: boolean;
 
   /** "icon" attribute for the provider. */
-  "android:icon"?: string;
+  'android:icon'?: string;
 
   /** "initOrder" attribute for the provider. */
-  "android:initOrder"?: number;
+  'android:initOrder'?: number;
 
   /** "label" attribute for the provider. */
-  "android:label"?: number;
+  'android:label'?: number;
 
   /** "multiprocess" attribute for the provider. */
-  "android:multiprocess"?: boolean;
+  'android:multiprocess'?: boolean;
 
   /** "name" attribute for the provider. */
-  "android:name"?: string;
+  'android:name'?: string;
 
   /** "permission" attribute for the provider. */
-  "android:permission"?: string;
+  'android:permission'?: string;
 
   /** "process" attribute for the provider. */
-  "android:process"?: string;
+  'android:process'?: string;
 
   /** "readPermission" attribute for the provider. */
-  "android:readPermission"?: string;
+  'android:readPermission'?: string;
 
   /** "syncable" attribute for the provider. */
-  "android:syncable"?: boolean;
+  'android:syncable'?: boolean;
 
   /** "writePermission" attribute for the provider. */
-  "android:writePermission"?: string;
+  'android:writePermission'?: string;
 
   /** "exported" attribute for the provider. */
-  "android:exported"?: boolean;
+  'android:exported'?: boolean;
 };
 
 /**
@@ -157,13 +157,13 @@ type ManifestProvider = {
  */
 type ManifestServiceAttributes = AndroidManifestAttributes & {
   /** "enabled" attribute for the service. */
-  "android:enabled"?: StringBoolean;
+  'android:enabled'?: StringBoolean;
 
   /** "ed" attribute for the service. */
-  "android:ed"?: StringBoolean;
+  'android:ed'?: StringBoolean;
 
   /** "permission" attribute for the service. */
-  "android:permission"?: string;
+  'android:permission'?: string;
 };
 
 /**
@@ -172,7 +172,7 @@ type ManifestServiceAttributes = AndroidManifestAttributes & {
 type ManifestService = {
   $: ManifestServiceAttributes;
   /** Intent filter for the service. */
-  "intent-filter"?: ManifestIntentFilter[];
+  'intent-filter'?: ManifestIntentFilter[];
 };
 
 /**
@@ -180,31 +180,31 @@ type ManifestService = {
  */
 type ManifestApplicationAttributes = {
   /** "name" attribute for the application. */
-  "android:name": string | ".MainApplication";
+  'android:name': string | '.MainApplication';
 
   /** "icon" attribute for the application. */
-  "android:icon"?: string;
+  'android:icon'?: string;
 
   /** "roundIcon" attribute for the application. */
-  "android:roundIcon"?: string;
+  'android:roundIcon'?: string;
 
   /** "label" attribute for the application. */
-  "android:label"?: string;
+  'android:label'?: string;
 
   /** "allowBackup" attribute for the application. */
-  "android:allowBackup"?: StringBoolean;
+  'android:allowBackup'?: StringBoolean;
 
   /** "largeHeap" attribute for the application. */
-  "android:largeHeap"?: StringBoolean;
+  'android:largeHeap'?: StringBoolean;
 
   /** "requestLegacyExternalStorage" attribute for the application. */
-  "android:requestLegacyExternalStorage"?: StringBoolean;
+  'android:requestLegacyExternalStorage'?: StringBoolean;
 
   /** "usesCleartextTraffic" attribute for the application. */
-  "android:usesCleartextTraffic"?: StringBoolean;
+  'android:usesCleartextTraffic'?: StringBoolean;
 
   /** "networkSecurityConfig" attribute for the application. */
-  "android:networkSecurityConfig"?: string;
+  'android:networkSecurityConfig'?: string;
 
   /** Additional attributes for the application. */
   [key: string]: string | undefined;
@@ -215,45 +215,45 @@ type ManifestApplicationAttributes = {
  */
 type ManifestActivityAttributes = ManifestApplicationAttributes & {
   /** "ed" attribute for the activity. */
-  "android:ed"?: StringBoolean;
+  'android:ed'?: StringBoolean;
 
   /** "launchMode" attribute for the activity. */
-  "android:launchMode"?: string;
+  'android:launchMode'?: string;
 
   /** "theme" attribute for the activity. */
-  "android:theme"?: string;
+  'android:theme'?: string;
 
   /** "windowSoftInputMode" attribute for the activity. */
-  "android:windowSoftInputMode"?:
+  'android:windowSoftInputMode'?:
     | string
-    | "stateUnspecified"
-    | "stateUnchanged"
-    | "stateHidden"
-    | "stateAlwaysHidden"
-    | "stateVisible"
-    | "stateAlwaysVisible"
-    | "adjustUnspecified"
-    | "adjustResize"
-    | "adjustPan";
+    | 'stateUnspecified'
+    | 'stateUnchanged'
+    | 'stateHidden'
+    | 'stateAlwaysHidden'
+    | 'stateVisible'
+    | 'stateAlwaysVisible'
+    | 'adjustUnspecified'
+    | 'adjustResize'
+    | 'adjustPan';
 
   /** "screenOrientation" attribute for the activity. */
-  "android:screenOrientation":
-    | "unspecified"
-    | "behind"
-    | "landscape"
-    | "portrait"
-    | "reverseLandscape"
-    | "reversePortrait"
-    | "sensorLandscape"
-    | "sensorPortrait"
-    | "userLandscape"
-    | "userPortrait"
-    | "sensor"
-    | "fullSensor"
-    | "nosensor"
-    | "user"
-    | "fullUser"
-    | "locked";
+  'android:screenOrientation':
+    | 'unspecified'
+    | 'behind'
+    | 'landscape'
+    | 'portrait'
+    | 'reverseLandscape'
+    | 'reversePortrait'
+    | 'sensorLandscape'
+    | 'sensorPortrait'
+    | 'userLandscape'
+    | 'userPortrait'
+    | 'sensor'
+    | 'fullSensor'
+    | 'nosensor'
+    | 'user'
+    | 'fullUser'
+    | 'locked';
 
   /** Additional attributes for the activity. */
   [key: string]: string | undefined;
@@ -271,7 +271,7 @@ type ManifestActivity = {
  */
 type ManifestActivityElements = {
   /** Intent filter for the activity. */
-  "intent-filter"?: ManifestIntentFilter[];
+  'intent-filter'?: ManifestIntentFilter[];
 };
 
 /**
@@ -280,7 +280,7 @@ type ManifestActivityElements = {
 type ManifestUsesLibrary = {
   $: AndroidManifestAttributes & {
     /** "required" attribute for uses-library. */
-    "android:required"?: StringBoolean;
+    'android:required'?: StringBoolean;
   };
 };
 
@@ -305,10 +305,10 @@ type ManifestApplicationElements = {
   receiver?: ManifestReceiver[];
 
   /** Array of metadata entries within the application. */
-  "meta-data"?: ManifestMetaData[];
+  'meta-data'?: ManifestMetaData[];
 
   /** Array of uses-library entries within the application. */
-  "uses-library"?: ManifestUsesLibrary[];
+  'uses-library'?: ManifestUsesLibrary[];
 
   /** Array of provider entries within the application. */
   provider?: ManifestProvider[];
@@ -320,7 +320,7 @@ type ManifestApplicationElements = {
 type ManifestPermission = {
   $: AndroidManifestAttributes & {
     /** "protectionLevel" attribute for the permission. */
-    "android:protectionLevel"?: string | "signature";
+    'android:protectionLevel'?: string | 'signature';
   };
 };
 
@@ -337,10 +337,10 @@ type ManifestUsesPermission = {
 type ManifestUsesFeature = {
   $: AndroidManifestAttributes & {
     /** "glEsVersion" attribute for the uses-feature. */
-    "android:glEsVersion"?: string;
+    'android:glEsVersion'?: string;
 
     /** "required" attribute for the uses-feature. */
-    "android:required": StringBoolean;
+    'android:required': StringBoolean;
   };
 };
 
@@ -348,13 +348,13 @@ type ManifestUsesFeature = {
  * Specifies the types of intents that an activity, service, or broadcast receiver can respond to
  * without any associated intent filter attributes.
  */
-type ManifestQueryIntent = Omit<ManifestIntentFilter, "$">;
+type ManifestQueryIntent = Omit<ManifestIntentFilter, '$'>;
 
 /**
  * Specifies the set of other apps that an app intends to interact with. These other
  * apps are specified by package name, by intent signature, or by provider authority,
  * as described in the following sections on this page.
- * 
+ *
  * {@link https://developer.android.com/guide/topics/manifest/queries-element}
  */
 type ManifestQuery = {
@@ -371,7 +371,7 @@ type ManifestQuery = {
   /**
    * Specifies an intent filter signature. Your app can discover other apps that have
    * matching <intent-filter> elements.
-   * 
+   *
    * {@link https://developer.android.com/training/basics/intents/filters}
    */
   intent?: ManifestQueryIntent[];
@@ -379,7 +379,7 @@ type ManifestQuery = {
   /**
    * Specifies one or more content provider authorities. Your app can discover other apps
    * whose content providers use the specified authorities.
-   * 
+   *
    * {@link https://developer.android.com/guide/topics/providers/content-provider-basics#ContentURIs}
    */
   provider?: {
@@ -387,7 +387,7 @@ type ManifestQuery = {
       'android:authorities': string;
     };
   };
-}
+};
 
 /**
  * Represents elements within the AndroidManifest, including permissions, features, and application details.
@@ -397,13 +397,13 @@ type AndroidManifestElements = {
   permission?: ManifestPermission[];
 
   /** Array of uses-permission entries within the AndroidManifest. */
-  "uses-permission"?: ManifestUsesPermission[];
+  'uses-permission'?: ManifestUsesPermission[];
 
   /** Array of uses-permission-sdk-23 entries within the AndroidManifest. */
-  "uses-permission-sdk-23"?: ManifestUsesPermission[];
+  'uses-permission-sdk-23'?: ManifestUsesPermission[];
 
   /** Array of uses-feature entries within the AndroidManifest. */
-  "uses-feature"?: ManifestUsesFeature[];
+  'uses-feature'?: ManifestUsesFeature[];
 
   /** Application details within the AndroidManifest. */
   application?: ManifestApplication[];
@@ -420,10 +420,10 @@ export type AndroidManifestXML = {
   manifest: {
     $: {
       /** "xmlns:android" attribute for the manifest. */
-      "xmlns:android": string;
+      'xmlns:android': string;
 
       /** "xmlns:tools" attribute for the manifest. */
-      "xmlns:tools"?: string;
+      'xmlns:tools'?: string;
 
       /** "package" attribute for the manifest. */
       package?: string;

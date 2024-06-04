@@ -1,4 +1,4 @@
-import * as t from "io-ts";
+import * as t from 'io-ts';
 
 /**
  * Defines the schema for the FlagshipCodeConfig object.

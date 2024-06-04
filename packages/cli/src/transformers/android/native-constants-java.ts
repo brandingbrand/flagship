@@ -4,9 +4,9 @@ import {
   path,
   PrebuildOptions,
   string,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import { Transforms, defineTransformer } from "@/lib";
+import {Transforms, defineTransformer} from '@/lib';
 
 /**
  * Defines a transformer for the Android project's "NativeConstants.java" file.
@@ -22,7 +22,7 @@ export default defineTransformer<Transforms<string>>({
    * The name of the file to be transformed ("NativeConstants.java").
    * @type {string}
    */
-  file: "NativeConstants.java",
+  file: 'NativeConstants.java',
 
   /**
    * An array of transformer functions to be applied to the "NativeConstants.java" file.
@@ -40,12 +40,12 @@ export default defineTransformer<Transforms<string>>({
     (
       content: string,
       config: BuildConfig,
-      options: PrebuildOptions
+      options: PrebuildOptions,
     ): string => {
       return string.replace(
         content,
         /(ShowDevMenu",\s*").*(")/m,
-        `$1${!options.release}$2`
+        `$1${!options.release}$2`,
       );
     },
   ],
@@ -57,7 +57,7 @@ export default defineTransformer<Transforms<string>>({
    */
   transform: async function (
     config: BuildConfig,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
     return withUTF8(path.android.nativeConstants(config), (content: string) => {
       return this.transforms.reduce((acc, curr) => {

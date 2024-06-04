@@ -7,11 +7,11 @@ import {
   type BuildConfig,
   type PrebuildOptions,
   definePlugin,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import * as legacy from "./legacy";
-import * as generated from "./generated";
-import type { CodePluginSplashScreen } from "./types";
+import * as legacy from './legacy';
+import * as generated from './generated';
+import type {CodePluginSplashScreen} from './types';
 
 /**
  * Defines a plugin with functions for both iOS and Android platforms.
@@ -28,15 +28,15 @@ export default definePlugin<CodePluginSplashScreen>({
    */
   ios: async function (
     build: BuildConfig & CodePluginSplashScreen,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
     if (!build.codePluginSplashScreen.plugin.ios) return;
 
-    if (build.codePluginSplashScreen.plugin.ios.type === "legacy") {
+    if (build.codePluginSplashScreen.plugin.ios.type === 'legacy') {
       return legacy.ios(build);
     }
 
-    if (build.codePluginSplashScreen.plugin.ios.type === "generated") {
+    if (build.codePluginSplashScreen.plugin.ios.type === 'generated') {
       return generated.ios(build);
     }
   },
@@ -49,18 +49,18 @@ export default definePlugin<CodePluginSplashScreen>({
    */
   android: async function (
     build: BuildConfig & CodePluginSplashScreen,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
     if (!build.codePluginSplashScreen.plugin.android) return;
 
-    if (build.codePluginSplashScreen.plugin.android.type === "legacy") {
+    if (build.codePluginSplashScreen.plugin.android.type === 'legacy') {
       return legacy.android(build);
     }
 
-    if (build.codePluginSplashScreen.plugin.android.type === "generated") {
+    if (build.codePluginSplashScreen.plugin.android.type === 'generated') {
       return generated.android(build);
     }
   },
 });
 
-export type { CodePluginSplashScreen };
+export type {CodePluginSplashScreen};

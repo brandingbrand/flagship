@@ -4,9 +4,9 @@ import {
   path,
   PrebuildOptions,
   string,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import { Transforms, defineTransformer } from "@/lib";
+import {Transforms, defineTransformer} from '@/lib';
 
 /**
  * Defines a transformer for the Android project's "EnvSwitcher.java" file.
@@ -22,7 +22,7 @@ export default defineTransformer<Transforms<string>>({
    * The name of the file to be transformed ("EnvSwitcher.java").
    * @type {string}
    */
-  file: "EnvSwitcher.java",
+  file: 'EnvSwitcher.java',
 
   /**
    * An array of transformer functions to be applied to the "EnvSwitcher.java" file.
@@ -40,12 +40,12 @@ export default defineTransformer<Transforms<string>>({
     (
       content: string,
       config: BuildConfig,
-      options: PrebuildOptions
+      options: PrebuildOptions,
     ): string => {
       return string.replace(
         content,
         /(initialEnvName = ").*(")/m,
-        `$1${options.env}$2`
+        `$1${options.env}$2`,
       );
     },
   ],
@@ -57,7 +57,7 @@ export default defineTransformer<Transforms<string>>({
    */
   transform: async function (
     config: BuildConfig,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
     return withUTF8(path.android.envSwitcher(config), (content: string) => {
       return this.transforms.reduce((acc, curr) => {

@@ -64,7 +64,7 @@ type PluralsItemAttribute = {
   /**
    * The quantity associated with the plural string item.
    */
-  quantity: "zero" | "one" | "two" | "few" | "many" | "other";
+  quantity: 'zero' | 'one' | 'two' | 'few' | 'many' | 'other';
 };
 
 /**
@@ -124,7 +124,7 @@ type StringsElements = {
   /**
    * Array of string array resources.
    */
-  "string-array"?: StringArray[];
+  'string-array'?: StringArray[];
 
   /**
    * Array of plurals resources.

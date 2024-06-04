@@ -1,21 +1,21 @@
-import plist from "simple-plist";
+import plist from 'simple-plist';
 
-import { withInfoPlist, withPlist } from "../src/parsers/plist";
+import {withInfoPlist, withPlist} from '../src/parsers/plist';
 
-jest.mock("simple-plist");
+jest.mock('simple-plist');
 
-describe("withPlist", () => {
-  it("should read, modify, and write plist file", async () => {
-    const path = "/path/to/plist";
-    const originalData = { key: "value" };
-    const modifiedData = { key: "modifiedValue" };
+describe('withPlist', () => {
+  it('should read, modify, and write plist file', async () => {
+    const path = '/path/to/plist';
+    const originalData = {key: 'value'};
+    const modifiedData = {key: 'modifiedValue'};
 
     jest
-      .spyOn(plist, "readFileSync")
+      .spyOn(plist, 'readFileSync')
       .mockImplementationOnce(() => originalData);
-    jest.spyOn(plist, "writeFileSync").mockImplementationOnce(() => {});
+    jest.spyOn(plist, 'writeFileSync').mockImplementationOnce(() => {});
 
-    await withPlist(path, (data) => {
+    await withPlist(path, data => {
       expect(data).toEqual(originalData);
 
       return modifiedData;
@@ -26,18 +26,18 @@ describe("withPlist", () => {
   });
 });
 
-describe("withInfoPlist", () => {
-  it("should read, modify, and write info plist file", async () => {
-    const path = "/path/to/plist";
-    const originalData = { key: "value" };
-    const modifiedData = { key: "modifiedValue" };
+describe('withInfoPlist', () => {
+  it('should read, modify, and write info plist file', async () => {
+    const path = '/path/to/plist';
+    const originalData = {key: 'value'};
+    const modifiedData = {key: 'modifiedValue'};
 
     jest
-      .spyOn(plist, "readFileSync")
+      .spyOn(plist, 'readFileSync')
       .mockImplementationOnce(() => originalData);
-    jest.spyOn(plist, "writeFileSync").mockImplementationOnce(() => {});
+    jest.spyOn(plist, 'writeFileSync').mockImplementationOnce(() => {});
 
-    await withInfoPlist((data) => {
+    await withInfoPlist(data => {
       expect(data).toEqual(originalData);
 
       return modifiedData;

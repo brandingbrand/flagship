@@ -4,65 +4,65 @@
 
 /// <reference types="@brandingbrand/code-jest-config" />
 
-import { type BuildConfig, fs, path } from "@brandingbrand/code-cli-kit";
+import {type BuildConfig, fs, path} from '@brandingbrand/code-cli-kit';
 
-import transformer from "../src/transformers/android/strings-xml";
+import transformer from '../src/transformers/android/strings-xml';
 
-describe("android strings.xml transformers", () => {
+describe('android strings.xml transformers', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
-  it("should update strings.xml with displayName", async () => {
+  it('should update strings.xml with displayName', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.android.strings, "utf-8");
+    const content = await fs.readFile(path.android.strings, 'utf-8');
 
     expect(content).toContain(
       `<resources>
     <string name="app_name">Branding Brand</string>
-</resources>`
+</resources>`,
     );
   });
 
-  it("should update strings.xml with string", async () => {
+  it('should update strings.xml with string', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
     config.android.strings = {
       string: {
-        myKey: "myValue",
+        myKey: 'myValue',
       },
     };
 
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.android.strings, "utf-8");
+    const content = await fs.readFile(path.android.strings, 'utf-8');
 
     expect(content).toContain(
       `<resources>
     <string name="app_name">Branding Brand</string>
     <string name="myKey">myValue</string>
-</resources>`
+</resources>`,
     );
   });
 
-  it("should update strings.xml with stringArray", async () => {
+  it('should update strings.xml with stringArray', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
     config.android.strings = {
       stringArray: {
-        planets_array: ["Mercury", "Venus", "Earth", "Mars"],
+        planets_array: ['Mercury', 'Venus', 'Earth', 'Mars'],
       },
     };
 
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.android.strings, "utf-8");
+    const content = await fs.readFile(path.android.strings, 'utf-8');
 
     expect(content).toContain(`<resources>
     <string name="app_name">Branding Brand</string>
@@ -76,7 +76,7 @@ describe("android strings.xml transformers", () => {
 </resources>`);
   });
 
-  it("should update strings.xml with stringArray", async () => {
+  it('should update strings.xml with stringArray', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
@@ -85,19 +85,19 @@ describe("android strings.xml transformers", () => {
       plurals: {
         numberOfSongsAvailable: [
           {
-            quantity: "one",
-            value: "1 song found.",
+            quantity: 'one',
+            value: '1 song found.',
           },
           {
-            quantity: "other",
-            value: "2 songs found.",
+            quantity: 'other',
+            value: '2 songs found.',
           },
         ],
       },
     };
 
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.android.strings, "utf-8");
+    const content = await fs.readFile(path.android.strings, 'utf-8');
 
     expect(content).toContain(`<resources>
     <string name="app_name">Branding Brand</string>

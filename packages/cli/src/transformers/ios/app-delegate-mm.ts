@@ -4,9 +4,9 @@ import {
   withUTF8,
   path,
   string,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import { Transforms, defineTransformer } from "@/lib";
+import {Transforms, defineTransformer} from '@/lib';
 
 /**
  * Defines a transformer for the iOS project's "AppDelegate.mm" file.
@@ -22,7 +22,7 @@ export default defineTransformer<Transforms<string>>({
    * The name of the file to be transformed ("AppDelegate.mm").
    * @type {string}
    */
-  file: "AppDelegate.mm",
+  file: 'AppDelegate.mm',
 
   /**
    * An array of transformer functions to be applied to the "AppDelegate.mm" file.
@@ -40,7 +40,7 @@ export default defineTransformer<Transforms<string>>({
     (
       content: string,
       config: BuildConfig,
-      options: PrebuildOptions
+      options: PrebuildOptions,
     ): string => {
       if (!config.ios.plist?.urlScheme) {
         return content;
@@ -51,7 +51,7 @@ export default defineTransformer<Transforms<string>>({
         /(#import "AppDelegate\.h")/,
         `$1
 
-#import <React/RCTLinkingManager.h>`
+#import <React/RCTLinkingManager.h>`,
       );
     },
 
@@ -64,7 +64,7 @@ export default defineTransformer<Transforms<string>>({
     (
       content: string,
       config: BuildConfig,
-      options: PrebuildOptions
+      options: PrebuildOptions,
     ): string => {
       if (!config.ios.plist?.urlScheme) {
         return content;
@@ -84,7 +84,7 @@ export default defineTransformer<Transforms<string>>({
   return NO;
 }
 
-$1`
+$1`,
       );
     },
   ],
@@ -96,7 +96,7 @@ $1`
    */
   transform: async function (
     config: BuildConfig,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
     return withUTF8(path.ios.appDelegate, (content: string) => {
       return this.transforms.reduce((acc, curr) => {

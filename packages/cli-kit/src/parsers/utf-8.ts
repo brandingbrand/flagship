@@ -1,4 +1,4 @@
-import { fs } from "@/lib";
+import {fs} from '@/lib';
 
 /**
  * Reads content from a file, applies a callback function to the content,
@@ -20,14 +20,14 @@ import { fs } from "@/lib";
  */
 export async function withUTF8(
   filePath: string,
-  callback: (content: string) => string
+  callback: (content: string) => string,
 ): Promise<void> {
   /**
    * Reads the content of the file at the specified path using UTF-8 encoding.
    *
    * @returns {Promise<string>} A Promise that resolves to the file content as a string.
    */
-  const content = await fs.readFile(filePath, "utf-8");
+  const content = await fs.readFile(filePath, 'utf-8');
 
   /**
    * Applies the callback function to the file content.
@@ -42,5 +42,5 @@ export async function withUTF8(
    *
    * @returns {Promise<void>} A Promise that resolves once the write operation is complete.
    */
-  await fs.writeFile(filePath, transformedContent, "utf-8");
+  await fs.writeFile(filePath, transformedContent, 'utf-8');
 }

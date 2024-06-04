@@ -1,4 +1,4 @@
-import type { Plugin } from "@brandingbrand/code-cli-kit";
+import type {Plugin} from '@brandingbrand/code-cli-kit';
 
 /**
  * Represents the fastlane configuration for a code plugin.
@@ -8,7 +8,7 @@ export type CodePluginFastlane = {
   /**
    * Specifies the configuration for the code plugin fastlane.
    */
-  codePluginFastlane: Plugin<{ ios?: FastlaneIOS; android?: FastlaneAndroid }>;
+  codePluginFastlane: Plugin<{ios?: FastlaneIOS; android?: FastlaneAndroid}>;
 };
 
 /**
@@ -28,7 +28,7 @@ type AppCenterIOS = {
   /**
    * The type of distribution destination.
    */
-  destinationType: "group" | "store";
+  destinationType: 'group' | 'store';
 
   /**
    * Array of distribution destinations.
@@ -63,7 +63,7 @@ type AppCenterAndroid = {
   /**
    * The type of distribution destination.
    */
-  destinationType: "group" | "store";
+  destinationType: 'group' | 'store';
 
   /**
    * Array of distribution destinations.

@@ -3,9 +3,9 @@ import type {
   GenerateOptions,
   PrebuildOptions,
   CodeConfig,
-} from "@brandingbrand/code-cli-kit";
-import { program } from "commander";
-import type { PackageJson } from "type-fest";
+} from '@brandingbrand/code-cli-kit';
+import {program} from 'commander';
+import type {PackageJson} from 'type-fest';
 
 /**
  * Configuration object containing various settings.
@@ -61,7 +61,7 @@ export const config = {
     if (!/^[a-z0-9-~][a-z0-9-._~]*$/gm.test(data.name)) {
       // Throw an error if the name does not match the specified format
       throw Error(
-        "[GenerateCliCommandError]: name must follow non-scoped package names format"
+        '[GenerateCliCommandError]: name must follow non-scoped package names format',
       );
     }
 
@@ -72,12 +72,12 @@ export const config = {
    */
   __dangerously_access_build: {
     ios: {
-      displayName: "Default",
-      bundleId: "com.default",
+      displayName: 'Default',
+      bundleId: 'com.default',
     },
     android: {
-      displayName: "Default",
-      packageName: "com.default",
+      displayName: 'Default',
+      packageName: 'com.default',
     },
   } as BuildConfig,
   /**
@@ -117,23 +117,23 @@ export function isPackage(str: string): boolean {
  */
 export async function bundleRequire(
   packageOrFilePath: string,
-  format: "cjs" | "esm" = "cjs"
+  format: 'cjs' | 'esm' = 'cjs',
 ): Promise<any> {
   // Import the 'bundle-require' esm module dynamically
   // Due to esm and exports + types need to ignore ts for this import
   // @ts-ignore
-  const { bundleRequire: _bundleRequire } = await import("bundle-require");
+  const {bundleRequire: _bundleRequire} = await import('bundle-require');
 
   // Check if the input string represents a package
   if (isPackage(packageOrFilePath)) {
     // Parse package.json contents
     const pkg = require(
-      require.resolve(`${packageOrFilePath}/package.json`)
+      require.resolve(`${packageOrFilePath}/package.json`),
     ) as PackageJson;
 
     // Determine if the package is esm, if so reassign format
-    if (pkg.type === "module") {
-      format = "esm";
+    if (pkg.type === 'module') {
+      format = 'esm';
     }
 
     // Resolve the package name to its filepath
@@ -143,7 +143,7 @@ export async function bundleRequire(
   }
 
   // Use 'bundle-require' to bundle and require the specified file or package
-  const { mod } = await _bundleRequire({
+  const {mod} = await _bundleRequire({
     filepath: packageOrFilePath,
     format,
   });
@@ -161,7 +161,7 @@ export function isPrebuildCommand(): boolean {
   if (!program.args[0]) return false;
 
   // Check if the first argument is "prebuild"
-  if (program.args[0] === "prebuild") {
+  if (program.args[0] === 'prebuild') {
     return true; // Return true if the first argument is "prebuild"
   }
 
@@ -177,7 +177,7 @@ export function isGenerateCommand(): boolean {
   if (!program.args[0]) return false;
 
   // Check if the first argument is "generate"
-  if (program.args[0] === "plugin") {
+  if (program.args[0] === 'plugin') {
     return true; // Return true if the first argument is "generate"
   }
 

@@ -1,6 +1,6 @@
-import * as recast from "recast";
+import * as recast from 'recast';
 
-import { fs } from "@/lib";
+import {fs} from '@/lib';
 
 /**
  * Applies a visitor function to the AST of a TypeScript file.
@@ -34,16 +34,16 @@ export async function withTS(
   visitor: Parameters<typeof recast.visit>[1],
   options: recast.Options = {
     tabWidth: 2,
-    quote: "single",
+    quote: 'single',
     trailingComma: true,
-  }
+  },
 ): Promise<void> {
   // Parse the TypeScript file into an AST (Abstract Syntax Tree)
-  const ast = recast.parse(await fs.readFile(filePath, "utf-8"));
+  const ast = recast.parse(await fs.readFile(filePath, 'utf-8'));
 
   // Apply the visitor function to the AST
   recast.visit(ast, visitor);
 
   // Write the modified AST back to the file
-  await fs.writeFile(filePath, recast.print(ast, options).code, "utf-8");
+  await fs.writeFile(filePath, recast.print(ast, options).code, 'utf-8');
 }

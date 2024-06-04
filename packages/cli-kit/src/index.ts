@@ -9,21 +9,21 @@
  *
  * @dir cli-kit/lib
  */
-export * from "./lib";
+export * from './lib';
 
 /**
  * Parsers dir serves as the entry point of the parsers module
  *
  * @dir cli-kit/parsers
  */
-export * from "./parsers";
+export * from './parsers';
 
 /**
  * @Types dir serves as the entry point of the @types module
  */
-export * from "./@types";
+export * from './@types';
 
 /**
  * Schemas dir serves as the entry point of the schemas module
  */
-export * from "./schemas";
+export * from './schemas';

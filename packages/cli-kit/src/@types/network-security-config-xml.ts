@@ -5,7 +5,7 @@ type CertificatesAttributes = {
   /**
    * Source of the certificate, can be "system," "user," or "raw resource."
    */
-  src: "system" | "user" | "raw resource";
+  src: 'system' | 'user' | 'raw resource';
 
   /**
    * Indicates whether to override pins for the certificate.
@@ -45,7 +45,7 @@ type BaseConfigElements = {
   /**
    * Trust anchors section in the base configuration.
    */
-  ["trust-anchors"]: TrustAnchors;
+  ['trust-anchors']: TrustAnchors;
 };
 
 /**
@@ -100,7 +100,7 @@ type PinAttributes = {
   /**
    * Digest algorithm for the pin entry, always "SHA-256."
    */
-  digest: "SHA-256";
+  digest: 'SHA-256';
 };
 
 /**
@@ -160,17 +160,17 @@ type DomainConfigElements = {
   /**
    * Optional: Trust anchors section in the domain configuration.
    */
-  ["trust-anchors"]?: TrustAnchors;
+  ['trust-anchors']?: TrustAnchors;
 
   /**
    * Optional: Pin set in the domain configuration.
    */
-  ["pin-set"]?: PinSet;
+  ['pin-set']?: PinSet;
 
   /**
    * Optional: Nested domain configurations.
    */
-  ["domain-config"]?: DomainConfig[];
+  ['domain-config']?: DomainConfig[];
 };
 
 /**
@@ -200,7 +200,7 @@ type DebugOverridesElements = {
   /**
    * Optional: Trust anchors section in the debug overrides.
    */
-  ["trust-anchors"]?: TrustAnchors;
+  ['trust-anchors']?: TrustAnchors;
 };
 
 /**
@@ -215,17 +215,17 @@ type NetworkSecurityConfigElements = {
   /**
    * Optional: Base configuration in the network security configuration.
    */
-  ["base-config"]?: BaseConfig;
+  ['base-config']?: BaseConfig;
 
   /**
    * Optional: Array of domain configurations in the network security configuration.
    */
-  ["domain-config"]?: DomainConfig[];
+  ['domain-config']?: DomainConfig[];
 
   /**
    * Optional: Debug overrides in the network security configuration.
    */
-  ["debug-overrides"]?: DebugOverrides;
+  ['debug-overrides']?: DebugOverrides;
 };
 
 /**
@@ -235,5 +235,5 @@ export type NetworkSecurityConfigXML = {
   /**
    * Root element, containing elements for network security configuration.
    */
-  ["network-security-config"]: NetworkSecurityConfigElements;
+  ['network-security-config']: NetworkSecurityConfigElements;
 };

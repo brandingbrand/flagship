@@ -1,29 +1,29 @@
-import { type BuildConfig, path } from "@brandingbrand/code-cli-kit";
+import {type BuildConfig, path} from '@brandingbrand/code-cli-kit';
 
-import plugin, { type CodePluginAsset } from "../src";
+import plugin, {type CodePluginAsset} from '../src';
 
-jest.mock("react-native-asset");
+jest.mock('react-native-asset');
 
-import mockLinkAssets from "react-native-asset";
+import mockLinkAssets from 'react-native-asset';
 
-describe("plugin-asset", () => {
+describe('plugin-asset', () => {
   const config: BuildConfig & CodePluginAsset = {
     ios: {
-      bundleId: "com.app",
-      displayName: "App",
+      bundleId: 'com.app',
+      displayName: 'App',
     },
     android: {
-      packageName: "com.app",
-      displayName: "App",
+      packageName: 'com.app',
+      displayName: 'App',
     },
     codePluginAsset: {
       plugin: {
-        assetPath: ["./path/to/assets"],
+        assetPath: ['./path/to/assets'],
       },
     },
   };
 
-  it("ios", async () => {
+  it('ios', async () => {
     await plugin.ios?.(config, {} as any);
 
     expect(mockLinkAssets).toHaveBeenCalledWith({
@@ -32,17 +32,17 @@ describe("plugin-asset", () => {
       platforms: {
         ios: {
           enabled: true,
-          assets: ["./path/to/assets"].map((it) => path.project.resolve(it)),
+          assets: ['./path/to/assets'].map(it => path.project.resolve(it)),
         },
         android: {
           enabled: false,
-          assets: ["./path/to/assets"].map((it) => path.project.resolve(it)),
+          assets: ['./path/to/assets'].map(it => path.project.resolve(it)),
         },
       },
     });
   });
 
-  it("android", async () => {
+  it('android', async () => {
     await plugin.android?.(config, {} as any);
 
     expect(mockLinkAssets).toHaveBeenCalledWith({
@@ -51,11 +51,11 @@ describe("plugin-asset", () => {
       platforms: {
         ios: {
           enabled: false,
-          assets: ["./path/to/assets"].map((it) => path.project.resolve(it)),
+          assets: ['./path/to/assets'].map(it => path.project.resolve(it)),
         },
         android: {
           enabled: true,
-          assets: ["./path/to/assets"].map((it) => path.project.resolve(it)),
+          assets: ['./path/to/assets'].map(it => path.project.resolve(it)),
         },
       },
     });

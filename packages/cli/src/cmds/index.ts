@@ -9,11 +9,11 @@
  *
  * @module cmds/plugin
  */
-import "./plugin";
+import './plugin';
 
 /**
  * Prebuild command for native code generation
  *
  * @module cmds/prebuild
  */
-import "./prebuild";
+import './prebuild';

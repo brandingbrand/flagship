@@ -4,57 +4,57 @@
 
 /// <reference types="@brandingbrand/code-jest-config" />
 
-import { type BuildConfig, fs, path } from "@brandingbrand/code-cli-kit";
+import {type BuildConfig, fs, path} from '@brandingbrand/code-cli-kit';
 
-import transformer from "../src/transformers/ios/privacy-info-xcprivacy";
+import transformer from '../src/transformers/ios/privacy-info-xcprivacy';
 
-describe("ios PrivacyInfo.xcprivacy transformers", () => {
+describe('ios PrivacyInfo.xcprivacy transformers', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
-  it("should not update PrivacyInfo.xcprivacy file", async () => {
+  it('should not update PrivacyInfo.xcprivacy file', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
     const origionalContent = await fs.readFile(
       path.ios.privacyManifest,
-      "utf-8"
+      'utf-8',
     );
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.ios.privacyManifest, "utf-8");
+    const content = await fs.readFile(path.ios.privacyManifest, 'utf-8');
 
     expect(content).toEqual(origionalContent);
   });
 
-  it("should update PrivacyInfo.xcprivacy file", async () => {
+  it('should update PrivacyInfo.xcprivacy file', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
-    config.ios.privacyManifestPath = "./PrivacyInfo.xcprivacy";
+    config.ios.privacyManifestPath = './PrivacyInfo.xcprivacy';
 
     const privacyManifestContent = await fs.readFile(
-      path.project.resolve("PrivacyInfo.xcprivacy"),
-      "utf-8"
+      path.project.resolve('PrivacyInfo.xcprivacy'),
+      'utf-8',
     );
 
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.ios.privacyManifest, "utf-8");
+    const content = await fs.readFile(path.ios.privacyManifest, 'utf-8');
 
     expect(content).toEqual(privacyManifestContent);
   });
 
-  it("should throw error for wrong PrivacyInfo.xcprivacy path", async () => {
+  it('should throw error for wrong PrivacyInfo.xcprivacy path', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
-    config.ios.privacyManifestPath = "./blah/PrivacyInfo.xcprivacy";
+    config.ios.privacyManifestPath = './blah/PrivacyInfo.xcprivacy';
 
     const privacyManifestAbsolutePath = path.project.resolve(
-      config.ios.privacyManifestPath
+      config.ios.privacyManifestPath,
     );
 
     const throwError = async () => {
@@ -63,8 +63,8 @@ describe("ios PrivacyInfo.xcprivacy transformers", () => {
 
     await expect(throwError).rejects.toThrow(
       new Error(
-        `[PrivacyInfoXCPrivacyTransformerError]: path to privacy manifest does not exist ${privacyManifestAbsolutePath}, please update privacyManifestPath to the correct path relative to the root of your React Native project.`
-      )
+        `[PrivacyInfoXCPrivacyTransformerError]: path to privacy manifest does not exist ${privacyManifestAbsolutePath}, please update privacyManifestPath to the correct path relative to the root of your React Native project.`,
+      ),
     );
   });
 });
