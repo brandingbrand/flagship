@@ -119,7 +119,7 @@ export default defineAction(
       mod.exports.default = {};
 
       // Add each environment's content to the module's default export
-      // In fsapp <v10 the export is expected to be a default export
+      // In fsapp <v11 the export is expected to be a default export
       // https://github.com/brandingbrand/flagship/blob/7b540442d2b83ad710e98981bd368039f0eb635c/packages/fsapp/src/index.ts#L6
       envContents.forEach((it) => {
         mod.exports.default[it.name] ||= { app: it.content };
