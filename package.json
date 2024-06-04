@@ -13,13 +13,21 @@
     "dev": "turbo dev --concurrency 100",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "lint": "turbo lint --",
+    "prepare": "husky install",
     "test": "turbo test"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "prettier --write",
+    "package.json": "format-package -w"
   },
   "packageManager": "yarn@1.22.19",
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
+    "format-package": "^7.0.0",
+    "husky": ">=7",
+    "lint-staged": ">=10",
     "prettier": "^3.1.1",
     "turbo": "latest"
   }
