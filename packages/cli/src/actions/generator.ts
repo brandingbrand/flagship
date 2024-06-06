@@ -1,7 +1,7 @@
-import * as recast from "recast";
-import { path, withTS } from "@brandingbrand/code-cli-kit";
+import * as recast from 'recast';
+import {path, withTS} from '@brandingbrand/code-cli-kit';
 
-import { config, defineAction } from "@/lib";
+import {config, defineAction} from '@/lib';
 
 /**
  * Defines the action to handle updating the plugin generator dependencies.
@@ -10,12 +10,12 @@ import { config, defineAction } from "@/lib";
 export default defineAction(
   async (): Promise<void> => {
     // Dynamically import the function from the package
-    const { updatePackage } = await import("write-package");
+    const {updatePackage} = await import('write-package');
 
     // Get the relative path to the plugin
     const pluginPath = path.relative(
       path.project.resolve(),
-      path.project.resolve(config.code.pluginPath, config.generateOptions.name)
+      path.project.resolve(config.code.pluginPath, config.generateOptions.name),
     );
 
     // Update devDependencies in package.json to point to the local plugin
@@ -23,8 +23,8 @@ export default defineAction(
       devDependencies: {
         [config.generateOptions.name]: `link:${pluginPath}`,
       },
-    }).catch((e) => {
-      throw Error("Error: unable to update package.json, ", e.message);
+    }).catch(e => {
+      throw Error('Error: unable to update package.json, ', e.message);
     });
 
     // Update package.json in the plugin directory with its name
@@ -32,21 +32,21 @@ export default defineAction(
       path.project.resolve(config.code.pluginPath, config.generateOptions.name),
       {
         name: config.generateOptions.name,
-      }
-    ).catch((e) => {
-      throw Error("Error: unable to update package.json, ", e.message);
+      },
+    ).catch(e => {
+      throw Error('Error: unable to update package.json, ', e.message);
     });
 
     // Update flagship-code.config.ts with the new plugin
-    await withTS(path.project.resolve("flagship-code.config.ts"), {
+    await withTS(path.project.resolve('flagship-code.config.ts'), {
       visitArrayExpression(path) {
         if (
           path.parentPath.value.key &&
-          path.parentPath.value.key.name === "plugins"
+          path.parentPath.value.key.name === 'plugins'
         ) {
           // Add the plugin name to the plugins array
           path.value.elements.push(
-            recast.types.builders.literal(config.generateOptions.name)
+            recast.types.builders.literal(config.generateOptions.name),
           );
 
           // Stop the traversal since we've found what we needed
@@ -56,13 +56,13 @@ export default defineAction(
         // Continue traversal since we've not found what we needed
         this.traverse(path);
       },
-    }).catch((e) => {
+    }).catch(e => {
       throw Error(
-        "Error: unable to update flagship-code.config.ts with new plugin, ",
-        e.message
+        'Error: unable to update flagship-code.config.ts with new plugin, ',
+        e.message,
       );
     });
   },
-  "generator",
-  "template"
+  'generator',
+  'template',
 );

@@ -4,9 +4,9 @@ import {
   withUTF8,
   path,
   string,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import { type Transforms, defineTransformer } from "@/lib";
+import {type Transforms, defineTransformer} from '@/lib';
 
 /**
  * Defines a transformer for the Android project's "gradle.properties" file.
@@ -22,7 +22,7 @@ export default defineTransformer<Transforms<string>>({
    * The name of the file to be transformed ("build.gradle").
    * @type {string}
    */
-  file: "gradle.properties",
+  file: 'gradle.properties',
 
   /**
    * An array of transformer functions to be applied to the "gradle.properties" file.
@@ -44,7 +44,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(android\.useAndroidX=).*/m,
-        `$1${config.android.gradle.properties.useAndroidX}`
+        `$1${config.android.gradle.properties.useAndroidX}`,
       );
     },
 
@@ -61,7 +61,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(android\.enableJetifier=).*/m,
-        `$1${config.android.gradle.properties.enableJetifier}`
+        `$1${config.android.gradle.properties.enableJetifier}`,
       );
     },
 
@@ -77,7 +77,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(FLIPPER_VERSION=).*/m,
-        `$1${config.android.gradle.properties.FLIPPER_VERSION}`
+        `$1${config.android.gradle.properties.FLIPPER_VERSION}`,
       );
     },
 
@@ -94,7 +94,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(reactNativeArchitectures=).*/m,
-        `$1${config.android.gradle.properties.reactNativeArchitectures}`
+        `$1${config.android.gradle.properties.reactNativeArchitectures}`,
       );
     },
 
@@ -111,7 +111,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(newArchEnabled=).*/m,
-        `$1${config.android.gradle.properties.newArchEnabled}`
+        `$1${config.android.gradle.properties.newArchEnabled}`,
       );
     },
 
@@ -128,7 +128,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(hermesEnabled=).*/m,
-        `$1${config.android.gradle.properties.hermesEnabled}`
+        `$1${config.android.gradle.properties.hermesEnabled}`,
       );
     },
   ],

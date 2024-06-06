@@ -15,13 +15,13 @@ export async function AsyncComponents() {
    * Imports the Ink library asynchronously.
    * @type {Promise<typeof import("ink")>} A promise resolving to the imported Ink library.
    */
-  const ink = await import("ink");
+  const ink = await import('ink');
 
   /**
    * Imports the Ink Spinner component asynchronously.
    * @type {Promise<{ default: typeof import("ink-spinner").default }>} A promise resolving to the imported Spinner component.
    */
-  const inkSpinner = await import("ink-spinner");
+  const inkSpinner = await import('ink-spinner');
 
   /**
    * An object containing imported Ink components.

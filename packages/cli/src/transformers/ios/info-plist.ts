@@ -3,10 +3,10 @@ import {
   type InfoPlist,
   type PrebuildOptions,
   withInfoPlist,
-} from "@brandingbrand/code-cli-kit";
-import { mergeAndConcat } from "merge-anything";
+} from '@brandingbrand/code-cli-kit';
+import {mergeAndConcat} from 'merge-anything';
 
-import { Transforms, defineTransformer } from "@/lib";
+import {Transforms, defineTransformer} from '@/lib';
 
 /**
  * Defines a transformer for the iOS project's "Info.plist" file.
@@ -22,7 +22,7 @@ export default defineTransformer<Transforms<InfoPlist>>({
    * The name of the file to be transformed ("Info.plist").
    * @type {string}
    */
-  file: "Info.plist",
+  file: 'Info.plist',
 
   /**
    * An array of transformer functions to be applied to the "Info.plist" file.
@@ -40,7 +40,7 @@ export default defineTransformer<Transforms<InfoPlist>>({
     (content: InfoPlist, config: BuildConfig): InfoPlist => {
       if (!config.ios.plist) return content;
 
-      const { urlScheme, ...plist } = config.ios.plist;
+      const {urlScheme, ...plist} = config.ios.plist;
 
       return mergeAndConcat<InfoPlist, InfoPlist[]>(content, plist);
     },
@@ -54,14 +54,14 @@ export default defineTransformer<Transforms<InfoPlist>>({
     (content: InfoPlist, config: BuildConfig): InfoPlist => {
       if (!config.ios.plist?.urlScheme) return content;
 
-      const { urlScheme } = config.ios.plist;
+      const {urlScheme} = config.ios.plist;
 
       const bundleUrlScheme = urlScheme.host
         ? `${urlScheme.scheme}://${urlScheme.host}`
         : urlScheme.scheme;
 
       return mergeAndConcat<InfoPlist, InfoPlist[]>(content, {
-        CFBundleURLTypes: [{ CFBundleURLSchemes: [bundleUrlScheme] }],
+        CFBundleURLTypes: [{CFBundleURLSchemes: [bundleUrlScheme]}],
       });
     },
 
@@ -74,15 +74,15 @@ export default defineTransformer<Transforms<InfoPlist>>({
     (content: InfoPlist, config: BuildConfig): InfoPlist => {
       if (!config.ios.plist?.style) return content;
 
-      function getStyle(style: "light" | "dark" | "system") {
+      function getStyle(style: 'light' | 'dark' | 'system') {
         switch (style) {
-          case "dark":
-            return "Dark";
-          case "light":
-            return "Light";
-          case "system":
+          case 'dark':
+            return 'Dark';
+          case 'light':
+            return 'Light';
+          case 'system':
           default:
-            return "Automatic";
+            return 'Automatic';
         }
       }
       return mergeAndConcat<InfoPlist, InfoPlist[]>(content, {
@@ -99,7 +99,7 @@ export default defineTransformer<Transforms<InfoPlist>>({
     (content: InfoPlist, config: BuildConfig): InfoPlist => {
       if (!config.ios.versioning) return content;
 
-      const { version, build = 1 } = config.ios.versioning;
+      const {version, build = 1} = config.ios.versioning;
 
       return mergeAndConcat<InfoPlist, InfoPlist[]>(content, {
         CFBundleShortVersionString: version,
@@ -114,7 +114,7 @@ export default defineTransformer<Transforms<InfoPlist>>({
      * @returns {InfoPlist} - The updated content.
      */
     (content: InfoPlist, config: BuildConfig): InfoPlist => {
-      const { displayName, bundleId } = config.ios;
+      const {displayName, bundleId} = config.ios;
 
       return mergeAndConcat<InfoPlist, InfoPlist[]>(content, {
         CFBundleIdentifier: bundleId,
@@ -133,13 +133,14 @@ export default defineTransformer<Transforms<InfoPlist>>({
     (
       content: InfoPlist,
       config: BuildConfig,
-      options: PrebuildOptions
+      options: PrebuildOptions,
     ): InfoPlist => {
       if (!options.release) return content;
 
       if (!content.NSAppTransportSecurity?.NSExceptionDomains) return content;
 
-      const {localhost, ...exceptionDomainsWithoutLocalhost} = content.NSAppTransportSecurity.NSExceptionDomains;
+      const {localhost, ...exceptionDomainsWithoutLocalhost} =
+        content.NSAppTransportSecurity.NSExceptionDomains;
 
       return {
         ...content,
@@ -159,25 +160,25 @@ export default defineTransformer<Transforms<InfoPlist>>({
     (
       content: InfoPlist,
       config: BuildConfig,
-      options: PrebuildOptions
+      options: PrebuildOptions,
     ): InfoPlist => {
       if (!config.ios.plist?.orientation) return content;
 
-      const { UISupportedInterfaceOrientations, ...newContent } = content;
+      const {UISupportedInterfaceOrientations, ...newContent} = content;
 
-      const orientations = config.ios.plist.orientation.map((it) => {
+      const orientations = config.ios.plist.orientation.map(it => {
         switch (it) {
-          case "portrait":
-            return "UIInterfaceOrientationPortrait";
-          case "portraitUpsideDown":
-            return "UIInterfaceOrientationPortraitUpsideDown";
-          case "landscapeLeft":
-            return "UIInterfaceOrientationLandscapeLeft";
-          case "landscapeRight":
-            return "UIInterfaceOrientationLandscapeRight";
+          case 'portrait':
+            return 'UIInterfaceOrientationPortrait';
+          case 'portraitUpsideDown':
+            return 'UIInterfaceOrientationPortraitUpsideDown';
+          case 'landscapeLeft':
+            return 'UIInterfaceOrientationLandscapeLeft';
+          case 'landscapeRight':
+            return 'UIInterfaceOrientationLandscapeRight';
           default:
             throw new Error(
-              `[InfoPlistTransformerError]: ${it} is not a supported orientation`
+              `[InfoPlistTransformerError]: ${it} is not a supported orientation`,
             );
         }
       });
@@ -194,9 +195,9 @@ export default defineTransformer<Transforms<InfoPlist>>({
    */
   transform: async function (
     config: BuildConfig,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
-    return withInfoPlist((content) => {
+    return withInfoPlist(content => {
       return this.transforms.reduce((acc, curr) => {
         return curr(acc, config, options);
       }, content);

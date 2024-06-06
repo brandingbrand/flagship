@@ -11,10 +11,10 @@ import {
   string,
   withInfoPlist,
   withManifest,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import * as permissions from "./permissions";
-import { CodePluginPermissions } from "./types";
+import * as permissions from './permissions';
+import {CodePluginPermissions} from './types';
 
 /**
  * Defines a plugin with functions for both iOS and Android platforms.
@@ -31,22 +31,22 @@ export default definePlugin<CodePluginPermissions>({
    */
   ios: async function (
     build: BuildConfig & CodePluginPermissions,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
     // Check if the iOS plugin permissions are defined
     if (!build.codePluginPermissions.plugin.ios) return;
 
     // Resolve the path for RNPermissions.podspec file
     const filePath = require.resolve(
-      "react-native-permissions/RNPermissions.podspec",
+      'react-native-permissions/RNPermissions.podspec',
       {
         // eslint-disable-next-line turbo/no-undeclared-env-vars
-        ...(!process.env.JEST_WORKER_ID && { paths: [process.cwd()] }),
-      }
+        ...(!process.env.JEST_WORKER_ID && {paths: [process.cwd()]}),
+      },
     );
 
     // Update podspec file with appropriate permissions
-    await withUTF8(filePath, (content) => {
+    await withUTF8(filePath, content => {
       const pods = build.codePluginPermissions.plugin.ios!.reduce(
         (acc, curr) => {
           const pod = permissions.ios[curr.permission];
@@ -55,16 +55,16 @@ export default definePlugin<CodePluginPermissions>({
 
           return `${acc}, "ios/${pod?.pod}/*.{h,m,mm}"`;
         },
-        '"ios/*.{h,m,mm}"'
+        '"ios/*.{h,m,mm}"',
       );
 
       return string.replace(content, /(source_files\s+=\s+).*/, `$1${pods}`);
     });
 
     // Update Info.plist with appropriate permissions and texts
-    await withInfoPlist((plist) => {
+    await withInfoPlist(plist => {
       const newPlist = build.codePluginPermissions.plugin
-        .ios!.filter((it) => it.text)
+        .ios!.filter(it => it.text)
         .reduce((acc, curr) => {
           const pod = permissions.ios[curr.permission];
 
@@ -72,16 +72,16 @@ export default definePlugin<CodePluginPermissions>({
 
           if (!curr.text) {
             throw Error(
-              `[CodePermissionsPluginError]: ${pod.pod} permission requires a 'usageKey'.`
+              `[CodePermissionsPluginError]: ${pod.pod} permission requires a 'usageKey'.`,
             );
           }
 
           // Exception case for LocationAccuracy permission which requires a purpose key
           // https://developer.apple.com/documentation/bundleresources/information_property_list/nslocationtemporaryusagedescriptiondictionary
-          if (curr.permission === "LocationAccuracy") {
+          if (curr.permission === 'LocationAccuracy') {
             if (!curr.purposeKey) {
               throw Error(
-                "[CodePermissionsPluginError]: 'LocationAccuracy' permission requires a 'purposekey'."
+                "[CodePermissionsPluginError]: 'LocationAccuracy' permission requires a 'purposekey'.",
               );
             }
             return {
@@ -110,26 +110,26 @@ export default definePlugin<CodePluginPermissions>({
    */
   android: async function (
     build: BuildConfig & CodePluginPermissions,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
     // Check if the Android plugin permissions are defined
     if (!build.codePluginPermissions.plugin.android) return;
 
     // Update AndroidManifest.xml with appropriate permissions
-    await withManifest((xml) => {
-      if (!xml.manifest["uses-permission"]) {
-        xml.manifest = { ...xml.manifest, "uses-permission": [] };
+    await withManifest(xml => {
+      if (!xml.manifest['uses-permission']) {
+        xml.manifest = {...xml.manifest, 'uses-permission': []};
       }
 
       // Iterate through Android permissions, filtering out empty strings or objects.
       // An object is a permissible type to extend any permission typings.
       build.codePluginPermissions.plugin.android
-        ?.filter((it) => typeof it === "string" && !!it)
-        ?.forEach((it) => {
+        ?.filter(it => typeof it === 'string' && !!it)
+        ?.forEach(it => {
           // Push valid permissions to the Android manifest.
-          xml.manifest["uses-permission"]?.push({
+          xml.manifest['uses-permission']?.push({
             $: {
-              "android:name": `android.permission.${it}`,
+              'android:name': `android.permission.${it}`,
             },
           });
         });
@@ -137,4 +137,4 @@ export default definePlugin<CodePluginPermissions>({
   },
 });
 
-export type { CodePluginPermissions };
+export type {CodePluginPermissions};

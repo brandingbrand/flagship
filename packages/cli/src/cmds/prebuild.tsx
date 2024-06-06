@@ -1,11 +1,11 @@
-import chalk from "chalk";
-import { Option, program } from "commander";
-import { detect } from "detect-package-manager";
-import type { PrebuildOptions } from "@brandingbrand/code-cli-kit";
+import chalk from 'chalk';
+import {Option, program} from 'commander';
+import {detect} from 'detect-package-manager';
+import type {PrebuildOptions} from '@brandingbrand/code-cli-kit';
 
-import * as actions from "@/actions";
-import { Actions } from "@/components";
-import { config, emitter, logger, prevGroup } from "@/lib";
+import * as actions from '@/actions';
+import {Actions} from '@/components';
+import {config, emitter, logger, prevGroup} from '@/lib';
 
 /**
  * Defines a command for the "prebuild" operation using the "commander" library.
@@ -23,34 +23,34 @@ import { config, emitter, logger, prevGroup } from "@/lib";
  * @see {@link https://www.npmjs.com/package/commander | commander} - Command-line framework for Node.js.
  */
 program
-  .command("prebuild")
+  .command('prebuild')
   .description(
-    "Ephemeral native code generation for a specific build, environment, and platform."
+    'Ephemeral native code generation for a specific build, environment, and platform.',
   )
-  .requiredOption("-b, --build [build]", "Build configuration.")
-  .requiredOption("-e, --env [env]", "Initial environment.")
+  .requiredOption('-b, --build [build]', 'Build configuration.')
+  .requiredOption('-e, --env [env]', 'Initial environment.')
   .addOption(
     new Option(
-      "-p, --platform [platform]",
-      "ios, android, or native (ios & android) code generation."
+      '-p, --platform [platform]',
+      'ios, android, or native (ios & android) code generation.',
     )
-      .choices(["ios", "android", "native"])
-      .default("native")
+      .choices(['ios', 'android', 'native'])
+      .default('native'),
   )
-  .option("-r, --release", "Bundle only specified environment.", false)
-  .option("--verbose", "Show stdout.", false)
+  .option('-r, --release', 'Bundle only specified environment.', false)
+  .option('--verbose', 'Show stdout.', false)
   .action(async (options: PrebuildOptions) => {
     /**
      * Update the configuration options with the provided options and command type.
      */
-    config.options = { ...options, command: "prebuild" };
+    config.options = {...options, command: 'prebuild'};
 
-    const { render } = await import("ink");
+    const {render} = await import('ink');
 
     /**
      * Render the Reporter component to display progress.
      */
-    const { unmount } = render(<Actions />, { stdout: process.stderr });
+    const {unmount} = render(<Actions />, {stdout: process.stderr});
 
     global.unmount = unmount;
 
@@ -74,7 +74,7 @@ program
      * This is the last action to be run - if the execution gets to this point
      * it can be assumed that it was successful.
      */
-    emitter.emit("action", { name: prevGroup, status: "success" });
+    emitter.emit('action', {name: prevGroup, status: 'success'});
 
     /**
      * Unmount react ink components
@@ -87,7 +87,7 @@ program
     logger.resume();
 
     logger.info(
-      chalk.magenta`🚀 Generated native project(s), ready to launch your app!\n`
+      chalk.magenta`🚀 Generated native project(s), ready to launch your app!\n`,
     );
 
     logger.info(
@@ -104,6 +104,6 @@ program
 
     ${chalk.cyan((await detect()) + ` flagship-code plugin <plugin-name>`)}
         Generate a Flagship Code plugin
-`
+`,
     );
   });

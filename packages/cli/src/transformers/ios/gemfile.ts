@@ -4,9 +4,9 @@ import {
   withUTF8,
   path,
   string,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import { Transforms, defineTransformer } from "@/lib";
+import {Transforms, defineTransformer} from '@/lib';
 
 /**
  * Defines a transformer for the iOS project's "Gemfile" file.
@@ -22,7 +22,7 @@ export default defineTransformer<Transforms<string>>({
    * The name of the file to be transformed ("build.gradle").
    * @type {string}
    */
-  file: "Gemfile",
+  file: 'Gemfile',
 
   /**
    * An array of transformer functions to be applied to the "Gemfile" file.
@@ -43,7 +43,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(source.*\n)/m,
-        `$1\n${config.ios.gemfile.map((it) => it).join("\n")}\n`
+        `$1\n${config.ios.gemfile.map(it => it).join('\n')}\n`,
       );
     },
   ],
@@ -54,7 +54,7 @@ export default defineTransformer<Transforms<string>>({
    */
   transform: async function (
     config: BuildConfig,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
     return withUTF8(path.ios.gemfile, (content: string) => {
       return this.transforms.reduce((acc, curr) => {

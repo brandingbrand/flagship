@@ -1,11 +1,11 @@
 import type {
   EnvironmentContext,
   JestEnvironmentConfig,
-} from "@jest/environment";
-import { TestEnvironment } from "jest-environment-node";
-import fse from "fs-extra";
-import path from "path";
-import temp from "temp";
+} from '@jest/environment';
+import {TestEnvironment} from 'jest-environment-node';
+import fse from 'fs-extra';
+import path from 'path';
+import temp from 'temp';
 
 /**
  * Custom Jest environment for testing purposes with additional setup and teardown logic.
@@ -48,32 +48,32 @@ export default class CustomEnvironment extends TestEnvironment {
    * @returns {Promise<void>} A Promise that resolves once the setup is complete.
    */
   async setup() {
-    const { requireTemplate, fixtures } = this.options;
+    const {requireTemplate, fixtures} = this.options;
 
     if (!requireTemplate) return super.setup();
 
     // Create a temporary directory
     const dir = temp.mkdirSync();
     const templatePath = path.join(
-      require.resolve("@brandingbrand/code-cli/package.json"),
-      "..",
-      "template"
+      require.resolve('@brandingbrand/code-cli/package.json'),
+      '..',
+      'template',
     );
 
     // Create "ios" and "android" directories
-    await fse.mkdir(path.resolve(dir, "ios"));
-    await fse.mkdir(path.resolve(dir, "android"));
+    await fse.mkdir(path.resolve(dir, 'ios'));
+    await fse.mkdir(path.resolve(dir, 'android'));
 
     // Copy template files to the temporary directory
-    await fse.copy(path.resolve(templatePath, "ios"), path.resolve(dir, "ios"));
+    await fse.copy(path.resolve(templatePath, 'ios'), path.resolve(dir, 'ios'));
     await fse.copy(
-      path.resolve(templatePath, "android"),
-      path.resolve(dir, "android")
+      path.resolve(templatePath, 'android'),
+      path.resolve(dir, 'android'),
     );
-    await fse.copy(path.resolve(templatePath, "extras"), dir);
+    await fse.copy(path.resolve(templatePath, 'extras'), dir);
 
     // Copy fixtures if provided
-    if (fixtures && typeof fixtures === "string") {
+    if (fixtures && typeof fixtures === 'string') {
       await fse.copy(path.resolve(path.dirname(this.testPath), fixtures), dir);
     }
 
@@ -90,7 +90,7 @@ export default class CustomEnvironment extends TestEnvironment {
    * @returns {Promise<void>} A Promise that resolves once the teardown is complete.
    */
   async teardown() {
-    const { requireTemplate } = this.options;
+    const {requireTemplate} = this.options;
 
     if (!requireTemplate) return super.teardown();
 

@@ -1,11 +1,11 @@
-import ci from "ci-info";
-import chalk from "chalk";
-import updateCheck from "update-check";
-import { isWindows } from "@brandingbrand/code-cli-kit";
+import ci from 'ci-info';
+import chalk from 'chalk';
+import updateCheck from 'update-check';
+import {isWindows} from '@brandingbrand/code-cli-kit';
 
-import pkg from "../../package.json";
+import pkg from '../../package.json';
 
-import { config, defineAction, logger } from "@/lib";
+import {config, defineAction, logger} from '@/lib';
 
 /**
  * Executes the default action, providing detailed information and performing necessary checks.
@@ -42,7 +42,7 @@ export default defineAction(
 `);
     logger.info(
       chalk.bold
-        .blue`Welcome to Flagship Code ${chalk.bold.white`v${pkg.version}`}`
+        .blue`Welcome to Flagship Code ${chalk.bold.white`v${pkg.version}`}`,
     );
     logger.info(chalk.dim`  Configurable - Extensible - Toolkit`);
 
@@ -50,7 +50,7 @@ export default defineAction(
     if (isWindows) {
       logger.error(`${pkg.name} is unable to run on a windows machine.`);
 
-      throw Error("[InfoActionError]: unable to run on windows machine");
+      throw Error('[InfoActionError]: unable to run on windows machine');
     }
 
     // Check if the script is running in a CI environment, and log the CI server name if it is
@@ -67,7 +67,7 @@ export default defineAction(
     // Warn for new version available
     if (update) {
       logger.warn(
-        `A new version of ${pkg.name} is available: v${pkg.version} -> v${update.latest}`
+        `A new version of ${pkg.name} is available: v${pkg.version} -> v${update.latest}`,
       );
     }
 
@@ -76,6 +76,6 @@ export default defineAction(
       logger.pause();
     }
   },
-  "info",
-  "template"
+  'info',
+  'template',
 );

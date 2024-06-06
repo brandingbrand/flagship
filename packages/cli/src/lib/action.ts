@@ -1,13 +1,13 @@
-import mitt from "mitt";
-import chalk from "chalk";
+import mitt from 'mitt';
+import chalk from 'chalk';
 
-import logger from "./logger";
+import logger from './logger';
 
 // Represents the possible types for a group.
-export type Group = "template" | "env" | "code" | "dependencies";
+export type Group = 'template' | 'env' | 'code' | 'dependencies';
 
 // Represents the possible statuses of an action.
-export type Status = "pending" | "success" | "fail";
+export type Status = 'pending' | 'success' | 'fail';
 
 // Represents an event object containing action details.
 type Event = {
@@ -21,7 +21,7 @@ type Event = {
 export const emitter = mitt<Event>();
 
 // Holds the previous group name, initialized with "template".
-export let prevGroup: Group = "template";
+export let prevGroup: Group = 'template';
 
 /**
  * Wraps an asynchronous function with logging capabilities.
@@ -33,29 +33,29 @@ export let prevGroup: Group = "template";
 export function withAction<TResult, TArgs extends unknown[]>(
   fn: (...args: TArgs) => Promise<TResult>,
   name: string,
-  group: Group
+  group: Group,
 ): (...args: TArgs) => Promise<void> {
   return async function (...args: TArgs) {
     try {
       if (group === prevGroup) {
-        emitter.emit("action", { name: group, status: "pending" });
+        emitter.emit('action', {name: group, status: 'pending'});
       } else {
-        emitter.emit("action", { name: prevGroup, status: "success" });
-        emitter.emit("action", { name: group, status: "pending" });
+        emitter.emit('action', {name: prevGroup, status: 'success'});
+        emitter.emit('action', {name: group, status: 'pending'});
 
         prevGroup = group;
       }
 
       await fn(...args);
     } catch (error: any) {
-      emitter.emit("action", { name: group, status: "fail" });
+      emitter.emit('action', {name: group, status: 'fail'});
 
       global.unmount?.();
 
       logger.resume();
       logger.info(chalk.red`💥 Oops something went wrong! See errors below.\n`);
       console.group();
-      logger.info(chalk.dim(error.message) + "\n");
+      logger.info(chalk.dim(error.message) + '\n');
       console.groupEnd();
 
       process.exit(1);

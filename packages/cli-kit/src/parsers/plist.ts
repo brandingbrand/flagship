@@ -1,7 +1,7 @@
-import plist, { type PlistJsObj } from "simple-plist";
+import plist, {type PlistJsObj} from 'simple-plist';
 
-import type { InfoPlist } from "@/@types";
-import { path } from "@/lib";
+import type {InfoPlist} from '@/@types';
+import {path} from '@/lib';
 
 /**
  * Asynchronously reads the plist file from the given path.
@@ -47,7 +47,7 @@ async function asyncWriteFile(path: string, obj: PlistJsObj): Promise<void> {
  */
 export async function withPlist<T>(
   path: string,
-  callback: (plist: T) => T
+  callback: (plist: T) => T,
 ): Promise<void> {
   const plistData = plist.readFileSync<T>(path);
 
@@ -63,5 +63,5 @@ export async function withPlist<T>(
  * @returns {Promise} - A Promise that resolves with the updated Info.plist file as an object.
  */
 export const withInfoPlist = (
-  callback: (plist: InfoPlist) => InfoPlist
+  callback: (plist: InfoPlist) => InfoPlist,
 ): Promise<void> => withPlist<InfoPlist>(path.ios.infoPlist, callback);

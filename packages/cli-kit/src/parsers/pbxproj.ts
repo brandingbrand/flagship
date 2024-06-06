@@ -1,8 +1,8 @@
-import fs from "fs/promises";
+import fs from 'fs/promises';
 
-import xcode, { XcodeProject } from "xcode";
+import xcode, {XcodeProject} from 'xcode';
 
-import { path } from "@/lib";
+import {path} from '@/lib';
 
 /**
  * Reads an Xcode project file, applies a callback function to the parsed Xcode project,
@@ -20,7 +20,7 @@ import { path } from "@/lib";
  * ```
  */
 export async function withPbxproj(
-  callback: (pbxproj: XcodeProject) => void
+  callback: (pbxproj: XcodeProject) => void,
 ): Promise<void> {
   /**
    * Creates an Xcode project instance by parsing the content of the project file.

@@ -1,7 +1,7 @@
-import type { PackageJson } from "type-fest";
-import { canRunAndroid, canRunIOS, path } from "@brandingbrand/code-cli-kit";
+import type {PackageJson} from 'type-fest';
+import {canRunAndroid, canRunIOS, path} from '@brandingbrand/code-cli-kit';
 
-import { bundleRequire, config, defineAction, withAction } from "@/lib";
+import {bundleRequire, config, defineAction, withAction} from '@/lib';
 
 /**
  * Executes an action for running plugins.
@@ -11,12 +11,12 @@ import { bundleRequire, config, defineAction, withAction } from "@/lib";
 export default defineAction(
   async () => {
     // Load the package.json file of the project.
-    const pkg = require(path.project.resolve("package.json")) as PackageJson;
+    const pkg = require(path.project.resolve('package.json')) as PackageJson;
 
     // Check if the package.json file contains a devDependencies object.
     if (!pkg.devDependencies) {
       throw Error(
-        "Missing Configuration: Unable to locate devDependencies object in package.json. Please note that the absence of the devDependencies object does not allow us to verify installed plugins."
+        'Missing Configuration: Unable to locate devDependencies object in package.json. Please note that the absence of the devDependencies object does not allow us to verify installed plugins.',
       );
     }
 
@@ -25,38 +25,38 @@ export default defineAction(
 
     // Filter out plugins that are not listed as devDependencies.
     const uninstalledPlugins = config.code.plugins.filter(
-      (it) => !dependencyKeys.includes(it)
+      it => !dependencyKeys.includes(it),
     );
 
     // Check if there are uninstalled plugins.
     if (uninstalledPlugins.length) {
       throw Error(
-        `Missing Configuration: some of your plugins are not installed as devDependencies: ${uninstalledPlugins.map((it) => it).join(", ")}. Please install these plugins as devDependencies.`
+        `Missing Configuration: some of your plugins are not installed as devDependencies: ${uninstalledPlugins.map(it => it).join(', ')}. Please install these plugins as devDependencies.`,
       );
     }
 
     // Bundle and require all plugins listed in the config.
     const plugins = await Promise.all(
-      config.code.plugins.map(async (it) => {
+      config.code.plugins.map(async it => {
         const plugin = await bundleRequire(it);
 
         return plugin.default;
-      })
+      }),
     );
 
     // Execute iOS-specific actions for each plugin if the environment supports iOS.
     if (canRunIOS(config.options)) {
       for (const [index, plugin] of plugins.entries()) {
         // Skip if the plugin does not have an ios function.
-        if (typeof plugin.ios !== "function") continue;
+        if (typeof plugin.ios !== 'function') continue;
 
-        const name = config.code.plugins?.[index] ?? "unknown plugin";
+        const name = config.code.plugins?.[index] ?? 'unknown plugin';
 
         // Execute the iOS action with the plugin and its name.
         await withAction(
           plugin.ios,
           `${name} - ios`,
-          "code"
+          'code',
         )(config.build, config.options);
       }
     }
@@ -65,22 +65,22 @@ export default defineAction(
     if (canRunAndroid(config.options)) {
       for (const [index, plugin] of plugins.entries()) {
         // Skip if the plugin does not have an android function.
-        if (typeof plugin.android !== "function") continue;
+        if (typeof plugin.android !== 'function') continue;
 
-        const name = config.code.plugins?.[index] ?? "unknown plugin";
+        const name = config.code.plugins?.[index] ?? 'unknown plugin';
 
         // Execute the Android action with the plugin and its name.
         await withAction(
           plugin.android,
           `${name} - android`,
-          "code"
+          'code',
         )(config.build, config.options);
       }
     }
 
     // Return a success message with the list of executed plugins.
-    return `successfully ran plugins: ${config.code.plugins.map((it) => it).join(", ")}.`;
+    return `successfully ran plugins: ${config.code.plugins.map(it => it).join(', ')}.`;
   },
-  "plugins",
-  "code"
+  'plugins',
+  'code',
 );

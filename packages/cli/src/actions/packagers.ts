@@ -1,8 +1,8 @@
-import { isCI } from "ci-info";
-import { detect } from "detect-package-manager";
-import { canRunAndroid, canRunIOS, path } from "@brandingbrand/code-cli-kit";
+import {isCI} from 'ci-info';
+import {detect} from 'detect-package-manager';
+import {canRunAndroid, canRunIOS, path} from '@brandingbrand/code-cli-kit';
 
-import { config, defineAction, isGenerateCommand } from "@/lib";
+import {config, defineAction, isGenerateCommand} from '@/lib';
 
 /**
  * Defines the action to handle packagers installation based on platform availability and CI environment.
@@ -13,7 +13,7 @@ export default defineAction(
     /**
      * Imports the execa esm library dynamically.
      */
-    const { execa } = await import("execa");
+    const {execa} = await import('execa');
 
     /**
      * Executes package installation if the generate command is configured.
@@ -28,13 +28,13 @@ export default defineAction(
         await execa(packageManager, {
           cwd: path.project.resolve(
             config.code.pluginPath,
-            config.generateOptions.name
+            config.generateOptions.name,
           ),
-          stdout: config.options.verbose ? "inherit" : "ignore"
+          stdout: config.options.verbose ? 'inherit' : 'ignore',
         });
 
         // Execute package installation using the detected package manager
-        await execa(packageManager, { cwd: path.project.resolve() });
+        await execa(packageManager, {cwd: path.project.resolve()});
       } catch (e: any) {
         // Throw an error if package installation fails
         throw Error(`Error: failed to install node dependencies: ${e.message}`);
@@ -48,13 +48,13 @@ export default defineAction(
      */
     if (isCI && canRunAndroid(config.options)) {
       try {
-        await execa("bundle", ["install"], {
-          cwd: path.project.resolve("android"),
-          stdout: config.options.verbose ? "inherit" : "ignore"
+        await execa('bundle', ['install'], {
+          cwd: path.project.resolve('android'),
+          stdout: config.options.verbose ? 'inherit' : 'ignore',
         });
       } catch (e: any) {
         throw Error(
-          `Error: failed to run "bundle install" for Android: ${e.message}`
+          `Error: failed to run "bundle install" for Android: ${e.message}`,
         );
       }
     }
@@ -64,13 +64,13 @@ export default defineAction(
      */
     if (isCI && canRunIOS(config.options)) {
       try {
-        await execa("bundle", ["install"], {
-          cwd: path.project.resolve("ios"),
-          stdout: config.options.verbose ? "inherit" : "ignore"
+        await execa('bundle', ['install'], {
+          cwd: path.project.resolve('ios'),
+          stdout: config.options.verbose ? 'inherit' : 'ignore',
         });
       } catch (e: any) {
         throw Error(
-          `Error: failed to run "bundle install" for iOS: ${e.message}`
+          `Error: failed to run "bundle install" for iOS: ${e.message}`,
         );
       }
     }
@@ -80,15 +80,15 @@ export default defineAction(
      */
     if (canRunIOS(config.options)) {
       try {
-        await execa("pod", ["install"], {
-          cwd: path.project.resolve("ios"),
-          stdout: config.options.verbose ? "inherit" : "ignore"
+        await execa('pod', ['install'], {
+          cwd: path.project.resolve('ios'),
+          stdout: config.options.verbose ? 'inherit' : 'ignore',
         });
       } catch (e: any) {
         throw Error(`Error: failed to run "pod install" for iOS: ${e.message}`);
       }
     }
   },
-  "packagers",
-  "dependencies"
+  'packagers',
+  'dependencies',
 );

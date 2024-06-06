@@ -3,7 +3,7 @@
  * @module Plugin
  */
 
-import { definePlugin } from "@brandingbrand/code-cli-kit";
+import {definePlugin} from '@brandingbrand/code-cli-kit';
 
 /**
  * Defines a plugin with functions for both iOS and Android platforms.

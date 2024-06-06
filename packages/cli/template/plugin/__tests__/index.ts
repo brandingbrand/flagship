@@ -4,16 +4,16 @@
 
 /// <reference types="@brandingbrand/code-jest-config" />
 
-import plugin from "../src";
+import plugin from '../src';
 
-describe("plugin", () => {
-  it("ios", async () => {
+describe('plugin', () => {
+  it('ios', async () => {
     await plugin.ios?.({} as any, {} as any);
 
     expect(true).toBeTruthy();
   });
 
-  it("android", async () => {
+  it('android', async () => {
     await plugin.android?.({} as any, {} as any);
 
     expect(true).toBeTruthy();

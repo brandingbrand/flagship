@@ -4,9 +4,9 @@ import {
   path,
   string,
   PrebuildOptions,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import { type Transforms, defineTransformer } from "@/lib";
+import {type Transforms, defineTransformer} from '@/lib';
 
 /**
  * Defines a transformer for the Android project's "build.gradle" file.
@@ -29,7 +29,7 @@ export default defineTransformer<Transforms<string>>({
    * The name of the file to be transformed ("build.gradle").
    * @type {string}
    */
-  file: "build.gradle",
+  file: 'build.gradle',
 
   /**
    * An array of transformer functions to be applied to the "build.gradle" file.
@@ -51,7 +51,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(buildToolsVersion\s*=\s*")(\d|.)+(")/m,
-        `$1${config.android.gradle.projectGradle.buildToolsVersion}$3`
+        `$1${config.android.gradle.projectGradle.buildToolsVersion}$3`,
       );
     },
 
@@ -68,7 +68,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(minSdkVersion\s*=\s*)[\d]+/m,
-        `$1${config.android.gradle.projectGradle.minSdkVersion}`
+        `$1${config.android.gradle.projectGradle.minSdkVersion}`,
       );
     },
 
@@ -85,7 +85,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(compileSdkVersion\s*=\s*)[\d]+/m,
-        `$1${config.android.gradle.projectGradle.compileSdkVersion}`
+        `$1${config.android.gradle.projectGradle.compileSdkVersion}`,
       );
     },
 
@@ -102,7 +102,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(targetSdkVersion\s*=\s*)[\d]+/m,
-        `$1${config.android.gradle.projectGradle.targetSdkVersion}`
+        `$1${config.android.gradle.projectGradle.targetSdkVersion}`,
       );
     },
 
@@ -119,7 +119,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(ndkVersion\s*=\s*")(\d|.)+(")/m,
-        `$1${config.android.gradle.projectGradle.ndkVersion}$3`
+        `$1${config.android.gradle.projectGradle.ndkVersion}$3`,
       );
     },
 
@@ -133,7 +133,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(ext\s*{\s*?\n(\s+))/m,
-        `$1kotlinVersion = "${config.android.gradle?.projectGradle?.kotlinVersion || "1.7.10"}"\n$2`
+        `$1kotlinVersion = "${config.android.gradle?.projectGradle?.kotlinVersion || '1.7.10'}"\n$2`,
       );
     },
 
@@ -150,7 +150,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(ext\s*{\s*?\n(\s+))/m,
-        `$1${config.android.gradle.projectGradle.ext.map((it) => it).join("\n$2")}\n$2`
+        `$1${config.android.gradle.projectGradle.ext.map(it => it).join('\n$2')}\n$2`,
       );
     },
 
@@ -167,7 +167,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(repositories\s*{\s*?\n(\s+))/m,
-        `$1${config.android.gradle.projectGradle.repositories.map((it) => it).join("\n$2")}\n$2`
+        `$1${config.android.gradle.projectGradle.repositories.map(it => it).join('\n$2')}\n$2`,
       );
     },
 
@@ -184,7 +184,7 @@ export default defineTransformer<Transforms<string>>({
       return string.replace(
         content,
         /(dependencies\s*{\s*?\n(\s+))/m,
-        `$1${config.android.gradle.projectGradle.dependencies.map((it) => it).join("\n$2")}\n$2`
+        `$1${config.android.gradle.projectGradle.dependencies.map(it => it).join('\n$2')}\n$2`,
       );
     },
   ],
@@ -196,7 +196,7 @@ export default defineTransformer<Transforms<string>>({
    */
   transform: async function (
     config: BuildConfig,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
     return withUTF8(path.android.buildGradle, (content: string) => {
       return this.transforms.reduce((acc, curr) => {

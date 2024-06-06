@@ -14,7 +14,7 @@ interface pbxFile {
   target?: string;
 }
 
-declare module "xcode" {
+declare module 'xcode' {
   /**
    * UUID that is a key to each fragment of PBXProject.
    */
@@ -26,24 +26,24 @@ declare module "xcode" {
   type UUIDComment = string;
 
   type XCObjectType =
-    | "PBXBuildFile"
-    | "PBXFileReference"
-    | "PBXFrameworksBuildPhase"
-    | "PBXGroup"
-    | "PBXNativeTarget"
-    | "PBXProject"
-    | "PBXResourcesBuildPhase"
-    | "PBXShellScriptBuildPhase"
-    | "PBXSourcesBuildPhase"
-    | "PBXVariantGroup"
-    | "PBXTargetDependency"
-    | "XCBuildConfiguration"
-    | "XCConfigurationList";
+    | 'PBXBuildFile'
+    | 'PBXFileReference'
+    | 'PBXFrameworksBuildPhase'
+    | 'PBXGroup'
+    | 'PBXNativeTarget'
+    | 'PBXProject'
+    | 'PBXResourcesBuildPhase'
+    | 'PBXShellScriptBuildPhase'
+    | 'PBXSourcesBuildPhase'
+    | 'PBXVariantGroup'
+    | 'PBXTargetDependency'
+    | 'XCBuildConfiguration'
+    | 'XCConfigurationList';
 
   type PBXFile = pbxFile;
 
   interface PBXProject {
-    isa: "PBXProject";
+    isa: 'PBXProject';
     attributes: {
       LastUpgradeCheck: number;
       TargetAttributes: Record<
@@ -74,7 +74,7 @@ declare module "xcode" {
   }
 
   interface PBXNativeTarget {
-    isa: "PBXNativeTarget";
+    isa: 'PBXNativeTarget';
     buildConfigurationList: UUID;
     buildConfigurationList_comment: string;
     buildPhases: {
@@ -94,30 +94,30 @@ declare module "xcode" {
   }
 
   interface PBXBuildFile {
-    isa: "PBXBuildFile";
+    isa: 'PBXBuildFile';
     fileRef: UUID;
     // "AppDelegate.m"
     fileRef_comment: string;
   }
 
   interface PBXTargetDependency {
-    isa: "PBXTargetDependency";
+    isa: 'PBXTargetDependency';
     target: UUID;
     targetProxy: UUID;
   }
 
   interface XCConfigurationList {
-    isa: "XCConfigurationList";
+    isa: 'XCConfigurationList';
     buildConfigurations: {
       value: UUID;
-      comment: string | "Release" | "Debug";
+      comment: string | 'Release' | 'Debug';
     }[];
     defaultConfigurationIsVisible: number;
     defaultConfigurationName: string;
   }
 
   interface XCBuildConfiguration {
-    isa: "XCBuildConfiguration";
+    isa: 'XCBuildConfiguration';
     baseConfigurationReference: UUID;
     baseConfigurationReference_comment: string;
     buildSettings: Record<string, string | undefined | number | unknown[]> & {
@@ -157,21 +157,21 @@ declare module "xcode" {
   }
 
   type ProductType =
-    | "com.apple.product-type.application"
-    | "com.apple.product-type.app-extension"
-    | "com.apple.product-type.bundle"
-    | "com.apple.product-type.tool"
-    | "com.apple.product-type.library.dynamic"
-    | "com.apple.product-type.framework"
-    | "com.apple.product-type.library.static"
-    | "com.apple.product-type.bundle.unit-test"
-    | "com.apple.product-type.application.watchapp"
-    | "com.apple.product-type.application.watchapp2"
-    | "com.apple.product-type.watchkit-extension"
-    | "com.apple.product-type.watchkit2-extension";
+    | 'com.apple.product-type.application'
+    | 'com.apple.product-type.app-extension'
+    | 'com.apple.product-type.bundle'
+    | 'com.apple.product-type.tool'
+    | 'com.apple.product-type.library.dynamic'
+    | 'com.apple.product-type.framework'
+    | 'com.apple.product-type.library.static'
+    | 'com.apple.product-type.bundle.unit-test'
+    | 'com.apple.product-type.application.watchapp'
+    | 'com.apple.product-type.application.watchapp2'
+    | 'com.apple.product-type.watchkit-extension'
+    | 'com.apple.product-type.watchkit2-extension';
 
   interface PBXGroup {
-    isa: "PBXGroup";
+    isa: 'PBXGroup';
     children: {
       value: UUID;
       comment?: string;
@@ -228,7 +228,7 @@ declare module "xcode" {
     /**
      * @returns Content of .pbxproj file.
      */
-    writeSync(options?: { omitEmptyValues?: boolean }): string;
+    writeSync(options?: {omitEmptyValues?: boolean}): string;
 
     allUuids(): UUID[];
     generateUuid(): UUID;
@@ -260,8 +260,8 @@ declare module "xcode" {
       filePathsArray: string[],
       name: string,
       path: string,
-      sourceTree?: string
-    ): { uuid: UUID; pbxGroup: PBXGroup };
+      sourceTree?: string,
+    ): {uuid: UUID; pbxGroup: PBXGroup};
     removePbxGroup(groupName: unknown): void;
     addToPbxProjectSection(target: unknown): void;
     addToPbxNativeTargetSection(target: unknown): void;
@@ -291,7 +291,7 @@ declare module "xcode" {
     addXCConfigurationList(
       configurationObjectsArray: unknown,
       defaultConfigurationName: unknown,
-      comment: unknown
+      comment: unknown,
     ): {
       uuid: unknown;
       xcConfigurationList: {
@@ -303,7 +303,7 @@ declare module "xcode" {
     };
     addTargetDependency(
       target: unknown,
-      dependencyTargets: unknown
+      dependencyTargets: unknown,
     ): {
       uuid: unknown;
       target: unknown;
@@ -314,7 +314,7 @@ declare module "xcode" {
       comment: unknown,
       target: unknown,
       optionsOrFolderType: unknown,
-      subfolderPath: unknown
+      subfolderPath: unknown,
     ): {
       uuid: unknown;
       buildPhase: {
@@ -358,7 +358,7 @@ declare module "xcode" {
       prop: string,
       value: unknown,
       build: unknown,
-      target: string
+      target: string,
     ): void;
     updateProductName(name: string): void;
     removeFromFrameworkSearchPaths(file: unknown): void;
@@ -379,7 +379,7 @@ declare module "xcode" {
       name: unknown,
       type: unknown,
       subfolder: unknown,
-      bundleId: unknown
+      bundleId: unknown,
     ): {
       uuid: unknown;
       pbxNativeTarget: {
@@ -397,7 +397,7 @@ declare module "xcode" {
     /**
      * Get First PBXProject that can be found in `.pbxproj` file.
      */
-    getFirstProject(): { uuid: UUID; firstProject: PBXProject };
+    getFirstProject(): {uuid: UUID; firstProject: PBXProject};
     getFirstTarget(): {
       uuid: UUID;
       firstTarget: PBXNativeTarget;
@@ -406,26 +406,26 @@ declare module "xcode" {
      * Retrieves PBXNativeTarget by the type
      */
     getTarget(
-      productType: ProductType
-    ): { uuid: UUID; target: PBXNativeTarget } | null;
+      productType: ProductType,
+    ): {uuid: UUID; target: PBXNativeTarget} | null;
     addToPbxGroupType(
       file: unknown,
       groupKey: unknown,
-      groupType: unknown
+      groupType: unknown,
     ): void;
     addToPbxVariantGroup(file: unknown, groupKey: unknown): void;
     addToPbxGroup(file: PBXFile | string, groupKey: UUID): void;
     pbxCreateGroupWithType(
       name: unknown,
       pathName: unknown,
-      groupType: unknown
+      groupType: unknown,
     ): unknown;
     pbxCreateVariantGroup(name: unknown): unknown;
     pbxCreateGroup(name: string, pathName: string): UUID;
     removeFromPbxGroupAndType(
       file: unknown,
       groupKey: unknown,
-      groupType: unknown
+      groupType: unknown,
     ): void;
     removeFromPbxGroup(file: unknown, groupKey: unknown): void;
     removeFromPbxVariantGroup(file: unknown, groupKey: unknown): void;
@@ -439,10 +439,7 @@ declare module "xcode" {
     /**
      * @param criteria Params that should be used to locate desired PBXGroup.
      */
-    findPBXGroupKey(criteria: {
-      name?: string;
-      path?: string;
-    }): UUID | undefined;
+    findPBXGroupKey(criteria: {name?: string; path?: string}): UUID | undefined;
     findPBXVariantGroupKey(criteria: unknown): string;
     addLocalizationVariantGroup(name: unknown): {
       uuid: unknown;
@@ -474,7 +471,7 @@ declare module "xcode" {
         compilerFLags?: string;
         embed?: boolean;
         sign?: boolean;
-      }
+      },
     ): PBXFile | null;
     removeFile(path: unknown, group: unknown, opt: unknown): unknown;
     getBuildProperty(prop: unknown, build: unknown): unknown;
@@ -482,7 +479,7 @@ declare module "xcode" {
     addDataModelDocument(
       filePath: unknown,
       group: unknown,
-      opt: unknown
+      opt: unknown,
     ): unknown;
     addTargetAttribute(prop: unknown, value: unknown, target: unknown): void;
     removeTargetAttribute(prop: unknown, target: unknown): void;
@@ -491,7 +488,7 @@ declare module "xcode" {
   export function project(projectPath: string): XcodeProject;
 }
 
-declare module "xcode/lib/pbxFile" {
+declare module 'xcode/lib/pbxFile' {
   export default class PBXFile implements pbxFile {
     constructor(file: string);
     basename: string;

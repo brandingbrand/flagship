@@ -1,7 +1,7 @@
 /**
  * Represents a plugin for configuring the splash screen settings in a mobile app.
  */
-import type { Plugin } from "@brandingbrand/code-cli-kit";
+import type {Plugin} from '@brandingbrand/code-cli-kit';
 
 /**
  * Represents the configuration options for the splash screen of a mobile app.
@@ -30,7 +30,7 @@ type IOSSplash =
       /**
        * Specifies that the splash screen is of type "legacy".
        */
-      type: "legacy";
+      type: 'legacy';
       /**
        * Configuration options for legacy iOS splash screen.
        */
@@ -55,7 +55,7 @@ type IOSSplash =
       /**
        * Specifies that the splash screen is of type "generated".
        */
-      type: "generated";
+      type: 'generated';
       /**
        * Configuration options for generated iOS splash screen.
        */
@@ -79,7 +79,7 @@ type AndroidSplash =
       /**
        * Specifies that the splash screen is of type "legacy".
        */
-      type: "legacy";
+      type: 'legacy';
       /**
        * Configuration options for legacy Android splash screen.
        */
@@ -94,7 +94,7 @@ type AndroidSplash =
       /**
        * Specifies that the splash screen is of type "generated".
        */
-      type: "generated";
+      type: 'generated';
       /**
        * Configuration options for generated Android splash screen.
        */

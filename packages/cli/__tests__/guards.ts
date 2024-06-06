@@ -1,25 +1,25 @@
-import { defineAction, defineTransformer } from "../src/lib/guards";
+import {defineAction, defineTransformer} from '../src/lib/guards';
 
-describe("defineAction function", () => {
-  it("should return a Promise that resolves when the action completes successfully", async () => {
+describe('defineAction function', () => {
+  it('should return a Promise that resolves when the action completes successfully', async () => {
     const mockAction = async () => {
-      return new Promise<void>((resolve) => {
+      return new Promise<void>(resolve => {
         setTimeout(() => {
           resolve();
         }, 100);
       });
     };
 
-    const resultPromise = defineAction(mockAction, "Test Action", "code");
+    const resultPromise = defineAction(mockAction, 'Test Action', 'code');
 
     await expect(resultPromise()).resolves.toBeUndefined();
   });
 });
 
-describe("defineTransformer function", () => {
-  it("should return the provided transformer object", () => {
+describe('defineTransformer function', () => {
+  it('should return the provided transformer object', () => {
     const mockTransformer = {
-      file: "mockFile",
+      file: 'mockFile',
       transforms: [],
       transform: async () => {},
     };

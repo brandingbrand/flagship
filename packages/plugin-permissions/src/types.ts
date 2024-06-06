@@ -1,6 +1,6 @@
-import type { Plugin } from "@brandingbrand/code-cli-kit";
+import type {Plugin} from '@brandingbrand/code-cli-kit';
 
-import * as permissions from "./permissions";
+import * as permissions from './permissions';
 
 /**
  * Represents a set of permissions required by a Code Plugin for both iOS and Android platforms.
@@ -41,15 +41,15 @@ type IOSPermission = {
     purposeKey?: string;
   } & /**
    * Conditional type to enforce 'text' property requirement based on 'usageKey'.
-   */ ((typeof permissions.ios)[T]["usageKey"] extends undefined
+   */ ((typeof permissions.ios)[T]['usageKey'] extends undefined
     ? {} // If 'usageKey' is undefined, 'text' is optional
-    : { text: string }) & // If 'usageKey' is defined, 'text' is required
+    : {text: string}) & // If 'usageKey' is defined, 'text' is required
     /**
      * Conditional type to enforce 'purposeKey' property requirement based on 'purposeKey'.
      */
-    ((typeof permissions.ios)[T]["purposeKey"] extends undefined
+    ((typeof permissions.ios)[T]['purposeKey'] extends undefined
       ? {} // If 'purposeKey' is undefined, 'purposeKey' is optional
-      : { purposeKey: string }); // If 'purposeKey' is defined, 'purposeKey' is required
+      : {purposeKey: string}); // If 'purposeKey' is defined, 'purposeKey' is required
 }[keyof typeof permissions.ios];
 
 /**

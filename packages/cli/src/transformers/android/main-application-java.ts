@@ -4,9 +4,9 @@ import {
   path,
   PrebuildOptions,
   string,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import { Transforms, defineTransformer } from "@/lib";
+import {Transforms, defineTransformer} from '@/lib';
 
 /**
  * Defines a transformer for the Android project's "MainApplication.java" file.
@@ -22,7 +22,7 @@ export default defineTransformer<Transforms<string>>({
    * The name of the file to be transformed ("MainApplication.java").
    * @type {string}
    */
-  file: "MainApplication.java",
+  file: 'MainApplication.java',
 
   /**
    * An array of transformer functions to be applied to the "MainApplication.java" file.
@@ -40,14 +40,14 @@ export default defineTransformer<Transforms<string>>({
     (
       content: string,
       config: BuildConfig,
-      options: PrebuildOptions
+      options: PrebuildOptions,
     ): string => {
       return string.replace(
         content,
         /(new PackageList.*\s+)/m,
         `$1packages.add(new NativeConstantsPackage());
           packages.add(new EnvSwitcherPackage());
-          `
+          `,
       );
     },
   ],
@@ -59,7 +59,7 @@ export default defineTransformer<Transforms<string>>({
    */
   transform: async function (
     config: BuildConfig,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
     return withUTF8(path.android.mainApplication(config), (content: string) => {
       return this.transforms.reduce((acc, curr) => {

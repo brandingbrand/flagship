@@ -1,13 +1,13 @@
-import fse from "fs-extra";
+import fse from 'fs-extra';
 import {
   fs,
   canRunAndroid,
   canRunIOS,
   path,
   globAndReplace,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import { config, defineAction, isGenerateCommand } from "@/lib";
+import {config, defineAction, isGenerateCommand} from '@/lib';
 
 /**
  * Define an action to initialize a project template.
@@ -21,9 +21,9 @@ export default defineAction(
   async () => {
     // Get the path to the template directory of the '@brandingbrand/code-cli' package
     const templatePath = path.join(
-      require.resolve("@brandingbrand/code-cli/package.json"),
-      "..",
-      "template"
+      require.resolve('@brandingbrand/code-cli/package.json'),
+      '..',
+      'template',
     );
 
     // If the generate cli command was executed copy the plugin template only
@@ -31,19 +31,19 @@ export default defineAction(
     if (isGenerateCommand()) {
       const pluginPath = path.project.resolve(
         config.code.pluginPath,
-        config.generateOptions.name
+        config.generateOptions.name,
       );
 
-      await fs.mkdir(pluginPath).catch((e) => {
+      await fs.mkdir(pluginPath).catch(e => {
         throw Error(
-          `Error: unable to create directory ${pluginPath}, ${e.message}`
+          `Error: unable to create directory ${pluginPath}, ${e.message}`,
         );
       });
       await fse
-        .copy(path.resolve(templatePath, "plugin"), pluginPath)
-        .catch((e) => {
+        .copy(path.resolve(templatePath, 'plugin'), pluginPath)
+        .catch(e => {
           throw Error(
-            `Error: unable to copy plugin template to ${pluginPath}, ${e.message}`
+            `Error: unable to copy plugin template to ${pluginPath}, ${e.message}`,
           );
         });
 
@@ -55,18 +55,18 @@ export default defineAction(
     // Check if the configuration allows running for iOS platform
     if (canRunIOS(config.options)) {
       // Create directories for iOS platform
-      await fse.mkdir(path.project.resolve("ios")).catch((e) => {
+      await fse.mkdir(path.project.resolve('ios')).catch(e => {
         throw Error(
-          `Error: unable to create ios directory in project root ${path.project.resolve()}, ${e.message}`
+          `Error: unable to create ios directory in project root ${path.project.resolve()}, ${e.message}`,
         );
       });
 
       // Copy over iOS template to ios directory
       await fse
-        .copy(path.resolve(templatePath, "ios"), path.project.resolve("ios"))
-        .catch((e) => {
+        .copy(path.resolve(templatePath, 'ios'), path.project.resolve('ios'))
+        .catch(e => {
           throw Error(
-            `Error: unable to copy ios template to ios directory in project root ${path.project.resolve("ios")}, ${e.message}`
+            `Error: unable to copy ios template to ios directory in project root ${path.project.resolve('ios')}, ${e.message}`,
           );
         });
     }
@@ -74,21 +74,21 @@ export default defineAction(
     // Check if the configuration allows running for Android platform
     if (canRunAndroid(config.options)) {
       // Create directories for Android platform
-      await fse.mkdir(path.project.resolve("android")).catch((e) => {
+      await fse.mkdir(path.project.resolve('android')).catch(e => {
         throw Error(
-          `Error: unable to create android directory in project root ${path.project.resolve()}, ${e.message}`
+          `Error: unable to create android directory in project root ${path.project.resolve()}, ${e.message}`,
         );
       });
 
       // Copy template files for Android platform to the project directory
       await fse
         .copy(
-          path.resolve(templatePath, "android"),
-          path.project.resolve("android")
+          path.resolve(templatePath, 'android'),
+          path.project.resolve('android'),
         )
-        .catch((e) => {
+        .catch(e => {
           throw Error(
-            `Error: unable to copy ios template to android directory in project root ${path.project.resolve("android")}, ${e.message}`
+            `Error: unable to copy ios template to android directory in project root ${path.project.resolve('android')}, ${e.message}`,
           );
         });
 
@@ -98,11 +98,11 @@ export default defineAction(
         await fse
           .copyFile(
             path.project.resolve(config.build.android.signing.storeFile),
-            path.project.resolve("android", "app", "release.keystore")
+            path.project.resolve('android', 'app', 'release.keystore'),
           )
-          .catch((e) => {
+          .catch(e => {
             throw Error(
-              `Error: unable to copy keystore to ${path.project.resolve("android", "app", "release.keystore")}, ${e.message}`
+              `Error: unable to copy keystore to ${path.project.resolve('android', 'app', 'release.keystore')}, ${e.message}`,
             );
           });
       }
@@ -110,58 +110,58 @@ export default defineAction(
 
     // Copy extra template files to the project directory based on platform availability
     await fse
-      .copy(path.resolve(templatePath, "extras"), path.project.resolve(), {
+      .copy(path.resolve(templatePath, 'extras'), path.project.resolve(), {
         filter: function (path) {
           // Filter out Android files if Android platform is not enabled
-          if (!canRunAndroid(config.options) && path.indexOf("android") > -1) {
+          if (!canRunAndroid(config.options) && path.indexOf('android') > -1) {
             return false;
           }
 
           // Filter out iOS files if iOS platform is not enabled
-          if (!canRunIOS(config.options) && path.indexOf("ios") > -1) {
+          if (!canRunIOS(config.options) && path.indexOf('ios') > -1) {
             return false;
           }
 
           return true;
         },
       })
-      .catch((e) => {
+      .catch(e => {
         throw Error(
-          `Error: unable to copy additional template files native directories, ${e.message}`
+          `Error: unable to copy additional template files native directories, ${e.message}`,
         );
       });
 
     if (canRunAndroid(config.options)) {
       // Rename android package namespace to updated package name for both debug and main packages
       await Promise.all(
-        ["debug", "main", "release"].map((it) =>
+        ['debug', 'main', 'release'].map(it =>
           fs.renameAndCopyDirectory(
-            "com.app",
+            'com.app',
             config.build.android.packageName,
-            path.project.resolve("android", "app", "src", it, "java")
-          )
-        )
-      ).catch((e) => {
+            path.project.resolve('android', 'app', 'src', it, 'java'),
+          ),
+        ),
+      ).catch(e => {
         throw Error(
-          `Error: unable to rename android directories to updated package name, ${e.message}`
+          `Error: unable to rename android directories to updated package name, ${e.message}`,
         );
       });
 
       // Replace package namespace in Java files for debug, main, and release builds
       await globAndReplace(
-        "android/**/{debug,main,release}/**/*.java",
+        'android/**/{debug,main,release}/**/*.java',
         /package\s+com\.app;/,
-        `package ${config.build.android.packageName};`
-      ).catch((e) => {
+        `package ${config.build.android.packageName};`,
+      ).catch(e => {
         throw Error(
-          `Error: unable to to update package names in native android files, ${e.message}`
+          `Error: unable to to update package names in native android files, ${e.message}`,
         );
       });
     }
 
     // Return success message after adding native templates to the project
-    return "added native template(s) to project";
+    return 'added native template(s) to project';
   },
-  "template",
-  "template"
+  'template',
+  'template',
 );

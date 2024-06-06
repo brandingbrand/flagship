@@ -3,9 +3,9 @@ import {
   type PrebuildOptions,
   type ColorsXML,
   withColors,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import { Transforms, defineTransformer } from "@/lib";
+import {Transforms, defineTransformer} from '@/lib';
 
 /**
  * Defines a transformer for the Android project's "colors.xml" file.
@@ -19,7 +19,7 @@ export default defineTransformer<Transforms<ColorsXML, void>>({
   /**
    * Specifies the file to be transformed, which is colors.xml in this case.
    */
-  file: "colors.xml",
+  file: 'colors.xml',
 
   /**
    * An array of transformer functions to be applied to the "colors.xml" file.
@@ -37,14 +37,14 @@ export default defineTransformer<Transforms<ColorsXML, void>>({
       if (!config.android.colors) return;
 
       if (!xml.resources.color) {
-        xml.resources = { ...xml.resources, color: [] };
+        xml.resources = {...xml.resources, color: []};
       }
 
       Object.entries(config.android.colors).forEach(([name, _]) =>
         xml.resources.color?.push({
-          $: { name },
+          $: {name},
           _,
-        })
+        }),
       );
     },
   ],
@@ -57,10 +57,10 @@ export default defineTransformer<Transforms<ColorsXML, void>>({
    */
   transform: async function (
     config: BuildConfig,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
-    return withColors((xml) => {
-      return this.transforms.forEach((it) => it(xml, config, options));
+    return withColors(xml => {
+      return this.transforms.forEach(it => it(xml, config, options));
     });
   },
 });

@@ -10,15 +10,15 @@ export type URLScheme = {
  * Represents the possible interface orientations for an iOS app.
  */
 export type InterfaceOrientation =
-  | "UIInterfaceOrientationPortrait"
-  | "UIInterfaceOrientationPortraitUpsideDown"
-  | "UIInterfaceOrientationLandscapeLeft"
-  | "UIInterfaceOrientationLandscapeRight";
+  | 'UIInterfaceOrientationPortrait'
+  | 'UIInterfaceOrientationPortraitUpsideDown'
+  | 'UIInterfaceOrientationLandscapeLeft'
+  | 'UIInterfaceOrientationLandscapeRight';
 
 /**
  * Represents the possible interface styles for an iOS app.
  */
-export type InterfaceStyle = "Light" | "Dark" | "Automatic";
+export type InterfaceStyle = 'Light' | 'Dark' | 'Automatic';
 
 /**
  * Represents the App Transport Security settings for an iOS app.
@@ -40,7 +40,7 @@ export type AppTransportSecurity = {
 export type InfoPlist = Record<string, unknown> & {
   UIStatusBarHidden?: boolean;
   UIStatusBarStyle?: string;
-  UILaunchStoryboardName?: string | "LaunchScreen";
+  UILaunchStoryboardName?: string | 'LaunchScreen';
   CFBundleShortVersionString?: string;
   CFBundleVersion?: string;
   CFBundleDisplayName?: string;

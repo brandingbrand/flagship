@@ -1,7 +1,7 @@
-import * as t from "io-ts";
-import type { PartialDeep } from "type-fest";
+import * as t from 'io-ts';
+import type {PartialDeep} from 'type-fest';
 
-import { BuildConfigSchema, FlagshipCodeConfigSchema } from "@/schemas";
+import {BuildConfigSchema, FlagshipCodeConfigSchema} from '@/schemas';
 
 /**
  * Represents the runtime type of the FlagshipCodeConfig object.
@@ -47,7 +47,7 @@ export type PrebuildOptions = {
   /** Indicates whether to display verbose output. */
   verbose: boolean;
   /** The target platform for prebuilding. */
-  platform: "ios" | "android" | "native";
+  platform: 'ios' | 'android' | 'native';
 };
 
 /**
@@ -57,7 +57,7 @@ export type GenerateOptions = {
   /**
    * Type of generator - only "plugin" is available currently
    */
-  type: "plugin";
+  type: 'plugin';
   /**
    * Name of your plugin. This will be reflected in your package.json and
    * in your flagship-code.config.ts.

@@ -1,6 +1,6 @@
 /// <reference types="@brandingbrand/code-cli-kit/types"/>
 
-import fse from "fs-extra";
+import fse from 'fs-extra';
 import {
   BuildConfig,
   fs,
@@ -9,34 +9,34 @@ import {
   withInfoPlist,
   withPbxproj,
   withUTF8,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import type { CodePluginSplashScreen } from "./types";
+import type {CodePluginSplashScreen} from './types';
 
 /**
  * Generates iOS splash screen using provided configuration.
  * @param config The build configuration including splash screen settings.
  */
 export async function ios(config: BuildConfig & CodePluginSplashScreen) {
-  if (config.codePluginSplashScreen.plugin.ios?.type !== "generated") {
+  if (config.codePluginSplashScreen.plugin.ios?.type !== 'generated') {
     throw Error(
-      "[CodePluginSplashScreen]: generated was inadvertently executed with the incorrect config - 'type' must be 'generated'"
+      "[CodePluginSplashScreen]: generated was inadvertently executed with the incorrect config - 'type' must be 'generated'",
     );
   }
 
   // Extract logoPath and background color from the iOS splash screen configuration
-  const { logoPath, backgroundColor: background } =
+  const {logoPath, backgroundColor: background} =
     config.codePluginSplashScreen.plugin.ios.generated;
 
   // Resolve the input file path
   const inputFile = path.project.resolve(logoPath);
 
   // Require the generate function from react-native-bootsplash
-  const { generate } = require(
-    require.resolve("react-native-bootsplash/dist/commonjs/generate.js", {
+  const {generate} = require(
+    require.resolve('react-native-bootsplash/dist/commonjs/generate.js', {
       // eslint-disable-next-line turbo/no-undeclared-env-vars
-      ...(!process.env.JEST_WORKER_ID && { paths: [process.cwd()] }),
-    })
+      ...(!process.env.JEST_WORKER_ID && {paths: [process.cwd()]}),
+    }),
   );
 
   // Generate iOS splash screen using the specified configuration
@@ -44,12 +44,12 @@ export async function ios(config: BuildConfig & CodePluginSplashScreen) {
     logo: inputFile,
     background,
     logoWidth: 212,
-    platforms: ["ios"],
+    platforms: ['ios'],
     assetsOutput: null,
     ios: {
-      sourceDir: path.project.resolve("ios"),
+      sourceDir: path.project.resolve('ios'),
       xcodeProject: {
-        name: "app",
+        name: 'app',
         isWorkspace: true,
       },
     },
@@ -57,37 +57,37 @@ export async function ios(config: BuildConfig & CodePluginSplashScreen) {
 
   // Rename the generated BootSplash.storyboard file to LaunchScreen.storyboard
   await fse.move(
-    path.project.resolve("ios", "app", "BootSplash.storyboard"),
-    path.project.resolve("ios", "app", "LaunchScreen.storyboard"),
-    { overwrite: true }
+    path.project.resolve('ios', 'app', 'BootSplash.storyboard'),
+    path.project.resolve('ios', 'app', 'LaunchScreen.storyboard'),
+    {overwrite: true},
   );
 
-  await withPbxproj((project) => {
-    const targetKey = project.findTargetKey("app");
+  await withPbxproj(project => {
+    const targetKey = project.findTargetKey('app');
 
     if (!targetKey) {
       throw Error(
-        "[CodePluginSplashCreenError]: cannot find target 'app' uuid"
+        "[CodePluginSplashCreenError]: cannot find target 'app' uuid",
       );
     }
 
-    const groupKey = project.findPBXGroupKey({ name: "app" });
+    const groupKey = project.findPBXGroupKey({name: 'app'});
 
     if (!groupKey) {
       throw Error("[CodePluginSplashCreenError]: cannot find group 'app' uuid");
     }
 
     project.removeResourceFile(
-      "app/BootSplash.storyboard",
-      { target: targetKey },
-      groupKey
+      'app/BootSplash.storyboard',
+      {target: targetKey},
+      groupKey,
     );
   });
 
-  await withInfoPlist((plist) => {
+  await withInfoPlist(plist => {
     return {
       ...plist,
-      UILaunchStoryboardName: "LaunchScreen.storyboard",
+      UILaunchStoryboardName: 'LaunchScreen.storyboard',
     };
   });
 }
@@ -97,59 +97,59 @@ export async function ios(config: BuildConfig & CodePluginSplashScreen) {
  * @param config The build configuration including splash screen settings.
  */
 export async function android(config: BuildConfig & CodePluginSplashScreen) {
-  if (config.codePluginSplashScreen.plugin.android?.type !== "generated") {
+  if (config.codePluginSplashScreen.plugin.android?.type !== 'generated') {
     throw Error(
-      "[CodePluginSplashScreen]: generated was inadvertently executed with the incorrect config - 'type' must be 'generated'"
+      "[CodePluginSplashScreen]: generated was inadvertently executed with the incorrect config - 'type' must be 'generated'",
     );
   }
 
   // Extract logoPath and background color from the Android splash screen configuration
-  const { logoPath, backgroundColor: background } =
+  const {logoPath, backgroundColor: background} =
     config.codePluginSplashScreen.plugin.android.generated;
 
   // Resolve the input file path
   const inputFile = path.project.resolve(logoPath);
 
   // Require the generate function from react-native-bootsplash
-  const { generate } = require(
-    require.resolve("react-native-bootsplash/dist/commonjs/generate.js", {
+  const {generate} = require(
+    require.resolve('react-native-bootsplash/dist/commonjs/generate.js', {
       // eslint-disable-next-line turbo/no-undeclared-env-vars
-      ...(!process.env.JEST_WORKER_ID && { paths: [process.cwd()] }),
-    })
+      ...(!process.env.JEST_WORKER_ID && {paths: [process.cwd()]}),
+    }),
   );
 
   // Generate Android splash screen using the specified configuration
   await generate({
-    flavor: "main",
+    flavor: 'main',
     logo: inputFile,
     background,
     logoWidth: 180,
     assetsOutput: null,
-    platforms: ["android"],
+    platforms: ['android'],
     android: {
-      sourceDir: path.project.resolve("android"),
-      appName: "app",
+      sourceDir: path.project.resolve('android'),
+      appName: 'app',
     },
   });
 
   // Create the necessary directory structure for the Android splash screen layout
   await fs.mkdir(
-    path.project.resolve("android", "app", "src", "main", "res", "layout"),
+    path.project.resolve('android', 'app', 'src', 'main', 'res', 'layout'),
     {
       recursive: true,
-    }
+    },
   );
 
   // Write the splash.xml layout file for Android splash screen
   await fs.writeFile(
     path.project.resolve(
-      "android",
-      "app",
-      "src",
-      "main",
-      "res",
-      "layout",
-      "splash.xml"
+      'android',
+      'app',
+      'src',
+      'main',
+      'res',
+      'layout',
+      'splash.xml',
     ),
     `<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -165,11 +165,11 @@ export async function android(config: BuildConfig & CodePluginSplashScreen) {
         android:background="@drawable/bootsplash_logo"
     />
 </LinearLayout>
-`
+`,
   );
 
   // Update the main activity file to set the splash screen layout
-  await withUTF8(path.android.mainActivity(config), (content) => {
+  await withUTF8(path.android.mainActivity(config), content => {
     // Add package imports to the main activity
     content = string.replace(
       content,
@@ -178,7 +178,7 @@ export async function android(config: BuildConfig & CodePluginSplashScreen) {
     
 import android.os.Bundle;
 import androidx.annotation.Nullable;
-`
+`,
     );
 
     // Add onCreate method to the main activity to set the splash screen layout
@@ -191,7 +191,7 @@ import androidx.annotation.Nullable;
     super.onCreate(savedInstanceState);
     setContentView(R.layout.splash);
   }
-`
+`,
     );
 
     return content;

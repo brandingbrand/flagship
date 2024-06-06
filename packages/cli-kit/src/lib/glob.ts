@@ -1,7 +1,7 @@
-import fs from "fs/promises";
-import path from "path";
+import fs from 'fs/promises';
+import path from 'path';
 
-import { glob, sync } from "glob";
+import {glob, sync} from 'glob';
 
 /**
  * Glob files, read their content, replace a specified value, and write the updated content back to the files.
@@ -14,7 +14,7 @@ import { glob, sync } from "glob";
 export async function globAndReplace(
   pattern: string,
   oldText: RegExp | string,
-  newText: string
+  newText: string,
 ): Promise<void> {
   /**
    * Replace occurrences of the specified substring or matches of the regular expression in a given content.
@@ -27,7 +27,7 @@ export async function globAndReplace(
   const replaceInContent = (
     content: string,
     oldText: RegExp | string,
-    newText: string
+    newText: string,
   ): string => content.replace(oldText, newText);
 
   /**
@@ -38,14 +38,14 @@ export async function globAndReplace(
   const processFiles = async (files: string[]): Promise<void> => {
     for (const filePath of files) {
       const absoluteFilePath = path.resolve(filePath);
-      const originalContent = await fs.readFile(absoluteFilePath, "utf-8");
+      const originalContent = await fs.readFile(absoluteFilePath, 'utf-8');
       const updatedContent = replaceInContent(
         originalContent,
         oldText,
-        newText
+        newText,
       );
 
-      await fs.writeFile(absoluteFilePath, updatedContent, "utf-8");
+      await fs.writeFile(absoluteFilePath, updatedContent, 'utf-8');
     }
   };
 
@@ -89,7 +89,7 @@ export function getMatchingFiles(directory: string, oldName: string): string[] {
    */
   const caseSensitiveResults = sync(
     `${directory}/**/*${oldName}*`,
-    globOptions
+    globOptions,
   );
 
   /**
@@ -99,7 +99,7 @@ export function getMatchingFiles(directory: string, oldName: string): string[] {
    */
   const caseInsensitiveResults = sync(
     `${directory}/**/*${oldName.toLocaleLowerCase()}*`,
-    globOptions
+    globOptions,
   );
 
   /**

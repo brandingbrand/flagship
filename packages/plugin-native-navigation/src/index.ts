@@ -11,7 +11,7 @@ import {
   withUTF8,
   path,
   string,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
 /**
  * Defines a plugin with functions for both iOS and Android platforms.
@@ -28,12 +28,12 @@ export default definePlugin({
    */
   ios: async function (
     build: BuildConfig,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
     // Resolve path to react-native-navigation postlink path module
     const rnnPath = require.resolve(
-      "react-native-navigation/autolink/postlink/path.js",
-      { paths: [process.cwd()] }
+      'react-native-navigation/autolink/postlink/path.js',
+      {paths: [process.cwd()]},
     );
 
     // Update mainApplicationJava in postlink path module
@@ -41,12 +41,12 @@ export default definePlugin({
 
     // Resolve path to react-native-navigation postlink IOS script
     const scriptPath = require.resolve(
-      "react-native-navigation/autolink/postlink/postLinkIOS.js",
-      { paths: [process.cwd()] }
+      'react-native-navigation/autolink/postlink/postLinkIOS.js',
+      {paths: [process.cwd()]},
     );
 
     // Set executable permission for postlink IOS script
-    await fs.chmod(scriptPath, "755");
+    await fs.chmod(scriptPath, '755');
 
     // Require postlink IOS script
     const rnnIOSLink = require(scriptPath);
@@ -63,24 +63,26 @@ export default definePlugin({
    */
   android: async function (
     build: BuildConfig,
-    options: PrebuildOptions
+    options: PrebuildOptions,
   ): Promise<void> {
-    if(build.android.gradle?.projectGradle?.kotlinVersion) {
+    if (build.android.gradle?.projectGradle?.kotlinVersion) {
       await withUTF8(path.android.buildGradle, content => {
-        return string.replace(content,
+        return string.replace(
+          content,
           /(dependencies\s*{\s*?\n(\s+))/m,
-          `$1classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:${build.android.gradle?.projectGradle?.kotlinVersion}'\n$2`)
-      })
+          `$1classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:${build.android.gradle?.projectGradle?.kotlinVersion}'\n$2`,
+        );
+      });
     }
 
     // Resolve path to react-native-navigation postlink Android script
     const scriptPath = require.resolve(
-      "react-native-navigation/autolink/postlink/postLinkAndroid.js",
-      { paths: [process.cwd()] }
+      'react-native-navigation/autolink/postlink/postLinkAndroid.js',
+      {paths: [process.cwd()]},
     );
 
     // Set executable permission for postlink Android script
-    await fs.chmod(scriptPath, "755");
+    await fs.chmod(scriptPath, '755');
 
     // Require postlink Android script
     const rnnAndroidLink = require(scriptPath);

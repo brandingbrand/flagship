@@ -3,39 +3,39 @@ import type {
   CodeConfig,
   GenerateOptions,
   PrebuildOptions,
-} from "@brandingbrand/code-cli-kit";
+} from '@brandingbrand/code-cli-kit';
 
-import { program } from "commander";
+import {program} from 'commander';
 
 import {
   config,
   isGenerateCommand,
   isPackage,
   isPrebuildCommand,
-} from "../src/lib/config";
+} from '../src/lib/config';
 
-describe("config object", () => {
-  it("should have default values for codeConfig, optionsConfig, and buildConfig", () => {
+describe('config object', () => {
+  it('should have default values for codeConfig, optionsConfig, and buildConfig', () => {
     expect(config.code).toEqual({});
     expect(config.options).toEqual({});
     expect(config.build).toEqual({
       ios: {
-        displayName: "Default",
-        bundleId: "com.default",
+        displayName: 'Default',
+        bundleId: 'com.default',
       },
       android: {
-        displayName: "Default",
-        packageName: "com.default",
+        displayName: 'Default',
+        packageName: 'com.default',
       },
     });
   });
 
-  it("should be able to update code configuration", () => {
+  it('should be able to update code configuration', () => {
     const codeConfig: CodeConfig = {
-      buildPath: "./my/build/path",
-      envPath: "./my/env/path",
-      pluginPath: "./my/plugin/path",
-      plugins: ["@brandingbrand/code-my-plugin"],
+      buildPath: './my/build/path',
+      envPath: './my/env/path',
+      pluginPath: './my/plugin/path',
+      plugins: ['@brandingbrand/code-my-plugin'],
     };
 
     config.code = codeConfig;
@@ -43,14 +43,14 @@ describe("config object", () => {
     expect(config.code).toEqual(codeConfig);
   });
 
-  it("should be able to update options configuration", () => {
+  it('should be able to update options configuration', () => {
     const optionsConfig: PrebuildOptions = {
-      build: "internal",
-      env: "prod",
+      build: 'internal',
+      env: 'prod',
       release: false,
       verbose: false,
-      platform: "ios",
-      command: "prebuild",
+      platform: 'ios',
+      command: 'prebuild',
     };
 
     config.options = optionsConfig;
@@ -58,11 +58,11 @@ describe("config object", () => {
     expect(config.options).toEqual(optionsConfig);
   });
 
-  it("should be able to update generateOptions configuration", () => {
+  it('should be able to update generateOptions configuration', () => {
     const generateOptionsConfig: GenerateOptions = {
-      type: "plugin",
-      name: "code-plugin-example",
-      command: "generate",
+      type: 'plugin',
+      name: 'code-plugin-example',
+      command: 'generate',
     };
 
     config.generateOptions = generateOptionsConfig;
@@ -70,11 +70,11 @@ describe("config object", () => {
     expect(config.generateOptions).toEqual(generateOptionsConfig);
   });
 
-  it("should be able to update generateOptions configuration", () => {
+  it('should be able to update generateOptions configuration', () => {
     const generateOptionsConfig: GenerateOptions = {
-      type: "plugin",
-      name: "@brandingbrand/code-plugin-example",
-      command: "generate",
+      type: 'plugin',
+      name: '@brandingbrand/code-plugin-example',
+      command: 'generate',
     };
 
     expect(() => {
@@ -82,15 +82,15 @@ describe("config object", () => {
     }).toThrow();
   });
 
-  it("should be able to update build configuration", () => {
+  it('should be able to update build configuration', () => {
     const buildConfig: BuildConfig = {
       ios: {
-        bundleId: "com.brandingbrand",
-        displayName: "Branding Brand",
+        bundleId: 'com.brandingbrand',
+        displayName: 'Branding Brand',
       },
       android: {
-        displayName: "Branding Brand",
-        packageName: "com.brandingbrand",
+        displayName: 'Branding Brand',
+        packageName: 'com.brandingbrand',
       },
     };
 
@@ -100,43 +100,43 @@ describe("config object", () => {
   });
 });
 
-describe("isPackage", () => {
-  it("should return true for a valid package name", () => {
-    const packageName = "lodash";
+describe('isPackage', () => {
+  it('should return true for a valid package name', () => {
+    const packageName = 'lodash';
     expect(isPackage(packageName)).toBe(true);
   });
 
-  it("should return true for a valid scoped package name", () => {
-    const scopedPackageName = "@types/lodash";
+  it('should return true for a valid scoped package name', () => {
+    const scopedPackageName = '@types/lodash';
     expect(isPackage(scopedPackageName)).toBe(true);
   });
 
-  it("should return false for a file path", () => {
-    const filePath = "path/to/file";
+  it('should return false for a file path', () => {
+    const filePath = 'path/to/file';
     expect(isPackage(filePath)).toBe(false);
   });
 
-  it("should return false for a Windows file path", () => {
-    const windowsFilePath = "C:\\path\\to\\file";
+  it('should return false for a Windows file path', () => {
+    const windowsFilePath = 'C:\\path\\to\\file';
     expect(isPackage(windowsFilePath)).toBe(false);
   });
 
-  it("should return false for a file path with extension", () => {
-    const filePathWithExtension = "file.js";
+  it('should return false for a file path with extension', () => {
+    const filePathWithExtension = 'file.js';
     expect(isPackage(filePathWithExtension)).toBe(true);
   });
 });
 
-describe("isCommand", () => {
-  it("isPrebuildCommand", () => {
-    program.args = ["prebuild"];
+describe('isCommand', () => {
+  it('isPrebuildCommand', () => {
+    program.args = ['prebuild'];
 
     expect(isGenerateCommand()).not.toBeTruthy();
     expect(isPrebuildCommand()).toBeTruthy();
   });
 
-  it("isPrebuildCommand", () => {
-    program.args = ["plugin"];
+  it('isPrebuildCommand', () => {
+    program.args = ['plugin'];
 
     expect(isPrebuildCommand()).not.toBeTruthy();
     expect(isGenerateCommand()).toBeTruthy();

@@ -1,4 +1,4 @@
-import semver from "semver";
+import semver from 'semver';
 import {
   BuildConfig,
   BuildConfigSchema,
@@ -6,9 +6,9 @@ import {
   Plugin,
   fs,
   path,
-} from "@brandingbrand/code-cli-kit";
-import { isLeft } from "fp-ts/lib/Either";
-import { mergeAndConcat } from "merge-anything";
+} from '@brandingbrand/code-cli-kit';
+import {isLeft} from 'fp-ts/lib/Either';
+import {mergeAndConcat} from 'merge-anything';
 
 import {
   bundleRequire,
@@ -17,7 +17,7 @@ import {
   isGenerateCommand,
   REACT_NATIVE_VERSION_RANGE,
   REACT_VERSION_RANGE,
-} from "@/lib";
+} from '@/lib';
 
 /**
  * Defines an action to handle configuration loading, decoding, and verification.
@@ -28,16 +28,14 @@ import {
 export default defineAction(
   async () => {
     // Gather the react-native and react versions.
-    const {
-      version: reactNativeVersion,
-    } = require("react-native/package.json");
-    const { version: reactVersion } = require("react/package.json");
+    const {version: reactNativeVersion} = require('react-native/package.json');
+    const {version: reactVersion} = require('react/package.json');
 
     // Validate the installed version of React Native against the required semantic version range.
     // Throws an error if the installed version does not satisfy the required range.
     if (!semver.satisfies(reactNativeVersion, REACT_NATIVE_VERSION_RANGE)) {
       throw Error(
-        `Version Mismatch: react-native version must match ${REACT_NATIVE_VERSION_RANGE}, the installed version is ${reactNativeVersion}.`
+        `Version Mismatch: react-native version must match ${REACT_NATIVE_VERSION_RANGE}, the installed version is ${reactNativeVersion}.`,
       );
     }
 
@@ -45,22 +43,22 @@ export default defineAction(
     // Throws an error if the installed version does not satisfy the required range.
     if (!semver.satisfies(reactVersion, REACT_VERSION_RANGE)) {
       throw Error(
-        `Version Mismatch: react version must match ${REACT_VERSION_RANGE}, the installed version is ${reactVersion}.`
+        `Version Mismatch: react version must match ${REACT_VERSION_RANGE}, the installed version is ${reactVersion}.`,
       );
     }
 
     // Check if flagship-code.config.ts file exists
     if (
-      !(await fs.doesPathExist(path.project.resolve("flagship-code.config.ts")))
+      !(await fs.doesPathExist(path.project.resolve('flagship-code.config.ts')))
     ) {
       throw Error(
-        "Unknown File: cannot find flagship-code.config.ts, be sure this exists in the root of your project."
+        'Unknown File: cannot find flagship-code.config.ts, be sure this exists in the root of your project.',
       );
     }
 
     // Load flagship-code.config.ts file with default export
     const flagshipCodeConfig = (
-      await bundleRequire(path.project.resolve("flagship-code.config.ts"))
+      await bundleRequire(path.project.resolve('flagship-code.config.ts'))
     ).default;
 
     // Decode and validate flagshipCodeConfig against FlagshipCodeConfigSchema
@@ -70,7 +68,7 @@ export default defineAction(
     // Check if decoding is successful
     if (isLeft(decodedFlagshipCodeConfig)) {
       throw new Error(
-        "Type Mismatch: flagship-code.config.ts object does not match expected types, please check for typescript errors in flagship-code.config.ts"
+        'Type Mismatch: flagship-code.config.ts object does not match expected types, please check for typescript errors in flagship-code.config.ts',
       );
     }
 
@@ -84,13 +82,13 @@ export default defineAction(
     // Resolve the build path based on the configuration
     const buildPath = path.project.resolve(
       config.code.buildPath,
-      `build.${config.options.build}.ts`
+      `build.${config.options.build}.ts`,
     );
 
     // Check if the build path exists
     if (!(await fs.doesPathExist(buildPath))) {
       throw Error(
-        `Unknown Path: cannot find build path: ${buildPath} for build: ${config.options.build}`
+        `Unknown Path: cannot find build path: ${buildPath} for build: ${config.options.build}`,
       );
     }
 
@@ -104,7 +102,7 @@ export default defineAction(
     // Check if decoding is successful
     if (isLeft(decodedBuildConfig)) {
       throw new Error(
-        `Type Mismatch: build.${config.options.build}.ts object does not match expected types, please check for typescript errors in build.${config.options.build}.ts`
+        `Type Mismatch: build.${config.options.build}.ts object does not match expected types, please check for typescript errors in build.${config.options.build}.ts`,
       );
     }
 
@@ -118,17 +116,17 @@ export default defineAction(
      */
     const mergedBuildConfig = Object.entries(config.build)
       // Filter out entries with keys 'ios' and 'android'.
-      .filter(([key]) => key !== "ios" && key !== "android")
+      .filter(([key]) => key !== 'ios' && key !== 'android')
       // Filter out entries without 'ios' or 'android' properties.
       .filter(
         ([_, value]) =>
           !!(value as unknown as Plugin<unknown>).ios ||
-          !!(value as unknown as Plugin<unknown>).android
+          !!(value as unknown as Plugin<unknown>).android,
       )
       // Reduce the array of filtered entries to a single merged object.
       .reduce((acc, [_, value]) => {
         // Destructure 'plugin' property and rename remaining properties as 'pluginBuildconfig'.
-        const { plugin, ...pluginBuildconfig } =
+        const {plugin, ...pluginBuildconfig} =
           value as unknown as Plugin<unknown>;
 
         // Merge the accumulated configuration with the plugin build configuration.
@@ -141,6 +139,6 @@ export default defineAction(
     // Return a success message
     return `found and verified flagship-code.config.ts and build.${config.options.build}.ts`;
   },
-  "config",
-  "template"
+  'config',
+  'template',
 );

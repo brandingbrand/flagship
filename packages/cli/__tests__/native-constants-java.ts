@@ -4,26 +4,26 @@
 
 /// <reference types="@brandingbrand/code-jest-config" />
 
-import { type BuildConfig, fs, path } from "@brandingbrand/code-cli-kit";
+import {type BuildConfig, fs, path} from '@brandingbrand/code-cli-kit';
 
-import transformer from "../src/transformers/android/native-constants-java";
+import transformer from '../src/transformers/android/native-constants-java';
 
-describe("NativeConstants.java transformers", () => {
+describe('NativeConstants.java transformers', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
-  it("should update NativeConstants.java ShowDevMenu to false", async () => {
+  it('should update NativeConstants.java ShowDevMenu to false', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
-    config.android.packageName = "com.app";
+    config.android.packageName = 'com.app';
 
-    await transformer.transform(config, { release: true } as any);
+    await transformer.transform(config, {release: true} as any);
     const content = await fs.readFile(
       path.android.nativeConstants(config),
-      "utf-8"
+      'utf-8',
     );
 
     expect(content).toContain('constants.put("ShowDevMenu", "false");');

@@ -4,28 +4,28 @@
 
 /// <reference types="@brandingbrand/code-jest-config" />
 
-import { type BuildConfig, fs, path } from "@brandingbrand/code-cli-kit";
+import {type BuildConfig, fs, path} from '@brandingbrand/code-cli-kit';
 
-import transformer from "../src/transformers/android/android-manifest-xml";
+import transformer from '../src/transformers/android/android-manifest-xml';
 
-describe("android AndroidManifest.xml transformers", () => {
+describe('android AndroidManifest.xml transformers', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
-  it("should update AndroidManifest.xml with url scheme", async () => {
+  it('should update AndroidManifest.xml with url scheme', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
     config.android.manifest = {
       urlScheme: {
-        scheme: "myapp",
+        scheme: 'myapp',
       },
     };
 
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.android.androidManifest, "utf-8");
+    const content = await fs.readFile(path.android.androidManifest, 'utf-8');
 
     expect(content).toContain(`<intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -35,20 +35,20 @@ describe("android AndroidManifest.xml transformers", () => {
             </intent-filter>`);
   });
 
-  it("should update AndroidManifest.xml with url scheme", async () => {
+  it('should update AndroidManifest.xml with url scheme', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
     config.android.manifest = {
       urlScheme: {
-        scheme: "myapp",
-        host: "app",
+        scheme: 'myapp',
+        host: 'app',
       },
     };
 
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.android.androidManifest, "utf-8");
+    const content = await fs.readFile(path.android.androidManifest, 'utf-8');
 
     expect(content).toContain(`<intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -58,17 +58,17 @@ describe("android AndroidManifest.xml transformers", () => {
             </intent-filter>`);
   });
 
-  it("should update AndroidManifest.xml with url scheme", async () => {
+  it('should update AndroidManifest.xml with url scheme', async () => {
     const config = {
       ...__flagship_code_build_config,
     } as BuildConfig;
 
     config.android.manifest = {
-      orientation: "portrait",
+      orientation: 'portrait',
     };
 
     await transformer.transform(config, {} as any);
-    const content = await fs.readFile(path.android.androidManifest, "utf-8");
+    const content = await fs.readFile(path.android.androidManifest, 'utf-8');
 
     expect(content).toContain(`android:screenOrientation="portrait"`);
   });
