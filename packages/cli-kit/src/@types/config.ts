@@ -14,6 +14,19 @@ export type CodeConfig = t.TypeOf<typeof FlagshipCodeConfigSchema>;
 export type BuildConfig = t.TypeOf<typeof BuildConfigSchema>;
 
 /**
+ * A utility type that enforces the structure of `BuildConfig` and allows for optional extensions.
+ *
+ * If the generic type `T` is exactly `BuildConfig`, it returns `BuildConfig`.
+ * Otherwise, it returns a type that merges `BuildConfig` with `T`, allowing
+ * for additional properties specified in `T`.
+ *
+ * @template T - The optional type extensions to `BuildConfig`.
+ */
+export type ExtendedBuildConfig<T> = T extends BuildConfig
+  ? BuildConfig
+  : BuildConfig & T;
+
+/**
  * Represents the configuration for environment settings.
  * @template T - The type of the environment configuration.
  */
