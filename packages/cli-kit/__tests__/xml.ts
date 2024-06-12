@@ -6,7 +6,6 @@ import {
   OPTS,
   withColors,
   withManifest,
-  withNetworkSecurityConfig,
   withStrings,
   withStyles,
   withXml,
@@ -120,43 +119,6 @@ describe('xml', () => {
     expect(fs.readFile).toHaveBeenCalledWith(path.android.colors);
     expect(callback).toHaveBeenCalledWith(xmlObject);
     expect(fs.writeFile).toHaveBeenCalledWith(path.android.colors, xmlContent);
-  });
-
-  it('withNetworkSecurityConfig should parse, modify, and write network security config XML file', async () => {
-    const xmlContent = `<?xml version="1.0" encoding="utf-8"?>
-    <network-security-config>
-        <domain-config>
-            <domain includeSubdomains="true">example.com</domain>
-            <trust-anchors>
-                <certificates src="@raw/my_ca"/>
-            </trust-anchors>
-        </domain-config>
-    </network-security-config>`;
-    const xmlObject = {
-      'network-security-config': {
-        'domain-config': {
-          domain: 'example.com',
-          'trust-anchors': {
-            certificates: '',
-          },
-        },
-      },
-    };
-
-    const callback = jest.fn();
-    jest.spyOn(XMLParser.prototype, 'parse').mockReturnValue(xmlObject);
-    jest.spyOn(XMLBuilder.prototype, 'build').mockReturnValue(xmlContent);
-
-    await withNetworkSecurityConfig(callback);
-
-    expect(fs.readFile).toHaveBeenCalledWith(
-      path.android.networkSecurityConfig,
-    );
-    expect(callback).toHaveBeenCalledWith(xmlObject);
-    expect(fs.writeFile).toHaveBeenCalledWith(
-      path.android.networkSecurityConfig,
-      xmlContent,
-    );
   });
 
   it('withManifest should parse, modify, and write android manifest XML file', async () => {

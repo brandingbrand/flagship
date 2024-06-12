@@ -210,21 +210,6 @@ export default {
     ),
 
     /**
-     * Retrieves the absolute path to the Android network_security_config.xml file.
-     *
-     * @returns {string} The absolute path to "android/app/src/main/res/xml/network_security_config.xml".
-     */
-    networkSecurityConfig: resolvePathFromProject(
-      'android',
-      'app',
-      'src',
-      'main',
-      'res',
-      'xml',
-      'network_security_config.xml',
-    ),
-
-    /**
      * Retrieves the absolute path to the Android strings.xml file.
      *
      * @returns {string} The absolute path to "android/app/src/main/res/values/strings.xml".
