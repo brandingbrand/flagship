@@ -104,15 +104,6 @@ describe('path', () => {
     );
   });
 
-  it('should have an android.networkSecurityConfig function that returns the path to android/app/src/main/res/xml/network_security_config.xml', () => {
-    const networkSecurityConfigPath = path.android.networkSecurityConfig;
-    expect(networkSecurityConfigPath).toEqual(
-      expect.stringMatching(
-        /.*android\/app\/src\/main\/res\/xml\/network_security_config\.xml$/,
-      ),
-    );
-  });
-
   it('should have an android.mainApplication function that returns the path to android/app/src/main/java/com/example/app/MainApplication.java', () => {
     const config = {
       android: {

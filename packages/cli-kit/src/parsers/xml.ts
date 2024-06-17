@@ -1,3 +1,4 @@
+import nodeFS from 'fs';
 import fs from 'fs/promises';
 
 import {type X2jOptions, XMLBuilder, XMLParser} from 'fast-xml-parser';
@@ -125,8 +126,78 @@ export async function withManifest(
 export async function withNetworkSecurityConfig(
   callback: (xml: NetworkSecurityConfigXML) => void,
 ) {
+  const networkSecurityConfigPath = path.project.resolve(
+    'android',
+    'app',
+    'src',
+    'main',
+    'res',
+    'xml',
+    'network_security_config.xml',
+  );
+
+  /**
+   * Check if network_security_config.xml exists. If it does not exist, write
+   * a new empty network_security_config.xml.
+   *
+   * This file is not available by default because it can interfere with
+   * Metro bundler connection.
+   */
+  if (!nodeFS.existsSync(networkSecurityConfigPath)) {
+    await fs.mkdir(
+      path.project.resolve('android', 'app', 'src', 'main', 'res', 'xml'),
+      {recursive: true},
+    );
+
+    await fs.writeFile(
+      networkSecurityConfigPath,
+      new XMLBuilder(BUILD_OPTS).build({
+        '?xml': {
+          $: {
+            version: '1.0',
+            encoding: 'utf-8',
+          },
+        },
+        'network-security-config': {},
+      }),
+    );
+  }
+
+  /**
+   * Function that applies the network security config to the AndroidManifest.xml file.
+   * Only apply `android:networkSecurityConfig` to AndroidManifest.xml when this parser
+   * is used because it will then affect localhost, 10.0.2.2, etc. connection as the default
+   * network security configuration is empty - a domain-config would need to be added for
+   * those hosts to connect to.
+   *
+   * @example
+   * ```xml
+   * <?xml version="1.0" encoding="utf-8"?>
+   * <network-security-config>
+   *     <domain-config cleartextTrafficPermitted="true">
+   *         <domain includeSubdomains="true">localhost</domain>
+   *         <domain includeSubdomains="true">10.0.2.2</domain>
+   *     </domain-config>
+   * </network-security-config>
+   * ```
+   */
+  await withManifest(xml => {
+    const mainApplication = xml.manifest.application?.find(
+      it => it.$['android:name'] === '.MainApplication',
+    );
+
+    if (!mainApplication) {
+      throw new Error(
+        '[AndroidManifestTransformer]: cannot set network security configuration because .MainApplication not found',
+      );
+    }
+
+    mainApplication.$['android:networkSecurityConfig'] =
+      '@xml/network_security_config';
+  });
+
   return withXml(
-    path.android.networkSecurityConfig,
+    networkSecurityConfigPath,
     {
       isArray: tagName => {
         if (

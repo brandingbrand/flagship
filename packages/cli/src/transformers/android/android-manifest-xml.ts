@@ -105,25 +105,6 @@ export default defineTransformer<Transforms<AndroidManifestXML, void>>({
 
       mainActivity.$['android:screenOrientation'] = orientation;
     },
-
-    /**
-     * Function that applies the network security config to the AndroidManifest.xml file.
-     * @param xml The AndroidManifestXML object representing the contents of the AndroidManifest.xml file.
-     * @param config The build configuration containing Android-specific manifest options.
-     */
-    (xml: AndroidManifestXML, config: BuildConfig) => {
-      // Find the main application activity in the manifest and update its intent filter
-      const mainApplication = xml.manifest.application
-        ?.find((it) => it.$["android:name"] === ".MainApplication")
-
-      if (!mainApplication) {
-        throw new Error(
-          "[AndroidManifestTransformer]: cannot set network security configuration because .MainApplication not found"
-        );
-      }
-
-      mainApplication.$["android:networkSecurityConfig"] = "@xml/network_security_config"
-    },
   ],
 
   /**
