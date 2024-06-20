@@ -1,5 +1,12 @@
 # @brandingbrand/code-plugin-fastlane
 
+## 3.0.0-alpha.5
+
+### Patch Changes
+
+- Updated dependencies [152c6de]
+  - @brandingbrand/code-cli-kit@13.0.0-alpha.5
+
 ## 3.0.0-alpha.4
 
 ### Patch Changes

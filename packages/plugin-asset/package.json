@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-asset",
-  "version": "2.0.0-alpha.4",
+  "version": "2.0.0-alpha.5",
   "description": "plugin for Flagship Code for assets",
   "license": "MIT",
   "main": "src/index.ts",
@@ -20,10 +20,10 @@
     "react-native-asset": "2.1.1"
   },
   "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "13.0.0-alpha.4"
+    "@brandingbrand/code-cli-kit": "13.0.0-alpha.5"
   },
   "devDependencies": {
-    "@brandingbrand/code-cli-kit": "13.0.0-alpha.4",
+    "@brandingbrand/code-cli-kit": "13.0.0-alpha.5",
     "@brandingbrand/code-jest-config": "1.0.0-alpha.1",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",

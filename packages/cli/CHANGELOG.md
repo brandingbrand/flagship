@@ -1,5 +1,16 @@
 # @brandingbrand/code-cli
 
+## 13.0.0-alpha.5
+
+### Minor Changes
+
+- 152c6de: dynamically generate network_security_config.xml
+
+### Patch Changes
+
+- Updated dependencies [152c6de]
+  - @brandingbrand/code-cli-kit@13.0.0-alpha.5
+
 ## 13.0.0-alpha.4
 
 ### Minor Changes
