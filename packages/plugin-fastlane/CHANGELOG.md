@@ -1,5 +1,24 @@
 # @brandingbrand/code-plugin-fastlane
 
+## 3.0.0
+
+### Major Changes
+
+- 1ddf4fc: Flagship Code™ v13 rewrite
+
+### Patch Changes
+
+- b5ce895: add increment build function to bundle lane when build number does not exist
+- Updated dependencies [2160de2]
+- Updated dependencies [1ddf4fc]
+- Updated dependencies [2160de2]
+- Updated dependencies [152c6de]
+- Updated dependencies [2160de2]
+- Updated dependencies [51344be]
+- Updated dependencies [e085e57]
+- Updated dependencies [cd5a724]
+  - @brandingbrand/code-cli-kit@13.0.0
+
 ## 3.0.0-alpha.5
 
 ### Patch Changes
