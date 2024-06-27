@@ -1,4 +1,4 @@
-import logger from '../src/lib/logger';
+import logger, {centerText} from '../src/lib/logger';
 
 jest.spyOn(console, 'log').mockImplementation(jest.fn());
 jest.spyOn(console, 'warn').mockImplementation(jest.fn());
@@ -89,5 +89,37 @@ describe('logger', () => {
   it('should pause logging', () => {
     logger.pause();
     expect(logger.isPaused).toBeTruthy();
+  });
+});
+
+describe('centerText', () => {
+  test('should center text within the total length', () => {
+    const result = centerText('hello', 11);
+    expect(result).toBe('   hello   ');
+  });
+
+  test('should return text as is if total length is less than or equal to text length', () => {
+    const result = centerText('hello world', 5);
+    expect(result).toBe('hello world');
+  });
+
+  test('should return text as is if total length is equal to text length', () => {
+    const result = centerText('hello', 5);
+    expect(result).toBe('hello');
+  });
+
+  test('should handle empty string', () => {
+    const result = centerText('', 10);
+    expect(result).toBe('          ');
+  });
+
+  test('should handle total length less than custom length', () => {
+    const result = centerText('hello', 4);
+    expect(result).toBe('hello');
+  });
+
+  test('should handle single character padding', () => {
+    const result = centerText('a', 3);
+    expect(result).toBe(' a ');
   });
 });

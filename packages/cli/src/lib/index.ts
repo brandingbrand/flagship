@@ -37,7 +37,7 @@ export * from './action';
  *
  * @module lib/logger
  */
-export {default as logger} from './logger';
+export {default as logger, centerText} from './logger';
 
 /**
  * Constant module for global usage
