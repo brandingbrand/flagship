@@ -1,3 +1,4 @@
+/* eslint-disable no-control-regex */
 import {Writable} from 'stream';
 
 /**
@@ -119,3 +120,32 @@ export default {
     process.stdout.write = this.__stdout__;
   },
 };
+
+/**
+ * Centers the given text within the specified total length, accounting for ANSI escape codes.
+ *
+ * @param {string} text - The text to center.
+ * @param {number} totalLength - The total length of the output string including padding.
+ * @returns {string} - The centered text with padding.
+ */
+export function centerText(text: string, totalLength: number) {
+  const textLength = text.replace(
+    /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
+    '',
+  ).length;
+
+  if (textLength >= totalLength) {
+    // If the text is already longer or equal to 200 characters, return it as is
+    return text;
+  }
+
+  const totalPadding = totalLength - textLength;
+  const paddingEachSide = Math.floor(totalPadding / 2);
+
+  // Create the padding strings
+  const leftPadding = ' '.repeat(paddingEachSide);
+  const rightPadding = ' '.repeat(totalPadding - paddingEachSide);
+
+  // Combine the padding and text
+  return leftPadding + text + rightPadding;
+}

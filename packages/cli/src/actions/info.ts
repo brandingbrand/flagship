@@ -5,7 +5,7 @@ import {isWindows} from '@brandingbrand/code-cli-kit';
 
 import pkg from '../../package.json';
 
-import {config, defineAction, logger} from '@/lib';
+import {centerText, config, defineAction, logger} from '@/lib';
 
 /**
  * Executes the default action, providing detailed information and performing necessary checks.
@@ -41,10 +41,16 @@ export default defineAction(
 
 `);
     logger.info(
-      chalk.bold
-        .blue`Welcome to Flagship Code ${chalk.bold.white`v${pkg.version}`}`,
+      chalk.bold.blue(
+        centerText(
+          `Welcome to Flagship™ Code ${chalk.bold.white`v${pkg.version}`}`,
+          40,
+        ),
+      ),
     );
-    logger.info(chalk.dim`  Configurable - Extensible - Toolkit`);
+    logger.info(
+      chalk.dim(centerText(`Configurable - Extensible - Toolkit`, 40)),
+    );
 
     // Check if the script is running on Windows, and throw an error if it is
     if (isWindows) {
