@@ -30,7 +30,7 @@ function projectPath(): string {
  * @param {...string} paths - Path segments to be joined and resolved.
  * @returns {string} The resolved absolute path.
  */
-function resolvePathFromProject(...paths: string[]): string {
+export function resolvePathFromProject(...paths: string[]): string {
   return path.resolve(projectPath(), ...paths);
 }
 
@@ -40,7 +40,7 @@ function resolvePathFromProject(...paths: string[]): string {
  * @param {string} value - The string to be split.
  * @returns {string[]} An array of strings obtained by splitting the input string.
  */
-function packageToPath(value: string): string[] {
+export function packageToPath(value: string): string[] {
   return value.split('.');
 }
 
