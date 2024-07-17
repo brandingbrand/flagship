@@ -5,6 +5,7 @@ import {
   canRunIOS,
   path,
   globAndReplace,
+  getReactNativeVersion,
 } from '@brandingbrand/code-cli-kit';
 
 import {config, defineAction, isGenerateCommand} from '@/lib';
@@ -19,11 +20,13 @@ import {config, defineAction, isGenerateCommand} from '@/lib';
  */
 export default defineAction(
   async () => {
+    const reactNativeVersion = getReactNativeVersion();
     // Get the path to the template directory of the '@brandingbrand/code-cli' package
     const templatePath = path.join(
       require.resolve('@brandingbrand/code-cli/package.json'),
       '..',
-      'template',
+      'templates',
+      `react-native-${reactNativeVersion}`,
     );
 
     // If the generate cli command was executed copy the plugin template only
@@ -40,7 +43,10 @@ export default defineAction(
         );
       });
       await fse
-        .copy(path.resolve(templatePath, 'plugin'), pluginPath)
+        .copy(
+          path.resolve(templatePath, '..', 'flagship-code-plugin'),
+          pluginPath,
+        )
         .catch(e => {
           throw Error(
             `Error: unable to copy plugin template to ${pluginPath}, ${e.message}`,
@@ -110,7 +116,7 @@ export default defineAction(
 
     // Copy extra template files to the project directory based on platform availability
     await fse
-      .copy(path.resolve(templatePath, 'extras'), path.project.resolve(), {
+      .copy(path.resolve(templatePath, 'addons'), path.project.resolve(), {
         filter: function (path) {
           // Filter out Android files if Android platform is not enabled
           if (!canRunAndroid(config.options) && path.indexOf('android') > -1) {

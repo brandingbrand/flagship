@@ -67,14 +67,14 @@ export function getReactNativeVersion(): string {
   const coercedVersion = semver.coerce(version);
 
   // Check if the major version is undefined and throw an error if it is
-  if (!coercedVersion?.major) {
+  if (typeof coercedVersion?.major !== 'number') {
     throw Error(
       'Type Mismatch: react-native major version is expected to be defined.',
     );
   }
 
   // Check if the minor version is undefined and throw an error if it is
-  if (!coercedVersion?.minor) {
+  if (typeof coercedVersion?.minor !== 'number') {
     throw Error(
       'Type Mismatch: react-native minor version is expected to be defined.',
     );
