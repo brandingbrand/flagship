@@ -6,7 +6,11 @@
 
 import {type BuildConfig, fs, path} from '@brandingbrand/code-cli-kit';
 
-import transformer from '../src/transformers/ios/gemfile';
+import transformer from '../src/transformers/transformers-0.72/ios/gemfile';
+
+jest.mock('../../cli-kit/src/lib/platform', () => ({
+  getReactNativeVersion: () => '0.72',
+}));
 
 describe('ios gemfile transformers', () => {
   beforeEach(() => {

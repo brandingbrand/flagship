@@ -48,16 +48,23 @@ export default class CustomEnvironment extends TestEnvironment {
    * @returns {Promise<void>} A Promise that resolves once the setup is complete.
    */
   async setup() {
-    const {requireTemplate, fixtures} = this.options;
+    const {
+      requireTemplate,
+      fixtures,
+      reactNativeVersion = '0.72',
+    } = this.options;
 
     if (!requireTemplate) return super.setup();
+
+    this.global.JEST_REACT_NATIVE_VERSION = reactNativeVersion;
 
     // Create a temporary directory
     const dir = temp.mkdirSync();
     const templatePath = path.join(
       require.resolve('@brandingbrand/code-cli/package.json'),
       '..',
-      'template',
+      'templates',
+      `react-native-${reactNativeVersion}`,
     );
 
     // Create "ios" and "android" directories
@@ -70,7 +77,7 @@ export default class CustomEnvironment extends TestEnvironment {
       path.resolve(templatePath, 'android'),
       path.resolve(dir, 'android'),
     );
-    await fse.copy(path.resolve(templatePath, 'extras'), dir);
+    await fse.copy(path.resolve(templatePath, 'addons'), dir);
 
     // Copy fixtures if provided
     if (fixtures && typeof fixtures === 'string') {

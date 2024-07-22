@@ -1,3 +1,5 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
+
 import semver from 'semver';
 
 import type {PrebuildOptions} from '@/@types';
@@ -53,6 +55,22 @@ export function canRunAndroid(options: PrebuildOptions): boolean {
  * ```
  */
 export function getReactNativeVersion(): string {
+  /**
+   * Checks if the current environment is a Jest testing environment with a specific
+   * React Native version and returns that version if it exists.
+   *
+   * @returns {any} The Jest React Native version if it is set, otherwise undefined.
+   */
+  if (
+    // Ensure process.env.JEST_WORKER_ID is a truthy value
+    process.env.JEST_WORKER_ID &&
+    // Check if global object has the property JEST_REACT_NATIVE_VERSION
+    (global as any).JEST_REACT_NATIVE_VERSION
+  ) {
+    // Return the Jest React Native version
+    return (global as any).JEST_REACT_NATIVE_VERSION;
+  }
+
   // Import the version from the React Native package.json
   const {version} = require(
     require.resolve('react-native/package.json', {

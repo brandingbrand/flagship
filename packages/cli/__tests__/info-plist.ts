@@ -6,7 +6,7 @@
 
 import {type BuildConfig, fs, path} from '@brandingbrand/code-cli-kit';
 
-import transformer from '../src/transformers/ios/info-plist';
+import transformer from '../src/transformers/transformers-0.72/ios/info-plist';
 
 describe('ios Info.plist transformers', () => {
   beforeEach(() => {

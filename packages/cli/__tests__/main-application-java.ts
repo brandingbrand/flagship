@@ -6,7 +6,7 @@
 
 import {type BuildConfig, fs, path} from '@brandingbrand/code-cli-kit';
 
-import transformer from '../src/transformers/android/main-application-java';
+import transformer from '../src/transformers/transformers-0.72/android/main-application-java';
 
 describe('MainApplication.java transformers', () => {
   beforeEach(() => {

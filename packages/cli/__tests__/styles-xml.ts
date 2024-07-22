@@ -6,7 +6,7 @@
 
 import {type BuildConfig, fs, path} from '@brandingbrand/code-cli-kit';
 
-import transformer from '../src/transformers/android/styles-xml';
+import transformer from '../src/transformers/transformers-0.72/android/styles-xml';
 
 describe('android styles.xml transformers', () => {
   beforeEach(() => {

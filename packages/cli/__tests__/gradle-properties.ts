@@ -6,7 +6,7 @@
 
 import {type BuildConfig, fs, path} from '@brandingbrand/code-cli-kit';
 
-import transformer from '../src/transformers/android/gradle-properties';
+import transformer from '../src/transformers/transformers-0.72/android/gradle-properties';
 
 describe('build.gradle transformers', () => {
   beforeEach(() => {

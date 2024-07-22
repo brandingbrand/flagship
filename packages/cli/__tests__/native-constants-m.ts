@@ -6,7 +6,7 @@
 
 import {type BuildConfig, fs, path} from '@brandingbrand/code-cli-kit';
 
-import transformer from '../src/transformers/ios/native-constants-m';
+import transformer from '../src/transformers/transformers-0.72/ios/native-constants-m';
 
 describe('NativeConstants.java transformers', () => {
   beforeEach(() => {
