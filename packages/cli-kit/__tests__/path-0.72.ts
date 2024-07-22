@@ -1,4 +1,4 @@
-import path from '../src/lib/path';
+import path from '../src/lib/path/path-0.72';
 
 describe('path', () => {
   it('should resolve paths relative to the project root', () => {
