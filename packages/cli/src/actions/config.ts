@@ -28,8 +28,16 @@ import {
 export default defineAction(
   async () => {
     // Gather the react-native and react versions.
-    const {version: reactNativeVersion} = require('react-native/package.json');
-    const {version: reactVersion} = require('react/package.json');
+    const {version: reactNativeVersion} = require(
+      require.resolve('react-native/package.json', {
+        paths: [process.cwd()],
+      }),
+    );
+    const {version: reactVersion} = require(
+      require.resolve('react/package.json', {
+        paths: [process.cwd()],
+      }),
+    );
 
     // Validate the installed version of React Native against the required semantic version range.
     // Throws an error if the installed version does not satisfy the required range.

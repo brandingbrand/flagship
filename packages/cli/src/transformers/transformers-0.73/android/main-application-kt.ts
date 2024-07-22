@@ -22,7 +22,7 @@ export default defineTransformer<Transforms<string>>({
    * The name of the file to be transformed ("MainApplication.java").
    * @type {string}
    */
-  file: 'MainApplication.java',
+  file: 'MainApplication.kt',
 
   /**
    * An array of transformer functions to be applied to the "MainApplication.java" file.
@@ -44,9 +44,9 @@ export default defineTransformer<Transforms<string>>({
     ): string => {
       return string.replace(
         content,
-        /(new PackageList.*\s+)/m,
-        `$1packages.add(new NativeConstantsPackage());
-          packages.add(new EnvSwitcherPackage());
+        /(PackageList\(.*\s+)/m,
+        `$1add(new NativeConstantsPackage())
+          add(new EnvSwitcherPackage())
           `,
       );
     },

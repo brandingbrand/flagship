@@ -54,7 +54,11 @@ export function canRunAndroid(options: PrebuildOptions): boolean {
  */
 export function getReactNativeVersion(): string {
   // Import the version from the React Native package.json
-  const {version} = require('react-native/package.json');
+  const {version} = require(
+    require.resolve('react-native/package.json', {
+      paths: [process.cwd()],
+    }),
+  );
 
   // Check if the version is undefined and throw an error if it is
   if (!version) {
