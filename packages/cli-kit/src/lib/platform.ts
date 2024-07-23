@@ -43,7 +43,10 @@ export function canRunAndroid(options: PrebuildOptions): boolean {
 }
 
 /**
- * Gets the major and minor version of the installed React Native package.
+ * Gets the major and minor version of the installed React Native package. The major and minor version
+ * combination can short-circuit this function with the global variable FLAGSHIP_CODE_REACT_NATIVE_VERSION.
+ *
+ * Currently this is useful for unit tests when specifying specific templates to test.
  *
  * @returns {string} The major and minor version of React Native, in the format 'X.Y'.
  * @throws Will throw an error if the version is undefined or if the major or minor version cannot be determined.
