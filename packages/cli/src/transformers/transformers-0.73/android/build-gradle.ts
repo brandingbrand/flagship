@@ -124,6 +124,22 @@ export default defineTransformer<Transforms<string>>({
     },
 
     /**
+     * Transformer for updating the "kotlinVersion" value in "build.gradle".
+     * @param {string} content - The content of the file.
+     * @param {BuildConfig} config - The build configuration.
+     * @returns {string} - The updated content.
+     */
+    (content: string, config: BuildConfig): string => {
+      if (!config.android.gradle?.projectGradle?.kotlinVersion) return content;
+
+      return string.replace(
+        content,
+        /(kotlinVersion\s+=\s+").*(")/m,
+        `$1${config.android.gradle.projectGradle.kotlinVersion}$2`,
+      );
+    },
+
+    /**
      * Transformer for updating the "ext" object in "build.gradle".
      * @param {string} content - The content of the file.
      * @param {BuildConfig} config - The build configuration.
