@@ -8,10 +8,11 @@ import {
   type PrebuildOptions,
   definePlugin,
   fs,
-  withUTF8,
-  path,
-  string,
+  getReactNativeVersion,
 } from '@brandingbrand/code-cli-kit';
+
+import {android as android72} from './android-0.72';
+import {android as android73} from './android-0.73';
 
 /**
  * Defines a plugin with functions for both iOS and Android platforms.
@@ -65,29 +66,12 @@ export default definePlugin({
     build: BuildConfig,
     options: PrebuildOptions,
   ): Promise<void> {
-    if (build.android.gradle?.projectGradle?.kotlinVersion) {
-      await withUTF8(path.android.buildGradle, content => {
-        return string.replace(
-          content,
-          /(dependencies\s*{\s*?\n(\s+))/m,
-          `$1classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:${build.android.gradle?.projectGradle?.kotlinVersion}'\n$2`,
-        );
-      });
+    switch (getReactNativeVersion()) {
+      case '0.73':
+        return android73(build, options);
+      case '0.72':
+      default:
+        return android72(build, options);
     }
-
-    // Resolve path to react-native-navigation postlink Android script
-    const scriptPath = require.resolve(
-      'react-native-navigation/autolink/postlink/postLinkAndroid.js',
-      {paths: [process.cwd()]},
-    );
-
-    // Set executable permission for postlink Android script
-    await fs.chmod(scriptPath, '755');
-
-    // Require postlink Android script
-    const rnnAndroidLink = require(scriptPath);
-
-    // Execute postlink Android script
-    await rnnAndroidLink();
   },
 });

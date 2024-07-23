@@ -7,10 +7,13 @@ import {
   type BuildConfig,
   type PrebuildOptions,
   definePlugin,
+  getReactNativeVersion,
 } from '@brandingbrand/code-cli-kit';
 
-import * as legacy from './legacy';
-import * as generated from './generated';
+import * as legacy72 from './legacy-0.72';
+import * as legacy73 from './legacy-0.73';
+import * as generated72 from './generated-0.72';
+import * as generated73 from './generated-0.73';
 import type {CodePluginSplashScreen} from './types';
 
 /**
@@ -33,11 +36,13 @@ export default definePlugin<CodePluginSplashScreen>({
     if (!build.codePluginSplashScreen.plugin.ios) return;
 
     if (build.codePluginSplashScreen.plugin.ios.type === 'legacy') {
-      return legacy.ios(build);
+      // legacy72 and legacy73 are the same for iOS
+      return legacy72.ios(build);
     }
 
     if (build.codePluginSplashScreen.plugin.ios.type === 'generated') {
-      return generated.ios(build);
+      // generated72 and generated73 are the same for iOS
+      return generated72.ios(build);
     }
   },
 
@@ -54,11 +59,23 @@ export default definePlugin<CodePluginSplashScreen>({
     if (!build.codePluginSplashScreen.plugin.android) return;
 
     if (build.codePluginSplashScreen.plugin.android.type === 'legacy') {
-      return legacy.android(build);
+      switch (getReactNativeVersion()) {
+        case '0.73':
+          return legacy73.android(build);
+        case '0.72':
+        default:
+          return legacy72.android(build);
+      }
     }
 
     if (build.codePluginSplashScreen.plugin.android.type === 'generated') {
-      return generated.android(build);
+      switch (getReactNativeVersion()) {
+        case '0.73':
+          return generated73.android(build);
+        case '0.72':
+        default:
+          return generated72.android(build);
+      }
     }
   },
 });

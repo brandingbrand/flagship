@@ -155,8 +155,8 @@ export default defineAction(
 
       // Replace package namespace in Java files for debug, main, and release builds
       await globAndReplace(
-        'android/**/{debug,main,release}/**/*.java',
-        /package\s+com\.app;/,
+        'android/**/{debug,main,release}/**/*.{java,kt}',
+        /package\s+com\.app/,
         `package ${config.build.android.packageName};`,
       ).catch(e => {
         throw Error(

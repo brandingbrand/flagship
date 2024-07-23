@@ -5,3 +5,7 @@ export * from '../../transformers-0.72/android';
 // Specifically overwrite the implementation for MainApplication.kt in React Native 0.72.
 // In React Native 0.72, MainApplication.java existed; this update replaces that implementation.
 export {default as mainApplication} from './main-application-kt';
+
+// Specifically overwrite the implementation for build.gradle in React Native 0.72.
+// In React Native 0.72, build.gradle existed; this update replaces that implementation.
+export {default as buildGradle} from './build-gradle';

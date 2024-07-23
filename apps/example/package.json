@@ -26,7 +26,7 @@
     "react": "18.2.0",
     "react-native": "0.73.9",
     "react-native-device-info": "10.12.0",
-    "react-native-navigation": "7.37.2",
+    "react-native-navigation": "^7.40.1",
     "react-native-permissions": "4.1.1",
     "react-native-sensitive-info": "5.5.8"
   },
