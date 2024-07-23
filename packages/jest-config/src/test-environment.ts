@@ -56,7 +56,8 @@ export default class CustomEnvironment extends TestEnvironment {
 
     if (!requireTemplate) return super.setup();
 
-    this.global.JEST_REACT_NATIVE_VERSION = reactNativeVersion;
+    // Override the getReactNativeVersion logic to early exit with provided version
+    this.global.FLAGSHIP_CODE_REACT_NATIVE_VERSION = reactNativeVersion;
 
     // Create a temporary directory
     const dir = temp.mkdirSync();
