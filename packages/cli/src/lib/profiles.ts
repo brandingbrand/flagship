@@ -10,17 +10,10 @@ type Profile = Record<
   string,
   {
     version: string;
-    type: 'dependencies' | 'devDependencies';
+    devOnly?: boolean;
+    capabilities?: string[];
+    required?: boolean;
     banned?: boolean;
-    required?:
-      | boolean
-      | {
-          sibling: {
-            name: string;
-            version: string;
-            type: 'dependencies' | 'devDependencies';
-          };
-        };
   }
 >;
 
@@ -30,99 +23,61 @@ type Profile = Record<
  */
 const react_native_0_72: Profile = {
   react: {
-    version: '^18.2.0',
-    type: 'dependencies',
+    version: '18.2.0',
+    capabilities: ['@types/react'],
     required: true,
   },
   'react-native': {
     version: '^0.72.0',
-    type: 'dependencies',
-    required: true,
-  },
-  'react-native-navigation': {
-    version: '^7.37.2',
-    type: 'dependencies',
-    required: {
-      sibling: {
-        name: '@brandingbrand/fsapp',
-        version: '>=11.0.0 <13.0.0',
-        type: 'dependencies',
-      },
-    },
-  },
-  '@brandingbrand/react-native-app-restart': {
-    version: '^0.4.0',
-    type: 'dependencies',
-    required: {
-      sibling: {
-        name: '@brandingbrand/fsapp',
-        version: '>=11.0.0 <13.0.0',
-        type: 'dependencies',
-      },
-    },
-  },
-  'react-native-device-info': {
-    version: '>=10.7.0',
-    type: 'dependencies',
-    required: {
-      sibling: {
-        name: '@brandingbrand/fsapp',
-        version: '>=11.0.0 <13.0.0',
-        type: 'dependencies',
-      },
-    },
-  },
-  '@react-native-async-storage/async-storage': {
-    version: '>=1.23.1',
-    type: 'dependencies',
-    required: {
-      sibling: {
-        name: '@brandingbrand/fsapp',
-        version: '>=11.0.0 <13.0.0',
-        type: 'dependencies',
-      },
-    },
-  },
-  'react-native-sensitive-info': {
-    version: '^5.0.0',
-    type: 'dependencies',
-    required: {
-      sibling: {
-        name: '@brandingbrand/fsapp',
-        version: '>=11.0.0 <13.0.0',
-        type: 'dependencies',
-      },
-    },
-  },
-  '@babel/core': {
-    version: '^7.20.0',
-    type: 'devDependencies',
-    required: true,
-  },
-  '@babel/preset-env': {
-    version: '^7.20.0',
-    type: 'devDependencies',
-    required: true,
-  },
-  '@babel/runtime': {
-    version: '^7.20.0',
-    type: 'devDependencies',
+    capabilities: ['react', 'metro-react-native-babel-preset'],
     required: true,
   },
   'metro-react-native-babel-preset': {
     version: '^0.76.9',
-    type: 'devDependencies',
-    required: true,
+    capabilities: ['@babel/core', '@babel/preset-env', '@babel/runtime'],
+    devOnly: true,
   },
-  '@types/react': {
-    version: '^18.0.24',
-    type: 'devDependencies',
-    required: true,
+  '@babel/core': {
+    version: '^7.20.0',
+    devOnly: true,
+  },
+  '@babel/preset-env': {
+    version: '^7.20.0',
+    devOnly: true,
+  },
+  '@babel/runtime': {
+    version: '^7.20.0',
+    devOnly: true,
   },
   '@types/react-native': {
     version: '1000.0.0',
-    type: 'devDependencies',
+    devOnly: true,
     banned: true,
+  },
+  '@brandingbrand/fsapp': {
+    version: '>=10 <=13',
+    capabilities: [
+      'react-native-navigation',
+      '@brandingbrand/react-native-app-restart',
+      'react-native-device-info',
+      '@react-native-async-storage/async-storage',
+      'react-native-sensitive-info',
+    ],
+  },
+  'react-native-navigation': {
+    version: '^7.37.2',
+  },
+  '@brandingbrand/react-native-app-restart': {
+    version: '^0.4.0',
+  },
+  'react-native-device-info': {
+    version: '>=10.7.0',
+  },
+  '@react-native-async-storage/async-storage': {
+    version: '>=1.23.1',
+  },
+  'react-native-sensitive-info': {
+    version: '^5.0.0',
   },
 };
 
@@ -134,28 +89,20 @@ const react_native_0_73: Profile = {
   ...react_native_0_72,
   'react-native': {
     version: '^0.73.0',
-    type: 'dependencies',
+    capabilities: ['react', '@react-native/babel-preset'],
     required: true,
   },
   'react-native-navigation': {
-    version: '^7.37.2',
-    type: 'dependencies',
-    required: {
-      sibling: {
-        name: '@brandingbrand/fsapp',
-        version: '>=11.0.0 <13.0.0',
-        type: 'dependencies',
-      },
-    },
+    version: '^7.40.1',
   },
   '@react-native/babel-preset': {
     version: '^0.73.21',
-    type: 'devDependencies',
+    devOnly: true,
     required: true,
   },
   'metro-react-native-babel-preset': {
     version: '1000.0.0',
-    type: 'devDependencies',
+    devOnly: true,
     banned: true,
   },
 };
