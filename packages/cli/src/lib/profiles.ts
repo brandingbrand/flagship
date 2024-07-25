@@ -99,8 +99,8 @@ const react_native_0_73: Record<string, Profile> = {
   },
   '@react-native/babel-preset': {
     version: '^0.73.21',
+    capabilities: ['@babel/core', '@babel/preset-env', '@babel/runtime'],
     devOnly: true,
-    required: true,
   },
   'metro-react-native-babel-preset': {
     version: '1000.0.0',

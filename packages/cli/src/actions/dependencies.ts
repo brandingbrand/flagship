@@ -27,12 +27,18 @@ export default defineAction(
     const reactNativeProfile =
       profiles[reactNativeVersion as keyof typeof profiles];
 
+    const executedProfiles: string[] = [];
+
     /**
      * Verifies and updates a dependency based on the given profile.
      * @param {string} dependency - The name of the dependency.
      * @param {Profile} profile - The profile specifying the version and other details for the dependency.
      */
     function verifyDependency(dependency: string, profile: Profile) {
+      if (executedProfiles.includes(dependency)) return;
+
+      executedProfiles.push(dependency);
+
       const version =
         pkg.content?.[profile.devOnly ? 'devDependencies' : 'dependencies']?.[
           dependency
@@ -90,7 +96,7 @@ export default defineAction(
 
     // Verify non-required dependencies that are already in package.json
     Object.entries(reactNativeProfile)
-      .filter(([_key, value]) => !value.required)
+      .filter(([key, _value]) => !executedProfiles.includes(key))
       .filter(([key, _value]) =>
         Object.keys({
           ...pkg.content.dependencies,
