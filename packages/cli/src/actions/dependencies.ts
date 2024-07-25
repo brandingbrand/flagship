@@ -24,6 +24,7 @@ export default defineAction(
         pkg.content?.[profile.devOnly ? 'devDependencies' : 'dependencies']?.[
           dependency
         ];
+      const pkgKey = profile.devOnly ? 'devDependencies' : 'dependencies';
 
       if (
         (!version ||
@@ -34,19 +35,10 @@ export default defineAction(
         !profile.banned
       ) {
         pkg.update({
-          ...(profile.devOnly
-            ? {
-                devDependencies: {
-                  ...(pkg.content.devDependencies as any),
-                  [dependency]: profile.version,
-                },
-              }
-            : {
-                dependencies: {
-                  ...(pkg.content.dependencies as any),
-                  [dependency]: profile.version,
-                },
-              }),
+          [pkgKey]: {
+            ...(pkg.content[pkgKey] as any),
+            [dependency]: profile.version,
+          },
         });
       }
 
