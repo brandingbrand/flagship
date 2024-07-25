@@ -47,6 +47,10 @@ const react_native_0_72: Record<string, Profile> = {
     version: '^7.20.0',
     devOnly: true,
   },
+  '@types/react': {
+    version: '^18.2.0',
+    devOnly: true,
+  },
   '@types/react-native': {
     version: '1000.0.0',
     devOnly: true,

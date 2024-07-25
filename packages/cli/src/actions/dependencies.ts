@@ -26,7 +26,11 @@ export default defineAction(
         ];
 
       if (
-        (!version || !semver.satisfies(version, profile.version)) &&
+        (!version ||
+          !semver.satisfies(
+            semver.coerce(version) || version,
+            profile.version,
+          )) &&
         !profile.banned
       ) {
         pkg.update({
