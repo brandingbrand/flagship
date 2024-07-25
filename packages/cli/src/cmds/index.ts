@@ -5,11 +5,11 @@
  */
 
 /**
- * Dependency check command for aligning versions with React Native preset
+ * Align dependencies command for aligning versions with React Native preset
  *
- * @module cmds/deps-check
+ * @module cmds/align-deps
  */
-import './deps-check';
+import './align-deps';
 
 /**
  * Generate command for creating a plugin

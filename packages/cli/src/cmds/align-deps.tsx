@@ -21,7 +21,7 @@ import {emitter, logger} from '@/lib';
  * @see {@link https://www.npmjs.com/package/commander | commander} - Command-line framework for Node.js.
  */
 program
-  .command('deps-check')
+  .command('align-deps')
   .description('check dependencies with respect to React Native version')
   .addOption(
     new Option('-p, --profile [profile]', 'React Native profile')
