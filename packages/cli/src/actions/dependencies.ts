@@ -89,15 +89,15 @@ export default defineAction(
 
     // Verify required dependencies
     Object.entries(reactNativeProfile)
-      .filter(([_key, value]) => value.required)
+      .filter(([, value]) => value.required)
       .forEach(([key, value]) => {
         verifyDependency(key, value);
       });
 
     // Verify non-required dependencies that are already in package.json
     Object.entries(reactNativeProfile)
-      .filter(([key, _value]) => !executedProfiles.includes(key))
-      .filter(([key, _value]) =>
+      .filter(([key]) => !executedProfiles.includes(key))
+      .filter(([key]) =>
         Object.keys({
           ...pkg.content.dependencies,
           ...pkg.content.devDependencies,
