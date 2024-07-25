@@ -1,5 +1,5 @@
 import {getReactNativeVersion} from '@brandingbrand/code-cli-kit';
-import NPMCliPackageJson from '@npmcli/package-json';
+import PackageJson from '@npmcli/package-json';
 import semver from 'semver';
 
 import {defineAction} from '@/lib';
@@ -7,7 +7,7 @@ import {profiles, Profile} from '@/lib/profiles';
 
 export default defineAction(
   async (): Promise<void> => {
-    const pkg = await NPMCliPackageJson.load(process.cwd());
+    const pkg = await PackageJson.load(process.cwd());
     const reactNativeVersion = getReactNativeVersion();
 
     if (!(reactNativeVersion in profiles)) {
@@ -103,5 +103,5 @@ export default defineAction(
     await pkg.save();
   },
   'dependencies',
-  'dependencies',
+  'template',
 );
