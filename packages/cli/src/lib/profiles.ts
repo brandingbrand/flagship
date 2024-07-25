@@ -6,22 +6,20 @@
  * The "banned" type version doesn't matter - for purposes here just setting
  * to 1000.0.0 to make it obvious that it has no purpose.
  */
-type Profile = Record<
-  string,
-  {
-    version: string;
-    devOnly?: boolean;
-    capabilities?: string[];
-    required?: boolean;
-    banned?: boolean;
-  }
->;
+
+export type Profile = {
+  version: string;
+  devOnly?: boolean;
+  capabilities?: string[];
+  required?: boolean;
+  banned?: boolean;
+};
 
 /**
  * Profile for React Native version 0.72.
  * Includes React and React Native dependencies with their respective versions and types.
  */
-const react_native_0_72: Profile = {
+const react_native_0_72: Record<string, Profile> = {
   react: {
     version: '18.2.0',
     capabilities: ['@types/react'],
@@ -85,7 +83,7 @@ const react_native_0_72: Profile = {
  * Profile for React Native version 0.73.
  * Includes React and React Native dependencies with their respective versions and types.
  */
-const react_native_0_73: Profile = {
+const react_native_0_73: Record<string, Profile> = {
   ...react_native_0_72,
   'react-native': {
     version: '^0.73.0',

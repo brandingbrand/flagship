@@ -41,7 +41,7 @@ program
     /**
      * Loop through predefined actions and execute them sequentially.
      */
-    for (const action of [actions.info]) {
+    for (const action of [actions.info, actions.dependencies]) {
       await action();
     }
 
@@ -49,7 +49,7 @@ program
      * This is the last action to be run - if the execution gets to this point
      * it can be assumed that it was successful.
      */
-    emitter.emit('action', {name: 'dependencies', status: 'success'});
+    emitter.emit('action', {name: 'template', status: 'success'});
 
     /**
      * Unmount react ink components
