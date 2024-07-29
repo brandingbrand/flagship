@@ -66,10 +66,3 @@ export {default as packagers} from './packagers';
  * @module actions/generator
  */
 export {default as generator} from './generator';
-
-/**
- * Action to...
- *
- * @module actions/dependencies
- */
-export {default as dependencies} from './dependencies';

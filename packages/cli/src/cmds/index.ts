@@ -5,13 +5,6 @@
  */
 
 /**
- * Align dependencies command for aligning versions with React Native preset
- *
- * @module cmds/align-deps
- */
-import './align-deps';
-
-/**
  * Generate command for creating a plugin
  *
  * @module cmds/plugin
