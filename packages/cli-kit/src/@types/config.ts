@@ -81,3 +81,23 @@ export type GenerateOptions = {
    */
   command: string;
 };
+
+/**
+ * Represents options for align-deps cli command.
+ */
+export type AlignDepsOptions = {
+  /**
+   * Fix package.json dependencies.
+   */
+  fix: boolean;
+
+  /**
+   * React Native profile based on React Native version.
+   */
+  profile: '0.72' | '0.73';
+
+  /**
+   * The cli command.
+   */
+  command: string;
+};

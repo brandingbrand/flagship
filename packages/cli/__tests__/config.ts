@@ -9,6 +9,7 @@ import {program} from 'commander';
 
 import {
   config,
+  isAlignDepsCommand,
   isGenerateCommand,
   isPackage,
   isPrebuildCommand,
@@ -128,7 +129,7 @@ describe('isPackage', () => {
 });
 
 describe('isCommand', () => {
-  it('isPrebuildCommand', () => {
+  it('isGenerateCommand', () => {
     program.args = ['prebuild'];
 
     expect(isGenerateCommand()).not.toBeTruthy();
@@ -140,5 +141,12 @@ describe('isCommand', () => {
 
     expect(isPrebuildCommand()).not.toBeTruthy();
     expect(isGenerateCommand()).toBeTruthy();
+  });
+
+  it('isAlignDepsCommand', () => {
+    program.args = ['align-deps'];
+
+    expect(isGenerateCommand()).not.toBeTruthy();
+    expect(isAlignDepsCommand()).toBeTruthy();
   });
 });

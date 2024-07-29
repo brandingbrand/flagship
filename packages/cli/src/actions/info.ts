@@ -1,3 +1,4 @@
+import ansiAlign from 'ansi-align';
 import ci from 'ci-info';
 import chalk from 'chalk';
 import updateCheck from 'update-check';
@@ -5,8 +6,7 @@ import {isWindows} from '@brandingbrand/code-cli-kit';
 
 import pkg from '../../package.json';
 
-import {config, defineAction, logger} from '@/lib';
-import ansiAlign from 'ansi-align';
+import {config, defineAction, isAlignDepsCommand, logger} from '@/lib';
 
 /**
  * Executes the default action, providing detailed information and performing necessary checks.
@@ -75,7 +75,7 @@ export default defineAction(
     }
 
     // Pause logs when not in CI in favor of react-ink
-    if (!ci.isCI && !config.options.verbose) {
+    if (!ci.isCI && !config.options.verbose && !isAlignDepsCommand) {
       logger.pause();
     }
   },

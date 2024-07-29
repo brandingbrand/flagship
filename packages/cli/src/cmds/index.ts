@@ -5,6 +5,13 @@
  */
 
 /**
+ * Command for aligning dependencies
+ *
+ * @module cmds/align-deps
+ */
+import './align-deps';
+
+/**
  * Generate command for creating a plugin
  *
  * @module cmds/plugin

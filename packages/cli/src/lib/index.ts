@@ -45,3 +45,10 @@ export {default as logger} from './logger';
  * @module lib/constants
  */
 export * from './constants';
+
+/**
+ * Profiles module for dependency management
+ *
+ * @module lib/profiles
+ */
+export * from './profiles';

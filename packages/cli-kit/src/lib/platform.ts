@@ -1,5 +1,3 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
-
 import semver from 'semver';
 
 import type {PrebuildOptions} from '@/@types';
