@@ -23,7 +23,6 @@
   "dependencies": {
     "@brandingbrand/code-cli-kit": "13.0.0",
     "@npmcli/package-json": "^5.2.0",
-    "ansi-align": "^3.0.1",
     "bundle-require": "^4.0.2",
     "chalk": "^4.1.2",
     "ci-info": "^4.0.0",
@@ -53,7 +52,6 @@
     "@brandingbrand/code-jest-config": "1.0.0",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
-    "@types/ansi-align": "3.0.5",
     "@types/eslint": "^8.56.1",
     "@types/node": "^20.10.6",
     "@types/npmcli__package-json": "^4.0.4",

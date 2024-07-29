@@ -1,7 +1,6 @@
 import ci from 'ci-info';
 import chalk from 'chalk';
 import updateCheck from 'update-check';
-import align from 'ansi-align';
 import {isWindows} from '@brandingbrand/code-cli-kit';
 
 import pkg from '../../package.json';
@@ -19,6 +18,7 @@ export default defineAction(
   async () => {
     // Log cli details
     console.log(chalk.blue`
+
           ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
           ▒▒                   ▒▒▒
           ▒▒                 ▒▒▒
@@ -38,13 +38,13 @@ export default defineAction(
           ▒▒   ▒▒▒
           ▒▒ ▒▒▒
           ▒▒▒▒
-    `);
-    const message = align([
+
+`);
+    logger.info(
       chalk.bold
         .blue`Welcome to Flagship Code ${chalk.bold.white`v${pkg.version}`}`,
-      chalk.dim`Configurable - Extensible - Toolkit`,
-    ]);
-    logger.info(message.join('\n'));
+    );
+    logger.info(chalk.dim`  Configurable - Extensible - Toolkit`);
 
     // Check if the script is running on Windows, and throw an error if it is
     if (isWindows) {
