@@ -3181,6 +3181,11 @@
   dependencies:
     "@types/estree" "*"
 
+"@types/ansi-align@3.0.5":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@types/ansi-align/-/ansi-align-3.0.5.tgz#47302af78848bfcc2432b9050ce81e7c11a6d541"
+  integrity sha512-W6b8auzVjGP4JS2ejBl9OzwL1N3aBGqY7gamD28GymzcdNVeVGS+jfLeNWO/iknHLWa00hqGPaT3AcXhKax4aA==
+
 "@types/babel__core@^7.1.14", "@types/babel__core@^7.20.4":
   version "7.20.5"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.20.5.tgz#3df15f27ba85319caa07ba08d0721889bb39c017"
