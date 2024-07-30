@@ -46,6 +46,14 @@ export type Plugin<T> = {
 } & PartialDeep<BuildConfig>;
 
 /**
+ * Represents the default cli command options.
+ */
+type Options = {
+  /** Log levels */
+  logLevel: 'debug' | 'log' | 'info' | 'warn' | 'error';
+};
+
+/**
  * Represents options for prebuild cli command.
  */
 export type PrebuildOptions = {
@@ -61,7 +69,7 @@ export type PrebuildOptions = {
   verbose: boolean;
   /** The target platform for prebuilding. */
   platform: 'ios' | 'android' | 'native';
-};
+} & Options;
 
 /**
  * Represents options for generate cli command.
@@ -80,7 +88,7 @@ export type GenerateOptions = {
    * The cli command.
    */
   command: string;
-};
+} & Options;
 
 /**
  * Represents options for align-deps cli command.
@@ -100,4 +108,4 @@ export type AlignDepsOptions = {
    * The cli command.
    */
   command: string;
-};
+} & Options;

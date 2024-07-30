@@ -1,9 +1,9 @@
 import PackageJson from '@npmcli/package-json';
 import semver from 'semver';
 import chalk from 'chalk';
-import {getReactNativeVersion} from '@brandingbrand/code-cli-kit';
+import {getReactNativeVersion, logger} from '@brandingbrand/code-cli-kit';
 
-import {config, defineAction, logger, profiles, type Profile} from '@/lib';
+import {config, defineAction, profiles, type Profile} from '@/lib';
 
 /**
  * Updates dependencies in package.json based on the specified React Native profile.
@@ -15,8 +15,9 @@ export default defineAction(
    */
   async (): Promise<void> => {
     logger.info(
-      chalk.dim`\n    Checking project React Native version: ${getReactNativeVersion()} against profile React Native Version ${config.alignDepsOptions.profile}.`,
+      `checking project version react-native@${getReactNativeVersion()} against profile version react-native@${config.alignDepsOptions.profile}`,
     );
+    logger.info('');
 
     const pkg = await PackageJson.load(process.cwd());
     const ogDeps = Object.freeze(pkg.content.dependencies);
@@ -166,28 +167,22 @@ export default defineAction(
      * @param {string} type - A string indicating the type of changeset being logged.
      */
     function logDiff(changeset: any[], type: string) {
-      let message: string[];
-
       if (changeset.length) {
-        logger.info();
-        logger.info(chalk.bold.dim`    ${type} changeset:\n`);
+        logger.info(chalk.bold.dim`  ${type} changeset:`);
         changeset.forEach(it => {
           switch (it.type) {
             case 'CHANGE':
-              message = [
-                chalk.red`        --${it.path}@${it.oldValue}`,
-                '\n',
-                chalk.green`        ++${it.path}@${it.value}`,
-              ];
+              logger.info(chalk.red`        --${it.path}@${it.oldValue}`);
+              logger.info(chalk.green`        ++${it.path}@${it.value}`);
               break;
             case 'CREATE':
-              message = [chalk.green`        ++${it.path}@${it.value}`];
+              logger.info(chalk.green`        ++${it.path}@${it.value}`);
               break;
             case 'REMOVE':
-              message = [chalk.red`        --${it.path}@${it.oldValue}`];
+              logger.info(chalk.red`        --${it.path}@${it.oldValue}`);
               break;
           }
-          logger.info(...message, '\n');
+          logger.info('');
         });
       }
     }
@@ -195,6 +190,4 @@ export default defineAction(
     logDiff(depsDiff, 'dependencies');
     logDiff(devDepsDiff, 'devDependencies');
   },
-  'dependencies',
-  'template',
 );

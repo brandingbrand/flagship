@@ -1,11 +1,13 @@
-import chalk from 'chalk';
-import {program} from 'commander';
-import {detect} from 'detect-package-manager';
-import {type GenerateOptions} from '@brandingbrand/code-cli-kit';
+import {program, Option} from 'commander';
+import {
+  type GenerateOptions,
+  logger,
+  FlagshipCodeManager,
+} from '@brandingbrand/code-cli-kit';
 
 import * as actions from '@/actions';
-import {Actions} from '@/components';
-import {config, emitter, logger} from '@/lib';
+import {config} from '@/lib';
+import {Status} from '@/components/Status';
 
 /**
  * Defines a command for generating a flagship-code template using the "commander" library.
@@ -24,6 +26,14 @@ import {config, emitter, logger} from '@/lib';
 program
   .command('plugin')
   .description('generate a plugin')
+  .addOption(
+    new Option(
+      '-l --log-level [logLevel]',
+      'debug, log, info, warn, error log levels.',
+    )
+      .choices(['debug', 'log', 'info', 'warn', 'error'])
+      .default('info'),
+  )
   .argument('<string>', 'name of generated plugin')
   .action(async (str: string, options: GenerateOptions) => {
     /**
@@ -33,48 +43,32 @@ program
 
     const {render} = await import('ink');
 
-    /**
-     * Render the Reporter component to display progress.
-     */
-    const {unmount} = render(<Actions />, {stdout: process.stderr});
+    await new Promise(res => {
+      /**
+       * Render the Reporter component to display progress.
+       */
+      const {unmount} = render(<Status res={res} />, {stdout: process.stderr});
 
-    global.unmount = unmount;
+      global.unmount = unmount;
+    });
 
-    /**
-     * Loop through predefined actions and execute them sequentially.
-     */
-    for (const action of [
-      actions.info,
-      actions.config,
-      actions.template,
-      actions.generator,
-      actions.packagers,
-    ]) {
-      await action();
-    }
+    logger.setLogLevel(logger.getLogLevelFromString(options.logLevel));
+    logger.pause();
+    logger.printCmdOptions(options, 'plugin');
 
-    /**
-     * This is the last action to be run - if the execution gets to this point
-     * it can be assumed that it was successful.
-     */
-    emitter.emit('action', {name: 'dependencies', status: 'success'});
+    FlagshipCodeManager.shared
+      .addAction(actions.info)
+      .addAction(actions.config)
+      .addAction(actions.template)
+      .addAction(actions.generator)
+      .addAction(actions.packagers);
 
-    /**
-     * Unmount react ink components
-     */
-    unmount();
+    await FlagshipCodeManager.shared.run();
 
     /**
      * Resume logging with console.log and process.stdout
      */
     logger.resume();
-    logger.info(chalk.magenta`🚀 Generated ${str} plugin!\n`);
 
-    logger.info(
-      chalk.gray`Useful commands:
-
-    ${chalk.cyan((await detect()) + ` flagship-code prebuild --build <build-variant> --env <env-variant>`)}
-        Generate native code for React Native app
-`,
-    );
+    global.unmount?.();
   });

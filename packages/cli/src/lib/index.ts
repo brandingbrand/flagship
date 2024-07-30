@@ -33,13 +33,6 @@ export * from './errors';
 export * from './action';
 
 /**
- * Log module for console utilities
- *
- * @module lib/logger
- */
-export {default as logger} from './logger';
-
-/**
  * Constant module for global usage
  *
  * @module lib/constants

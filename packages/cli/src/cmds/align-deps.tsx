@@ -1,10 +1,14 @@
 import chalk from 'chalk';
 import {Option, program} from 'commander';
-import {detect} from 'detect-package-manager';
-import {AlignDepsOptions} from '@brandingbrand/code-cli-kit';
+import {
+  AlignDepsOptions,
+  FlagshipCodeManager,
+  logger,
+} from '@brandingbrand/code-cli-kit';
 
 import * as actions from '@/actions';
-import {config, logger} from '@/lib';
+import {config} from '@/lib';
+import {Status} from '@/components';
 
 /**
  * Defines a command for aligning dependencies for a specified React Native verison
@@ -28,6 +32,14 @@ program
       .choices(['0.72', '0.73'])
       .makeOptionMandatory(),
   )
+  .addOption(
+    new Option(
+      '-l --log-level [logLevel]',
+      'debug, log, info, warn, error log levels.',
+    )
+      .choices(['debug', 'log', 'info', 'warn', 'error'])
+      .default('info'),
+  )
   .option('--f, --fix [fix]', 'Fix package.json dependencies.', false)
   .action(async (options: AlignDepsOptions) => {
     /**
@@ -35,26 +47,33 @@ program
      */
     config.alignDepsOptions = {...options, command: 'align-deps'};
 
-    /**
-     * Loop through predefined actions and execute them sequentially.
-     */
-    for (const action of [actions.info, actions.dependencies]) {
-      await action();
-    }
+    const {render} = await import('ink');
+
+    await new Promise(res => {
+      /**
+       * Render the Reporter component to display progress.
+       */
+      const {unmount} = render(<Status res={res} />, {stdout: process.stderr});
+
+      global.unmount = unmount;
+    });
+
+    logger.setLogLevel(logger.getLogLevelFromString(options.logLevel));
+    logger.pause();
+    logger.printCmdOptions(options, 'align-deps');
+
+    FlagshipCodeManager.shared
+      .addAction(actions.info)
+      .addAction(actions.dependencies);
+
+    await FlagshipCodeManager.shared.run();
+
+    logger.info(`Dependencies ${options.fix ? 'fixed' : 'checked'}!`);
 
     /**
      * Resume logging with console.log and process.stdout
      */
     logger.resume();
-    logger.info(
-      chalk.magenta`🚀 Dependencies ${options.fix ? 'fixed' : 'checked'}!\n`,
-    );
 
-    logger.info(
-      chalk.gray`Useful commands:
-
-    ${chalk.cyan((await detect()) + ` flagship-code prebuild --build <build-variant> --env <env-variant>`)}
-        Generate native code for React Native app
-`,
-    );
+    global.unmount?.();
   });
