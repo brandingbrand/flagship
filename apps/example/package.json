@@ -41,7 +41,7 @@
     "@brandingbrand/code-plugin-asset": "2.0.0",
     "@brandingbrand/code-plugin-example": "link:./coderc/plugins/plugin-example",
     "@brandingbrand/code-plugin-native-navigation": "2.0.0",
-    "@brandingbrand/code-plugin-permissions": "2.0.0",
+    "@brandingbrand/code-plugin-permissions": "2.0.1",
     "@brandingbrand/code-plugin-splash-screen": "2.0.0",
     "@react-native/eslint-config": "^0.72.2",
     "@react-native/metro-config": "^0.72.11",
