@@ -11,6 +11,7 @@ import {
   string,
   withInfoPlist,
   withManifest,
+  path,
 } from '@brandingbrand/code-cli-kit';
 
 import * as permissions from './permissions';
@@ -36,29 +37,36 @@ export default definePlugin<CodePluginPermissions>({
     // Check if the iOS plugin permissions are defined
     if (!build.codePluginPermissions.plugin.ios) return;
 
-    // Resolve the path for RNPermissions.podspec file
-    const filePath = require.resolve(
-      'react-native-permissions/RNPermissions.podspec',
-      {
-        // eslint-disable-next-line turbo/no-undeclared-env-vars
-        ...(!process.env.JEST_WORKER_ID && {paths: [process.cwd()]}),
-      },
-    );
-
     // Update podspec file with appropriate permissions
-    await withUTF8(filePath, content => {
-      const pods = build.codePluginPermissions.plugin.ios!.reduce(
-        (acc, curr) => {
-          const pod = permissions.ios[curr.permission];
-
-          if (!pod?.pod) return acc;
-
-          return `${acc}, "ios/${pod?.pod}/*.{h,m,mm}"`;
-        },
-        '"ios/*.{h,m,mm}"',
+    await withUTF8(path.ios.podfile, content => {
+      const pods = build.codePluginPermissions.plugin.ios?.map(
+        it => `'${it.permission}'`,
       );
 
-      return string.replace(content, /(source_files\s+=\s+).*/, `$1${pods}`);
+      if (!pods) return content;
+
+      const setupPodsString = `setup_permissions([
+  ${pods.join(',\n  ')}
+])`;
+
+      return string.replace(
+        content,
+        /(.)/m,
+        `def node_require(script)
+  # Resolve script with node to allow for hoisting
+  require Pod::Executable.execute_command('node', ['-p',
+    "require.resolve(
+      '#{script}',
+      {paths: [process.argv[1]]},
+    )", __dir__]).strip
+end
+
+node_require('react-native-permissions/scripts/setup.rb')
+
+${setupPodsString}
+
+$1`,
+      );
     });
 
     // Update Info.plist with appropriate permissions and texts

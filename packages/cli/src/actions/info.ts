@@ -6,6 +6,7 @@ import {isWindows} from '@brandingbrand/code-cli-kit';
 import pkg from '../../package.json';
 
 import {config, defineAction, logger} from '@/lib';
+import ansiAlign from 'ansi-align';
 
 /**
  * Executes the default action, providing detailed information and performing necessary checks.
@@ -40,11 +41,13 @@ export default defineAction(
           ▒▒▒▒
 
 `);
+
     logger.info(
-      chalk.bold
-        .blue`Welcome to Flagship Code ${chalk.bold.white`v${pkg.version}`}`,
+      ansiAlign([
+        chalk.bold.blue`Flagship Code ${chalk.bold.white`v${pkg.version}`}`,
+        chalk.dim`Configurable - Extensible - Toolkit`,
+      ]).join('\n'),
     );
-    logger.info(chalk.dim`  Configurable - Extensible - Toolkit`);
 
     // Check if the script is running on Windows, and throw an error if it is
     if (isWindows) {

@@ -8,8 +8,6 @@ import plugin from '../src';
 import type {CodePluginPermissions} from '../src/types';
 
 describe('plugin-permissions', () => {
-  jest.spyOn(fs, 'writeFile').mockImplementation(jest.fn());
-
   it('ios', async () => {
     const config: BuildConfig & CodePluginPermissions = {
       ios: {
@@ -39,13 +37,11 @@ describe('plugin-permissions', () => {
 
     await plugin.ios?.(config, {} as any);
 
-    expect(fs.writeFile).toHaveBeenCalledWith(
-      require.resolve('react-native-permissions/RNPermissions.podspec'),
-      expect.stringContaining(
-        '"ios/*.{h,m,mm}", "ios/AppTrackingTransparency/*.{h,m,mm}"',
-      ),
-      'utf-8',
-    );
+    expect(await fs.readFile(path.ios.podfile, 'utf-8'))
+      .toContain(`setup_permissions([
+  'AppTrackingTransparency',
+  'LocationAccuracy'
+])`);
     expect(await fs.readFile(path.ios.infoPlist, 'utf-8'))
       .toContain(`<key>NSUserTrackingUsageDescription</key>
     <string>Let me use your ad identifier</string>`);
