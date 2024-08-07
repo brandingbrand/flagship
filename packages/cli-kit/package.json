@@ -19,7 +19,7 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "@types/node": "^20.10.6",
-    "fast-xml-parser": "^4.3.4",
+    "fast-xml-parser": "^4.4.1",
     "fp-ts": "^2.16.2",
     "fs-extra": "^11.2.0",
     "glob": "10.3.10",
