@@ -42,6 +42,7 @@ export default function StatusProgress() {
     return () => {
       FlagshipCodeManager.shared.removeAllListeners('onRun');
       FlagshipCodeManager.shared.removeAllListeners('onEnd');
+      FlagshipCodeManager.shared.removeAllListeners('onError');
     };
   }, []);
 

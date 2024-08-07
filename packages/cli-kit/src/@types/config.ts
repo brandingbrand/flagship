@@ -108,4 +108,4 @@ export type AlignDepsOptions = {
    * The cli command.
    */
   command: string;
-} & Options;
+};

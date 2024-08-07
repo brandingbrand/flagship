@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import {Option, program} from 'commander';
 import {
   AlignDepsOptions,
@@ -32,14 +31,6 @@ program
       .choices(['0.72', '0.73'])
       .makeOptionMandatory(),
   )
-  .addOption(
-    new Option(
-      '-l --log-level [logLevel]',
-      'debug, log, info, warn, error log levels.',
-    )
-      .choices(['debug', 'log', 'info', 'warn', 'error'])
-      .default('info'),
-  )
   .option('--f, --fix [fix]', 'Fix package.json dependencies.', false)
   .action(async (options: AlignDepsOptions) => {
     /**
@@ -58,7 +49,6 @@ program
       global.unmount = unmount;
     });
 
-    logger.setLogLevel(logger.getLogLevelFromString(options.logLevel));
     logger.pause();
     logger.printCmdOptions(options, 'align-deps');
 
