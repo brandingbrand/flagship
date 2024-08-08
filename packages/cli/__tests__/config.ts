@@ -52,6 +52,7 @@ describe('config object', () => {
       verbose: false,
       platform: 'ios',
       command: 'prebuild',
+      logLevel: 'info',
     };
 
     config.options = optionsConfig;
@@ -64,6 +65,7 @@ describe('config object', () => {
       type: 'plugin',
       name: 'code-plugin-example',
       command: 'generate',
+      logLevel: 'info',
     };
 
     config.generateOptions = generateOptionsConfig;
@@ -76,6 +78,7 @@ describe('config object', () => {
       type: 'plugin',
       name: '@brandingbrand/code-plugin-example',
       command: 'generate',
+      logLevel: 'info',
     };
 
     expect(() => {

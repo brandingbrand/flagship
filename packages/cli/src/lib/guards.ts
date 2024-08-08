@@ -7,20 +7,17 @@ import {withAction} from './action';
  * This utility is designed to work with asynchronous actions.
  *
  * @param action - The asynchronous action to be performed.
- * @param name - A descriptive name for the action, used in logging messages.
  * @returns A Promise that resolves when the action completes successfully.
  *
  * @remarks
  * This function is a wrapper around the "withLog" utility from "@brandingbrand/code-cli-kit".
  * It adds logging capabilities to the provided action, allowing for better visibility into
  * the execution of asynchronous tasks.
+ *
+ * TODO: this is now over-engineered and can be simplified.
  */
-export function defineAction(
-  action: () => Promise<void | string>,
-  name: string,
-  group: 'template' | 'env' | 'code' | 'dependencies',
-) {
-  return withAction(action, name, group);
+export function defineAction(action: () => Promise<void | string>) {
+  return withAction(action);
 }
 
 export type Transformer<T> = {
