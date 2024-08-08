@@ -62,16 +62,20 @@ export default defineAction(
     }
 
     // Check for package updates
-    const update = await updateCheck({
-      name: pkg.name,
-      version: pkg.version,
-    });
+    try {
+      const update = await updateCheck({
+        name: pkg.name,
+        version: pkg.version,
+      });
 
-    // Warn for new version available
-    if (update) {
-      logger.warn(
-        `A new version of ${pkg.name} is available: v${pkg.version} -> v${update.latest}`,
-      );
+      // Warn for new version available
+      if (update) {
+        logger.warn(
+          `new version of ${pkg.name} is available: v${pkg.version} -> v${update.latest}`,
+        );
+      }
+    } catch (e: any) {
+      logger.error(`failed to check for ${pkg.name} updates: ${e.message}`);
     }
 
     // Pause logs when not in CI in favor of react-ink
