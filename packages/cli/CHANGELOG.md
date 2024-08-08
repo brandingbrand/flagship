@@ -1,5 +1,12 @@
 # @brandingbrand/code-cli
 
+## 13.0.1
+
+### Patch Changes
+
+- edf872b: dead code elimination
+- cb615e8: update-check log error instead of program exit.
+
 ## 13.0.0
 
 ### Major Changes
