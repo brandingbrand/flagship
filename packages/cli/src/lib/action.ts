@@ -55,7 +55,7 @@ export function withAction<TResult, TArgs extends unknown[]>(
       logger.resume();
       logger.info(chalk.red`💥 Oops something went wrong! See errors below.\n`);
       console.group();
-      logger.info(chalk.dim(error.message) + '\n');
+      logger.info(chalk.dim(error.stack) + '\n');
       console.groupEnd();
 
       process.exit(1);
