@@ -4,4 +4,4 @@
 
 ## Usage
 
-See usage at documentation site: https://brandingbrand.github.io/flagship/en/packages/plugins/fastlane
+See usage at documentation site: https://brandingbrand.github.io/flagship/packages/plugins/fastlane

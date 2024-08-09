@@ -4,4 +4,4 @@
 
 ## Usage
 
-See usage at documentation site: https://brandingbrand.github.io/flagship/en/packages/cli
+See usage at documentation site: https://brandingbrand.github.io/flagship/packages/cli
