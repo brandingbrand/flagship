@@ -28,7 +28,7 @@ This Flagship Code v13 currently supports React Native version 0.72.+. Each majo
 
 There are two core packages that Flagship Code depends on for ephermal native code generation, cli and cli-kit. Add both of these packages a development dependencies to your project.
 
-import { Tabs, TabItem } from "@astrojs/starlight/components";
+import {Tabs, TabItem} from '@astrojs/starlight/components';
 
 <Tabs>
 <TabItem label="yarn">
@@ -69,8 +69,8 @@ These should now be reflected in your `package.json`.
   "version": "1.0.0",
   "author": "Your Name <email@example.com>",
   "dependencies": {
-    "react": "^18.2.0",
-    "react-native": "~0.72.0"
+    "react": "~18.2.0",
+    "react-native": ">=0.72.0 <0.74.0"
   },
   "devDependencies": {
     "@brandingbrand/code-cli": "13.0.0",
@@ -104,12 +104,12 @@ This configuration serves as a cornerstone for project scaffolding flexibility w
 The provided example serves as an excellent starting point for initiating a React Native project. It's worth noting that all paths specified in the configuration files are relative to the root directory of your project, ensuring clarity and ease of management.
 
 ```ts title="flagship-code.config.ts"
-import { defineConfig } from "@brandingbrand/code-cli-kit";
+import {defineConfig} from '@brandingbrand/code-cli-kit';
 
 export default defineConfig({
-  buildPath: "./coderc/build",
-  envPath: "./coderc/env",
-  pluginPath: "./coderc/plugins",
+  buildPath: './coderc/build',
+  envPath: './coderc/env',
+  pluginPath: './coderc/plugins',
   plugins: [],
 });
 ```
@@ -127,16 +127,16 @@ The primary objective of the build configuration is to provide a mechanism for o
 Although there may appear to be redundancy across build configurations, this redundancy is essential to accommodate potential variances in third-party dependencies' requirements. The following example showcases the minimal setup required to initialize this configuration.
 
 ```ts title="build.internal.ts"
-import { defineBuild } from "@brandingbrand/code-cli-kit";
+import {defineBuild} from '@brandingbrand/code-cli-kit';
 
 export default defineBuild({
   ios: {
-    bundleId: "com.brandingbrand",
-    displayName: "Branding Brand",
+    bundleId: 'com.brandingbrand',
+    displayName: 'Branding Brand',
   },
   android: {
-    packageName: "com.brandingbrand",
-    displayName: "Branding Brand",
+    packageName: 'com.brandingbrand',
+    displayName: 'Branding Brand',
   },
 });
 ```
@@ -152,11 +152,11 @@ touch ./coderc/env/env.dev.ts
 The primary aim of the env configuration is to furnish developers with a type-safe runtime environment. This feature is exclusively beneficial to developers leveraging `@brandingbrand/fsapp` as their routing solution. The env configuration offers a minimal example of its functionality.
 
 ```ts title="env.dev.ts"
-import { defineEnv } from "@brandingbrand/code-cli-kit";
+import {defineEnv} from '@brandingbrand/code-cli-kit';
 
 export default defineEnv<Env>({
-  id: "abc12345",
-  domain: "https://dev.myexampledomain.com",
+  id: 'abc12345',
+  domain: 'https://dev.myexampledomain.com',
 });
 ```
 

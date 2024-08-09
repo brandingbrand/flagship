@@ -14,7 +14,7 @@ Given the prevalence of TypeScript in React Native projects, Flagship Code prior
 
 #### Version Compatibility Assurance
 
-In light of React Native's regular release cycle, Flagship Code prioritizes stable compatibility with the latest framework versions. Recognizing the potential impact of native code changes on both projects and third-party dependencies, Flagship Code adheres to a policy of ensuring compatibility with the latest stable version minus one, mitigating the risk of unforeseen regressions.
+In light of React Native's regular release cycle, Flagship Code prioritizes stable compatibility with the latest framework versions. Recognizing the potential impact of native code changes on both projects and third-party dependencies, Flagship Code adheres to a policy of ensuring compatibility with the latest stable version minus one, mitigating the risk of unforeseen regressions. Currently we support both 0.72 and 0.73 versions of React Native.
 
 #### Customizability and Extensibility
 
