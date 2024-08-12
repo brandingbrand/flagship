@@ -6,7 +6,7 @@ Flagship Code is a comprehensive Configuration as Code (CaC) toolkit designed to
 
 ## Quick Start
 
-#### Compatibility
+### Compatibility
 
 In your `package.json` verify you are using matching the versions of `react-native` and `react` packages noted below.
 
@@ -24,7 +24,13 @@ In your `package.json` verify you are using matching the versions of `react-nati
 
 This Flagship Code v13 currently supports React Native version 0.72.+. Each major version of Flagship Code supports a new minor version of React Native.
 
-#### Dependencies
+### React Native Support
+
+Flagship Code™ is committed to maintaining compatibility with the latest versions of React Native. Recognizing the need for gradual migration in complex projects, we are implementing multi-version React Native support. This feature allows developers to seamlessly upgrade to newer versions of React Native while maintaining support for legacy versions within the same codebase.
+
+Currently, Flagship Code™ is fully compatible with React Native versions 0.72 and 0.73, and we are continuously expanding support to include new releases as they become available. The framework intelligently detects the installed version of React Native in your project and automatically selects the appropriate compatibility profile, ensuring that your development experience remains consistent and stable across different React Native versions. This approach enables teams to adopt new technologies at their own pace without compromising the functionality of existing code.
+
+### Dependencies
 
 There are two core packages that Flagship Code depends on for ephermal native code generation, cli and cli-kit. Add both of these packages a development dependencies to your project.
 
@@ -79,13 +85,13 @@ These should now be reflected in your `package.json`.
 }
 ```
 
-#### Configuration
+### Configuration
 
 Flagship Code employs three distinct configurations to facilitate the generation of your native iOS and Android projects. These configurations encompass `flagship-code.config.ts`, `build.<mode>.ts`, and `env.<mode>.ts`, with `<mode>` denoting specific build or environment settings such as internal, store, dev, staging, or prod.
 
 In a meticulous endeavor to maintain robustness, Flagship Code implements type guards across all configurations. This strategic approach minimizes potential side-effects, ensuring smooth execution when initiating actions to generate your native iOS and Android projects.
 
-##### Flagship Code Configuration
+#### Flagship Code Configuration
 
 Create the `flagship-code.config.ts` in the root of your project.
 
@@ -114,7 +120,7 @@ export default defineConfig({
 });
 ```
 
-##### Build Configuration
+#### Build Configuration
 
 Create a build configuration file in the directory that is denoted in your `flagship-code.config.ts` under the `buildPath` attribute.
 
@@ -141,7 +147,7 @@ export default defineBuild({
 });
 ```
 
-##### Env Configuration
+#### Env Configuration
 
 Create a build configuration file in the directory that is denoted in your `flagship-code.config.ts` under the `envPath` attribute.
 
@@ -160,7 +166,7 @@ export default defineEnv<Env>({
 });
 ```
 
-#### Native Code Generation
+### Native Code Generation
 
 With the dependencies and configuration requirements met, the native code is now prepared for generation. It's crucial to grasp that Flagship Code's primary objective is to manage iOS and Android code, as outlined in the Overview. Consequently, the existing iOS and Android directories will no longer be retained in your repository. Therefore, it's imperative to append the `ios` and `android` directories to your `.gitignore` file.
 
