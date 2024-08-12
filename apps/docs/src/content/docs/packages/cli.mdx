@@ -4,11 +4,11 @@ title: cli
 
 The command-line interface (CLI) package integral to the Flagship Code framework is denoted by `@brandingbrand/code-cli`. This sophisticated utility orchestrates the parsing of command-line arguments, facilitating the seamless execution of two pivotal commands: `prebuild` and `generate`. These commands, meticulously designed and meticulously curated, play a pivotal role in the orchestration of tasks within your esteemed React Native project. As the lifeblood of your development endeavors, their judicious utilization is imperative for the harmonious evolution of your digital endeavors. The `prebuild` command responsible for native code generation and the `generate` command is responsible for plugin package generation.
 
-### Install
+## Install
 
 Add `@brandingbrand/code-cli` as a development dependency to your React Native project.
 
-import { Tabs, TabItem } from "@astrojs/starlight/components";
+import {Tabs, TabItem} from '@astrojs/starlight/components';
 
 <Tabs>
 <TabItem label="yarn">
@@ -49,18 +49,18 @@ Your package.json should now be updated, `@brandingbrand/code-cli` should be lis
   "version": "1.0.0",
   "author": "Your Name <email@example.com>",
   "dependencies": {
-    "react": "^18.2.0",
-    "react-native": "~0.72.0"
+    "react": "~18.2.0",
+    "react-native": "^0.73.0"
   },
   "devDependencies": {
-    "@brandingbrand/code-cli": "13.0.0"
+    "@brandingbrand/code-cli": "^13.0.0"
   }
 }
 ```
 
-### Commands
+## Commands
 
-#### Prebuild
+### prebuild
 
 The `prebuild` command serves as a fundamental tool for generating native iOS and Android projects seamlessly. It is designed to cater to various scenarios, whether you require project generation for both platforms collectively or for individual platforms, such as solely iOS or Android. Its pervasive utilization stems from its integral role in managing the native code generation process within Flagship Code. Whenever new packages or plugins are installed, the execution of `prebuild` becomes imperative to ensure the coherence and integrity of the generated codebase.
 
@@ -117,6 +117,24 @@ _required_
 
 The designated name for the environment configuration consumed by Flagship Code, which is set as the default environment linked to `@brandingbrand/fsapp`, is derived from the `<mode>` specified in the filename of the build configuration. For example, if the filename is `env.dev.ts`, the designated name would be `dev`.
 
+#### `log-level`
+
+**type:** `error | warn | info | log | debug`
+
+**default**: `info`
+
+_optional_
+
+The --log-level option allows you to control the verbosity of the CLI's output by specifying the level of detail you want in the logs. The available options are as follows, in increasing order of verbosity:
+
+    - error: Logs only error messages.
+    - warn: Logs warnings and errors.
+    - info: Logs informational messages, warnings, and errors.
+    - log: Logs general messages, informational messages, warnings, and errors.
+    - debug: Logs all messages, including debug information, general messages, informational messages, warnings, and errors.
+
+Each level includes all the log messages from the levels to its left. For example, selecting warn will include both warnings and errors, while selecting debug will include all log messages.
+
 #### `platform`
 
 **type:** `native | ios | android`
@@ -137,7 +155,21 @@ _optional_
 
 The option `release` determines whether to generate native code in "release" mode. When set to `true`, certain features will be toggled based on this mode. Specifically, the specified `env` option will be linked to `@brandingbrand/fsapp`, and the development menu provided by `@brandingbrand/fsapp` will be disabled. Conversely, when set to `false`, all environments will be linked to `@brandingbrand/fsapp`, and the development menu provided by `@brandingbrand/fsapp` will be enabled. If this option is not explicitly specified, the default value for `release` will be `false`.
 
-#### Plugin
+#### `verbose`
+
+**type:** `boolean`
+
+**default:** `false`
+
+_optional_
+
+The verbose option controls how the CLI output is rendered—either through process.stdout or via react-ink. When verbose is set to false, all output to process.stdout is disabled, and internal logs are redirected to react-ink using process.stderr. Internal logging can be handled using the logger function provided by @brandingbrand/cli-kit.
+
+This behavior is implemented because when verbose is disabled, third-party scripts executed via plugins often produce extensive output to process.stdout, which can obscure the core logs of Flagship Code™. Conversely, when verbose is enabled, process.stdout is fully active, and any progress bars or spinners provided by react-ink are turned off.
+
+This option is particularly relevant for tty terminals, such as those used in continuous integration (CI) environments.
+
+### plugin
 
 The `plugin` command is a pivotal tool for effortlessly creating new plugins. Tailored to facilitate the initiation of extended native code alterations beyond what Flagship Code offers, it provides a robust starting point. Not only does it furnish a foundation for source code, but it also furnishes a template for unit testing. This ensures thorough testing of plugins against real native iOS and Android projects, enhancing their reliability and robustness.
 
@@ -185,3 +217,67 @@ You can pass the following options to the `plugin` command.
 _required_
 
 The designated name for the generated plugin serves as both the directory name within the specified `pluginPath` in `flagship-code.config.ts` and the linked name in your `package.json` and `flagship-code.config.ts`. This name must comply with the package naming convention without project scoping.
+
+### align-deps
+
+The `align-deps` command is essential for ensuring that all required dependencies and their dependent packages are correctly aligned to the specified versions. This command uses profiles that correspond to specific React Native versions. For instance, there could be profiles for versions `0.72` and `0.73`, each dictating the appropriate versions for required dependencies, their dependents, as well as optional dependencies and their dependents.
+
+Here is an example on how to execute the command:
+
+<Tabs>
+<TabItem label="yarn">
+
+```sh
+yarn flagship-code align-deps --profile 0.72
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npx flagship-code align-deps --profile 0.72
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+pnpx flagship-code align-deps --profile 0.72
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bunx flagship-code align-deps --profile 0.72
+```
+
+</TabItem>
+</Tabs>
+
+You can pass the following options to the `prebuild` command.
+
+#### `profile`
+
+**type:** `0.72` | `0.73`
+
+_required_
+
+The `--profile` argument specifies the React Native version profile that the align-deps command should use to align dependencies. Currently, the available options are:
+
+    - 0.72: Aligns dependencies according to the specifications for React Native version 0.72.
+    - 0.73: Aligns dependencies according to the specifications for React Native version 0.73.
+
+This argument is required to ensure that the correct versions of dependencies, their dependents, and optional packages are set based on the selected React Native profile. Choose the profile that matches the React Native version your project is using.
+
+#### `fix`
+
+**type:** `boolean`
+
+**default:** `false`
+
+_optional_
+
+The `--fix` argument enables the align-deps command to automatically apply the necessary changes to your `package.json` file. When this argument is used, the command will update the `dependencies` and `devDependencies` in your package.json to align with the correct versions specified by the selected profile.
+
+Without `--fix`, the command will only display the required changes without making any modifications to your `package.json`. Use this option to streamline the process of keeping your `dependencies` in sync with the chosen React Native profile.
