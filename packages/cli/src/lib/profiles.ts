@@ -27,7 +27,11 @@ const react_native_0_72: Record<string, Profile> = {
   },
   'react-native': {
     version: '^0.72.0',
-    capabilities: ['react', 'metro-react-native-babel-preset'],
+    capabilities: [
+      'react',
+      'metro-react-native-babel-preset',
+      '@react-native/metro-config',
+    ],
     required: true,
   },
   'metro-react-native-babel-preset': {
@@ -45,6 +49,10 @@ const react_native_0_72: Record<string, Profile> = {
   },
   '@babel/runtime': {
     version: '^7.20.0',
+    devOnly: true,
+  },
+  '@react-native/metro-config': {
+    version: '^0.72.0',
     devOnly: true,
   },
   '@types/react': {
@@ -91,7 +99,11 @@ const react_native_0_73: Record<string, Profile> = {
   ...react_native_0_72,
   'react-native': {
     version: '^0.73.0',
-    capabilities: ['react', '@react-native/babel-preset'],
+    capabilities: [
+      'react',
+      '@react-native/babel-preset',
+      '@react-native/metro-config',
+    ],
     required: true,
   },
   'react-native-navigation': {
@@ -100,6 +112,10 @@ const react_native_0_73: Record<string, Profile> = {
   '@react-native/babel-preset': {
     version: '^0.73.21',
     capabilities: ['@babel/core', '@babel/preset-env', '@babel/runtime'],
+    devOnly: true,
+  },
+  '@react-native/metro-config': {
+    version: '^0.73.0',
     devOnly: true,
   },
   'metro-react-native-babel-preset': {
