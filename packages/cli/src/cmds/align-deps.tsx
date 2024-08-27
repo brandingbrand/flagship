@@ -28,7 +28,7 @@ program
   .description('check dependencies with respect to React Native version')
   .addOption(
     new Option('-p, --profile [profile]', 'React Native profile')
-      .choices(['0.72', '0.73'])
+      .choices(['0.72', '0.73', '0.74'])
       .makeOptionMandatory(),
   )
   .option('--f, --fix [fix]', 'Fix package.json dependencies.', false)

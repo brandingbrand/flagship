@@ -21,6 +21,10 @@ const profiles = {
     iosTransformers: iosTransformersRN73,
     androidTransformers: androidTransformersRN73,
   },
+  '0.74': {
+    iosTransformers: iosTransformersRN73,
+    androidTransformers: androidTransformersRN73,
+  },
 };
 
 // Get the React Native version

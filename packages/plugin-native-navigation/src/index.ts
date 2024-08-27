@@ -67,6 +67,7 @@ export default definePlugin({
     options: PrebuildOptions,
   ): Promise<void> {
     switch (getReactNativeVersion()) {
+      case '0.74':
       case '0.73':
         return android73(build, options);
       case '0.72':
