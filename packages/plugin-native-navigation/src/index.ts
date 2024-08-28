@@ -13,6 +13,7 @@ import {
 
 import {android as android72} from './android-0.72';
 import {android as android73} from './android-0.73';
+import {android as android74} from './android-0.74';
 
 /**
  * Defines a plugin with functions for both iOS and Android platforms.
@@ -68,6 +69,7 @@ export default definePlugin({
   ): Promise<void> {
     switch (getReactNativeVersion()) {
       case '0.74':
+        return android74(build, options);
       case '0.73':
         return android73(build, options);
       case '0.72':
