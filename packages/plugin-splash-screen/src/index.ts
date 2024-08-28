@@ -60,6 +60,7 @@ export default definePlugin<CodePluginSplashScreen>({
 
     if (build.codePluginSplashScreen.plugin.android.type === 'legacy') {
       switch (getReactNativeVersion()) {
+        case '0.74':
         case '0.73':
           return legacy73.android(build);
         case '0.72':
@@ -70,6 +71,7 @@ export default definePlugin<CodePluginSplashScreen>({
 
     if (build.codePluginSplashScreen.plugin.android.type === 'generated') {
       switch (getReactNativeVersion()) {
+        case '0.74':
         case '0.73':
           return generated73.android(build);
         case '0.72':

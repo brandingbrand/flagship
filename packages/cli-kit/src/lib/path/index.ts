@@ -7,12 +7,14 @@ import pathRN73 from './path-0.73';
 type VersionProfiles = {
   '0.72': typeof pathRN72;
   '0.73': typeof pathRN73;
+  '0.74': typeof pathRN73;
 };
 
 // Define the profiles object with specific types
 const profiles: VersionProfiles = {
   '0.72': pathRN72,
   '0.73': pathRN73,
+  '0.74': pathRN73,
 };
 
 // Get the React Native version

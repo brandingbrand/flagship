@@ -9,7 +9,7 @@ import pkg from '../../package.json';
  *
  * TODO: remove - likely does not need to be used anymore, we should lean on align-deps.
  */
-export const REACT_NATIVE_VERSION_RANGE = '^0.72.0 || ^0.73.0';
+export const REACT_NATIVE_VERSION_RANGE = '^0.72.0 || ^0.73.0 || ^0.74';
 
 /**
  * Semantic version range for the minimum supported React version.

@@ -126,9 +126,36 @@ const react_native_0_73: Record<string, Profile> = {
 };
 
 /**
+ * Profile for React Native version 0.74.
+ * Includes React and React Native dependencies with their respective versions and types.
+ */
+const react_native_0_74: Record<string, Profile> = {
+  ...react_native_0_73,
+  'react-native': {
+    version: '^0.74.0',
+    capabilities: [
+      'react',
+      '@react-native/babel-preset',
+      '@react-native/metro-config',
+    ],
+    required: true,
+  },
+  '@react-native/babel-preset': {
+    version: '^0.74.87',
+    capabilities: ['@babel/core', '@babel/preset-env', '@babel/runtime'],
+    devOnly: true,
+  },
+  '@react-native/metro-config': {
+    version: '^0.74.87',
+    devOnly: true,
+  },
+};
+
+/**
  * Exported profiles object containing different React Native version profiles.
  */
 export const profiles = {
   '0.72': react_native_0_72,
   '0.73': react_native_0_73,
+  '0.74': react_native_0_74,
 };
