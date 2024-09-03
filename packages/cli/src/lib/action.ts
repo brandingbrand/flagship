@@ -1,5 +1,3 @@
-import mitt from 'mitt';
-
 /**
  * Wraps an asynchronous function with logging capabilities.
  * @template TResult - The result type of the function.
