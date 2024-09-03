@@ -1,4 +1,3 @@
-import ansiAlign from 'ansi-align';
 import ci from 'ci-info';
 import updateCheck from 'update-check';
 import {isWindows, logger} from '@brandingbrand/code-cli-kit';
@@ -25,16 +24,19 @@ export default defineAction(async () => {
     logger.info(`Continuous Integration server: ${ci.name}`);
   }
 
-  // Check for package updates
-  const update = await updateCheck({
-    name: pkg.name,
-    version: pkg.version,
-  });
+  try {
+    const update = await updateCheck({
+      name: pkg.name,
+      version: pkg.version,
+    });
 
-  // Warn for new version available
-  if (update) {
-    logger.warn(
-      `A new version of ${pkg.name} is available: v${pkg.version} -> v${update.latest}`,
-    );
+    // Warn for new version available
+    if (update) {
+      logger.warn(
+        `new version of ${pkg.name} is available: v${pkg.version} -> v${update.latest}`,
+      );
+    }
+  } catch (e: any) {
+    logger.error(`failed to check for ${pkg.name} updates: ${e.message}`);
   }
 });

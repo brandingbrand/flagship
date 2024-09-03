@@ -19,13 +19,6 @@ export * from './config';
 export * from './guards';
 
 /**
- * Errors module for internal logging
- *
- * @module lib/errors
- */
-export * from './errors';
-
-/**
  * Action module for executing and reporting actions
  *
  * @module lib/log
