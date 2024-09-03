@@ -2719,9 +2719,9 @@
   integrity sha512-xkdvp0D9Ld/ZKsjo/y1bgfhTEU72ITimd2PMMQtts7jf6JPIOJbsiErCvm37m/qMFuPGEq/8d+fZ4pydOj08HQ==
 
 "@pagefind/default-ui@^1.0.3":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@pagefind/default-ui/-/default-ui-1.0.4.tgz#fd12947c17f5f4ecd3b414bfd532c30a4326de83"
-  integrity sha512-edkcaPSKq67C49Vehjo+LQCpT615v4d7JRhfGzFPccePvdklaL+VXrfghN/uIfsdoG+HoLI1PcYy2iFcB9CTkw==
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@pagefind/default-ui/-/default-ui-1.1.1.tgz#ba6c0f1f46f5a548ca3a79e79d3d9c400e783238"
+  integrity sha512-ZM0zDatWDnac/VGHhQCiM7UgA4ca8jpjA+VfuTJyHJBaxGqZMQnm4WoTz9E0KFcue1Bh9kxpu7uWFZfwpZZk0A==
 
 "@pagefind/linux-arm64@1.0.4":
   version "1.0.4"
