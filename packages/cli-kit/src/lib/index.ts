@@ -4,6 +4,8 @@
  * @module lib
  */
 
+import {FlagshipCodeLogger} from './FlagshipCodeLogger';
+
 /**
  * Guards lib exports various guards for type checking.
  *
@@ -52,3 +54,25 @@ export * from './platform';
  * @module lib/string
  */
 export * from './string';
+
+/**
+ * Singleton instance of the FlagshipCodeLogger.
+ *
+ * @example
+ * ```typescript
+ * logger.log('This is a log message');
+ * ```
+ */
+export const logger = FlagshipCodeLogger.shared;
+
+/**
+ * Exports the FlagshipCodeManager class.
+ *
+ * @example
+ * ```typescript
+ * import { FlagshipCodeManager } from './path/to/FlagshipCodeManager';
+ * const manager = new FlagshipCodeManager();
+ * manager.doSomething();
+ * ```
+ */
+export {FlagshipCodeManager} from './FlagshipCodeManager';

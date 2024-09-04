@@ -9,6 +9,7 @@ import {program} from 'commander';
 
 import {
   config,
+  isAlignDepsCommand,
   isGenerateCommand,
   isPackage,
   isPrebuildCommand,
@@ -51,6 +52,7 @@ describe('config object', () => {
       verbose: false,
       platform: 'ios',
       command: 'prebuild',
+      logLevel: 'info',
     };
 
     config.options = optionsConfig;
@@ -63,6 +65,7 @@ describe('config object', () => {
       type: 'plugin',
       name: 'code-plugin-example',
       command: 'generate',
+      logLevel: 'info',
     };
 
     config.generateOptions = generateOptionsConfig;
@@ -75,6 +78,7 @@ describe('config object', () => {
       type: 'plugin',
       name: '@brandingbrand/code-plugin-example',
       command: 'generate',
+      logLevel: 'info',
     };
 
     expect(() => {
@@ -128,7 +132,7 @@ describe('isPackage', () => {
 });
 
 describe('isCommand', () => {
-  it('isPrebuildCommand', () => {
+  it('isGenerateCommand', () => {
     program.args = ['prebuild'];
 
     expect(isGenerateCommand()).not.toBeTruthy();
@@ -140,5 +144,12 @@ describe('isCommand', () => {
 
     expect(isPrebuildCommand()).not.toBeTruthy();
     expect(isGenerateCommand()).toBeTruthy();
+  });
+
+  it('isAlignDepsCommand', () => {
+    program.args = ['align-deps'];
+
+    expect(isGenerateCommand()).not.toBeTruthy();
+    expect(isAlignDepsCommand()).toBeTruthy();
   });
 });

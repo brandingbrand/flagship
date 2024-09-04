@@ -1,11 +1,19 @@
-import chalk from 'chalk';
 import {Option, program} from 'commander';
-import {detect} from 'detect-package-manager';
-import type {PrebuildOptions} from '@brandingbrand/code-cli-kit';
+import {
+  type PrebuildOptions,
+  FlagshipCodeManager,
+  logger,
+} from '@brandingbrand/code-cli-kit';
+import ansiAlign from 'ansi-align';
 
 import * as actions from '@/actions';
-import {Actions} from '@/components';
-import {config, emitter, logger, prevGroup} from '@/lib';
+import {
+  config,
+  FLAGSHIP_CODE_DESCRIPTION,
+  FLAGSHIP_CODE_LOGO,
+  FLAGSHIP_CODE_TITLE,
+} from '@/lib';
+import {Status} from '@/components/Status';
 
 /**
  * Defines a command for the "prebuild" operation using the "commander" library.
@@ -37,6 +45,14 @@ program
       .choices(['ios', 'android', 'native'])
       .default('native'),
   )
+  .addOption(
+    new Option(
+      '-l --log-level [logLevel]',
+      'debug, log, info, warn, error log levels.',
+    )
+      .choices(['debug', 'log', 'info', 'warn', 'error'])
+      .default('info'),
+  )
   .option('-r, --release', 'Bundle only specified environment.', false)
   .option('--verbose', 'Show stdout.', false)
   .action(async (options: PrebuildOptions) => {
@@ -47,63 +63,45 @@ program
 
     const {render} = await import('ink');
 
-    /**
-     * Render the Reporter component to display progress.
-     */
-    const {unmount} = render(<Actions />, {stdout: process.stderr});
+    await new Promise(res => {
+      /**
+       * Render the Reporter component to display progress.
+       */
+      const {unmount} = render(<Status res={res} />, {stdout: process.stderr});
 
-    global.unmount = unmount;
+      global.unmount = unmount;
+    });
 
-    /**
-     * Loop through predefined actions and execute them sequentially.
-     */
-    for (const action of [
-      actions.info, // emit template pending status
-      actions.clean,
-      actions.config,
-      actions.template, // emit template success status
-      actions.env, // emit env pending + success status
-      actions.transformers, // emit code pending status
-      actions.plugins, // emit code success status
-      actions.packagers, // emit pending + success status
-    ]) {
-      await action();
+    logger.setLogLevel(logger.getLogLevelFromString(options.logLevel));
+
+    if (!options.verbose) {
+      logger.pause();
     }
 
-    /**
-     * This is the last action to be run - if the execution gets to this point
-     * it can be assumed that it was successful.
-     */
-    emitter.emit('action', {name: prevGroup, status: 'success'});
+    process.stdout.write(FLAGSHIP_CODE_LOGO + '\n\n');
+    process.stdout.write(
+      ansiAlign([FLAGSHIP_CODE_TITLE, FLAGSHIP_CODE_DESCRIPTION]).join('\n') +
+        '\n\n',
+    );
 
-    /**
-     * Unmount react ink components
-     */
-    unmount();
+    logger.printCmdOptions(options, 'prebuild');
+
+    FlagshipCodeManager.shared
+      .addAction(actions.info)
+      .addAction(actions.clean)
+      .addAction(actions.config)
+      .addAction(actions.template)
+      .addAction(actions.env)
+      .addAction(actions.transformers)
+      .addAction(actions.plugins)
+      .addAction(actions.packagers);
+
+    await FlagshipCodeManager.shared.run();
 
     /**
      * Resume logging with console.log and process.stdout
      */
     logger.resume();
 
-    logger.info(
-      chalk.magenta`🚀 Generated native project(s), ready to launch your app!\n`,
-    );
-
-    logger.info(
-      chalk.gray`Useful commands:
-
-    ${chalk.cyan((await detect()) + ` react-native run-ios`)}
-        Run your iOS app locally
-
-    ${chalk.cyan((await detect()) + ` react-native run-andorid`)}
-        Run your Android app locally
-
-    ${chalk.cyan((await detect()) + ` react-native start`)}
-        Start the Metro development server
-
-    ${chalk.cyan((await detect()) + ` flagship-code plugin <plugin-name>`)}
-        Generate a Flagship Code plugin
-`,
-    );
+    global.unmount?.();
   });

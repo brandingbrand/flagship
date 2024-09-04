@@ -26,15 +26,15 @@ export * from './guards';
 export * from './action';
 
 /**
- * Log module for console utilities
- *
- * @module lib/logger
- */
-export {default as logger} from './logger';
-
-/**
  * Constant module for global usage
  *
  * @module lib/constants
  */
 export * from './constants';
+
+/**
+ * Profiles module for dependency management
+ *
+ * @module lib/profiles
+ */
+export * from './profiles';

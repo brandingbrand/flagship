@@ -7,6 +7,10 @@ import fs from 'fs/promises';
 import {withNetworkSecurityConfig} from '../src/parsers/xml';
 import path from '../src/lib/path';
 
+jest.mock('../src/lib/platform', () => ({
+  getReactNativeVersion: () => '0.72',
+}));
+
 describe('network security configuration', () => {
   it('AndroidManifest.xml should not contain @xml/network_security_config by default', async () => {
     const androidManifest = await fs.readFile(
