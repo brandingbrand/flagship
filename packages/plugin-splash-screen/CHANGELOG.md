@@ -1,5 +1,17 @@
 # @brandingbrand/code-plugin-splash-screen
 
+## 3.0.0
+
+### Minor Changes
+
+- d78a816: react native 0.73 support
+
+### Patch Changes
+
+- Updated dependencies [f194fca]
+- Updated dependencies [d78a816]
+  - @brandingbrand/code-cli-kit@13.1.0
+
 ## 2.0.0
 
 ### Major Changes

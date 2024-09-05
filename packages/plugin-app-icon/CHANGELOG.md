@@ -1,5 +1,13 @@
 # @brandingbrand/code-plugin-app-icon
 
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies [f194fca]
+- Updated dependencies [d78a816]
+  - @brandingbrand/code-cli-kit@13.1.0
+
 ## 2.0.0
 
 ### Major Changes

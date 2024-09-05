@@ -1,5 +1,18 @@
 # @brandingbrand/code-cli
 
+## 13.1.0
+
+### Minor Changes
+
+- f194fca: align dependencies command
+- d78a816: react native 0.73 support
+
+### Patch Changes
+
+- Updated dependencies [f194fca]
+- Updated dependencies [d78a816]
+  - @brandingbrand/code-cli-kit@13.1.0
+
 ## 13.0.1
 
 ### Patch Changes
