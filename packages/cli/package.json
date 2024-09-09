@@ -21,7 +21,6 @@
   },
   "types": "dist/index.d.ts",
   "dependencies": {
-    "@brandingbrand/code-cli-kit": "13.0.0",
     "@npmcli/package-json": "^5.2.0",
     "ansi-align": "^3.0.1",
     "bundle-require": "^4.0.2",
@@ -47,11 +46,13 @@
     "write-package": "^7.0.0"
   },
   "peerDependencies": {
+    "@brandingbrand/code-cli-kit": "^13.0.0",
     "react": "^18.2.0",
     "react-native": "~0.72.0"
   },
   "devDependencies": {
-    "@brandingbrand/code-jest-config": "1.0.0",
+    "@brandingbrand/code-cli-kit": "*",
+    "@brandingbrand/code-jest-config": "*",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/ansi-align": "3.0.5",

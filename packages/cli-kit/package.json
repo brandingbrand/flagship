@@ -32,7 +32,7 @@
     "xcode": "^3.0.2-nightly.20240423000755527.sha.5158ec51"
   },
   "devDependencies": {
-    "@brandingbrand/code-jest-config": "1.0.0",
+    "@brandingbrand/code-jest-config": "*",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/eslint": "^8.56.1",

@@ -36,7 +36,7 @@
     "@babel/runtime": "^7.20.0",
     "@brandingbrand/code-cli": "13.0.1",
     "@brandingbrand/code-cli-kit": "13.0.0",
-    "@brandingbrand/code-jest-config": "1.0.0",
+    "@brandingbrand/code-jest-config": "*",
     "@brandingbrand/code-plugin-app-icon": "2.0.0",
     "@brandingbrand/code-plugin-asset": "2.0.0",
     "@brandingbrand/code-plugin-example": "link:./coderc/plugins/plugin-example",
