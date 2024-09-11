@@ -1,5 +1,11 @@
 # @brandingbrand/code-plugin-fastlane
 
+## 3.0.1
+
+### Patch Changes
+
+- cece852: peer dependency alignment
+
 ## 3.0.0
 
 ### Major Changes

@@ -4,4 +4,4 @@
 
 ## Usage
 
-See usage at documentation site: https://brandingbrand.github.io/flagship/en/packages/plugins/target-extension
+See usage at documentation site: https://brandingbrand.github.io/flagship/packages/plugins/target-extension

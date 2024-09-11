@@ -1,4 +1,5 @@
 import type {
+  AlignDepsOptions,
   BuildConfig,
   GenerateOptions,
   PrebuildOptions,
@@ -66,6 +67,22 @@ export const config = {
     }
 
     this.__dangerously_access_generate_options = data;
+  },
+  /**
+   * @property {Object} __dangerously_access_align_deps_options - Configuration object for align deps options.
+   */
+  __dangerously_access_align_deps_options: {} as AlignDepsOptions,
+  /**
+   * @property {function} alignDepsOptions - Getter function for accessing options configuration.
+   */
+  get alignDepsOptions() {
+    return this.__dangerously_access_align_deps_options;
+  },
+  /**
+   * @property {function} alignDepsOptions - Setter function for updating options configuration.
+   */
+  set alignDepsOptions(data: AlignDepsOptions) {
+    this.__dangerously_access_align_deps_options = data;
   },
   /**
    * @property {Object} __dangerously_access_build - Configuration object for build settings.
@@ -178,6 +195,22 @@ export function isGenerateCommand(): boolean {
 
   // Check if the first argument is "generate"
   if (program.args[0] === 'plugin') {
+    return true; // Return true if the first argument is "generate"
+  }
+
+  return false; // Return false if the first argument is not "generate"
+}
+
+/**
+ * Checks if the generate command is present in the program arguments.
+ * @returns {boolean} Returns true if the generate command is present, otherwise false.
+ */
+export function isAlignDepsCommand(): boolean {
+  // Check if there are no program arguments or if the first argument is missing
+  if (!program.args[0]) return false;
+
+  // Check if the first argument is "generate"
+  if (program.args[0] === 'align-deps') {
     return true; // Return true if the first argument is "generate"
   }
 

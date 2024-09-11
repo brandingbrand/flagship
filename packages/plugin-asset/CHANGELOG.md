@@ -1,5 +1,11 @@
 # @brandingbrand/code-plugin-asset
 
+## 2.0.1
+
+### Patch Changes
+
+- cece852: peer dependency alignment
+
 ## 2.0.0
 
 ### Major Changes

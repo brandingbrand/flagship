@@ -1,5 +1,15 @@
 # @brandingbrand/code-plugin-native-navigation
 
+## 2.1.0
+
+### Minor Changes
+
+- d78a816: react native 0.73 support
+
+### Patch Changes
+
+- cece852: peer dependency alignment
+
 ## 2.0.0
 
 ### Major Changes
