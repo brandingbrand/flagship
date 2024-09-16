@@ -1,0 +1,35 @@
+{
+  "name": "@brandingbrand/code-app-router",
+  "version": "1.0.0",
+  "description": "Navigator wrapper around React Native Navigation",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0"
+  },
+  "types": "src/index.ts",
+  "dependencies": {
+    "parse-url": "^9.2.0",
+    "path-to-regexp": "^7.1.0",
+    "react-native-url-polyfill": "^2.0.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-navigation": "*"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/eslint": "^8.56.1",
+    "eslint": "^8.56.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3",
+    "react": "18.2.0",
+    "react-native": "^0.73.9",
+    "react-native-navigation": "^7.40.1"
+  }
+}
