@@ -30,9 +30,11 @@ export default defineAction(async () => {
 
   // If the dependency is not found, throw a warning
   if (index === -1) {
-    throw Error(
+    logger.debug(
       "Missing Configuration: Unable to locate the '@brandingbrand/fsapp' dependency. Please note that the absence of this dependency will prevent you from leveraging the benefits of multi-tenant typed environments.",
     );
+
+    return;
   }
 
   // Resolve the environment directory path based on the configuration
