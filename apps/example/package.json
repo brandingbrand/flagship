@@ -12,9 +12,11 @@
     "start": "react-native start"
   },
   "dependencies": {
+    "@brandingbrand/code-app-env": "*",
     "@brandingbrand/code-app-router": "*",
+    "@brandingbrand/react-native-app-restart": "0.4.0",
     "react": "18.2.0",
-    "react-native": "0.73.9",
+    "react-native": "0.73.11",
     "react-native-navigation": "^7.40.1"
   },
   "devDependencies": {
@@ -39,6 +41,7 @@
     "babel-jest": "^29.6.3",
     "eslint": "^8.19.0",
     "jest": "^29.2.1",
+    "plugin-env": "link:coderc/plugins/plugin-env",
     "plugin-monorepo": "link:coderc/plugins/plugin-monorepo",
     "prettier": "2.8.8",
     "react-native-bootsplash": "^5.4.0",

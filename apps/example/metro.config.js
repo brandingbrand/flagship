@@ -1,5 +1,6 @@
 const path = require('path');
 const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
+const {getCacheVersion} = require('@brandingbrand/code-app-env/metro-bundler');
 
 /**
  * Metro configuration
@@ -8,6 +9,7 @@ const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
  * @type {import('metro-config').MetroConfig}
  */
 const config = {
+  cacheVersion: getCacheVersion(),
   watchFolders: [
     path.resolve(__dirname, '../../node_modules'),
     path.resolve(__dirname, '../../packages'),

@@ -47,8 +47,8 @@
   },
   "peerDependencies": {
     "@brandingbrand/code-cli-kit": "^13.0.0",
-    "react": "^18.2.0",
-    "react-native": "~0.72.0"
+    "react": "18.2.0",
+    "react-native": "0.73.11"
   },
   "devDependencies": {
     "@brandingbrand/code-cli-kit": "*",

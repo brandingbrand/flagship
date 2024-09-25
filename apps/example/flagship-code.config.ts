@@ -31,5 +31,6 @@ export default defineConfig({
     '@brandingbrand/code-plugin-permissions',
     '@brandingbrand/code-plugin-splash-screen',
     'plugin-monorepo',
+    'plugin-env',
   ],
 });
