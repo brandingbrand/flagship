@@ -98,7 +98,7 @@ export default defineAction(async (): Promise<void> => {
     try {
       for await (const line of execa({
         cwd: path.project.resolve('ios'),
-      })`pod install`) {
+      })(isCI ? 'bundle exec pod install' : 'pod install')) {
         logger.debug(line);
       }
 
