@@ -1,4 +1,5 @@
-import spawnAsync from "@expo/spawn-async";
+import { isCI } from "ci-info";
+import spawnAsync, { SpawnOptions } from "@expo/spawn-async";
 
 import { os, path } from "../../../utils";
 
@@ -13,14 +14,20 @@ export const execute = (options: InitOptions, config: Config) => ({
         throw new Error("cannot run cocoapods on linux");
       }
 
-      await spawnAsync("pod", ["install"], {
+      const execOpts: SpawnOptions = {
         stdio: [
           options.verbose ? "inherit" : "ignore",
           options.verbose ? "inherit" : "ignore",
           options.verbose ? "inherit" : "ignore",
         ],
         cwd: path.project.resolve("ios"),
-      });
+      };
+
+      if (isCI) {
+        await spawnAsync("bundle", ["exec", "pod", "install"], execOpts);
+      } else {
+        await spawnAsync("pod", ["install"], execOpts);
+      }
     },
     "cocoapods",
     "platform::ios"
