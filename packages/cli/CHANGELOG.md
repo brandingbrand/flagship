@@ -1,5 +1,11 @@
 # @brandingbrand/code-cli
 
+## 13.1.1
+
+### Patch Changes
+
+- pin xcodeproj gem to 1.25.0 as 1.26.0 has a default setting that breaks react-native setup
+
 ## 13.1.0
 
 ### Minor Changes
