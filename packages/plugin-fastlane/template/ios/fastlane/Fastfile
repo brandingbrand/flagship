@@ -1,6 +1,6 @@
 default_platform :ios
 
-# make a provisioned build and upload to appcenter
+# make a provisioned build
 lane :build do
   keychain_password = SecureRandom.uuid
   keychain_name = 'ios-build.keychain'
@@ -57,7 +57,7 @@ lane :compile do
 end
 
 <% if(codePluginFastlane.plugin && codePluginFastlane.plugin.ios && codePluginFastlane.plugin.ios.appCenter) { -%>
-lane :increment_build do
+lane :increment_build_appcenter do
   begin
     version = appcenter_fetch_version_number(
         owner_name: "<%= codePluginFastlane.plugin.ios.appCenter.organization %>",
@@ -78,7 +78,7 @@ end
 
 <% if(codePluginFastlane.plugin && codePluginFastlane.plugin.ios && codePluginFastlane.plugin.ios.appCenter) { -%>
 lane :appcenter do
-  increment_build
+  increment_build_appcenter
 
   build
 
@@ -89,4 +89,42 @@ lane :appcenter do
     destinations: "<%= codePluginFastlane.plugin.ios.appCenter.destinations %>"
   )
 end
+<% } -%>
+
+<% if(codePluginFastlane.plugin && codePluginFastlane.plugin.ios && codePluginFastlane.plugin.ios.firebase) { -%>
+lane :increment_build_firebase do
+  begin
+    version = firebase_app_distribution_get_latest_release(
+      app: "<%= codePluginFastlane.plugin.ios.firebase.appId %>",
+      service_credentials_json_data: ENV["GOOGLE_SERVICE_CREDENTIALS"],
+    )
+
+    if version[:buildVersion]
+      build_number = increment_build_number(
+        build_number: version[:buildVersion].to_i + 1
+      )
+      puts "Fastlane: updated build number to #{build_number}"
+    end
+  rescue StandardError => e
+    puts "Fastlane: did not find any applicable versions for 'firebase_app_distribution_get_latest_release"
+    puts "Fastlane: #{e.message}"
+  end
+end
+<% } -%>
+
+<% if(codePluginFastlane.plugin && codePluginFastlane.plugin.ios && codePluginFastlane.plugin.ios.firebase) { -%>
+
+lane :firebase do
+  increment_build_firebase
+
+  build
+
+  firebase_app_distribution(
+    app: "<%= codePluginFastlane.plugin.ios.firebase.appId %>",
+    service_credentials_json_data: ENV["GOOGLE_SERVICE_CREDENTIALS"],
+    release_notes: ENV["FIREBASE_DISTRIBUTE_RELEASE_NOTES"],
+    groups: "<%= codePluginFastlane.plugin.ios.firebase.groups %>"
+  )
+end
+
 <% } -%>
