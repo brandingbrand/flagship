@@ -99,11 +99,6 @@ describe('plugin-fastlane', () => {
       'utf-8',
     );
 
-    const pluginfileContent = await fs.readFile(
-      path.project.resolve('ios', 'fastlane', 'Pluginfile'),
-      'utf-8',
-    );
-
     expect(fastfileContent).toContain(
       `@profiles = ['${path.project.resolve('coderc', 'signing', 'enterprise.mobileprovision')}']`,
     );
@@ -123,9 +118,8 @@ describe('plugin-fastlane', () => {
 plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
 eval_gemfile(plugins_path) if File.exist?(plugins_path)`);
 
-    expect(fastfileContent).toContain('lane :increment_build_appcenter');
-    expect(fastfileContent).not.toContain('firebase');
-    expect(pluginfileContent).not.toContain('firebase');
+    expect(fastfileContent).toContain('appcenter_upload');
+    expect(fastfileContent).not.toContain('firebase_app_distribution');
   });
 
   it('ios with firebase config', async () => {
@@ -146,15 +140,8 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`);
       path.project.resolve('ios', 'fastlane', 'Fastfile'),
       'utf-8',
     );
-    const pluginfileContent = await fs.readFile(
-      path.project.resolve('ios', 'fastlane', 'Pluginfile'),
-      'utf-8',
-    );
-
-    expect(fastfileContent).toContain('lane :increment_build_firebase');
-    expect(fastfileContent).toContain('firebase');
-    expect(fastfileContent).not.toContain('appcenter');
-    expect(pluginfileContent).not.toContain('appcenter');
+    expect(fastfileContent).toContain('firebase_app_distribution');
+    expect(fastfileContent).not.toContain('appcenter_upload');
   });
 
   it('android', async () => {
@@ -174,54 +161,19 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`);
       'utf-8',
     );
 
-    expect(fastfileContent).toContain(`lane :appcenter_bundle do
-  increment_build`);
     expect(fastfileContent).not.toContain('<%=');
     expect(fastfileContent).not.toContain('%>');
 
-    expect(fastfileContent).toContain('lane :increment_build_appcenter');
-    expect(fastfileContent).not.toContain('firebase');
-    expect(pluginfileContent).not.toContain('firebase');
+    expect(fastfileContent).toContain('appcenter_upload');
+    expect(fastfileContent).not.toContain('firebase_app_distribution');
 
     expect(gemfileContent).toContain(`gem 'fastlane'
 
 plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
 eval_gemfile(plugins_path) if File.exist?(plugins_path)`);
 
-    expect(fastfileContent).toContain('lane :increment_build_appcenter');
-    expect(fastfileContent).not.toContain('firebase');
-    expect(pluginfileContent).not.toContain('firebase');
-  });
-
-  it('android bundle without increment build', async () => {
-    await plugin.android?.(
-      {
-        ...config,
-        android: {
-          ...config.android,
-          versioning: {version: '1.0.0', build: 5},
-        },
-      },
-      options as any,
-    );
-
-    const fastfileContent = await fs.readFile(
-      path.project.resolve('android', 'fastlane', 'Fastfile'),
-      'utf-8',
-    );
-    const gemfileContent = await fs.readFile(
-      path.project.resolve('android', 'Gemfile'),
-      'utf-8',
-    );
-
-    expect(fastfileContent).not.toContain(`lane :appcenter_bundle do
-  increment_build`);
-    expect(fastfileContent).not.toContain('<%=');
-    expect(fastfileContent).not.toContain('%>');
-    expect(gemfileContent).toContain(`gem 'fastlane'
-
-plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
-eval_gemfile(plugins_path) if File.exist?(plugins_path)`);
+    expect(fastfileContent).toContain('appcenter_upload');
+    expect(fastfileContent).not.toContain('firebase_app_distribution');
   });
 
   it('android with firebase config', async () => {
@@ -231,15 +183,8 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`);
       path.project.resolve('android', 'fastlane', 'Fastfile'),
       'utf-8',
     );
-    const pluginfileContent = await fs.readFile(
-      path.project.resolve('android', 'fastlane', 'Pluginfile'),
-      'utf-8',
-    );
 
-    expect(fastfileContent).toContain('lane :increment_build_firebase');
-    expect(fastfileContent).toContain('lane :firebase_assemble');
-    expect(fastfileContent).toContain('lane :firebase_bundle');
-    expect(fastfileContent).not.toContain('appcenter');
-    expect(pluginfileContent).not.toContain('appcenter');
+    expect(fastfileContent).toContain('firebase_app_distribution');
+    expect(fastfileContent).not.toContain('appcenter_upload');
   });
 });

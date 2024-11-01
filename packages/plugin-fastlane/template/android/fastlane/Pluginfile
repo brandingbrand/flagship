@@ -2,10 +2,5 @@
 #
 # Ensure this file is checked in to source control!
 
-<% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.appCenter) { -%>
 gem 'fastlane-plugin-appcenter'
-<% } -%>
-
-<% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.firebase) { -%>
 gem 'fastlane-plugin-firebase_app_distribution'
-<% } -%>
