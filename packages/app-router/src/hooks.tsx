@@ -83,9 +83,6 @@ export function useModal<T, U>() {
   }
 
   return {
-    // The data passed to the modal, cast to the type T
-    data: state.data as T,
-
     // A function to resolve the modal with a result of type U
     resolve: state.resolve(componentId) as (result: U) => void,
 
@@ -238,33 +235,6 @@ export function useNavigator() {
   }
 
   /**
-   * Converts a URL path or full URL string to a `URL` object.
-   *
-   * If the input string does not contain a protocol, it prepends the default `bundleId`
-   * and converts it into a complete URL. If a protocol exists, it directly converts the
-   * input into a `URL` object.
-   *
-   * @param pathOrUrl - The URL path or full URL string to be converted.
-   * @returns A `URL` object representing the complete URL.
-   *
-   * @example
-   * ```typescript
-   * const url1 = createAppURL('/path/to/resource');
-   * console.log(url1.toString()); // Outputs: app://path/to/resource
-   *
-   * const url2 = createAppURL('https://example.com/resource');
-   * console.log(url2.toString()); // Outputs: https://example.com/resource
-   * ```
-   */
-  function createAppURL(pathOrUrl: string): URLParse<any> {
-    // Check if the input string contains a protocol using a regular expression.
-    const hasProtocol = /^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(pathOrUrl);
-
-    // Convert the resulting string into a URL object and return it.
-    return urlParse(pathOrUrl, true);
-  }
-
-  /**
    * Determines if a given route is associated with a bottom tab.
    *
    * @param {Route} route - The route to check.
@@ -326,7 +296,7 @@ export function useNavigator() {
    * open('/home');
    */
   async function open(path: string, passProps = {}, options?: Options) {
-    const url = createAppURL(path);
+    const url = urlParse(path, true);
     const matchedRoute = route.routes.find(it => {
       return match(it.path)(url.pathname);
     });
@@ -361,7 +331,7 @@ export function useNavigator() {
     // Perform any associated action with the matched route
     try {
       if (matchedRoute.type === 'action') {
-        (matchedRoute as unknown as ActionRoute).action(
+        await (matchedRoute as unknown as ActionRoute).action(
           url.href,
           res ? res.params : {},
           query,
@@ -494,8 +464,8 @@ export function useNavigator() {
 
         return (
           <ComponentIdContext.Provider value={componentId}>
-            <ModalContext.Provider value={{resolve, reject, data: passProps}}>
-              <Component />
+            <ModalContext.Provider value={{resolve, reject}}>
+              <Component {...passProps} />
             </ModalContext.Provider>
           </ComponentIdContext.Provider>
         );
@@ -588,7 +558,7 @@ export function useLinking() {
     if (!url) return;
 
     try {
-      const {pathname, query} = urlParse(url, true);
+      const {pathname, query} = urlParse(url);
 
       // Navigates to the parsed URL's pathname and search params
       navigator.open(pathname + query);

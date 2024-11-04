@@ -266,7 +266,4 @@ export type ModalData<T, U> = {
    * @returns A function that rejects the modal.
    */
   reject: (componentId: string) => () => void;
-
-  /** The data passed to the modal component. */
-  data: T;
 };
