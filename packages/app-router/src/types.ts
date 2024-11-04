@@ -3,30 +3,25 @@ import URLParse from 'url-parse';
 
 /**
  * Represents the main router configuration object.
+ *
+ * The Router type defines the structure of the routing configuration
+ * used in the application, specifying the routes, an optional provider
+ * for context, and an optional function that is called when the app is launched.
  */
 export type Router = {
-  /**
-   * Array of routes to be registered with the router.
-   *
-   * These routes define the various paths and navigation options
-   * for the application.
-   */
+  /** An array of routes defined in the application. */
   routes: IndexRoute[];
 
   /**
-   * Optional provider component that wraps the application.
-   *
-   * If provided, this component will be used to wrap the entire app,
-   * useful for providing context or global state.
+   * An optional React component that acts as a provider for context.
+   * This can be used to provide state or functionality to the routing
+   * mechanism or child components.
    */
   Provider?: React.ComponentType<any>;
 
   /**
-   * Optional callback that is executed when the app is launched.
-   *
-   * This function can perform initialization tasks like setting up
-   * resources, loading configurations, etc. It returns a promise that
-   * resolves when the app is fully ready.
+   * An optional function that is called when the application is launched.
+   * This function may return a promise to perform any asynchronous initialization.
    */
   onAppLaunched?: () => Promise<void>;
 };
@@ -34,33 +29,26 @@ export type Router = {
 /**
  * Provides control flow for guarding navigation.
  *
- * This object is passed to the `Guard` function to handle navigation
- * actions such as canceling the navigation, redirecting to a different
- * path, or displaying a modal.
+ * The Next type defines the methods available for controlling the navigation
+ * flow when guards are invoked. This includes the ability to cancel navigation,
+ * redirect to a different path, and show a modal component.
  */
 export type Next = {
-  /**
-   * Cancels the current navigation process.
-   */
+  /** Cancels the current navigation action. */
   cancel: () => void;
 
   /**
-   * Redirects the user to a different path.
-   *
-   * @param path - The target URL or path to redirect to.
+   * Redirects to a specified path.
+   * @param path The path to redirect to.
    */
   redirect: (path: string) => void;
 
   /**
-   * Displays a modal component.
-   *
-   * @template T - The type of data to pass to the modal.
-   * @template U - The type of data the modal resolves to.
-   *
-   * @param Component - The React component to display as a modal.
-   * @param data - The data to pass to the modal component.
-   * @param options - Navigation options for configuring the modal display.
-   * @returns A promise that resolves when the modal is dismissed.
+   * Shows a modal with the specified component, passing data and options.
+   * @param Component The React component to display in the modal.
+   * @param data The data to pass to the modal component.
+   * @param options Navigation options for the modal.
+   * @returns A promise that resolves with the result from the modal.
    */
   showModal: <T, U>(
     Component: React.ComponentType,
@@ -70,143 +58,133 @@ export type Next = {
 };
 
 /**
- * Represents a guard function that handles navigation logic.
+ * Represents a guard function for navigation logic.
  *
- * Guards are invoked before navigating to a route, allowing for
- * tasks like authentication checks, data fetching, or route validation.
+ * Guards are functions that determine whether a navigation action should
+ * proceed. They receive information about the target and current routes
+ * and provide control over the navigation flow.
  *
- * @param to - The target URL being navigated to.
- * @param from - The previous URL being navigated from, or undefined if none.
- * @param next - The `Next` object providing control over the navigation.
- * @returns A promise that resolves when the guard completes its task.
+ * @param to The target URL to navigate to.
+ * @param from The current URL from which the navigation is initiated, or undefined.
+ * @param next An object providing methods to control the navigation flow.
+ * @returns A promise that resolves when the guard has completed its logic.
  */
 export type Guard = (
-  to: URLParse<any>,
-  from: URLParse<any> | undefined,
+  to: URLParse<Record<string, string | undefined>>,
+  from: URLParse<Record<string, string | undefined>> | undefined,
   next: Next,
 ) => Promise<void>;
 
 /**
- * Base type for route definitions, shared across different route types.
+ * Base type for route definitions.
+ *
+ * This interface provides the common properties that all route types
+ * share, including the path, name, and optional guards.
  */
-export type RouteBase = {
-  /**
-   * The URL path associated with this route.
-   */
+interface RouteBase {
+  /** The path associated with the route. */
   path: string;
 
-  /**
-   *
-   */
+  /** The name of the route. */
   name: string;
 
-  /**
-   * Optional array of guard functions to be executed before navigating to this route.
-   */
+  /** Optional array of guard functions for this route. */
   guards?: Guard[];
+}
+
+/**
+ * Common properties for routes with components.
+ *
+ * This interface extends the RouteBase, adding properties specific to
+ * routes that render React components, such as the component itself,
+ * optional navigation options, and an error boundary component.
+ */
+interface ComponentRouteBase extends RouteBase {
+  /** The React component to render for this route. */
+  Component: React.ComponentType;
+
+  /** Optional navigation options for the route. */
+  options?: Options;
 
   /**
-   * Optional nested child routes that extend the functionality of this route.
+   * An optional error boundary component to catch errors in the child component tree.
+   */
+  ErrorBoundary?: React.ComponentClass;
+}
+
+/**
+ * Route representing a bottom tab.
+ *
+ * This route type is used for defining bottom tab navigators. It extends
+ * the ComponentRouteBase and includes options specific to bottom tab navigation.
+ */
+export type BottomTabRoute = ComponentRouteBase & {
+  /** Indicates the type of this route. */
+  type: 'bottomtab';
+
+  /** Navigation options for the bottom tab, excluding default bottomTab options. */
+  options: Omit<Options, 'bottomTab'> & {bottomTab: OptionsBottomTab};
+
+  /** Unique identifier for the stack associated with this tab. */
+  stackId: string;
+
+  /**
+   * An optional array of child routes that can be nested within this bottom tab.
    */
   children?: RouteChild[];
 };
 
 /**
- * Represents a route that is part of a bottom tab navigation.
+ * Route representing an action.
+ *
+ * This route type defines actions that can be performed in the application.
+ * It includes a function to handle the action based on the URL and parameters.
  */
-export type BottomTabRoute = RouteBase & {
-  /**
-   * A constant identifying this route as a bottom tab.
-   */
-  type: 'bottomtab';
-
-  /**
-   * Navigation options specific to this route, excluding `bottomTab` options.
-   */
-  options: Omit<Options, 'bottomTab'> & {bottomTab: OptionsBottomTab};
-
-  /**
-   * The name of this route, used for identifying and navigating to the route.
-   */
-  name: string;
-
-  /**
-   * The React component to render when this route is active.
-   */
-  Component: React.ComponentType;
-
-  /**
-   * Optional error boundary component to handle any errors in the `Component`.
-   */
-  ErrorBoundary?: React.ComponentClass;
-
-  /**
-   * Identifier for the navigation stack associated with this route.
-   *
-   * Used to distinguish between different stacks in the bottom tab navigation.
-   */
-  stackId: string;
-};
-
-/**
- * Represents a route that triggers an action instead of rendering a component.
- */
-export type ActionRoute = RouteBase & {
-  /**
-   * A constant identifying this route as an action route.
-   */
+export interface ActionRoute extends RouteBase {
+  /** Indicates the type of this route. */
   type: 'action';
 
   /**
-   * A function that performs an action when the route is navigated to.
-   *
-   * @param url - The full URL being navigated to.
-   * @param pathParams - Parameters parsed from the path.
-   * @param queryParams - Parameters parsed from the query string.
+   * The action to perform when navigating to this route.
+   * @param url The URL associated with the action.
+   * @param pathParams Parameters extracted from the URL path.
+   * @param queryParams Parameters extracted from the URL query string.
    * @returns A promise that resolves when the action is completed.
    */
   action: (
     url: string,
-    pathParams: object,
-    queryParams: object,
+    pathParams: Partial<Record<string, string | string[]>>,
+    queryParams: Record<string, string | undefined>,
   ) => Promise<void>;
-};
+
+  /**
+   * An optional array of child routes that can be nested under this action route.
+   */
+  children?: RouteChild[];
+}
 
 /**
- * Represents a route that renders a React component.
+ * Route representing a component screen.
+ *
+ * This route type is used for defining screens that render a specific React component.
+ * It includes properties for the component, navigation options, and an optional error boundary.
  */
-export type ComponentRoute = RouteBase & {
-  /**
-   * A constant identifying this route as a component route.
-   */
+export type ComponentRoute = ComponentRouteBase & {
+  /** Indicates the type of this route. */
   type: 'component';
 
   /**
-   * Optional navigation options specific to this route.
+   * An optional array of child routes that can be nested under this component route.
    */
-  options?: Options;
-
-  /**
-   * The name of this route, used for identifying and navigating to the route.
-   */
-  name: string;
-
-  /**
-   * The React component to render when this route is active.
-   */
-  Component: React.ComponentType;
-
-  /**
-   * Optional error boundary component to handle any errors in the `Component`.
-   */
-  ErrorBoundary?: React.ComponentClass;
+  children?: RouteChild[];
 };
 
 /**
- * Represents a top-level route that can either be a bottom tab, action, or component route.
+ * Defines a top-level route, excluding nested children.
  *
- * `IndexRoute` excludes child routes from `ActionRoute` and `ComponentRoute`, making it
- * suitable for defining the main navigation structure.
+ * This type is a union of route types that are valid as top-level routes
+ * in the router. It excludes the children property to ensure that only
+ * top-level routes are defined.
  */
 export type IndexRoute =
   | BottomTabRoute
@@ -214,69 +192,81 @@ export type IndexRoute =
   | Omit<ComponentRoute, 'children'>;
 
 /**
- * Represents a child route, either an action or component route.
+ * Represents a child route for nested structures.
+ *
+ * Child routes can either be action routes or component routes, allowing
+ * for a flexible structure of nested navigation.
  */
 export type RouteChild = ActionRoute | ComponentRoute;
 
 /**
- * Represents a child route, either an action or component route without children.
+ * Represents a child route without nested children.
+ *
+ * This type is a union of action and component routes, excluding the
+ * 'children' property to ensure that only top-level child routes can be
+ * defined within a parent route. It may optionally include a stack ID,
+ * which can be used to identify the stack associated with the route.
  */
-export type RouteChildWithoutChildren = {stackId?: string} & (
-  | Omit<ActionRoute, 'children'>
-  | Omit<ComponentRoute, 'children'>
-);
+export type RouteChildWithoutChildren = {
+  /**
+   * An optional identifier for the stack associated with this child route.
+   * This can be used for navigation and managing route state within the stack.
+   */
+  stackId?: string;
+} & Omit<RouteChild, 'children'>;
 
 /**
- * Represents the data structure for a modal component.
- * @template T The type of data passed to the modal.
- * @template U The type of result returned by the modal.
+ * RouteMatch definition for matching routes within the router.
+ *
+ * This interface describes the result of matching a route within the
+ * routing configuration, including the route name, path, URL, and
+ * any nested routes that are present.
+ */
+export interface RouteMatch {
+  /** The name of the matched route. */
+  name: string;
+
+  /** The path of the matched route. */
+  path: string;
+
+  /** The resolved URL for the matched route, or null if not applicable. */
+  url: string | null;
+
+  /** Additional data associated with the matched route. */
+  data: unknown;
+
+  /**
+   * An array of nested routes, excluding the Component and ErrorBoundary properties,
+   * along with a flag indicating whether the route has a component.
+   */
+  routes: (Omit<RouteChild, 'Component' | 'ErrorBoundary'> & {
+    hasComponent: boolean;
+    stackId: string;
+  })[];
+}
+
+/**
+ * Modal data for managing component modals.
+ *
+ * This type encapsulates the data required for managing modal components,
+ * including methods to resolve or reject the modal, as well as the data
+ * passed to the modal.
  */
 export type ModalData<T, U> = {
   /**
-   * A function that returns another function to resolve the modal with a result.
-   * @param componentId The unique identifier of the modal component.
-   * @returns A function that takes a result and returns it.
+   * Function to resolve the modal with the given component ID and result.
+   * @param componentId The ID of the modal component.
+   * @returns A function that takes the result to resolve the modal.
    */
   resolve: (componentId: string) => (result: U) => U;
 
   /**
-   * A function that returns another function to reject or close the modal without a result.
-   * @param componentId The unique identifier of the modal component.
-   * @returns A function that closes the modal without returning a result.
+   * Function to reject the modal with the given component ID.
+   * @param componentId The ID of the modal component.
+   * @returns A function that rejects the modal.
    */
   reject: (componentId: string) => () => void;
 
-  /**
-   * The data passed to the modal component.
-   */
+  /** The data passed to the modal component. */
   data: T;
-};
-
-export type RouteMatch = {
-  /**
-   * The name of the route, used for registration with React Native Navigation
-   */
-  name: string;
-
-  /**
-   * The path pattern associated with the route
-   */
-  path: string;
-
-  /**
-   * Type representing the URL object
-   */
-  url: string | null;
-
-  /**
-   * Type representing any data associated with the router
-   */
-  data: unknown;
-
-  /**
-   * Array of routes to be registered with the router
-   */
-  routes: (Omit<RouteChildWithoutChildren, 'Component' | 'ErrorBoundary'> & {
-    hasComponent: boolean;
-  })[];
 };
