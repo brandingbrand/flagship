@@ -8,7 +8,7 @@ import urlParse from 'url-parse';
 import type URLParse from 'url-parse';
 
 import {ComponentIdContext, ModalContext, RouteContext} from './context';
-import {ActionRoute, Guard} from './types';
+import {ActionRoute, Guard, RouteMatchRoute} from './types';
 
 /**
  * Counter used for generating unique IDs.
@@ -245,8 +245,8 @@ export function useNavigator() {
    * const isTab = isBottomTab(route);
    * console.log(isTab); // true
    */
-  function isBottomTab(route: any): boolean {
-    if (route.options?.bottomTab) {
+  function isBottomTab(route: RouteMatchRoute): boolean {
+    if ((route as any).options?.bottomTab) {
       return true;
     }
 
@@ -268,7 +268,10 @@ export function useNavigator() {
    * const index = getBottomTabIndex(routes[1], routes);
    * console.log(index); // 1
    */
-  function getBottomTabIndex(route: any, routes: any[]): number {
+  function getBottomTabIndex(
+    route: RouteMatchRoute,
+    routes: RouteMatchRoute[],
+  ): number {
     const index = routes
       .filter(it => isBottomTab(it))
       .reduce((acc, curr, index) => {

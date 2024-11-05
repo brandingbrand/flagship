@@ -1,11 +1,17 @@
-import {LayoutRoot, LayoutStack, Navigation} from 'react-native-navigation';
+import {
+  LayoutRoot,
+  LayoutStack,
+  Navigation,
+  OptionsBottomTab,
+} from 'react-native-navigation';
 import {Fragment} from 'react';
 
 import {ComponentIdContext, RouteContext} from './context';
 import {
+  ActionRoute,
   BottomTabRoute,
   ComponentRoute,
-  IndexRoute,
+  RouteChild,
   RouteChildWithoutChildren,
   Router,
 } from './types';
@@ -67,16 +73,20 @@ function createInitialLayout(): LayoutRoot {
  * // ]
  */
 function flatten(
-  routes: IndexRoute[],
+  routes: (BottomTabRoute | RouteChild)[],
   parentStackId?: string,
 ): RouteChildWithoutChildren[] {
   return routes.flatMap(route => {
     // Extract children and the rest of the route properties
-    const {children, ...routeProps} = route as any;
+    const {children, ...routeProps} = route;
 
-    // Determine the stackId to pass to child routes
-    const currentStackId =
-      (routeProps as BottomTabRoute).stackId || parentStackId;
+    const currentStackId = (function () {
+      if (route.type === 'bottomtab') {
+        return route.stackId;
+      }
+
+      return parentStackId;
+    })();
 
     // Create the flattened current route without children
     const flattenedRoute = {...routeProps, stackId: currentStackId};
@@ -145,7 +155,7 @@ function setRootLayout(
 function addBottomTabToLayout(
   layout: LayoutRoot,
   routeName: string,
-  bottomTab: any,
+  bottomTab: OptionsBottomTab,
   stackId?: string,
 ) {
   const tab: LayoutStack = {
@@ -190,16 +200,17 @@ function addBottomTabToLayout(
  * );
  */
 function renderComponent(
-  route: ComponentRoute,
-  props: any,
+  route: ComponentRoute | BottomTabRoute,
+  props: Record<string, unknown> & {
+    componentId: string;
+    APP_ROUTER_URL: string;
+  },
   Provider: React.ComponentType<any>,
   ErrorBoundary: React.ComponentType<any>,
   routes: RouteChildWithoutChildren[],
 ) {
   const {componentId, APP_ROUTER_URL, ...data} = props;
-
-  // Ensure Component is defined (safeguard against potential undefined)
-  const Component = route.Component!;
+  const {Component} = route;
 
   /**
    * Sanitizes the routes by removing `Component` and `ErrorBoundary` from the context.
@@ -211,11 +222,18 @@ function renderComponent(
    *          and an additional `hasComponent` property indicating if a component was present.
    */
   const sanitizedRoutes = routes.map(route => {
-    const {Component, ErrorBoundary, ...passRoute} = route as any;
+    if (isComponentRoute(route)) {
+      const {Component, ErrorBoundary, ...passRoute} = route;
+
+      return {
+        ...passRoute,
+        hasComponent: !!Component,
+      };
+    }
 
     return {
-      ...passRoute,
-      hasComponent: !!Component,
+      ...route,
+      hasComponent: false,
     };
   });
 
@@ -241,6 +259,21 @@ function renderComponent(
 }
 
 /**
+ * Type guard that narrows the type of the given route to
+ * ensure it is either a ComponentRoute or BottomTabRoute.
+ *
+ * @param route - The route object to be checked.
+ * @returns True if the route type is not 'action', indicating
+ * that it is a ComponentRoute or BottomTabRoute; otherwise,
+ * returns false.
+ */
+function isComponentRoute(
+  route: RouteChildWithoutChildren,
+): route is ComponentRoute | BottomTabRoute {
+  return route.type !== 'action';
+}
+
+/**
  * Registers a single route with the navigation system.
  *
  * @param {Route} route - The route definition.
@@ -262,25 +295,31 @@ function registerRoute(
   Provider: React.ComponentType,
   routes: RouteChildWithoutChildren[],
 ): void {
-  const {bottomTab, ...passOptions} = (route as any).options ?? {};
-  const {ErrorBoundary = Fragment, Component} = route as any;
+  if (!isComponentRoute(route)) return;
 
-  if (!Component) return;
+  const {bottomTab, ...passOptions} = route.options;
+  const {ErrorBoundary = Fragment, Component} = route;
 
-  // Attach options to the component
+  /**
+   * Attaches custom `options` to the component by casting to `any`.
+   *
+   * In TypeScript, `React.ComponentType<any>` only includes the type for the component itself
+   * (e.g., its props and rendering behavior) and doesn't support additional static properties,
+   * such as custom metadata like `options`.
+   *
+   * Casting `Component` to `any` bypasses TypeScript's type-checking,
+   * allowing us to attach `options` as a static property without type errors.
+   *
+   * @note This cast is necessary because TypeScript enforces that `React.ComponentType`
+   *       should only represent functional or class components without additional properties.
+   */
   (Component as any).options = passOptions;
 
   // Register the component with react-native-navigation
   Navigation.registerComponent(
     route.name,
     () => props =>
-      renderComponent(
-        route as ComponentRoute,
-        props,
-        Provider,
-        ErrorBoundary,
-        routes,
-      ),
+      renderComponent(route, props, Provider, ErrorBoundary, routes),
     () => Component,
   );
 

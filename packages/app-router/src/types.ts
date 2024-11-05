@@ -213,7 +213,7 @@ export type RouteChildWithoutChildren = {
    * This can be used for navigation and managing route state within the stack.
    */
   stackId?: string;
-} & Omit<RouteChild, 'children'>;
+} & Omit<BottomTabRoute | RouteChild, 'children'>;
 
 /**
  * RouteMatch definition for matching routes within the router.
@@ -239,11 +239,35 @@ export interface RouteMatch {
    * An array of nested routes, excluding the Component and ErrorBoundary properties,
    * along with a flag indicating whether the route has a component.
    */
-  routes: (Omit<RouteChild, 'Component' | 'ErrorBoundary'> & {
-    hasComponent: boolean;
-    stackId: string;
-  })[];
+  routes: RouteMatchRoute[];
 }
+
+/**
+ * Represents a matched route used for navigation or routing purposes.
+ *
+ * This type includes all properties from either `BottomTabRoute` or `RouteChild`,
+ * except `Component` and `ErrorBoundary`, which are omitted.
+ * Additional properties specific to the match are added for use in the routing logic.
+ *
+ * - `hasComponent` indicates whether a component is associated with this route.
+ * - `stackId` (optional) is a unique identifier for a stack of routes if needed
+ *   for hierarchical navigation, such as in nested stacks.
+ */
+export type RouteMatchRoute = Omit<
+  BottomTabRoute | RouteChild,
+  'Component' | 'ErrorBoundary'
+> & {
+  /**
+   * Indicates if the route has an associated component.
+   */
+  hasComponent: boolean;
+
+  /**
+   * An optional identifier for the navigation stack to which this route belongs.
+   * This is useful in cases where route nesting or stack-based navigation is required.
+   */
+  stackId?: string;
+};
 
 /**
  * Modal data for managing component modals.
