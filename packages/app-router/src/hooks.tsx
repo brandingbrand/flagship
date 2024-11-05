@@ -46,7 +46,7 @@ export function useRoute() {
  *
  * @throws {Error} If the hook is used outside of a `ModalContext.Provider`.
  *
- * @returns {Object} An object containing the modal's data, a `resolve` function to return a result, and a `reject` function to close the modal without returning a result.
+ * @returns {{ data: T; resolve: (result: U) => void; reject: () => void }} An object containing the modal's data, a `resolve` function to return a result, and a `reject` function to close the modal without returning a result.
  *
  * @example
  * ```typescript
@@ -151,7 +151,7 @@ export function useQueryParams() {
 /**
  * Custom hook to retrieve the router data.
  *
- * @returns {RouterDataType} The current router data.
+ * @returns {T} The current router data.
  */
 export function useRouteData<T>(): T {
   const route = useRoute();
@@ -222,8 +222,7 @@ export function useNavigator() {
           {cancel, redirect, showModal},
         );
       } catch (e) {
-        // TODO: Implement error handling logic if needed
-        console.error(e); // Optional: Log error for debugging purposes
+        throw new Error(`Guard error: ${(e as Error).message}`);
       }
     }
 
@@ -297,11 +296,11 @@ export function useNavigator() {
    */
   async function open(path: string, passProps = {}, options?: Options) {
     const url = urlParse(path, true);
-    const matchedRoute = route.routes.find(it => {
-      return match(it.path)(url.pathname);
-    });
+    const matchedRoute = route.routes.find(it => match(it.path)(url.pathname));
 
-    if (!matchedRoute) return;
+    if (!matchedRoute) {
+      throw new Error(`No route matched for path: ${path}`); // Throw error if route not found
+    }
 
     try {
       const redirect = await runGuards(
@@ -310,26 +309,12 @@ export function useNavigator() {
         matchedRoute.guards,
       );
 
-      if (redirect) {
-        await open(redirect);
-        // Break out of function since we are redirecting
-        return;
-      }
+      if (redirect) return open(redirect, passProps, options);
+      if (redirect === false) return;
 
-      if (redirect === false) {
-        // Break out of function since cancel was executed
-        return;
-      }
-    } catch (e) {
-      // Break out of function due to side-effect throwing error from a guard
-      return;
-    }
+      const res = match(matchedRoute.path)(url.pathname);
+      const {query} = urlParse(url.href, true);
 
-    const res = match(matchedRoute.path)(url.pathname);
-    const {query} = urlParse(url.href, true);
-
-    // Perform any associated action with the matched route
-    try {
       if (matchedRoute.type === 'action') {
         await (matchedRoute as unknown as ActionRoute).action(
           url.href,
@@ -337,25 +322,22 @@ export function useNavigator() {
           query,
         );
       }
+
+      if (!matchedRoute.hasComponent) return;
+
+      if (isBottomTab(matchedRoute)) {
+        return popToRoot({
+          ...options,
+          bottomTabs: {
+            currentTabIndex: getBottomTabIndex(matchedRoute, route.routes),
+          },
+        });
+      }
+
+      return push(path, passProps, options);
     } catch (e) {
-      // handle error (e.g., log it)
+      throw new Error(`Error during navigation: ${(e as Error).message}`);
     }
-
-    // If there's no associated component, return
-    if (!matchedRoute.hasComponent) return;
-
-    // If the route is a bottom tab, pop to root
-    if (isBottomTab(matchedRoute)) {
-      return popToRoot({
-        ...options,
-        bottomTabs: {
-          currentTabIndex: getBottomTabIndex(matchedRoute, route.routes),
-        },
-      });
-    }
-
-    // Otherwise, push the new route
-    return push(path, passProps, options);
   }
 
   /**
@@ -452,68 +434,77 @@ export function useNavigator() {
     data: T,
     options: Options = {},
   ): Promise<U> {
-    // Generate a unique name for the modal component.
     const name = `Modal_${idCounter}`;
     idCounter++;
 
-    // Register the modal component with React Native Navigation.
-    Navigation.registerComponent(
-      name,
-      () => props => {
-        const {componentId, resolve, reject, ...passProps} = props;
+    try {
+      Navigation.registerComponent(
+        name,
+        () => props => {
+          const {componentId, resolve, reject, ...passProps} = props;
+          return (
+            <ComponentIdContext.Provider value={componentId}>
+              <ModalContext.Provider value={{resolve, reject}}>
+                <Component {...passProps} />
+              </ModalContext.Provider>
+            </ComponentIdContext.Provider>
+          );
+        },
+        () => Component,
+      );
+    } catch (e) {
+      throw new Error(
+        `Error during modal registration: ${(e as Error).message}`,
+      );
+    }
 
-        return (
-          <ComponentIdContext.Provider value={componentId}>
-            <ModalContext.Provider value={{resolve, reject}}>
-              <Component {...passProps} />
-            </ModalContext.Provider>
-          </ComponentIdContext.Provider>
-        );
-      },
-      () => Component,
-    );
-
-    // Return a promise that resolves or rejects based on modal dismissal.
     return new Promise((res, rej) => {
-      // Define the resolve function that dismisses the modal and resolves the promise.
       function resolve(componentId: string) {
-        return (data: U) => {
-          res(data);
-
-          Navigation.dismissModal(componentId);
+        return (result: U) => {
+          res(result);
+          try {
+            Navigation.dismissModal(componentId);
+          } catch (e) {
+            throw new Error(`Error dismissing modal: ${(e as Error).message}`);
+          }
         };
       }
 
-      // Define the reject function that dismisses the modal and rejects the promise.
       function reject(componentId: string) {
         return () => {
-          rej();
-
-          Navigation.dismissModal(componentId);
+          rej(new Error('Modal was rejected'));
+          try {
+            Navigation.dismissModal(componentId);
+          } catch (e) {
+            throw new Error(`Error dismissing modal: ${(e as Error).message}`);
+          }
         };
       }
 
-      // Show the modal using React Native Navigation with the provided options.
-      Navigation.showModal({
-        stack: {
-          children: [
-            {
-              component: {
-                name,
-                passProps: {
-                  ...data,
-                  resolve,
-                  reject,
-                },
-                options: {
-                  ...((Component as any).options ?? {}),
-                  ...options,
+      try {
+        Navigation.showModal({
+          stack: {
+            children: [
+              {
+                component: {
+                  name,
+                  passProps: {
+                    ...data,
+                    resolve,
+                    reject,
+                  },
+                  options: {
+                    ...((Component as any).options ?? {}),
+                    ...options,
+                  },
                 },
               },
-            },
-          ],
-        },
-      });
+            ],
+          },
+        });
+      } catch (e) {
+        throw new Error(`Error showing modal: ${(e as Error).message}`);
+      }
     });
   }
 

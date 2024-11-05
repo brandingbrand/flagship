@@ -146,7 +146,8 @@ function setRootLayout(
  *
  * @param {LayoutRoot} layout - The current layout object.
  * @param {string} routeName - The name of the route associated with the bottom tab.
- * @param {any} bottomTab - The bottom tab configuration.
+ * @param {OptionsBottomTab} bottomTab - The bottom tab configuration.
+ * @param {string} stackId - Unique identifier for a stack within the navigation hierarchy.
  *
  * @example
  * addBottomTabToLayout(layout, 'HomeScreen', { text: 'Home' });
@@ -180,22 +181,35 @@ function addBottomTabToLayout(
 }
 
 /**
- * Renders the component for a given route.
+ * Renders a specified route component, wrapping it with an error boundary, a provider, and context providers
+ * for route and component identifiers.
  *
- * @param {Route} route - The route definition.
- * @param {any} props - The properties passed to the component.
- * @param {React.ComponentType} Provider - The React component to be used as a provider.
- * @param {Record<string, string>} routeMap - A map of route paths to route names.
- * @param {React.ComponentType} ErrorBoundary - The component to be used as an error boundary.
- * @returns {JSX.Element} The rendered component wrapped in the necessary providers.
+ * This function sanitizes the routes array to create a lighter context object, removing the `Component` and
+ * `ErrorBoundary` properties and adding a `hasComponent` flag to indicate the presence of a component.
+ * It then wraps the route's `Component` in a series of providers, including an `ErrorBoundary` for handling
+ * any runtime errors, a `Provider` for custom context, and the route-specific contexts.
+ *
+ * @param {ComponentRoute | BottomTabRoute} route - The route object to render, which includes
+ * the component to be displayed, route path, name, and any navigation options.
+ * @param {Record<string, unknown> & { componentId: string; APP_ROUTER_URL: string }} props - Props passed to the component,
+ * including `componentId` for the navigation stack and `APP_ROUTER_URL` for the current route URL.
+ * @param {React.ComponentType<any>} Provider - A React component to wrap the route component with custom context,
+ * allowing for dependency injection or state management specific to this navigation structure.
+ * @param {React.ComponentType<any>} ErrorBoundary - A React component for error handling, wrapping the component
+ * to catch any errors that occur during rendering or lifecycle events.
+ * @param {RouteChildWithoutChildren[]} routes - An array of sanitized route objects representing available routes.
+ * Each route object is stripped of its `Component` and `ErrorBoundary` properties for a leaner context object.
+ *
+ * @returns {JSX.Element} The rendered route component, wrapped with the specified error boundary, provider,
+ * and context providers to manage navigation and route data.
  *
  * @example
  * const renderedComponent = renderComponent(
  *   { path: '/home', name: 'HomeScreen', Component: HomeComponent },
- *   { componentId: 'component1', __flagship_app_router_url: 'https://example.com' },
+ *   { componentId: 'component1', APP_ROUTER_URL: 'https://example.com' },
  *   MyCustomProvider,
- *   routeMap,
- *   MyErrorBoundary
+ *   MyErrorBoundary,
+ *   routes
  * );
  */
 function renderComponent(
@@ -223,7 +237,6 @@ function renderComponent(
   const sanitizedRoutes = routes.map(route => {
     if (isComponentRoute(route)) {
       const {Component, ErrorBoundary, ...passRoute} = route;
-
       return {
         ...passRoute,
         hasComponent: !!Component,
@@ -275,23 +288,34 @@ function isComponentRoute(
 /**
  * Registers a single route with the navigation system.
  *
- * @param {Route} route - The route definition.
- * @param {LayoutRoot} layout - The current layout object.
- * @param {Record<string, string>} routeMap - A map of route paths to route names.
- * @param {React.ComponentType} Provider - The React component to be used as a provider.
+ * This function registers a route's component with `react-native-navigation`, allowing
+ * it to be used within the navigation stack. If the route has a `bottomTab` option,
+ * it will also be added to the bottom tab layout. The function also assigns custom options
+ * to the component via a TypeScript cast, enabling additional metadata to be attached to
+ * the component instance.
+ *
+ * @param {RouteChildWithoutChildren} route - The route definition object, containing details
+ * such as the route name, path, and component to render.
+ * @param {LayoutRoot} layout - The current layout object for the navigation structure. This is
+ * updated if the route has a `bottomTab` option.
+ * @param {React.ComponentType<any>} Provider - A React component that wraps the route component
+ * as a provider, allowing for dependency injection or state management specific to the route.
+ * @param {RouteChildWithoutChildren[]} routes - Array of flattened route definitions, used for
+ * navigation and context within the application.
  *
  * @example
+ * // Register a route with a provider and optional bottom tab configuration
  * registerRoute(
  *   { path: '/home', name: 'HomeScreen', Component: HomeComponent },
  *   layout,
- *   routeMap,
- *   MyCustomProvider
+ *   MyCustomProvider,
+ *   routes
  * );
  */
 function registerRoute(
   route: RouteChildWithoutChildren,
   layout: LayoutRoot,
-  Provider: React.ComponentType,
+  Provider: React.ComponentType<any>,
   routes: RouteChildWithoutChildren[],
 ): void {
   if (!isComponentRoute(route)) return;
@@ -300,14 +324,12 @@ function registerRoute(
   const {ErrorBoundary = Fragment, Component} = route;
 
   /**
-   * Attaches custom `options` to the component by casting to `any`.
+   * Attaches custom `options` to the component by casting it to `any`.
    *
-   * In TypeScript, `React.ComponentType<any>` only includes the type for the component itself
-   * (e.g., its props and rendering behavior) and doesn't support additional static properties,
-   * such as custom metadata like `options`.
-   *
-   * Casting `Component` to `any` bypasses TypeScript's type-checking,
-   * allowing us to attach `options` as a static property without type errors.
+   * In TypeScript, `React.ComponentType<any>` includes only the component's props and
+   * rendering behavior, but does not support additional static properties such as custom
+   * `options`. Casting `Component` to `any` bypasses TypeScript’s strict type-checking,
+   * allowing custom `options` to be assigned as a static property without type errors.
    *
    * @note This cast is necessary because TypeScript enforces that `React.ComponentType`
    *       should only represent functional or class components without additional properties.
@@ -331,10 +353,21 @@ function registerRoute(
 /**
  * Registers routes and sets the root layout for the application.
  *
- * @param {AppRouter} appRouter - The router configuration for the app.
- * @param {Route[]} appRouter.routes - Array of route definitions.
- * @param {Function} [appRouter.onAppLaunched] - Optional callback to be called after the app is launched.
- * @param {React.ComponentType} [appRouter.Provider=Fragment] - Optional React component to be used as a provider.
+ * This function configures the application's routing by registering each route with
+ * the navigation system and setting the root layout. It also initializes the layout
+ * structure and sets up an optional provider for context within the navigation.
+ * An optional `onAppLaunched` callback can be provided, which is called when the app
+ * completes its launch.
+ *
+ * @param {Router} appRouter - The main router configuration for the app, including routes,
+ *                             an optional launch callback, and an optional provider component.
+ * @param {RouteChildWithoutChildren[]} appRouter.routes - Array of route definitions,
+ *                                                         detailing paths, components, and options.
+ * @param {() => Promise<void>} [appRouter.onAppLaunched] - Optional async callback to be executed
+ *                                                         after the app has launched.
+ * @param {React.ComponentType<any>} [appRouter.Provider=Fragment] - Optional React component to be used as a provider,
+ *                                                                  which wraps all registered routes, allowing for
+ *                                                                  dependency injection or context.
  *
  * @example
  * register({
