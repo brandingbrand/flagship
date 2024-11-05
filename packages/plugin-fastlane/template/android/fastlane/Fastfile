@@ -18,6 +18,7 @@ lane :increment_build do
         app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",
         version: "<%- android.versioning?.version || "1.0.0" %>"
     )
+
     if version["build_number"]
       build_number = version["build_number"].to_i + 1
       sh %Q{cd .. && echo "$(awk '{sub(/versionCode [[:digit:]]+$/,"versionCode "#{build_number})}1' app/build.gradle)" > app/build.gradle && cd -}
@@ -64,6 +65,7 @@ end
 <% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.appCenter) { -%>
 lane :appcenter_assemble do
   increment_build
+
   assemble
 
   appcenter_upload(
@@ -78,6 +80,7 @@ lane :appcenter_bundle do
 <% if(!android.versioning || android.versioning.build === undefined) { -%>
   increment_build
 <% } -%>
+
   bundle
   appcenter_upload(
     owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
