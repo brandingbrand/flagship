@@ -8,7 +8,6 @@ import {Fragment} from 'react';
 
 import {ComponentIdContext, RouteContext} from './context';
 import {
-  ActionRoute,
   BottomTabRoute,
   ComponentRoute,
   RouteChild,

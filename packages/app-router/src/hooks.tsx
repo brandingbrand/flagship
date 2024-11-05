@@ -2,10 +2,7 @@ import {match} from 'path-to-regexp';
 import {useContext, useEffect} from 'react';
 import {Layout, Navigation, Options} from 'react-native-navigation';
 import {Linking} from 'react-native';
-// eslint-disable-next-line import/no-duplicates
 import urlParse from 'url-parse';
-// eslint-disable-next-line import/no-duplicates
-import type URLParse from 'url-parse';
 
 import {ComponentIdContext, ModalContext, RouteContext} from './context';
 import {ActionRoute, Guard, RouteMatchRoute} from './types';
