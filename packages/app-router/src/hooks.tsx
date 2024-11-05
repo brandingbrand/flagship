@@ -231,25 +231,6 @@ export function useNavigator() {
   }
 
   /**
-   * Determines if a given route is associated with a bottom tab.
-   *
-   * @param {Route} route - The route to check.
-   * @returns {boolean} True if the route is associated with a bottom tab, otherwise false.
-   *
-   * @example
-   * const route = { name: 'Home', Component: HomeComponent, options: { bottomTab: { text: 'Home' } } };
-   * const isTab = isBottomTab(route);
-   * console.log(isTab); // true
-   */
-  function isBottomTab(route: RouteMatchRoute): boolean {
-    if ((route as any).options?.bottomTab) {
-      return true;
-    }
-
-    return false;
-  }
-
-  /**
    * Gets the index of a bottom tab for a given route.
    *
    * @param {Route} route - The route for which to get the bottom tab index.
@@ -269,7 +250,7 @@ export function useNavigator() {
     routes: RouteMatchRoute[],
   ): number {
     const index = routes
-      .filter(it => isBottomTab(it))
+      .filter(it => it.type === 'bottomtab')
       .reduce((acc, curr, index) => {
         if (curr.name === route.name) {
           return index;
@@ -325,7 +306,7 @@ export function useNavigator() {
 
       if (!matchedRoute.hasComponent) return;
 
-      if (isBottomTab(matchedRoute)) {
+      if (matchedRoute.type === 'bottomtab') {
         return popToRoot({
           ...options,
           bottomTabs: {

@@ -249,6 +249,10 @@ function renderComponent(
     };
   });
 
+  const url =
+    APP_ROUTER_URL ||
+    (route.type === 'bottomtab' ? route.path : APP_ROUTER_URL);
+
   // Render the component wrapped with ErrorBoundary, Provider, RouterContext, and ComponentIdContext
   return (
     <ErrorBoundary>
@@ -257,7 +261,7 @@ function renderComponent(
           value={{
             path: route.path,
             name: route.name,
-            url: APP_ROUTER_URL,
+            url,
             data,
             routes: sanitizedRoutes,
           }}>
@@ -320,7 +324,7 @@ function registerRoute(
 ): void {
   if (!isComponentRoute(route)) return;
 
-  const {bottomTab, ...passOptions} = route.options;
+  const {bottomTab, ...passOptions} = route.options ?? {};
   const {ErrorBoundary = Fragment, Component} = route;
 
   /**
