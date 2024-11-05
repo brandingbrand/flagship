@@ -10,24 +10,29 @@ lane :bundle do
   gradle(task: "app:bundleRelease")
 end
 
+<% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.appCenter) { -%>
+lane :increment_build do
+  begin
+    version = appcenter_fetch_version_number(
+        owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
+        app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",
+        version: "<%- android.versioning?.version || "1.0.0" %>"
+    )
+    if version["build_number"]
+      build_number = version["build_number"].to_i + 1
+      sh %Q{cd .. && echo "$(awk '{sub(/versionCode [[:digit:]]+$/,"versionCode "#{build_number})}1' app/build.gradle)" > app/build.gradle && cd -}
+
+      puts "Fastlane: updated build number to #{build_number}"
+    end
+  rescue
+    puts "Fastlane: did not find any applicable versions for appcenter_fetch_version_number"
+  end
+end
+<% } -%>
+
 lane :increment_build_appcenter do
   <% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.appCenter) { -%>
-    begin
-      version = appcenter_fetch_version_number(
-          owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
-          app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",
-          version: "<%- android.versioning?.version || "1.0.0" %>"
-      )
-
-      if version["build_number"]
-        build_number = version["build_number"].to_i + 1
-        sh %Q{cd .. && echo "$(awk '{sub(/versionCode [[:digit:]]+$/,"versionCode "#{build_number})}1' app/build.gradle)" > app/build.gradle && cd -}
-
-        puts "Fastlane: updated build number to #{build_number}"
-      end
-    rescue
-      puts "Fastlane: did not find any applicable versions for appcenter_fetch_version_number"
-    end
+    increment_build
   <% } else { -%>
     UI.user_error!("Fastlane: Tried to increment build number with appcenter but no appcenter configuration was provided in the build configuration.")
   <% } -%>
@@ -55,7 +60,35 @@ lane :increment_build_firebase do
   <% } -%>
 end
 
-lane :distribute_internal do
+
+<% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.appCenter) { -%>
+lane :appcenter_assemble do
+  increment_build
+  assemble
+
+  appcenter_upload(
+    owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
+    app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",
+    destination_type: "<%= codePluginFastlane.plugin.android.appCenter.destinationType %>",
+    destinations: "<%= codePluginFastlane.plugin.android.appCenter.destinations %>"
+  )
+end
+
+lane :appcenter_bundle do
+<% if(!android.versioning || android.versioning.build === undefined) { -%>
+  increment_build
+<% } -%>
+  bundle
+  appcenter_upload(
+    owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
+    app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",
+    destination_type: "<%= codePluginFastlane.plugin.android.appCenter.destinationType %>",
+    destinations: "<%= codePluginFastlane.plugin.android.appCenter.destinations %>"
+  )
+end
+<% } -%>
+
+lane :distribute_package do
   assemble
 
 <% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.appCenter) { -%>
@@ -76,7 +109,7 @@ lane :distribute_internal do
 <% } -%>
 end
 
-lane :distribute_store do
+lane :distribute_bundle do
   bundle
 
 <% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.appCenter) { -%>

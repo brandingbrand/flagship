@@ -78,18 +78,6 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`,
       },
     );
 
-    // Render Pluginfile template for iOS
-    await withUTF8(
-      path.project.resolve('ios', 'fastlane', 'Pluginfile'),
-      content => {
-        return ejs.render(content, {
-          ...build,
-          ...options,
-          ...(!build.codePluginFastlane ? {codePluginFastlane: {}} : {}),
-        });
-      },
-    );
-
     // Get list of provisioning profiles files
     const files = await fs.readdir(
       path.project.resolve(build.ios.signing.profilesDir),
@@ -192,18 +180,6 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`,
     // Render Fastfile template for Android
     await withUTF8(
       path.project.resolve('android', 'fastlane', 'Fastfile'),
-      content => {
-        return ejs.render(content, {
-          ...build,
-          ...options,
-          ...(!build.codePluginFastlane ? {codePluginFastlane: {}} : {}),
-        });
-      },
-    );
-
-    // Render PluginFile template for Android
-    await withUTF8(
-      path.project.resolve('android', 'fastlane', 'Pluginfile'),
       content => {
         return ejs.render(content, {
           ...build,
