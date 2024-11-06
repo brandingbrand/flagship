@@ -1,5 +1,11 @@
 # @brandingbrand/code-cli
 
+## 12.0.1
+
+### Patch Changes
+
+- pin xcodeproj to 1.25 as 1.26 default build settings breaks react-native scripts
+
 ## 12.0.0
 
 - no changes

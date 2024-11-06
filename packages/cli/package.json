@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-cli",
-  "version": "12.0.0",
+  "version": "12.0.1",
   "description": "cli for Flagship Code applications",
   "license": "MIT",
   "repository": {
@@ -40,6 +40,7 @@
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
   "dependencies": {
+    "ci-info": "^4.0.0",
     "commander": "^9.4.1"
   },
   "peerDependencies": {

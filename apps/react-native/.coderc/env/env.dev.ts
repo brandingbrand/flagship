@@ -47,6 +47,13 @@ const dev: ENV = {
       version: '0.0.1',
       build: 1,
     },
+    gradle: {
+      projectGradle: {
+        compileSdkVersion: 34,
+        targetSdkVersion: 34,
+        buildToolsVersion: '34.0.0',
+      },
+    },
     signing: {
       keyAlias: 'androiddebugkey',
       storeFile: 'signing/example.keystore',
