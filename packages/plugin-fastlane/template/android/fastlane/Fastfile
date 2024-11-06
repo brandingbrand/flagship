@@ -32,15 +32,15 @@ end
 <% } -%>
 
 lane :increment_build_appcenter do
-  <% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.appCenter) { -%>
+<% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.appCenter) { -%>
   increment_build
-  <% } else { -%>
+<% } else { -%>
   UI.user_error!("Fastlane: Tried to increment build number with appcenter but no appcenter configuration was provided in the build configuration.")
-  <% } -%>
+<% } -%>
 end
 
 lane :increment_build_firebase do
-  <% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.firebase) { -%>
+<% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.firebase) { -%>
   begin
     version = firebase_app_distribution_get_latest_release(
       app: "<%= codePluginFastlane.plugin.android.firebase.appId %>",
@@ -56,9 +56,9 @@ lane :increment_build_firebase do
     puts "Fastlane: did not find any applicable versions for 'firebase_app_distribution_get_latest_release"
     puts "Fastlane: #{e.message}"
   end
-  <% } else { -%>
+<% } else { -%>
   UI.user_error!("Fastlane: Tried to increment build number with firebase but no firebase configuration was provided in the build configuration.")
-  <% } -%>
+<% } -%>
 end
 
 
