@@ -16,19 +16,6 @@ import {
 } from './types';
 
 /**
- * Creates the initial layout object for the application.
- *
- * @returns {LayoutRoot} The initial layout object.
- *
- * @example
- * const initialLayout = createInitialLayout();
- * console.log(initialLayout); // { root: {} }
- */
-function createInitialLayout(): LayoutRoot {
-  return {root: {}};
-}
-
-/**
  * Flattens a nested array of route objects into a flat array while preserving the `stackId`
  * of parent routes and associating it with their child routes.
  *
@@ -79,13 +66,8 @@ function flatten(
     // Extract children and the rest of the route properties
     const {children, ...routeProps} = route;
 
-    const currentStackId = (function () {
-      if (route.type === 'bottomtab') {
-        return route.stackId;
-      }
-
-      return parentStackId;
-    })();
+    const currentStackId =
+      route.type === 'bottomtab' ? route.stackId : parentStackId;
 
     // Create the flattened current route without children
     const flattenedRoute = {...routeProps, stackId: currentStackId};
@@ -386,7 +368,7 @@ function registerRoute(
  * });
  */
 function register({onAppLaunched, routes, Provider = Fragment}: Router) {
-  const layout = createInitialLayout();
+  const layout = {root: {}};
 
   const flattenedRoutes = flatten(routes);
 

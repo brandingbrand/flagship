@@ -273,8 +273,7 @@ export type RouteMatchRoute = Omit<
  * Modal data for managing component modals.
  *
  * This type encapsulates the data required for managing modal components,
- * including methods to resolve or reject the modal, as well as the data
- * passed to the modal.
+ * including methods to resolve or reject the modal.
  */
 export type ModalData<T, U> = {
   /**
