@@ -96,9 +96,14 @@ export default defineAction(async (): Promise<void> => {
    */
   if (canRunIOS(config.options)) {
     try {
-      for await (const line of execa({
+      const podInstallOut = execa({
         cwd: path.project.resolve('ios'),
-      })`pod install`) {
+      })(
+        isCI ? 'bundle' : 'pod',
+        isCI ? ['exec', 'pod', 'install'] : ['install'],
+      );
+
+      for await (const line of podInstallOut) {
         logger.debug(line);
       }
 

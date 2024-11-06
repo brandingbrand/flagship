@@ -34,7 +34,7 @@
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
-    "@brandingbrand/code-cli": "13.1.0",
+    "@brandingbrand/code-cli": "13.1.1",
     "@brandingbrand/code-cli-kit": "13.1.0",
     "@brandingbrand/code-jest-config": "*",
     "@brandingbrand/code-plugin-app-icon": "2.0.1",
