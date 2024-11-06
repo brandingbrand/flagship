@@ -1,4 +1,4 @@
-import {Options, OptionsBottomTab} from 'react-native-navigation';
+import {LayoutRoot, Options, OptionsBottomTab} from 'react-native-navigation';
 import URLParse from 'url-parse';
 
 /**
@@ -24,6 +24,40 @@ export type Router = {
    * This function may return a promise to perform any asynchronous initialization.
    */
   onAppLaunched?: () => Promise<void>;
+
+  /**
+   * Sets the root layout for the navigation system.
+   *
+   * The `setRoot` function is used to initialize and configure the root layout
+   * of the application’s navigation. This function is typically called once,
+   * usually after app launch, to define the main navigation structure.
+   *
+   * @param {LayoutRoot} layout - The root layout configuration object,
+   * which specifies the initial screen(s) and layout options for the navigation system.
+   *
+   * @returns {Promise<void>} A promise that resolves when the root layout
+   * has been successfully set, allowing for any necessary setup completion
+   * or additional configuration after navigation initialization.
+   *
+   * @example
+   * const layout: LayoutRoot = {
+   *   root: {
+   *     bottomTabs: {
+   *       children: [
+   *         { component: { name: 'HomeScreen' } },
+   *         { component: { name: 'ProfileScreen' } }
+   *       ]
+   *     }
+   *   }
+   * };
+   *
+   * function setRoot(layout) {
+   *   // do some conditional root
+   *
+   *   Navigation.setRoot(layout);
+   * }
+   */
+  setRoot?: (layout: LayoutRoot) => Promise<void>;
 };
 
 /**

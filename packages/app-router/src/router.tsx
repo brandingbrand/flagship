@@ -85,6 +85,7 @@ function flatten(
  * @param {LayoutRoot} layout - The current layout object.
  * @param {Route[]} routes - Array of route definitions.
  * @param {Function} [onAppLaunched] - Optional callback to be called after the app is launched.
+ * @param {Function} [setRoot] - Optional callback to be called when root should be set.
  *
  * @example
  * setRootLayout(layout, routes, async () => {
@@ -95,6 +96,7 @@ function setRootLayout(
   layout: LayoutRoot,
   routes: RouteChildWithoutChildren[],
   onAppLaunched?: () => Promise<void>,
+  setRoot?: (layout: LayoutRoot) => Promise<void>,
 ): void {
   // If no layout has been defined, set a default stack layout with the first route
   if (!Object.keys(layout.root).length) {
@@ -118,6 +120,8 @@ function setRootLayout(
     } catch {
       // handle the error (e.g., log it)
     }
+
+    if (setRoot) return setRoot(layout);
 
     Navigation.setRoot(layout);
   });
@@ -365,9 +369,19 @@ function registerRoute(
  *     console.log('App launched');
  *   },
  *   Provider: MyCustomProvider,
+ *   setRoot: async (layout) => {
+ *     // do some conditional root logic
+ *
+ *     Navigation.setRoot(layout);
+ *   },
  * });
  */
-function register({onAppLaunched, routes, Provider = Fragment}: Router) {
+function register({
+  onAppLaunched,
+  routes,
+  Provider = Fragment,
+  setRoot,
+}: Router) {
   const layout = {root: {}};
 
   const flattenedRoutes = flatten(routes);
@@ -376,7 +390,7 @@ function register({onAppLaunched, routes, Provider = Fragment}: Router) {
     registerRoute(route, layout, Provider, flattenedRoutes),
   );
 
-  setRootLayout(layout, flattenedRoutes, onAppLaunched);
+  setRootLayout(layout, flattenedRoutes, onAppLaunched, setRoot);
 }
 
 export {register};
