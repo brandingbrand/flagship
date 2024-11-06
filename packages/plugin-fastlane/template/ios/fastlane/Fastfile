@@ -78,9 +78,9 @@ end
 
 lane :increment_build_appcenter do
   <% if(codePluginFastlane.plugin && codePluginFastlane.plugin.ios && codePluginFastlane.plugin.ios.appCenter) { -%>
-    increment_build
+  increment_build
   <% } else { -%>
-    UI.user_error!("Fastlane: Tried to increment build number with appcenter but no appcenter configuration was provided in the build configuration.")
+  UI.user_error!("Fastlane: Tried to increment build number with appcenter but no appcenter configuration was provided in the build configuration.")
   <% } -%>
 end
 
@@ -102,24 +102,24 @@ end
 
 lane :increment_build_firebase do
   <% if(codePluginFastlane.plugin && codePluginFastlane.plugin.ios && codePluginFastlane.plugin.ios.firebase) { -%>
-    begin
-      version = firebase_app_distribution_get_latest_release(
-        app: "<%= codePluginFastlane.plugin.ios.firebase.appId %>",
-        service_credentials_json_data: ENV["GOOGLE_SERVICE_CREDENTIALS"],
-      )
+  begin
+    version = firebase_app_distribution_get_latest_release(
+      app: "<%= codePluginFastlane.plugin.ios.firebase.appId %>",
+      service_credentials_json_data: ENV["GOOGLE_SERVICE_CREDENTIALS"],
+    )
 
-      if version[:buildVersion]
-        build_number = increment_build_number(
-          build_number: version[:buildVersion].to_i + 1
-        )
-        puts "Fastlane: updated build number to #{build_number}"
-      end
-    rescue StandardError => e
-      puts "Fastlane: did not find any applicable versions for 'firebase_app_distribution_get_latest_release"
-      puts "Fastlane: #{e.message}"
+    if version[:buildVersion]
+      build_number = increment_build_number(
+        build_number: version[:buildVersion].to_i + 1
+      )
+      puts "Fastlane: updated build number to #{build_number}"
     end
+  rescue StandardError => e
+    puts "Fastlane: did not find any applicable versions for 'firebase_app_distribution_get_latest_release"
+    puts "Fastlane: #{e.message}"
+  end
   <% } else { -%>
-    UI.user_error!("Fastlane: Tried to increment build number with firebase but no firebase configuration was provided in the build configuration.")
+  UI.user_error!("Fastlane: Tried to increment build number with firebase but no firebase configuration was provided in the build configuration.")
   <% } -%>
 end
 
@@ -127,21 +127,21 @@ lane :distribute do
   build
 
   <% if(codePluginFastlane.plugin && codePluginFastlane.plugin.ios && codePluginFastlane.plugin.ios.appCenter) { -%>
-    appcenter_upload(
-      owner_name: "<%= codePluginFastlane.plugin.ios.appCenter.organization %>",
-      app_name: "<%= codePluginFastlane.plugin.ios.appCenter.appName %>",
-      destination_type: "<%= codePluginFastlane.plugin.ios.appCenter.destinationType %>",
-      destinations: "<%= codePluginFastlane.plugin.ios.appCenter.destinations %>"
-    )
+  appcenter_upload(
+    owner_name: "<%= codePluginFastlane.plugin.ios.appCenter.organization %>",
+    app_name: "<%= codePluginFastlane.plugin.ios.appCenter.appName %>",
+    destination_type: "<%= codePluginFastlane.plugin.ios.appCenter.destinationType %>",
+    destinations: "<%= codePluginFastlane.plugin.ios.appCenter.destinations %>"
+  )
   <% } -%>
 
   <% if(codePluginFastlane.plugin && codePluginFastlane.plugin.ios && codePluginFastlane.plugin.ios.firebase) { -%>
-    firebase_app_distribution(
-      app: "<%= codePluginFastlane.plugin.ios.firebase.appId %>",
-      service_credentials_json_data: ENV["GOOGLE_SERVICE_CREDENTIALS"],
-      release_notes: ENV["FIREBASE_DISTRIBUTE_RELEASE_NOTES"],
-      groups: "<%= codePluginFastlane.plugin.ios.firebase.groups %>"
-    )
+  firebase_app_distribution(
+    app: "<%= codePluginFastlane.plugin.ios.firebase.appId %>",
+    service_credentials_json_data: ENV["GOOGLE_SERVICE_CREDENTIALS"],
+    release_notes: ENV["FIREBASE_DISTRIBUTE_RELEASE_NOTES"],
+    groups: "<%= codePluginFastlane.plugin.ios.firebase.groups %>"
+  )
   <% } -%>
 end
 
