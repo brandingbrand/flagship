@@ -52,6 +52,26 @@ describe('plugin-fastlane', () => {
     },
   };
 
+  const configWithFirebase = {
+    ...config,
+    codePluginFastlane: {
+      plugin: {
+        ios: {
+          firebase: {
+            appId: '1234',
+            groups: ['IAT'],
+          },
+        },
+        android: {
+          firebase: {
+            appId: '4321',
+            groups: ['IAT'],
+          },
+        },
+      },
+    },
+  };
+
   const options = {
     release: false,
   };
@@ -97,6 +117,31 @@ describe('plugin-fastlane', () => {
 
 plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
 eval_gemfile(plugins_path) if File.exist?(plugins_path)`);
+
+    expect(fastfileContent).toContain('appcenter_upload');
+    expect(fastfileContent).not.toContain('firebase_app_distribution');
+  });
+
+  it('ios with firebase config', async () => {
+    await plugin.ios?.(configWithFirebase, options as any);
+
+    expect(
+      await fs.doesPathExist(
+        path.project.resolve('ios', 'fastlane', 'Fastfile'),
+      ),
+    ).toBeTruthy();
+    expect(
+      await fs.doesPathExist(
+        path.project.resolve('ios', 'fastlane', 'Pluginfile'),
+      ),
+    ).toBeTruthy();
+
+    const fastfileContent = await fs.readFile(
+      path.project.resolve('ios', 'fastlane', 'Fastfile'),
+      'utf-8',
+    );
+    expect(fastfileContent).toContain('firebase_app_distribution');
+    expect(fastfileContent).not.toContain('appcenter_upload');
   });
 
   it('android', async () => {
@@ -111,14 +156,19 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`);
       'utf-8',
     );
 
-    expect(fastfileContent).toContain(`lane :appcenter_bundle do
-  increment_build`);
     expect(fastfileContent).not.toContain('<%=');
     expect(fastfileContent).not.toContain('%>');
+
+    expect(fastfileContent).toContain('appcenter_upload');
+    expect(fastfileContent).not.toContain('firebase_app_distribution');
+
     expect(gemfileContent).toContain(`gem 'fastlane'
 
 plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
 eval_gemfile(plugins_path) if File.exist?(plugins_path)`);
+
+    expect(fastfileContent).toContain('appcenter_upload');
+    expect(fastfileContent).not.toContain('firebase_app_distribution');
   });
 
   it('android bundle without increment build', async () => {
@@ -150,5 +200,17 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`);
 
 plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
 eval_gemfile(plugins_path) if File.exist?(plugins_path)`);
+  });
+
+  it('android with firebase config', async () => {
+    await plugin.android?.(configWithFirebase, options as any);
+
+    const fastfileContent = await fs.readFile(
+      path.project.resolve('android', 'fastlane', 'Fastfile'),
+      'utf-8',
+    );
+
+    expect(fastfileContent).toContain('firebase_app_distribution');
+    expect(fastfileContent).not.toContain('appcenter_upload');
   });
 });

@@ -1,5 +1,17 @@
 # @brandingbrand/code-plugin-fastlane
 
+## 3.1.0
+
+### Minor Changes
+
+- Add Lanes for Firebase App Distributation Support based on build config
+  New Lanes:
+  - increment_build_appcenter - increment build version based on last App Center version
+  - increment_build_firebase - increment build version based on last Firebase version
+  - distribute (iOS) - build and upload to App Center and/or Firebase
+  - distribute_package (Android) - build and upload APK to App Center and/or Firebase
+  - distribute_bundle (Android) - build and upload AAB to App Center and/or Firebase
+
 ## 3.0.1
 
 ### Patch Changes

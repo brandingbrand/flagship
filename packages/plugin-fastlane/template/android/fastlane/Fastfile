@@ -31,6 +31,37 @@ lane :increment_build do
 end
 <% } -%>
 
+lane :increment_build_appcenter do
+<% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.appCenter) { -%>
+  increment_build
+<% } else { -%>
+  UI.user_error!("Fastlane: Tried to increment build number with appcenter but no appcenter configuration was provided in the build configuration.")
+<% } -%>
+end
+
+lane :increment_build_firebase do
+<% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.firebase) { -%>
+  begin
+    version = firebase_app_distribution_get_latest_release(
+      app: "<%= codePluginFastlane.plugin.android.firebase.appId %>",
+      service_credentials_json_data: ENV["GOOGLE_SERVICE_CREDENTIALS"]
+    )
+
+    if version[:buildVersion]
+      build_number = version[:buildVersion].to_i + 1
+      sh %Q{cd .. && echo "$(awk '{sub(/versionCode [[:digit:]]+$/,"versionCode "#{build_number})}1' app/build.gradle)" > app/build.gradle && cd -}
+      puts "Fastlane: updated build number to #{build_number}"
+    end
+  rescue StandardError => e
+    puts "Fastlane: did not find any applicable versions for 'firebase_app_distribution_get_latest_release"
+    puts "Fastlane: #{e.message}"
+  end
+<% } else { -%>
+  UI.user_error!("Fastlane: Tried to increment build number with firebase but no firebase configuration was provided in the build configuration.")
+<% } -%>
+end
+
+
 <% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.appCenter) { -%>
 lane :appcenter_assemble do
   increment_build
@@ -51,7 +82,6 @@ lane :appcenter_bundle do
 <% } -%>
 
   bundle
-
   appcenter_upload(
     owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
     app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",
@@ -60,3 +90,46 @@ lane :appcenter_bundle do
   )
 end
 <% } -%>
+
+lane :distribute_package do
+  assemble
+
+<% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.appCenter) { -%>
+  appcenter_upload(
+    owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
+    app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",
+    destination_type: "<%= codePluginFastlane.plugin.android.appCenter.destinationType %>",
+    destinations: "<%= codePluginFastlane.plugin.android.appCenter.destinations %>"
+  )
+<% } -%>
+<% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.firebase) { -%>
+  firebase_app_distribution(
+    app: "<%= codePluginFastlane.plugin.android.firebase.appId %>",
+    service_credentials_json_data: ENV["GOOGLE_SERVICE_CREDENTIALS"],
+    release_notes: ENV["FIREBASE_DISTRIBUTE_RELEASE_NOTES"],
+    groups: "<%= codePluginFastlane.plugin.android.firebase.groups %>"
+  )
+<% } -%>
+end
+
+lane :distribute_bundle do
+  bundle
+
+<% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.appCenter) { -%>
+  appcenter_upload(
+    owner_name: "<%= codePluginFastlane.plugin.android.appCenter.organization %>",
+    app_name: "<%= codePluginFastlane.plugin.android.appCenter.appName %>",
+    destination_type: "<%= codePluginFastlane.plugin.android.appCenter.destinationType %>",
+    destinations: "<%= codePluginFastlane.plugin.android.appCenter.destinations %>"
+  )
+<% } -%>
+<% if(codePluginFastlane.plugin && codePluginFastlane.plugin.android && codePluginFastlane.plugin.android.firebase) { -%>
+  firebase_app_distribution(
+    app: "<%= codePluginFastlane.plugin.android.firebase.appId %>",
+    service_credentials_json_data: ENV["GOOGLE_SERVICE_CREDENTIALS"],
+    release_notes: ENV["FIREBASE_DISTRIBUTE_RELEASE_NOTES"],
+    android_artifact_type: "AAB",
+    groups: "<%= codePluginFastlane.plugin.android.firebase.groups %>"
+  )
+<% } -%>
+end
