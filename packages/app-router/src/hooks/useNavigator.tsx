@@ -1,11 +1,12 @@
+import URLParse from 'url-parse';
 import {match} from 'path-to-regexp';
-import {useContext, useEffect} from 'react';
 import {Layout, Navigation, Options} from 'react-native-navigation';
-import {Linking} from 'react-native';
-import urlParse from 'url-parse';
 
-import {ComponentIdContext, ModalContext, RouteContext} from './context';
-import {ActionRoute, Guard, RouteMatchRoute} from './types';
+import {ComponentIdContext, ModalContext} from '../context';
+import type {ActionRoute, Guard, RouteMatchRoute} from '../types';
+
+import {useComponentId} from './useComponentId';
+import {useRoute} from './useRoute';
 
 /**
  * Counter used for generating unique IDs.
@@ -17,147 +18,7 @@ import {ActionRoute, Guard, RouteMatchRoute} from './types';
  * @type {number}
  * @default 0
  */
-let idCounter = 0;
-
-/**
- * Custom hook to access the Router context.
- *
- * @returns {RouterContextType} The current router state from the RouterContext.
- * @throws Will throw an error if the hook is used outside of a RouterContext.Provider.
- */
-export function useRoute() {
-  const state = useContext(RouteContext);
-
-  if (!state) {
-    throw new Error(
-      'useRoute must be used inside a AppRouterURLContext.Provider',
-    );
-  }
-
-  return state;
-}
-
-/**
- * Hook to interact with a modal's state within the context of a `ModalContext.Provider`.
- * Provides access to the modal's data and functions to resolve or reject the modal.
- *
- * @template T - The type of the data passed to the modal.
- * @template U - The type of the result returned when the modal is resolved.
- *
- * @throws {Error} If the hook is used outside of a `ModalContext.Provider`.
- *
- * @returns {{ data: T; resolve: (result: U) => void; reject: () => void }} An object containing the modal's data, a `resolve` function to return a result, and a `reject` function to close the modal without returning a result.
- *
- * @example
- * ```typescript
- * // Using useModal in a component
- * const { data, resolve, reject } = useModal<MyDataType, MyResultType>();
- *
- * // Access the data passed to the modal
- * console.log(data);
- *
- * // Resolve the modal with a result
- * const handleConfirm = () => {
- *   resolve({ success: true });
- * };
- *
- * // Reject the modal without returning a result
- * const handleCancel = () => {
- *   reject();
- * };
- * ```
- */
-export function useModal<T, U>() {
-  // Access the current modal state from the ModalContext
-  const state = useContext(ModalContext);
-
-  // Get the unique component ID of the modal
-  const componentId = useComponentId();
-
-  // Ensure the hook is used within a ModalContext.Provider
-  if (!state) {
-    throw new Error('useModal must be used inside a ModalContext.Provider');
-  }
-
-  return {
-    // A function to resolve the modal with a result of type U
-    resolve: state.resolve(componentId) as (result: U) => void,
-
-    // A function to reject the modal, closing it without returning a result
-    reject: state.reject(componentId) as () => void,
-  };
-}
-
-/**
- * Custom hook to access the Component ID context.
- *
- * @returns {ComponentIdContextType} The current component ID from the ComponentIdContext.
- * @throws Will throw an error if the hook is used outside of a ComponentIdContext.Provider.
- */
-export function useComponentId() {
-  const state = useContext(ComponentIdContext);
-
-  if (!state) {
-    throw new Error(
-      'useAppRouterURLContext must be used inside a ComponentIdContext.Provider',
-    );
-  }
-
-  return state;
-}
-
-/**
- * Custom hook to retrieve URL parameters matched by the route's path.
- *
- * @returns {Record<string, string>} An object containing the matched URL parameters.
- * @throws Will throw an error if no matches are found for the path parameters.
- */
-export function usePathParams() {
-  const route = useRoute();
-
-  if (!route.url) return {};
-
-  // Match the current URL pathname against the router's path pattern
-  try {
-    const {pathname} = urlParse(route.url, true);
-    const matches = match(route.path)(pathname);
-
-    if (!matches) {
-      throw new Error('no matches for path params');
-    }
-
-    // Return the matched parameters
-    return matches.params;
-  } catch (e) {
-    return {};
-  }
-}
-
-/**
- * Custom hook to retrieve search parameters from the URL.
- *
- * @returns {Record<string, string>} An object containing key-value pairs of search parameters.
- */
-export function useQueryParams() {
-  const route = useRoute();
-
-  if (!route.url) return {};
-
-  const {query} = urlParse(route.url, true);
-
-  return query;
-}
-
-/**
- * Custom hook to retrieve the router data.
- *
- * @returns {T} The current router data.
- */
-export function useRouteData<T>(): T {
-  const route = useRoute();
-
-  return route.data as T;
-}
+let idCounter: number = 0;
 
 /**
  * Custom hook to provide navigation functions for managing the component stack.
@@ -217,8 +78,8 @@ export function useNavigator() {
       try {
         // Call the guard function with the parsed paths and control functions
         await guard(
-          urlParse(toPath, true),
-          fromPath ? urlParse(fromPath, true) : undefined,
+          URLParse(toPath, true),
+          fromPath ? URLParse(fromPath, true) : undefined,
           {cancel, redirect, showModal},
         );
       } catch (e) {
@@ -276,7 +137,7 @@ export function useNavigator() {
    * open('/home');
    */
   async function open(path: string, passProps = {}, options?: Options) {
-    const url = urlParse(path, true);
+    const url = URLParse(path, true);
     const matchedRoute = route.routes.find(it => match(it.path)(url.pathname));
 
     if (!matchedRoute) {
@@ -286,7 +147,7 @@ export function useNavigator() {
     try {
       const redirect = await runGuards(
         url.href,
-        route.url ? urlParse(route.url, true).href : null,
+        route.url ? URLParse(route.url, true).href : null,
         matchedRoute.guards,
       );
 
@@ -294,7 +155,7 @@ export function useNavigator() {
       if (redirect === false) return;
 
       const res = match(matchedRoute.path)(url.pathname);
-      const {query} = urlParse(url.href, true);
+      const {query} = URLParse(url.href, true);
 
       if (matchedRoute.type === 'action') {
         await (matchedRoute as unknown as ActionRoute).action(
@@ -498,65 +359,4 @@ export function useNavigator() {
     setStackRoot,
     showModal,
   };
-}
-
-/**
- * A custom hook that manages deep linking by listening for URL changes
- * and navigating accordingly using a navigator.
- *
- * @example
- * function App() {
- *   useLinking();
- *
- *   return <YourAppComponent />;
- * }
- *
- * // This hook will automatically handle incoming deep links and navigate
- * // based on the URL, such as `yourapp://path?query=param`.
- */
-export function useLinking() {
-  const navigator = useNavigator();
-
-  /**
-   * Handles the URL passed from deep linking and navigates to the correct screen.
-   *
-   * @param {Object} params - Parameters object.
-   * @param {string | null} params.url - The URL to be processed.
-   *
-   * @example
-   * callback({ url: 'yourapp://profile?user=123' });
-   */
-  function callback({url}: {url: string | null}) {
-    if (!url) return;
-
-    try {
-      const {pathname, query} = urlParse(url);
-
-      // Navigates to the parsed URL's pathname and search params
-      navigator.open(pathname + query);
-    } catch (e) {
-      // Handle the error (e.g., log it)
-    }
-  }
-
-  useEffect(() => {
-    // Check the initial URL when the app is launched
-    (async function () {
-      try {
-        const url = await Linking.getInitialURL();
-
-        callback({url});
-      } catch (e) {
-        // Handle the error (e.g., log it)
-      }
-    })();
-
-    // Listen for any URL events and handle them with the callback
-    const subscription = Linking.addEventListener('url', callback);
-
-    // Cleanup the event listener when the component unmounts
-    return () => {
-      subscription.remove();
-    };
-  }, []);
 }
