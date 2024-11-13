@@ -253,51 +253,71 @@ export function useNavigator() {
   }
 
   /**
-   * Displays a modal with the specified component and data, and returns a promise
+   * Displays a modal with the specified React component and data, and returns a promise
    * that resolves when the modal is dismissed.
    *
-   * @template T - The type of data passed to the modal.
-   * @template U - The type of data returned when the modal is resolved.
+   * @template T - The type of data passed to the modal component as props.
+   * @template U - The type of data returned when the modal resolves (typically from `resolve`).
    *
-   * @param Component - The React component to render inside the modal.
-   * @param data - The data to pass to the modal component.
-   * @param options - Additional options for displaying the modal.
+   * @param Component - The React component to render inside the modal. This component must have an optional `modalId` property, which is assigned automatically if not provided.
+   * @param data - The data of type `T` to pass as props to the modal component.
+   * @param options - Additional modal display options, including animations, styles, and other navigation options.
    *
-   * @returns A promise that resolves with the data returned from the modal when it's dismissed.
+   * @returns A promise that resolves with the data of type `U` returned from the modal when it is dismissed or rejects if the modal is closed without a result.
+   *
+   * @throws Will throw an error if the modal component fails to register or display, or if an error occurs during dismissal.
    *
    * @example
    * ```typescript
-   * const result = await showModal<MyComponentProps, ResultType>(MyComponent, { prop1: 'value' }, { modalOptions: true });
+   * interface MyComponentProps {
+   *   prop1: string;
+   * }
+   * interface ResultType {
+   *   resultKey: string;
+   * }
+   *
+   * const result = await showModal<MyComponentProps, ResultType>(
+   *   MyComponent,
+   *   { prop1: 'value' },
+   *   { modalOptions: { animated: true } }
+   * );
    * console.log('Modal result:', result);
    * ```
+   *
+   * @remarks
+   * - The function registers the `Component` with `Navigation` if it is not already registered by checking `modalId`.
+   * - It uses `Navigation.showModal` to display the modal with the provided options and data, and wraps the component in `ModalContext` for handling resolution and rejection.
+   * - Upon dismissal, the modal resolves or rejects based on user interaction or the component’s internal logic.
    */
   async function showModal<T, U>(
-    Component: React.ComponentType,
+    Component: React.ComponentType & {modalId?: string},
     data: T,
     options: Options = {},
   ): Promise<U> {
-    const name = `Modal_${idCounter}`;
-    idCounter++;
+    if (!Component.modalId) {
+      Component.modalId = `Modal_${idCounter}`;
+      idCounter++;
 
-    try {
-      Navigation.registerComponent(
-        name,
-        () => props => {
-          const {componentId, resolve, reject, ...passProps} = props;
-          return (
-            <ComponentIdContext.Provider value={componentId}>
-              <ModalContext.Provider value={{resolve, reject}}>
-                <Component {...passProps} />
-              </ModalContext.Provider>
-            </ComponentIdContext.Provider>
-          );
-        },
-        () => Component,
-      );
-    } catch (e) {
-      throw new Error(
-        `Error during modal registration: ${(e as Error).message}`,
-      );
+      try {
+        Navigation.registerComponent(
+          Component.modalId,
+          () => props => {
+            const {componentId, resolve, reject, ...passProps} = props;
+            return (
+              <ComponentIdContext.Provider value={componentId}>
+                <ModalContext.Provider value={{resolve, reject}}>
+                  <Component {...passProps} />
+                </ModalContext.Provider>
+              </ComponentIdContext.Provider>
+            );
+          },
+          () => Component,
+        );
+      } catch (e) {
+        throw new Error(
+          `Error during modal registration: ${(e as Error).message}`,
+        );
+      }
     }
 
     return new Promise((res, rej) => {
@@ -323,13 +343,18 @@ export function useNavigator() {
         };
       }
 
+      if (!Component.modalId)
+        throw Error(
+          'Error showing modal: not tagged correctly with modalId or failed to register.',
+        );
+
       try {
         Navigation.showModal({
           stack: {
             children: [
               {
                 component: {
-                  name,
+                  name: Component.modalId,
                   passProps: {
                     ...data,
                     resolve,
