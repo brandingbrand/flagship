@@ -12,9 +12,8 @@
   },
   "types": "src/index.ts",
   "dependencies": {
-    "parse-url": "^9.2.0",
-    "path-to-regexp": "^7.1.0",
-    "react-native-url-polyfill": "^2.0.0"
+    "path-to-regexp": "^8.1.0",
+    "url-parse": "^1.5.10"
   },
   "peerDependencies": {
     "react": "*",
@@ -25,8 +24,7 @@
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/eslint": "^8.56.1",
-    "eslint": "^8.56.0",
-    "tsup": "^8.0.1",
+    "@types/url-parse": "^1.4.11",
     "typescript": "^5.3.3",
     "react": "18.2.0",
     "react-native": "^0.73.9",
