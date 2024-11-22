@@ -82,9 +82,9 @@ For more detailed guidance and information, please refer to the [Flagship Code C
 
 ### Build Configuration
 
-Depending on the plugin, there might be additional configuration required. Regarding the `plugin-fastlane`, there's an optional additional build configuration feature available to extend your Fastlane setup. Presently, the only extension supported is for AppCenter uploads. Providing the AppCenter configuration will prompt the plugin to update your Fastlane setup accordingly.
+Depending on the plugin, there might be additional configuration required. Regarding the `plugin-fastlane`, there's an optional additional build configuration feature available to extend your Fastlane setup. Presently, the only extensions supported are for uploads to AppCenter and/or Firebase App Distribution. Providing configuration for either services will prompt the plugin to update your Fastlane setup accordingly.
 
-For the purpose of illustration, the `build.internal.ts` configuration shall be presented as follows if you want to include AppCenter uploads:
+For the purpose of illustration, the `build.internal.ts` configuration shall be presented as follows if you want to include both AppCenter and Firebase App Distribution uploads:
 
 ```ts title="build.internal.ts"
 import { defineBuild } from "@brandingbrand/code-cli-kit";
@@ -108,6 +108,10 @@ export default defineBuild<CodePluginFastlane>({
           destinationType: "group",
           destinations: ["iat"],
         },
+        firebase: {
+          appId: '1234',
+          groups: ['iat'],
+        },
       },
       android: {
         appCenter: {
@@ -115,6 +119,10 @@ export default defineBuild<CodePluginFastlane>({
           appName: "MyApp-Android",
           destinationType: "group",
           destinations: ["iat"],
+        },
+        firebase: {
+          appId: '4321',
+          groups: ['iat'],
         },
       },
     },
@@ -164,6 +172,26 @@ _required_
 
 Array of distribution destinations.
 
+##### `codePluginFastlane.plugin.ios.firebase`
+
+#### `FirebaseIOS`
+
+###### `appId`
+
+**type:** `"string"
+
+_required_
+
+The Firebase app id.
+
+###### `groups`
+
+**type:** `string[]`
+
+_required_
+
+Array of distribution groups.
+
 ##### `codePluginFastlane.plugin.android.appCenter`
 
 **type:** [AppCenterAndroid](#appcenterandroid)
@@ -204,6 +232,26 @@ _required_
 
 Array of distribution destinations.
 
+##### `codePluginFastlane.plugin.android.firebase`
+
+#### `FirebaseAndroid`
+
+###### `appId`
+
+**type:** `"string"
+
+_required_
+
+The Firebase app id.
+
+###### `groups`
+
+**type:** `string[]`
+
+_required_
+
+Array of distribution groups.
+
 :::note
-If you don't need AppCenter then do not include the `codePluginFastlane` configuration.
+If you don't need AppCenter or Firebase App Distribution then do not include the `codePluginFastlane` configuration.
 :::
