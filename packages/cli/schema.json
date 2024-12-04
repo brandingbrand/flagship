@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Flagship Code Commands Configuration",
+  "description": "Schema for defining custom commander options in flagship-code.commands.json",
+  "type": "object",
+  "properties": {
+    "options": {
+      "type": "array",
+      "description": "An array of custom options to be dynamically added to commander commands",
+      "items": {
+        "type": "object",
+        "properties": {
+          "flags": {
+            "type": "string",
+            "description": "The flag syntax for the option, following commander conventions (e.g., '--flag <value>').",
+            "pattern": "^--[a-zA-Z0-9\\-_]+(\\s<[a-zA-Z0-9\\-_]+>|\\s\\[[a-zA-Z0-9\\-_]+\\])?$",
+            "examples": [
+              "--custom-flag <value>",
+              "--enable-feature",
+              "--mode [type]"
+            ],
+            "minLength": 2
+          },
+          "description": {
+            "type": "string",
+            "description": "A brief description of the option, including the expected value format or type.",
+            "minLength": 1,
+            "examples": [
+              "Specifies the initial environment to use, e.g., 'development', 'staging', or 'production'.",
+              "Defines the path to the environments directory.",
+              "A comma-separated list of environments to hide."
+            ]
+          },
+          "example": {
+            "type": "string",
+            "description": "A concrete example showing how to use the option.",
+            "examples": [
+              "--app-env-initial development",
+              "--app-env-dir ./config/environments",
+              "--app-env-hide staging,test"
+            ]
+          },
+          "defaultValue": {
+            "description": "The default value for the option if it is not specified by the user.",
+            "anyOf": [
+              {"type": "string"},
+              {"type": "number"},
+              {"type": "boolean"},
+              {"type": "null"}
+            ]
+          },
+          "choices": {
+            "type": "array",
+            "description": "Restrict the option's possible values to a predefined set.",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true,
+            "examples": [["debug", "release", "test"]]
+          },
+          "required": {
+            "type": "boolean",
+            "description": "Indicates whether the option is mandatory.",
+            "default": false
+          }
+        },
+        "required": ["flags", "description"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["options"],
+  "additionalProperties": false
+}

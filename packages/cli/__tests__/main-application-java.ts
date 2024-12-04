@@ -1,5 +1,5 @@
 /**
- * @jest-environment-options {"requireTemplate": true}
+ * @jest-environment-options {"requireTemplate": true, "fixtures": "project-pbxproj_fixtures"}
  */
 
 /// <reference types="@brandingbrand/code-jest-config" />
