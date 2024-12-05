@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-jest-config",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "files": [
     "build",
@@ -17,6 +17,9 @@
   "types": "./index.d.ts",
   "dependencies": {
     "ts-jest": "^29.1.2"
+  },
+  "peerDependencies": {
+    "@brandingbrand/code-cli": "^13.1.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
