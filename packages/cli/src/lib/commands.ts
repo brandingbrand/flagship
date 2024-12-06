@@ -4,6 +4,11 @@ import {cwd} from 'process';
 import {Command, Option} from 'commander';
 import {glob} from 'glob';
 import findNodeModules from 'find-node-modules';
+import Ajv from 'ajv';
+
+import schema from '../../schema.json';
+
+const ajv = new Ajv();
 
 /**
  * Interface for the configuration options in the JSON file.
@@ -75,7 +80,17 @@ function findConfigFiles() {
 function parseConfigFile(configPath: string): ConfigFile | null {
   try {
     const fileContents = fs.readFileSync(configPath, 'utf8');
-    return JSON.parse(fileContents) as ConfigFile;
+    const json = JSON.parse(fileContents) as ConfigFile;
+
+    const validate = ajv.compile(schema);
+    const valid = validate(json);
+
+    if (!valid)
+      throw Error(
+        `ValidationError: ${CONFIG_FILE_NAME} does not conform to the json schema.`,
+      );
+
+    return json;
   } catch (error) {
     console.error(`Failed to parse ${configPath}:`, (error as Error).message);
     return null;
