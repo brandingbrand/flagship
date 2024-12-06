@@ -1,0 +1,44 @@
+{
+  "name": "@brandingbrand/code-app-env",
+  "version": "1.0.0",
+  "description": "Flagship App Env",
+  "license": "MIT",
+  "homepage": "#",
+  "author": "Chris Herman",
+  "main": "src/index",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build:babel": "tsc --project tsconfig.babel.json",
+    "build:metro": "tsc --project tsconfig.metro.json"
+  },
+  "create-react-native-library": {
+    "type": "module-legacy",
+    "languages": "kotlin-swift",
+    "version": "0.40.0"
+  },
+  "types": "src/index",
+  "dependencies": {
+    "cosmiconfig": "^9.0.0"
+  },
+  "peerDependencies": {
+    "@brandingbrand/react-native-app-restart": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@babel/core": "7.25.2",
+    "@brandingbrand/react-native-app-restart": "^0.4.0",
+    "@react-native-async-storage/async-storage": "^1.24.0",
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/babel__core": "^7.20.5",
+    "@types/node": "^22.3.0",
+    "@types/react": "18.2.6",
+    "react-native": "0.73.11",
+    "react-native-sensitive-info": "^5.5.8",
+    "react": "18.2.0",
+    "typescript": "^5.5.4"
+  }
+}

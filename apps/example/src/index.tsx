@@ -1,9 +1,11 @@
 import {register} from '@brandingbrand/code-app-router';
+import {DevMenu} from '@brandingbrand/code-app-env';
 
 import assets from './assets';
 import HelloWorldModal from './components/HelloWorldModal';
 
 register({
+  Provider: DevMenu,
   routes: [
     {
       type: 'bottomtab',
