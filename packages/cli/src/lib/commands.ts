@@ -4,7 +4,6 @@ import {cwd} from 'process';
 import {Command, Option} from 'commander';
 import {glob} from 'glob';
 import findNodeModules from 'find-node-modules';
-import {logger} from '@brandingbrand/code-cli-kit';
 
 /**
  * Interface for the configuration options in the JSON file.
@@ -144,9 +143,11 @@ export function registerCustomOptions(command: Command): void {
       option.makeOptionMandatory();
     }
 
-    option.argParser((value: string, previous: unknown) =>
-      validateChoice(value, opt.choices ?? []),
-    );
+    if (opt.choices) {
+      option.argParser((value: string, previous: unknown) =>
+        validateChoice(value, opt.choices ?? []),
+      );
+    }
 
     command.addOption(option);
   });

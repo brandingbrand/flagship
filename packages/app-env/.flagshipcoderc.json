@@ -1,5 +1,4 @@
 {
-  "$schema": "./schema.json",
   "options": [
     {
       "flags": "--option-b <value>",
