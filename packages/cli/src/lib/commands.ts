@@ -4,6 +4,7 @@ import {cwd} from 'process';
 import {Command, Option} from 'commander';
 import {glob} from 'glob';
 import findNodeModules from 'find-node-modules';
+import {logger} from '@brandingbrand/code-cli-kit';
 
 /**
  * Interface for the configuration options in the JSON file.
@@ -58,7 +59,7 @@ const CONFIG_FILE_NAME = '.flagshipcoderc.json';
  */
 function findConfigFiles() {
   const nodeModulesPaths = findNodeModules({cwd: cwd(), relative: false}).map(
-    it => `${it}/*/${CONFIG_FILE_NAME}`,
+    it => `${it}/**/${CONFIG_FILE_NAME}`,
   );
 
   return glob.sync(nodeModulesPaths, {
@@ -93,7 +94,7 @@ function loadConfigFiles(): ConfigFile {
   const aggregatedOptions: CommandOption[] = [];
 
   if (configFiles.length === 0) {
-    console.warn('No flagship-code.commands.json files found.');
+    console.warn(`No ${CONFIG_FILE_NAME} files found.`);
     return {options: []};
   }
 
