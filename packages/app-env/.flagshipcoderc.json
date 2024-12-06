@@ -1,0 +1,9 @@
+{
+  "options": [
+    {
+      "flags": "--option-b <value>",
+      "description": "An option from package-b",
+      "required": true
+    }
+  ]
+}
