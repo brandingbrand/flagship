@@ -9,7 +9,8 @@ import {
   getReactNativeVersion,
 } from '@brandingbrand/code-cli-kit';
 
-import {config, defineAction, isGenerateCommand} from '@/lib';
+import {FSAPP_DEPENDENCY, config, defineAction, isGenerateCommand} from '@/lib';
+import {hasDependency, matchesFilePatterns} from '@/lib/dependencies';
 
 /**
  * Define an action to initialize a project template.
@@ -28,6 +29,36 @@ export default defineAction(async () => {
     'templates',
     `react-native-${reactNativeVersion}`,
   );
+
+  /**
+   * Filters files during a copy operation to exclude specific native files if the `fsapp` dependency is not installed.
+   *
+   * The function checks if the current project does not have the `fsapp` dependency and matches the source file
+   * against a predefined set of patterns. If both conditions are true, the file is excluded.
+   *
+   * @param src - The source file path being processed.
+   * @returns `false` if the file should be excluded; otherwise, `true`.
+   *
+   * @example
+   * ```typescript
+   * const shouldCopy = filter('/path/to/ios/EnvSwitcher.java');
+   * console.log(shouldCopy); // true or false depending on the presence of 'fsapp' and file match
+   * ```
+   */
+  const fileFilter = (src: string): boolean => {
+    if (
+      !hasDependency(process.cwd(), FSAPP_DEPENDENCY) &&
+      matchesFilePatterns(src, [
+        'EnvSwitcher.java',
+        'EnvSwitcher.m',
+        'NativeConstants.java',
+        'NativeConstants.m',
+      ])
+    ) {
+      return false;
+    }
+    return true;
+  };
 
   // If the generate cli command was executed copy the plugin template only
   // WARNING: Consider moving this in future.
@@ -73,7 +104,9 @@ export default defineAction(async () => {
 
     // Copy over iOS template to ios directory
     await fse
-      .copy(path.resolve(templatePath, 'ios'), path.project.resolve('ios'))
+      .copy(path.resolve(templatePath, 'ios'), path.project.resolve('ios'), {
+        filter: fileFilter,
+      })
       .catch(e => {
         throw Error(
           `Error: unable to copy ios template to ios directory in project root ${path.project.resolve('ios')}, ${e.message}`,
@@ -97,6 +130,7 @@ export default defineAction(async () => {
       .copy(
         path.resolve(templatePath, 'android'),
         path.project.resolve('android'),
+        {filter: fileFilter},
       )
       .catch(e => {
         throw Error(
