@@ -1,8 +1,3 @@
-/**
- * Defines a plugin for @brandingbrand/code-cli-kit.
- * @module Plugin
- */
-
 import {
   definePlugin,
   fs,
@@ -12,88 +7,78 @@ import {
 } from '@brandingbrand/code-cli-kit';
 
 /**
- * Defines a plugin with functions for both iOS and Android platforms.
- * @alias module:Plugin
- * @param {Object} build - The build configuration object.
- * @param {Object} options - The options object.
+ * Custom error for missing required options.
+ */
+class MissingOptionError extends Error {
+  constructor(optionName: string) {
+    super(`MissingOptionError: missing ${optionName} variable`);
+    this.name = 'MissingOptionError';
+  }
+}
+
+/**
+ * Type definition for the plugin options.
+ */
+interface PluginOptions {
+  appEnvInitial: string;
+  appEnvDir: string;
+  appEnvHide?: string[];
+  release: boolean;
+}
+
+/**
+ * Helper function to validate required options.
+ */
+function validateOptions(options: PluginOptions) {
+  if (!options.appEnvInitial) {
+    throw new MissingOptionError('appEnvInitial');
+  }
+  if (!options.appEnvDir) {
+    throw new MissingOptionError('appEnvDir');
+  }
+}
+
+/**
+ * Helper function to write the environment configuration file.
+ */
+async function writeEnvConfig(options: PluginOptions) {
+  const configPath = path.join(process.cwd(), '.flagshipappenvrc');
+  const configData = {
+    hiddenEnvs: options.appEnvHide || [],
+    singleEnv: options.release,
+    dir: options.appEnvDir,
+  };
+
+  await fs.writeFile(configPath, JSON.stringify(configData, null, 2));
+}
+
+/**
+ * Defines a plugin for both iOS and Android platforms.
  */
 export default definePlugin({
-  /**
-   * Function to be executed for iOS platform.
-   * @param {Object} _build - The build configuration object for iOS.
-   * @param {Object} _options - The options object for iOS.
-   * @returns {Promise<void>} A promise that resolves when the process completes.
-   */
-  ios: async function (_build: object, options: any): Promise<void> {
-    if (!options.appEnvInitial) {
-      throw Error('MissingOptionError: missing appEnvInitial variable');
-    }
+  ios: async (_build: object, options: any): Promise<void> => {
+    validateOptions(options);
 
-    if (!options.appEnvDir) {
-      throw Error('MissingOptionError: missing appEnvDir variable');
-    }
+    await withInfoPlist(plist => ({
+      ...plist,
+      FlagshipEnv: options.appEnvInitial,
+      FlagshipDevMenu: options.release,
+    }));
 
-    await withInfoPlist(plist => {
-      return {
-        ...plist,
-        FlagshipEnv: options.appEnvInitial,
-        FlagshipDevMenu: options.release,
-      };
-    });
-
-    await fs.writeFile(
-      path.join(process.cwd(), '.flagshipappenvrc'),
-      JSON.stringify(
-        {
-          hiddenEnvs: options.appEnvHide || [],
-          singleEnv: options.release,
-          dir: options.appEnvDir,
-        },
-        null,
-        2,
-      ),
-    );
+    await writeEnvConfig(options);
   },
 
-  /**
-   * Function to be executed for Android platform.
-   * @param {Object} _build - The build configuration object for Android.
-   * @param {Object} _options - The options object for Android.
-   * @returns {Promise<void>} A promise that resolves when the process completes.
-   */
-  android: async function (_build: object, options: any): Promise<void> {
-    if (!options.appEnvInitial) {
-      throw Error('MissingOptionError: missing appEnvInitial variable');
-    }
-
-    if (!options.appEnvDir) {
-      throw Error('MissingOptionError: missing appEnvDir variable');
-    }
+  android: async (_build: object, options: any): Promise<void> => {
+    validateOptions(options);
 
     await withStrings(xml => {
-      xml.resources.string?.push({
-        $: {name: 'flagship_env'},
-        _: options.appEnvInitial,
-      });
-      xml.resources.string?.push({
-        $: {name: 'flagship_dev_menu'},
-        _: `${options.release}`,
-      });
-
+      xml.resources.string?.push(
+        {$: {name: 'flagship_env'}, _: options.appEnvInitial},
+        {$: {name: 'flagship_dev_menu'}, _: `${options.release}`},
+      );
       return xml;
     });
 
-    await fs.writeFile(
-      path.join(process.cwd(), '.flagshipappenvrc'),
-      JSON.stringify(
-        {
-          hiddenEnvs: options.appEnvHide || [],
-          singleEnv: options.release,
-          dir: options.appEnvDir,
-        },
-        null,
-        2,
-      ),
-    );
+    await writeEnvConfig(options);
   },
 });
