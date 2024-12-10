@@ -49,7 +49,7 @@ async function writeEnvConfig(options: PluginOptions) {
     dir: options.appEnvDir,
   };
 
-  await fs.writeFile(configPath, JSON.stringify(configData, null, 2));
+  await fs.writeFile(configPath, JSON.stringify(configData, null, 2) + '\n');
 }
 
 /**
