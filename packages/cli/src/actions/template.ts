@@ -53,6 +53,8 @@ export default defineAction(async () => {
         'EnvSwitcher.m',
         'NativeConstants.java',
         'NativeConstants.m',
+        'EnvSwitcherPackage.java',
+        'NativeConstantsPackage.java',
       ])
     ) {
       return false;
@@ -104,9 +106,7 @@ export default defineAction(async () => {
 
     // Copy over iOS template to ios directory
     await fse
-      .copy(path.resolve(templatePath, 'ios'), path.project.resolve('ios'), {
-        filter: fileFilter,
-      })
+      .copy(path.resolve(templatePath, 'ios'), path.project.resolve('ios'))
       .catch(e => {
         throw Error(
           `Error: unable to copy ios template to ios directory in project root ${path.project.resolve('ios')}, ${e.message}`,
@@ -130,7 +130,6 @@ export default defineAction(async () => {
       .copy(
         path.resolve(templatePath, 'android'),
         path.project.resolve('android'),
-        {filter: fileFilter},
       )
       .catch(e => {
         throw Error(
@@ -172,7 +171,7 @@ export default defineAction(async () => {
           return false;
         }
 
-        return true;
+        return fileFilter(path);
       },
     })
     .catch(e => {

@@ -6,7 +6,8 @@ import {
   string,
 } from '@brandingbrand/code-cli-kit';
 
-import {Transforms, defineTransformer} from '@/lib';
+import {FSAPP_DEPENDENCY, Transforms, defineTransformer} from '@/lib';
+import {hasDependency} from '@/lib/dependencies';
 
 /**
  * Defines a transformer for the Android project's "EnvSwitcher.java" file.
@@ -59,6 +60,8 @@ export default defineTransformer<Transforms<string>>({
     config: BuildConfig,
     options: PrebuildOptions,
   ): Promise<void> {
+    if (!hasDependency(process.cwd(), FSAPP_DEPENDENCY)) return;
+
     return withUTF8(path.android.envSwitcher(config), (content: string) => {
       return this.transforms.reduce((acc, curr) => {
         return curr(acc, config, options);
