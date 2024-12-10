@@ -6,7 +6,8 @@ import {
   string,
 } from '@brandingbrand/code-cli-kit';
 
-import {Transforms, defineTransformer} from '@/lib';
+import {FSAPP_DEPENDENCY, Transforms, defineTransformer} from '@/lib';
+import {hasDependency} from '@/lib/dependencies';
 
 /**
  * Defines a transformer for the Android project's "MainApplication.java" file.
@@ -42,6 +43,8 @@ export default defineTransformer<Transforms<string>>({
       config: BuildConfig,
       options: PrebuildOptions,
     ): string => {
+      if (!hasDependency(process.cwd(), FSAPP_DEPENDENCY)) return content;
+
       return string.replace(
         content,
         /(new PackageList.*\s+)/m,
