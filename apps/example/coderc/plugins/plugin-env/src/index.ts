@@ -5,6 +5,8 @@
 
 import {
   definePlugin,
+  fs,
+  path,
   withInfoPlist,
   withStrings,
 } from '@brandingbrand/code-cli-kit';
@@ -22,14 +24,35 @@ export default definePlugin({
    * @param {Object} _options - The options object for iOS.
    * @returns {Promise<void>} A promise that resolves when the process completes.
    */
-  ios: async function (_build: object, _options: object): Promise<void> {
+  ios: async function (_build: object, options: any): Promise<void> {
+    if (!options.appEnvInitial) {
+      throw Error('MissingOptionError: missing appEnvInitial variable');
+    }
+
+    if (!options.appEnvDir) {
+      throw Error('MissingOptionError: missing appEnvDir variable');
+    }
+
     await withInfoPlist(plist => {
       return {
         ...plist,
-        FlagshipEnv: 'prod',
-        FlagshipDevMenu: true,
+        FlagshipEnv: options.appEnvInitial,
+        FlagshipDevMenu: options.release,
       };
     });
+
+    await fs.writeFile(
+      path.join(process.cwd(), '.flagshipappenvrc'),
+      JSON.stringify(
+        {
+          hiddenEnvs: options.appEnvHide || [],
+          singleEnv: options.release,
+          dir: options.appEnvDir,
+        },
+        null,
+        2,
+      ),
+    );
   },
 
   /**
@@ -38,12 +61,39 @@ export default definePlugin({
    * @param {Object} _options - The options object for Android.
    * @returns {Promise<void>} A promise that resolves when the process completes.
    */
-  android: async function (_build: object, _options: object): Promise<void> {
-    return withStrings(xml => {
-      xml.resources.string?.push({$: {name: 'flagship_env'}, _: 'prod'});
-      xml.resources.string?.push({$: {name: 'flagship_dev_menu'}, _: 'true'});
+  android: async function (_build: object, options: any): Promise<void> {
+    if (!options.appEnvInitial) {
+      throw Error('MissingOptionError: missing appEnvInitial variable');
+    }
+
+    if (!options.appEnvDir) {
+      throw Error('MissingOptionError: missing appEnvDir variable');
+    }
+
+    await withStrings(xml => {
+      xml.resources.string?.push({
+        $: {name: 'flagship_env'},
+        _: options.appEnvInitial,
+      });
+      xml.resources.string?.push({
+        $: {name: 'flagship_dev_menu'},
+        _: `${options.release}`,
+      });
 
       return xml;
     });
+
+    await fs.writeFile(
+      path.join(process.cwd(), '.flagshipappenvrc'),
+      JSON.stringify(
+        {
+          hiddenEnvs: options.appEnvHide || [],
+          singleEnv: options.release,
+          dir: options.appEnvDir,
+        },
+        null,
+        2,
+      ),
+    );
   },
 });

@@ -1,4 +1,5 @@
 {
   "hiddenEnvs": [],
+  "singleEnv": false,
   "dir": "./coderc/env"
 }
