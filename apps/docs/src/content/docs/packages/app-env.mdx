@@ -1,0 +1,309 @@
+---
+title: app-env
+---
+
+## **Introduction**
+
+The **`app-env`** package provides a comprehensive solution for managing environment configurations in React Native applications. It supports both iOS and Android platforms and integrates seamlessly with `@brandingbrand/code-app-router`. With **`app-env`**, developers can:
+
+- Define environment-specific settings.
+- Switch between development, staging, and production environments.
+- Access native environment modules and developer tools.
+
+---
+
+## **Installation**
+
+To add the **`app-env`** package to your project, follow these steps:
+
+### **Step 1: Install the Package**
+
+import {Tabs, TabItem} from '@astrojs/starlight/components';
+
+<Tabs>
+<TabItem label="yarn">
+
+```sh
+yarn add @brandingbrand/code-app-env
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npm install @brandingbrand/code-app-env
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+pnpm add @brandingbrand/code-app-env
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bun add @brandingbrand/code-app-env
+```
+
+</TabItem>
+</Tabs>
+
+### **Step 2: Link Native Modules**
+
+If you are using **React Native 0.60+**, auto-linking should handle the native dependencies. However, for manual linking or troubleshooting, follow these steps:
+
+#### **For iOS**
+
+1. **Install CocoaPods dependencies**:
+
+   ```bash
+   cd ios && pod install && cd ..
+   ```
+
+2. Ensure the **`react-native-flagship-env`** module is included in your `Podfile`:
+
+   ```ruby
+   pod 'react-native-flagship-env', :path => '../node_modules/@brandingbrand/code-app-env'
+   ```
+
+#### **For Android**
+
+1. Add the module to your **`settings.gradle`**:
+
+   ```gradle
+   include ':react-native-flagship-env'
+   project(':react-native-flagship-env').projectDir = new File(rootProject.projectDir, '../node_modules/@brandingbrand/code-app-env/android')
+   ```
+
+2. Add the dependency in your **`app/build.gradle`**:
+
+   ```gradle
+   implementation project(':react-native-flagship-env')
+   ```
+
+3. Update **`MainApplication.java`** to include the package:
+
+   ```java
+   import com.flagshipenv.FlagshipEnvPackage;
+
+   @Override
+   protected List<ReactPackage> getPackages() {
+     return Arrays.<ReactPackage>asList(
+       new MainReactPackage(),
+       new FlagshipEnvPackage() // Add this line
+     );
+   }
+   ```
+
+### **Step 3: Verify Installation**
+
+Run the following command to ensure the package is properly linked:
+
+```bash
+npx react-native run-ios
+# or
+npx react-native run-android
+```
+
+If you encounter errors related to missing modules, follow the linking instructions above or clean your build:
+
+```bash
+cd ios && pod install --repo-update && cd ..
+npx react-native start --reset-cache
+```
+
+---
+
+## **Configuration**
+
+### **Environment Configuration Files**
+
+Create environment configuration files in your project. These files define environment-specific settings and are named using the pattern **`env.<mode>.ts`**. For example:
+
+1. **`env.development.ts`**
+
+   ```typescript
+   export default {
+     apiUrl: 'https://api-dev.example.com',
+     featureFlag: true,
+   };
+   ```
+
+2. **`env.staging.ts`**
+
+   ```typescript
+   export default {
+     apiUrl: 'https://api-staging.example.com',
+     featureFlag: false,
+   };
+   ```
+
+3. **`env.production.ts`**
+
+   ```typescript
+   export default {
+     apiUrl: 'https://api.example.com',
+     featureFlag: false,
+   };
+   ```
+
+### **`.flagshipappenvrc` Configuration**
+
+Create a **`.flagshipappenvrc`** file in your project root to specify the location of your environment files and hidden environments.
+
+Example **`.flagshipappenvrc`**:
+
+```json
+{
+  "dir": "./config/environments",
+  "hiddenEnvs": ["test"],
+  "singleEnv": "development"
+}
+```
+
+#### **Options:**
+
+- **`dir`**: Path to the directory containing your environment files.
+- **`hiddenEnvs`**: Array of environments to exclude from selection.
+- **`singleEnv`**: (Optional) Specify a single environment to use.
+
+---
+
+## **Using the `FlagshipEnv` Native Module**
+
+The `FlagshipEnv` module provides constants and methods to manage environment settings at runtime.
+
+### **Constants**
+
+- **`envName`**: Current environment name.
+
+  ```typescript
+  import {envName} from '@brandingbrand/code-app-env';
+
+  console.log(envName); // 'development'
+  ```
+
+- **`appVersion`**: The current app version.
+
+  ```typescript
+  import {appVersion} from '@brandingbrand/code-app-env';
+
+  console.log(appVersion); // '1.0.0'
+  ```
+
+- **`buildNumber`**: The current build number.
+
+  ```typescript
+  import {buildNumber} from '@brandingbrand/code-app-env';
+
+  console.log(buildNumber); // '42'
+  ```
+
+### **Methods**
+
+- **`setEnv(name: string)`**: Set the current environment and update configurations.
+
+  ```typescript
+  import {setEnv} from '@brandingbrand/code-app-env';
+
+  await setEnv('staging');
+  ```
+
+---
+
+## **Components**
+
+### **`DevMenu`**
+
+The `DevMenu` component provides a developer menu for managing environments and performing common tasks.
+
+#### **Props**
+
+- **`screens`**: Array of React components for additional screens in the menu.
+- **`onRestart`**: Function to restart the app.
+- **`onEnvChange`**: Function to handle environment changes.
+- **`location`**: Position of the Version Overlay (`'topLeft'`, `'topRight'`, `'bottomLeft'`, `'bottomRight'`).
+
+#### **Example**
+
+```tsx
+import {DevMenu} from '@brandingbrand/code-app-env';
+import {DebugScreen} from './DebugScreen';
+
+export default function App() {
+  return (
+    <DevMenu
+      screens={[DebugScreen]}
+      onRestart={() => console.log('Restarting...')}
+      onEnvChange={env => console.log(`Switched to ${env}`)}
+      location="bottomRight">
+      <Text>Welcome to the app!</Text>
+    </DevMenu>
+  );
+}
+```
+
+### **`EnvSwitcher`**
+
+The `EnvSwitcher` component allows developers to switch between different environments dynamically.
+
+#### **Example**
+
+```tsx
+import {EnvSwitcher} from '@brandingbrand/code-app-env';
+
+export default function DevSettings() {
+  return <EnvSwitcher />;
+}
+```
+
+---
+
+## **File Structure**
+
+```
+app-env/
+  ├── android/
+  │   └── src/
+  │       └── main/
+  │           └── java/
+  │               └── com/
+  │                   └── flagshipenv/
+  │                       ├── FlagshipEnvModule.kt
+  │                       └── FlagshipEnvPackage.kt
+  ├── ios/
+  │   ├── FlagshipEnv-Bridging-Header.h
+  │   └── FlagshipEnv.swift
+  ├── src/
+  │   ├── components/
+  │   │   ├── DevMenu.tsx
+  │   │   └── EnvSwitcher.tsx
+  │   └── lib/
+  │       └── env.ts
+  ├── .flagshipappenvrc
+  └── package.json
+```
+
+---
+
+## **Troubleshooting**
+
+### **Common Issues**
+
+1. **Native Module Not Linked**:
+
+   - Ensure you've run `pod install` for iOS.
+   - Check that `MainApplication.java` includes `FlagshipEnvPackage` for Android.
+
+2. **Configuration File Not Found**:
+
+   - Verify that `.flagshipappenvrc` exists in your project root.
+   - Ensure the `dir` field in `.flagshipappenvrc` points to the correct path.
+
+3. **Environment Not Switching**:
+
+   - Check if `setEnv` is called correctly.
+   - Restart the app after changing environments.
