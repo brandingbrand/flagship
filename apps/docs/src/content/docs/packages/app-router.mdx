@@ -1,0 +1,298 @@
+---
+title: app-router
+---
+
+The **`app-router`** package is a routing and navigation solution for React Native applications built on top of **React Native Navigation**. It provides a robust API to manage navigation stacks, bottom tabs, modals, deep linking, and route guards. The package is designed to be highly configurable and TypeScript-friendly, making it ideal for scalable applications.
+
+---
+
+## **Installation**
+
+### **Step 1: Install the Package**
+
+import {Tabs, TabItem} from '@astrojs/starlight/components';
+
+<Tabs>
+<TabItem label="yarn">
+
+```sh
+yarn add @brandingbrand/code-app-router
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npm install @brandingbrand/code-app-router
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+pnpm add @brandingbrand/code-app-router
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bun add @brandingbrand/code-app-router
+```
+
+</TabItem>
+</Tabs>
+
+### **Step 2: Install Peer Dependencies**
+
+Ensure **React**, **React Native**, and **React Native Navigation** are installed:
+
+```bash
+pnpm add react react-native react-native-navigation
+```
+
+### **Step 3: Link Native Dependencies**
+
+For React Native **0.60+**, auto-linking should handle native dependencies. If needed, follow these manual steps:
+
+#### **For iOS**
+
+1. Install CocoaPods dependencies:
+
+   ```bash
+   cd ios && pod install && cd ..
+   ```
+
+#### **For Android**
+
+Ensure the following in your **`settings.gradle`**:
+
+```gradle
+include ':react-native-navigation'
+project(':react-native-navigation').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-navigation/android/app')
+```
+
+---
+
+## **Configuration**
+
+### **Step 1: Define Your Routes**
+
+Create a routes file, e.g., **`routes.ts`**:
+
+```typescript
+import HomeScreen from './screens/HomeScreen';
+import ProfileScreen from './screens/ProfileScreen';
+
+export const routes = [
+  {
+    name: 'Home',
+    path: '/',
+    Component: HomeScreen,
+    type: 'bottomtab',
+    options: {bottomTab: {text: 'Home'}},
+    stackId: 'mainStack',
+  },
+  {
+    name: 'Profile',
+    path: '/profile',
+    Component: ProfileScreen,
+    type: 'component',
+  },
+];
+```
+
+### **Step 2: Register Routes**
+
+In your **entry file** (e.g., **`App.tsx`**), register the routes and set the root layout:
+
+```typescript
+import {register} from '@brandingbrand/code-app-router';
+import {routes} from './routes';
+
+register({
+  routes,
+  onAppLaunched: async () => {
+    console.log('App launched');
+  },
+});
+```
+
+---
+
+## **API Overview**
+
+### **Router Configuration**
+
+#### `register({ routes, onAppLaunched, Provider, setRoot })`
+
+Registers routes and initializes the router.
+
+- **`routes`**: Array of route definitions.
+- **`onAppLaunched`** (optional): Callback when the app launches.
+- **`Provider`** (optional): A React component to provide global context.
+- **`setRoot`** (optional): Function to customize root layout logic.
+
+---
+
+## **Hooks**
+
+### **1. `useNavigator`**
+
+Provides navigation functions like `push`, `pop`, `showModal`, etc.
+
+**Example:**
+
+```typescript
+import { useNavigator } from '@brandingbrand/code-app-router';
+
+function HomeScreen() {
+  const navigator = useNavigator();
+
+  const goToProfile = () => navigator.push('/profile');
+
+  return <Button onPress={goToProfile} title="Go to Profile" />;
+}
+```
+
+### **2. `useLinking`**
+
+Handles deep linking by listening for URL changes.
+
+**Example:**
+
+```typescript
+import { useLinking } from '@brandingbrand/code-app-router';
+
+function App() {
+  useLinking(['app'], (e) => console.error(e));
+
+  return <YourAppComponent />;
+}
+```
+
+### **3. `useModal`**
+
+Manages modal state with `resolve` and `reject` functions.
+
+**Example:**
+
+```typescript
+import { useModal } from '@brandingbrand/code-app-router';
+
+function MyModal() {
+  const { resolve, reject } = useModal();
+
+  return (
+    <View>
+      <Button onPress={() => resolve({ success: true })} title="Confirm" />
+      <Button onPress={reject} title="Cancel" />
+    </View>
+  );
+}
+```
+
+---
+
+## **Defining Routes**
+
+### **Route Types**
+
+1. **Bottom Tab Route**
+
+   ```typescript
+   {
+     name: 'Home',
+     path: '/',
+     Component: HomeScreen,
+     type: 'bottomtab',
+     options: { bottomTab: { text: 'Home' } },
+   }
+   ```
+
+2. **Component Route**
+
+   ```typescript
+   {
+     name: 'Profile',
+     path: '/profile',
+     Component: ProfileScreen,
+     type: 'component',
+   }
+   ```
+
+3. **Action Route**
+
+   ```typescript
+   {
+     name: 'Logout',
+     path: '/logout',
+     type: 'action',
+     action: async () => {
+       await logoutUser();
+     },
+   }
+   ```
+
+---
+
+## **Advanced Features**
+
+### **1. Route Guards**
+
+Guards control navigation by allowing redirection or cancellation.
+
+**Example:**
+
+```typescript
+const authGuard = async (to, from, {redirect}) => {
+  if (!isAuthenticated()) {
+    redirect('/login');
+  }
+};
+
+const routes = [
+  {
+    name: 'Profile',
+    path: '/profile',
+    Component: ProfileScreen,
+    guards: [authGuard],
+  },
+];
+```
+
+### **2. Modals**
+
+Use `showModal` to display a modal dynamically.
+
+**Example:**
+
+```typescript
+const result = await navigator.showModal(MyModalComponent, {prop1: 'value'});
+console.log(result);
+```
+
+---
+
+## **File Structure**
+
+```
+app-router/
+  ├── src/
+  │   ├── hooks/
+  │   │   ├── useNavigator.tsx
+  │   │   ├── useLinking.ts
+  │   │   └── ...
+  │   ├── context.tsx
+  │   ├── router.tsx
+  │   └── types.ts
+  ├── package.json
+  └── README.md
+```
+
+---
+
+## **Troubleshooting**
+
+1. **Navigation Not Working**: Ensure routes are registered and native modules are linked.
+2. **Deep Linking Issues**: Verify the `hosts` parameter in `useLinking`.
