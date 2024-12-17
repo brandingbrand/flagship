@@ -37,6 +37,21 @@ type AppCenterIOS = {
 };
 
 /**
+ * Represents the configuration for Firebase App Distribution for iOS.
+ */
+type FirebaseIOS = {
+  /**
+   * The application id in firebase.
+   */
+  appId: string;
+
+  /**
+   * Array of testing groups
+   */
+  groups: string[];
+};
+
+/**
  * Represents the configuration for Fastlane specific to iOS.
  */
 type FastlaneIOS = {
@@ -44,6 +59,7 @@ type FastlaneIOS = {
    * Configuration for App Center for iOS.
    */
   appCenter?: AppCenterIOS;
+  firebase?: FirebaseIOS;
 };
 
 /**
@@ -72,6 +88,21 @@ type AppCenterAndroid = {
 };
 
 /**
+ * Represents the configuration for Firebase App Distribution for Android.
+ */
+type FirebaseAndroid = {
+  /**
+   * The application id in firebase.
+   */
+  appId: string;
+
+  /**
+   * Array of testing groups
+   */
+  groups: string[];
+};
+
+/**
  * Represents the configuration for Fastlane specific to Android.
  */
 type FastlaneAndroid = {
@@ -79,4 +110,5 @@ type FastlaneAndroid = {
    * Configuration for App Center for Android.
    */
   appCenter?: AppCenterAndroid;
+  firebase?: FirebaseAndroid;
 };

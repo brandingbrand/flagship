@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-cli",
-  "version": "13.1.0",
+  "version": "13.1.1",
   "description": "cli for Flagship Code applications",
   "license": "MIT",
   "bin": {
