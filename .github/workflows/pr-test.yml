@@ -26,4 +26,4 @@ jobs:
       - name: Run tests
         run: yarn test
       - name: Initialize react native app
-        run: yarn workspace @brandingbrand/code-example prebuild --build internal --env prod --platform android --verbose
+        run: yarn workspace @brandingbrand/code-example prebuild --build internal --platform android --app-env-initial prod --app-env-dir ./coderc/env --verbose

@@ -1,0 +1,22 @@
+{
+  "options": [
+    {
+      "flags": "--app-env-initial <value>",
+      "description": "Specifies the initial environment to be used when the application starts (e.g., 'development', 'staging', or 'production').",
+      "required": true,
+      "example": "--app-env-initial development"
+    },
+    {
+      "flags": "--app-env-dir <value>",
+      "description": "Defines the directory path where environment configuration files are stored (relative or absolute path).",
+      "required": true,
+      "example": "--app-env-dir ./config/environments"
+    },
+    {
+      "flags": "--app-env-hide <value>",
+      "description": "Specifies one or more environments to hide from selection or visibility (comma-separated list).",
+      "required": false,
+      "example": "--app-env-hide staging,test"
+    }
+  ]
+}

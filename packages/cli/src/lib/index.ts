@@ -38,3 +38,10 @@ export * from './constants';
  * @module lib/profiles
  */
 export * from './profiles';
+
+/**
+ * Dependency helper functions
+ *
+ * @module lib/dependencies
+ */
+export * from './dependencies';
