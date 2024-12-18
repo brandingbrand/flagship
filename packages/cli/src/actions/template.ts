@@ -9,8 +9,14 @@ import {
   getReactNativeVersion,
 } from '@brandingbrand/code-cli-kit';
 
-import {FSAPP_DEPENDENCY, config, defineAction, isGenerateCommand} from '@/lib';
-import {hasDependency, matchesFilePatterns} from '@/lib/dependencies';
+import {
+  FSAPP_DEPENDENCY,
+  config,
+  defineAction,
+  isGenerateCommand,
+  hasDependency,
+  matchesFilePatterns,
+} from '@/lib';
 
 /**
  * Define an action to initialize a project template.

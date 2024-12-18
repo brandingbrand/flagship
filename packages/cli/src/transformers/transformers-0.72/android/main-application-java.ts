@@ -6,8 +6,12 @@ import {
   string,
 } from '@brandingbrand/code-cli-kit';
 
-import {FSAPP_DEPENDENCY, Transforms, defineTransformer} from '@/lib';
-import {hasDependency} from '@/lib/dependencies';
+import {
+  FSAPP_DEPENDENCY,
+  Transforms,
+  defineTransformer,
+  hasDependency,
+} from '@/lib';
 
 /**
  * Defines a transformer for the Android project's "MainApplication.java" file.
