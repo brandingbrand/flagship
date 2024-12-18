@@ -31,10 +31,6 @@ interface CommandOption {
    */
   choices?: string[];
   /**
-   * The name of a global function to parse the input value.
-   */
-  parse?: string;
-  /**
    * Whether the option is mandatory.
    */
   required?: boolean;
@@ -103,7 +99,6 @@ function loadConfigFiles(): ConfigFile {
   const aggregatedOptions: CommandOption[] = [];
 
   if (configFiles.length === 0) {
-    console.warn(`No ${CONFIG_FILE_NAME} files found.`);
     return {options: []};
   }
 
