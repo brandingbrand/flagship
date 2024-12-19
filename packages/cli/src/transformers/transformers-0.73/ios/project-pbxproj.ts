@@ -8,7 +8,12 @@ import {
 } from '@brandingbrand/code-cli-kit';
 import type {XcodeProject, PBXFile} from 'xcode';
 
-import {Transforms, defineTransformer} from '@/lib';
+import {
+  FSAPP_DEPENDENCY,
+  Transforms,
+  defineTransformer,
+  hasDependency,
+} from '@/lib';
 
 /**
  * Defines a transformer for the iOS project's "project.pbxproj" file.
@@ -56,9 +61,12 @@ export default defineTransformer<Transforms<XcodeProject, void>>({
 
       // These files exist as extras and need to be added to pbxproj file as
       // source files or header files
+      if (hasDependency(process.cwd(), FSAPP_DEPENDENCY)) {
+        project.addSourceFile('app/EnvSwitcher.m', opt, groupKey);
+        project.addSourceFile('app/NativeConstants.m', opt, groupKey);
+      }
+
       project.addSourceFile('app/app.swift', opt, groupKey);
-      project.addSourceFile('app/EnvSwitcher.m', opt, groupKey);
-      project.addSourceFile('app/NativeConstants.m', opt, groupKey);
       project.addHeaderFile('app/app-Bridging-Header.h', opt, groupKey);
 
       // PrivacyInfo.xcprivacy is already included in the React Native 0.73 template from
