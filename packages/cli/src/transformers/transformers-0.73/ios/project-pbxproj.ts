@@ -61,11 +61,6 @@ export default defineTransformer<Transforms<XcodeProject, void>>({
 
       // These files exist as extras and need to be added to pbxproj file as
       // source files or header files
-      if (hasDependency(process.cwd(), FSAPP_DEPENDENCY)) {
-        project.addSourceFile('app/EnvSwitcher.m', opt, groupKey);
-        project.addSourceFile('app/NativeConstants.m', opt, groupKey);
-      }
-
       project.addSourceFile('app/app.swift', opt, groupKey);
       project.addHeaderFile('app/app-Bridging-Header.h', opt, groupKey);
 
