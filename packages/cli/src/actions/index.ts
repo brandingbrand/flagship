@@ -19,13 +19,6 @@ export {default as clean} from './clean';
 export {default as config} from './config';
 
 /**
- * Action to typecheck envs and write envs to fsapp
- *
- * @module actions/env
- */
-export {default as env} from './env';
-
-/**
  * Actiont to write package info to terminal
  *
  * @module actions/info

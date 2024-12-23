@@ -95,7 +95,6 @@ registerCustomOptions(
         .addAction(actions.clean)
         .addAction(actions.config)
         .addAction(actions.template)
-        .addAction(actions.env)
         .addAction(actions.transformers)
         .addAction(actions.plugins)
         .addAction(actions.packagers);
