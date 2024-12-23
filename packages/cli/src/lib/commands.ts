@@ -1,6 +1,9 @@
+/* eslint-disable no-useless-escape */
+
 import fs from 'fs';
 import {cwd} from 'process';
 
+import {path} from '@brandingbrand/code-cli-kit';
 import {Command, Option} from 'commander';
 import {glob} from 'glob';
 import findNodeModules from 'find-node-modules';
@@ -58,12 +61,32 @@ const CONFIG_FILE_NAME = '.flagshipcoderc.json';
  * Find all flagship-code.commands.json files in node_modules
  */
 function findConfigFiles() {
+  // Read package.json to get dependencies
+  const packageJson = JSON.parse(
+    fs.readFileSync(path.project.resolve('package.json'), 'utf8'),
+  );
+  const dependencies = [
+    ...Object.keys(packageJson.dependencies || {}),
+    ...Object.keys(packageJson.devDependencies || {}),
+  ];
   const nodeModulesPaths = findNodeModules({cwd: cwd(), relative: false}).map(
     it => `${it}/**/${CONFIG_FILE_NAME}`,
   );
-
-  return glob.sync(nodeModulesPaths, {
+  const files = glob.sync(nodeModulesPaths, {
     nodir: true, // Ensure we only get files
+  });
+
+  // Filter to only include files from dependencies
+  return files.filter(file => {
+    const parts = path.parse(file);
+    const moduleMatch = parts.dir.match(
+      /node_modules[\/\\](?:@[^\/\\]+[\/\\][^\/\\]+|[^\/\\]+)/,
+    );
+
+    if (!moduleMatch) return false;
+
+    const packageName = moduleMatch[0].replace(/^node_modules[\/\\]/, '');
+    return dependencies.includes(packageName);
   });
 }
 

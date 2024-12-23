@@ -61,8 +61,6 @@ export type PrebuildOptions = {
   build: string;
   /** The cli command. */
   command: string;
-  /** The environment version. */
-  env: string;
   /** Indicates whether it's a release build. */
   release: boolean;
   /** Indicates whether to display verbose output. */

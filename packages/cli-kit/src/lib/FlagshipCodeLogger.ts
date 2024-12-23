@@ -362,18 +362,6 @@ export class FlagshipCodeLogger {
         this.getMessage(messages, false),
       );
 
-      if ((message as any) instanceof Error) {
-        const errorStackArr = (message as any).stack.split(
-          '\n',
-        ) as unknown as Array<string>;
-
-        errorStackArr.shift();
-
-        FlagshipCodeManager.shared.emit(
-          'onLog',
-          chalk.dim('\n' + errorStackArr.join('\n')),
-        );
-      }
       return;
     }
 

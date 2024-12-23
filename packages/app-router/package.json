@@ -25,9 +25,9 @@
     "@repo/typescript-config": "*",
     "@types/eslint": "^8.56.1",
     "@types/url-parse": "^1.4.11",
-    "typescript": "^5.3.3",
     "react": "18.2.0",
     "react-native": "0.73.11",
-    "react-native-navigation": "^7.40.1"
+    "react-native-navigation": "^7.40.1",
+    "typescript": "^5.3.3"
   }
 }

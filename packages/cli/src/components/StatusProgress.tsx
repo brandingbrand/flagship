@@ -78,7 +78,7 @@ export default function StatusProgress() {
           <Text color={'green'}> ⟨ </Text>
           <Text color={'green'}>{getString()}</Text>
           <Text color={'green'}> ⟩ </Text>
-          <Text bold>{state.percent * 100}%</Text>
+          <Text bold>{Math.round(state.percent * 100)}%</Text>
         </>
       )}
     </>
