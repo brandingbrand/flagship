@@ -11,6 +11,17 @@ module.exports = {
   ...require('ts-jest/jest-preset'),
 
   /**
+   * Ignore patterns
+   */
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/dist/',
+    '/build/',
+    '/coverage/',
+    '/fixtures/',
+  ],
+
+  /**
    * Set the test environment for Jest.
    *
    * @remarks

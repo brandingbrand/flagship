@@ -24,6 +24,8 @@ import {
 } from '@brandingbrand/code-cli-kit';
 import chalk from 'chalk';
 import dedent from 'dedent';
+import {bundleRequire} from 'bundle-require';
+import magicast from 'magicast';
 
 /**
  * Determines if a string represents a package or a file path.
@@ -41,55 +43,13 @@ export function isPackage(str: string): boolean {
 }
 
 /**
- * Asynchronously bundles and requires a package or file.
- *
- * @param {string} packageOrFilePath - The name of the package or the file path to bundle and require.
- * @param {('cjs'|'esm')} format - The module format to use when bundling.
- * @returns {Promise<any>} A Promise that resolves to the required module.
- */
-export async function bundleRequire(
-  packageOrFilePath: string,
-  format: 'cjs' | 'esm' = 'cjs',
-): Promise<any> {
-  // Import the 'bundle-require' esm module dynamically
-  // Due to esm and exports + types need to ignore ts for this import
-  // @ts-ignore
-  const {bundleRequire: _bundleRequire} = await import('bundle-require');
-
-  // Check if the input string represents a package
-  if (isPackage(packageOrFilePath)) {
-    // Parse package.json contents
-    const pkg = require(require.resolve(`${packageOrFilePath}/package.json`));
-
-    // Determine if the package is esm, if so reassign format
-    if (pkg.type === 'module') {
-      format = 'esm';
-    }
-
-    // Resolve the package name to its filepath
-    packageOrFilePath = require.resolve(packageOrFilePath, {
-      paths: [process.cwd()],
-    });
-  }
-
-  // Use 'bundle-require' to bundle and require the specified file or package
-  const {mod} = await _bundleRequire({
-    filepath: packageOrFilePath,
-    format,
-  });
-
-  // Return the required module
-  return mod;
-}
-
-/**
  * Validates environment files for proper structure and exports.
  *
  * @param {string} baseDir - The base directory to search for environment files.
  * @returns {Promise<string[]>} A promise that resolves to an array of valid environment file paths.
  * @throws {Error} If environment files don't meet the required structure.
  */
-async function validateEnvFiles(baseDir: string): Promise<string[]> {
+export async function validateEnvFiles(baseDir: string): Promise<string[]> {
   const pattern = path.join(baseDir, '**', 'env.*.ts');
   const files = glob.sync(pattern, {ignore: '**/node_modules/**'});
 
@@ -161,7 +121,7 @@ async function validateEnvFiles(baseDir: string): Promise<string[]> {
           },
         });
 
-        if (!hasDefaultExport) {
+        if (!hasDefaultExport && hasDefineEnvImport) {
           throw new Error(
             chalk.red(
               dedent`\n\nError: Invalid export configuration in ${file}.
@@ -192,31 +152,7 @@ async function validateEnvFiles(baseDir: string): Promise<string[]> {
           );
         }
 
-        if (!hasDefineEnvImport) {
-          throw new Error(
-            chalk.red(
-              dedent`\n\nError: Invalid import configuration in ${file}.
-
-            The "env.*.ts" file must contain the named import of "defineEnv" form the package "@brandingbrand/code-cli-kit".
-
-                import { defineEnv } from '@brandingbrand/code-cli-kit';
-
-            Issues detected:
-            - Multiple default exports or no default export found.
-
-            Steps to resolve this issue:
-            1. Open the file where the error occurred: ${file}.
-
-            2. Ensure the file imports "defineEnv" from "@brandingbrand/code-cli-kit".
-                     Example:
-
-                         import { defineEnv } from '@brandingbrand/code-cli-kit';
-
-            For more details on the requirements for "env.*.ts" files, refer to the documentation or reach out for support.
-            `,
-            ),
-          );
-        }
+        if (!hasDefineEnvImport) return;
 
         results.push(file);
       },
@@ -232,7 +168,7 @@ async function validateEnvFiles(baseDir: string): Promise<string[]> {
  * @param {string} env - The target environment.
  * @returns {Promise<{ name: string; content: any }[]>} Processed environment contents.
  */
-async function processEnvironmentFiles(
+export async function processEnvironmentFiles(
   isRelease: boolean,
   env: string,
 ): Promise<{name: string; content: any}[]> {
@@ -245,7 +181,8 @@ async function processEnvironmentFiles(
   const envContent = await Promise.all(
     envs.map(async file => {
       const match = /env\.(.*)\.ts/.exec(file);
-      const content = (await bundleRequire(file)).default;
+      const content = (await bundleRequire({filepath: file, format: 'cjs'}))
+        .mod;
       const name = match?.[1];
 
       if (!name) {
@@ -271,7 +208,7 @@ async function processEnvironmentFiles(
  * @returns {string} Resolved path to the project environment index file.
  * @throws {Error} When version cannot be parsed or is unsupported.
  */
-function resolveProjectEnvIndexPath(version: string): string {
+export function resolveProjectEnvIndexPath(version: string): string {
   const coercedVersion = semver.coerce(version);
 
   if (!coercedVersion) {
@@ -320,7 +257,6 @@ async function processAndLinkEnvs(
 
   const projectEnvIndexPath = resolveProjectEnvIndexPath(fsappVersion);
 
-  const magicast = await import('magicast');
   const mod = magicast.parseModule('');
 
   envContents.forEach(it => {

@@ -2,7 +2,17 @@
 title: plugin-fsapp
 ---
 
-The "plugin-fsapp"
+# plugin-fsapp
+
+The `@brandingbrand/code-plugin-fsapp` is a specialized plugin for Flagship Code that manages environment configurations and native module setup for React Native applications using @brandingbrand/fsapp. It handles the complexities of environment switching, native constants, and platform-specific implementations.
+
+## Key Features
+
+- Environment switching capabilities for development, staging, and production
+- Automated native module configuration for iOS and Android
+- Native constants management
+- Support for React Native 0.72 and 0.73
+- Type-safe environment configuration
 
 ## Install
 
@@ -62,7 +72,7 @@ Your package.json should now be updated, `@brandingbrand/code-plugin-fsapp` shou
 
 ### Flagship Code Configuration
 
-Upon installing the dependency, it is imperative to update the `flagship-code.config.ts` file. Specifically, ensure that the `plugins` array includes the newly installed dependency. This step is crucial, as Flagship Code will only invoke the plugin if it is listed within this array. By including the dependency in the `plugins` array, you enable Flagship Code to recognize and utilize the functionality provided by the plugin during project execution.
+Upon installing the dependency, it is imperative to update the `flagship-code.config.ts` file. Specifically, ensure that the `plugins` array includes the newly installed dependency. This step is crucial, as Flagship Code will only invoke the plugin if it is listed within this array.
 
 ```ts title="flagship-code.config.ts" ins={9}
 import {defineConfig} from '@brandingbrand/code-cli-kit';
@@ -77,4 +87,72 @@ export default defineConfig({
 });
 ```
 
+### Environment Configuration
+
+Create environment files following this structure:
+
+```typescript title="env.development.ts"
+import {defineEnv} from '@brandingbrand/code-cli-kit';
+
+export default defineEnv({
+  API_URL: 'https://dev-api.example.com',
+  FEATURE_FLAGS: {
+    enableFeatureA: true,
+  },
+});
+```
+
+### CLI Options
+
+The plugin requires the following command-line options:
+
+```sh
+--env <environment>  # Specifies the initial environment (development, staging, production)
+```
+
+Example usage:
+
+```sh
+flagship-code build --env development
+```
+
+### Platform-Specific Setup
+
+The plugin automatically handles:
+
+- iOS
+
+  - Configures EnvSwitcher and NativeConstants modules
+  - Updates Xcode project settings
+  - Manages environment variables
+
+- Android
+  - Sets up Java modules for environment switching
+  - Configures MainActivity and MainApplication
+  - Handles build-time environment configuration
+
 For more detailed guidance and information, please refer to the [Flagship Code Configuration](/guides/config) guide. This resource offers comprehensive instructions and insights to assist you in configuring Flagship Code effectively.
+
+## Troubleshooting
+
+Common issues and solutions:
+
+1. Environment files not detected
+
+   - Ensure files follow the naming convention: `env.<environment>.ts`
+   - Verify files are in the correct directory
+
+2. Build errors
+
+   - Check that all native dependencies are properly linked
+   - Verify React Native version compatibility
+
+3. Environment switching issues
+   - Confirm proper CLI flag usage
+   - Check environment file syntax
+
+## Additional Resources
+
+- [Flagship Code Configuration Guide](/guides/config)
+- [Environment Management](/guides/environments)
+- [Native Module Setup](/guides/native-modules)

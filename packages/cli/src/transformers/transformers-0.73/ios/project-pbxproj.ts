@@ -8,12 +8,7 @@ import {
 } from '@brandingbrand/code-cli-kit';
 import type {XcodeProject, PBXFile} from 'xcode';
 
-import {
-  FSAPP_DEPENDENCY,
-  Transforms,
-  defineTransformer,
-  hasDependency,
-} from '@/lib';
+import {Transforms, defineTransformer} from '@/lib';
 
 /**
  * Defines a transformer for the iOS project's "project.pbxproj" file.

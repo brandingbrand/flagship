@@ -57,7 +57,7 @@ export default defineAction(
      * @param {string} dependency - The name of the dependency.
      * @param {Profile} profile - The profile specifying the version and other details for the dependency.
      */
-    function verifyDependency(dependency: string, profile: Profile): any {
+    function verifyDependency(dependency: string, profile: Profile): void {
       if (executedProfiles.includes(dependency)) return;
 
       executedProfiles.push(dependency);

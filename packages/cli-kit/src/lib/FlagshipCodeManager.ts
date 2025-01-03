@@ -95,7 +95,7 @@ export class FlagshipCodeManager extends EventEmitter {
         FlagshipCodeLogger.shared.error(e);
         this.emit('onError');
         console.log();
-        process.exit(0);
+        process.exit(1);
       }
 
       ++actionsRun;
