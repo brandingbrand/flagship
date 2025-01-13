@@ -58,12 +58,15 @@ export function defineBuild<T = BuildConfig>(
 }
 
 /**
- * Defines a plugin configuration of generic type T.
+ * Defines a plugin configuration with two generic type parameters.
  *
- * @param plugin - The plugin configuration object of type PluginConfig<T>.
- * @returns The provided plugin configuration.
- * @template T - The generic type of the plugin configuration.
+ * @param plugin - The plugin configuration object of type PluginConfig<T, U>
+ * @returns The provided plugin configuration
+ * @template T - The first generic type parameter for the plugin configuration
+ * @template U - The second generic type parameter for the plugin configuration
  */
-export function definePlugin<T>(plugin: PluginConfig<T>) {
+export function definePlugin<T = unknown, U = unknown>(
+  plugin: PluginConfig<T, U>,
+) {
   return plugin;
 }

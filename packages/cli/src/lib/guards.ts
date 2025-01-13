@@ -20,10 +20,13 @@ export function defineAction(action: () => Promise<void | string>) {
   return withAction(action);
 }
 
-export type Transformer<T> = {
+export type Transformer<T, U> = {
   file: string;
   transforms: Array<T>;
-  transform: (config: BuildConfig, options: PrebuildOptions) => Promise<void>;
+  transform: (
+    config: BuildConfig,
+    options: PrebuildOptions & U,
+  ) => Promise<void>;
 };
 
 export type Transforms<T, U = undefined> = (
@@ -35,10 +38,10 @@ export type Transforms<T, U = undefined> = (
 /**
  * Creates and applies a transformer function with logging using the provided Transformer definition.
  *
- * @template T - The type of the transformer.
- *
- * @param {Transformer<T>} transformer - The transformer definition containing transformation details.
- * @returns {Promise<T>} A Promise that resolves to the result of the transformation.
+ * @template T The type of the transformer
+ * @template U The type of any additional options
+ * @param transformer The transformer definition containing transformation details
+ * @returns The transformer definition
  *
  * @example
  * ```typescript
@@ -54,12 +57,14 @@ export type Transforms<T, U = undefined> = (
  * console.log(transformedContent);
  * ```
  */
-export function defineTransformer<T>(transformer: Transformer<T>) {
+export function defineTransformer<T = unknown, U = unknown>(
+  transformer: Transformer<T, U>,
+) {
   /**
    * Applies the specified transformation function with logging.
    *
-   * @param {BuildConfig} config - The configuration object for the transformation.
-   * @returns {Promise<T>} A Promise that resolves to the result of the transformation.
+   * @param config The configuration object for the transformation
+   * @returns A Promise that resolves to the result of the transformation
    */
   return transformer;
 }

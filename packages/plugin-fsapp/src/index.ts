@@ -240,7 +240,7 @@ export function resolveProjectEnvIndexPath(version: string): string {
  * @returns {Promise<void>} A promise that resolves when environment processing is complete.
  */
 async function processAndLinkEnvs(
-  options: PrebuildOptions & {env: string; release: boolean},
+  options: PrebuildOptions & {env: string},
 ): Promise<void> {
   logger.log('Processing environment files...');
 
@@ -270,19 +270,16 @@ async function processAndLinkEnvs(
   );
 }
 
-export default definePlugin({
+export default definePlugin<unknown, {env: string}>({
   /**
    * iOS-specific logic for the plugin.
    * @param {BuildConfig & CodePluginTargetExtension} build - The build configuration for iOS.
    * @param {PrebuildOptions} options - The options object for iOS.
    * @returns {Promise<void>} A promise that resolves when iOS processing is complete.
    */
-  ios: async function (
-    build: BuildConfig,
-    options: PrebuildOptions,
-  ): Promise<void> {
+  ios: async function (build, options): Promise<void> {
     logger.log('Processing environment files for iOS...');
-    await processAndLinkEnvs(options as any);
+    await processAndLinkEnvs(options);
 
     await withPbxproj(project => {
       const targetKey = project.findTargetKey('app');
