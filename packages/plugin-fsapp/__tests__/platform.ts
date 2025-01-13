@@ -5,7 +5,10 @@
 /// <reference types="@brandingbrand/code-jest-config" />
 
 import {fs, path} from '@brandingbrand/code-cli-kit';
-import plugin from '../src';
+import plugin, {
+  getEnvironmentSwitcherPath,
+  getNativeConstantsPath,
+} from '../src';
 
 jest.mock('bundle-require', () => ({
   bundleRequire: jest.fn().mockImplementation(async ({filepath}) => ({
@@ -19,7 +22,10 @@ jest.mock('bundle-require', () => ({
 
 describe('platforms', () => {
   test('ios', async () => {
-    await plugin.ios?.({} as any, {env: 'prod', release: true} as any);
+    await plugin.ios?.(
+      {android: {packageName: 'com.app'}} as any,
+      {env: 'prod', release: true} as any,
+    );
 
     const projectEnvIndex = await fs.readFile(
       require.resolve('@brandingbrand/fsapp/src/project_env_index.js', {
@@ -38,8 +44,28 @@ describe('platforms', () => {
 };`);
     expect(pbxProj).toContain('NativeConstants.m');
     expect(pbxProj).toContain('EnvSwitcher.m');
-    expect(await fs.doesPathExist(path.ios.envSwitcher)).toBeTruthy();
-    expect(await fs.doesPathExist(path.ios.nativeConstants)).toBeTruthy();
+    expect(
+      await fs.doesPathExist(
+        getEnvironmentSwitcherPath(
+          {
+            ios: {bundleId: 'com.app'},
+            android: {packageName: 'com.app'},
+          } as any,
+          'ios',
+        ),
+      ),
+    ).toBeTruthy();
+    expect(
+      await fs.doesPathExist(
+        getEnvironmentSwitcherPath(
+          {
+            ios: {bundleId: 'com.app'},
+            android: {packageName: 'com.app'},
+          } as any,
+          'ios',
+        ),
+      ),
+    ).toBeTruthy();
   });
 
   test('android', async () => {
@@ -73,14 +99,24 @@ describe('platforms', () => {
     expect(mainApplication).toContain('EnvSwitcherPackage()');
     expect(
       await fs.doesPathExist(
-        path.android.envSwitcher({android: {packageName: 'com.app'}} as any),
+        getEnvironmentSwitcherPath(
+          {
+            ios: {bundleId: 'com.app'},
+            android: {packageName: 'com.app'},
+          } as any,
+          'android',
+        ),
       ),
     ).toBeTruthy();
     expect(
       await fs.doesPathExist(
-        path.android.nativeConstants({
-          android: {packageName: 'com.app'},
-        } as any),
+        getNativeConstantsPath(
+          {
+            ios: {bundleId: 'com.app'},
+            android: {packageName: 'com.app'},
+          } as any,
+          'android',
+        ),
       ),
     ).toBeTruthy();
   });

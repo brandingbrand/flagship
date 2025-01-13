@@ -103,13 +103,6 @@ export default {
      *
      * @returns {string} The absolute path to "ios/app/EnvSwitcher.m".
      */
-    envSwitcher: resolvePathFromProject('ios', 'app', 'EnvSwitcher.m'),
-
-    /**
-     * Retrieves the absolute path to the iOS EnvSwitcher.m file.
-     *
-     * @returns {string} The absolute path to "ios/app/EnvSwitcher.m".
-     */
     entitlements: resolvePathFromProject('ios', 'app', 'app.entitlements'),
 
     /**
@@ -122,13 +115,6 @@ export default {
       'app',
       'PrivacyInfo.xcprivacy',
     ),
-
-    /**
-     * Retrieves the absolute path to the iOS NativeConstants.m file.
-     *
-     * @returns {string} The absolute path to "ios/app/NativeConstants.m".
-     */
-    nativeConstants: resolvePathFromProject('ios', 'app', 'NativeConstants.m'),
 
     /**
      * Retrieves the absolute path to the iOS AppDelegate.mm file.
@@ -272,42 +258,6 @@ export default {
         'java',
         ...packageToPath(config.android.packageName),
         'MainActivity.java',
-      );
-    },
-
-    /**
-     * Retrieves the absolute path to the Android EnvSwitcher.java file.
-     *
-     * @param {BuildConfig} config - The Android project configuration.
-     * @returns {string} The absolute path to the EnvSwitcher.java file.
-     */
-    envSwitcher: function (config: BuildConfig): string {
-      return resolvePathFromProject(
-        'android',
-        'app',
-        'src',
-        'main',
-        'java',
-        ...packageToPath(config.android.packageName),
-        'EnvSwitcher.java',
-      );
-    },
-
-    /**
-     * Retrieves the absolute path to the Android NativeConstants.java file.
-     *
-     * @param {BuildConfig} config - The Android project configuration.
-     * @returns {string} The absolute path to the NativeConstants.java file.
-     */
-    nativeConstants: function (config: BuildConfig): string {
-      return resolvePathFromProject(
-        'android',
-        'app',
-        'src',
-        'main',
-        'java',
-        ...packageToPath(config.android.packageName),
-        'NativeConstants.java',
       );
     },
   },

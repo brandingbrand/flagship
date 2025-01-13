@@ -21,11 +21,70 @@ import {
   getReactNativeVersion,
   withUTF8,
   string,
+  packageToPath,
 } from '@brandingbrand/code-cli-kit';
 import chalk from 'chalk';
 import dedent from 'dedent';
 import {bundleRequire} from 'bundle-require';
 import magicast from 'magicast';
+
+/**
+ * Returns the file path for the environment switcher for the specified platform.
+ *
+ * @param config - The build configuration object containing platform-specific settings
+ * @param platform - The target platform ('ios' or 'android')
+ * @returns The resolved file path to the environment switcher file
+ */
+export function getEnvironmentSwitcherPath(
+  config: BuildConfig,
+  platform: 'ios' | 'android',
+) {
+  const paths = {
+    ios: ['ios', 'app', 'EnvSwitcher.m'],
+    android: [
+      'android',
+      'app',
+      'src',
+      'main',
+      'java',
+      ...packageToPath(config.android.packageName),
+      getReactNativeVersion() === '0.73'
+        ? 'EnvSwitcher.kt'
+        : 'EnvSwitcher.java',
+    ],
+  };
+
+  return path.project.resolve(...paths[platform]);
+}
+
+/**
+ * Returns the file path for the native constants for the specified platform.
+ *
+ * @param config - The build configuration object containing platform-specific settings
+ * @param platform - The target platform ('ios' or 'android')
+ * @returns The resolved file path to the native constants file
+ */
+export function getNativeConstantsPath(
+  config: BuildConfig,
+  platform: 'ios' | 'android',
+) {
+  const paths = {
+    ios: ['ios', 'app', 'NativeConstants.m'],
+    android: [
+      'android',
+      'app',
+      'src',
+      'main',
+      'java',
+      ...packageToPath(config.android.packageName),
+      getReactNativeVersion() === '0.73'
+        ? 'NativeConstants.kt'
+        : 'NativeConstants.java',
+    ],
+  };
+
+  return path.project.resolve(...paths[platform]);
+}
 
 /**
  * Determines if a string represents a package or a file path.
@@ -305,7 +364,7 @@ export default definePlugin<unknown, {env: string}>({
       path.project.resolve('ios', 'app', 'NativeConstants.m'),
     );
 
-    await withUTF8(path.ios.envSwitcher, content => {
+    await withUTF8(getEnvironmentSwitcherPath(build, 'ios'), content => {
       return string.replace(
         content,
         /(\*initialEnvName\s+=\s+@").*(")/m,
@@ -313,7 +372,7 @@ export default definePlugin<unknown, {env: string}>({
       );
     });
 
-    await withUTF8(path.ios.nativeConstants, content => {
+    await withUTF8(getNativeConstantsPath(build, 'ios'), content => {
       return string.replace(
         content,
         /(ShowDevMenu":\s+@").*(")/m,
@@ -377,7 +436,7 @@ $2add(EnvSwitcherPackage())
         ),
       );
 
-      await withUTF8(path.android.envSwitcher(build), content => {
+      await withUTF8(getEnvironmentSwitcherPath(build, 'android'), content => {
         return string.replace(
           content,
           /(initialEnvName = ").*(")/m,
@@ -385,7 +444,7 @@ $2add(EnvSwitcherPackage())
         );
       });
 
-      await withUTF8(path.android.nativeConstants(build), content => {
+      await withUTF8(getNativeConstantsPath(build, 'android'), content => {
         return string.replace(
           content,
           /(ShowDevMenu",\s*").*(")/m,

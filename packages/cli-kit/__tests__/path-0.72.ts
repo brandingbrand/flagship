@@ -22,13 +22,6 @@ describe('path', () => {
     );
   });
 
-  it('should have an ios.envSwitcher function that returns the path to ios/app/EnvSwitcher.m', () => {
-    const envSwitcherPath = path.ios.envSwitcher;
-    expect(envSwitcherPath).toEqual(
-      expect.stringMatching(/.*ios\/app\/EnvSwitcher\.m$/),
-    );
-  });
-
   it('should have an ios.entitlements function that returns the path to ios/app/app.entitlements', () => {
     const entitlementsPath = path.ios.entitlements;
     expect(entitlementsPath).toEqual(
@@ -46,13 +39,6 @@ describe('path', () => {
   it('should have an ios.gemfile function that returns the path to ios/app/Gemfile', () => {
     const gemfilePath = path.ios.gemfile;
     expect(gemfilePath).toEqual(expect.stringMatching(/.*ios\/Gemfile$/));
-  });
-
-  it('should have an ios.nativeConstants function that returns the path to ios/app/NativeConstants.m', () => {
-    const nativeConstantsPath = path.ios.nativeConstants;
-    expect(nativeConstantsPath).toEqual(
-      expect.stringMatching(/.*ios\/app\/NativeConstants\.m$/),
-    );
   });
 
   it('should have an ios.appDelegate function that returns the path to ios/app/AppDelegate.mm', () => {
@@ -146,27 +132,6 @@ describe('path', () => {
     );
   });
 
-  it('should have an android.envSwitcher function that returns the path to android/app/src/main/java/com/example/app/EnvSwitcher.java', () => {
-    const config = {
-      android: {
-        name: 'example',
-        displayName: 'Example',
-        packageName: 'com.example.app',
-      },
-      ios: {
-        name: 'example',
-        displayName: 'Example',
-        bundleId: 'com.example.app',
-      },
-    };
-    const envSwitcherPath = path.android.envSwitcher(config);
-    expect(envSwitcherPath).toEqual(
-      expect.stringMatching(
-        /.*android\/app\/src\/main\/java\/com\/example\/app\/EnvSwitcher\.java$/,
-      ),
-    );
-  });
-
   it('should have an android.gemfile function that returns the path to android/Gemfile', () => {
     const gemfilePath = path.android.gemfile;
     expect(gemfilePath).toEqual(expect.stringMatching(/.*android\/Gemfile$/));
@@ -176,27 +141,6 @@ describe('path', () => {
     const gradlePropertiesPath = path.android.gradleProperties;
     expect(gradlePropertiesPath).toEqual(
       expect.stringMatching(/.*android\/gradle\.properties$/),
-    );
-  });
-
-  it('should have an android.nativeConstants function that returns the path to android/app/src/main/java/com/example/app/NativeConstants.java', () => {
-    const config = {
-      android: {
-        name: 'example',
-        displayName: 'Example',
-        packageName: 'com.example.app',
-      },
-      ios: {
-        name: 'example',
-        displayName: 'Example',
-        bundleId: 'com.example.app',
-      },
-    };
-    const nativeConstantsPath = path.android.nativeConstants(config);
-    expect(nativeConstantsPath).toEqual(
-      expect.stringMatching(
-        /.*android\/app\/src\/main\/java\/com\/example\/app\/NativeConstants\.java$/,
-      ),
     );
   });
 
