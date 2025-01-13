@@ -48,9 +48,7 @@ export function getEnvironmentSwitcherPath(
       'main',
       'java',
       ...packageToPath(config.android.packageName),
-      getReactNativeVersion() === '0.73'
-        ? 'EnvSwitcher.kt'
-        : 'EnvSwitcher.java',
+      'EnvSwitcher.java',
     ],
   };
 
@@ -77,9 +75,7 @@ export function getNativeConstantsPath(
       'main',
       'java',
       ...packageToPath(config.android.packageName),
-      getReactNativeVersion() === '0.73'
-        ? 'NativeConstants.kt'
-        : 'NativeConstants.java',
+      'NativeConstants.java',
     ],
   };
 
