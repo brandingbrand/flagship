@@ -240,7 +240,7 @@ export function resolveProjectEnvIndexPath(version: string): string {
  * @returns {Promise<void>} A promise that resolves when environment processing is complete.
  */
 async function processAndLinkEnvs(
-  options: PrebuildOptions & Record<string, string>,
+  options: PrebuildOptions & {env: string; release: boolean},
 ): Promise<void> {
   logger.log('Processing environment files...');
 
