@@ -11,7 +11,8 @@ export function SignInModal(props: any) {
 
       hideModal('blah');
     });
-  }, [hideModal]);
+  }, [hideModal, props.route.params.__modalId]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>/account/signin</Text>

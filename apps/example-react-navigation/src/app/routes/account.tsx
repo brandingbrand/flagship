@@ -1,5 +1,6 @@
 import React from 'react';
 import {Text, View, StyleSheet, Button} from 'react-native';
+
 import {useModal} from '../../shared/components/ModalProvider';
 
 export function Account() {
