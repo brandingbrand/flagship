@@ -719,24 +719,6 @@ const gemfilePath = path.ios.gemfile;
 
 ##### Constant
 
-###### `path.ios.envSwitcher`
-
-Generates the absolute path to the iOS EnvSwitcher.m.
-
-**type:** `string`
-
-##### Usage
-
-Below is an illustrative example demonstrating the utilization of the `path.ios.envSwitcher` to generate the absolute path to the EnvSwitcher.m.
-
-```ts
-import {path} from '@brandingbrand/code-cli-kit';
-
-const envSwitcherPath = path.ios.envSwitcher;
-```
-
-##### Constant
-
 ###### `path.ios.entitlements`
 
 Generates the absolute path to the iOS app.entitlements.
@@ -769,24 +751,6 @@ Below is an illustrative example demonstrating the utilization of the `path.ios.
 import {path} from '@brandingbrand/code-cli-kit';
 
 const privacyManifestPath = path.ios.privacyManifest;
-```
-
-##### Constant
-
-###### `path.ios.nativeConstants`
-
-Generates the absolute path to the iOS NativeConstants.m.
-
-**type:** `string`
-
-##### Usage
-
-Below is an illustrative example demonstrating the utilization of the `path.ios.nativeConstants` to generate the absolute path to the NativeConstants.m.
-
-```ts
-import {path} from '@brandingbrand/code-cli-kit';
-
-const nativeConstantsPath = path.ios.nativeConstants;
 ```
 
 ##### Constant
@@ -1027,66 +991,6 @@ import {path} from '@brandingbrand/code-cli-kit';
 // config aggregated from @brandingbrand/cli
 
 const mainActivityPath = path.android.mainActivity(config);
-```
-
-##### Function
-
-###### `path.android.envSwitcher`
-
-Generates the absolute path to the Android EnvSwitcher.java.
-
-**type:** `function (config: BuildConfig): string`
-
-##### Options
-
-###### `config`
-
-**type:** [BuildConfig](/guides/build)
-
-_required_
-
-The build configuration consumed by Flagship Code represented by `build.<mode>.ts`.
-
-##### Usage
-
-Below is an illustrative example demonstrating the utilization of the `path.android.envSwitcher` to generate the absolute path to the EnvSwitcher.java.
-
-```ts
-import {path} from '@brandingbrand/code-cli-kit';
-
-// config aggregated from @brandingbrand/cli
-
-const envSwitcherPath = path.android.envSwitcher(config);
-```
-
-##### Function
-
-###### `path.android.nativeConstants`
-
-Generates the absolute path to the Android NativeConstants.java.
-
-**type:** `function (config: BuildConfig): string`
-
-##### Options
-
-###### `config`
-
-**type:** [BuildConfig](/guides/build)
-
-_required_
-
-The build configuration consumed by Flagship Code represented by `build.<mode>.ts`.
-
-##### Usage
-
-Below is an illustrative example demonstrating the utilization of the `path.android.nativeConstants` to generate the absolute path to the NativeConstants.java.
-
-```ts
-import {path} from '@brandingbrand/code-cli-kit';
-
-// config aggregated from @brandingbrand/cli
-
-const nativeConstantsPath = path.android.nativeConstants(config);
 ```
 
 ### string

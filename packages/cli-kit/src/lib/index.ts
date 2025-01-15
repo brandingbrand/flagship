@@ -39,7 +39,7 @@ export * from './glob';
  *
  * @module lib/path
  */
-export {default as path} from './path';
+export {default as path, packageToPath} from './path';
 
 /**
  * Platform lib exports various functionalities related to platform-specific behavior.

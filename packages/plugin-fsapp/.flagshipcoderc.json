@@ -1,0 +1,10 @@
+{
+  "options": [
+    {
+      "flags": "--env <value>",
+      "description": "Specifies the initial environment to be used when the application starts (e.g., 'development', 'staging', or 'production').",
+      "required": true,
+      "example": "--env development"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "name": "@brandingbrand/code-plugin-fsapp",
+  "version": "1.0.0",
+  "description": "plugin for Flagship Code for @brandingbrand/fsapp",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "@brandingbrand/code-jest-config"
+  },
+  "types": "src/index.ts",
+  "dependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/parser": "^7.26.3",
+    "@babel/traverse": "^7.26.4",
+    "bundle-require": "^4.0.2",
+    "chalk": "^4.1.2",
+    "dedent": "^1.5.3",
+    "glob": "^11.0.0",
+    "magicast": "^0.3.5",
+    "semver": "^7.6.3"
+  },
+  "peerDependencies": {
+    "@brandingbrand/code-cli-kit": "^13.0.0"
+  },
+  "devDependencies": {
+    "@brandingbrand/code-cli-kit": "*",
+    "@brandingbrand/code-jest-config": "*",
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/babel__core": "^7.20.5",
+    "@types/babel__traverse": "^7.20.6",
+    "@types/eslint": "^8.56.1",
+    "@types/semver": "^7.5.8",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  }
+}

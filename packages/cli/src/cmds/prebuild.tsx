@@ -38,7 +38,6 @@ registerCustomOptions(
       'Ephemeral native code generation for a specific build, environment, and platform.',
     )
     .requiredOption('-b, --build [build]', 'Build configuration.')
-    .option('-e, --env [env]', 'Initial environment.')
     .addOption(
       new Option(
         '-p, --platform [platform]',
@@ -95,7 +94,6 @@ registerCustomOptions(
         .addAction(actions.clean)
         .addAction(actions.config)
         .addAction(actions.template)
-        .addAction(actions.env)
         .addAction(actions.transformers)
         .addAction(actions.plugins)
         .addAction(actions.packagers);

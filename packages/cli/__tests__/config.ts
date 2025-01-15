@@ -47,7 +47,6 @@ describe('config object', () => {
   it('should be able to update options configuration', () => {
     const optionsConfig: PrebuildOptions = {
       build: 'internal',
-      env: 'prod',
       release: false,
       verbose: false,
       platform: 'ios',

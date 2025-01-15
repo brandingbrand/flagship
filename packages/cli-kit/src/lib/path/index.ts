@@ -1,6 +1,6 @@
 import {getReactNativeVersion} from '../platform';
 
-import pathRN72 from './path-0.72';
+import pathRN72, {packageToPath} from './path-0.72';
 import pathRN73 from './path-0.73';
 
 // Define the type for the version profiles
@@ -28,3 +28,5 @@ const path = profiles[reactNativeVersion as keyof typeof profiles];
 
 // Export the selected path
 export default path;
+
+export {packageToPath};

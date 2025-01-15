@@ -28,12 +28,6 @@ describe('ios project.pbxproj transformers', () => {
       '/* app.entitlements */ = {isa = PBXFileReference; name = "app.entitlements"; path = "app/app.entitlements"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; explicitFileType = undefined; includeInIndex = 0; };',
     );
     expect(content).toContain(
-      '/* NativeConstants.m */ = {isa = PBXFileReference; name = "NativeConstants.m"; path = "app/NativeConstants.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };',
-    );
-    expect(content).toContain(
-      '/* EnvSwitcher.m */ = {isa = PBXFileReference; name = "EnvSwitcher.m"; path = "app/EnvSwitcher.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };',
-    );
-    expect(content).toContain(
       '/* app.swift */ = {isa = PBXFileReference; name = "app.swift"; path = "app/app.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };',
     );
     expect(content).toContain(

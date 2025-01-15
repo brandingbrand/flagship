@@ -29,21 +29,6 @@ export {default as androidGemfile} from './gemfile';
 export {default as gradleProperties} from './gradle-properties';
 
 /**
- * Represents the EnvSwitcher.java file transformers.
- */
-export {default as mainApplication} from './main-application-java';
-
-/**
- * Represents the EnvSwitcher.java file transformers.
- */
-export {default as androidEnvSwitcher} from './env-switcher-java';
-
-/**
- * Represents the NativeConstants.java file transformers.
- */
-export {default as androidNativeConstants} from './native-constants-java';
-
-/**
  * Represents the strings.xml file transformers.
  */
 export {default as strings} from './strings-xml';

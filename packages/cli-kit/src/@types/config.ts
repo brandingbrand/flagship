@@ -34,11 +34,15 @@ export type EnvConfig<T = unknown> = T;
 
 /**
  * Represents the configuration for a plugin.
- * @template T - The type of the plugin.
+ * @template T - The type to extend the build configuration.
+ * @template U - The type to extend the prebuild options.
  */
-export type PluginConfig<T> = {
-  ios?: (build: BuildConfig & T, options: PrebuildOptions) => Promise<void>;
-  android?: (build: BuildConfig & T, options: PrebuildOptions) => Promise<void>;
+export type PluginConfig<T, U> = {
+  ios?: (build: BuildConfig & T, options: PrebuildOptions & U) => Promise<void>;
+  android?: (
+    build: BuildConfig & T,
+    options: PrebuildOptions & U,
+  ) => Promise<void>;
 };
 
 export type Plugin<T> = {
@@ -61,8 +65,6 @@ export type PrebuildOptions = {
   build: string;
   /** The cli command. */
   command: string;
-  /** The environment version. */
-  env: string;
   /** Indicates whether it's a release build. */
   release: boolean;
   /** Indicates whether to display verbose output. */
