@@ -1,5 +1,9 @@
 import React from 'react';
-import {NavigationContainer, LinkingOptions} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  LinkingOptions,
+  useNavigation,
+} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -9,8 +13,11 @@ import {Cart} from './app/routes/cart';
 import {Account} from './app/routes/account';
 import {AccountSettings} from './app/routes/account.settings';
 import {navigationRef, overrideNavigationDispatch} from './shared/lib/guard';
+import {SignInModal} from './pages/account/SignInModal';
+import {ModalProvider} from './shared/components/ModalProvider';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 const AccountStack = createStackNavigator();
 
 const linking: LinkingOptions<ReactNavigation.RootParamList> = {
@@ -26,6 +33,7 @@ const linking: LinkingOptions<ReactNavigation.RootParamList> = {
           AccountSettings: 'account/settings',
         },
       },
+      SignInModal: '/modal',
     },
   },
 };
@@ -47,6 +55,20 @@ function AccountStackNavigator() {
   );
 }
 
+function TabNavigator() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={Home} options={{title: 'Home'}} />
+      <Tab.Screen name="Shop" component={Shop} options={{title: 'Shop'}} />
+      <Tab.Screen name="Cart" component={Cart} options={{title: 'Cart'}} />
+      <Tab.Screen
+        name="AccountStack"
+        component={AccountStackNavigator}
+        options={{headerShown: false, title: 'Account'}}
+      />
+    </Tab.Navigator>
+  );
+}
 export function App() {
   return (
     <NavigationContainer
@@ -56,16 +78,23 @@ export function App() {
       onUnhandledAction={action =>
         console.error('Unhandled navigation action:', action)
       }>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={Home} options={{title: 'Home'}} />
-        <Tab.Screen name="Shop" component={Shop} options={{title: 'Shop'}} />
-        <Tab.Screen name="Cart" component={Cart} options={{title: 'Cart'}} />
-        <Tab.Screen
-          name="AccountStack"
-          component={AccountStackNavigator}
-          options={{headerShown: false, title: 'Account'}}
-        />
-      </Tab.Navigator>
+      <ModalProvider>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Tabs"
+            component={TabNavigator}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="SignInModal"
+            component={SignInModal}
+            options={{
+              presentation: 'modal',
+              headerShown: true,
+            }}
+          />
+        </Stack.Navigator>
+      </ModalProvider>
     </NavigationContainer>
   );
 }

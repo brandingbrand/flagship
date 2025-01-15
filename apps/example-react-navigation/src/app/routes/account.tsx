@@ -1,14 +1,21 @@
 import React from 'react';
 import {Text, View, StyleSheet, Button} from 'react-native';
-import {useLinkTo} from '@react-navigation/native';
+import {useModal} from '../../shared/components/ModalProvider';
 
 export function Account() {
-  const linkTo = useLinkTo();
+  const {showModal} = useModal();
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>/account</Text>
-      <Button title="Settings" onPress={() => linkTo('/account/settings')} />
+      <Button
+        title="Settings"
+        onPress={async () => {
+          const res = await showModal('SignInModal');
+
+          console.log('RES: ', res);
+        }}
+      />
     </View>
   );
 }
