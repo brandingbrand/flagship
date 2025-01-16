@@ -40,9 +40,8 @@ yarn-error.log*
 # Astro
 .astro/
 
+# Flagship Code
 !**/coderc/build
-apps/example/ios
-apps/example/android
-
-!**/plugin-native-navigation/__tests__/**/node_modules
-!**/plugin-fsapp/__tests__/**/node_modules
+!**/__tests__/**/node_modules
+apps/**/ios
+apps/**/android
