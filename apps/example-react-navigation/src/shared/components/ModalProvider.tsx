@@ -97,7 +97,6 @@ export const useModal = () => {
   const currentModalId = (route.params as {__modalId?: string})?.__modalId;
 
   const enhancedHideModal = (value: any) => {
-    console.log('Current Modal Id: ', currentModalId);
     if (!currentModalId) {
       throw new Error(
         'useModal must be used within a modal with a valid `__modalId` in route.params.',
