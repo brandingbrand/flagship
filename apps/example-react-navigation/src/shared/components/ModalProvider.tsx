@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useCallback} from 'react';
+import React, {createContext, useContext, useCallback, useEffect} from 'react';
 import {
   NavigationProp,
   useNavigation,
@@ -54,11 +54,12 @@ export const ModalProvider: React.FC<{children: React.ReactNode}> = ({
   const hideModal = useCallback(
     (modalId: string, value: any) => {
       const resolve = modalMap.get(modalId);
+
       if (resolve) {
         resolve(value); // Resolve the promise with the provided value
+        navigation.goBack(); // Navigate back to dismiss the modal
         modalMap.delete(modalId); // Remove the modal from the map
       }
-      navigation.goBack(); // Navigate back to dismiss the modal
     },
     [navigation],
   );
@@ -91,10 +92,21 @@ export const useModalContext = (): ModalContextType => {
  * @returns An enhanced `hideModal` function and other modal utilities.
  */
 export const useModal = () => {
-  const {hideModal, showModal} = useModalContext();
   const route = useRoute();
+  const navigation = useNavigation();
+  const {hideModal, showModal} = useModalContext();
 
   const currentModalId = (route.params as {__modalId?: string})?.__modalId;
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', e => {
+      if (currentModalId) {
+        modalMap.delete(currentModalId);
+      }
+    });
+
+    return unsubscribe; // Cleanup the listener on unmount
+  }, [navigation, currentModalId]);
 
   const enhancedHideModal = (value: any) => {
     if (!currentModalId) {
