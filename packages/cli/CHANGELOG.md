@@ -1,5 +1,11 @@
 # @brandingbrand/code-cli
 
+## 13.1.2
+
+### Patch Changes
+
+- pin concurrent-ruby version in Gemfile
+
 ## 13.1.1
 
 ### Patch Changes
