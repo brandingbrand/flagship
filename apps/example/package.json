@@ -12,8 +12,18 @@
     "start": "react-native start"
   },
   "dependencies": {
+    "@brandingbrand/flagship-sdk": "^1.22.0",
+    "@brandingbrand/react-native-dynamic-fonts": "^0.4.0",
+    "@brandingbrand/react-native-pager-view": "^6.2.2",
+    "@react-native-async-storage/async-storage": "^1.23.1",
     "react": "18.2.0",
-    "react-native": "0.73.11"
+    "react-native": "0.73.11",
+    "react-native-device-info": "^10.13.2",
+    "react-native-fs": "^2.20.0",
+    "react-native-localize": "^2.2.4",
+    "react-native-svg": "^14.1.0",
+    "react-native-video": "^5.2.1",
+    "react-native-webview": "^13.8.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
