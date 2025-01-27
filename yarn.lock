@@ -1722,7 +1722,7 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@brandingbrand/react-native-app-restart@0.4.0", "@brandingbrand/react-native-app-restart@^0.4.0":
+"@brandingbrand/react-native-app-restart@^0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@brandingbrand/react-native-app-restart/-/react-native-app-restart-0.4.0.tgz#f8fee4991dedcaaf7d8623b73061901317756ef3"
   integrity sha512-4KbGl6+ZGzeZu7/i+Q8gz1pm91va4HHoVJQzAB9I/gRL8MdAfWURt01fDqL5uqV36AVN/Ymhv1i4EPsG8rYVYw==
@@ -11084,10 +11084,6 @@ plist@^3.0.1, plist@^3.0.5:
     "@xmldom/xmldom" "^0.8.8"
     base64-js "^1.5.1"
     xmlbuilder "^15.1.1"
-
-"plugin-env@link:apps/example/coderc/plugins/plugin-env":
-  version "0.0.0"
-  uid ""
 
 "plugin-monorepo@link:apps/example/coderc/plugins/plugin-monorepo":
   version "0.0.0"
