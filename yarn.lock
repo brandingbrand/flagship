@@ -1783,6 +1783,17 @@
     ts-toolbelt "^9.6.0"
     tslib "^2.0.0"
 
+"@brandingbrand/fsi18n@^12.0.0-alpha.20":
+  version "12.0.0-alpha.20"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/fsi18n/-/fsi18n-12.0.0-alpha.20.tgz#bf5e615a58d79af9dfeccfaad274c3ee013014f5"
+  integrity sha512-lhwAplgeijs3ZQ5DK7+cd+Q0gQ+TLeN6IFMJVIXG9mjZXSWvYvsU/d5eqTAalFIe54sQ3DaqT5Ws06JyWnO9Xg==
+  dependencies:
+    "@brandingbrand/standard-types" "12.0.0-alpha.20"
+    decimal.js "^10.0.1"
+    i18n-js "^3.3.0"
+    lodash "^4.17.21"
+    tslib "^2.0.0"
+
 "@brandingbrand/react-native-app-restart@^0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@brandingbrand/react-native-app-restart/-/react-native-app-restart-0.4.0.tgz#f8fee4991dedcaaf7d8623b73061901317756ef3"
@@ -1815,6 +1826,13 @@
     deprecated-react-native-prop-types "^4.0.0"
     prop-types "^15.6.1"
     react-addons-shallow-compare "15.6.2"
+
+"@brandingbrand/standard-types@12.0.0-alpha.20":
+  version "12.0.0-alpha.20"
+  resolved "https://registry.yarnpkg.com/@brandingbrand/standard-types/-/standard-types-12.0.0-alpha.20.tgz#5dd87f4c95507e31957521ddfa7f69811d92f984"
+  integrity sha512-PENonGVSQ/ljqdIJQw3Z0fyNudiej4Lqjv9F073mW72NoHbus1KMiYLSQXGo20wjDRRkAVJUjdYKEuLUXLEaMw==
+  dependencies:
+    tslib "^2.0.0"
 
 "@brandingbrand/tcomb-form-native@^0.6.20":
   version "0.6.20"
