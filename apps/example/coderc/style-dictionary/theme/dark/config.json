@@ -1,0 +1,21 @@
+{
+  "source": [
+    "./coderc/style-dictionary/theme/*.tokens.json",
+    "./coderc/style-dictionary/theme/dark/*.tokens.json"
+  ],
+  "platforms": {
+    "ts": {
+      "transformGroup": "react-native",
+      "files": [
+        {
+          "format": "javascript/es6",
+          "destination": "src/shared/lib/__tokens__/dark.js"
+        },
+        {
+          "format": "typescript/es6-declarations",
+          "destination": "src/shared/lib/__tokens__/dark.d.ts"
+        }
+      ]
+    }
+  }
+}

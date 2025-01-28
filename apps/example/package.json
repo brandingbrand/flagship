@@ -6,8 +6,12 @@
   "main": "index.js",
   "scripts": {
     "android": "react-native run-android",
+    "generate": "yarn generate:styles && yarn generate:asset-index",
+    "generate:asset-index": "ts-node ./coderc/asset-index/generate.ts",
+    "generate:styles": "style-dictionary build --config ./coderc/style-dictionary/theme/light/config.json && style-dictionary build --config ./coderc/style-dictionary/theme/dark/config.json",
     "ios": "react-native run-ios",
     "lint": "eslint .",
+    "postinit": "yarn generate",
     "prebuild": "flagship-code prebuild",
     "start": "react-native start"
   },
@@ -17,11 +21,17 @@
     "@brandingbrand/react-native-dynamic-fonts": "^0.4.0",
     "@brandingbrand/react-native-pager-view": "^6.2.2",
     "@react-native-async-storage/async-storage": "^1.23.1",
+    "@react-navigation/bottom-tabs": "^7.2.0",
+    "@react-navigation/native": "^7.0.14",
+    "@react-navigation/stack": "^7.1.1",
     "react": "18.2.0",
     "react-native": "0.73.11",
     "react-native-device-info": "^10.13.2",
     "react-native-fs": "^2.20.0",
+    "react-native-gesture-handler": "^2.22.0",
     "react-native-localize": "^2.2.4",
+    "react-native-safe-area-context": "^5.1.0",
+    "react-native-screens": "^4.5.0",
     "react-native-svg": "^14.1.0",
     "react-native-video": "^5.2.1",
     "react-native-webview": "^13.8.7"
@@ -51,6 +61,8 @@
     "prettier": "2.8.8",
     "react-native-bootsplash": "^5.4.0",
     "react-test-renderer": "18.2.0",
+    "style-dictionary": "^3.8.0",
+    "ts-node": "^10.9.2",
     "typescript": "5.0.4"
   }
 }
