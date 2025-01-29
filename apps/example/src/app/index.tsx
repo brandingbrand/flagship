@@ -1,7 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 
 import {DiscoverStackNavigator} from './routes/discover';
 import {ShopStackNavigator} from './routes/shop';
@@ -9,7 +8,6 @@ import {CartStackNavigator} from './routes/cart';
 import {AccountStackNavigator} from './routes/account';
 import {WishlistStackNavigator} from './routes/wishlist';
 
-const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
@@ -50,13 +48,7 @@ export function App() {
       onUnhandledAction={action =>
         console.error('Unhandled navigation action:', action)
       }>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Tabs"
-          component={BottomTabNavigator}
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator>
+      <BottomTabNavigator />
     </NavigationContainer>
   );
 }
