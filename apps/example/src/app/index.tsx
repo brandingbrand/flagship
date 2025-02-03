@@ -7,8 +7,14 @@ import {ShopStackNavigator} from './routes/shop';
 import {CartStackNavigator} from './routes/cart';
 import {AccountStackNavigator} from './routes/account';
 import {WishlistStackNavigator} from './routes/wishlist';
+import {createStackNavigator} from '@react-navigation/stack';
+
+import {ForceUpdateModal} from '@/pages/maintenance/ForceUpdateModal';
+import {SoftUpdateModal} from '@/pages/maintenance/SoftUpdateModal';
+import {MaintenanceModal} from '@/pages/maintenance/MaintenanceModal';
 
 const BottomTab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 export function App() {
   return (
@@ -43,6 +49,11 @@ export function App() {
           options={{headerShown: false, title: 'Account'}}
         />
       </BottomTab.Navigator>
+      <Stack.Navigator screenOptions={{presentation: 'modal'}}>
+        <Stack.Screen name="ForceUpdateModal" component={ForceUpdateModal} />
+        <Stack.Screen name="SoftUpdateModal" component={SoftUpdateModal} />
+        <Stack.Screen name="MaintenanceModal" component={MaintenanceModal} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
