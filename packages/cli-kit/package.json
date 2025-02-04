@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-cli-kit",
-  "version": "13.1.0",
+  "version": "13.1.1",
   "description": "tools for Flagship Code react-native application",
   "license": "MIT",
   "main": "dist/index.js",
