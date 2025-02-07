@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {i18n, keys} from '@/shared/i18n';
 
-const CartStack = createStackNavigator();
+const CartStack = createNativeStackNavigator();
 
 function Cart() {
   return (

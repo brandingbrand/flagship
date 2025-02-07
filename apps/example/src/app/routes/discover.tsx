@@ -2,10 +2,10 @@ import React from 'react';
 import {View, Text} from 'react-native';
 
 import {i18n, keys} from '@/shared/i18n';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {DiscoverSlug} from './discover.$slug';
 
-const DiscoverStack = createStackNavigator();
+const DiscoverStack = createNativeStackNavigator();
 
 function Discover() {
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {LinkingOptions, NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {ForceUpdateModal} from '@/pages/maintenance/ForceUpdateModal';
 import {SoftUpdateModal} from '@/pages/maintenance/SoftUpdateModal';
@@ -16,8 +16,8 @@ import {ROUTES} from './lib/constants';
 import {navigationRef} from './lib/navigation';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
-const Stack = createStackNavigator<RootStackParamList>();
-const ModalStack = createStackNavigator<ModalStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
+const ModalStack = createNativeStackNavigator<ModalStackParamList>();
 
 /**
  * Navigation linking configuration for deep linking and URL handling

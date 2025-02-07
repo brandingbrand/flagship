@@ -1,11 +1,11 @@
 import React from 'react';
 import {View, Text, Button} from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {i18n, keys} from '@/shared/i18n';
 import {useLinkTo} from '@react-navigation/native';
 
-const AccountStack = createStackNavigator();
+const AccountStack = createNativeStackNavigator();
 
 function Account() {
   const linkTo = useLinkTo();
