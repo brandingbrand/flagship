@@ -1,0 +1,732 @@
+{
+  "neutral": {
+    "fg-primary": {
+      "value": "{global.neutral.black}",
+      "type": "color",
+      "description": "primary text/icons (ex. headlines)"
+    },
+    "fg-secondary": {
+      "value": "{global.darkalpha.700}",
+      "type": "color",
+      "description": "secondary text/icons (ex. body copy)"
+    },
+    "fg-tertiary": {
+      "value": "{global.darkalpha.500}",
+      "type": "color",
+      "description": "tertiary text/icons (ex. placeholder copy)"
+    },
+    "fg-primary-inverse": {
+      "value": "{global.neutral.white}",
+      "type": "color",
+      "description": "primary text/icons (ex. headlines)"
+    },
+    "fg-secondary-inverse": {
+      "value": "{global.whitealpha.800}",
+      "type": "color",
+      "description": "secondary text/icons (ex. body copy)"
+    },
+    "fg-tertiary-inverse": {
+      "value": "{global.whitealpha.500}",
+      "type": "color",
+      "description": "tertiary text/icons (ex. inactive states)"
+    },
+    "bg-canvas": {
+      "value": "{global.neutral.50}",
+      "type": "color",
+      "description": "background of the entire design"
+    },
+    "bg": {
+      "value": "{global.neutral.white}",
+      "type": "color",
+      "description": "bg for containers"
+    },
+    "bg-strong": {
+      "value": "{global.neutral.50}",
+      "type": "color",
+      "description": "elevated bg"
+    },
+    "bg-stronger": {
+      "value": "{global.neutral.100}",
+      "type": "color",
+      "description": "even more elevated bg"
+    },
+    "bg-strongest": {
+      "value": "{global.neutral.black}",
+      "type": "color",
+      "description": "highest contrast to default bg"
+    },
+    "border": {
+      "value": "{global.neutral.100}",
+      "type": "color",
+      "description": "default border"
+    },
+    "border-weakest": {
+      "value": "{global.neutral.50}",
+      "type": "color",
+      "description": "disabled state of default border"
+    },
+    "border-strongest": {
+      "value": "{global.neutral.black}",
+      "type": "color",
+      "description": "strongest contrast border"
+    },
+    "bg-loading": {
+      "value": "linear-gradient(-90deg, #ffffff 0%, #f0f1f3 50%, #ffffff 100%)",
+      "type": "color",
+      "description": "loading state"
+    },
+    "bg-backdrop-strong": {
+      "value": "{global.darkalpha.500}",
+      "type": "color",
+      "description": "overlay behind modals"
+    },
+    "bg-backdrop-weak": {
+      "value": "{global.whitealpha.500}",
+      "type": "color",
+      "description": "overlay behind modals"
+    },
+    "white-primary": {
+      "value": "{global.neutral.white}",
+      "type": "color"
+    },
+    "white-secondary": {
+      "value": "{global.whitealpha.700}",
+      "type": "color"
+    },
+    "white-tertiary": {
+      "value": "{global.whitealpha.500}",
+      "type": "color"
+    },
+    "black-primary": {
+      "value": "{global.neutral.black}",
+      "type": "color"
+    },
+    "black-secondary": {
+      "value": "{global.darkalpha.700}",
+      "type": "color"
+    },
+    "black-tertiary": {
+      "value": "{global.darkalpha.500}",
+      "type": "color"
+    }
+  },
+  "brand": {
+    "fg": {
+      "value": "{global.brand.500}",
+      "type": "color",
+      "description": "brand text/icons"
+    },
+    "fg-strong": {
+      "value": "{global.brand.800}",
+      "type": "color",
+      "description": "strong contrast of fg elements"
+    },
+    "fg-inverse": {
+      "value": "{global.neutral.white}",
+      "type": "color",
+      "description": "text/icons on brand color"
+    },
+    "bg-weakest": {
+      "value": "{global.brand.50}",
+      "type": "color",
+      "description": "brand containers (ex. alerts)"
+    },
+    "bg-weaker": {
+      "value": "{global.brand.100}",
+      "type": "color"
+    },
+    "bg-weak": {
+      "value": "{global.brand.400}",
+      "type": "color"
+    },
+    "bg": {
+      "value": "{global.brand.500}",
+      "type": "color",
+      "description": "primary actions (ex. buttons) hello"
+    },
+    "bg-strong": {
+      "value": "{global.brand.600}",
+      "type": "color",
+      "description": "hover state of primary actions"
+    },
+    "bg-stronger": {
+      "value": "{global.brand.800}",
+      "type": "color",
+      "description": "pressed state of primary actions"
+    },
+    "bg-strongest": {
+      "value": "{global.brand.900}",
+      "type": "color"
+    },
+    "border": {
+      "value": "{global.brand.500}",
+      "type": "color",
+      "description": "brand border"
+    },
+    "border-weakest": {
+      "value": "{global.brand.50}",
+      "type": "color",
+      "description": "disabled state of border"
+    },
+    "border-strongest": {
+      "value": "{global.brand.900}",
+      "type": "color",
+      "description": "strongest contrast of border"
+    },
+    "constant": {
+      "value": "{global.brand.500}",
+      "type": "color",
+      "description": "Does not change when toggling between light/dark modes."
+    }
+  },
+  "accent1": {
+    "fg": {
+      "value": "{global.accent1.500}",
+      "type": "color",
+      "description": "accent1 text/icons"
+    },
+    "fg-strong": {
+      "value": "{global.accent1.800}",
+      "type": "color",
+      "description": "strong contrast of accent1 text/icons"
+    },
+    "fg-inverse": {
+      "value": "{global.neutral.white}",
+      "type": "color",
+      "description": "text/icons on accent1"
+    },
+    "bg-weakest": {
+      "value": "{global.accent1.50}",
+      "type": "color",
+      "description": "accent1 containers (ex. alerts)"
+    },
+    "bg-weaker": {
+      "value": "{global.accent1.100}",
+      "type": "color"
+    },
+    "bg-weak": {
+      "value": "{global.accent1.400}",
+      "type": "color"
+    },
+    "bg": {
+      "value": "{global.accent1.500}",
+      "type": "color",
+      "description": "accent1 actions (ex. buttons)"
+    },
+    "bg-strong": {
+      "value": "{global.accent1.600}",
+      "type": "color",
+      "description": "hover state of accent1 actions"
+    },
+    "bg-stronger": {
+      "value": "{global.accent1.800}",
+      "type": "color"
+    },
+    "bg-strongest": {
+      "value": "{global.accent1.900}",
+      "type": "color",
+      "description": "pressed state of accent1"
+    },
+    "border": {
+      "value": "{global.accent1.500}",
+      "type": "color",
+      "description": "accent1 border"
+    },
+    "border-weakest": {
+      "value": "{global.accent1.50}",
+      "type": "color",
+      "description": "disabled state of accent1 border"
+    },
+    "border-strongest": {
+      "value": "{global.accent1.900}",
+      "type": "color",
+      "description": "strongest contrast of accent1 border"
+    },
+    "constant": {
+      "value": "{global.accent1.500}",
+      "type": "color",
+      "description": "Does not change when toggling between light/dark modes."
+    }
+  },
+  "accent2": {
+    "fg": {
+      "value": "{global.accent2.500}",
+      "type": "color",
+      "description": "accent2 text/icons"
+    },
+    "fg-strong": {
+      "value": "{global.accent2.800}",
+      "type": "color",
+      "description": "strong contrast of accent2 text/icons"
+    },
+    "fg-inverse": {
+      "value": "{global.neutral.white}",
+      "type": "color",
+      "description": "text/icons on accent2 color"
+    },
+    "bg-weakest": {
+      "value": "{global.accent2.50}",
+      "type": "color",
+      "description": "accent2 containers (ex. alerts)"
+    },
+    "bg-weaker": {
+      "value": "{global.accent2.100}",
+      "type": "color"
+    },
+    "bg-weak": {
+      "value": "{global.accent2.400}",
+      "type": "color"
+    },
+    "bg": {
+      "value": "{global.accent2.500}",
+      "type": "color",
+      "description": "accent2 actions (ex. buttons)"
+    },
+    "bg-strong": {
+      "value": "{global.accent2.600}",
+      "type": "color",
+      "description": "hover state of accent2 actions"
+    },
+    "bg-stronger": {
+      "value": "{global.accent2.800}",
+      "type": "color"
+    },
+    "bg-strongest": {
+      "value": "{global.accent2.900}",
+      "type": "color",
+      "description": "pressed state of accent2 actions"
+    },
+    "border": {
+      "value": "{global.accent2.500}",
+      "type": "color",
+      "description": "accent2 border"
+    },
+    "border-weakest": {
+      "value": "{global.accent2.50}",
+      "type": "color",
+      "description": "disabled state of accent2 border"
+    },
+    "border-strongest": {
+      "value": "{global.accent2.900}",
+      "type": "color",
+      "description": "strongest contrast of accent2 border"
+    },
+    "constant": {
+      "value": "{global.accent2.500}",
+      "type": "color",
+      "description": "Does not change when toggling between light/dark modes."
+    }
+  },
+  "accent3": {
+    "fg": {
+      "value": "{global.accent3.500}",
+      "type": "color",
+      "description": "accent3 text/icons"
+    },
+    "fg-strong": {
+      "value": "{global.accent3.800}",
+      "type": "color",
+      "description": "strong contrast for text/icons"
+    },
+    "fg-inverse": {
+      "value": "{global.neutral.white}",
+      "type": "color",
+      "description": "text/icons on accent3"
+    },
+    "bg-weakest": {
+      "value": "{global.accent3.50}",
+      "type": "color",
+      "description": "accent3 containers (ex. alerts)"
+    },
+    "bg-weaker": {
+      "value": "{global.accent3.100}",
+      "type": "color"
+    },
+    "bg-weak": {
+      "value": "{global.accent3.400}",
+      "type": "color"
+    },
+    "bg": {
+      "value": "{global.accent3.500}",
+      "type": "color",
+      "description": "accent3 actions (ex. buttons)"
+    },
+    "bg-strong": {
+      "value": "{global.accent3.600}",
+      "type": "color",
+      "description": "hover state of accent3 actions"
+    },
+    "bg-stronger": {
+      "value": "{global.accent3.800}",
+      "type": "color"
+    },
+    "bg-strongest": {
+      "value": "{global.accent3.900}",
+      "type": "color",
+      "description": "pressed state of accent3 actions"
+    },
+    "border": {
+      "value": "{global.accent3.500}",
+      "type": "color",
+      "description": "accent3 border"
+    },
+    "border-weakest": {
+      "value": "{global.accent3.50}",
+      "type": "color",
+      "description": "disabled state of accent3 border"
+    },
+    "border-strongest": {
+      "value": "{global.accent3.900}",
+      "type": "color",
+      "description": "strongest contrast of accent3 border"
+    },
+    "constant": {
+      "value": "{global.accent3.500}",
+      "type": "color",
+      "description": "Does not change when toggling between light/dark modes."
+    }
+  },
+  "success": {
+    "fg": {
+      "value": "{global.success.500}",
+      "type": "color",
+      "description": "success text/icons"
+    },
+    "fg-strong": {
+      "value": "{global.success.800}",
+      "type": "color",
+      "description": "strong contrast for success text/icons"
+    },
+    "fg-inverse": {
+      "value": "{global.neutral.white}",
+      "type": "color",
+      "description": "text/icons on success"
+    },
+    "bg-weakest": {
+      "value": "{global.success.50}",
+      "type": "color",
+      "description": "success containers (ex. alerts)"
+    },
+    "bg-weaker": {
+      "value": "{global.success.100}",
+      "type": "color"
+    },
+    "bg-weak": {
+      "value": "{global.success.400}",
+      "type": "color"
+    },
+    "bg": {
+      "value": "{global.success.500}",
+      "type": "color",
+      "description": "success actions (ex. buttons)"
+    },
+    "bg-strong": {
+      "value": "{global.success.600}",
+      "type": "color",
+      "description": "hover state of success actions"
+    },
+    "bg-stronger": {
+      "value": "{global.success.800}",
+      "type": "color"
+    },
+    "bg-strongest": {
+      "value": "{global.success.900}",
+      "type": "color",
+      "description": "pressed state of success actions"
+    },
+    "border": {
+      "value": "{global.success.500}",
+      "type": "color",
+      "description": "success border"
+    },
+    "border-weakest": {
+      "value": "{global.success.50}",
+      "type": "color",
+      "description": "disabled state of success border"
+    },
+    "border-strongest": {
+      "value": "{global.success.900}",
+      "type": "color",
+      "description": "strongest contrast of success border"
+    },
+    "constant": {
+      "value": "{global.success.500}",
+      "type": "color",
+      "description": "Does not change when toggling between light/dark modes."
+    }
+  },
+  "warning": {
+    "fg": {
+      "value": "{global.warning.500}",
+      "type": "color",
+      "description": "warning text/icons"
+    },
+    "fg-strong": {
+      "value": "{global.warning.800}",
+      "type": "color",
+      "description": "strong contrast for warning text/icons"
+    },
+    "fg-inverse": {
+      "value": "{global.neutral.white}",
+      "type": "color",
+      "description": "text/icons on warning"
+    },
+    "bg-weakest": {
+      "value": "{global.warning.50}",
+      "type": "color",
+      "description": "warning containers (ex. alerts)"
+    },
+    "bg-weaker": {
+      "value": "{global.warning.100}",
+      "type": "color"
+    },
+    "bg-weak": {
+      "value": "{global.warning.400}",
+      "type": "color"
+    },
+    "bg": {
+      "value": "{global.warning.500}",
+      "type": "color",
+      "description": "warning actions (ex. buttons)"
+    },
+    "bg-strong": {
+      "value": "{global.warning.600}",
+      "type": "color"
+    },
+    "bg-stronger": {
+      "value": "{global.warning.800}",
+      "type": "color"
+    },
+    "bg-strongest": {
+      "value": "{global.warning.900}",
+      "type": "color"
+    },
+    "border": {
+      "value": "{global.warning.500}",
+      "type": "color",
+      "description": "warning border"
+    },
+    "border-weakest": {
+      "value": "{global.warning.50}",
+      "type": "color",
+      "description": "disabled state of warning border"
+    },
+    "border-strongest": {
+      "value": "{global.warning.900}",
+      "type": "color",
+      "description": "strongest contrast of warning border"
+    },
+    "constant": {
+      "value": "{global.warning.500}",
+      "type": "color",
+      "description": "Does not change when toggling between light/dark modes."
+    }
+  },
+  "danger": {
+    "fg": {
+      "value": "{global.danger.500}",
+      "type": "color",
+      "description": "danger text/icons"
+    },
+    "fg-strong": {
+      "value": "{global.danger.800}",
+      "type": "color",
+      "description": "strong contrast for danger text/icons"
+    },
+    "fg-inverse": {
+      "value": "{global.neutral.white}",
+      "type": "color",
+      "description": "text/icons on danger"
+    },
+    "bg-weakest": {
+      "value": "{global.danger.50}",
+      "type": "color",
+      "description": "danger containers (ex. alerts)"
+    },
+    "bg-weaker": {
+      "value": "{global.danger.100}",
+      "type": "color"
+    },
+    "bg-weak": {
+      "value": "{global.danger.400}",
+      "type": "color"
+    },
+    "bg": {
+      "value": "{global.danger.500}",
+      "type": "color",
+      "description": "danger actions (ex. buttons)"
+    },
+    "bg-strong": {
+      "value": "{global.danger.600}",
+      "type": "color",
+      "description": "hover state for danger actions"
+    },
+    "bg-stronger": {
+      "value": "{global.danger.800}",
+      "type": "color"
+    },
+    "bg-strongest": {
+      "value": "{global.danger.900}",
+      "type": "color",
+      "description": "pressed state of danger actions"
+    },
+    "border": {
+      "value": "{global.danger.500}",
+      "type": "color",
+      "description": "danger border"
+    },
+    "border-weakest": {
+      "value": "{global.danger.50}",
+      "type": "color",
+      "description": "disabled state of danger border"
+    },
+    "border-strongest": {
+      "value": "{global.danger.900}",
+      "type": "color",
+      "description": "strongest contrast of danger border"
+    },
+    "constant": {
+      "value": "{global.danger.500}",
+      "type": "color",
+      "description": "Does not change when toggling between light/dark modes."
+    }
+  },
+  "info": {
+    "fg": {
+      "value": "{global.info.500}",
+      "type": "color",
+      "description": "info text/icons"
+    },
+    "fg-strong": {
+      "value": "{global.info.800}",
+      "type": "color",
+      "description": "strong contrast for info text/icons"
+    },
+    "fg-inverse": {
+      "value": "{global.neutral.white}",
+      "type": "color",
+      "description": "text/icons on info"
+    },
+    "bg-weakest": {
+      "value": "{global.info.50}",
+      "type": "color",
+      "description": "info containers (ex. alerts)"
+    },
+    "bg-weaker": {
+      "value": "{global.info.100}",
+      "type": "color"
+    },
+    "bg-weak": {
+      "value": "{global.info.400}",
+      "type": "color"
+    },
+    "bg": {
+      "value": "{global.info.500}",
+      "type": "color",
+      "description": "info actions (ex. buttons)"
+    },
+    "bg-strong": {
+      "value": "{global.info.600}",
+      "type": "color",
+      "description": "hover state of info actions"
+    },
+    "bg-stronger": {
+      "value": "{global.info.800}",
+      "type": "color"
+    },
+    "bg-strongest": {
+      "value": "{global.info.900}",
+      "type": "color",
+      "description": "pressed state of info actions"
+    },
+    "border": {
+      "value": "{global.info.500}",
+      "type": "color",
+      "description": "info border"
+    },
+    "border-weakest": {
+      "value": "{global.info.50}",
+      "type": "color",
+      "description": "disabled state of info border"
+    },
+    "border-strongest": {
+      "value": "{global.info.900}",
+      "type": "color",
+      "description": "strongest contrast of info border"
+    },
+    "constant": {
+      "value": "{global.info.500}",
+      "type": "color",
+      "description": "Does not change when toggling between light/dark modes."
+    }
+  },
+  "sale": {
+    "fg": {
+      "value": "{global.info.300}",
+      "type": "color",
+      "description": "info text/icons"
+    },
+    "fg-strong": {
+      "value": "{global.info.50}",
+      "type": "color",
+      "description": "strong contrast for info text/icons"
+    },
+    "fg-inverse": {
+      "value": "{global.neutral.black}",
+      "type": "color",
+      "description": "text/icons on info"
+    },
+    "bg-weakest": {
+      "value": "{global.info.900}",
+      "type": "color",
+      "description": "info containers (ex. alerts)"
+    },
+    "bg-weaker": {
+      "value": "{global.info.800}",
+      "type": "color"
+    },
+    "bg-weak": {
+      "value": "{global.info.500}",
+      "type": "color"
+    },
+    "bg": {
+      "value": "{global.info.300}",
+      "type": "color",
+      "description": "info actions (ex. buttons)"
+    },
+    "bg-strong": {
+      "value": "{global.info.200}",
+      "type": "color",
+      "description": "hover state of info actions"
+    },
+    "bg-stronger": {
+      "value": "{global.info.100}",
+      "type": "color"
+    },
+    "bg-strongest": {
+      "value": "{global.info.50}",
+      "type": "color",
+      "description": "pressed state of info actions"
+    },
+    "border": {
+      "value": "{global.info.300}",
+      "type": "color",
+      "description": "info border"
+    },
+    "border-weakest": {
+      "value": "{global.info.900}",
+      "type": "color",
+      "description": "disabled state of info border"
+    },
+    "border-strongest": {
+      "value": "{global.info.50}",
+      "type": "color",
+      "description": "strongest contrast of info border"
+    },
+    "constant": {
+      "value": "{global.info.500}",
+      "type": "color",
+      "description": "Does not change when toggling between light/dark modes."
+    }
+  }
+}

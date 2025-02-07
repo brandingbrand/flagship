@@ -50,14 +50,14 @@ export default defineBuild<
       ios: {
         type: 'generated',
         generated: {
-          logoPath: './coderc/assets/splash-screen/logo.png',
+          logoPath: './coderc/assets/splash-screen/ios/generated/logo.png',
           backgroundColor: '#fff',
         },
       },
       android: {
         type: 'generated',
         generated: {
-          logoPath: './coderc/assets/splash-screen/logo.png',
+          logoPath: './coderc/assets/splash-screen/android/generated/logo.png',
           backgroundColor: '#fff',
         },
       },
