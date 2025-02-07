@@ -1,6 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {NavigationContainer} from '@react-navigation/native';
+import {LinkingOptions, NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {ForceUpdateModal} from '@/pages/maintenance/ForceUpdateModal';
@@ -18,6 +18,115 @@ import {navigationRef} from './lib/navigation';
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 const Stack = createStackNavigator<RootStackParamList>();
 const ModalStack = createStackNavigator<ModalStackParamList>();
+
+/**
+ * Navigation linking configuration for deep linking and URL handling
+ * @type {Object}
+ */
+const linking: LinkingOptions<RootStackParamList> = {
+  /**
+   * URL prefixes that the app will handle
+   * Includes both custom URL scheme and web URL
+   * @type {string[]}
+   */
+  prefixes: ['myapp://', 'https://myapp.com'],
+
+  /**
+   * Screen configuration mapping URLs to navigation routes
+   * @type {Object}
+   */
+  config: {
+    /**
+     * Root level screens configuration
+     * @type {Object}
+     */
+    screens: {
+      /**
+       * Main navigator containing bottom tabs
+       * @type {Object}
+       */
+      [ROUTES.MAIN]: {
+        /**
+         * Bottom tab navigator screens
+         * @type {Object}
+         */
+        screens: {
+          /**
+           * Discover tab stack configuration
+           * Handles /discover and /discover/:slug routes
+           * @type {Object}
+           */
+          [ROUTES.DISCOVER_STACK]: {
+            screens: {
+              /** @type {string} Base discover screen route */
+              Discover: 'discover',
+              /** @type {string} Dynamic discover detail route with slug parameter */
+              DiscoverSlug: 'discover/:slug',
+            },
+          },
+          /**
+           * Shop tab stack configuration
+           * Handles /shop route
+           * @type {Object}
+           */
+          [ROUTES.SHOP_STACK]: {
+            screens: {
+              /** @type {string} Base shop screen route */
+              Shop: 'shop',
+            },
+          },
+          /**
+           * Wishlist tab stack configuration
+           * Handles /wishlist route
+           * @type {Object}
+           */
+          [ROUTES.WISHLIST_STACK]: {
+            screens: {
+              /** @type {string} Base wishlist screen route */
+              Wishlist: 'wishlist',
+            },
+          },
+          /**
+           * Cart tab stack configuration
+           * Handles /cart route
+           * @type {Object}
+           */
+          [ROUTES.CART_STACK]: {
+            screens: {
+              /** @type {string} Base cart screen route */
+              Cart: 'cart',
+            },
+          },
+          /**
+           * Account tab stack configuration
+           * Handles /account route
+           * @type {Object}
+           */
+          [ROUTES.ACCOUNT_STACK]: {
+            screens: {
+              /** @type {string} Base account screen route */
+              Account: 'account',
+            },
+          },
+        },
+      },
+      /**
+       * Modal screens configuration
+       * @type {Object}
+       */
+      [ROUTES.MODAL]: {
+        screens: {
+          /** @type {string} Force update modal route */
+          [ROUTES.FORCE_UPDATE_MODAL]: 'force-update',
+          /** @type {string} Soft update modal route */
+          [ROUTES.SOFT_UPDATE_MODAL]: 'soft-update',
+          /** @type {string} Maintenance modal route */
+          [ROUTES.MAINTENANCE_MODAL]: 'maintenance',
+        },
+      },
+    },
+  },
+};
 
 function MainNavigator() {
   return (
@@ -60,7 +169,6 @@ function ModalNavigator() {
       screenOptions={{
         presentation: 'modal',
         headerShown: false,
-        cardStyle: {backgroundColor: 'rgba(0, 0, 0, 0.5)'},
       }}>
       <ModalStack.Screen
         name={ROUTES.FORCE_UPDATE_MODAL}
@@ -81,6 +189,7 @@ function ModalNavigator() {
 export function App() {
   return (
     <NavigationContainer
+      linking={linking}
       ref={navigationRef}
       onUnhandledAction={action =>
         console.error('Unhandled navigation action:', action)
