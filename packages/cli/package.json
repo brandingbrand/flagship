@@ -28,7 +28,7 @@
     "ci-info": "^4.0.0",
     "commander": "11.1.0",
     "detect-package-manager": "^3.0.1",
-    "esbuild": "^0.20.0",
+    "esbuild": "^0.25.0",
     "execa": "^9.3.0",
     "fp-ts": "^2.16.2",
     "ink": "^4.4.1",
