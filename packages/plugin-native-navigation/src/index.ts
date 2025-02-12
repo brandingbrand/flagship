@@ -8,7 +8,7 @@ import {
   type PrebuildOptions,
   definePlugin,
   fs,
-  getReactNativeVersion,
+  version,
 } from '@brandingbrand/code-cli-kit';
 
 import {android as android72} from './android-0.72';
@@ -66,12 +66,11 @@ export default definePlugin({
     build: BuildConfig,
     options: PrebuildOptions,
   ): Promise<void> {
-    switch (getReactNativeVersion()) {
-      case '0.73':
-        return android73(build, options);
-      case '0.72':
-      default:
-        return android72(build, options);
-    }
+    const pluginAndroid = version.select({
+      '0.72': android72,
+      '0.73': android73,
+    });
+
+    return pluginAndroid(build, options);
   },
 });

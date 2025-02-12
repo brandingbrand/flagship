@@ -55,6 +55,8 @@ export * from './platform';
  */
 export * from './string';
 
+export * as version from './version';
+
 /**
  * Singleton instance of the FlagshipCodeLogger.
  *

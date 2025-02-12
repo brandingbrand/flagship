@@ -37,6 +37,7 @@ export type EnvConfig<T = unknown> = T;
  * @template T - The type of the plugin.
  */
 export type PluginConfig<T> = {
+  common?: (build: BuildConfig & T, options: PrebuildOptions) => Promise<void>;
   ios?: (build: BuildConfig & T, options: PrebuildOptions) => Promise<void>;
   android?: (build: BuildConfig & T, options: PrebuildOptions) => Promise<void>;
 };

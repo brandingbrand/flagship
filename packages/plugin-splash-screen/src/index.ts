@@ -7,7 +7,7 @@ import {
   type BuildConfig,
   type PrebuildOptions,
   definePlugin,
-  getReactNativeVersion,
+  version,
 } from '@brandingbrand/code-cli-kit';
 
 import * as legacy72 from './legacy-0.72';
@@ -59,23 +59,21 @@ export default definePlugin<CodePluginSplashScreen>({
     if (!build.codePluginSplashScreen.plugin.android) return;
 
     if (build.codePluginSplashScreen.plugin.android.type === 'legacy') {
-      switch (getReactNativeVersion()) {
-        case '0.73':
-          return legacy73.android(build);
-        case '0.72':
-        default:
-          return legacy72.android(build);
-      }
+      const pluginAndroid = version.select({
+        '0.72': legacy72.android,
+        '0.73': legacy73.android,
+      });
+
+      return pluginAndroid(build);
     }
 
     if (build.codePluginSplashScreen.plugin.android.type === 'generated') {
-      switch (getReactNativeVersion()) {
-        case '0.73':
-          return generated73.android(build);
-        case '0.72':
-        default:
-          return generated72.android(build);
-      }
+      const pluginAndroid = version.select({
+        '0.72': generated72.android,
+        '0.73': generated73.android,
+      });
+
+      return pluginAndroid(build);
     }
   },
 });
