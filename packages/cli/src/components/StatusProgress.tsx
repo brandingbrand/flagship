@@ -2,42 +2,61 @@ import {useAsync} from 'react-async';
 import {useEffect, useState} from 'react';
 import {FlagshipCodeManager} from '@brandingbrand/code-cli-kit';
 
-import {AsyncComponents} from './AsyncComponents';
+import {StatusAsyncComponents} from './StatusAsyncComponents';
 
+interface ProgressState {
+  percent: number;
+  result?: 'success' | 'fail';
+}
+
+/**
+ * Status progress component that displays a loading spinner, progress bar, and completion state
+ * @returns A React component showing the current progress state with visual indicators
+ */
 export default function StatusProgress() {
-  const [state, setState] = useState<{
-    percent: number;
-    result: undefined | 'success' | 'fail';
-  }>({
+  const [state, setState] = useState<ProgressState>({
     percent: 0,
     result: undefined,
   });
 
   const {data, isPending} = useAsync({
-    promiseFn: AsyncComponents,
+    promiseFn: StatusAsyncComponents,
   });
 
   useEffect(() => {
-    FlagshipCodeManager.shared.on('onRun', function (evt) {
+    /**
+     * Handle progress updates during execution
+     */
+    const onRun = (evt: number) => {
       setState(prevState => ({
         ...prevState,
         percent: evt,
       }));
-    });
+    };
 
-    FlagshipCodeManager.shared.on('onEnd', function () {
+    /**
+     * Handle successful completion
+     */
+    const onEnd = () => {
       setState(prevState => ({
         ...prevState,
         result: 'success',
       }));
-    });
+    };
 
-    FlagshipCodeManager.shared.on('onError', function () {
+    /**
+     * Handle execution failures
+     */
+    const onError = () => {
       setState(prevState => ({
         ...prevState,
         result: 'fail',
       }));
-    });
+    };
+
+    FlagshipCodeManager.shared.on('onRun', onRun);
+    FlagshipCodeManager.shared.on('onEnd', onEnd);
+    FlagshipCodeManager.shared.on('onError', onError);
 
     return () => {
       FlagshipCodeManager.shared.removeAllListeners('onRun');
@@ -50,6 +69,10 @@ export default function StatusProgress() {
 
   const {Text, Spinner} = data;
 
+  /**
+   * Generates a progress bar string representation
+   * @returns A string containing progress bar characters
+   */
   function getString() {
     const screen = 10;
     const max = Math.min(Math.floor(screen * state.percent), screen);

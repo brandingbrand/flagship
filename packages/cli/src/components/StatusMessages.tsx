@@ -1,26 +1,42 @@
 import {useAsync} from 'react-async';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useCallback} from 'react';
 import {FlagshipCodeManager} from '@brandingbrand/code-cli-kit';
 
-import {AsyncComponents} from './AsyncComponents';
+import {StatusAsyncComponents} from './StatusAsyncComponents';
 
+/**
+ * StatusMessages component that displays log messages from FlagshipCodeManager
+ * in a vertically stacked list.
+ *
+ * @returns A React component that renders log messages or null if still loading
+ *
+ * @example
+ * ```tsx
+ * <StatusMessages />
+ * ```
+ */
 export function StatusMessages() {
   const [messages, setMessages] = useState<string[]>([]);
 
-  useEffect(() => {
-    FlagshipCodeManager.shared.on('onLog', function (evt) {
-      setMessages(prevMessages => {
-        return [...prevMessages, evt];
-      });
-    });
+  /**
+   * Handler for new log messages
+   */
+  const handleNewMessage = useCallback((evt: string) => {
+    setMessages(prevMessages => [...prevMessages, evt]);
+  }, []);
 
+  useEffect(() => {
+    // Subscribe to log events
+    FlagshipCodeManager.shared.on('onLog', handleNewMessage);
+
+    // Cleanup subscription on unmount
     return () => {
       FlagshipCodeManager.shared.removeAllListeners('onLog');
     };
-  }, []);
+  }, [handleNewMessage]);
 
   const {data, isPending} = useAsync({
-    promiseFn: AsyncComponents,
+    promiseFn: StatusAsyncComponents,
   });
 
   if (!data || isPending) return null;
@@ -29,8 +45,8 @@ export function StatusMessages() {
 
   return (
     <Box flexDirection="column">
-      {messages.map(it => (
-        <Text key={it}>{it}</Text>
+      {messages.map((message, index) => (
+        <Text key={`${message}-${index}`}>{message}</Text>
       ))}
     </Box>
   );

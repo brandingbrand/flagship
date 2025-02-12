@@ -10,7 +10,7 @@
  * <Box><Text>Loading...</Text><Spinner/></Box>
  * ```
  */
-export async function AsyncComponents() {
+export async function StatusAsyncComponents() {
   /**
    * Imports the Ink library asynchronously.
    * @type {Promise<typeof import("ink")>} A promise resolving to the imported Ink library.

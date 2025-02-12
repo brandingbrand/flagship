@@ -3,7 +3,7 @@ import {program} from 'commander';
 import {useEffect} from 'react';
 import ansiAlign from 'ansi-align';
 
-import {AsyncComponents} from './AsyncComponents';
+import {StatusAsyncComponents} from './StatusAsyncComponents';
 import {StatusMessages} from './StatusMessages';
 import StatusProgress from './StatusProgress';
 
@@ -15,15 +15,28 @@ import {
   FLAGSHIP_CODE_TITLE,
 } from '@/lib';
 
-type Props = {
+/**
+ * Props for the Status component
+ */
+type StatusProps = {
+  /** Callback function to be called when status is done loading */
   res: Function;
 };
 
-export function Status({res}: Props) {
+/**
+ * Status component that displays the Flagship CLI interface
+ * @param {Props} props - Component props
+ * @param {Function} props.res - Callback function executed when loading completes
+ * @returns {JSX.Element|null} Rendered Status component or null if data is loading/verbose mode
+ */
+export function Status({res}: StatusProps): JSX.Element | null {
   const {data, isPending} = useAsync({
-    promiseFn: AsyncComponents,
+    promiseFn: StatusAsyncComponents,
   });
 
+  /**
+   * Effect hook to trigger callback when loading completes
+   */
   useEffect(() => {
     if (!isPending) {
       res();
