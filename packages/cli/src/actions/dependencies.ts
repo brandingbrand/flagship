@@ -1,7 +1,7 @@
 import PackageJson from '@npmcli/package-json';
 import semver from 'semver';
 import chalk from 'chalk';
-import {getReactNativeVersion, logger} from '@brandingbrand/code-cli-kit';
+import {version, logger} from '@brandingbrand/code-cli-kit';
 
 import {config, defineAction, profiles, type Profile} from '@/lib';
 
@@ -15,7 +15,7 @@ export default defineAction(
    */
   async (): Promise<void> => {
     logger.info(
-      `checking project version react-native@${getReactNativeVersion()} against profile version react-native@${config.alignDepsOptions.profile}`,
+      `checking project version react-native@${version.getReactNativeVersion()} against profile version react-native@${config.alignDepsOptions.profile}`,
     );
     logger.info('');
 

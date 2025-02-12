@@ -4,7 +4,7 @@
  * @module transformers
  */
 
-import {getReactNativeVersion} from '@brandingbrand/code-cli-kit';
+import {version} from '@brandingbrand/code-cli-kit';
 
 import * as androidTransformersRN72 from './transformers-0.72/android';
 import * as iosTransformersRN72 from './transformers-0.72/ios';
@@ -24,7 +24,7 @@ const profiles = {
 };
 
 // Get the React Native version
-const reactNativeVersion = getReactNativeVersion();
+const reactNativeVersion = version.getReactNativeVersion();
 
 // Ensure the version exists in the profiles object
 if (!(reactNativeVersion in profiles)) {

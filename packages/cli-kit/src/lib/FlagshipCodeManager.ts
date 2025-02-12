@@ -1,6 +1,6 @@
 import {EventEmitter} from 'events';
 
-import {FlagshipCodeLogger} from './FlagshipCodeLogger';
+import * as logger from './logger';
 
 /**
  * Manages the flagship code and ensures there is only one instance of the manager.
@@ -92,7 +92,7 @@ export class FlagshipCodeManager extends EventEmitter {
       try {
         await action();
       } catch (e: any) {
-        FlagshipCodeLogger.shared.error(e);
+        logger.error(e);
         this.emit('onError');
         process.exit(1);
       }

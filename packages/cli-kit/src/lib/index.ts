@@ -4,8 +4,6 @@
  * @module lib
  */
 
-import {FlagshipCodeLogger} from './FlagshipCodeLogger';
-
 /**
  * Guards lib exports various guards for type checking.
  *
@@ -65,7 +63,7 @@ export * as version from './version';
  * logger.log('This is a log message');
  * ```
  */
-export const logger = FlagshipCodeLogger.shared;
+export * as logger from './logger';
 
 /**
  * Exports the FlagshipCodeManager class.

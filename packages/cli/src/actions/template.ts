@@ -6,7 +6,7 @@ import {
   logger,
   path,
   globAndReplace,
-  getReactNativeVersion,
+  version,
 } from '@brandingbrand/code-cli-kit';
 
 import {config, defineAction, isGenerateCommand} from '@/lib';
@@ -20,7 +20,7 @@ import {config, defineAction, isGenerateCommand} from '@/lib';
  * @throws {Error} - Throws an error if there's an issue with creating directories or copying template files.
  */
 export default defineAction(async () => {
-  const reactNativeVersion = getReactNativeVersion();
+  const reactNativeVersion = version.getReactNativeVersion();
   // Get the path to the template directory of the '@brandingbrand/code-cli' package
   const templatePath = path.join(
     require.resolve('@brandingbrand/code-cli/package.json'),
