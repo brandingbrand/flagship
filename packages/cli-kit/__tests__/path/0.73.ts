@@ -1,4 +1,4 @@
-import path from '../src/lib/path/path-0.73';
+import path from '../../src/lib/path/0.73';
 
 describe('path', () => {
   it('should have an android.mainApplication function that returns the path to android/app/src/main/java/com/example/app/MainApplication.kt', () => {

@@ -60,7 +60,7 @@ export function select<T>(versions: Record<string, T>): T {
   const availableVersions = Object.keys(versions)
     .map(version => ({version, semver: semver.coerce(version)}))
     .filter(v => v.semver)
-    .sort((a, b) => semver.compare(b.version, a.version)); // Sort descending
+    .sort((a, b) => semver.compare(b.semver!.version, a.semver!.version)); // Sort descending
 
   // Try exact match
   if (versions[rnVersion]) {
