@@ -1,5 +1,4 @@
-import {packageToPath, resolvePathFromProject} from '../helper';
-
+import {packageToPath, resolvePathFromProject} from './helper';
 import {default as path072} from './0.72';
 
 import {BuildConfig} from '@/@types';

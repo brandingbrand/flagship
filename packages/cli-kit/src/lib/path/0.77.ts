@@ -1,5 +1,4 @@
-import {resolvePathFromProject} from '../helper';
-
+import {resolvePathFromProject} from './helper';
 import {default as path073} from './0.73';
 
 /**

@@ -1,6 +1,6 @@
 import path from 'path';
 
-import {resolvePathFromProject, packageToPath} from '../helper';
+import {resolvePathFromProject, packageToPath} from './helper';
 
 import {type BuildConfig} from '@/@types';
 
