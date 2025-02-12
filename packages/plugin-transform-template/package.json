@@ -11,6 +11,9 @@
   "jest": {
     "preset": "@brandingbrand/code-jest-config"
   },
+  "dependencies": {
+    "@brandingbrand/code-cli-kit": "*"
+  },
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
