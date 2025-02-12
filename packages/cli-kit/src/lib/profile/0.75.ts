@@ -1,11 +1,11 @@
 /**
- * Imports the base profile configuration from version 0.73
+ * Imports the base profile configuration from version 0.74
  */
 import {default as profile074} from './0.74';
 
 /**
  * Default export containing dependency specifications and configurations
- * @exports {Object} Configuration object extending profile073
+ * @exports {Object} Configuration object extending profile074
  */
 export default {
   ...profile074,
@@ -16,7 +16,7 @@ export default {
    * @property {boolean} required - Indicates this is a required dependency
    */
   'react-native': {
-    version: '^0.74.0',
+    version: '^0.75.0',
     capabilities: [
       'react',
       '@react-native/babel-preset',
@@ -31,7 +31,7 @@ export default {
    * @property {boolean} devOnly - Indicates this is a development-only dependency
    */
   '@react-native/babel-preset': {
-    version: '^0.74.87',
+    version: '^0.75.0',
     capabilities: ['@babel/core', '@babel/preset-env', '@babel/runtime'],
     devOnly: true,
   },
@@ -41,7 +41,7 @@ export default {
    * @property {boolean} devOnly - Indicates this is a development-only dependency
    */
   '@react-native/metro-config': {
-    version: '^0.74.87',
+    version: '^0.75.0',
     devOnly: true,
   },
 };
