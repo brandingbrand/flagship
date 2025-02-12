@@ -5,77 +5,86 @@ import {resolvePathFromProject, packageToPath} from '../helper';
 import {type BuildConfig} from '@/@types';
 
 /**
- * Extended path utility that includes additional functions.
+ * Extended path utility that includes additional functionality for managing
+ * file paths in a React Native project. Provides convenient access to common
+ * project, iOS and Android file paths.
+ *
+ * @module paths
  */
 export default {
   /**
-   * Spread all current path functions.
+   * Includes all native Node.js path module functions and properties.
+   * @see {@link https://nodejs.org/api/path.html Node.js Path}
    */
   ...path,
 
   /**
-   * Project-specific path utilities.
+   * Project-specific path utilities for working with the root project directory.
    */
   project: {
     /**
      * Resolves a path relative to the project root directory.
      *
-     * @param {...string} paths - Path segments to be joined and resolved.
-     * @returns {string} The resolved absolute path.
+     * @param {...string} paths - Path segments to be joined and resolved
+     * @returns {string} An absolute path with the provided segments joined to the project root
+     * @example
+     * paths.project.resolve('src', 'components') // Returns "/path/to/project/src/components"
      */
     resolve: resolvePathFromProject,
   },
 
   /**
-   * Retrieves the absolute path to the Flagship Code™ config file.
+   * Returns the absolute path to the Flagship Code™ configuration file.
+   * This file contains core project settings and build configurations.
    *
-   * @returns {string} The absolute path to "flagship-code.config.ts".
+   * @returns {string} Absolute path to "flagship-code.config.ts"
    */
   config: resolvePathFromProject('flagship-code.config.ts'),
 
   /**
-   * iOS-speicifc path utilities
+   * iOS-specific path utilities for accessing key iOS project files and configurations.
+   * All paths are relative to the 'ios' directory in the project root.
    */
   ios: {
     /**
-     * Retrieves the absolute path to the iOS Podfile file.
+     * Gets the absolute path to the iOS Podfile, which manages CocoaPods dependencies.
      *
-     * @returns {string} The absolute path to "ios/Podfile".
+     * @returns {string} Absolute path to "ios/Podfile"
      */
     podfile: resolvePathFromProject('ios', 'Podfile'),
 
     /**
-     * Retrieves the absolute path to the iOS Info.plist file.
+     * Gets the absolute path to the iOS Info.plist, which defines key app properties.
      *
-     * @returns {string} The absolute path to "ios/app/Info.plist".
+     * @returns {string} Absolute path to "ios/app/Info.plist"
      */
     infoPlist: resolvePathFromProject('ios', 'app', 'Info.plist'),
 
     /**
-     * Retrieves the absolute path to the iOS Gemfile file.
+     * Gets the absolute path to the iOS Gemfile, which manages Ruby dependencies.
      *
-     * @returns {string} The absolute path to "ios/app/Gemfile".
+     * @returns {string} Absolute path to "ios/app/Gemfile"
      */
     gemfile: resolvePathFromProject('ios', 'Gemfile'),
 
     /**
-     * Retrieves the absolute path to the iOS EnvSwitcher.m file.
+     * Gets the path to EnvSwitcher.m, which handles environment switching functionality.
      *
-     * @returns {string} The absolute path to "ios/app/EnvSwitcher.m".
+     * @returns {string} Absolute path to "ios/app/EnvSwitcher.m"
      */
     envSwitcher: resolvePathFromProject('ios', 'app', 'EnvSwitcher.m'),
 
     /**
-     * Retrieves the absolute path to the iOS EnvSwitcher.m file.
+     * Gets the path to app.entitlements, which configures iOS app capabilities.
      *
-     * @returns {string} The absolute path to "ios/app/EnvSwitcher.m".
+     * @returns {string} Absolute path to "ios/app/app.entitlements"
      */
     entitlements: resolvePathFromProject('ios', 'app', 'app.entitlements'),
 
     /**
-     * Retrieves the absolute path to the iOS PrivacyInfo.xcprivacy file.
+     * Gets the path to PrivacyInfo.xcprivacy manifest file for iOS privacy features.
      *
-     * @returns {string} The absolute path to "ios/app/PrivacyInfo.xcprivacy".
+     * @returns {string} Absolute path to "ios/app/PrivacyInfo.xcprivacy"
      */
     privacyManifest: resolvePathFromProject(
       'ios',
@@ -84,23 +93,23 @@ export default {
     ),
 
     /**
-     * Retrieves the absolute path to the iOS NativeConstants.m file.
+     * Gets the path to NativeConstants.m for iOS native constant definitions.
      *
-     * @returns {string} The absolute path to "ios/app/NativeConstants.m".
+     * @returns {string} Absolute path to "ios/app/NativeConstants.m"
      */
     nativeConstants: resolvePathFromProject('ios', 'app', 'NativeConstants.m'),
 
     /**
-     * Retrieves the absolute path to the iOS AppDelegate.mm file.
+     * Gets the path to AppDelegate.mm, the main iOS application delegate.
      *
-     * @returns {string} The absolute path to "ios/app/AppDelegate.mm".
+     * @returns {string} Absolute path to "ios/app/AppDelegate.mm"
      */
     appDelegate: resolvePathFromProject('ios', 'app', 'AppDelegate.mm'),
 
     /**
-     * Retrieves the absolute path to the iOS project.pbxproj file.
+     * Gets the path to the Xcode project configuration file.
      *
-     * @returns {string} The absolute path to "ios/app.xcodeproj/project.pbxproj".
+     * @returns {string} Absolute path to "ios/app.xcodeproj/project.pbxproj"
      */
     projectPbxProj: resolvePathFromProject(
       'ios',
@@ -110,41 +119,42 @@ export default {
   },
 
   /**
-   * Android-specific path utilities
+   * Android-specific path utilities for accessing key Android project files and configurations.
+   * All paths are relative to the 'android' directory in the project root.
    */
   android: {
     /**
-     * Retrieves the absolute path to the Android build.gradle file.
+     * Gets the path to the root build.gradle file containing project-level build configurations.
      *
-     * @returns {string} The absolute path to "android/build.gradle".
+     * @returns {string} Absolute path to "android/build.gradle"
      */
     buildGradle: resolvePathFromProject('android', 'build.gradle'),
 
     /**
-     * Retrieves the absolute path to the Android Gemfile file.
+     * Gets the path to the Android Gemfile for Ruby dependency management.
      *
-     * @returns {string} The absolute path to "android/Gemfile".
+     * @returns {string} Absolute path to "android/Gemfile"
      */
     gemfile: resolvePathFromProject('android', 'Gemfile'),
 
     /**
-     * Retrieves the absolute path to the Android gradle.properties file.
+     * Gets the path to gradle.properties containing Gradle-specific settings.
      *
-     * @returns {string} The absolute path to "android/gradle.properties".
+     * @returns {string} Absolute path to "android/gradle.properties"
      */
     gradleProperties: resolvePathFromProject('android', 'gradle.properties'),
 
     /**
-     * Retrieves the absolute path to the Android app/build.gradle file.
+     * Gets the path to the app-level build.gradle file for module-specific configurations.
      *
-     * @returns {string} The absolute path to "android/app/build.gradle".
+     * @returns {string} Absolute path to "android/app/build.gradle"
      */
     appBuildGradle: resolvePathFromProject('android', 'app', 'build.gradle'),
 
     /**
-     * Retrieves the absolute path to the AndroidManifest.xml file.
+     * Gets the path to AndroidManifest.xml containing core app declarations.
      *
-     * @returns {string} The absolute path to "android/app/src/main/AndroidManifest.xml".
+     * @returns {string} Absolute path to "android/app/src/main/AndroidManifest.xml"
      */
     androidManifest: resolvePathFromProject(
       'android',
@@ -155,9 +165,9 @@ export default {
     ),
 
     /**
-     * Retrieves the absolute path to the Android colors.xml file.
+     * Gets the path to colors.xml defining app color resources.
      *
-     * @returns {string} The absolute path to "android/app/src/main/res/values/colors.xml".
+     * @returns {string} Absolute path to "android/app/src/main/res/values/colors.xml"
      */
     colors: resolvePathFromProject(
       'android',
@@ -170,9 +180,9 @@ export default {
     ),
 
     /**
-     * Retrieves the absolute path to the Android strings.xml file.
+     * Gets the path to strings.xml containing app string resources.
      *
-     * @returns {string} The absolute path to "android/app/src/main/res/values/strings.xml".
+     * @returns {string} Absolute path to "android/app/src/main/res/values/strings.xml"
      */
     strings: resolvePathFromProject(
       'android',
@@ -185,9 +195,9 @@ export default {
     ),
 
     /**
-     * Retrieves the absolute path to the Android styles.xml file.
+     * Gets the path to styles.xml defining app style resources.
      *
-     * @returns {string} The absolute path to "android/app/src/main/res/values/styles.xml".
+     * @returns {string} Absolute path to "android/app/src/main/res/values/styles.xml"
      */
     styles: resolvePathFromProject(
       'android',
@@ -200,10 +210,12 @@ export default {
     ),
 
     /**
-     * Retrieves the absolute path to the Android MainApplication.java file.
+     * Gets the path to MainApplication.java, the primary Application class.
      *
-     * @param {BuildConfig} config - The Android project configuration.
-     * @returns {string} The absolute path to the MainApplication.java file.
+     * @param {BuildConfig} config - Android build configuration containing package information
+     * @returns {string} Absolute path to MainApplication.java in the app package directory
+     * @example
+     * paths.android.mainApplication({android: {packageName: 'com.example.app'}})
      */
     mainApplication: function (config: BuildConfig): string {
       return resolvePathFromProject(
@@ -218,10 +230,10 @@ export default {
     },
 
     /**
-     * Retrieves the absolute path to the Android MainActivity.java file.
+     * Gets the path to MainActivity.java, the main activity class.
      *
-     * @param {BuildConfig} config - The Android project configuration.
-     * @returns {string} The absolute path to the MainActivity.java file.
+     * @param {BuildConfig} config - Android build configuration containing package information
+     * @returns {string} Absolute path to MainActivity.java in the app package directory
      */
     mainActivity: function (config: BuildConfig): string {
       return resolvePathFromProject(
@@ -236,10 +248,10 @@ export default {
     },
 
     /**
-     * Retrieves the absolute path to the Android EnvSwitcher.java file.
+     * Gets the path to EnvSwitcher.java for environment management.
      *
-     * @param {BuildConfig} config - The Android project configuration.
-     * @returns {string} The absolute path to the EnvSwitcher.java file.
+     * @param {BuildConfig} config - Android build configuration containing package information
+     * @returns {string} Absolute path to EnvSwitcher.java in the app package directory
      */
     envSwitcher: function (config: BuildConfig): string {
       return resolvePathFromProject(
@@ -254,10 +266,10 @@ export default {
     },
 
     /**
-     * Retrieves the absolute path to the Android NativeConstants.java file.
+     * Gets the path to NativeConstants.java containing Android native constants.
      *
-     * @param {BuildConfig} config - The Android project configuration.
-     * @returns {string} The absolute path to the NativeConstants.java file.
+     * @param {BuildConfig} config - Android build configuration containing package information
+     * @returns {string} Absolute path to NativeConstants.java in the app package directory
      */
     nativeConstants: function (config: BuildConfig): string {
       return resolvePathFromProject(
