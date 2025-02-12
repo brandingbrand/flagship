@@ -1,0 +1,9 @@
+{
+  "name": "@brandingbrand/code-template",
+  "version": "13.1.1",
+  "description": "templates for Flagship Code react-native application",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}

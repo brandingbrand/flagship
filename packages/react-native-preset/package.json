@@ -1,0 +1,9 @@
+{
+  "name": "@brandingbrand/code-react-native-preset",
+  "version": "13.1.1",
+  "description": "preset for Flagship Code react-native application",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}
