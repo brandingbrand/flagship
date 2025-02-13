@@ -7,6 +7,7 @@ import {
  * Transformer functions for modifying Android manifest XML configuration
  */
 export default {
+  __test: /\bAndroidManifest\.xml$/,
   /**
    * Configures URL scheme handling in the Android manifest
    * Adds intent filters for handling deep links with the specified scheme and host
