@@ -1,3 +1,3 @@
 export default {
-  __test: /\bios\/.*Gemfile$/gmm,
+  __test: /\bios\/.*Gemfile$/gm,
 };

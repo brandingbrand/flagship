@@ -1,3 +1,3 @@
 export default {
-  __test: /\bandroid\/.*Gemfile$/gmm,
+  __test: /\bandroid\/.*Gemfile$/gm,
 };
