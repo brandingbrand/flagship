@@ -3,8 +3,21 @@ import type {PackageJson} from 'type-fest';
 import {fs, logger, path, definePlugin} from '@brandingbrand/code-cli-kit';
 import {bundleRequire} from 'bundle-require';
 
+/**
+ * Defines a plugin that manages multi-tenant environment configuration for FSApp projects
+ */
 export default definePlugin({
+  /**
+   * Common execution function that handles environment configuration linking
+   * @param _ - Unused first parameter
+   * @param options - Configuration options including release and environment settings
+   */
   common: async (_, options) => {
+    /**
+     * Validates that the package.json contains required FSApp dependencies
+     * @param pkg - The parsed package.json contents
+     * @throws {Error} If dependencies are missing or FSApp dependency is not found
+     */
     const validatePackageJson = (pkg: PackageJson) => {
       if (!pkg.dependencies) {
         throw new Error(
@@ -19,6 +32,13 @@ export default definePlugin({
       }
     };
 
+    /**
+     * Retrieves environment configuration files from the specified directory
+     * @param envDir - Directory containing environment config files
+     * @param options - Options object containing release and env settings
+     * @returns Array of environment file names
+     * @throws {Error} If no valid environment files are found
+     */
     const getEnvFiles = async (envDir: string, options: any) => {
       const envs = (await fs.readdir(envDir)).filter(file =>
         options.release
@@ -35,6 +55,13 @@ export default definePlugin({
       return envs;
     };
 
+    /**
+     * Parses the contents of environment configuration files
+     * @param envs - Array of environment file names
+     * @param envDir - Directory containing the environment files
+     * @returns Array of parsed environment configurations with names and content
+     * @throws {Error} If environment file names don't match expected format
+     */
     const parseEnvContents = async (envs: string[], envDir: string) => {
       return Promise.all(
         envs.map(async file => {
@@ -55,6 +82,11 @@ export default definePlugin({
       );
     };
 
+    /**
+     * Retrieves and validates the installed FSApp version
+     * @returns Coerced semver version of FSApp
+     * @throws {Error} If FSApp version cannot be parsed
+     */
     const getFsappVersion = async () => {
       const {version} = require(
         require.resolve('@brandingbrand/fsapp/package.json', {
