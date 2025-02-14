@@ -14,7 +14,7 @@ export default {
    * @param config - Build configuration containing Android theme settings
    * @throws Error if AppTheme style cannot be found in the xml
    */
-  theme: (xml: StylesXML, config: BuildConfig) => {
+  style: (xml: StylesXML, config: BuildConfig) => {
     if (config.android.style === undefined) return;
 
     const theme = xml.resources.style.find(it => it.$.name === 'AppTheme');

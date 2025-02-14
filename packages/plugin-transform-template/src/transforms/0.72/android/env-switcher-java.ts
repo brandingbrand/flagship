@@ -23,7 +23,7 @@ export default {
    * @param {PrebuildOptions} options - Prebuild options containing environment info
    * @returns {string} The updated file content with new environment value
    */
-  env: (
+  initialEnvName: (
     content: string,
     config: BuildConfig,
     options: PrebuildOptions,
