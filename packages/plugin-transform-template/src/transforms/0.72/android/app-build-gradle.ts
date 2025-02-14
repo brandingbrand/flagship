@@ -7,6 +7,9 @@ export default {
   /**
    * Regular expression to match Android build.gradle files
    */
+  // This regex has an escaped forward slash that ESLint flags, but it's needed
+  // to properly match android folder paths on both Windows and Unix systems
+  // eslint-disable-next-line no-useless-escape
   __test: /\bandroid\/[^\/]+\/build\.gradle$/gm,
 
   /**
