@@ -29,7 +29,7 @@ import com.reactnativenavigation.NavigationActivity`,
       content,
       /class[.\s\S{]*/m,
       `class MainActivity : NavigationActivity() {
-    
+
 }
 `,
     );

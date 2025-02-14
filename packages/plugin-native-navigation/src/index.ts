@@ -11,8 +11,9 @@ import {
   version,
 } from '@brandingbrand/code-cli-kit';
 
-import {android as android72} from './android-0.72';
-import {android as android73} from './android-0.73';
+import {android as android72} from './android/0.72';
+import {android as android73} from './android/0.73';
+import {android as android74} from './android/0.74';
 
 /**
  * Defines a plugin with functions for both iOS and Android platforms.
@@ -69,6 +70,7 @@ export default definePlugin({
     const pluginAndroid = version.select({
       '0.72': android72,
       '0.73': android73,
+      '0.74': android74,
     });
 
     return pluginAndroid(build, options);
