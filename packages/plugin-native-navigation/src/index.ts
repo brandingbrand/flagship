@@ -1,8 +1,3 @@
-/**
- * Defines a plugin for @brandingbrand/code-cli-kit.
- * @module Plugin
- */
-
 import {
   type BuildConfig,
   type PrebuildOptions,

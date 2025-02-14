@@ -8,6 +8,18 @@ import {
 
 import {android as android73} from '../android/0.73';
 
+/**
+ * Performs Android-specific build configuration modifications
+ *
+ * This function:
+ * 1. Runs the base Android 0.73 configuration
+ * 2. Locates the react-native-navigation package
+ * 3. Updates ReactTypefaceUtils.java to use ReactConstants instead of ReactTextShadowNode
+ *
+ * @param build - The build configuration object containing project settings
+ * @param options - Prebuild options that customize the build process
+ * @returns Promise that resolves when modifications are complete
+ */
 export async function android(build: BuildConfig, options: PrebuildOptions) {
   await android73(build, options);
 
