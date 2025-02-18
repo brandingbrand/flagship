@@ -1,4 +1,4 @@
-import * as version from '../version';
+import {version} from '@brandingbrand/code-cli-kit';
 
 import profile072 from './0.72';
 import profile073 from './0.73';

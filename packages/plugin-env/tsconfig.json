@@ -1,3 +1,4 @@
 {
   "extends": "@repo/typescript-config/base.json",
+  "include": ["../shared/types/bundle-require.d.ts"]
 }
