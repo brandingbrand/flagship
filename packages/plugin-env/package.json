@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "bundle-require": "5.1.0",
+    "semver": "^7.6.2",
     "magicast": "0.3.5"
   },
   "devDependencies": {
