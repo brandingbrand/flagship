@@ -11,19 +11,19 @@
   "jest": {
     "preset": "@brandingbrand/code-jest-config"
   },
+  "dependencies": {
+    "@brandingbrand/code-plugin-clean-native-files": "*",
+    "@brandingbrand/code-plugin-env": "*",
+    "@brandingbrand/code-plugin-packager-install": "*",
+    "@brandingbrand/code-plugin-transform-template": "*",
+    "@brandingbrand/code-plugin-verify-dependencies": "*"
+  },
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "eslint": "^8.56.0",
     "jest": "^29.0.0",
     "typescript": "^5.3.3"
-  },
-  "peerDependencies": {
-    "@brandingbrand/code-plugin-clean-native-files": "*",
-    "@brandingbrand/code-plugin-env": "*",
-    "@brandingbrand/code-plugin-packager-install": "*",
-    "@brandingbrand/code-plugin-transform-template": "*",
-    "@brandingbrand/code-plugin-verify-dependencies": "*"
   },
   "publishConfig": {
     "access": "public"
