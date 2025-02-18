@@ -12,14 +12,19 @@
     "preset": "@brandingbrand/code-jest-config"
   },
   "dependencies": {
-    "@brandingbrand/code-cli-kit": "*"
+    "@brandingbrand/code-cli-kit": "*",
+    "@brandingbrand/code-templates": "*"
   },
   "devDependencies": {
+    "@brandingbrand/code-cli-kit": "*",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "eslint": "^8.56.0",
     "jest": "^29.0.0",
     "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "@brandingbrand/code-cli-kit": "*"
   },
   "publishConfig": {
     "access": "public"
