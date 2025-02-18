@@ -1,5 +1,4 @@
-# @brandingbrand/code-plugin-clean-native-files
-
+# @brandingbrand/code-plugin-clean
 A plugin for cleaning up native `android` and `ios` directories from your project. This plugin checks if these directories exist and removes them, providing clear logging for each action. It is useful for resetting your environment or cleaning up unnecessary native directories during your build or maintenance process.
 
 ## Features
@@ -13,7 +12,7 @@ A plugin for cleaning up native `android` and `ios` directories from your projec
 To install the plugin with Yarn, run the following command:
 
 ```bash
-yarn add -D @brandingbrand/code-plugin-clean-native-files
+yarn add -D @brandingbrand/code-plugin-clean
 ```
 
 Ensure that you have the necessary setup to use the plugin with `@brandingbrand/code-cli`.
@@ -27,9 +26,10 @@ This plugin is executed using `@brandingbrand/code-cli`, making it part of your 
 You can add this plugin to your project by integrating it with your build pipeline or running it manually like this:
 
 ```ts
-import cleanNativeFilesPlugin from '@brandingbrand/code-plugin-clean-native-files';
+import cleanNativeFilesPlugin from '@brandingbrand/code-plugin-clean';
 
-cleanNativeFilesPlugin.common();
+cleanNativeFilesPlugin.ios();
+cleanNativeFilesPlugin.android();
 ```
 
 ### Plugin Workflow
@@ -52,7 +52,7 @@ Here’s how to integrate it into your `flagship-code.config.ts`:
 
 1. **Configure the Plugin in `flagship-code.config.ts`**:
 
-   You will need to add the `@brandingbrand/code-plugin-clean-native-files` plugin to your `flagship-code.config.ts` to execute it automatically or as part of a custom command.
+   You will need to add the `@brandingbrand/code-plugin-clean` plugin to your `flagship-code.config.ts` to execute it automatically or as part of a custom command.
 
    Example `flagship-code.config.ts`:
 
@@ -61,7 +61,7 @@ Here’s how to integrate it into your `flagship-code.config.ts`:
 
    export default defineConfig({
      plugins: [
-       '@brandingbrand/code-plugin-clean-native-files',
+       '@brandingbrand/code-plugin-clean',
      ],
      // Other configurations for your project
    });

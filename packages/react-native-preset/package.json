@@ -12,7 +12,7 @@
     "preset": "@brandingbrand/code-jest-config"
   },
   "dependencies": {
-    "@brandingbrand/code-plugin-clean-native-files": "*",
+    "@brandingbrand/code-plugin-clean": "*",
     "@brandingbrand/code-plugin-env": "*",
     "@brandingbrand/code-plugin-packager-install": "*",
     "@brandingbrand/code-plugin-transform-template": "*",
