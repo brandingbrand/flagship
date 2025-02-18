@@ -13,7 +13,7 @@ A plugin for cleaning up native `android` and `ios` directories from your projec
 To install the plugin with Yarn, run the following command:
 
 ```bash
-yarn add @brandingbrand/code-plugin-clean-native-files rimraf
+yarn add -D @brandingbrand/code-plugin-clean-native-files
 ```
 
 Ensure that you have the necessary setup to use the plugin with `@brandingbrand/code-cli`.
@@ -46,19 +46,26 @@ The plugin performs the following steps:
 
 ### Example Usage
 
-You can run this plugin within a build or cleanup script using `@brandingbrand/code-cli` like this:
+To use this plugin with `@brandingbrand/code-cli` in a project, ensure that your project is set up with a `flagship-code.config.ts` file. This file typically contains the configuration for various actions and plugins, including this clean-up plugin.
 
-```ts
-import cleanNativeFilesPlugin from '@brandingbrand/code-plugin-clean-native-files';
+Here’s how to integrate it into your `flagship-code.config.ts`:
 
-cleanNativeFilesPlugin.common()
-  .then(() => {
-    console.log('Cleanup completed successfully');
-  })
-  .catch(err => {
-    console.error('Error during cleanup:', err);
-  });
-```
+1. **Configure the Plugin in `flagship-code.config.ts`**:
+
+   You will need to add the `@brandingbrand/code-plugin-clean-native-files` plugin to your `flagship-code.config.ts` to execute it automatically or as part of a custom command.
+
+   Example `flagship-code.config.ts`:
+
+   ```ts
+   import { defineConfig } from '@brandingbrand/code-cli-kit';
+
+   export default defineConfig({
+     plugins: [
+       '@brandingbrand/code-plugin-clean-native-files',
+     ],
+     // Other configurations for your project
+   });
+   ```
 
 ### Error Handling
 
@@ -93,7 +100,3 @@ To ensure code quality, you can run ESLint:
 ```bash
 yarn lint
 ```
-
-## License
-
-This plugin is licensed under the [MIT License](LICENSE).
