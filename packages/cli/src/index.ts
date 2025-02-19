@@ -2,24 +2,17 @@ import process from 'process';
 
 import chalk from 'chalk';
 import {Command, Option} from 'commander';
-import {PrebuildOptions, logger} from '@brandingbrand/code-cli-kit';
+import {
+  PrebuildOptions,
+  AlignDepsOptions,
+  logger,
+} from '@brandingbrand/code-cli-kit';
 
 import cliPkg from '../package.json';
 
 import globalEmitter from './events';
 import {findBuildConfigFiles, loadFlagshipCodeConfig} from './configs';
 import {renderStatus} from './renderer';
-
-/**
- * Options interface for the align-deps command
- * @interface AlignDepsOptions
- * @property {('0.72'|'0.73'|'0.74'|'0.75'|'0.76'|'0.77')} profile - React Native version profile to check against
- * @property {boolean} fix - Whether to automatically fix dependency mismatches
- */
-interface AlignDepsOptions {
-  profile: '0.72' | '0.73' | '0.74' | '0.75' | '0.76' | '0.77';
-  fix: boolean;
-}
 
 /**
  * Options interface for the plugin command
@@ -76,7 +69,14 @@ const PLATFORM_CHOICES = ['ios', 'android', 'native'] as const;
  * Supported React Native version profiles
  * @constant {readonly string[]}
  */
-const RN_PROFILE_CHOICES = ['0.72', '0.73'] as const;
+const RN_PROFILE_CHOICES = [
+  '0.72',
+  '0.73',
+  '0.74',
+  '0.75',
+  '0.76',
+  '0,77',
+] as const;
 
 /**
  * Default logging level for commands
