@@ -15,15 +15,6 @@ import {findBuildConfigFiles, loadFlagshipCodeConfig} from './configs';
 import {renderStatus} from './renderer';
 
 /**
- * Options interface for the plugin command
- * @interface PluginOptions
- * @property {('debug'|'log'|'info'|'warn'|'error')} logLevel - Logging verbosity level
- */
-interface PluginOptions {
-  logLevel: 'debug' | 'log' | 'info' | 'warn' | 'error';
-}
-
-/**
  * Options interface for the prebuild command
  * @interface PrebuildOptions
  * @property {string} build - Build configuration identifier
@@ -142,7 +133,7 @@ program
       .default(DEFAULT_LOG_LEVEL),
   )
   .argument('<string>', 'name of generated plugin')
-  .action((str: string, options: PluginOptions) => {
+  .action((str: string, options: any) => {
     // Command implementation moved to separate file
   });
 
