@@ -27,6 +27,7 @@
     "detect-package-manager": "^3.0.1",
     "esbuild": "^0.20.0",
     "execa": "^9.3.0",
+    "glob": "10.3.10",
     "fp-ts": "^2.16.2",
     "ink": "^4.4.1",
     "ink-spinner": "^5.0.0",

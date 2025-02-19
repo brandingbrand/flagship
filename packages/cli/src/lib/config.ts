@@ -132,10 +132,10 @@ export function isPackage(str: string): boolean {
  * @param {string} packageOrFilePath - The name of the package or the file path to bundle and require.
  * @returns {Promise<any>} A Promise that resolves to the required module.
  */
-export async function bundleRequire(
+export async function bundleRequire<T extends any>(
   packageOrFilePath: string,
   format: 'cjs' | 'esm' = 'cjs',
-): Promise<any> {
+): Promise<T> {
   // Import the 'bundle-require' esm module dynamically
   // Due to esm and exports + types need to ignore ts for this import
   // @ts-ignore
