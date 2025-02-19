@@ -22,6 +22,7 @@ type StatusProps = {
   /** Callback function to be called when status is done loading */
   res: Function;
   numberOfPlugins: number;
+  cmd: string;
 };
 
 /**
@@ -33,6 +34,7 @@ type StatusProps = {
 export function Status({
   res,
   numberOfPlugins,
+  cmd,
 }: StatusProps): JSX.Element | null {
   const {data, isPending} = useAsync({
     promiseFn: StatusAsyncComponents,
@@ -63,7 +65,7 @@ export function Status({
       <Box marginTop={1} marginBottom={1} flexDirection="row">
         <Text>
           {FLAGSHIP_CODE_LABEL}
-          <Text color="gray"> [ {program.args[0]} ] </Text>
+          <Text color="gray">` [ {cmd} ] `</Text>
         </Text>
         <StatusProgress numberOfPlugins={numberOfPlugins} />
       </Box>

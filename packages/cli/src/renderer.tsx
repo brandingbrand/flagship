@@ -24,14 +24,16 @@ import {Status} from './components';
  */
 export async function renderStatus({
   numberOfPlugins = 0,
+  cmd,
 }: {
   numberOfPlugins?: number;
+  cmd: string;
 }): Promise<void> {
   const {render} = await import('ink');
 
   await new Promise(res => {
     const {unmount} = render(
-      <Status res={res} numberOfPlugins={numberOfPlugins} />,
+      <Status res={res} numberOfPlugins={numberOfPlugins} cmd={cmd} />,
       {stdout: process.stderr},
     );
     global.unmount = unmount;

@@ -17,7 +17,7 @@ export default definePlugin({
     const {execa} = await import('execa');
 
     try {
-      for await (const line of execa('bundle', ['exec', 'install'], {
+      for await (const line of execa('bundle', ['install'], {
         cwd: path.project.resolve('ios'),
       })) {
         logger.debug(line);
@@ -50,7 +50,7 @@ export default definePlugin({
     const {execa} = await import('execa');
 
     try {
-      for await (const line of execa('bundle', ['exec', 'install'], {
+      for await (const line of execa('bundle', ['install'], {
         cwd: path.project.resolve('android'),
       })) {
         logger.debug(line);

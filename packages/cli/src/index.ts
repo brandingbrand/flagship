@@ -177,13 +177,15 @@ program
       options.build,
     );
     const {plugins} = await loadFlagshipCodeConfig();
-    const numberOfPlugins = plugins.reduce((acc, curr) => {
-      return acc + Object.keys(curr.plugin).length;
-    }, 0);
 
-    await renderStatus({numberOfPlugins});
+    await renderStatus({
+      numberOfPlugins: plugins.reduce((acc, curr) => {
+        return acc + Object.keys(curr.plugin).length;
+      }, 0),
+      cmd: 'prebuild',
+    });
 
-    logger.setLogLevel(logger.getLogLevelFromString('debug'));
+    logger.setLogLevel(logger.getLogLevelFromString(options.logLevel));
     if (!options.verbose) logger.pause();
     logger.printCmdOptions(options, 'prebuild');
 
@@ -228,12 +230,12 @@ program
       } catch (error) {
         globalEmitter.emit('onError');
         throw Error(`Failed to run scripts for plugin "${name}": ${error}`);
-      } finally {
-        globalEmitter.emit('onEnd');
-        logger.resume();
-        global.unmount?.();
       }
     }
+
+    globalEmitter.emit('onEnd');
+    logger.resume();
+    global.unmount?.();
   });
 
 /**
