@@ -2,9 +2,45 @@ import {
   logger,
   definePlugin,
   PrebuildOptions,
+  fs,
+  path,
 } from '@brandingbrand/code-cli-kit';
 
 import profile from './profile'; // Import profile configurations based on React Native version
+
+interface PackageJson {
+  name: string;
+  version: string;
+  dependencies: Record<string, unknown>;
+  devDependencies: Record<string, unknown>;
+  [key: string]: unknown;
+}
+
+async function getPackageJson(
+  packageName: string,
+): Promise<PackageJson | null> {
+  try {
+    // Resolve the package's entry point
+    const packageMainPath = require.resolve(packageName);
+
+    // Find the package root directory
+    const packageRoot =
+      packageMainPath.split(`${packageName}`)[0] + packageName;
+
+    // Construct the path to package.json
+    const packageJsonPath = path.join(packageRoot, 'package.json');
+
+    // Read and parse the JSON file
+    const packageJson: PackageJson = JSON.parse(
+      await fs.readFile(packageJsonPath, 'utf-8'),
+    );
+
+    return packageJson;
+  } catch (error) {
+    console.error(`Error retrieving package.json for ${packageName}:`, error);
+    return null;
+  }
+}
 
 /**
  * A plugin that verifies the dependencies based on the selected React Native version profile.
@@ -22,12 +58,13 @@ export default definePlugin({
     const rnProfile = profile;
 
     // Function to check for missing or banned dependencies
-    const checkDependencies = (dependencies: Record<string, any>) => {
+    const checkDependencies = async (dependencies: Record<string, any>) => {
+      const rootPackageJson = await getPackageJson(
+        path.project.resolve('package.json'),
+      );
       for (const [packageName, config] of Object.entries(dependencies)) {
         try {
-          const installedVersion = require(
-            `${packageName}/package.json`,
-          ).version;
+          const installedVersion = (await getPackageJson(packageName))?.version;
 
           // Check if the required version is satisfied
           if (
@@ -39,8 +76,16 @@ export default definePlugin({
             );
           }
 
+          const rootDependenciesAndDevDependencies = [
+            ...Object.keys(rootPackageJson?.dependencies || {}),
+            ...Object.keys(rootPackageJson?.devDependencies || {}),
+          ];
+
           // Check if the package is banned
-          if (config.banned) {
+          if (
+            config.banned &&
+            rootDependenciesAndDevDependencies.includes(packageName)
+          ) {
             logger.warn(`Banned package found: ${packageName}`);
           }
 
@@ -58,7 +103,7 @@ export default definePlugin({
 
     // Verify dependencies for the current project
     logger.log('Verifying project dependencies...');
-    checkDependencies(rnProfile);
+    await checkDependencies(rnProfile);
 
     logger.log('Dependency verification complete.');
   },

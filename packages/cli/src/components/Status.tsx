@@ -1,5 +1,4 @@
 import {useAsync} from 'react-async';
-import {program} from 'commander';
 import {useEffect} from 'react';
 import ansiAlign from 'ansi-align';
 
@@ -64,7 +63,7 @@ export function Status({
       <Box marginTop={1} marginBottom={1} flexDirection="row">
         <Text>
           {FLAGSHIP_CODE_LABEL}
-          <Text color="gray">` [ {cmd} ] `</Text>
+          <Text color="gray"> [ {cmd} ] </Text>
         </Text>
         <StatusProgress numberOfPlugins={numberOfPlugins} />
       </Box>
