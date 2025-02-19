@@ -64,15 +64,3 @@ export * as version from './version';
  * ```
  */
 export * as logger from './logger';
-
-/**
- * Exports the FlagshipCodeManager class.
- *
- * @example
- * ```typescript
- * import { FlagshipCodeManager } from './path/to/FlagshipCodeManager';
- * const manager = new FlagshipCodeManager();
- * manager.doSomething();
- * ```
- */
-export {FlagshipCodeManager} from './FlagshipCodeManager';

@@ -3,8 +3,6 @@ import {Writable} from 'stream';
 import chalk, {Chalk} from 'chalk';
 import dayjs from 'dayjs';
 
-import {FlagshipCodeManager} from './FlagshipCodeManager';
-
 const GLOBAL_KEY = Symbol.for('global.event.emitter');
 
 /**

@@ -8,7 +8,6 @@ import {StatusMessages} from './StatusMessages';
 import StatusProgress from './StatusProgress';
 
 import {
-  config,
   FLAGSHIP_CODE_DESCRIPTION,
   FLAGSHIP_CODE_LABEL,
   FLAGSHIP_CODE_LOGO,
@@ -49,7 +48,7 @@ export function Status({
     }
   }, [isPending]);
 
-  if (!data || isPending || config.options.verbose) return null;
+  if (!data || isPending) return null;
 
   const {Box, Text} = data;
 
