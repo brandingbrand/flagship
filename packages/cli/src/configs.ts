@@ -98,6 +98,9 @@ export async function findBuildConfigFiles(
   }
 }
 
+/**
+ * Represents a plugin with its configuration options
+ */
 interface Plugin {
   name: string;
   plugin: any;
@@ -106,18 +109,32 @@ interface Plugin {
   };
 }
 
+/**
+ * Represents a preset that contains multiple plugins
+ */
 interface Preset {
   name: string;
   plugins: Plugin[];
 }
 
+/**
+ * Represents the complete loaded configuration with plugins and presets
+ */
 interface LoadedConfig {
   preset?: Preset;
   plugins: Plugin[];
   config: CodeConfig;
 }
 
-async function resolveModule(id: string, cwd: string) {
+/**
+ * Resolves a module path using Node's require.resolve
+ *
+ * @param {string} id - The module identifier to resolve
+ * @param {string} cwd - The current working directory
+ * @returns {Promise<string>} The resolved module path
+ * @throws {Error} If the module cannot be resolved
+ */
+async function resolveModule(id: string, cwd: string): Promise<string> {
   try {
     return require.resolve(id, {paths: [cwd]});
   } catch {
@@ -125,6 +142,14 @@ async function resolveModule(id: string, cwd: string) {
   }
 }
 
+/**
+ * Loads a plugin from a configuration
+ *
+ * @param {string | [string, {index?: number}]} pluginConfig - The plugin configuration
+ * @param {string} cwd - The current working directory
+ * @returns {Promise<Plugin>} The loaded plugin
+ * @throws {Error} If the plugin cannot be loaded
+ */
 async function loadPlugin(
   pluginConfig: string | [string, {index?: number}],
   cwd: string,
@@ -147,17 +172,25 @@ async function loadPlugin(
   }
 }
 
+/**
+ * Loads a preset and its plugins
+ *
+ * @param {string} presetName - The name of the preset to load
+ * @param {string} cwd - The current working directory
+ * @returns {Promise<Preset>} The loaded preset with its plugins
+ * @throws {Error} If the preset cannot be loaded or is invalid
+ */
 async function loadPreset(presetName: string, cwd: string): Promise<Preset> {
   try {
     const presetPath = await resolveModule(presetName, cwd);
     const presetModule = await bundleRequire<Preset>(presetPath);
 
-    if (!Array.isArray(presetModule.plugins)) {
+    if (!Array.isArray(presetModule)) {
       throw new Error(`Preset "${presetName}" must export a plugins array`);
     }
 
     const plugins = await Promise.all(
-      presetModule.plugins.map((plugin: any) => loadPlugin(plugin, cwd)),
+      presetModule.map((plugin: any) => loadPlugin(plugin, cwd)),
     );
 
     return {

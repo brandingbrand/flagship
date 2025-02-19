@@ -1,7 +1,11 @@
+import {colorsXmlTransformer} from './colors-xml';
+import {manifestXmlTransformer} from './manifest-xml';
+import {networkSecurityConfigXmlTransformer} from './network-security-config-xml';
 import {pbxprojTransformer} from './pbxproj';
 import {plistTransformer} from './plist';
+import {stringsXmlTransformer} from './strings-xml';
+import {stylesXmlTransformer} from './styles-xml';
 import {utf8Transformer} from './utf-8';
-import {xmlTransformer} from './xml';
 
 /**
  * Array of file transformers that process different file types in the project.
@@ -45,8 +49,24 @@ export const transformers = [
     use: plistTransformer,
   },
   {
-    test: /\b\.xml$/,
-    use: xmlTransformer,
+    test: /\b\colors.xml$/,
+    use: colorsXmlTransformer,
+  },
+  {
+    test: /\b\AndroidManifest.xml$/,
+    use: manifestXmlTransformer,
+  },
+  {
+    test: /\b\network_security_config.xml.xml$/,
+    use: networkSecurityConfigXmlTransformer,
+  },
+  {
+    test: /\b\strings.xml$/,
+    use: stringsXmlTransformer,
+  },
+  {
+    test: /\b\styles.xml$/,
+    use: stylesXmlTransformer,
   },
   {
     test: /(\.(java|mm|swift|properties|entitlements|xcprivacy|gradle)$|^Podfile$|^Gemfile$)/,

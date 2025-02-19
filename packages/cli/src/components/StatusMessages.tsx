@@ -1,6 +1,7 @@
 import {useAsync} from 'react-async';
 import {useEffect, useState, useCallback} from 'react';
-import {FlagshipCodeManager} from '@brandingbrand/code-cli-kit';
+
+import globalEmitter from '../events';
 
 import {StatusAsyncComponents} from './StatusAsyncComponents';
 
@@ -27,11 +28,11 @@ export function StatusMessages() {
 
   useEffect(() => {
     // Subscribe to log events
-    FlagshipCodeManager.shared.on('onLog', handleNewMessage);
+    globalEmitter.on('onLog', handleNewMessage);
 
     // Cleanup subscription on unmount
     return () => {
-      FlagshipCodeManager.shared.removeAllListeners('onLog');
+      globalEmitter.removeAllListeners('onLog');
     };
   }, [handleNewMessage]);
 

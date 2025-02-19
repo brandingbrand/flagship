@@ -27,8 +27,7 @@ export default {
       content,
       /(#import "AppDelegate\.h")/,
       `$1
-
-  #import <React/RCTLinkingManager.h>`,
+#import <React/RCTLinkingManager.h>`,
     );
   },
 

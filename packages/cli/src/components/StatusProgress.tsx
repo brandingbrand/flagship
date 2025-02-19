@@ -1,6 +1,7 @@
 import {useAsync} from 'react-async';
 import {useEffect, useState} from 'react';
-import {FlagshipCodeManager} from '@brandingbrand/code-cli-kit';
+
+import globalEmitter from '../events';
 
 import {StatusAsyncComponents} from './StatusAsyncComponents';
 
@@ -13,7 +14,11 @@ interface ProgressState {
  * Status progress component that displays a loading spinner, progress bar, and completion state
  * @returns A React component showing the current progress state with visual indicators
  */
-export default function StatusProgress() {
+export default function StatusProgress({
+  numberOfPlugins,
+}: {
+  numberOfPlugins: number;
+}) {
   const [state, setState] = useState<ProgressState>({
     percent: 0,
     result: undefined,
@@ -27,10 +32,10 @@ export default function StatusProgress() {
     /**
      * Handle progress updates during execution
      */
-    const onRun = (evt: number) => {
+    const onRun = () => {
       setState(prevState => ({
         ...prevState,
-        percent: evt,
+        percent: prevState.percent + 1,
       }));
     };
 
@@ -54,14 +59,14 @@ export default function StatusProgress() {
       }));
     };
 
-    FlagshipCodeManager.shared.on('onRun', onRun);
-    FlagshipCodeManager.shared.on('onEnd', onEnd);
-    FlagshipCodeManager.shared.on('onError', onError);
+    globalEmitter.on('onRun', onRun);
+    globalEmitter.on('onEnd', onEnd);
+    globalEmitter.on('onError', onError);
 
     return () => {
-      FlagshipCodeManager.shared.removeAllListeners('onRun');
-      FlagshipCodeManager.shared.removeAllListeners('onEnd');
-      FlagshipCodeManager.shared.removeAllListeners('onError');
+      globalEmitter.removeAllListeners('onRun');
+      globalEmitter.removeAllListeners('onEnd');
+      globalEmitter.removeAllListeners('onError');
     };
   }, []);
 
@@ -75,7 +80,10 @@ export default function StatusProgress() {
    */
   function getString() {
     const screen = 10;
-    const max = Math.min(Math.floor(screen * state.percent), screen);
+    const max = Math.min(
+      Math.floor(screen * (state.percent / numberOfPlugins)),
+      screen,
+    );
     const chars = '█'.repeat(max);
 
     return chars + ' '.repeat(screen - max);
@@ -101,7 +109,7 @@ export default function StatusProgress() {
           <Text color={'green'}> ⟨ </Text>
           <Text color={'green'}>{getString()}</Text>
           <Text color={'green'}> ⟩ </Text>
-          <Text bold>{state.percent * 100}%</Text>
+          <Text bold>{(state.percent / numberOfPlugins) * 100}%</Text>
         </>
       )}
     </>

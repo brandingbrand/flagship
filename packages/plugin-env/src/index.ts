@@ -109,8 +109,7 @@ export default definePlugin({
     validatePackageJson(pkg);
 
     const {mod} = await bundleRequire({
-      filepath: 'flagship-code.config.ts',
-      cwd: process.cwd(),
+      filepath: path.project.resolve('flagship-code.config.ts'),
       format: 'cjs',
     });
 

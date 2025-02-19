@@ -2,10 +2,13 @@ import process from 'process';
 
 import chalk from 'chalk';
 import {Command, Option} from 'commander';
+import {PrebuildOptions, logger} from '@brandingbrand/code-cli-kit';
 
 import cliPkg from '../package.json';
 
+import globalEmitter from './events';
 import {findBuildConfigFiles, loadFlagshipCodeConfig} from './configs';
+import {renderStatus} from './renderer';
 
 /**
  * Options interface for the align-deps command
@@ -37,14 +40,6 @@ interface PluginOptions {
  * @property {boolean} release - Whether to bundle only the specified environment
  * @property {boolean} verbose - Whether to show detailed stdout output
  */
-interface PrebuildOptions {
-  build: string;
-  env: string;
-  platform: 'ios' | 'android' | 'native';
-  logLevel: 'debug' | 'log' | 'info' | 'warn' | 'error';
-  release: boolean;
-  verbose: boolean;
-}
 
 /**
  * Base URL for reporting issues
@@ -181,7 +176,64 @@ program
       process.cwd(),
       options.build,
     );
-    const codeConfig = await loadFlagshipCodeConfig();
+    const {plugins} = await loadFlagshipCodeConfig();
+    const numberOfPlugins = plugins.reduce((acc, curr) => {
+      return acc + Object.keys(curr.plugin).length;
+    }, 0);
+
+    await renderStatus({numberOfPlugins});
+
+    logger.setLogLevel(logger.getLogLevelFromString('debug'));
+    if (!options.verbose) logger.pause();
+    logger.printCmdOptions(options, 'prebuild');
+
+    const sortedPlugins = plugins
+      .map((plugin, originalIndex) => ({
+        plugin,
+        index:
+          plugin.options?.index !== undefined
+            ? plugin.options.index
+            : originalIndex, // Use explicit index if available, otherwise preserve order
+      }))
+      .sort((a, b) => a.index - b.index) // Sort in descending order
+      .map(({plugin}) => plugin);
+
+    for (const plugin of sortedPlugins) {
+      const {name, plugin: scripts} = plugin;
+
+      try {
+        // Run common script if it exists
+        if (scripts.common) {
+          logger.debug(`Running common script for plugin: ${name}`);
+          await scripts.common(buildConfig, options);
+          globalEmitter.emit('onRun');
+        }
+
+        // Run platform-specific scripts
+        if (options.platform === 'ios' || options.platform === 'native') {
+          if (scripts.ios) {
+            logger.debug(`Running iOS script for plugin: ${name}`);
+            await scripts.ios(buildConfig, options);
+            globalEmitter.emit('onRun');
+          }
+        }
+
+        if (options.platform === 'android' || options.platform === 'native') {
+          if (scripts.android) {
+            logger.debug(`Running Android script for plugin: ${name}`);
+            await scripts.android(buildConfig, options);
+            globalEmitter.emit('onRun');
+          }
+        }
+      } catch (error) {
+        globalEmitter.emit('onError');
+        throw Error(`Failed to run scripts for plugin "${name}": ${error}`);
+      } finally {
+        globalEmitter.emit('onEnd');
+        logger.resume();
+        global.unmount?.();
+      }
+    }
   });
 
 /**

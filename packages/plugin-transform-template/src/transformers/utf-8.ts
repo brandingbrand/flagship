@@ -28,8 +28,9 @@ export async function utf8Transformer(
   config: BuildConfig,
   options: PrebuildOptions,
   transforms: Record<string, Function>,
+  filePath: string = '',
 ): Promise<void> {
-  return withUTF8(path.ios.privacyManifest, (content: string) => {
+  return withUTF8(filePath, (content: string) => {
     return Object.values(transforms).reduce((acc, curr) => {
       return curr(acc, config, options);
     }, content);

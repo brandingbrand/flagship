@@ -5,6 +5,8 @@ import dayjs from 'dayjs';
 
 import {FlagshipCodeManager} from './FlagshipCodeManager';
 
+const GLOBAL_KEY = Symbol.for('global.event.emitter');
+
 /**
  * Enum representing available logging levels in order of increasing severity
  */
@@ -129,7 +131,8 @@ const handlePausedLog = (
   messages: (string | Error)[],
   isError = false,
 ): void => {
-  FlagshipCodeManager.shared.emit(
+  // @ts-ignore
+  (global[GLOBAL_KEY] as any).emit(
     'onLog',
     formatMessage(
       messages.map(m => m.toString()),
@@ -141,7 +144,8 @@ const handlePausedLog = (
     const error = messages[3] as Error;
     const errorStackArr = error.stack?.split('\n') ?? [];
     errorStackArr.shift();
-    FlagshipCodeManager.shared.emit(
+    // @ts-ignore
+    (global[GLOBAL_KEY] as any).emit(
       'onLog',
       chalk.dim('\n' + errorStackArr.join('\n')),
     );

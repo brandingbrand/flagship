@@ -1,10 +1,12 @@
 import fs from 'fs-extra';
 import {
+  fs as flagshipFs,
   path,
   definePlugin,
   BuildConfig,
   PrebuildOptions,
   version,
+  globAndReplace,
 } from '@brandingbrand/code-cli-kit';
 
 import {transformers} from './transformers';
@@ -61,7 +63,7 @@ const walkAndTransform = async (
         await walkAndTransform(srcEntry, destEntry, config, options);
       } else {
         await fs.copyFile(srcEntry, destEntry);
-        await applyTransform(srcEntry, config, options);
+        await applyTransform(destEntry, config, options);
       }
     }),
   );
@@ -70,7 +72,7 @@ const walkAndTransform = async (
 /**
  * Applies transformations to a file if matching transformers are found.
  *
- * @param srcPath - The path to the source file to transform
+ * @param destEntry - The path to the destination file to transform
  * @param config - The build configuration object
  * @param options - Prebuild options for the transformation process
  * @returns A Promise that resolves when transformations are complete
@@ -80,18 +82,18 @@ const walkAndTransform = async (
  * 3. If both are found, applies the transformer with the matched transforms
  */
 const applyTransform = async (
-  srcPath: string,
+  destEntry: string,
   config: BuildConfig,
   options: PrebuildOptions,
 ): Promise<void> => {
-  const transformerEntry = transformers.find(t => t.test.test(srcPath));
+  const transformerEntry = transformers.find(t => t.test.test(destEntry));
   const transformsEntry = Object.values(transforms).find(predicate =>
-    predicate.__test.test(srcPath),
+    predicate.__test.test(destEntry),
   );
 
   if (transformerEntry && transformsEntry) {
     const {__test, ...passTransforms} = transformsEntry;
-    await transformerEntry.use(config, options, passTransforms);
+    await transformerEntry.use(config, options, passTransforms, destEntry);
   }
 };
 
@@ -144,6 +146,7 @@ const transformTemplates = async (
 export default definePlugin({
   ios: async (build: BuildConfig, options: PrebuildOptions) => {
     const destDir = path.project.resolve('ios');
+    await fs.mkdir(destDir);
     await transformTemplates(
       'ios',
       version.getReactNativeVersion(),
@@ -154,6 +157,7 @@ export default definePlugin({
   },
   android: async (build: BuildConfig, options: PrebuildOptions) => {
     const destDir = path.project.resolve('android');
+    await fs.mkdir(destDir);
     await transformTemplates(
       'android',
       version.getReactNativeVersion(),
@@ -161,5 +165,31 @@ export default definePlugin({
       build,
       options,
     );
+
+    // Rename android package namespace to updated package name for both debug and main packages
+    await Promise.all(
+      ['debug', 'main', 'release'].map(it =>
+        flagshipFs.renameAndCopyDirectory(
+          'com.app',
+          build.android.packageName,
+          path.project.resolve('android', 'app', 'src', it, 'java'),
+        ),
+      ),
+    ).catch(e => {
+      throw Error(
+        `Error: unable to rename android directories to updated package name, ${e.message}`,
+      );
+    });
+
+    // Replace package namespace in Java files for debug, main, and release builds
+    await globAndReplace(
+      'android/**/{debug,main,release}/**/*.{java,kt}',
+      /package\s+com\.app/,
+      `package ${build.android.packageName};`,
+    ).catch(e => {
+      throw Error(
+        `Error: unable to to update package names in native android files, ${e.message}`,
+      );
+    });
   },
 });

@@ -5,11 +5,13 @@ import {
 } from '@brandingbrand/code-cli-kit';
 
 /**
- * Applies XML transformations using provided transform functions
+ * Transforms strings.xml content by applying provided transform functions
  *
- * @param config - Build configuration object
- * @param options - Prebuild options
- * @param transforms - Object containing transform functions to apply
+ * @param config - Build configuration containing version, name and other build details
+ * @param options - Prebuild options specifying environment, platform and other settings
+ * @param transforms - Object containing transform functions to modify the XML content
+ * @param filePath - Optional path to the strings.xml file to transform
+ * @returns Promise that resolves when all transforms are applied
  *
  * @example
  * ```typescript
@@ -27,10 +29,11 @@ import {
  * await xmlTransformer(buildConfig, prebuildOptions, transforms);
  * ```
  */
-export async function xmlTransformer(
+export async function stringsXmlTransformer(
   config: BuildConfig,
   options: PrebuildOptions,
   transforms: Record<string, Function>,
+  filePath: string = '',
 ): Promise<void> {
   return withStrings(xml => {
     return Object.values(transforms).forEach(it => it(xml, config, options));

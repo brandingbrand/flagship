@@ -44,4 +44,5 @@ yarn-error.log*
 apps/example/ios
 apps/example/android
 
+.gradle
 !**/plugin-native-navigation/__tests__/**/node_modules

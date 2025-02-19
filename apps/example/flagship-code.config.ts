@@ -21,6 +21,8 @@ export default defineConfig({
    */
   pluginPath: './coderc/plugins',
 
+  preset: '@brandingbrand/code-react-native-preset',
+
   /**
    * An array of plugin names.
    */

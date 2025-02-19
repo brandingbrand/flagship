@@ -34,6 +34,7 @@ export function pbxprojTransformer(
   config: BuildConfig,
   options: PrebuildOptions,
   transforms: Record<string, Function>,
+  filePath: string = '',
 ): Promise<void> {
   return withPbxproj(project => {
     Object.values(transforms).forEach(it => it(project, config, options));

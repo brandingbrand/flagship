@@ -35,6 +35,7 @@ export async function plistTransformer(
   config: BuildConfig,
   options: PrebuildOptions,
   transforms: Record<string, Function>,
+  filePath: string = '',
 ): Promise<void> {
   return withInfoPlist(content => {
     return Object.values(transforms).reduce((acc, curr) => {

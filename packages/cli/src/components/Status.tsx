@@ -21,6 +21,7 @@ import {
 type StatusProps = {
   /** Callback function to be called when status is done loading */
   res: Function;
+  numberOfPlugins: number;
 };
 
 /**
@@ -29,7 +30,10 @@ type StatusProps = {
  * @param {Function} props.res - Callback function executed when loading completes
  * @returns {JSX.Element|null} Rendered Status component or null if data is loading/verbose mode
  */
-export function Status({res}: StatusProps): JSX.Element | null {
+export function Status({
+  res,
+  numberOfPlugins,
+}: StatusProps): JSX.Element | null {
   const {data, isPending} = useAsync({
     promiseFn: StatusAsyncComponents,
   });
@@ -61,7 +65,7 @@ export function Status({res}: StatusProps): JSX.Element | null {
           {FLAGSHIP_CODE_LABEL}
           <Text color="gray"> [ {program.args[0]} ] </Text>
         </Text>
-        <StatusProgress />
+        <StatusProgress numberOfPlugins={numberOfPlugins} />
       </Box>
     </Box>
   );

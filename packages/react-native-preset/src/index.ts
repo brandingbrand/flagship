@@ -6,7 +6,7 @@
  * 2. code-plugin-env: Handles environment configuration and variables
  * 3. code-plugin-verify-dependencies: Verifies project dependencies are correct
  * 4. code-plugin-transform-template: Transforms template files
- * 5. code-plugin-packager-install: Handles package installation (executes at last priority)
+ * 5. code-plugin-packager-install: Handles package installation (executes as last priority)
  */
 export default [
   '@brandingbrand/code-plugin-clean',

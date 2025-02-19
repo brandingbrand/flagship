@@ -165,8 +165,7 @@ export async function bundleRequire<T extends any>(
     format,
   });
 
-  // Return the required module
-  return mod;
+  return mod.default;
 }
 
 /**
