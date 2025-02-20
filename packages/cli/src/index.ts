@@ -6,7 +6,7 @@ import {AlignDepsOptions, logger} from '@brandingbrand/code-cli-kit';
 import cliPkg from '../package.json';
 
 import {executePrebuild} from './commands';
-import {constants} from './core';
+import {constants} from './ui/constants';
 
 const {
   ERROR_REPORT_URL,

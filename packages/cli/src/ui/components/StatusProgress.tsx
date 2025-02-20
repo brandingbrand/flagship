@@ -10,11 +10,7 @@ interface ProgressState {
   result?: 'success' | 'fail';
 }
 
-export default function StatusProgress({
-  numberOfPlugins,
-}: {
-  numberOfPlugins: number;
-}) {
+export function StatusProgress({numberOfPlugins}: {numberOfPlugins: number}) {
   const [state, setState] = useState<ProgressState>({
     percent: 0,
     result: undefined,

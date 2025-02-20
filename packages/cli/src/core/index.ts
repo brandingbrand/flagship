@@ -1,3 +1,2 @@
 export * from './config';
-export * from './constants';
-export * from './eventBus';
+export {default as globalEmitter} from './eventBus';

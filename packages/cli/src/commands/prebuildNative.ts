@@ -3,7 +3,7 @@ import {PrebuildOptions, logger} from '@brandingbrand/code-cli-kit';
 import {findBuildConfigFiles} from '../core/config/buildConfig';
 import {loadFlagshipCodeConfig} from '../core/config/flagshipConfig';
 import {renderStatus} from '../ui/inkRenderer';
-import globalEmitter from '../core/eventBus';
+import {globalEmitter} from '../core';
 
 /**
  * Executes the prebuild process for native code generation.

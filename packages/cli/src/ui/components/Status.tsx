@@ -11,7 +11,7 @@ import {
 
 import {StatusAsyncComponents} from './StatusAsyncComponents';
 import {StatusMessages} from './StatusMessages';
-import StatusProgress from './StatusProgress';
+import {StatusProgress} from './StatusProgress';
 
 /**
  * Props for the Status component
