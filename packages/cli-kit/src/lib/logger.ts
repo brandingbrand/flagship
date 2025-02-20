@@ -90,11 +90,11 @@ const getGroupPadding = (options?: {
 const getTagStringByLevel = (level: LogLevel): string => {
   switch (level) {
     case LogLevel.Log:
-      return 'log';
+      return '  log';
     case LogLevel.Info:
-      return 'info';
+      return ' info';
     case LogLevel.Warn:
-      return 'warn';
+      return ' warn';
     case LogLevel.Error:
       return 'error';
     case LogLevel.Debug:

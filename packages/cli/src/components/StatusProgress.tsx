@@ -10,10 +10,6 @@ interface ProgressState {
   result?: 'success' | 'fail';
 }
 
-/**
- * Status progress component that displays a loading spinner, progress bar, and completion state
- * @returns A React component showing the current progress state with visual indicators
- */
 export default function StatusProgress({
   numberOfPlugins,
 }: {
@@ -24,14 +20,26 @@ export default function StatusProgress({
     result: undefined,
   });
 
+  // Track the current animated position
+  const [animationPosition, setAnimationPosition] = useState(0);
+
   const {data, isPending} = useAsync({
     promiseFn: StatusAsyncComponents,
   });
 
+  // Animation effect
   useEffect(() => {
-    /**
-     * Handle progress updates during execution
-     */
+    if (!state.result) {
+      const animationInterval = setInterval(() => {
+        setAnimationPosition(prev => (prev + 1) % 11); // 11 = screen size + 1
+      }, 100); // Adjust speed as needed
+
+      return () => clearInterval(animationInterval);
+    }
+  }, [state.result]);
+
+  // Your existing useEffect for event handlers
+  useEffect(() => {
     const onRun = () => {
       setState(prevState => ({
         ...prevState,
@@ -39,9 +47,6 @@ export default function StatusProgress({
       }));
     };
 
-    /**
-     * Handle successful completion
-     */
     const onEnd = () => {
       setState(prevState => ({
         ...prevState,
@@ -49,9 +54,6 @@ export default function StatusProgress({
       }));
     };
 
-    /**
-     * Handle execution failures
-     */
     const onError = () => {
       setState(prevState => ({
         ...prevState,
@@ -72,26 +74,45 @@ export default function StatusProgress({
 
   if (!data || isPending) return null;
 
-  const {Text, Spinner} = data;
+  const {Text} = data;
 
-  /**
-   * Generates a progress bar string representation
-   * @returns A string containing progress bar characters
-   */
   function getString() {
     const screen = 10;
     const max = Math.min(
       Math.floor(screen * (state.percent / numberOfPlugins)),
       screen,
     );
-    const chars = '█'.repeat(max);
 
-    return chars + ' '.repeat(screen - max);
+    return Array(screen)
+      .fill('█')
+      .map((char, index) => {
+        if (index >= max) {
+          // Background portion should be dimmer
+          return (
+            <Text color="gray" key={index}>
+              {' '}
+            </Text>
+          );
+        }
+        if (index === animationPosition % (max + 1)) {
+          // Animated portion
+          return (
+            <Text color="gray" key={index}>
+              {char}
+            </Text>
+          );
+        }
+        // Filled portion
+        return (
+          <Text color="green" key={index}>
+            {char}
+          </Text>
+        );
+      });
   }
 
   return (
     <>
-      {!state.result && <Spinner />}
       {state.result === 'success' && (
         <>
           <Text color={'green'}>✓ </Text>
@@ -106,10 +127,11 @@ export default function StatusProgress({
       )}
       {!state.result && (
         <>
-          <Text color={'green'}> ⟨ </Text>
+          <Text color={'green'}>[ </Text>
           <Text color={'green'}>{getString()}</Text>
-          <Text color={'green'}> ⟩ </Text>
+          <Text color={'green'}> ]</Text>
           <Text bold>
+            {' '}
             {Math.round((state.percent / numberOfPlugins) * 100)}%
           </Text>
         </>
