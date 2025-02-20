@@ -49,23 +49,23 @@ export const transformers = [
     use: plistTransformer,
   },
   {
-    test: /\b\colors.xml$/,
+    test: /\bcolors.xml$/,
     use: colorsXmlTransformer,
   },
   {
-    test: /\b\AndroidManifest.xml$/,
+    test: /\bAndroidManifest.xml$/,
     use: manifestXmlTransformer,
   },
   {
-    test: /\b\network_security_config.xml.xml$/,
+    test: /\bnetwork_security_config.xml.xml$/,
     use: networkSecurityConfigXmlTransformer,
   },
   {
-    test: /\b\strings.xml$/,
+    test: /\bstrings.xml$/,
     use: stringsXmlTransformer,
   },
   {
-    test: /\b\styles.xml$/,
+    test: /\bstyles.xml$/,
     use: stylesXmlTransformer,
   },
   {

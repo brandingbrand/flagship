@@ -6,7 +6,7 @@ import {parse} from '@babel/parser';
 import traverse from '@babel/traverse';
 import {glob} from 'glob';
 import {findConfigFile} from 'typescript';
-import {BuildConfig, CodeConfig} from '@brandingbrand/code-cli-kit';
+import {BuildConfig, CodeConfig, logger} from '@brandingbrand/code-cli-kit';
 
 import {bundleRequire} from './lib';
 
@@ -72,6 +72,9 @@ export async function findBuildConfigFiles(
   const pattern = path.join(rootDir, '**/build.*.ts');
   try {
     const files = await glob(pattern, {ignore: ['**/node_modules/**']});
+    logger.log(
+      `Found ${files.length} build configurations: ${files.join(', ')}`,
+    );
 
     const buildFile = files.find(filePath => {
       const fileName = path.basename(filePath);

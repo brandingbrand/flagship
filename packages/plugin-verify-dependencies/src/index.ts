@@ -79,7 +79,7 @@ export default definePlugin({
    * @returns {Promise<void>} A Promise representing the completion of dependency verification
    * @throws {Error} If dependency verification encounters critical errors
    */
-  common: async (_, options: PrebuildOptions): Promise<void> => {
+  common: async (_: any, options: PrebuildOptions): Promise<void> => {
     // Select the profile based on the React Native version
     const rnProfile = profile;
 
@@ -90,10 +90,13 @@ export default definePlugin({
      * @throws {Error} If dependency checking encounters critical errors
      */
     const checkDependencies = async (dependencies: Record<string, any>) => {
-      const rootPackageJson = await getPackageJson(
-        path.project.resolve('package.json'),
-      );
+      const rootPackageJson = await getPackageJson(path.project.resolve());
+      const rootDeps = {
+        ...rootPackageJson?.dependencies,
+        ...rootPackageJson?.devDependencies,
+      };
       for (const [packageName, config] of Object.entries(dependencies)) {
+        if (!rootDeps[packageName]) continue;
         try {
           const installedVersion = (await getPackageJson(packageName))?.version;
 
