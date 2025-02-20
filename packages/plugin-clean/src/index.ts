@@ -15,17 +15,21 @@ export default definePlugin({
    * Function that handles removal of iOS directory
    */
   ios: async (_): Promise<void> => {
+    logger.debug('Checking for iOS directory existence...');
     // Check if the 'ios' directory exists
     const doesIOSExist = await fs.doesPathExist(path.project.resolve('ios'));
 
     if (doesIOSExist) {
+      logger.info('iOS directory found, proceeding with removal');
       try {
         await rimraf(path.project.resolve('ios'));
-        logger.log('Successfully removed ios directory');
+        logger.info('Successfully removed iOS directory');
       } catch (e: any) {
-        logger.error('Failed to remove ios directory', e);
-        throw new Error(`Error: unable to remove ios directory, ${e.message}`);
+        logger.error('Failed to remove iOS directory', e);
+        throw new Error(`Error: unable to remove iOS directory, ${e.message}`);
       }
+    } else {
+      logger.debug('iOS directory not found, skipping removal');
     }
   },
 
@@ -33,21 +37,25 @@ export default definePlugin({
    * Function that handles removal of Android directory
    */
   android: async (_): Promise<void> => {
+    logger.debug('Checking for Android directory existence...');
     // Check if the 'android' directory exists
     const doesAndroidExist = await fs.doesPathExist(
       path.project.resolve('android'),
     );
 
     if (doesAndroidExist) {
+      logger.info('Android directory found, proceeding with removal');
       try {
         await rimraf(path.project.resolve('android'));
-        logger.log('Successfully removed android directory');
+        logger.info('Successfully removed Android directory');
       } catch (e: any) {
-        logger.error('Failed to remove android directory', e);
+        logger.error('Failed to remove Android directory', e);
         throw new Error(
-          `Error: unable to remove android directory, ${e.message}`,
+          `Error: unable to remove Android directory, ${e.message}`,
         );
       }
+    } else {
+      logger.debug('Android directory not found, skipping removal');
     }
   },
 });

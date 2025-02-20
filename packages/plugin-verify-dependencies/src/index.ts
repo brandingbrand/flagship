@@ -61,10 +61,13 @@ async function getPackageJson(
       currentDir = path.dirname(currentDir);
     }
 
-    console.error(`Could not find package.json for ${packageName}`);
+    logger.error(`Could not find package.json for ${packageName}`);
     return null;
   } catch (error) {
-    console.error(`Error retrieving package.json for ${packageName}:`, error);
+    logger.error(
+      `Error retrieving package.json for ${packageName}:`,
+      error as any,
+    );
     return null;
   }
 }
@@ -108,6 +111,7 @@ export default definePlugin({
      * @throws {Error} On dependency validation failures
      */
     const checkDependencies = async (dependencies: Record<string, any>) => {
+      logger.debug('Reading root package.json');
       const rootPackageJson = JSON.parse(
         await fs.readFile(path.project.resolve('package.json'), 'utf-8'),
       );
@@ -115,10 +119,18 @@ export default definePlugin({
         ...rootPackageJson?.dependencies,
         ...rootPackageJson?.devDependencies,
       };
+
+      logger.debug('Starting dependency validation');
       for (const [packageName, config] of Object.entries(dependencies)) {
-        if (!rootDeps[packageName]) continue;
+        if (!rootDeps[packageName]) {
+          logger.debug(
+            `Skipping ${packageName} - not found in root dependencies`,
+          );
+          continue;
+        }
 
         try {
+          logger.debug(`Checking package: ${packageName}`);
           const installedVersion = (await getPackageJson(packageName))?.version;
           const coercedInstalledVersion =
             semver.coerce(installedVersion)?.version;
@@ -160,10 +172,10 @@ export default definePlugin({
     };
 
     // Verify dependencies for the current project
-    logger.log('Verifying project dependencies...');
+    logger.info('Verifying project dependencies...');
     await checkDependencies(rnProfile);
 
-    logger.log('Dependency verification complete.');
+    logger.info('Dependency verification complete.');
   },
 });
 

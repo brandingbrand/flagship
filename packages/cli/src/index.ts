@@ -119,6 +119,7 @@ program
   )
   .option('--f, --fix [fix]', 'Fix package.json dependencies.', false)
   .action((options: AlignDepsOptions) => {
+    logger.info('Starting align-deps command', 'align-deps');
     // Command implementation moved to separate file
   });
 
@@ -135,6 +136,7 @@ program
   )
   .argument('<string>', 'name of generated plugin')
   .action((str: string, options: any) => {
+    logger.info('Starting plugin generation', 'plugin');
     // Command implementation moved to separate file
   });
 
@@ -168,17 +170,27 @@ program
       process.cwd(),
       options.build,
     );
+
     const {plugins} = await loadFlagshipCodeConfig();
 
+    const pluginCount = plugins.reduce((acc, curr) => {
+      return acc + Object.keys(curr.plugin).length;
+    }, 0);
+    logger.info(`Found ${pluginCount} plugins to process`, 'prebuild');
+
     await renderStatus({
-      numberOfPlugins: plugins.reduce((acc, curr) => {
-        return acc + Object.keys(curr.plugin).length;
-      }, 0),
+      numberOfPlugins: pluginCount,
       cmd: 'prebuild',
     });
 
     logger.setLogLevel(logger.getLogLevelFromString(options.logLevel));
-    if (!options.verbose) logger.pause();
+    if (!options.verbose) {
+      logger.debug(
+        'Running in non-verbose mode - pausing detailed output',
+        'prebuild',
+      );
+      logger.pause();
+    }
     logger.printCmdOptions(options, 'prebuild');
 
     const sortedPlugins = plugins
@@ -187,26 +199,30 @@ program
         index:
           plugin.options?.index !== undefined
             ? plugin.options.index
-            : originalIndex, // Use explicit index if available, otherwise preserve order
+            : originalIndex,
       }))
-      .sort((a, b) => a.index - b.index) // Sort in descending order
+      .sort((a, b) => a.index - b.index)
       .map(({plugin}) => plugin);
+
+    logger.info(
+      `Processing ${sortedPlugins.length} plugins in order`,
+      'prebuild',
+    );
 
     for (const plugin of sortedPlugins) {
       const {name, plugin: scripts} = plugin;
+      logger.info(`Processing plugin: ${name}`, 'prebuild');
 
       try {
-        // Run common script if it exists
         if (scripts.common) {
-          logger.debug(`Running common script for plugin: ${name}`);
+          logger.debug(`Running common script for plugin: ${name}`, 'prebuild');
           await scripts.common(buildConfig, options);
           globalEmitter.emit('onRun');
         }
 
-        // Run platform-specific scripts
         if (options.platform === 'ios' || options.platform === 'native') {
           if (scripts.ios) {
-            logger.debug(`Running iOS script for plugin: ${name}`);
+            logger.debug(`Running iOS script for plugin: ${name}`, 'prebuild');
             await scripts.ios(buildConfig, options);
             globalEmitter.emit('onRun');
           }
@@ -214,17 +230,22 @@ program
 
         if (options.platform === 'android' || options.platform === 'native') {
           if (scripts.android) {
-            logger.debug(`Running Android script for plugin: ${name}`);
+            logger.debug(
+              `Running Android script for plugin: ${name}`,
+              'prebuild',
+            );
             await scripts.android(buildConfig, options);
             globalEmitter.emit('onRun');
           }
         }
       } catch (error) {
+        logger.error(`Plugin execution failed: ${name}`, 'prebuild');
         globalEmitter.emit('onError');
         throw Error(`Failed to run scripts for plugin "${name}": ${error}`);
       }
     }
 
+    logger.info('Prebuild process completed successfully', 'prebuild');
     globalEmitter.emit('onEnd');
     logger.resume();
     global.unmount?.();
@@ -238,23 +259,21 @@ program
  * @throws {never} Never throws, handles all errors
  */
 const handleError = async (error: Error | CLIError): Promise<never> => {
-  console.log();
+  logger.error('CLI execution failed', 'cli');
 
   if (error instanceof CLIError) {
-    console.log(chalk.red(`CLI Error (${error.code}): ${error.message}`));
+    logger.error(`CLI Error (${error.code}): ${error.message}`, 'cli');
   } else {
-    console.log(
-      chalk.red(
-        `Unexpected error. Please report it as a bug: ${ERROR_REPORT_URL}`,
-      ),
+    logger.error(
+      `Unexpected error. Please report it as a bug: ${ERROR_REPORT_URL}`,
+      'cli',
     );
-    console.log(chalk.yellow('Error message:'), error.message);
+    logger.error(`Error message: ${error.message}`, 'cli');
     if (error.stack) {
-      console.log(chalk.gray('Stack trace:'), error.stack);
+      logger.debug(`Stack trace: ${error.stack}`, 'cli');
     }
   }
 
-  console.log();
   process.exit(1);
 };
 

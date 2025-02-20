@@ -1,6 +1,4 @@
 import {
-  canRunAndroid,
-  canRunIOS,
   logger,
   path,
   definePlugin,
@@ -17,19 +15,22 @@ export default definePlugin({
     const {execa} = await import('execa');
 
     try {
+      logger.info('Installing Ruby gems for iOS project...');
       for await (const line of execa('bundle', ['install'], {
         cwd: path.project.resolve('ios'),
       })) {
         logger.debug(line);
       }
-      logger.log('Installed Ruby gems for the iOS project');
+      logger.info('Successfully installed Ruby gems for the iOS project');
     } catch (error: any) {
+      logger.error('Failed to install Ruby gems for iOS');
       throw new Error(
         `Error: failed to run "bundle exec install" for iOS: ${error.message}`,
       );
     }
 
     try {
+      logger.info('Installing pods for iOS project...');
       const podInstallOut = execa('bundle', ['exec', 'pod', 'install'], {
         cwd: path.project.resolve('ios'),
       });
@@ -38,8 +39,9 @@ export default definePlugin({
         logger.debug(line);
       }
 
-      logger.log('Installed pods for the iOS project');
+      logger.info('Successfully installed pods for the iOS project');
     } catch (error: any) {
+      logger.error('Failed to install pods for iOS');
       throw new Error(
         `Error: failed to run "bundle exec pod install" for iOS: ${error.message}`,
       );
@@ -50,13 +52,15 @@ export default definePlugin({
     const {execa} = await import('execa');
 
     try {
+      logger.info('Installing Ruby gems for Android project...');
       for await (const line of execa('bundle', ['install'], {
         cwd: path.project.resolve('android'),
       })) {
         logger.debug(line);
       }
-      logger.log('Installed Ruby gems for the Android project');
+      logger.info('Successfully installed Ruby gems for the Android project');
     } catch (error: any) {
+      logger.error('Failed to install Ruby gems for Android');
       throw new Error(
         `Error: failed to run "bundle exec install" for Android: ${error.message}`,
       );

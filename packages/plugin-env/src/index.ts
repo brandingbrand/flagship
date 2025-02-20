@@ -19,17 +19,21 @@ export default definePlugin({
      * @throws {Error} If dependencies are missing or FSApp dependency is not found
      */
     const validatePackageJson = (pkg: PackageJson) => {
+      logger.debug('Validating package.json dependencies...');
       if (!pkg.dependencies) {
+        logger.error('No dependencies found in package.json');
         throw new Error(
           'Missing Configuration: Unable to locate dependencies object in package.json. The absence of @brandingbrand/fsapp will prevent multi-tenant typed environments.',
         );
       }
 
       if (!('@brandingbrand/fsapp' in pkg.dependencies)) {
+        logger.error('Missing @brandingbrand/fsapp dependency');
         throw new Error(
           "Missing Configuration: Unable to locate the '@brandingbrand/fsapp' dependency. Multi-tenant typed environments will not work without this.",
         );
       }
+      logger.debug('Package.json validation successful');
     };
 
     /**
@@ -40,6 +44,7 @@ export default definePlugin({
      * @throws {Error} If no valid environment files are found
      */
     const getEnvFiles = async (envDir: string, options: any) => {
+      logger.debug(`Scanning for env files in directory: ${envDir}`);
       const envs = (await fs.readdir(envDir)).filter(file =>
         options.release
           ? path.basename(file) === `env.${options.env}.ts`
@@ -47,11 +52,13 @@ export default definePlugin({
       );
 
       if (!envs.length) {
+        logger.error(`No valid env files found in ${envDir}`);
         throw new Error(
           `Missing Configuration: No valid env files found in ${envDir}. Expected pattern "env.<mode>.ts".`,
         );
       }
 
+      logger.debug(`Found ${envs.length} environment files`);
       return envs;
     };
 
@@ -63,15 +70,18 @@ export default definePlugin({
      * @throws {Error} If environment file names don't match expected format
      */
     const parseEnvContents = async (envs: string[], envDir: string) => {
+      logger.debug('Beginning to parse environment file contents');
       return Promise.all(
         envs.map(async file => {
           const envName = /env\.(.*)\.ts/.exec(file)?.[1];
           if (!envName) {
+            logger.error(`Invalid env file name format: ${file}`);
             throw new Error(
               `Name Mismatch: env file ${file} does not follow expected format "env.<variant>.ts".`,
             );
           }
 
+          logger.debug(`Parsing env file: ${file}`);
           const {mod} = await bundleRequire({
             filepath: path.resolve(envDir, file),
             format: 'cjs',
@@ -88,6 +98,7 @@ export default definePlugin({
      * @throws {Error} If FSApp version cannot be parsed
      */
     const getFsappVersion = async () => {
+      logger.debug('Retrieving FSApp version');
       const {version} = require(
         require.resolve('@brandingbrand/fsapp/package.json', {
           paths: [process.cwd()],
@@ -96,18 +107,22 @@ export default definePlugin({
 
       const coercedVersion = semver.coerce(version);
       if (!coercedVersion) {
+        logger.error('Failed to parse FSApp version');
         throw new Error(
           'Type Mismatch: cannot parse @brandingbrand/fsapp version',
         );
       }
 
+      logger.debug(`Found FSApp version: ${coercedVersion}`);
       return coercedVersion;
     };
 
     // Main execution flow
+    logger.info('Starting environment configuration process');
     const pkg = require(path.project.resolve('package.json')) as PackageJson;
     validatePackageJson(pkg);
 
+    logger.debug('Loading flagship-code configuration');
     const {mod} = await bundleRequire({
       filepath: path.project.resolve('flagship-code.config.ts'),
       format: 'cjs',
@@ -115,19 +130,22 @@ export default definePlugin({
 
     const envDir = path.project.resolve(mod.default.envPath);
     if (!(await fs.doesPathExist(envDir))) {
+      logger.error(`Environment directory not found: ${envDir}`);
       throw new Error(
         `Unknown Path: env directory: ${envDir} does not exist. Check the "envPath" attribute in flagship-code.config.ts.`,
       );
     }
 
     const envs = await getEnvFiles(envDir, options);
-    logger.log(`Found ${envs.length} env configurations: ${envs.join(', ')}`);
+    logger.info(`Found ${envs.length} env configurations: ${envs.join(', ')}`);
 
     const envContents = await parseEnvContents(envs, envDir);
+    logger.debug('Importing magicast for environment processing');
     const magicast = await import('magicast');
     const parseMod = magicast.parseModule('');
     const coercedVersion = await getFsappVersion();
 
+    logger.debug('Determining project environment index path');
     const projectEnvIndexPath = semver.satisfies(coercedVersion, '<11')
       ? path.resolve(
           require.resolve('@brandingbrand/fsapp/package.json', {
@@ -141,11 +159,13 @@ export default definePlugin({
         });
 
     if (!projectEnvIndexPath) {
+      logger.error('project_env_index.js not found');
       throw new Error(
         'Missing File: cannot find project_env_index.js in @brandingbrand/fsapp to successfully link environments.',
       );
     }
 
+    logger.debug('Processing environment contents based on FSApp version');
     if (semver.satisfies(coercedVersion, '<11')) {
       parseMod.exports.default = {};
       envContents.forEach(it => {
@@ -157,10 +177,11 @@ export default definePlugin({
       });
     }
 
+    logger.debug('Writing environment configurations to file');
     magicast.writeFile(parseMod, projectEnvIndexPath);
 
-    logger.log(
-      `Linked ${envContents.map(it => it.name).join(', ')} to @brandingbrand/fsapp project_env_index.js`,
+    logger.info(
+      `Successfully linked ${envContents.map(it => it.name).join(', ')} to @brandingbrand/fsapp project_env_index.js`,
     );
   },
 });
