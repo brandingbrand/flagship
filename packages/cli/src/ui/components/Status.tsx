@@ -2,16 +2,16 @@ import {useAsync} from 'react-async';
 import {useEffect} from 'react';
 import ansiAlign from 'ansi-align';
 
-import {StatusAsyncComponents} from './StatusAsyncComponents';
-import {StatusMessages} from './StatusMessages';
-import StatusProgress from './StatusProgress';
-
 import {
   FLAGSHIP_CODE_DESCRIPTION,
   FLAGSHIP_CODE_LABEL,
   FLAGSHIP_CODE_LOGO,
   FLAGSHIP_CODE_TITLE,
-} from '@/lib';
+} from '../constants';
+
+import {StatusAsyncComponents} from './StatusAsyncComponents';
+import {StatusMessages} from './StatusMessages';
+import StatusProgress from './StatusProgress';
 
 /**
  * Props for the Status component

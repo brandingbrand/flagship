@@ -1,9 +1,9 @@
 import {useAsync} from 'react-async';
 import {useEffect, useState, useCallback, memo} from 'react';
 
-import globalEmitter from '../events';
-
 import {StatusAsyncComponents} from './StatusAsyncComponents';
+
+import globalEmitter from '@/core/eventBus';
 
 // Add a max number of messages to prevent potential memory issues
 const MAX_MESSAGES = 1000;

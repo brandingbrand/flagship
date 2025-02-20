@@ -1,9 +1,9 @@
 import {useAsync} from 'react-async';
 import {useEffect, useState} from 'react';
 
-import globalEmitter from '../events';
-
 import {StatusAsyncComponents} from './StatusAsyncComponents';
+
+import globalEmitter from '@/core/eventBus';
 
 interface ProgressState {
   percent: number;

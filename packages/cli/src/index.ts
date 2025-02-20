@@ -1,18 +1,23 @@
 import process from 'process';
 
-import chalk from 'chalk';
 import {Command, Option} from 'commander';
-import {
-  PrebuildOptions,
-  AlignDepsOptions,
-  logger,
-} from '@brandingbrand/code-cli-kit';
+import {AlignDepsOptions, logger} from '@brandingbrand/code-cli-kit';
 
 import cliPkg from '../package.json';
 
-import globalEmitter from './events';
-import {findBuildConfigFiles, loadFlagshipCodeConfig} from './configs';
-import {renderStatus} from './renderer';
+import {executePrebuild} from './commands';
+import {constants} from './core';
+
+const {
+  ERROR_REPORT_URL,
+  CLI_NAME,
+  CLI_DESCRIPTION,
+  LOG_LEVEL_CHOICES,
+  PLATFORM_CHOICES,
+  RN_PROFILE_CHOICES,
+  DEFAULT_LOG_LEVEL,
+  DEFAULT_PLATFORM,
+} = constants;
 
 /**
  * Options interface for the prebuild command
@@ -24,83 +29,6 @@ import {renderStatus} from './renderer';
  * @property {boolean} release - Whether to bundle only the specified environment
  * @property {boolean} verbose - Whether to show detailed stdout output
  */
-
-/**
- * Base URL for reporting issues
- * @constant {string}
- */
-const ERROR_REPORT_URL = 'https://github.com/brandingbrand/flagship/issues';
-
-/**
- * Name of the CLI tool
- * @constant {string}
- */
-const CLI_NAME = 'flagship-code';
-
-/**
- * Description of the CLI tool's purpose
- * @constant {string}
- */
-const CLI_DESCRIPTION =
-  'command-line interface for ephemeral native code generation';
-
-/**
- * Available log level options
- * @constant {readonly string[]}
- */
-const LOG_LEVEL_CHOICES = ['debug', 'log', 'info', 'warn', 'error'] as const;
-
-/**
- * Available platform choices for code generation
- * @constant {readonly string[]}
- */
-const PLATFORM_CHOICES = ['ios', 'android', 'native'] as const;
-
-/**
- * Supported React Native version profiles
- * @constant {readonly string[]}
- */
-const RN_PROFILE_CHOICES = [
-  '0.72',
-  '0.73',
-  '0.74',
-  '0.75',
-  '0.76',
-  '0.77',
-  '0.78',
-] as const;
-
-/**
- * Default logging level for commands
- * @constant {string}
- */
-const DEFAULT_LOG_LEVEL = 'info';
-
-/**
- * Default platform for code generation
- * @constant {string}
- */
-const DEFAULT_PLATFORM = 'native';
-
-/**
- * Custom error class for CLI-specific errors
- * @class CLIError
- * @extends Error
- */
-class CLIError extends Error {
-  /**
-   * Creates a new CLIError instance
-   * @param {string} message - Error message
-   * @param {string} [code] - Error code for categorization
-   */
-  constructor(
-    message: string,
-    public code?: string,
-  ) {
-    super(message);
-    this.name = 'CLIError';
-  }
-}
 
 // Initialize main program
 const program: Command = new Command()
@@ -165,91 +93,7 @@ program
   )
   .option('-r, --release', 'Bundle only specified environment.', false)
   .option('--verbose', 'Show stdout.', false)
-  .action(async (options: PrebuildOptions) => {
-    const buildConfig = await findBuildConfigFiles(
-      process.cwd(),
-      options.build,
-    );
-
-    const {plugins} = await loadFlagshipCodeConfig();
-
-    const pluginCount = plugins.reduce((acc, curr) => {
-      return acc + Object.keys(curr.plugin).length;
-    }, 0);
-    logger.info(`Found ${pluginCount} plugins to process`, 'prebuild');
-
-    await renderStatus({
-      numberOfPlugins: pluginCount,
-      cmd: 'prebuild',
-    });
-
-    logger.setLogLevel(logger.getLogLevelFromString(options.logLevel));
-    if (!options.verbose) {
-      logger.debug(
-        'Running in non-verbose mode - pausing detailed output',
-        'prebuild',
-      );
-      logger.pause();
-    }
-    logger.printCmdOptions(options, 'prebuild');
-
-    const sortedPlugins = plugins
-      .map((plugin, originalIndex) => ({
-        plugin,
-        index:
-          plugin.options?.index !== undefined
-            ? plugin.options.index
-            : originalIndex,
-      }))
-      .sort((a, b) => a.index - b.index)
-      .map(({plugin}) => plugin);
-
-    logger.info(
-      `Processing ${sortedPlugins.length} plugins in order`,
-      'prebuild',
-    );
-
-    for (const plugin of sortedPlugins) {
-      const {name, plugin: scripts} = plugin;
-      logger.info(`Processing plugin: ${name}`, 'prebuild');
-
-      try {
-        if (scripts.common) {
-          logger.debug(`Running common script for plugin: ${name}`, 'prebuild');
-          await scripts.common(buildConfig, options);
-          globalEmitter.emit('onRun');
-        }
-
-        if (options.platform === 'ios' || options.platform === 'native') {
-          if (scripts.ios) {
-            logger.debug(`Running iOS script for plugin: ${name}`, 'prebuild');
-            await scripts.ios(buildConfig, options);
-            globalEmitter.emit('onRun');
-          }
-        }
-
-        if (options.platform === 'android' || options.platform === 'native') {
-          if (scripts.android) {
-            logger.debug(
-              `Running Android script for plugin: ${name}`,
-              'prebuild',
-            );
-            await scripts.android(buildConfig, options);
-            globalEmitter.emit('onRun');
-          }
-        }
-      } catch (error) {
-        logger.error(`Plugin execution failed: ${name}`, 'prebuild');
-        globalEmitter.emit('onError');
-        throw Error(`Failed to run scripts for plugin "${name}": ${error}`);
-      }
-    }
-
-    logger.info('Prebuild process completed successfully', 'prebuild');
-    globalEmitter.emit('onEnd');
-    logger.resume();
-    global.unmount?.();
-  });
+  .action(executePrebuild);
 
 /**
  * Handles errors that occur during CLI execution
@@ -258,20 +102,15 @@ program
  * @returns {Promise<never>} Never resolves, always exits process
  * @throws {never} Never throws, handles all errors
  */
-const handleError = async (error: Error | CLIError): Promise<never> => {
+const handleError = async (error: Error): Promise<never> => {
   logger.error('CLI execution failed', 'cli');
-
-  if (error instanceof CLIError) {
-    logger.error(`CLI Error (${error.code}): ${error.message}`, 'cli');
-  } else {
-    logger.error(
-      `Unexpected error. Please report it as a bug: ${ERROR_REPORT_URL}`,
-      'cli',
-    );
-    logger.error(`Error message: ${error.message}`, 'cli');
-    if (error.stack) {
-      logger.debug(`Stack trace: ${error.stack}`, 'cli');
-    }
+  logger.error(
+    `Unexpected error. Please report it as a bug: ${ERROR_REPORT_URL}`,
+    'cli',
+  );
+  logger.error(`Error message: ${error.message}`, 'cli');
+  if (error.stack) {
+    logger.debug(`Stack trace: ${error.stack}`, 'cli');
   }
 
   process.exit(1);
