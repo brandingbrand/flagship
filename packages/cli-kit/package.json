@@ -4,9 +4,7 @@
   "description": "tools for Flagship Code react-native application",
   "license": "MIT",
   "main": "dist/index.js",
-  "publishConfig": {
-    "access": "public"
-  },
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "yarn tsup src/index.ts --dts",
     "dev": "yarn tsup src/index.ts --dts --watch",
@@ -16,7 +14,6 @@
   "jest": {
     "preset": "@brandingbrand/code-jest-config"
   },
-  "types": "dist/index.d.ts",
   "dependencies": {
     "@types/node": "^20.10.6",
     "chalk": "^4.1.2",
@@ -41,5 +38,8 @@
     "tsup": "^8.0.1",
     "type-fest": "4.10.2",
     "typescript": "^5.3.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
