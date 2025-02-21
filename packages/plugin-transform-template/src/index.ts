@@ -33,13 +33,18 @@ const getTemplatePath = (
     `Getting template path for ${templateType} ${platform} v${version}`,
   );
 
+  const coercedVersion = semver.coerce(version);
+  if (!coercedVersion) {
+    throw new Error(`Invalid version string: ${version}`);
+  }
+
   // Try each possible minor version down to 0
   for (
-    let minorVersion = semver.minor(version);
+    let minorVersion = semver.minor(coercedVersion);
     minorVersion >= 0;
     minorVersion--
   ) {
-    const tryVersion = `${semver.major(version)}.${minorVersion}`;
+    const tryVersion = `${semver.major(coercedVersion)}.${minorVersion}`;
     const tryPath = path.join(
       require.resolve('@brandingbrand/code-templates/package.json'),
       '..',
@@ -53,12 +58,8 @@ const getTemplatePath = (
     }
   }
 
-  return path.join(
-    require.resolve('@brandingbrand/code-templates/package.json'),
-    '..',
-    templateType,
-    version,
-    platform,
+  throw new Error(
+    `Template not found for ${templateType} ${platform} v${version}`,
   );
 };
 
