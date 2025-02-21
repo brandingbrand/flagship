@@ -9,12 +9,21 @@ import {
   globAndReplace,
   logger,
 } from '@brandingbrand/code-cli-kit';
+import semver from 'semver';
 
 import {transformers} from './transformers';
 import {transforms} from './transforms';
 
+/** Type representing the available template types */
 type TemplateType = 'react-native' | 'supporting-files';
 
+/**
+ * Gets the filesystem path to a template based on type, platform and version
+ * @param templateType - The type of template to locate
+ * @param platform - The target platform (iOS or Android)
+ * @param version - The version string to match
+ * @returns The full filesystem path to the template
+ */
 const getTemplatePath = (
   templateType: TemplateType,
   platform: 'ios' | 'android',
@@ -23,6 +32,27 @@ const getTemplatePath = (
   logger.debug(
     `Getting template path for ${templateType} ${platform} v${version}`,
   );
+
+  // Try each possible minor version down to 0
+  for (
+    let minorVersion = semver.minor(version);
+    minorVersion >= 0;
+    minorVersion--
+  ) {
+    const tryVersion = `${semver.major(version)}.${minorVersion}`;
+    const tryPath = path.join(
+      require.resolve('@brandingbrand/code-templates/package.json'),
+      '..',
+      templateType,
+      tryVersion,
+      platform,
+    );
+
+    if (fs.existsSync(tryPath)) {
+      return tryPath;
+    }
+  }
+
   return path.join(
     require.resolve('@brandingbrand/code-templates/package.json'),
     '..',
@@ -32,6 +62,13 @@ const getTemplatePath = (
   );
 };
 
+/**
+ * Recursively walks through a directory, copying and transforming files
+ * @param srcDir - Source directory path
+ * @param destDir - Destination directory path
+ * @param config - Build configuration object
+ * @param options - Prebuild options
+ */
 const walkAndTransform = async (
   srcDir: string,
   destDir: string,
@@ -60,6 +97,12 @@ const walkAndTransform = async (
   );
 };
 
+/**
+ * Applies appropriate transformations to a file based on matching rules
+ * @param destEntry - Path to the file to transform
+ * @param config - Build configuration object
+ * @param options - Prebuild options
+ */
 const applyTransform = async (
   destEntry: string,
   config: BuildConfig,
@@ -78,6 +121,16 @@ const applyTransform = async (
   }
 };
 
+/**
+ * Transforms templates for a specific platform using the appropriate transformers
+ * @param templateType - Type of template to transform
+ * @param platform - Target platform (iOS or Android)
+ * @param version - Version string to match
+ * @param destDir - Destination directory path
+ * @param build - Build configuration object
+ * @param options - Prebuild options
+ * @param required - Whether the template is required (throws error if not found when true)
+ */
 const transformTemplates = async (
   templateType: TemplateType,
   platform: 'ios' | 'android',
@@ -102,7 +155,15 @@ const transformTemplates = async (
   await walkAndTransform(templatePath, destDir, build, options);
 };
 
+/**
+ * Plugin definition with platform-specific build processes
+ */
 export default definePlugin({
+  /**
+   * iOS build process
+   * @param build - Build configuration object
+   * @param options - Prebuild options
+   */
   ios: async (build: BuildConfig, options: PrebuildOptions) => {
     logger.info('Starting iOS template generation');
     const destDir = path.project.resolve('ios');
@@ -127,6 +188,12 @@ export default definePlugin({
     );
     logger.info('Completed iOS template generation');
   },
+
+  /**
+   * Android build process
+   * @param build - Build configuration object
+   * @param options - Prebuild options
+   */
   android: async (build: BuildConfig, options: PrebuildOptions) => {
     logger.info('Starting Android template generation');
     const destDir = path.project.resolve('android');
