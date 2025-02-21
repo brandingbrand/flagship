@@ -6,6 +6,7 @@ import profile074 from './0.74';
 import profile075 from './0.75';
 import profile076 from './0.76';
 import profile077 from './0.77';
+import profile078 from './0.78';
 
 export type {Profile} from './0.72';
 
@@ -38,4 +39,5 @@ export default version.select({
   '0.75': profile075,
   '0.76': profile076,
   '0.77': profile077,
+  '0.78': profile078,
 }) as typeof profile072;
