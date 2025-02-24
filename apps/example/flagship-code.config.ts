@@ -53,11 +53,9 @@ export default defineConfig({
    * @type {string[]}
    */
   plugins: [
-    '@brandingbrand/code-plugin-native-navigation',
     '@brandingbrand/code-plugin-asset',
     '@brandingbrand/code-plugin-app-icon',
-    '@brandingbrand/code-plugin-permissions',
     '@brandingbrand/code-plugin-splash-screen',
-    '@brandingbrand/code-plugin-example',
+    '@brandingbrand/code-plugin-monorepo',
   ],
 });

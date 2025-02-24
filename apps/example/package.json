@@ -4,14 +4,6 @@
   "private": true,
   "license": "MIT",
   "main": "index.js",
-  "workspaces": {
-    "nohoist": [
-      "**/react",
-      "**/react/**",
-      "**/react-native",
-      "**/react-native/**"
-    ]
-  },
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -20,15 +12,8 @@
     "start": "react-native start"
   },
   "dependencies": {
-    "@brandingbrand/fsapp": "12.0.0-alpha.20",
-    "@brandingbrand/react-native-app-restart": "0.4.0",
-    "@react-native-async-storage/async-storage": ">=1.23.1",
     "react": "18.2.0",
-    "react-native": "0.73.9",
-    "react-native-device-info": "10.12.0",
-    "react-native-navigation": "^7.40.1",
-    "react-native-permissions": "4.1.1",
-    "react-native-sensitive-info": "5.5.8"
+    "react-native": "0.73.9"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -39,10 +24,8 @@
     "@brandingbrand/code-jest-config": "*",
     "@brandingbrand/code-plugin-app-icon": "2.0.1",
     "@brandingbrand/code-plugin-asset": "2.0.1",
-    "@brandingbrand/code-plugin-example": "link:./coderc/plugins/plugin-example",
-    "@brandingbrand/code-plugin-native-navigation": "2.1.0",
-    "@brandingbrand/code-plugin-permissions": "2.0.2",
     "@brandingbrand/code-plugin-splash-screen": "2.1.0",
+    "@brandingbrand/code-plugin-monorepo": "link:./coderc/plugins/plugin-monorepo",
     "@brandingbrand/code-react-native-preset": "*",
     "@react-native/babel-preset": "0.73.21",
     "@react-native/eslint-config": "0.73.2",

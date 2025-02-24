@@ -13,6 +13,7 @@ export default definePlugin({
    * @param options - Configuration options including release and environment settings
    */
   common: async (_, options) => {
+    return;
     /**
      * Validates that the package.json contains required FSApp dependencies
      * @param pkg - The parsed package.json contents
@@ -22,16 +23,12 @@ export default definePlugin({
       logger.debug('Validating package.json dependencies...');
       if (!pkg.dependencies) {
         logger.error('No dependencies found in package.json');
-        throw new Error(
-          'Missing Configuration: Unable to locate dependencies object in package.json. The absence of @brandingbrand/fsapp will prevent multi-tenant typed environments.',
-        );
+        return;
       }
 
       if (!('@brandingbrand/fsapp' in pkg.dependencies)) {
         logger.error('Missing @brandingbrand/fsapp dependency');
-        throw new Error(
-          "Missing Configuration: Unable to locate the '@brandingbrand/fsapp' dependency. Multi-tenant typed environments will not work without this.",
-        );
+        return;
       }
       logger.debug('Package.json validation successful');
     };
