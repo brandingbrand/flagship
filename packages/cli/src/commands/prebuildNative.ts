@@ -64,7 +64,7 @@ export async function executePrebuild(options: PrebuildOptions) {
   }
   await logger.printCmdOptions(options, 'prebuild');
 
-  logger.info(`Found ${pluginCount} plugins to process`, 'prebuild');
+  logger.info(`Found ${pluginCount} plugin scripts to process`, 'prebuild');
 
   const sortedPlugins = plugins
     .map((plugin, originalIndex) => ({
