@@ -57,6 +57,31 @@ function compareVersions(a: string, b: string): -1 | 0 | 1 {
   return 0;
 }
 
+export function selectWithVersion<T>(
+  versions: Record<string, T>,
+  version: string,
+): T {
+  const availableVersions = Object.keys(versions).sort(
+    (a, b) => -compareVersions(a, b),
+  ); // Sort descending
+
+  // Try exact match
+  if (versions[version]) {
+    return versions[version] as T;
+  }
+
+  // Find the closest lower version
+  for (const version of availableVersions) {
+    if (compareVersions(version, version) <= 0) {
+      return versions[version] as T;
+    }
+  }
+
+  throw new Error(
+    `Unsupported React Native version: ${version}. No suitable fallback found. Available versions: ${availableVersions.join(', ')}`,
+  );
+}
+
 export function select<T>(versions: Record<string, T>): T {
   const rnVersion = getReactNativeVersion();
   const availableVersions = Object.keys(versions).sort(
