@@ -11,7 +11,7 @@ import semver from 'semver';
  * Profile configuration containing dependency requirements and restrictions based on React Native version.
  * @see ./profile
  */
-import profile from './profile';
+import profile, {getProfile} from './profile';
 
 /**
  * Interface representing the structure of a package.json file.
@@ -118,7 +118,7 @@ const satisfies = (installed: string, range: string): boolean => {
 export default definePlugin<{}, AlignDepsOptions>({
   common: async (_: any, options: AlignDepsOptions): Promise<void> => {
     // Use the profile (assumed to be an object where keys are package names)
-    const rnProfile = profile;
+    const rnProfile = getProfile(options.profile) || profile;
     const rootPkgPath = path.project.resolve('package.json');
     const rootPkgJson: PackageJsonType = JSON.parse(
       await fs.readFile(rootPkgPath, 'utf-8'),
@@ -193,11 +193,6 @@ export default definePlugin<{}, AlignDepsOptions>({
       }
     }
 
-    // Optionally log the diff between original and updated dependencies
-    const originalDeps = {
-      ...rootPkgJson.dependencies,
-      ...rootPkgJson.devDependencies,
-    };
     logger.info('Dependency verification and update complete.');
 
     if (options.fix) {

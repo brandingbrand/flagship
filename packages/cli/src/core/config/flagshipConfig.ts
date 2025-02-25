@@ -55,7 +55,7 @@ async function resolveModule(id: string, cwd: string): Promise<string> {
  * @returns {Promise<Plugin>} The loaded plugin
  * @throws {Error} If the plugin cannot be loaded
  */
-async function loadPlugin(
+export async function loadPlugin(
   pluginConfig: string | [string, {index?: number}],
   cwd: string,
 ): Promise<Plugin> {

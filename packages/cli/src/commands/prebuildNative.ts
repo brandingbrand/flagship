@@ -119,7 +119,7 @@ export async function executePrebuild(options: PrebuildOptions) {
   }
 
   logger.info('Prebuild process completed successfully', 'prebuild');
-  globalEmitter.emit('onEnd');
+  await logger.flush();
   logger.resume();
-  global.unmount?.();
+  globalEmitter.emit('onEnd');
 }

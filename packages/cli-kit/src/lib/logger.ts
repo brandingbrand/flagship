@@ -20,6 +20,7 @@ export enum LogLevel {
 let isPaused = false;
 let logLevel = LogLevel.Info;
 let groupDepth = 0;
+let logQueue: Promise<void> = Promise.resolve();
 
 // Original references
 const originalStdout = process.stdout.write;
@@ -125,29 +126,34 @@ const writeToStdout = (messages: string[]): void => {
  * @param messages - Array of messages to log
  * @param isError - Whether this is an error log
  */
-const handlePausedLog = (
+const handlePausedLog = async (
   messages: (string | Error)[],
   isError = false,
-): void => {
-  // @ts-ignore
-  (global[GLOBAL_KEY] as any).emit(
-    'onLog',
-    formatMessage(
-      messages.map(m => m.toString()),
-      false,
-    ),
-  );
+): Promise<void> => {
+  return new Promise<void>(resolve => {
+    logQueue = logQueue.then(async () => {
+      // @ts-ignore
+      (global[GLOBAL_KEY] as any).emit(
+        'onLog',
+        formatMessage(
+          messages.map(m => m.toString()),
+          false,
+        ),
+      );
 
-  if (isError && messages[3] && messages[3] instanceof Error) {
-    const error = messages[3] as Error;
-    const errorStackArr = error.stack?.split('\n') ?? [];
-    errorStackArr.shift();
-    // @ts-ignore
-    (global[GLOBAL_KEY] as any).emit(
-      'onLog',
-      chalk.dim('\n' + errorStackArr.join('\n')),
-    );
-  }
+      if (isError && messages[3] && messages[3] instanceof Error) {
+        const error = messages[3] as Error;
+        const errorStackArr = error.stack?.split('\n') ?? [];
+        errorStackArr.shift();
+        // @ts-ignore
+        (global[GLOBAL_KEY] as any).emit(
+          'onLog',
+          chalk.dim('\n' + errorStackArr.join('\n')),
+        );
+      }
+      resolve();
+    });
+  });
 };
 
 /**
@@ -156,11 +162,11 @@ const handlePausedLog = (
  * @param message - The message to log
  * @param scope - The scope of the log message
  */
-const logMessage = (
+const logMessage = async (
   level: LogLevel,
   message: string | Error,
   scope = 'cli',
-): void => {
+): Promise<void> => {
   if (logLevel > level) return;
 
   const messages: (string | Error)[] = [
@@ -171,7 +177,7 @@ const logMessage = (
   ];
 
   if (isPaused) {
-    handlePausedLog(messages, level === LogLevel.Error);
+    await handlePausedLog(messages, level === LogLevel.Error);
     return;
   }
 
@@ -183,7 +189,7 @@ const logMessage = (
  * @param message - The message to log
  * @param scope - The scope of the log message
  */
-export const debug = (message: string, scope = 'cli'): void =>
+export const debug = async (message: string, scope = 'cli'): Promise<void> =>
   logMessage(LogLevel.Debug, message, scope);
 
 /**
@@ -191,7 +197,7 @@ export const debug = (message: string, scope = 'cli'): void =>
  * @param message - The message to log
  * @param scope - The scope of the log message
  */
-export const log = (message: string, scope = 'cli'): void =>
+export const log = async (message: string, scope = 'cli'): Promise<void> =>
   logMessage(LogLevel.Log, message, scope);
 
 /**
@@ -199,7 +205,7 @@ export const log = (message: string, scope = 'cli'): void =>
  * @param message - The message to log
  * @param scope - The scope of the log message
  */
-export const info = (message: string, scope = 'cli'): void =>
+export const info = async (message: string, scope = 'cli'): Promise<void> =>
   logMessage(LogLevel.Info, message, scope);
 
 /**
@@ -207,7 +213,7 @@ export const info = (message: string, scope = 'cli'): void =>
  * @param message - The message to log
  * @param scope - The scope of the log message
  */
-export const warn = (message: string, scope = 'cli'): void =>
+export const warn = async (message: string, scope = 'cli'): Promise<void> =>
   logMessage(LogLevel.Warn, message, scope);
 
 /**
@@ -215,8 +221,10 @@ export const warn = (message: string, scope = 'cli'): void =>
  * @param message - The message or error to log
  * @param scope - The scope of the log message
  */
-export const error = (message: string | Error, scope = 'cli'): void =>
-  logMessage(LogLevel.Error, message, scope);
+export const error = async (
+  message: string | Error,
+  scope = 'cli',
+): Promise<void> => logMessage(LogLevel.Error, message, scope);
 
 /**
  * Pauses logging output by redirecting stdout and console.log
@@ -252,6 +260,13 @@ export const setLogLevel = (level: LogLevel): void => {
 export const getLogLevel = (): LogLevel => logLevel;
 
 /**
+ * Returns a promise that resolves when all queued logs are processed
+ */
+export const flush = async (): Promise<void> => {
+  await logQueue;
+};
+
+/**
  * Converts a string to its corresponding LogLevel enum value
  * @param level - String representation of log level
  * @returns Corresponding LogLevel enum value
@@ -277,17 +292,20 @@ export const getLogLevelFromString = (level: string): LogLevel => {
  * @param options - Object containing command options
  * @param cmd - Name of the command
  */
-export const printCmdOptions = <T extends Record<string, any>>(
+export const printCmdOptions = async <T extends Record<string, any>>(
   options: T,
   cmd: string,
-): void => {
-  info(`${cmd} options`);
+): Promise<void> => {
+  await info(`${cmd} options`);
 
-  Object.entries(options).forEach(([key, value], index, entries) => {
-    const isLast = index === entries.length - 1;
+  for (const [key, value, index] of Object.entries(options).map((entry, i) => [
+    ...entry,
+    i,
+  ])) {
+    const isLast = index === Object.entries(options).length - 1;
     const pipe = `${isLast ? '╰' : '├'}─`;
     const keyValue = `${key}: ${JSON.stringify(value)}`;
 
-    info(chalk.gray(`${pipe} ${keyValue}${isLast ? '\n' : ''}`));
-  });
+    await info(chalk.gray(`${pipe} ${keyValue}${isLast ? '\n' : ''}`));
+  }
 };

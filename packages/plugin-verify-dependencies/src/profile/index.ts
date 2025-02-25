@@ -32,7 +32,7 @@ export type {Profile} from './0.72';
  *
  * @returns A version-specific profile module with package dependency configurations
  */
-export default version.select({
+export const profiles = {
   '0.72': profile072,
   '0.73': profile073,
   '0.74': profile074,
@@ -40,4 +40,10 @@ export default version.select({
   '0.76': profile076,
   '0.77': profile077,
   '0.78': profile078,
-}) as typeof profile072;
+} as const;
+
+export function getProfile(version: string) {
+  return profiles[version as keyof typeof profiles] || undefined;
+}
+
+export default version.select(profiles) as typeof profile072;

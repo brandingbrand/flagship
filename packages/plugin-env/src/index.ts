@@ -13,24 +13,29 @@ export default definePlugin({
    * @param options - Configuration options including release and environment settings
    */
   common: async (_, options) => {
-    return;
     /**
-     * Validates that the package.json contains required FSApp dependencies
+     * Validates that the package.json contains required FSApp dependencies.
+     * This function checks that the package.json has a dependencies section
+     * and includes the @brandingbrand/fsapp dependency.
+     *
      * @param pkg - The parsed package.json contents
+     * @returns {boolean} False if validation fails, undefined if successful
      * @throws {Error} If dependencies are missing or FSApp dependency is not found
      */
-    const validatePackageJson = (pkg: PackageJson) => {
+    const validatePackageJson = (pkg: PackageJson): boolean => {
       logger.debug('Validating package.json dependencies...');
       if (!pkg.dependencies) {
         logger.error('No dependencies found in package.json');
-        return;
+        return false;
       }
 
       if (!('@brandingbrand/fsapp' in pkg.dependencies)) {
         logger.error('Missing @brandingbrand/fsapp dependency');
-        return;
+        return false;
       }
       logger.debug('Package.json validation successful');
+
+      return true;
     };
 
     /**
@@ -117,7 +122,11 @@ export default definePlugin({
     // Main execution flow
     logger.info('Starting environment configuration process');
     const pkg = require(path.project.resolve('package.json')) as PackageJson;
-    validatePackageJson(pkg);
+    const valid = validatePackageJson(pkg);
+
+    if (!valid) {
+      return;
+    }
 
     logger.debug('Loading flagship-code configuration');
     const {mod} = await bundleRequire({

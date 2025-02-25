@@ -5,7 +5,7 @@ import {AlignDepsOptions, logger} from '@brandingbrand/code-cli-kit';
 
 import cliPkg from '../package.json';
 
-import {executePrebuild} from './commands';
+import {executeAlignDeps, executePrebuild} from './commands';
 import {constants} from './ui/constants';
 
 const {
@@ -46,10 +46,7 @@ program
       .makeOptionMandatory(),
   )
   .option('--f, --fix [fix]', 'Fix package.json dependencies.', false)
-  .action((options: AlignDepsOptions) => {
-    logger.info('Starting align-deps command', 'align-deps');
-    // Command implementation moved to separate file
-  });
+  .action(executeAlignDeps);
 
 program
   .command('plugin')
