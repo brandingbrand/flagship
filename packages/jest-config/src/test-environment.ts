@@ -116,7 +116,7 @@ export default class CustomEnvironment extends TestEnvironment {
     );
     const android = getTemplatePath(
       'react-native',
-      'ios',
+      'android',
       reactNativeVersion as string,
     );
     const supportFiles = getTemplatePath(
