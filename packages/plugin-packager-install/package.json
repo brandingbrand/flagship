@@ -6,7 +6,7 @@
   "types": "src/index.ts",
   "scripts": {
     "lint": "eslint . --max-warnings 0",
-    "test": "jest"
+    "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest"
   },
   "jest": {
     "preset": "@brandingbrand/code-jest-config"

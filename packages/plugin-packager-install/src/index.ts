@@ -5,6 +5,8 @@ import {
   PrebuildOptions,
 } from '@brandingbrand/code-cli-kit';
 
+import {getExeca} from './execa';
+
 /**
  * A plugin that handles package installation for React Native projects,
  * ensuring dependencies for both iOS and Android are installed.
@@ -12,7 +14,7 @@ import {
  */
 export default definePlugin({
   ios: async (_, options: PrebuildOptions): Promise<void> => {
-    const {execa} = await import('execa');
+    const execa = await getExeca();
 
     try {
       logger.info('Installing Ruby gems for iOS project...');
@@ -49,7 +51,7 @@ export default definePlugin({
   },
 
   android: async (_, options: PrebuildOptions): Promise<void> => {
-    const {execa} = await import('execa');
+    const execa = await getExeca();
 
     try {
       logger.info('Installing Ruby gems for Android project...');
