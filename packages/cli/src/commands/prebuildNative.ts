@@ -62,7 +62,7 @@ export async function executePrebuild(options: PrebuildOptions) {
     );
     logger.pause();
   }
-  logger.printCmdOptions(options, 'prebuild');
+  await logger.printCmdOptions(options, 'prebuild');
 
   logger.info(`Found ${pluginCount} plugins to process`, 'prebuild');
 

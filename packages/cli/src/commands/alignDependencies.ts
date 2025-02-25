@@ -55,7 +55,7 @@ export async function executeAlignDeps(options: AlignDepsOptions) {
   });
 
   logger.pause();
-  logger.printCmdOptions(options, 'align-deps');
+  await logger.printCmdOptions(options, 'align-deps');
 
   try {
     logger.info('Running dependency verification...', 'align-deps');
