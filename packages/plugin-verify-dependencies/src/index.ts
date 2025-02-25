@@ -24,9 +24,14 @@ interface PackageJsonType {
   [key: string]: unknown;
 }
 
-/**
- * Traverses upward from the current directory to locate the package.json for a given package.
- */
+interface DependencyConfig {
+  version: string;
+  capabilities?: string[];
+  required?: boolean;
+  devOnly?: boolean;
+  banned?: boolean;
+}
+
 async function getPackageJson(
   packageName: string,
 ): Promise<PackageJsonType | null> {
@@ -56,9 +61,6 @@ async function getPackageJson(
   }
 }
 
-/**
- * Checks if a file exists at the given path.
- */
 async function fileExists(filePath: string): Promise<boolean> {
   try {
     await fs.access(filePath);
@@ -68,18 +70,12 @@ async function fileExists(filePath: string): Promise<boolean> {
   }
 }
 
-/**
- * Helper: Determines the correct package key for a dependency.
- */
 function getPackageKey(
   devOnly: boolean = false,
 ): 'dependencies' | 'devDependencies' {
   return devOnly ? 'devDependencies' : 'dependencies';
 }
 
-/**
- * Updates the dependency version for a given package in the provided package.json object.
- */
 function updateDependency(
   pkgJson: PackageJsonType,
   packageName: string,
@@ -87,14 +83,10 @@ function updateDependency(
   devOnly: boolean = false,
 ): void {
   const key = getPackageKey(devOnly);
-  // Ensure the section exists
   pkgJson[key] = pkgJson[key] || {};
   pkgJson[key][packageName] = requiredVersion;
 }
 
-/**
- * Removes a dependency from both dependencies and devDependencies.
- */
 function removeDependency(pkgJson: PackageJsonType, packageName: string): void {
   if (pkgJson.dependencies && packageName in pkgJson.dependencies) {
     delete pkgJson.dependencies[packageName];
@@ -104,27 +96,18 @@ function removeDependency(pkgJson: PackageJsonType, packageName: string): void {
   }
 }
 
-/**
- * Checks if an installed version satisfies the required version range.
- */
 const satisfies = (installed: string, range: string): boolean => {
   return semver.satisfies(installed, range);
 };
 
-/**
- * Plugin for verifying and updating project dependencies against a React Native profile.
- * If options.save is true, the updated package.json is written back to disk.
- */
 export default definePlugin<{}, AlignDepsOptions>({
   common: async (_: any, options: AlignDepsOptions): Promise<void> => {
-    // Use the profile (assumed to be an object where keys are package names)
     const rnProfile = getProfile(options.profile) || profile;
     const rootPkgPath = path.project.resolve('package.json');
     const rootPkgJson: PackageJsonType = JSON.parse(
       await fs.readFile(rootPkgPath, 'utf-8'),
     );
 
-    // Combine dependencies and devDependencies for lookup
     const rootDeps: Record<string, unknown> = {
       ...rootPkgJson.dependencies,
       ...rootPkgJson.devDependencies,
@@ -132,9 +115,42 @@ export default definePlugin<{}, AlignDepsOptions>({
 
     logger.info(`Verifying project dependencies using React Native profile...`);
 
-    // Iterate over each dependency defined in the profile
+    // First handle capabilities for required or existing dependencies
     for (const [packageName, depConfig] of Object.entries(rnProfile)) {
-      // If the dependency is not present in the root package.json, skip it.
+      const config = depConfig as DependencyConfig;
+      // Only process capabilities if the package is required or already exists
+      if (
+        config.capabilities?.length &&
+        (config.required || rootDeps[packageName])
+      ) {
+        for (const capability of config.capabilities) {
+          const capabilityConfig = (rnProfile as any)[
+            capability
+          ] as DependencyConfig;
+          if (capabilityConfig && !rootDeps[capability]) {
+            logger.warn(
+              `Missing capability ${capability} required by ${packageName}`,
+              'verify-deps',
+            );
+            if (options.fix) {
+              updateDependency(
+                rootPkgJson,
+                capability,
+                capabilityConfig.version,
+                capabilityConfig.devOnly,
+              );
+              logger.info(
+                `Added ${capability} with version ${capabilityConfig.version}`,
+                'verify-deps',
+              );
+            }
+          }
+        }
+      }
+    }
+
+    // Then handle regular dependency checks
+    for (const [packageName, depConfig] of Object.entries(rnProfile)) {
       if (!rootDeps[packageName]) {
         logger.debug(
           `Skipping ${packageName} - not found in root dependencies`,
@@ -150,40 +166,39 @@ export default definePlugin<{}, AlignDepsOptions>({
           ? semver.coerce(installedVersion)?.version
           : null;
 
-        // If installed and version doesn't satisfy, update it.
         if (
           installedVersion &&
           coercedInstalledVersion &&
-          !satisfies(coercedInstalledVersion, (depConfig as any).version)
+          !satisfies(
+            coercedInstalledVersion,
+            (depConfig as DependencyConfig).version,
+          )
         ) {
           logger.warn(
-            `Dependency version mismatch for ${packageName}: expected ${(depConfig as any).version}, found ${installedVersion}. Updating...`,
+            `Dependency version mismatch for ${packageName}: expected ${
+              (depConfig as DependencyConfig).version
+            }, found ${installedVersion}. Updating...`,
           );
-          // Update the dependency in the correct section.
-          const devOnly = !!(depConfig as any).devOnly;
           updateDependency(
             rootPkgJson,
             packageName,
-            (depConfig as any).version,
-            devOnly,
+            (depConfig as DependencyConfig).version,
+            (depConfig as DependencyConfig).devOnly,
           );
         }
 
-        // If the dependency is banned, remove it.
-        if ((depConfig as any).banned) {
+        if ((depConfig as DependencyConfig).banned) {
           logger.warn(`Banned package found: ${packageName}. Removing...`);
           removeDependency(rootPkgJson, packageName);
         }
 
-        // If the dependency is required but missing an installed version, warn (could also add it)
-        if ((depConfig as any).required && !installedVersion) {
+        if ((depConfig as DependencyConfig).required && !installedVersion) {
           logger.warn(`Required dependency missing: ${packageName}.`);
-          // Optionally, you might update or add the dependency here.
           updateDependency(
             rootPkgJson,
             packageName,
-            (depConfig as any).version,
-            !!(depConfig as any).devOnly,
+            (depConfig as DependencyConfig).version,
+            (depConfig as DependencyConfig).devOnly,
           );
         }
       } catch (error) {
