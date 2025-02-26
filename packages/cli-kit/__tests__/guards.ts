@@ -13,6 +13,7 @@ describe('Guard Utility Functions', () => {
         buildPath: './path/to/build/configs',
         pluginPath: './path/to/plugins',
         plugins: ['my-plugin'],
+        preset: 'my-preset',
       };
 
       expect(defineConfig(config)).toEqual(config);
