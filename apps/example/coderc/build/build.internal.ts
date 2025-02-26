@@ -47,20 +47,7 @@ export default defineBuild<
   },
   codePluginSplashScreen: {
     plugin: {
-      ios: {
-        type: 'generated',
-        generated: {
-          logoPath: './coderc/assets/splash-screen/logo.png',
-          backgroundColor: '#fff',
-        },
-      },
-      android: {
-        type: 'generated',
-        generated: {
-          logoPath: './coderc/assets/splash-screen/logo.png',
-          backgroundColor: '#fff',
-        },
-      },
+      splashImage: './splash.png',
     },
   },
 });

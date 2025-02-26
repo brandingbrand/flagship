@@ -11135,7 +11135,7 @@ react-native-bootsplash@5.4.0, react-native-bootsplash@^5.4.0:
     ts-dedent "^2.2.0"
     xml-formatter "^3.6.0"
 
-react-native-navigation@^7.40.1:
+react-native-navigation@7.40.1, react-native-navigation@^7.40.1:
   version "7.40.1"
   resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-7.40.1.tgz#774a3cf5e6a98c9847519f3f427c487dd2ea5c3b"
   integrity sha512-GQ6Azdhf6EtkUVdYv/3hbid3tDiEQnJf47TL6Joc0R92DUEA3c1tpXG0z9Y/D7lzYFOaIBPg3efnMHrpk74GeA==
