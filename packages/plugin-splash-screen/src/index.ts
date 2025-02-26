@@ -1,5 +1,3 @@
-import fsn from 'fs';
-
 import {
   definePlugin,
   fs,
@@ -12,6 +10,11 @@ import sharp from 'sharp';
 
 import {CodePluginSplashScreen} from './types';
 
+/**
+ * Generates Android splash screen assets from source image
+ * @param sourceImage - Path to source splash screen image
+ * @param androidPath - Path to Android project directory
+ */
 async function generateAndroidSplash(
   sourceImage: string,
   androidPath: string,
@@ -57,6 +60,11 @@ async function generateAndroidSplash(
   logger.info('Generated Android splash screen');
 }
 
+/**
+ * Generates iOS splash screen assets from source image
+ * @param sourceImage - Path to source splash screen image
+ * @param iosPath - Path to iOS project directory
+ */
 async function generateIOSSplash(
   sourceImage: string,
   iosPath: string,
@@ -156,7 +164,7 @@ export default definePlugin({
 
     const iosPath = path.project.resolve('ios', 'app');
 
-    if (!fsn.existsSync(splashImage)) {
+    if (!fs.existsSync(splashImage)) {
       throw new Error(`Source image not found: ${splashImage}`);
     }
 
@@ -178,7 +186,7 @@ export default definePlugin({
 
     const androidPath = path.project.resolve('android');
 
-    if (!fsn.existsSync(splashImage)) {
+    if (!fs.existsSync(splashImage)) {
       throw new Error(`Source image not found: ${splashImage}`);
     }
 
