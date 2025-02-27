@@ -1,113 +1,51 @@
 import type {Plugin} from '@brandingbrand/code-cli-kit';
 
 /**
- * Type definition for the code plugin app icon.
+ * Type definition for the code plugin that generates app icons for iOS and Android.
+ *
+ * @remarks
+ * This plugin handles generation of various icon types needed for mobile applications:
+ * - Universal app icons for iOS App Store and basic Android launchers
+ * - Adaptive icons for modern Android devices (foreground/background layers)
+ * - Small notification icons for Android status bar
+ *
+ * @example
+ * ```typescript
+ * const config: CodePluginAppIcon = {
+ *   codePluginAppIcon: {
+ *     universalIcon: 'path/to/1024x1024.png',
+ *     foregroundIcon: 'path/to/foreground.png',
+ *     backgroundIcon: 'path/to/background.png',
+ *     notificationIcon: 'path/to/notification.png'
+ *   }
+ * };
+ * ```
  */
 export type CodePluginAppIcon = {
   codePluginAppIcon: Plugin<{
     /**
-     * The path to the app icon.
+     * Path to 1024x1024px PNG icon used for iOS App Store and basic Android launchers.
+     * This should be a square image with no transparency.
      */
-    appIconPath: string;
+    universalIcon: string;
 
     /**
-     * The insets for the icon.
+     * Path to foreground layer image for Android adaptive icons.
+     * Should be 108x108dp (432x432px) with transparency for adaptive scaling.
      */
-    iconInsets: number;
+    foregroundIcon: string;
+
+    /**
+     * Path to background layer image for Android adaptive icons.
+     * Should be 108x108dp (432x432px), typically a solid color or simple pattern.
+     */
+    backgroundIcon: string;
+
+    /**
+     * Optional hex color code for Android adaptive icon background.
+     * Used as a fallback when backgroundIcon is not provided.
+     * Should be a valid hex color string (e.g. '#FFFFFF').
+     */
+    backgroundColor?: string;
   }>;
-};
-
-/**
- * Type definition for an icon.
- */
-export type Icon = {
-  /**
-   * The platform of the icon.
-   */
-  platform: 'ios' | 'android';
-
-  /**
-   * The type of the icon.
-   */
-  type: 'universal' | 'legacy' | 'adaptive' | 'notification';
-
-  /**
-   * The name of the icon.
-   */
-  name: string;
-
-  /**
-   * The input file for the icon.
-   */
-  inputFile: string;
-
-  /**
-   * Optional transformation properties for the icon.
-   */
-  transform?: {
-    /**
-     * The size of the transformation.
-     */
-    size: number;
-
-    /**
-     * The radius of the transformation.
-     */
-    radius: number;
-
-    /**
-     * The padding of the transformation.
-     */
-    padding: number;
-  };
-};
-
-/**
- * Type definition for a rule.
- */
-export type Rule = {
-  /**
-   * The platform of the rule.
-   */
-  platform: 'ios' | 'android';
-
-  /**
-   * The size of the rule.
-   */
-  size: {
-    /**
-     * Universal size for the rule (optional).
-     */
-    universal?: number;
-
-    /**
-     * Legacy size for the rule (optional).
-     */
-    legacy?: number;
-
-    /**
-     * Adaptive size for the rule (optional).
-     */
-    adaptive?: number;
-
-    /**
-     * Notification size for the rule (optional).
-     */
-    notification?: number;
-  };
-
-  /**
-   * The scale of the rule.
-   */
-  scale?: number;
-
-  /**
-   * The idiom of the rule (optional).
-   */
-  idiom?: 'ios-marketing' | 'ipad' | 'iphone';
-
-  /**
-   * The DPI of the rule (optional).
-   */
-  dpi?: string;
 };

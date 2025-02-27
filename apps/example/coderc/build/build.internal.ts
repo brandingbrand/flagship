@@ -30,8 +30,9 @@ export default defineBuild<
   },
   codePluginAppIcon: {
     plugin: {
-      appIconPath: './coderc/assets/app-icon',
-      iconInsets: 20,
+      universalIcon: './universal.png',
+      backgroundIcon: './background.png',
+      foregroundIcon: './foreground.png',
     },
   },
   codePluginPermissions: {
