@@ -30,9 +30,9 @@ export default defineBuild<
   },
   codePluginAppIcon: {
     plugin: {
-      universalIcon: './universal.png',
-      backgroundIcon: './background.png',
-      foregroundIcon: './foreground.png',
+      universalIcon: './coderc/assets/universal.png',
+      backgroundIcon: './coderc/assets/background.png',
+      foregroundIcon: './coderc/assets/foreground.png',
     },
   },
   codePluginPermissions: {
@@ -48,7 +48,7 @@ export default defineBuild<
   },
   codePluginSplashScreen: {
     plugin: {
-      splashImage: './splash.png',
+      splashImage: './coderc/assets/splash.png',
     },
   },
 });
