@@ -33,6 +33,7 @@ export default defineBuild<
       universalIcon: './coderc/assets/universal.png',
       backgroundIcon: './coderc/assets/background.png',
       foregroundIcon: './coderc/assets/foreground.png',
+      notificationIcon: './coderc/assets/notification.png',
     },
   },
   codePluginPermissions: {

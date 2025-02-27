@@ -42,6 +42,35 @@ export type CodePluginAppIcon = {
     backgroundIcon: string;
 
     /**
+     * Path to small monochrome icon for Android notification bar.
+     *
+     * @remarks
+     * This should be a simple, single-color silhouette design that follows Material Design guidelines:
+     * - Design at 24x24dp base size
+     * - Use only alpha channel (transparency), no RGB colors
+     * - Simple shapes that are recognizable at small sizes
+     * - Avoid fine details that won't render well when scaled
+     * - Must work well on both light and dark backgrounds
+     * - Should be clearly visible when converted to white for notification bar
+     *
+     * The system will automatically scale this icon for different device densities:
+     * - mdpi: 24x24px
+     * - hdpi: 36x36px
+     * - xhdpi: 48x48px
+     * - xxhdpi: 72x72px
+     * - xxxhdpi: 96x96px
+     *
+     * @example
+     * Typical usage in Android manifest:
+     * ```xml
+     * <meta-data
+     *   android:name="android.app.notification_icon"
+     *   android:resource="@mipmap/ic_notification"/>
+     * ```
+     */
+    notificationIcon?: string;
+
+    /**
      * Optional hex color code for Android adaptive icon background.
      * Used as a fallback when backgroundIcon is not provided.
      * Should be a valid hex color string (e.g. '#FFFFFF').

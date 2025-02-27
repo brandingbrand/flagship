@@ -177,9 +177,44 @@ const ICON_CONFIGS = {
   },
 };
 
+const NOTIFICATION_ICON_CONFIGS = {
+  size: 24, // base size in dp
+  // Android density multipliers for different resolutions
+  densities: {
+    'mipmap-mdpi': 1, // 24x24
+    'mipmap-hdpi': 1.5, // 36x36
+    'mipmap-xhdpi': 2, // 48x48
+    'mipmap-xxhdpi': 3, // 72x72
+    'mipmap-xxxhdpi': 4, // 96x96
+  },
+};
+
+async function generateAndroidNotificationIcon(
+  sourceIcon: string,
+  androidResPath: string,
+): Promise<void> {
+  for (const [folder, multiplier] of Object.entries(
+    NOTIFICATION_ICON_CONFIGS.densities,
+  )) {
+    const size = Math.floor(NOTIFICATION_ICON_CONFIGS.size * multiplier);
+    const folderPath = path.join(androidResPath, folder);
+    await fs.mkdir(folderPath, {recursive: true});
+
+    await sharp(sourceIcon)
+      .resize(size, size)
+      .png()
+      .toFile(path.join(folderPath, 'ic_notification.png'));
+
+    logger.info(
+      `Generated Android notification icon in ${folder} (${size}x${size})`,
+    );
+  }
+}
+
 async function generateAndroidIcons(
   sourceIcon: string,
   androidResPath: string,
+  notificationIcon?: string,
 ): Promise<void> {
   for (const [folder, size] of Object.entries(ANDROID_ICON_SIZES)) {
     const folderPath = path.join(androidResPath, folder);
@@ -249,6 +284,10 @@ async function generateAndroidIcons(
       .toFile(path.join(folderPath, 'ic_launcher_round.png'));
 
     logger.info(`Generated Android icons in ${folder} (${size}x${size})`);
+
+    if (notificationIcon) {
+      await generateAndroidNotificationIcon(notificationIcon, androidResPath);
+    }
   }
 }
 
@@ -375,8 +414,13 @@ export default definePlugin({
    * @returns {Promise<void>} Resolves when all icon generation is complete
    */
   async android(build: CodePluginAppIcon): Promise<void> {
-    const {universalIcon, foregroundIcon, backgroundIcon, backgroundColor} =
-      build.codePluginAppIcon.plugin;
+    const {
+      universalIcon,
+      foregroundIcon,
+      backgroundIcon,
+      backgroundColor,
+      notificationIcon,
+    } = build.codePluginAppIcon.plugin;
 
     if (!universalIcon && !foregroundIcon) {
       throw new Error(
@@ -395,7 +439,11 @@ export default definePlugin({
 
     // Generate traditional icons
     if (universalIcon) {
-      await generateAndroidIcons(universalIcon, androidResPath);
+      await generateAndroidIcons(
+        universalIcon,
+        androidResPath,
+        notificationIcon,
+      );
     }
 
     // Generate adaptive icons
