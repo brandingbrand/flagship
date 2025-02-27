@@ -76,5 +76,19 @@ export type CodePluginAppIcon = {
      * Should be a valid hex color string (e.g. '#FFFFFF').
      */
     backgroundColor?: string;
+
+    /**
+     * Optional inset value for Android launcher icons (in percentage).
+     * Controls how much the icon image is inset from the edges of its container.
+     *
+     * @remarks
+     * This applies to both standard and round launcher icons on Android:
+     * - Higher values create more padding around the icon
+     * - Lower values make the icon fill more of its container
+     * - Typically between 0-20 (representing 0-20% inset)
+     * - Default launcher icons use around 13% inset
+     * - Round icons typically use less inset (around 4%)
+     */
+    inset?: number;
   }>;
 };

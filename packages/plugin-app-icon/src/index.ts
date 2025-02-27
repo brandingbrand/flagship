@@ -299,6 +299,7 @@ async function generateAndroidIcons(
  * @param {string} [backgroundIcon] - Optional path to background layer image (must be 1024x1024 PNG)
  * @param {string} [backgroundColor] - Optional hex color code for background (e.g. '#FFFFFF')
  * @param {string} androidResPath - Path to Android resources directory
+ * @param {number} inset - Percentage (0-100) to inset the foreground image from edges
  * @throws {Error} If required files cannot be created or processed
  * @returns {Promise<void>} Resolves when all adaptive icon resources are generated
  */
@@ -307,6 +308,7 @@ async function generateAndroidAdaptiveIcons(
   backgroundIcon: string | undefined,
   backgroundColor: string | undefined,
   androidResPath: string,
+  inset: number,
 ): Promise<void> {
   // Create anydpi-v26 folder
   const adaptivePath = path.join(androidResPath, 'mipmap-anydpi-v26');
@@ -330,7 +332,7 @@ async function generateAndroidAdaptiveIcons(
         : `<background android:drawable="@color/ic_launcher_background"/>`
     }
     <foreground>
-        <inset android:drawable="@mipmap/ic_launcher_foreground" android:inset="20%"/>
+        <inset android:drawable="@mipmap/ic_launcher_foreground" android:inset="${inset}%"/>
     </foreground>
 </adaptive-icon>`;
 
@@ -420,6 +422,7 @@ export default definePlugin({
       backgroundIcon,
       backgroundColor,
       notificationIcon,
+      inset = 20,
     } = build.codePluginAppIcon.plugin;
 
     if (!universalIcon && !foregroundIcon) {
@@ -453,6 +456,7 @@ export default definePlugin({
         backgroundIcon,
         backgroundColor,
         androidResPath,
+        inset,
       );
     }
 
