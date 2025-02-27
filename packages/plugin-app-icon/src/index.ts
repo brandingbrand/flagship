@@ -164,15 +164,19 @@ async function generateIOSIcons(
   logger.info('Generated iOS app icon (1024x1024)');
 }
 
-/**
- * Generates Android traditional (non-adaptive) icons in all required density buckets.
- * Creates icon variants for different screen densities based on the ANDROID_ICON_SIZES mapping.
- *
- * @param {string} sourceIcon - Path to source icon file (must be 1024x1024 PNG)
- * @param {string} androidResPath - Path to Android resources directory
- * @throws {Error} If directory creation or image processing fails
- * @returns {Promise<void>} Resolves when all icons are generated
- */
+const ICON_CONFIGS = {
+  standard: {
+    size: 1024,
+    padding: 0.13, // 13% padding
+    radius: 64, // moderate rounded corners
+  },
+  round: {
+    size: 1024,
+    padding: 0.04, // 4% padding
+    radius: 512, // fully round
+  },
+};
+
 async function generateAndroidIcons(
   sourceIcon: string,
   androidResPath: string,
@@ -181,12 +185,70 @@ async function generateAndroidIcons(
     const folderPath = path.join(androidResPath, folder);
     await fs.mkdir(folderPath, {recursive: true});
 
+    // Calculate scaled values for this size
+    const standardPadding = Math.round(size * ICON_CONFIGS.standard.padding);
+    const roundPadding = Math.round(size * ICON_CONFIGS.round.padding);
+    const standardRadius = Math.round(
+      size * (ICON_CONFIGS.standard.radius / ICON_CONFIGS.standard.size),
+    );
+    const roundRadius = Math.round(
+      size * (ICON_CONFIGS.round.radius / ICON_CONFIGS.round.size),
+    );
+
+    // Create SVG masks
+    const standardMask = Buffer.from(`
+      <svg width="${size}" height="${size}">
+        <rect
+          x="0"
+          y="0"
+          width="${size}"
+          height="${size}"
+          rx="${standardRadius}"
+          ry="${standardRadius}"
+          fill="white"
+        />
+      </svg>
+    `);
+
+    const cutoutMask = Buffer.from(
+      `<svg><rect x="0" y="0" width="${size}" height="${size}" rx="${roundRadius}" ry="${roundRadius}"/></svg>`,
+    );
+
+    // Generate standard icon
     await sharp(sourceIcon)
-      .resize(size, size)
+      .resize(size, size, {fit: 'fill'})
+      .composite([
+        {
+          input: standardMask,
+          blend: 'dest-in',
+        },
+      ])
+      .extend({
+        top: 100,
+        bottom: 100,
+        left: 100,
+        right: 100,
+        background: {r: 0, g: 0, b: 0, alpha: 0},
+      })
+
       .png()
       .toFile(path.join(folderPath, 'ic_launcher.png'));
 
-    logger.info(`Generated Android icon: ${folder} (${size}x${size})`);
+    // Generate round icon
+    await sharp(sourceIcon)
+      .resize(size, size, {fit: 'fill'})
+      .composite([{input: cutoutMask, blend: 'dest-in'}])
+      .extend({
+        top: 100,
+        bottom: 100,
+        left: 100,
+        right: 100,
+        background: {r: 0, g: 0, b: 0, alpha: 0},
+      })
+      .png()
+      .toFile(path.join(folderPath, 'ic_launcher_round.png'));
+
+    logger.info(`Generated Android icons in ${folder} (${size}x${size})`);
   }
 }
 
@@ -228,14 +290,12 @@ async function generateAndroidAdaptiveIcons(
         ? '<background android:drawable="@mipmap/ic_launcher_background"/>'
         : `<background android:drawable="@color/ic_launcher_background"/>`
     }
-    <foreground android:drawable="@mipmap/ic_launcher_foreground"/>
+    <foreground>
+        <inset android:drawable="@mipmap/ic_launcher_foreground" android:inset="20%"/>
+    </foreground>
 </adaptive-icon>`;
 
   await fs.writeFile(path.join(adaptivePath, 'ic_launcher.xml'), xmlContent);
-  await fs.writeFile(
-    path.join(adaptivePath, 'ic_launcher_round.xml'),
-    xmlContent,
-  );
 
   // Generate background if image provided
   if (backgroundIcon) {
