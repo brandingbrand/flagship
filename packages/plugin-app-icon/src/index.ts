@@ -224,10 +224,10 @@ async function generateAndroidIcons(
         },
       ])
       .extend({
-        top: 100,
-        bottom: 100,
-        left: 100,
-        right: 100,
+        top: standardPadding,
+        bottom: standardPadding,
+        left: standardPadding,
+        right: standardPadding,
         background: {r: 0, g: 0, b: 0, alpha: 0},
       })
 
@@ -239,10 +239,10 @@ async function generateAndroidIcons(
       .resize(size, size, {fit: 'fill'})
       .composite([{input: cutoutMask, blend: 'dest-in'}])
       .extend({
-        top: 100,
-        bottom: 100,
-        left: 100,
-        right: 100,
+        top: roundPadding,
+        bottom: roundPadding,
+        left: roundPadding,
+        right: roundPadding,
         background: {r: 0, g: 0, b: 0, alpha: 0},
       })
       .png()
@@ -296,6 +296,10 @@ async function generateAndroidAdaptiveIcons(
 </adaptive-icon>`;
 
   await fs.writeFile(path.join(adaptivePath, 'ic_launcher.xml'), xmlContent);
+  await fs.writeFile(
+    path.join(adaptivePath, 'ic_launcher_round.xml'),
+    xmlContent,
+  );
 
   // Generate background if image provided
   if (backgroundIcon) {
