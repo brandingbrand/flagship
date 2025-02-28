@@ -59,7 +59,7 @@ program
       .choices(LOG_LEVEL_CHOICES)
       .default(DEFAULT_LOG_LEVEL),
   )
-  .argument('<string>', 'name of generated plugin')
+  .argument('<string>', 'path of generated plugin')
   .action(generatePlugin);
 
 program

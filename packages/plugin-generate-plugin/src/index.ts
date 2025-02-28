@@ -6,6 +6,7 @@ import {
   logger,
   withTS,
   definePlugin,
+  GenerateOptions,
 } from '@brandingbrand/code-cli-kit';
 
 /**
@@ -17,9 +18,11 @@ import {
  * This plugin is used to scaffold new plugins with the correct structure and configuration.
  */
 export default definePlugin({
-  common: async (): Promise<void> => {
-    const pluginName = '@brandingbrand/code-plugin-example';
-    const pluginPath = path.project.resolve('./coderc/plugins');
+  common: async (
+    _,
+    {pluginName, ...options}: GenerateOptions,
+  ): Promise<void> => {
+    const pluginPath = path.project.resolve(options.pluginPath);
 
     logger.debug(`Starting plugin generation for ${pluginName}`);
 
@@ -52,14 +55,6 @@ export default definePlugin({
       logger.error('Failed to generate plugin', error);
       throw error;
     }
-  },
-
-  ios: async (): Promise<void> => {
-    logger.debug('No iOS-specific configuration needed for this plugin.');
-  },
-
-  android: async (): Promise<void> => {
-    logger.debug('No Android-specific configuration needed for this plugin.');
   },
 });
 

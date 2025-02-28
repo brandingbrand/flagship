@@ -1,6 +1,9 @@
 import {GenerateOptions, logger} from '@brandingbrand/code-cli-kit';
 
-import {loadPlugin} from '../core/config/flagshipConfig';
+import {
+  loadFlagshipCodeConfig,
+  loadPlugin,
+} from '../core/config/flagshipConfig';
 import {globalEmitter} from '../core';
 
 import {renderStatus} from '@/ui/inkRenderer';
@@ -27,19 +30,10 @@ import {renderStatus} from '@/ui/inkRenderer';
  * @emits {globalEmitter#onRun} When plugin execution completes successfully
  * @emits {globalEmitter#onError} When plugin execution fails
  * @emits {globalEmitter#onEnd} When process completes
- *
- * @example
- * ```typescript
- * await executeAlignDeps({
- *   build: 'development',
- *   env: 'local',
- *   logLevel: 'info',
- *   verbose: true,
- *   fix: false
- * });
- * ```
  */
-export async function generatePlugin(options: GenerateOptions) {
+export async function generatePlugin(str: string, options: GenerateOptions) {
+  const {config} = await loadFlagshipCodeConfig();
+
   const pluginGeneratePlugin = await loadPlugin(
     '@brandingbrand/code-plugin-generate-plugin',
     process.cwd(),
@@ -61,7 +55,13 @@ export async function generatePlugin(options: GenerateOptions) {
     logger.info('Running dependency verification...', 'generate-plugin');
 
     if (pluginGeneratePlugin.plugin.common) {
-      await pluginGeneratePlugin.plugin.common({}, options);
+      await pluginGeneratePlugin.plugin.common(
+        {},
+        {
+          pluginName: str,
+          pluginPath: config.pluginPath,
+        },
+      );
       globalEmitter.emit('onRun');
     }
   } catch (error) {

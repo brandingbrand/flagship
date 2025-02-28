@@ -88,7 +88,12 @@ export type GenerateOptions = {
    * Name of your plugin. This will be reflected in your package.json and
    * in your flagship-code.config.ts.
    */
-  name: string;
+  pluginName: string;
+  /**
+   * Path to your plugin. This will be reflected in your package.json and
+   * in your flagship-code.config.ts.
+   */
+  pluginPath: string;
   /**
    * The cli command.
    */
