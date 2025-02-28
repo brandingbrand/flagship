@@ -40,7 +40,7 @@ export async function generatePlugin(str: string, options: GenerateOptions) {
   );
 
   if (!pluginGeneratePlugin) {
-    throw new Error('Verify dependencies plugin not found');
+    throw new Error('Generate Plugin plugin not found');
   }
 
   await renderStatus({
@@ -52,7 +52,7 @@ export async function generatePlugin(str: string, options: GenerateOptions) {
   await logger.printCmdOptions(options, 'generate-plugin');
 
   try {
-    logger.info('Running dependency verification...', 'generate-plugin');
+    logger.info('Generating a plugin...', 'generate-plugin');
 
     if (pluginGeneratePlugin.plugin.common) {
       await pluginGeneratePlugin.plugin.common(
