@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@npmcli/package-json": "^5.2.0",
+    "@brandingbrand/code-plugin-generate-plugin": "*",
     "ansi-align": "^3.0.1",
     "bundle-require": "^4.0.2",
     "chalk": "^4.1.2",

@@ -5,7 +5,7 @@ import {AlignDepsOptions, logger} from '@brandingbrand/code-cli-kit';
 
 import cliPkg from '../package.json';
 
-import {executeAlignDeps, executePrebuild} from './commands';
+import {executeAlignDeps, executePrebuild, generatePlugin} from './commands';
 import {constants} from './ui/constants';
 
 const {
@@ -49,7 +49,7 @@ program
   .action(executeAlignDeps);
 
 program
-  .command('plugin')
+  .command('generate-plugin')
   .description('generate a plugin')
   .addOption(
     new Option(
@@ -60,10 +60,7 @@ program
       .default(DEFAULT_LOG_LEVEL),
   )
   .argument('<string>', 'name of generated plugin')
-  .action((str: string, options: any) => {
-    logger.info('Starting plugin generation', 'plugin');
-    // Command implementation moved to separate file
-  });
+  .action(generatePlugin);
 
 program
   .command('prebuild')
