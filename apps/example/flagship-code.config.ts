@@ -37,9 +37,9 @@ export default defineConfig({
    * The preset configuration to use for the application.
    * This preset provides default settings and configurations for React Native projects.
    * @type {string}
-   * @default '@brandingbrand/code-react-native-preset'
+   * @default '@brandingbrand/code-preset-react-native'
    */
-  preset: '@brandingbrand/code-react-native-preset',
+  preset: '@brandingbrand/code-preset-react-native',
 
   /**
    * An array of plugin names to load and enable for the application.

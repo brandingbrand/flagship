@@ -9,7 +9,7 @@ import * as t from 'io-ts';
  *   buildPath: "./path/to/build/configs",
  *   envPath: "./path/to/env/configs",
  *   pluginPath: "./path/to/plugins",
- *   preset: "@brandingbrand/code-react-native-preset"
+ *   preset: "@brandingbrand/code-preset-react-native"
  *   plugins: ["@brandingbrand/code-plugin-app-icon"],
  * }
  * ```

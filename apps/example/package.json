@@ -28,7 +28,7 @@
     "@brandingbrand/code-plugin-monorepo": "link:./coderc/plugins/plugin-monorepo",
     "@brandingbrand/code-plugin-native-navigation": "*",
     "@brandingbrand/code-plugin-splash-screen": "*",
-    "@brandingbrand/code-react-native-preset": "*",
+    "@brandingbrand/code-preset-react-native": "*",
     "@react-native/babel-preset": "0.73.21",
     "@react-native/eslint-config": "0.73.2",
     "@react-native/metro-config": "0.73.5",
