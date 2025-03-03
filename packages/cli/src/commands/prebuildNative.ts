@@ -50,13 +50,13 @@ export async function executePrebuild(options: PrebuildOptions) {
   const pluginCount = plugins.reduce((acc, curr) => {
     return acc + Object.keys(curr.plugin).length;
   }, 0);
-  await renderStatus({
-    numberOfPlugins: pluginCount,
-    cmd: 'prebuild',
-  });
 
   logger.setLogLevel(logger.getLogLevelFromString(options.logLevel));
   if (!options.verbose) {
+    await renderStatus({
+      numberOfPlugins: pluginCount,
+      cmd: 'prebuild',
+    });
     logger.debug(
       'Running in non-verbose mode - pausing detailed output',
       'prebuild',

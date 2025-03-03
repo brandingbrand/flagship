@@ -6,28 +6,14 @@ import {parse} from '@babel/parser';
 import traverse from '@babel/traverse';
 import {glob} from 'glob';
 import {BuildConfig, logger} from '@brandingbrand/code-cli-kit';
+import {Node} from '@babel/types';
 
 import {bundleRequire} from '@/utils/bundleRequire';
 
-/**
- * Finds and validates build configuration files in the specified directory
- *
- * @async
- * @param {string} rootDir - The root directory to search for build files
- * @param {string} build - The specific build configuration to find
- * @returns {Promise<BuildFile[]>} Array of valid build configuration files
- * @throws {Error} If no valid build file is found or if there are parsing errors
- */
 export async function findBuildConfigFiles(
   rootDir: string,
   build: string,
 ): Promise<BuildConfig> {
-  /**
-   * Checks if a file contains the defineBuild import from code-cli-kit
-   *
-   * @param {string} fileContent - The content of the file to check
-   * @returns {{ hasDefineBuild: boolean; importLine?: number }} Object indicating if and where defineBuild is imported
-   */
   const checkForDefineBuildImport = (
     fileContent: string,
   ): {hasDefineBuild: boolean; importLine?: number} => {
@@ -35,19 +21,18 @@ export async function findBuildConfigFiles(
     let importLine: number | undefined;
 
     try {
+      // Cast the parse result to Node to ensure type compatibility
       const ast = parse(fileContent, {
         sourceType: 'module',
         plugins: ['typescript'],
-      });
+      }) as unknown as Node;
 
       traverse(ast, {
         ImportDeclaration(path) {
           const node = path.node;
 
-          // Check if import is from @brandingbrand/code-cli-kit
           if (node.source.value === '@brandingbrand/code-cli-kit') {
             node.specifiers.forEach(specifier => {
-              // Use t.isImportSpecifier for type checking
               if (
                 t.isImportSpecifier(specifier) &&
                 t.isIdentifier(specifier.imported) &&

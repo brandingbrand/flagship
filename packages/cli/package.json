@@ -9,8 +9,8 @@
     "flagship-code": "./bin/flagship-code"
   },
   "scripts": {
-    "build": "yarn tsup src/index.ts --dts --external @brandingbrand/fsapp,@brandingbrand/code-cli",
-    "dev": "yarn tsup src/index.ts --dts --external @brandingbrand/fsapp,@brandingbrand/code-cli --watch",
+    "build": "yarn tsup src/index.ts --dts",
+    "dev": "yarn tsup src/index.ts --dts --watch",
     "lint": "eslint . --max-warnings 0",
     "test": "jest"
   },
@@ -20,17 +20,18 @@
   "dependencies": {
     "@babel/parser": "^7.25.0",
     "@babel/traverse": "^7.25.0",
-    "@babel/types": "^7.25.0",
     "@brandingbrand/code-plugin-generate-plugin": "*",
     "ansi-align": "^3.0.1",
     "bundle-require": "^4.0.2",
+    "chalk": "^4.1.2",
     "commander": "11.1.0",
     "fp-ts": "^2.16.2",
     "glob": "10.3.10",
     "ink": "^4.4.1",
     "io-ts": "^2.2.21",
     "react-async": "^10.0.1",
-    "tsup": "^8.0.1"
+    "type-fest": "^4.10.2",
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
     "@brandingbrand/code-cli-kit": "*",
@@ -42,8 +43,7 @@
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.55",
     "react": "18.2.0",
-    "type-fest": "^4.10.2",
-    "typescript": "^5.3.3"
+    "tsup": "^8.0.1"
   },
   "peerDependencies": {
     "@brandingbrand/code-cli-kit": "^13.0.0",
