@@ -40,6 +40,7 @@ import {renderStatus} from '@/ui/inkRenderer';
  * ```
  */
 export async function executeAlignDeps(options: AlignDepsOptions) {
+  let hasError = false;
   const verifyDepsPlugin = await loadPlugin(
     '@brandingbrand/code-plugin-verify-dependencies',
     process.cwd(),
@@ -72,9 +73,10 @@ export async function executeAlignDeps(options: AlignDepsOptions) {
   } catch (error) {
     logger.error('Failed to verify dependencies', 'align-deps');
     globalEmitter.emit('onError');
-    throw error;
+    hasError = true;
   } finally {
     await logger.flush();
+    if (hasError) return;
     logger.resume();
     globalEmitter.emit('onEnd');
   }

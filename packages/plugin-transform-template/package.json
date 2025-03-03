@@ -13,7 +13,10 @@
   },
   "dependencies": {
     "@brandingbrand/code-cli-kit": "*",
-    "@brandingbrand/code-templates": "*"
+    "@brandingbrand/code-templates": "*",
+    "fs-extra": "11.3.0",
+    "merge-anything": "5.1.7",
+    "semver": "^7.6.2"
   },
   "devDependencies": {
     "@brandingbrand/code-cli-kit": "*",

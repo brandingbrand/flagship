@@ -32,6 +32,7 @@ import {renderStatus} from '@/ui/inkRenderer';
  * @emits {globalEmitter#onEnd} When process completes
  */
 export async function generatePlugin(str: string, options: GenerateOptions) {
+  let hasError = false;
   const {config} = await loadFlagshipCodeConfig();
 
   const pluginGeneratePlugin = await loadPlugin(
@@ -67,9 +68,11 @@ export async function generatePlugin(str: string, options: GenerateOptions) {
   } catch (error) {
     logger.error('Failed to verify dependencies', 'generate-plugin');
     globalEmitter.emit('onError');
-    throw error;
+    hasError = true;
   } finally {
     await logger.flush();
+    if (hasError) return;
+
     logger.resume();
     globalEmitter.emit('onEnd');
   }

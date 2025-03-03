@@ -43,6 +43,7 @@ import {globalEmitter} from '../core';
  * ```
  */
 export async function executePrebuild(options: PrebuildOptions) {
+  let hasError = false;
   const buildConfig = await findBuildConfigFiles(process.cwd(), options.build);
   const {plugins} = await loadFlagshipCodeConfig();
 
@@ -112,11 +113,18 @@ export async function executePrebuild(options: PrebuildOptions) {
         }
       }
     } catch (error) {
-      logger.error(`Plugin execution failed: ${name}`, 'prebuild');
+      hasError = true;
+      logger.error(
+        `Failed to run scripts for plugin "${name}": ${error}`,
+        'prebuild',
+      );
+      await logger.flush();
       globalEmitter.emit('onError');
-      throw Error(`Failed to run scripts for plugin "${name}": ${error}`);
+      break;
     }
   }
+
+  if (hasError) return;
 
   logger.info('Prebuild process completed successfully', 'prebuild');
   await logger.flush();

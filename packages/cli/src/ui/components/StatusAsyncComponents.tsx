@@ -18,12 +18,6 @@ export async function StatusAsyncComponents() {
   const ink = await import('ink');
 
   /**
-   * Imports the Ink Spinner component asynchronously.
-   * @type {Promise<{ default: typeof import("ink-spinner").default }>} A promise resolving to the imported Spinner component.
-   */
-  const inkSpinner = await import('ink-spinner');
-
-  /**
    * An object containing imported Ink components.
    * @type {Object}
    * @property {typeof import("ink")} ink The imported Ink library.
@@ -31,6 +25,5 @@ export async function StatusAsyncComponents() {
    */
   return {
     ...ink,
-    Spinner: inkSpinner.default,
   };
 }

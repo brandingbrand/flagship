@@ -15,7 +15,8 @@
   "dependencies": {
     "@types/fs-extra": "^11.0.4",
     "fs-extra": "^11.2.0",
-    "react-native-bootsplash": "5.4.0"
+    "react-native-bootsplash": "5.4.0",
+    "sharp": "^0.32.5"
   },
   "devDependencies": {
     "@brandingbrand/code-cli-kit": "*",
