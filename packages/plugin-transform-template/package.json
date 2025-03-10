@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-transform-template",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha-20250306142323",
   "license": "MIT",
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -12,14 +12,14 @@
     "preset": "@brandingbrand/code-jest-config"
   },
   "dependencies": {
-    "@brandingbrand/code-cli-kit": "*",
-    "@brandingbrand/code-templates": "*",
+    "@brandingbrand/code-cli-kit": "14.0.0-alpha-20250306142323",
+    "@brandingbrand/code-templates": "14.0.0-alpha-20250306142323",
     "fs-extra": "11.3.0",
     "merge-anything": "5.1.7",
     "semver": "^7.6.2"
   },
   "devDependencies": {
-    "@brandingbrand/code-cli-kit": "*",
+    "@brandingbrand/code-cli-kit": "14.0.0-alpha-20250306142323",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "eslint": "^8.56.0",
@@ -27,7 +27,7 @@
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "*"
+    "@brandingbrand/code-cli-kit": "14.0.0-alpha-20250306142323"
   },
   "publishConfig": {
     "access": "public"

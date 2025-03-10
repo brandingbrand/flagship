@@ -64,6 +64,37 @@ const getTemplatePath = (
 };
 
 /**
+ * Verifies that a file is ready for transformation by checking it exists
+ * and has the expected content length
+ * @param filePath - Path to the file to verify
+ */
+const verifyFileReady = async (filePath: string): Promise<void> => {
+  // Wait for file to be accessible
+  let retries = 5;
+  let fileReady = false;
+
+  while (retries > 0 && !fileReady) {
+    try {
+      const stats = await fs.stat(filePath);
+      if (stats.size > 0) {
+        fileReady = true;
+      } else {
+        // If file exists but is empty, wait a bit
+        await new Promise(resolve => setTimeout(resolve, 50));
+      }
+    } catch (error) {
+      logger.debug(`File not ready yet: ${filePath}, retrying...`);
+      await new Promise(resolve => setTimeout(resolve, 50));
+    }
+    retries--;
+  }
+
+  if (!fileReady) {
+    logger.warn(`File may not be ready for transformation: ${filePath}`);
+  }
+};
+
+/**
  * Recursively walks through a directory, copying and transforming files
  * @param srcDir - Source directory path
  * @param destDir - Destination directory path
@@ -92,6 +123,7 @@ const walkAndTransform = async (
           `Copying and transforming file ${srcEntry} to ${destEntry}`,
         );
         await fs.copyFile(srcEntry, destEntry);
+        await verifyFileReady(destEntry);
         await applyTransform(destEntry, config, options);
       }
     }),

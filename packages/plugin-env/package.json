@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-env",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha-20250306142323",
   "license": "MIT",
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -17,7 +17,7 @@
     "semver": "^7.6.2"
   },
   "devDependencies": {
-    "@brandingbrand/code-cli-kit": "*",
+    "@brandingbrand/code-cli-kit": "14.0.0-alpha-20250306142323",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "eslint": "^8.56.0",
@@ -26,7 +26,7 @@
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "*"
+    "@brandingbrand/code-cli-kit": "14.0.0-alpha-20250306142323"
   },
   "publishConfig": {
     "access": "public"

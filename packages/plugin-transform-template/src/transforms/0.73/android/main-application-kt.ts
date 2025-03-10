@@ -30,9 +30,9 @@ export default {
       content,
       /(PackageList\(.*)\n(\s\s+)/m,
       `$1
-  $2add(NativeConstantsPackage())
-  $2add(EnvSwitcherPackage())
-            `,
+$2add(NativeConstantsPackage())
+$2add(EnvSwitcherPackage())
+$2`,
     );
   },
 };

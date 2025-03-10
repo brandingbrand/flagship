@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-native-navigation",
-  "version": "2.1.0",
+  "version": "3.0.0-alpha-20250306142323",
   "description": "plugin for Flagship Code for react-native-navigation",
   "license": "MIT",
   "main": "src/index.ts",
@@ -13,8 +13,8 @@
     "preset": "@brandingbrand/code-jest-config"
   },
   "devDependencies": {
-    "@brandingbrand/code-cli-kit": "*",
-    "@brandingbrand/code-jest-config": "*",
+    "@brandingbrand/code-cli-kit": "14.0.0-alpha-20250306142323",
+    "@brandingbrand/code-jest-config": "2.0.0-alpha-20250306142323",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/eslint": "^8.56.1",
@@ -23,7 +23,7 @@
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "^13.0.0",
+    "@brandingbrand/code-cli-kit": "14.0.0-alpha-20250306142323",
     "react-native-navigation": "*"
   },
   "publishConfig": {

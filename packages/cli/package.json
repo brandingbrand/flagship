@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-cli",
-  "version": "13.1.2",
+  "version": "14.0.0-alpha-20250306142323",
   "description": "cli for Flagship Code applications",
   "license": "MIT",
   "main": "dist/index.js",
@@ -20,7 +20,7 @@
   "dependencies": {
     "@babel/parser": "^7.25.0",
     "@babel/traverse": "^7.25.0",
-    "@brandingbrand/code-plugin-generate-plugin": "*",
+    "@brandingbrand/code-plugin-generate-plugin": "1.0.0-alpha-20250306142323",
     "ansi-align": "^3.0.1",
     "bundle-require": "^4.0.2",
     "chalk": "^4.1.2",
@@ -34,8 +34,8 @@
     "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "@brandingbrand/code-cli-kit": "*",
-    "@brandingbrand/code-jest-config": "*",
+    "@brandingbrand/code-cli-kit": "14.0.0-alpha-20250306142323",
+    "@brandingbrand/code-jest-config": "2.0.0-alpha-20250306142323",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/ansi-align": "3.0.5",
@@ -46,7 +46,7 @@
     "tsup": "^8.0.1"
   },
   "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "^13.0.0",
+    "@brandingbrand/code-cli-kit": "14.0.0-alpha-20250306142323",
     "react": ">=18.2.0 <18.4.0",
     "react-native": ">=0.72.0 <0.79.0"
   },
