@@ -10,6 +10,18 @@ import {default as profile074} from './0.74';
 export default {
   ...profile074,
   /**
+   * React core library configuration
+   * @property {string} version - The semantic version requirement
+   * @property {string[]} capabilities - Required type definitions
+   * @property {boolean} required - Indicates this is a required dependency
+   * @see {@link https://reactjs.org/}
+   */
+  react: {
+    version: '18.3.1',
+    capabilities: ['@types/react'],
+    required: true,
+  },
+  /**
    * React Native core package configuration
    * @property {string} version - The semantic version requirement
    * @property {string[]} capabilities - Required companion packages
@@ -42,6 +54,10 @@ export default {
    */
   '@react-native/metro-config': {
     version: '^0.75.0',
+    devOnly: true,
+  },
+  '@types/react': {
+    version: '^18.2.6',
     devOnly: true,
   },
 };

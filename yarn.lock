@@ -2263,11 +2263,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@brandingbrand/code-cli-kit@npm:*, @brandingbrand/code-cli-kit@workspace:packages/cli-kit":
+"@brandingbrand/code-cli-kit@npm:14.0.0-alpha-20250306142323, @brandingbrand/code-cli-kit@workspace:packages/cli-kit":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-cli-kit@workspace:packages/cli-kit"
   dependencies:
-    "@brandingbrand/code-jest-config": "npm:*"
+    "@brandingbrand/code-jest-config": "npm:2.0.0-alpha-20250306142323"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     "@types/eslint": "npm:^8.56.1"
@@ -2291,15 +2291,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-cli@npm:*, @brandingbrand/code-cli@workspace:packages/cli":
+"@brandingbrand/code-cli@npm:14.0.0-alpha-20250306142323, @brandingbrand/code-cli@workspace:packages/cli":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-cli@workspace:packages/cli"
   dependencies:
     "@babel/parser": "npm:^7.25.0"
     "@babel/traverse": "npm:^7.25.0"
-    "@brandingbrand/code-cli-kit": "npm:*"
-    "@brandingbrand/code-jest-config": "npm:*"
-    "@brandingbrand/code-plugin-generate-plugin": "npm:*"
+    "@brandingbrand/code-cli-kit": "npm:14.0.0-alpha-20250306142323"
+    "@brandingbrand/code-jest-config": "npm:2.0.0-alpha-20250306142323"
+    "@brandingbrand/code-plugin-generate-plugin": "npm:1.0.0-alpha-20250306142323"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     "@types/ansi-align": "npm:3.0.5"
@@ -2320,7 +2320,7 @@ __metadata:
     type-fest: "npm:^4.10.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@brandingbrand/code-cli-kit": ^13.0.0
+    "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
     react: ">=18.2.0 <18.4.0"
     react-native: ">=0.72.0 <0.79.0"
   bin:
@@ -2348,15 +2348,15 @@ __metadata:
     "@babel/core": "npm:^7.25.2"
     "@babel/preset-env": "npm:^7.25.3"
     "@babel/runtime": "npm:^7.25.0"
-    "@brandingbrand/code-cli": "npm:*"
-    "@brandingbrand/code-cli-kit": "npm:*"
-    "@brandingbrand/code-jest-config": "npm:*"
-    "@brandingbrand/code-plugin-app-icon": "npm:*"
-    "@brandingbrand/code-plugin-asset": "npm:*"
+    "@brandingbrand/code-cli": "npm:14.0.0-alpha-20250306142323"
+    "@brandingbrand/code-cli-kit": "npm:14.0.0-alpha-20250306142323"
+    "@brandingbrand/code-jest-config": "npm:2.0.0-alpha-20250306142323"
+    "@brandingbrand/code-plugin-app-icon": "npm:3.0.0-alpha-20250306142323"
+    "@brandingbrand/code-plugin-asset": "npm:3.0.0-alpha-20250306142323"
     "@brandingbrand/code-plugin-monorepo": "link:./coderc/plugins/plugin-monorepo"
-    "@brandingbrand/code-plugin-native-navigation": "npm:*"
-    "@brandingbrand/code-plugin-splash-screen": "npm:*"
-    "@brandingbrand/code-preset-react-native": "npm:*"
+    "@brandingbrand/code-plugin-native-navigation": "npm:3.0.0-alpha-20250306142323"
+    "@brandingbrand/code-plugin-splash-screen": "npm:3.0.0-alpha-20250306142323"
+    "@brandingbrand/code-preset-react-native": "npm:1.0.0-alpha-20250306142323"
     "@react-native-community/cli": "npm:15.0.1"
     "@react-native-community/cli-platform-android": "npm:15.0.1"
     "@react-native-community/cli-platform-ios": "npm:15.0.1"
@@ -2379,7 +2379,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-jest-config@npm:*, @brandingbrand/code-jest-config@workspace:packages/jest-config":
+"@brandingbrand/code-jest-config@npm:2.0.0-alpha-20250306142323, @brandingbrand/code-jest-config@workspace:packages/jest-config":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-jest-config@workspace:packages/jest-config"
   dependencies:
@@ -2390,16 +2390,16 @@ __metadata:
     ts-jest: "npm:^29.1.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@brandingbrand/code-cli": ^13.1.0
+    "@brandingbrand/code-cli": 14.0.0-alpha-20250306142323
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-app-icon@npm:*, @brandingbrand/code-plugin-app-icon@workspace:packages/plugin-app-icon":
+"@brandingbrand/code-plugin-app-icon@npm:3.0.0-alpha-20250306142323, @brandingbrand/code-plugin-app-icon@workspace:packages/plugin-app-icon":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-app-icon@workspace:packages/plugin-app-icon"
   dependencies:
-    "@brandingbrand/code-cli-kit": "npm:*"
-    "@brandingbrand/code-jest-config": "npm:*"
+    "@brandingbrand/code-cli-kit": "npm:14.0.0-alpha-20250306142323"
+    "@brandingbrand/code-jest-config": "npm:2.0.0-alpha-20250306142323"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     "@types/eslint": "npm:^8.56.1"
@@ -2407,16 +2407,16 @@ __metadata:
     sharp: "npm:^0.32.5"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@brandingbrand/code-cli-kit": ^13.0.0
+    "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-asset@npm:*, @brandingbrand/code-plugin-asset@workspace:packages/plugin-asset":
+"@brandingbrand/code-plugin-asset@npm:3.0.0-alpha-20250306142323, @brandingbrand/code-plugin-asset@workspace:packages/plugin-asset":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-asset@workspace:packages/plugin-asset"
   dependencies:
-    "@brandingbrand/code-cli-kit": "npm:*"
-    "@brandingbrand/code-jest-config": "npm:*"
+    "@brandingbrand/code-cli-kit": "npm:14.0.0-alpha-20250306142323"
+    "@brandingbrand/code-jest-config": "npm:2.0.0-alpha-20250306142323"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     "@types/eslint": "npm:^8.56.1"
@@ -2425,15 +2425,15 @@ __metadata:
     react-native-asset: "npm:2.1.1"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@brandingbrand/code-cli-kit": ^13.0.0
+    "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-clean@npm:*, @brandingbrand/code-plugin-clean@workspace:packages/plugin-clean":
+"@brandingbrand/code-plugin-clean@npm:1.0.0-alpha-20250306142323, @brandingbrand/code-plugin-clean@workspace:packages/plugin-clean":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-clean@workspace:packages/plugin-clean"
   dependencies:
-    "@brandingbrand/code-cli-kit": "npm:*"
+    "@brandingbrand/code-cli-kit": "npm:14.0.0-alpha-20250306142323"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     eslint: "npm:^8.56.0"
@@ -2441,15 +2441,15 @@ __metadata:
     rimraf: "npm:^5.0.5"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@brandingbrand/code-cli-kit": "*"
+    "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-env@npm:*, @brandingbrand/code-plugin-env@workspace:packages/plugin-env":
+"@brandingbrand/code-plugin-env@npm:1.0.0-alpha-20250306142323, @brandingbrand/code-plugin-env@workspace:packages/plugin-env":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-env@workspace:packages/plugin-env"
   dependencies:
-    "@brandingbrand/code-cli-kit": "npm:*"
+    "@brandingbrand/code-cli-kit": "npm:14.0.0-alpha-20250306142323"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     bundle-require: "npm:5.1.0"
@@ -2460,7 +2460,7 @@ __metadata:
     type-fest: "npm:4.34.1"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@brandingbrand/code-cli-kit": "*"
+    "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
   languageName: unknown
   linkType: soft
 
@@ -2468,8 +2468,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-fastlane@workspace:packages/plugin-fastlane"
   dependencies:
-    "@brandingbrand/code-cli-kit": "npm:*"
-    "@brandingbrand/code-jest-config": "npm:*"
+    "@brandingbrand/code-cli-kit": "npm:14.0.0-alpha-20250306142323"
+    "@brandingbrand/code-jest-config": "npm:2.0.0-alpha-20250306142323"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     "@types/ejs": "npm:^3.1.5"
@@ -2480,15 +2480,15 @@ __metadata:
     fs-extra: "npm:^11.2.0"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@brandingbrand/code-cli-kit": ^13.0.0
+    "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-generate-plugin@npm:*, @brandingbrand/code-plugin-generate-plugin@workspace:packages/plugin-generate-plugin":
+"@brandingbrand/code-plugin-generate-plugin@npm:1.0.0-alpha-20250306142323, @brandingbrand/code-plugin-generate-plugin@workspace:packages/plugin-generate-plugin":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-generate-plugin@workspace:packages/plugin-generate-plugin"
   dependencies:
-    "@brandingbrand/code-cli-kit": "npm:*"
+    "@brandingbrand/code-cli-kit": "npm:14.0.0-alpha-20250306142323"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     eslint: "npm:^8.56.0"
@@ -2497,7 +2497,7 @@ __metadata:
     recast: "npm:^0.23.5"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@brandingbrand/code-cli-kit": "*"
+    "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
   languageName: unknown
   linkType: soft
 
@@ -2507,12 +2507,12 @@ __metadata:
   languageName: node
   linkType: soft
 
-"@brandingbrand/code-plugin-native-navigation@npm:*, @brandingbrand/code-plugin-native-navigation@workspace:packages/plugin-native-navigation":
+"@brandingbrand/code-plugin-native-navigation@npm:3.0.0-alpha-20250306142323, @brandingbrand/code-plugin-native-navigation@workspace:packages/plugin-native-navigation":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-native-navigation@workspace:packages/plugin-native-navigation"
   dependencies:
-    "@brandingbrand/code-cli-kit": "npm:*"
-    "@brandingbrand/code-jest-config": "npm:*"
+    "@brandingbrand/code-cli-kit": "npm:14.0.0-alpha-20250306142323"
+    "@brandingbrand/code-jest-config": "npm:2.0.0-alpha-20250306142323"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     "@types/eslint": "npm:^8.56.1"
@@ -2520,16 +2520,16 @@ __metadata:
     react-native-navigation: "npm:7.40.3"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@brandingbrand/code-cli-kit": ^13.0.0
+    "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
     react-native-navigation: "*"
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-packager-install@npm:*, @brandingbrand/code-plugin-packager-install@workspace:packages/plugin-packager-install":
+"@brandingbrand/code-plugin-packager-install@npm:1.0.0-alpha-20250306142323, @brandingbrand/code-plugin-packager-install@workspace:packages/plugin-packager-install":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-packager-install@workspace:packages/plugin-packager-install"
   dependencies:
-    "@brandingbrand/code-cli-kit": "npm:*"
+    "@brandingbrand/code-cli-kit": "npm:14.0.0-alpha-20250306142323"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     eslint: "npm:^8.56.0"
@@ -2537,7 +2537,7 @@ __metadata:
     jest: "npm:^29.0.0"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@brandingbrand/code-cli-kit": "*"
+    "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
   languageName: unknown
   linkType: soft
 
@@ -2545,8 +2545,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-permissions@workspace:packages/plugin-permissions"
   dependencies:
-    "@brandingbrand/code-cli-kit": "npm:*"
-    "@brandingbrand/code-jest-config": "npm:*"
+    "@brandingbrand/code-cli-kit": "npm:14.0.0-alpha-20250306142323"
+    "@brandingbrand/code-jest-config": "npm:2.0.0-alpha-20250306142323"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     "@types/eslint": "npm:^8.56.1"
@@ -2554,17 +2554,17 @@ __metadata:
     react-native-permissions: "npm:^4.1.1"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@brandingbrand/code-cli-kit": ^13.0.0
+    "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
     react-native-permissions: ^4.0.0
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-splash-screen@npm:*, @brandingbrand/code-plugin-splash-screen@workspace:packages/plugin-splash-screen":
+"@brandingbrand/code-plugin-splash-screen@npm:3.0.0-alpha-20250306142323, @brandingbrand/code-plugin-splash-screen@workspace:packages/plugin-splash-screen":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-splash-screen@workspace:packages/plugin-splash-screen"
   dependencies:
-    "@brandingbrand/code-cli-kit": "npm:*"
-    "@brandingbrand/code-jest-config": "npm:*"
+    "@brandingbrand/code-cli-kit": "npm:14.0.0-alpha-20250306142323"
+    "@brandingbrand/code-jest-config": "npm:2.0.0-alpha-20250306142323"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     "@types/eslint": "npm:^8.56.1"
@@ -2575,7 +2575,7 @@ __metadata:
     sharp: "npm:^0.32.5"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@brandingbrand/code-cli-kit": ^13.0.0
+    "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
   languageName: unknown
   linkType: soft
 
@@ -2583,8 +2583,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-target-extension@workspace:packages/plugin-target-extension"
   dependencies:
-    "@brandingbrand/code-cli-kit": "npm:*"
-    "@brandingbrand/code-jest-config": "npm:*"
+    "@brandingbrand/code-cli-kit": "npm:14.0.0-alpha-20250306142323"
+    "@brandingbrand/code-jest-config": "npm:2.0.0-alpha-20250306142323"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     "@types/eslint": "npm:^8.56.1"
@@ -2593,16 +2593,16 @@ __metadata:
     fs-extra: "npm:^11.2.0"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@brandingbrand/code-cli-kit": ^13.0.0
+    "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-transform-template@npm:*, @brandingbrand/code-plugin-transform-template@workspace:packages/plugin-transform-template":
+"@brandingbrand/code-plugin-transform-template@npm:1.0.0-alpha-20250306142323, @brandingbrand/code-plugin-transform-template@workspace:packages/plugin-transform-template":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-transform-template@workspace:packages/plugin-transform-template"
   dependencies:
-    "@brandingbrand/code-cli-kit": "npm:*"
-    "@brandingbrand/code-templates": "npm:*"
+    "@brandingbrand/code-cli-kit": "npm:14.0.0-alpha-20250306142323"
+    "@brandingbrand/code-templates": "npm:14.0.0-alpha-20250306142323"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     eslint: "npm:^8.56.0"
@@ -2612,15 +2612,15 @@ __metadata:
     semver: "npm:^7.6.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@brandingbrand/code-cli-kit": "*"
+    "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-verify-dependencies@npm:*, @brandingbrand/code-plugin-verify-dependencies@workspace:packages/plugin-verify-dependencies":
+"@brandingbrand/code-plugin-verify-dependencies@npm:1.0.0-alpha-20250306142323, @brandingbrand/code-plugin-verify-dependencies@workspace:packages/plugin-verify-dependencies":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-verify-dependencies@workspace:packages/plugin-verify-dependencies"
   dependencies:
-    "@brandingbrand/code-cli-kit": "npm:*"
+    "@brandingbrand/code-cli-kit": "npm:14.0.0-alpha-20250306142323"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     eslint: "npm:^8.56.0"
@@ -2628,19 +2628,19 @@ __metadata:
     semver: "npm:^7.6.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@brandingbrand/code-cli-kit": "*"
+    "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-preset-react-native@npm:*, @brandingbrand/code-preset-react-native@workspace:packages/preset-react-native":
+"@brandingbrand/code-preset-react-native@npm:1.0.0-alpha-20250306142323, @brandingbrand/code-preset-react-native@workspace:packages/preset-react-native":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-preset-react-native@workspace:packages/preset-react-native"
   dependencies:
-    "@brandingbrand/code-plugin-clean": "npm:*"
-    "@brandingbrand/code-plugin-env": "npm:*"
-    "@brandingbrand/code-plugin-packager-install": "npm:*"
-    "@brandingbrand/code-plugin-transform-template": "npm:*"
-    "@brandingbrand/code-plugin-verify-dependencies": "npm:*"
+    "@brandingbrand/code-plugin-clean": "npm:1.0.0-alpha-20250306142323"
+    "@brandingbrand/code-plugin-env": "npm:1.0.0-alpha-20250306142323"
+    "@brandingbrand/code-plugin-packager-install": "npm:1.0.0-alpha-20250306142323"
+    "@brandingbrand/code-plugin-transform-template": "npm:1.0.0-alpha-20250306142323"
+    "@brandingbrand/code-plugin-verify-dependencies": "npm:1.0.0-alpha-20250306142323"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     eslint: "npm:^8.56.0"
@@ -2649,7 +2649,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-templates@npm:*, @brandingbrand/code-templates@workspace:packages/templates":
+"@brandingbrand/code-templates@npm:14.0.0-alpha-20250306142323, @brandingbrand/code-templates@workspace:packages/templates":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-templates@workspace:packages/templates"
   languageName: unknown
