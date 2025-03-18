@@ -67,12 +67,11 @@ export async function generatePlugin(str: string, options: GenerateOptions) {
     }
   } catch (error) {
     logger.error('Failed to verify dependencies', 'generate-plugin');
+    await logger.flush();
     globalEmitter.emit('onError');
-    hasError = true;
+    process.exit(1);
   } finally {
     await logger.flush();
-    if (hasError) return;
-
     logger.resume();
     globalEmitter.emit('onEnd');
   }

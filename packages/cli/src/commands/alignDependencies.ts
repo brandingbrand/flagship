@@ -72,11 +72,11 @@ export async function executeAlignDeps(options: AlignDepsOptions) {
     );
   } catch (error) {
     logger.error('Failed to verify dependencies', 'align-deps');
+    await logger.flush();
     globalEmitter.emit('onError');
-    hasError = true;
+    process.exit(1);
   } finally {
     await logger.flush();
-    if (hasError) return;
     logger.resume();
     globalEmitter.emit('onEnd');
   }
