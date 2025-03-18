@@ -19,7 +19,9 @@
     "@repo/typescript-config": "*",
     "@types/eslint": "^8.56.1",
     "eslint": "^8.56.0",
+    "jest": "^29.7.0",
     "react-native-navigation": "7.40.3",
+    "ts-jest": "^29.1.2",
     "typescript": "^5.3.3"
   },
   "peerDependencies": {

@@ -2267,7 +2267,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-cli-kit@workspace:packages/cli-kit"
   dependencies:
-    "@brandingbrand/code-jest-config": "npm:2.0.0-alpha-20250306142323"
+    "@brandingbrand/code-jest-config": "npm:*"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     "@types/eslint": "npm:^8.56.1"
@@ -2281,9 +2281,11 @@ __metadata:
     fs-extra: "npm:^11.2.0"
     glob: "npm:10.3.10"
     io-ts: "npm:^2.2.21"
+    jest: "npm:^29.7.0"
     recast: "npm:^0.23.5"
     semver: "npm:^7.6.2"
     simple-plist: "npm:^1.3.1"
+    ts-jest: "npm:^29.1.2"
     tsup: "npm:^8.0.1"
     type-fest: "npm:4.10.2"
     typescript: "npm:^5.3.3"
@@ -2314,8 +2316,10 @@ __metadata:
     glob: "npm:10.3.10"
     ink: "npm:^4.4.1"
     io-ts: "npm:^2.2.21"
+    jest: "npm:^29.7.0"
     react: "npm:18.2.0"
     react-async: "npm:^10.0.1"
+    ts-jest: "npm:^29.1.2"
     tsup: "npm:^8.0.1"
     type-fest: "npm:^4.10.2"
     typescript: "npm:^5.3.3"
@@ -2379,6 +2383,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@brandingbrand/code-jest-config@npm:*":
+  version: 1.1.0
+  resolution: "@brandingbrand/code-jest-config@npm:1.1.0"
+  dependencies:
+    ts-jest: "npm:^29.1.2"
+  peerDependencies:
+    "@brandingbrand/code-cli": ^13.1.0
+  checksum: 10c0/3941e8c444c36747aba8d6a7bc615399c0242e9a818f2a523d54b4f75b0f1a437a1e712fa27ce26b149d56cb0c32fa9012a7033f4b835ecc1384d81ff9ff81ae
+  languageName: node
+  linkType: hard
+
 "@brandingbrand/code-jest-config@npm:2.0.0-alpha-20250306142323, @brandingbrand/code-jest-config@workspace:packages/jest-config":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-jest-config@workspace:packages/jest-config"
@@ -2404,7 +2419,9 @@ __metadata:
     "@repo/typescript-config": "npm:*"
     "@types/eslint": "npm:^8.56.1"
     eslint: "npm:^8.56.0"
+    jest: "npm:^29.7.0"
     sharp: "npm:^0.32.5"
+    ts-jest: "npm:^29.1.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
     "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
@@ -2422,7 +2439,9 @@ __metadata:
     "@types/eslint": "npm:^8.56.1"
     "@types/react-native-asset": "npm:^2.0.2"
     eslint: "npm:^8.56.0"
+    jest: "npm:^29.7.0"
     react-native-asset: "npm:2.1.1"
+    ts-jest: "npm:^29.1.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
     "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
@@ -2437,8 +2456,9 @@ __metadata:
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     eslint: "npm:^8.56.0"
-    jest: "npm:^29.0.0"
+    jest: "npm:^29.7.0"
     rimraf: "npm:^5.0.5"
+    ts-jest: "npm:^29.1.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
     "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
@@ -2454,9 +2474,10 @@ __metadata:
     "@repo/typescript-config": "npm:*"
     bundle-require: "npm:5.1.0"
     eslint: "npm:^8.56.0"
-    jest: "npm:^29.0.0"
+    jest: "npm:^29.7.0"
     magicast: "npm:0.3.5"
     semver: "npm:^7.6.2"
+    ts-jest: "npm:^29.1.2"
     type-fest: "npm:4.34.1"
     typescript: "npm:^5.3.3"
   peerDependencies:
@@ -2478,6 +2499,8 @@ __metadata:
     ejs: "npm:^3.1.9"
     eslint: "npm:^8.56.0"
     fs-extra: "npm:^11.2.0"
+    jest: "npm:^29.7.0"
+    ts-jest: "npm:^29.1.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
     "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
@@ -2493,8 +2516,9 @@ __metadata:
     "@repo/typescript-config": "npm:*"
     eslint: "npm:^8.56.0"
     fs-extra: "npm:11.3.0"
-    jest: "npm:^29.0.0"
+    jest: "npm:^29.7.0"
     recast: "npm:^0.23.5"
+    ts-jest: "npm:^29.1.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
     "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
@@ -2517,7 +2541,9 @@ __metadata:
     "@repo/typescript-config": "npm:*"
     "@types/eslint": "npm:^8.56.1"
     eslint: "npm:^8.56.0"
+    jest: "npm:^29.7.0"
     react-native-navigation: "npm:7.40.3"
+    ts-jest: "npm:^29.1.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
     "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
@@ -2534,7 +2560,8 @@ __metadata:
     "@repo/typescript-config": "npm:*"
     eslint: "npm:^8.56.0"
     execa: "npm:^9.3.0"
-    jest: "npm:^29.0.0"
+    jest: "npm:^29.7.0"
+    ts-jest: "npm:^29.1.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
     "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
@@ -2551,7 +2578,9 @@ __metadata:
     "@repo/typescript-config": "npm:*"
     "@types/eslint": "npm:^8.56.1"
     eslint: "npm:^8.56.0"
+    jest: "npm:^29.7.0"
     react-native-permissions: "npm:^4.1.1"
+    ts-jest: "npm:^29.1.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
     "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
@@ -2571,8 +2600,10 @@ __metadata:
     "@types/fs-extra": "npm:^11.0.4"
     eslint: "npm:^8.56.0"
     fs-extra: "npm:^11.2.0"
+    jest: "npm:^29.7.0"
     react-native-bootsplash: "npm:5.4.0"
     sharp: "npm:^0.32.5"
+    ts-jest: "npm:^29.1.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
     "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
@@ -2591,6 +2622,8 @@ __metadata:
     "@types/fs-extra": "npm:^11.0.4"
     eslint: "npm:^8.56.0"
     fs-extra: "npm:^11.2.0"
+    jest: "npm:^29.7.0"
+    ts-jest: "npm:^29.1.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
     "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
@@ -2607,9 +2640,10 @@ __metadata:
     "@repo/typescript-config": "npm:*"
     eslint: "npm:^8.56.0"
     fs-extra: "npm:11.3.0"
-    jest: "npm:^29.0.0"
+    jest: "npm:^29.7.0"
     merge-anything: "npm:5.1.7"
     semver: "npm:^7.6.2"
+    ts-jest: "npm:^29.1.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
     "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
@@ -2624,8 +2658,9 @@ __metadata:
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     eslint: "npm:^8.56.0"
-    jest: "npm:^29.0.0"
+    jest: "npm:^29.7.0"
     semver: "npm:^7.6.2"
+    ts-jest: "npm:^29.1.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
     "@brandingbrand/code-cli-kit": 14.0.0-alpha-20250306142323
@@ -2644,7 +2679,8 @@ __metadata:
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     eslint: "npm:^8.56.0"
-    jest: "npm:^29.0.0"
+    jest: "npm:^29.7.0"
+    ts-jest: "npm:^29.1.2"
     typescript: "npm:^5.3.3"
   languageName: unknown
   linkType: soft
@@ -11931,7 +11967,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest@npm:^29.0.0, jest@npm:^29.2.1, jest@npm:^29.7.0":
+"jest@npm:^29.2.1, jest@npm:^29.7.0":
   version: 29.7.0
   resolution: "jest@npm:29.7.0"
   dependencies:
