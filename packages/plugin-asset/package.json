@@ -1,12 +1,10 @@
 {
   "name": "@brandingbrand/code-plugin-asset",
-  "version": "2.0.1",
+  "version": "3.0.0-alpha-20250306142323",
   "description": "plugin for Flagship Code for assets",
   "license": "MIT",
   "main": "src/index.ts",
-  "publishConfig": {
-    "access": "public"
-  },
+  "types": "src/index.ts",
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "test": "jest"
@@ -14,21 +12,25 @@
   "jest": {
     "preset": "@brandingbrand/code-jest-config"
   },
-  "types": "src/index.ts",
   "dependencies": {
     "@types/react-native-asset": "^2.0.2",
     "react-native-asset": "2.1.1"
   },
-  "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "^13.0.0"
-  },
   "devDependencies": {
-    "@brandingbrand/code-cli-kit": "*",
-    "@brandingbrand/code-jest-config": "*",
+    "@brandingbrand/code-cli-kit": "14.0.0-alpha-20250306142323",
+    "@brandingbrand/code-jest-config": "2.0.0-alpha-20250306142323",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/eslint": "^8.56.1",
     "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
     "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "@brandingbrand/code-cli-kit": "14.0.0-alpha-20250306142323"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

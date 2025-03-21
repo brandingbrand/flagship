@@ -1,3 +1,4 @@
+import fs from 'fs';
 import type {
   EnvironmentContext,
   JestEnvironmentConfig,
@@ -6,6 +7,7 @@ import {TestEnvironment} from 'jest-environment-node';
 import fse from 'fs-extra';
 import path from 'path';
 import temp from 'temp';
+import semver from 'semver';
 
 /**
  * Custom Jest environment for testing purposes with additional setup and teardown logic.
@@ -54,6 +56,52 @@ export default class CustomEnvironment extends TestEnvironment {
       reactNativeVersion = '0.72',
     } = this.options;
 
+    const getTemplatePath = (
+      templateType: string,
+      platform: 'ios' | 'android' | undefined,
+      version: string,
+    ): string => {
+      const coercedVersion = semver.coerce(version);
+      if (!coercedVersion) {
+        throw new Error(`Invalid version string: ${version}`);
+      }
+
+      // Try each possible minor version down to 0
+      for (
+        let minorVersion = semver.minor(coercedVersion);
+        minorVersion >= 0;
+        minorVersion--
+      ) {
+        const tryVersion = `${semver.major(coercedVersion)}.${minorVersion}`;
+        let tryPath;
+
+        if (platform) {
+          tryPath = path.join(
+            require.resolve('@brandingbrand/code-templates/package.json'),
+            '..',
+            templateType,
+            tryVersion,
+            platform,
+          );
+        } else {
+          tryPath = path.join(
+            require.resolve('@brandingbrand/code-templates/package.json'),
+            '..',
+            templateType,
+            tryVersion,
+          );
+        }
+
+        if (fs.existsSync(tryPath)) {
+          return tryPath;
+        }
+      }
+
+      throw new Error(
+        `Template not found for ${templateType} ${platform} v${version}`,
+      );
+    };
+
     if (!requireTemplate) return super.setup();
 
     // Override the getReactNativeVersion logic to early exit with provided version
@@ -61,11 +109,20 @@ export default class CustomEnvironment extends TestEnvironment {
 
     // Create a temporary directory
     const dir = temp.mkdirSync();
-    const templatePath = path.join(
-      require.resolve('@brandingbrand/code-cli/package.json'),
-      '..',
-      'templates',
-      `react-native-${reactNativeVersion}`,
+    const ios = getTemplatePath(
+      'react-native',
+      'ios',
+      reactNativeVersion as string,
+    );
+    const android = getTemplatePath(
+      'react-native',
+      'android',
+      reactNativeVersion as string,
+    );
+    const supportFiles = getTemplatePath(
+      'supporting-files',
+      undefined,
+      reactNativeVersion as string,
     );
 
     // Create "ios" and "android" directories
@@ -73,12 +130,9 @@ export default class CustomEnvironment extends TestEnvironment {
     await fse.mkdir(path.resolve(dir, 'android'));
 
     // Copy template files to the temporary directory
-    await fse.copy(path.resolve(templatePath, 'ios'), path.resolve(dir, 'ios'));
-    await fse.copy(
-      path.resolve(templatePath, 'android'),
-      path.resolve(dir, 'android'),
-    );
-    await fse.copy(path.resolve(templatePath, 'addons'), dir);
+    await fse.copy(ios, path.resolve(dir, 'ios'));
+    await fse.copy(android, path.resolve(dir, 'android'));
+    await fse.copy(supportFiles, dir);
 
     // Copy fixtures if provided
     if (fixtures && typeof fixtures === 'string') {

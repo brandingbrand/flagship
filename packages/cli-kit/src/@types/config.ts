@@ -36,9 +36,14 @@ export type EnvConfig<T = unknown> = T;
  * Represents the configuration for a plugin.
  * @template T - The type of the plugin.
  */
-export type PluginConfig<T> = {
-  ios?: (build: BuildConfig & T, options: PrebuildOptions) => Promise<void>;
-  android?: (build: BuildConfig & T, options: PrebuildOptions) => Promise<void>;
+export type PluginConfig<T, O = PrebuildOptions> = {
+  common?: (build: BuildConfig & T, options: O) => Promise<void>;
+  ios?: O extends PrebuildOptions
+    ? (build: BuildConfig & T, options: PrebuildOptions) => Promise<void>
+    : never;
+  android?: O extends PrebuildOptions
+    ? (build: BuildConfig & T, options: PrebuildOptions) => Promise<void>
+    : never;
 };
 
 export type Plugin<T> = {
@@ -83,7 +88,12 @@ export type GenerateOptions = {
    * Name of your plugin. This will be reflected in your package.json and
    * in your flagship-code.config.ts.
    */
-  name: string;
+  pluginName: string;
+  /**
+   * Path to your plugin. This will be reflected in your package.json and
+   * in your flagship-code.config.ts.
+   */
+  pluginPath: string;
   /**
    * The cli command.
    */
@@ -102,7 +112,7 @@ export type AlignDepsOptions = {
   /**
    * React Native profile based on React Native version.
    */
-  profile: '0.72' | '0.73';
+  profile: '0.72' | '0.73' | '0.74' | '0.75' | '0.76' | '0.77' | '0.78';
 
   /**
    * The cli command.

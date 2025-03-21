@@ -1,4 +1,4 @@
-import fsPromises from 'fs/promises';
+import fs, {existsSync} from 'fs';
 
 import fse from 'fs-extra';
 
@@ -14,7 +14,15 @@ export default {
    * Spread all current fs/promises functions so they can be
    * used along with new useful functions.
    */
-  ...fsPromises,
+  ...fs.promises,
+
+  /**
+   * Synchronously checks if a path exists.
+   *
+   * @param {string} path - The path to check
+   * @returns {boolean} True if the path exists, false otherwise
+   */
+  existsSync: fs.existsSync,
 
   /**
    * Checks if a keyword exists in a file.
@@ -27,7 +35,7 @@ export default {
     path: string,
     keyword: RegExp | string,
   ): Promise<boolean> {
-    const fileContent = await fsPromises.readFile(path, 'utf-8');
+    const fileContent = await fs.promises.readFile(path, 'utf-8');
 
     if (typeof keyword === 'string') {
       return fileContent.includes(keyword);
@@ -45,7 +53,7 @@ export default {
   doesPathExist: async function (path: string): Promise<boolean> {
     try {
       // Attempts to access the path asynchronously
-      await fsPromises.access(path);
+      await fs.promises.access(path);
 
       // If the access is successful, return true
       return true;
@@ -76,9 +84,9 @@ export default {
       );
     }
 
-    const fileContent = await fsPromises.readFile(path, 'utf-8');
+    const fileContent = await fs.promises.readFile(path, 'utf-8');
 
-    await fsPromises.writeFile(path, fileContent.replace(oldText, newText));
+    await fs.promises.writeFile(path, fileContent.replace(oldText, newText));
   },
 
   /**
@@ -114,7 +122,7 @@ export default {
       }, [])
       .reverse()) {
       const contents =
-        (await fse.pathExists(dir)) && (await fsPromises.readdir(dir));
+        (await fse.pathExists(dir)) && (await fs.promises.readdir(dir));
       if (Array.isArray(contents) && contents.length === 0) {
         await fse.remove(dir);
       }

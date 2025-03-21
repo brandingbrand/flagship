@@ -80,6 +80,13 @@ const FrameworksSchema = t.array(
  */
 const PodfileSchema = t.partial({
   /**
+   * Optional flag to enable new React Native architecture.
+   *
+   * @default false
+   */
+  newArchEnabled: t.boolean,
+
+  /**
    * Optional array of top-level configurations
    */
   config: t.array(t.string),

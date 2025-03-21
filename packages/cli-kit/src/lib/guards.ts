@@ -8,6 +8,7 @@ import type {
   EnvConfig,
   ExtendedBuildConfig,
   PluginConfig,
+  PrebuildOptions,
 } from '@/@types';
 
 /**
@@ -64,6 +65,8 @@ export function defineBuild<T = BuildConfig>(
  * @returns The provided plugin configuration.
  * @template T - The generic type of the plugin configuration.
  */
-export function definePlugin<T>(plugin: PluginConfig<T>) {
+export function definePlugin<T, O = PrebuildOptions>(
+  plugin: PluginConfig<T, O>,
+) {
   return plugin;
 }

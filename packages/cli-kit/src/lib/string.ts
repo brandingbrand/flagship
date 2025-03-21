@@ -1,4 +1,5 @@
 import {StringWarning} from './errors';
+import * as logger from './logger';
 
 /**
  * Collection of string-related utilities.
@@ -31,7 +32,9 @@ export const string = {
      * @throws {StringWarning} Throws a StringWarning if the condition is not met.
      */
     if (content.match(oldText) === null) {
-      throw new StringWarning(`string does not contain value: ${oldText}`);
+      logger.warn(`string does not contain value: ${oldText}`);
+
+      return content;
     }
 
     /**

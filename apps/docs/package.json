@@ -5,8 +5,6 @@
   "type": "module",
   "scripts": {
     "astro": "astro",
-    "build": "astro check && astro build",
-    "dev": "astro dev",
     "preview": "astro preview",
     "start": "astro dev"
   },
