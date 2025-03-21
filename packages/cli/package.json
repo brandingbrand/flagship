@@ -2,6 +2,12 @@
   "name": "@brandingbrand/code-cli",
   "version": "14.0.0-alpha-20250306142323",
   "description": "cli for Flagship Code applications",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brandingbrand/flagship"
+  },
+  "bugs": "https://github.com/brandingbrand/flagship/issues",
+  "homepage": "https://brandingbrand.github.io/flagship/packages/cli/",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

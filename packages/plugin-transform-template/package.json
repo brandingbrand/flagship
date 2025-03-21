@@ -1,6 +1,12 @@
 {
   "name": "@brandingbrand/code-plugin-transform-template",
   "version": "1.0.0-alpha-20250306142323",
+  "description": "code plugin to transform a template for use in flagship code application",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brandingbrand/flagship"
+  },
+  "bugs": "https://github.com/brandingbrand/flagship/issues",
   "license": "MIT",
   "main": "src/index.ts",
   "types": "src/index.ts",
