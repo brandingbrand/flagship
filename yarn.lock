@@ -2267,7 +2267,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-cli-kit@workspace:packages/cli-kit"
   dependencies:
-    "@brandingbrand/code-jest-config": "npm:*"
+    "@brandingbrand/code-jest-config": "npm:^2.0.0"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     "@types/eslint": "npm:^8.56.1"
@@ -2384,17 +2384,6 @@ __metadata:
     typescript: "npm:5.0.4"
   languageName: unknown
   linkType: soft
-
-"@brandingbrand/code-jest-config@npm:*":
-  version: 1.1.0
-  resolution: "@brandingbrand/code-jest-config@npm:1.1.0"
-  dependencies:
-    ts-jest: "npm:^29.1.2"
-  peerDependencies:
-    "@brandingbrand/code-cli": ^13.1.0
-  checksum: 10c0/3941e8c444c36747aba8d6a7bc615399c0242e9a818f2a523d54b4f75b0f1a437a1e712fa27ce26b149d56cb0c32fa9012a7033f4b835ecc1384d81ff9ff81ae
-  languageName: node
-  linkType: hard
 
 "@brandingbrand/code-jest-config@npm:^2.0.0, @brandingbrand/code-jest-config@workspace:packages/jest-config":
   version: 0.0.0-use.local
