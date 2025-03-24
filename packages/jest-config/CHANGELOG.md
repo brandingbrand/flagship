@@ -1,6 +1,6 @@
 # @brandingbrand/code-jest-config
 
-## 2.0.0-alpha-20250306142323
+## 2.0.0
 
 ### Major Changes
 
@@ -10,50 +10,6 @@
 
 - Updated dependencies
   - @brandingbrand/code-cli@14.0.0-alpha-20250306142323
-
-## 2.0.0-alpha-20250303215025
-
-### Major Changes
-
-- react native <v0.79 support
-
-### Patch Changes
-
-- Updated dependencies
-  - @brandingbrand/code-cli@14.0.0-alpha-20250303215025
-
-## 2.0.0-alpha-20250303201558
-
-### Major Changes
-
-- react native <0.79 support
-
-### Patch Changes
-
-- Updated dependencies
-  - @brandingbrand/code-cli@14.0.0-alpha-20250303201558
-
-## 2.0.0-alpha-20250303200100
-
-### Major Changes
-
-- react native <v0.79 support
-
-### Patch Changes
-
-- Updated dependencies
-  - @brandingbrand/code-cli@14.0.0-alpha-20250303200100
-
-## 2.0.0-alpha-20250303195416
-
-### Major Changes
-
-- react native <v0.79 support
-
-### Patch Changes
-
-- Updated dependencies
-  - @brandingbrand/code-cli@14.0.0-alpha-20250303195416
 
 ## 1.1.0
 

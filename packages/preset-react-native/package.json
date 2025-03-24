@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-preset-react-native",
-  "version": "1.0.0-alpha-20250306142323",
+  "version": "1.0.0",
   "description": "code preset to setup react native application with fsapp",
   "repository": {
     "type": "git",
@@ -18,11 +18,11 @@
     "preset": "@brandingbrand/code-jest-config"
   },
   "dependencies": {
-    "@brandingbrand/code-plugin-clean": "1.0.0-alpha-20250306142323",
-    "@brandingbrand/code-plugin-env": "1.0.0-alpha-20250306142323",
-    "@brandingbrand/code-plugin-packager-install": "1.0.0-alpha-20250306142323",
-    "@brandingbrand/code-plugin-transform-template": "1.0.0-alpha-20250306142323",
-    "@brandingbrand/code-plugin-verify-dependencies": "1.0.0-alpha-20250306142323"
+    "@brandingbrand/code-plugin-clean": "^1.0.0",
+    "@brandingbrand/code-plugin-env": "^1.0.0",
+    "@brandingbrand/code-plugin-packager-install": "^1.0.0",
+    "@brandingbrand/code-plugin-transform-template": "^1.0.0",
+    "@brandingbrand/code-plugin-verify-dependencies": "^1.0.0"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

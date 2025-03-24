@@ -1,6 +1,6 @@
 # @brandingbrand/code-cli
 
-## 14.0.0-alpha-20250306142323
+## 14.0.0
 
 ### Major Changes
 

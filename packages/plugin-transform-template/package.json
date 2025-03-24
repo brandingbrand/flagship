@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-transform-template",
-  "version": "1.0.0-alpha-20250306142323",
+  "version": "1.0.0",
   "description": "code plugin to transform a template for use in flagship code application",
   "repository": {
     "type": "git",
@@ -18,14 +18,14 @@
     "preset": "@brandingbrand/code-jest-config"
   },
   "dependencies": {
-    "@brandingbrand/code-cli-kit": "14.0.0-alpha-20250306142323",
-    "@brandingbrand/code-templates": "14.0.0-alpha-20250306142323",
+    "@brandingbrand/code-cli-kit": "^14.0.0",
+    "@brandingbrand/code-templates": "^14.0.0",
     "fs-extra": "11.3.0",
     "merge-anything": "5.1.7",
     "semver": "^7.6.2"
   },
   "devDependencies": {
-    "@brandingbrand/code-cli-kit": "14.0.0-alpha-20250306142323",
+    "@brandingbrand/code-cli-kit": "^14.0.0",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "eslint": "^8.56.0",
@@ -34,7 +34,7 @@
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "14.0.0-alpha-20250306142323"
+    "@brandingbrand/code-cli-kit": "^14.0.0"
   },
   "publishConfig": {
     "access": "public"

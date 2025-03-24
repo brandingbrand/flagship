@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-env",
-  "version": "1.0.0-alpha-20250306142323",
+  "version": "1.0.0",
   "description": "code plugin that handles environments for fsapp package",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "semver": "^7.6.2"
   },
   "devDependencies": {
-    "@brandingbrand/code-cli-kit": "14.0.0-alpha-20250306142323",
+    "@brandingbrand/code-cli-kit": "^14.0.0",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "eslint": "^8.56.0",
@@ -33,7 +33,7 @@
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "14.0.0-alpha-20250306142323"
+    "@brandingbrand/code-cli-kit": "^14.0.0"
   },
   "publishConfig": {
     "access": "public"

@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-templates",
-  "version": "14.0.0-alpha-20250306142323",
+  "version": "14.0.0",
   "description": "templates for Flagship Code react-native application",
   "repository": {
     "type": "git",

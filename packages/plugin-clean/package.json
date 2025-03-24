@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-clean",
-  "version": "1.0.0-alpha-20250306142323",
+  "version": "1.0.0",
   "description": "code plugin to clean react native application folders",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "rimraf": "^5.0.5"
   },
   "devDependencies": {
-    "@brandingbrand/code-cli-kit": "14.0.0-alpha-20250306142323",
+    "@brandingbrand/code-cli-kit": "^14.0.0",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "eslint": "^8.56.0",
@@ -30,7 +30,7 @@
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "14.0.0-alpha-20250306142323"
+    "@brandingbrand/code-cli-kit": "^14.0.0"
   },
   "publishConfig": {
     "access": "public"
