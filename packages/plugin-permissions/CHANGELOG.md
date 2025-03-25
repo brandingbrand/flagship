@@ -1,5 +1,17 @@
 # @brandingbrand/code-plugin-permissions
 
+## 2.0.2
+
+### Patch Changes
+
+- cece852: peer dependency alignment
+
+## 2.0.1
+
+### Patch Changes
+
+- c920f96: utilize react-native-permissions ios setup script.
+
 ## 2.0.0
 
 ### Major Changes

@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-splash-screen",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "plugin for Flagship Code for splash screens",
   "license": "MIT",
   "main": "src/index.ts",
@@ -21,11 +21,11 @@
     "react-native-bootsplash": "5.4.0"
   },
   "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "13.0.0"
+    "@brandingbrand/code-cli-kit": "^13.0.0"
   },
   "devDependencies": {
-    "@brandingbrand/code-cli-kit": "13.0.0",
-    "@brandingbrand/code-jest-config": "1.0.0",
+    "@brandingbrand/code-cli-kit": "*",
+    "@brandingbrand/code-jest-config": "*",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/eslint": "^8.56.1",

@@ -1,5 +1,11 @@
 # @brandingbrand/code-jest-config
 
+## 1.1.0
+
+### Patch Changes
+
+- update to support @brandingbrand/code-cli version 13.1.0 changes
+
 ## 1.0.0
 
 ### Major Changes

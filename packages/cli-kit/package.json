@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-cli-kit",
-  "version": "13.0.0",
+  "version": "13.1.1",
   "description": "tools for Flagship Code react-native application",
   "license": "MIT",
   "main": "dist/index.js",
@@ -19,17 +19,20 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "@types/node": "^20.10.6",
-    "fast-xml-parser": "^4.3.4",
+    "chalk": "^4.1.2",
+    "dayjs": "^1.11.12",
+    "fast-xml-parser": "^4.4.1",
     "fp-ts": "^2.16.2",
     "fs-extra": "^11.2.0",
     "glob": "10.3.10",
     "io-ts": "^2.2.21",
     "recast": "^0.23.5",
+    "semver": "^7.6.2",
     "simple-plist": "^1.3.1",
     "xcode": "^3.0.2-nightly.20240423000755527.sha.5158ec51"
   },
   "devDependencies": {
-    "@brandingbrand/code-jest-config": "1.0.0",
+    "@brandingbrand/code-jest-config": "*",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/eslint": "^8.56.1",

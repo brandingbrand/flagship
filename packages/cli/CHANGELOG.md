@@ -1,5 +1,35 @@
 # @brandingbrand/code-cli
 
+## 13.1.2
+
+### Patch Changes
+
+- pin concurrent-ruby version in Gemfile
+
+## 13.1.1
+
+### Patch Changes
+
+- pin xcodeproj gem to 1.25.0 as 1.26.0 has a default setting that breaks react-native setup
+
+## 13.1.0
+
+### Minor Changes
+
+- f194fca: align dependencies command
+- d78a816: react native 0.73 support
+
+### Patch Changes
+
+- cece852: peer dependency alignment
+
+## 13.0.1
+
+### Patch Changes
+
+- edf872b: dead code elimination
+- cb615e8: update-check log error instead of program exit.
+
 ## 13.0.0
 
 ### Major Changes

@@ -6,7 +6,7 @@
 
 import {type BuildConfig, fs, path} from '@brandingbrand/code-cli-kit';
 
-import transformer from '../src/transformers/ios/env-switcher-m';
+import transformer from '../src/transformers/transformers-0.72/ios/env-switcher-m';
 
 describe('EnvSwitcher.m transformers', () => {
   beforeEach(() => {

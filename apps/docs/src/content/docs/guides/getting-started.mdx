@@ -6,7 +6,7 @@ Flagship Code is a comprehensive Configuration as Code (CaC) toolkit designed to
 
 ## Quick Start
 
-#### Compatibility
+### Compatibility
 
 In your `package.json` verify you are using matching the versions of `react-native` and `react` packages noted below.
 
@@ -24,11 +24,17 @@ In your `package.json` verify you are using matching the versions of `react-nati
 
 This Flagship Code v13 currently supports React Native version 0.72.+. Each major version of Flagship Code supports a new minor version of React Native.
 
-#### Dependencies
+### React Native Support
+
+Flagship Code™ is committed to maintaining compatibility with the latest versions of React Native. Recognizing the need for gradual migration in complex projects, we are implementing multi-version React Native support. This feature allows developers to seamlessly upgrade to newer versions of React Native while maintaining support for legacy versions within the same codebase.
+
+Currently, Flagship Code™ is fully compatible with React Native versions 0.72 and 0.73, and we are continuously expanding support to include new releases as they become available. The framework intelligently detects the installed version of React Native in your project and automatically selects the appropriate compatibility profile, ensuring that your development experience remains consistent and stable across different React Native versions. This approach enables teams to adopt new technologies at their own pace without compromising the functionality of existing code.
+
+### Dependencies
 
 There are two core packages that Flagship Code depends on for ephermal native code generation, cli and cli-kit. Add both of these packages a development dependencies to your project.
 
-import { Tabs, TabItem } from "@astrojs/starlight/components";
+import {Tabs, TabItem} from '@astrojs/starlight/components';
 
 <Tabs>
 <TabItem label="yarn">
@@ -69,8 +75,8 @@ These should now be reflected in your `package.json`.
   "version": "1.0.0",
   "author": "Your Name <email@example.com>",
   "dependencies": {
-    "react": "^18.2.0",
-    "react-native": "~0.72.0"
+    "react": "~18.2.0",
+    "react-native": ">=0.72.0 <0.74.0"
   },
   "devDependencies": {
     "@brandingbrand/code-cli": "13.0.0",
@@ -79,13 +85,13 @@ These should now be reflected in your `package.json`.
 }
 ```
 
-#### Configuration
+### Configuration
 
 Flagship Code employs three distinct configurations to facilitate the generation of your native iOS and Android projects. These configurations encompass `flagship-code.config.ts`, `build.<mode>.ts`, and `env.<mode>.ts`, with `<mode>` denoting specific build or environment settings such as internal, store, dev, staging, or prod.
 
 In a meticulous endeavor to maintain robustness, Flagship Code implements type guards across all configurations. This strategic approach minimizes potential side-effects, ensuring smooth execution when initiating actions to generate your native iOS and Android projects.
 
-##### Flagship Code Configuration
+#### Flagship Code Configuration
 
 Create the `flagship-code.config.ts` in the root of your project.
 
@@ -104,17 +110,17 @@ This configuration serves as a cornerstone for project scaffolding flexibility w
 The provided example serves as an excellent starting point for initiating a React Native project. It's worth noting that all paths specified in the configuration files are relative to the root directory of your project, ensuring clarity and ease of management.
 
 ```ts title="flagship-code.config.ts"
-import { defineConfig } from "@brandingbrand/code-cli-kit";
+import {defineConfig} from '@brandingbrand/code-cli-kit';
 
 export default defineConfig({
-  buildPath: "./coderc/build",
-  envPath: "./coderc/env",
-  pluginPath: "./coderc/plugins",
+  buildPath: './coderc/build',
+  envPath: './coderc/env',
+  pluginPath: './coderc/plugins',
   plugins: [],
 });
 ```
 
-##### Build Configuration
+#### Build Configuration
 
 Create a build configuration file in the directory that is denoted in your `flagship-code.config.ts` under the `buildPath` attribute.
 
@@ -127,21 +133,21 @@ The primary objective of the build configuration is to provide a mechanism for o
 Although there may appear to be redundancy across build configurations, this redundancy is essential to accommodate potential variances in third-party dependencies' requirements. The following example showcases the minimal setup required to initialize this configuration.
 
 ```ts title="build.internal.ts"
-import { defineBuild } from "@brandingbrand/code-cli-kit";
+import {defineBuild} from '@brandingbrand/code-cli-kit';
 
 export default defineBuild({
   ios: {
-    bundleId: "com.brandingbrand",
-    displayName: "Branding Brand",
+    bundleId: 'com.brandingbrand',
+    displayName: 'Branding Brand',
   },
   android: {
-    packageName: "com.brandingbrand",
-    displayName: "Branding Brand",
+    packageName: 'com.brandingbrand',
+    displayName: 'Branding Brand',
   },
 });
 ```
 
-##### Env Configuration
+#### Env Configuration
 
 Create a build configuration file in the directory that is denoted in your `flagship-code.config.ts` under the `envPath` attribute.
 
@@ -152,15 +158,15 @@ touch ./coderc/env/env.dev.ts
 The primary aim of the env configuration is to furnish developers with a type-safe runtime environment. This feature is exclusively beneficial to developers leveraging `@brandingbrand/fsapp` as their routing solution. The env configuration offers a minimal example of its functionality.
 
 ```ts title="env.dev.ts"
-import { defineEnv } from "@brandingbrand/code-cli-kit";
+import {defineEnv} from '@brandingbrand/code-cli-kit';
 
 export default defineEnv<Env>({
-  id: "abc12345",
-  domain: "https://dev.myexampledomain.com",
+  id: 'abc12345',
+  domain: 'https://dev.myexampledomain.com',
 });
 ```
 
-#### Native Code Generation
+### Native Code Generation
 
 With the dependencies and configuration requirements met, the native code is now prepared for generation. It's crucial to grasp that Flagship Code's primary objective is to manage iOS and Android code, as outlined in the Overview. Consequently, the existing iOS and Android directories will no longer be retained in your repository. Therefore, it's imperative to append the `ios` and `android` directories to your `.gitignore` file.
 

@@ -1,5 +1,22 @@
 # @brandingbrand/code-cli-kit
 
+## 13.1.1
+
+### Patch Changes
+
+- 05eeaa6: add exit code to failed actions
+
+## 13.1.0
+
+### Minor Changes
+
+- f194fca: align dependencies command
+- d78a816: react native 0.73 support
+
+### Patch Changes
+
+- cece852: peer dependency alignment
+
 ## 13.0.0
 
 ### Major Changes

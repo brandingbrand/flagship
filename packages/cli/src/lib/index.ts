@@ -19,13 +19,6 @@ export * from './config';
 export * from './guards';
 
 /**
- * Errors module for internal logging
- *
- * @module lib/errors
- */
-export * from './errors';
-
-/**
  * Action module for executing and reporting actions
  *
  * @module lib/log
@@ -33,15 +26,15 @@ export * from './errors';
 export * from './action';
 
 /**
- * Log module for console utilities
- *
- * @module lib/logger
- */
-export {default as logger} from './logger';
-
-/**
  * Constant module for global usage
  *
  * @module lib/constants
  */
 export * from './constants';
+
+/**
+ * Profiles module for dependency management
+ *
+ * @module lib/profiles
+ */
+export * from './profiles';

@@ -6,7 +6,7 @@
 
 import {type BuildConfig, fs, path} from '@brandingbrand/code-cli-kit';
 
-import transformer from '../src/transformers/ios/app-entitlements';
+import transformer from '../src/transformers/transformers-0.72/ios/app-entitlements';
 
 describe('ios app.entitlements transformers', () => {
   beforeEach(() => {

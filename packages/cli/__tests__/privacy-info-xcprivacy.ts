@@ -6,7 +6,7 @@
 
 import {type BuildConfig, fs, path} from '@brandingbrand/code-cli-kit';
 
-import transformer from '../src/transformers/ios/privacy-info-xcprivacy';
+import transformer from '../src/transformers/transformers-0.72/ios/privacy-info-xcprivacy';
 
 describe('ios PrivacyInfo.xcprivacy transformers', () => {
   beforeEach(() => {

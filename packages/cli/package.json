@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-cli",
-  "version": "13.0.0",
+  "version": "13.1.2",
   "description": "cli for Flagship Code applications",
   "license": "MIT",
   "bin": {
@@ -21,20 +21,22 @@
   },
   "types": "dist/index.d.ts",
   "dependencies": {
-    "@brandingbrand/code-cli-kit": "13.0.0",
+    "@npmcli/package-json": "^5.2.0",
+    "ansi-align": "^3.0.1",
     "bundle-require": "^4.0.2",
     "chalk": "^4.1.2",
     "ci-info": "^4.0.0",
     "commander": "11.1.0",
     "detect-package-manager": "^3.0.1",
     "esbuild": "^0.20.0",
-    "execa": "^8.0.1",
+    "execa": "^9.3.0",
     "fp-ts": "^2.16.2",
     "ink": "^4.4.1",
     "ink-spinner": "^5.0.0",
     "io-ts": "^2.2.21",
     "magicast": "^0.3.3",
     "merge-anything": "5.1.7",
+    "microdiff": "^1.4.0",
     "mitt": "^3.0.1",
     "react-async": "^10.0.1",
     "recast": "^0.23.5",
@@ -44,15 +46,19 @@
     "write-package": "^7.0.0"
   },
   "peerDependencies": {
+    "@brandingbrand/code-cli-kit": "^13.0.0",
     "react": "^18.2.0",
     "react-native": "~0.72.0"
   },
   "devDependencies": {
-    "@brandingbrand/code-jest-config": "1.0.0",
+    "@brandingbrand/code-cli-kit": "*",
+    "@brandingbrand/code-jest-config": "*",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
+    "@types/ansi-align": "3.0.5",
     "@types/eslint": "^8.56.1",
     "@types/node": "^20.10.6",
+    "@types/npmcli__package-json": "^4.0.4",
     "@types/react": "^18.2.55",
     "react": "^18.2.0",
     "type-fest": "^4.10.2",

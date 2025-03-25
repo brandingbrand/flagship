@@ -6,7 +6,7 @@
 
 import {type BuildConfig, fs, path} from '@brandingbrand/code-cli-kit';
 
-import transformer from '../src/transformers/android/colors-xml';
+import transformer from '../src/transformers/transformers-0.72/android/colors-xml';
 
 describe('android colors.xml transformers', () => {
   beforeEach(() => {

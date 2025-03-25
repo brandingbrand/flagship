@@ -6,7 +6,7 @@
 
 import {type BuildConfig, fs, path} from '@brandingbrand/code-cli-kit';
 
-import transformer from '../src/transformers/ios/app-delegate-mm';
+import transformer from '../src/transformers/transformers-0.72/ios/app-delegate-mm';
 
 describe('AppDelegate.mm transformers', () => {
   beforeEach(() => {

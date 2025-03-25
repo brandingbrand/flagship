@@ -4,4 +4,4 @@
 
 ## Usage
 
-See usage at documentation site: https://brandingbrand.github.io/flagship/en/packages/jest-config
+See usage at documentation site: https://brandingbrand.github.io/flagship/packages/jest-config
