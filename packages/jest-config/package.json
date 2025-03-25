@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-jest-config",
-  "version": "2.0.0-alpha-20250306142323",
+  "version": "2.0.0",
   "license": "MIT",
   "types": "./index.d.ts",
   "files": [
@@ -23,7 +23,7 @@
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "@brandingbrand/code-cli": "14.0.0-alpha-20250306142323"
+    "@brandingbrand/code-cli": "^14.0.0"
   },
   "publishConfig": {
     "access": "public"
