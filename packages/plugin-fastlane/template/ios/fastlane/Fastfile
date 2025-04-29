@@ -107,13 +107,28 @@ lane :increment_build_firebase do
       app: "<%= codePluginFastlane.plugin.ios.firebase.appId %>",
       service_credentials_json_data: ENV["GOOGLE_SERVICE_CREDENTIALS"],
     )
-
+<% if(codePluginFastlane.plugin.ios.firebase.resetBuildOnVersionChange === false) { -%>
     if version[:buildVersion]
       build_number = increment_build_number(
         build_number: version[:buildVersion].to_i + 1
       )
       puts "Fastlane: updated build number to #{build_number}"
     end
+<% } else { -%>
+    if version[:buildVersion]
+      if version[:displayVersion] != "<%- ios.versioning?.version %>"
+        build_number = 1
+        puts "Fastlane: detected new version, resetting build number to #{build_number}"
+      else
+        build_number = version[:buildVersion].to_i + 1
+        puts "Fastlane: incremented build number to #{build_number}"
+      end
+      build_number = increment_build_number(
+        build_number: build_number
+      )
+      puts "Fastlane: updated build number to #{build_number}"
+    end
+<% } -%>
   rescue StandardError => e
     puts "Fastlane: did not find any applicable versions for 'firebase_app_distribution_get_latest_release"
     puts "Fastlane: #{e.message}"

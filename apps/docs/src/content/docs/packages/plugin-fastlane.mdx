@@ -192,6 +192,14 @@ _required_
 
 Array of distribution groups.
 
+###### `resetBuildOnVersionChange`
+
+**type:** `boolean`
+
+_optional_
+
+Will reset the build version to 1 whenever the version retrieved from firebase is different then local build number. Default behavior is to reset.
+
 ##### `codePluginFastlane.plugin.android.appCenter`
 
 **type:** [AppCenterAndroid](#appcenterandroid)
@@ -251,6 +259,15 @@ The Firebase app id.
 _required_
 
 Array of distribution groups.
+
+###### `resetBuildOnVersionChange`
+
+**type:** `boolean`
+
+_optional_
+
+Will reset the build version to 1 whenever the version retrieved from firebase is different then local build number. Default behavior is to NOT reset.
+
 
 :::note
 If you don't need AppCenter or Firebase App Distribution then do not include the `codePluginFastlane` configuration.
