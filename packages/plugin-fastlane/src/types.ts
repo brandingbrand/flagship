@@ -49,6 +49,10 @@ type FirebaseIOS = {
    * Array of testing groups
    */
   groups: string[];
+  /**
+   * reset build number on version mismatch
+   */
+  resetBuildOnVersionChange?: boolean;
 };
 
 /**
@@ -100,6 +104,10 @@ type FirebaseAndroid = {
    * Array of testing groups
    */
   groups: string[];
+  /**
+   * reset build number on version mismatch
+   */
+  resetBuildOnVersionChange?: boolean;
 };
 
 /**
