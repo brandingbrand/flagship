@@ -21,10 +21,16 @@ describe('plugin-fastlane', () => {
         provisioningProfileName: 'In House Provisioning Profile',
         exportMethod: 'enterprise',
       },
+      versioning: {
+        version: '0.0.1'
+      }
     },
     android: {
       packageName: 'com.brandingbrand',
       displayName: 'Branding Brand',
+      versioning: {
+        version: '0.0.1'
+      },
       signing: {
         storeFile: './coderc/signing/release.keystore',
         keyAlias: 'androiddebugkey',
@@ -52,7 +58,7 @@ describe('plugin-fastlane', () => {
     },
   };
 
-  const configWithFirebase = {
+  const configWithFirebase: BuildConfig & CodePluginFastlane = {
     ...config,
     codePluginFastlane: {
       plugin: {
@@ -213,4 +219,47 @@ eval_gemfile(plugins_path) if File.exist?(plugins_path)`);
     expect(fastfileContent).toContain('firebase_app_distribution');
     expect(fastfileContent).not.toContain('appcenter_upload');
   });
+
+  it('android does not include reset build by default', async () => {
+    await plugin.android?.(configWithFirebase, options as any);
+    const fastfileContent = await fs.readFile(
+      path.project.resolve('android', 'fastlane', 'Fastfile'),
+      'utf-8',
+    );
+
+    expect(fastfileContent).not.toContain('if version[:displayVersion] != "0.0.1"');
+  });
+  it('ios includes reset builds on mismatch by default', async () => {
+    await plugin.ios?.(configWithFirebase, options as any);
+    const fastfileContent = await fs.readFile(
+      path.project.resolve('ios', 'fastlane', 'Fastfile'),
+      'utf-8',
+    );
+    expect(fastfileContent).toContain('if version[:displayVersion] != "0.0.1"');
+  });
+  it('android adds resets builds on version mismatch', async () => {
+    await plugin.android?.({
+      ...configWithFirebase,
+      codePluginFastlane: {
+        plugin: {
+          ...configWithFirebase.codePluginFastlane.plugin,
+          android: {
+            firebase: {
+              appId: configWithFirebase.codePluginFastlane.plugin.android?.firebase?.appId ?? '',
+              groups: configWithFirebase.codePluginFastlane.plugin.android?.firebase?.groups ?? [],
+              resetBuildOnVersionChange: true,
+            }
+          }
+        }
+      }
+    }, options as any);
+
+    const fastfileContent = await fs.readFile(
+      path.project.resolve('android', 'fastlane', 'Fastfile'),
+      'utf-8',
+    );
+
+    expect(fastfileContent).toContain('if version[:displayVersion] != "0.0.1"');
+  });
+  
 });
