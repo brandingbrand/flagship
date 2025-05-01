@@ -1,5 +1,13 @@
 # @brandingbrand/code-plugin-fastlane
 
+## 4.1.0
+
+### Minor Changes
+
+- 88686c6: new firebase increment option to reset build version to 1 if version mismatch during lane increment_build_firebase
+  default behavior on iOS is to reset if new version found
+  default behavior on Android is to just increment
+
 ## 4.0.0-alpha-20250306142323
 
 ### Major Changes
