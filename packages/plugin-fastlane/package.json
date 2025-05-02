@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-fastlane",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "plugin for Flagship Code for fastlane and app center builds",
   "license": "MIT",
   "main": "src/index.ts",
