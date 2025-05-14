@@ -27,6 +27,15 @@ out/
 build
 dist
 
+# Yarn 2+
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
 
 # Debug
 npm-debug.log*
