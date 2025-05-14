@@ -32,22 +32,6 @@ interface LoadedConfig {
 }
 
 /**
- * Resolves a module path using Node's require.resolve
- *
- * @param {string} id - The module identifier to resolve
- * @param {string} cwd - The current working directory
- * @returns {Promise<string>} The resolved module path
- * @throws {Error} If the module cannot be resolved
- */
-async function resolveModule(id: string, cwd: string): Promise<string> {
-  try {
-    return require.resolve(id, {paths: [cwd]});
-  } catch {
-    return require.resolve(path.join(cwd, id));
-  }
-}
-
-/**
  * Loads a plugin from a configuration
  *
  * @param {string | [string, {index?: number}]} pluginConfig - The plugin configuration
@@ -64,8 +48,7 @@ export async function loadPlugin(
     : [pluginConfig, undefined];
 
   try {
-    const pluginPath = await resolveModule(pluginName, cwd);
-    const plugin = await bundleRequire(pluginPath);
+    const plugin = await bundleRequire(pluginName, cwd);
 
     return {
       name: pluginName,
@@ -87,8 +70,7 @@ export async function loadPlugin(
  */
 async function loadPreset(presetName: string, cwd: string): Promise<Preset> {
   try {
-    const presetPath = await resolveModule(presetName, cwd);
-    const presetModule = await bundleRequire<Preset>(presetPath);
+    const presetModule = await bundleRequire<Preset>(presetName, cwd);
 
     if (!Array.isArray(presetModule)) {
       throw new Error(`Preset "${presetName}" must export a plugins array`);
@@ -155,7 +137,7 @@ export async function loadFlagshipCodeConfig({
       console.log(`Loading config from: ${configPath}`);
     }
 
-    const config = await bundleRequire<CodeConfig>(configPath);
+    const config = await bundleRequire<CodeConfig>(configPath, rootDir);
 
     if (!config || typeof config !== 'object' || config === null) {
       throw new Error(`Invalid configuration format in ${configPath}`);

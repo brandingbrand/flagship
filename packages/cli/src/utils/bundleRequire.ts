@@ -1,4 +1,21 @@
+import {path} from '@brandingbrand/code-cli-kit';
 import {PackageJson} from 'type-fest';
+
+/**
+ * Resolves a module path using Node's require.resolve
+ *
+ * @param {string} id - The module identifier to resolve
+ * @param {string} cwd - The current working directory
+ * @returns {Promise<string>} The resolved module path
+ * @throws {Error} If the module cannot be resolved
+ */
+async function resolveModule(id: string, cwd: string): Promise<string> {
+  try {
+    return require.resolve(id, {paths: [cwd]});
+  } catch {
+    return require.resolve(path.join(cwd, id));
+  }
+}
 
 /**
  * Determines if a string represents a package or a file path.
@@ -23,6 +40,7 @@ export function isPackage(str: string): boolean {
  */
 export async function bundleRequire<T extends any>(
   packageOrFilePath: string,
+  cwd: string,
   format: 'cjs' | 'esm' = 'cjs',
 ): Promise<T> {
   // Import the 'bundle-require' esm module dynamically
@@ -43,9 +61,8 @@ export async function bundleRequire<T extends any>(
     }
 
     // Resolve the package name to its filepath
-    packageOrFilePath = require.resolve(packageOrFilePath, {
-      paths: [process.cwd()],
-    });
+
+    packageOrFilePath = await resolveModule(packageOrFilePath, cwd);
   }
 
   // Use 'bundle-require' to bundle and require the specified file or package
