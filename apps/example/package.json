@@ -20,7 +20,7 @@
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3",
     "@babel/runtime": "^7.25.0",
-    "@brandingbrand/code-cli": "^14.0.0",
+    "@brandingbrand/code-cli": "^14.0.1",
     "@brandingbrand/code-cli-kit": "^14.0.0",
     "@brandingbrand/code-jest-config": "^2.0.0",
     "@brandingbrand/code-plugin-app-icon": "^3.0.0",

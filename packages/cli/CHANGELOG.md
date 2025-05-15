@@ -1,5 +1,11 @@
 # @brandingbrand/code-cli
 
+## 14.0.1
+
+### Patch Changes
+
+- fix: plugin bundle require format detection
+
 ## 14.0.0
 
 ### Major Changes
