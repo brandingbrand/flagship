@@ -2293,7 +2293,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-cli@npm:^14.0.0, @brandingbrand/code-cli@workspace:packages/cli":
+"@brandingbrand/code-cli@npm:^14.0.1, @brandingbrand/code-cli@workspace:packages/cli":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-cli@workspace:packages/cli"
   dependencies:
@@ -2354,7 +2354,7 @@ __metadata:
     "@babel/core": "npm:^7.25.2"
     "@babel/preset-env": "npm:^7.25.3"
     "@babel/runtime": "npm:^7.25.0"
-    "@brandingbrand/code-cli": "npm:^14.0.0"
+    "@brandingbrand/code-cli": "npm:^14.0.1"
     "@brandingbrand/code-cli-kit": "npm:^14.0.0"
     "@brandingbrand/code-jest-config": "npm:^2.0.0"
     "@brandingbrand/code-plugin-app-icon": "npm:^3.0.0"
