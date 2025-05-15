@@ -77,7 +77,7 @@ export async function findBuildConfigFiles(
       throw Error(build);
     }
 
-    const buildConfig = await bundleRequire<BuildConfig>(buildFile);
+    const buildConfig = await bundleRequire<BuildConfig>(buildFile, rootDir);
 
     return buildConfig;
   } catch (error) {
