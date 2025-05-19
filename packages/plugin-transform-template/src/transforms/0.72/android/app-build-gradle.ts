@@ -1,4 +1,4 @@
-import {BuildConfig, string} from '@brandingbrand/code-cli-kit';
+import {BuildConfig, fs, path, string} from '@brandingbrand/code-cli-kit';
 
 /**
  * Configuration object for Android build.gradle file modifications
@@ -81,11 +81,34 @@ export default {
   signingConfig: (content: string, config: BuildConfig): string => {
     if (!config.android.signing) return content;
 
+    if (!config.android.signing.storeFile) {
+      throw new Error(
+        '[AppBuildGradleTransformerError]: Required parameter "storeFile" was not found in "android.signing"',
+      );
+    }
+    if (!config.android.signing.keyAlias) {
+      throw new Error(
+        '[AppBuildGradleTransformerError]: Required parameter "keyAlias" was not found in "android.signing"',
+      );
+    }
+
+    const storeFilePath = path.project.resolve(config.android.signing.storeFile);
+    if (!fs.existsSync(storeFilePath)) {
+      throw new Error(
+        `[AppBuildGradleTransformerError]: Specified android keystore file "${storeFilePath}" does not exist.`,
+      );
+    }
+
+    const storeFileRelativePath = path.relative(
+      path.project.resolve('android', 'app'),
+      storeFilePath,
+    );
+
     return string.replace(
       content,
       /(signingConfigs\s*{\s*)/m,
       `$1release {
-              storeFile file('release.keystore')
+              storeFile file('${storeFileRelativePath}')
               storePassword System.getenv("STORE_PASSWORD")
               keyAlias '${config.android.signing.keyAlias}'
               keyPassword System.getenv("KEY_PASSWORD")
