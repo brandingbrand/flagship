@@ -1,5 +1,12 @@
 # @brandingbrand/code-preset-react-native
 
+## 1.0.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @brandingbrand/code-plugin-transform-template@^1.0.1
+
 ## 1.0.0
 
 ### Major Changes
