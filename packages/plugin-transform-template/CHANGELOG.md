@@ -1,5 +1,11 @@
 # @brandingbrand/code-plugin-transform-template
 
+## 1.0.1
+
+### Patch Changes
+
+- fix android release signing by dynamic linking to the configured keystore file, if it exists
+
 ## 1.0.0
 
 ### Major Changes
