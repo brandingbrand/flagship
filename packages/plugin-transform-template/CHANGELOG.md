@@ -1,5 +1,11 @@
 # @brandingbrand/code-plugin-transform-template
 
+## 1.0.2
+
+### Patch Changes
+
+- fix: ios files test for utf 8 transforms to include .m files
+
 ## 1.0.1
 
 ### Patch Changes

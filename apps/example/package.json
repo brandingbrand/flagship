@@ -28,7 +28,7 @@
     "@brandingbrand/code-plugin-monorepo": "link:./coderc/plugins/plugin-monorepo",
     "@brandingbrand/code-plugin-native-navigation": "^3.0.0",
     "@brandingbrand/code-plugin-splash-screen": "^3.0.0",
-    "@brandingbrand/code-preset-react-native": "^1.0.0",
+    "@brandingbrand/code-preset-react-native": "^1.0.2",
     "@react-native-community/cli": "15.0.1",
     "@react-native-community/cli-platform-android": "15.0.1",
     "@react-native-community/cli-platform-ios": "15.0.1",

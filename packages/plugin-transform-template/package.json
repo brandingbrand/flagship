@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-transform-template",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "code plugin to transform a template for use in flagship code application",
   "repository": {
     "type": "git",

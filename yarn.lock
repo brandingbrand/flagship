@@ -2362,7 +2362,7 @@ __metadata:
     "@brandingbrand/code-plugin-monorepo": "link:./coderc/plugins/plugin-monorepo"
     "@brandingbrand/code-plugin-native-navigation": "npm:^3.0.0"
     "@brandingbrand/code-plugin-splash-screen": "npm:^3.0.0"
-    "@brandingbrand/code-preset-react-native": "npm:^1.0.0"
+    "@brandingbrand/code-preset-react-native": "npm:^1.0.2"
     "@react-native-community/cli": "npm:15.0.1"
     "@react-native-community/cli-platform-android": "npm:15.0.1"
     "@react-native-community/cli-platform-ios": "npm:15.0.1"
@@ -2621,7 +2621,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-transform-template@npm:^1.0.1, @brandingbrand/code-plugin-transform-template@workspace:packages/plugin-transform-template":
+"@brandingbrand/code-plugin-transform-template@npm:^1.0.2, @brandingbrand/code-plugin-transform-template@workspace:packages/plugin-transform-template":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-transform-template@workspace:packages/plugin-transform-template"
   dependencies:
@@ -2658,14 +2658,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-preset-react-native@npm:^1.0.0, @brandingbrand/code-preset-react-native@workspace:packages/preset-react-native":
+"@brandingbrand/code-preset-react-native@npm:^1.0.2, @brandingbrand/code-preset-react-native@workspace:packages/preset-react-native":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-preset-react-native@workspace:packages/preset-react-native"
   dependencies:
     "@brandingbrand/code-plugin-clean": "npm:^1.0.0"
     "@brandingbrand/code-plugin-env": "npm:^1.0.0"
     "@brandingbrand/code-plugin-packager-install": "npm:^1.0.0"
-    "@brandingbrand/code-plugin-transform-template": "npm:^1.0.1"
+    "@brandingbrand/code-plugin-transform-template": "npm:^1.0.2"
     "@brandingbrand/code-plugin-verify-dependencies": "npm:^1.0.0"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"

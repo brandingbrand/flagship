@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-preset-react-native",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "code preset to setup react native application with fsapp",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "@brandingbrand/code-plugin-clean": "^1.0.0",
     "@brandingbrand/code-plugin-env": "^1.0.0",
     "@brandingbrand/code-plugin-packager-install": "^1.0.0",
-    "@brandingbrand/code-plugin-transform-template": "^1.0.1",
+    "@brandingbrand/code-plugin-transform-template": "^1.0.2",
     "@brandingbrand/code-plugin-verify-dependencies": "^1.0.0"
   },
   "devDependencies": {
