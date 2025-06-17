@@ -69,7 +69,7 @@ export const transformers = [
     use: stylesXmlTransformer,
   },
   {
-    test: /(\.(java|kt|mm|swift|properties|entitlements|xcprivacy|gradle)$|Podfile$|Gemfile$)/,
+    test: /(\.(java|kt|m|mm|swift|properties|entitlements|xcprivacy|gradle)$|Podfile$|Gemfile$)/,
     use: utf8Transformer,
   },
 ];
