@@ -3,7 +3,9 @@
  * @module ProfileConfig073
  */
 
-import {default as profile072, type Profile} from './0.72';
+import type {DependencyProfile} from '../types';
+
+import {default as profile072} from './0.72';
 
 /**
  * Default export containing dependency configurations
@@ -54,6 +56,28 @@ export default {
     devOnly: true,
   },
   /**
+   * React Native ESLint configuration
+   * @property {string} version - Target version ^0.73.0
+   * @property {string[]} capabilities - Required ESLint dependencies
+   * @property {boolean} devOnly - Development-only dependency
+   */
+  '@react-native/eslint-config': {
+    version: '^0.73.0',
+    capabilities: ['eslint', 'prettier'],
+    devOnly: true,
+  },
+  /**
+   * Typescript base configuration for React Native
+   * @property {string} version - Target version ^0.73.0
+   * @property {string[]} capabilities - Required typescript dependencies
+   * @property {boolean} devOnly - Development-only dependency
+   */
+  '@react-native/typescript-config': {
+    version: '^0.73.0',
+    capabilities: ['typescript'],
+    devOnly: true,
+  },
+  /**
    * Legacy Metro React Native Babel preset
    * @property {string} version - Artificially high version to prevent usage
    * @property {boolean} devOnly - Development-only dependency
@@ -64,4 +88,15 @@ export default {
     devOnly: true,
     banned: true,
   },
-} satisfies Record<string, Profile>;
+  /**
+   * Legacy react-native typescript configuration preset.
+   * @property {string} version - Artificially high version to prevent usage
+   * @property {boolean} devOnly - Development-only dependency
+   * @property {boolean} banned - Indicates this package should not be used
+   */
+  '@tsconfig/react-native': {
+    version: '1000.0.0',
+    devOnly: true,
+    banned: true,
+  },
+} satisfies Record<string, DependencyProfile>;

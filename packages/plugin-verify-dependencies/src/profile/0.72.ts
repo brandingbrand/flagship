@@ -1,19 +1,4 @@
-/**
- * Represents the profile configuration for a package dependency
- * @interface Profile
- */
-export type Profile = {
-  /** The version or version range of the package */
-  version: string;
-  /** Whether this dependency is only needed for development */
-  devOnly?: boolean;
-  /** Array of package names that this package requires/depends on */
-  capabilities?: string[];
-  /** Whether this package is required for the project to function */
-  required?: boolean;
-  /** Whether usage of this package is prohibited */
-  banned?: boolean;
-};
+import type {DependencyProfile} from '../types';
 
 /**
  * Package dependency configurations and requirements
@@ -37,6 +22,16 @@ export default {
   'metro-react-native-babel-preset': {
     version: '^0.76.9',
     capabilities: ['@babel/core', '@babel/preset-env', '@babel/runtime'],
+    devOnly: true,
+  },
+  '@react-native/eslint-config': {
+    version: '^0.72.0',
+    capabilities: ['eslint', 'prettier'],
+    devOnly: true,
+  },
+  '@tsconfig/react-native': {
+    version: '^3.0.0',
+    capabilities: ['typescript'],
     devOnly: true,
   },
   '@babel/core': {
@@ -89,4 +84,4 @@ export default {
   'react-native-sensitive-info': {
     version: '^5.0.0',
   },
-} satisfies Record<string, Profile>;
+} satisfies Record<string, DependencyProfile>;

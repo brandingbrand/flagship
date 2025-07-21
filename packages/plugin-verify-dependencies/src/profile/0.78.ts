@@ -1,7 +1,5 @@
-/**
- * Imports the base profile configuration from version 0.77
- * @see ./0.77
- */
+import type {DependencyProfile} from '../types';
+
 import {default as profile077} from './0.77';
 
 /**
@@ -50,6 +48,30 @@ export default {
     devOnly: true,
   },
   /**
+   * React Native ESLint configuration
+   * @property {string} version - The semantic version requirement
+   * @property {string[]} capabilities - Required ESLint dependencies
+   * @property {boolean} devOnly - Indicates this is a development-only dependency
+   * @see {@link https://github.com/facebook/react-native/tree/main/packages/eslint-config-react-native}
+   */
+  '@react-native/eslint-config': {
+    version: '^0.78.0',
+    capabilities: ['eslint', 'prettier'],
+    devOnly: true,
+  },
+  /**
+   * Typescript base configuration for React Native
+   * @property {string} version - The semantic version requirement
+   * @property {string[]} capabilities - Required type definitions
+   * @property {boolean} devOnly - Indicates this is a development-only dependency
+   * @see {@link https://github.com/facebook/react-native/tree/main/packages/typescript-config}
+   */
+  '@react-native/typescript-config': {
+    version: '^0.78.0',
+    capabilities: ['typescript'],
+    devOnly: true,
+  },
+  /**
    * React core library configuration
    * @property {string} version - The semantic version requirement
    * @property {string[]} capabilities - Required type definitions
@@ -71,4 +93,4 @@ export default {
     version: '^19.0.0',
     devOnly: true,
   },
-};
+} satisfies Record<string, DependencyProfile>;
