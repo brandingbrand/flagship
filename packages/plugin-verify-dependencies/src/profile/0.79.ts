@@ -66,4 +66,34 @@ export default {
     capabilities: ['typescript'],
     devOnly: true,
   },
+  /**
+   * React Native CLI Core package configuration
+   * @property {string} version - The semantic version requirement
+   * @property {boolean} devOnly - Indicates this is a development-only dependency
+   * @see {@link https://github.com/react-native-community/cli#compatibility}
+   */
+  '@react-native-community/cli': {
+    version: '^18.0.0',
+    devOnly: true,
+  },
+  /**
+   * React Native CLI Android Platform package configuration
+   * @property {string} version - The semantic version requirement
+   * @property {boolean} devOnly - Indicates this is a development-only dependency
+   * @see {@link https://github.com/react-native-community/cli#compatibility}
+   */
+  '@react-native-community/cli-platform-android': {
+    version: '^18.0.0',
+    devOnly: true,
+  },
+  /**
+   * React Native CLI iOS Platform package configuration
+   * @property {string} version - The semantic version requirement
+   * @property {boolean} devOnly - Indicates this is a development-only dependency
+   * @see {@link https://github.com/react-native-community/cli#compatibility}
+   */
+  '@react-native-community/cli-platform-ios': {
+    version: '^18.0.0',
+    devOnly: true,
+  },
 } satisfies Record<string, DependencyProfile>;

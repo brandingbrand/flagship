@@ -77,6 +77,33 @@ export default {
     capabilities: ['typescript'],
     devOnly: true,
   },
+  /**
+   * React Native CLI Core package configuration
+   * @property {string} version - The semantic version requirement
+   * @property {boolean} devOnly - Indicates this is a development-only dependency
+   */
+  '@react-native-community/cli': {
+    version: '^14.0.0',
+    devOnly: true,
+  },
+  /**
+   * React Native CLI Android Platform package configuration
+   * @property {string} version - The semantic version requirement
+   * @property {boolean} devOnly - Indicates this is a development-only dependency
+   */
+  '@react-native-community/cli-platform-android': {
+    version: '^14.0.0',
+    devOnly: true,
+  },
+  /**
+   * React Native CLI iOS Platform package configuration
+   * @property {string} version - The semantic version requirement
+   * @property {boolean} devOnly - Indicates this is a development-only dependency
+   */
+  '@react-native-community/cli-platform-ios': {
+    version: '^14.0.0',
+    devOnly: true,
+  },
   '@types/react': {
     version: '^18.2.6',
     devOnly: true,

@@ -84,4 +84,16 @@ export default {
   'react-native-sensitive-info': {
     version: '^5.0.0',
   },
+  '@react-native-community/cli': {
+    version: '^11.0.0',
+    devOnly: true,
+  },
+  '@react-native-community/cli-platform-android': {
+    version: '^11.0.0',
+    devOnly: true,
+  },
+  '@react-native-community/cli-platform-ios': {
+    version: '^11.0.0',
+    devOnly: true,
+  },
 } satisfies Record<string, DependencyProfile>;

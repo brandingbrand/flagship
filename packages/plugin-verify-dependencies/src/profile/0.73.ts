@@ -78,6 +78,33 @@ export default {
     devOnly: true,
   },
   /**
+   * React Native CLI Core package configuration
+   * @property {string} version - Target version ^12.0.0
+   * @property {boolean} devOnly - Development-only dependency
+   */
+  '@react-native-community/cli': {
+    version: '^12.0.0',
+    devOnly: true,
+  },
+  /**
+   * React Native CLI Android Platform package configuration
+   * @property {string} version - Target version ^12.0.0
+   * @property {boolean} devOnly - Development-only dependency
+   */
+  '@react-native-community/cli-platform-android': {
+    version: '^12.0.0',
+    devOnly: true,
+  },
+  /**
+   * React Native CLI iOS Platform package configuration
+   * @property {string} version - Target version ^12.0.0
+   * @property {boolean} devOnly - Development-only dependency
+   */
+  '@react-native-community/cli-platform-ios': {
+    version: '^12.0.0',
+    devOnly: true,
+  },
+  /**
    * Legacy Metro React Native Babel preset
    * @property {string} version - Artificially high version to prevent usage
    * @property {boolean} devOnly - Development-only dependency
