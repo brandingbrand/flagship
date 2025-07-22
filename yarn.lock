@@ -2307,7 +2307,7 @@ __metadata:
     "@types/ansi-align": "npm:3.0.5"
     "@types/eslint": "npm:^8.56.1"
     "@types/node": "npm:^20.10.6"
-    "@types/react": "npm:^18.2.55"
+    "@types/react": "npm:^19.1.8"
     ansi-align: "npm:^3.0.1"
     bundle-require: "npm:^4.0.2"
     chalk: "npm:^4.1.2"
@@ -2319,7 +2319,7 @@ __metadata:
     ink: "npm:^4.4.1"
     io-ts: "npm:^2.2.21"
     jest: "npm:^29.7.0"
-    react: "npm:18.2.0"
+    react: "npm:19.1.0"
     react-async: "npm:^10.0.1"
     ts-jest: "npm:^29.1.2"
     tsup: "npm:^8.0.1"
@@ -2327,8 +2327,8 @@ __metadata:
     typescript: "npm:^5.3.3"
   peerDependencies:
     "@brandingbrand/code-cli-kit": ^14.0.0
-    react: ">=18.2.0 <18.4.0"
-    react-native: ">=0.72.0 <0.79.0"
+    react: ">=18.2.0 <19.2.0"
+    react-native: ">=0.72.0 <0.81.0"
   bin:
     flagship-code: ./bin/flagship-code
   languageName: unknown
@@ -5576,7 +5576,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.2.55":
+"@types/react@npm:*":
   version: 18.2.55
   resolution: "@types/react@npm:18.2.55"
   dependencies:
@@ -5594,6 +5594,15 @@ __metadata:
     "@types/prop-types": "npm:*"
     csstype: "npm:^3.0.2"
   checksum: 10c0/fe455f805c5da13b89964c3d68060cebd43e73ec15001a68b34634604a78140e6fc202f3f61679b9d809dde6d7a7c2cb3ed51e0fd1462557911db09879b55114
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^19.1.8":
+  version: 19.1.8
+  resolution: "@types/react@npm:19.1.8"
+  dependencies:
+    csstype: "npm:^3.0.2"
+  checksum: 10c0/4908772be6dc941df276931efeb0e781777fa76e4d5d12ff9f75eb2dcc2db3065e0100efde16fde562c5bafa310cc8f50c1ee40a22640459e066e72cd342143e
   languageName: node
   linkType: hard
 
@@ -15457,6 +15466,13 @@ __metadata:
   dependencies:
     loose-envify: "npm:^1.1.0"
   checksum: 10c0/b562d9b569b0cb315e44b48099f7712283d93df36b19a39a67c254c6686479d3980b7f013dc931f4a5a3ae7645eae6386b4aa5eea933baa54ecd0f9acb0902b8
+  languageName: node
+  linkType: hard
+
+"react@npm:19.1.0":
+  version: 19.1.0
+  resolution: "react@npm:19.1.0"
+  checksum: 10c0/530fb9a62237d54137a13d2cfb67a7db6a2156faed43eecc423f4713d9b20c6f2728b026b45e28fcd72e8eadb9e9ed4b089e99f5e295d2f0ad3134251bdd3698
   languageName: node
   linkType: hard
 
