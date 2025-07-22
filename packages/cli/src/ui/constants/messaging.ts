@@ -27,6 +27,7 @@ export const constants = {
     '0.76',
     '0.77',
     '0.78',
+    '0.79',
   ] as const,
 
   /** Default logging level if none specified */
