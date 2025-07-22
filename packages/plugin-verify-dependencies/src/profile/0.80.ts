@@ -67,6 +67,36 @@ export default {
     devOnly: true,
   },
   /**
+   * React Native CLI Core package configuration
+   * @property {string} version - The semantic version requirement
+   * @property {boolean} devOnly - Indicates this is a development-only dependency
+   * @see {@link https://github.com/react-native-community/cli#compatibility}
+   */
+  '@react-native-community/cli': {
+    version: '^19.0.0',
+    devOnly: true,
+  },
+  /**
+   * React Native CLI Android Platform package configuration
+   * @property {string} version - The semantic version requirement
+   * @property {boolean} devOnly - Indicates this is a development-only dependency
+   * @see {@link https://github.com/react-native-community/cli#compatibility}
+   */
+  '@react-native-community/cli-platform-android': {
+    version: '^19.0.0',
+    devOnly: true,
+  },
+  /**
+   * React Native CLI iOS Platform package configuration
+   * @property {string} version - The semantic version requirement
+   * @property {boolean} devOnly - Indicates this is a development-only dependency
+   * @see {@link https://github.com/react-native-community/cli#compatibility}
+   */
+  '@react-native-community/cli-platform-ios': {
+    version: '^19.0.0',
+    devOnly: true,
+  },
+  /**
    * React core library configuration
    * @property {string} version - The semantic version requirement
    * @property {string[]} capabilities - Required type definitions
