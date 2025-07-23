@@ -2635,6 +2635,7 @@ __metadata:
     merge-anything: "npm:5.1.7"
     semver: "npm:^7.6.2"
     ts-jest: "npm:^29.1.2"
+    type-fest: "npm:4.34.1"
     typescript: "npm:^5.3.3"
   peerDependencies:
     "@brandingbrand/code-cli-kit": ^14.0.0

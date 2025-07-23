@@ -5,17 +5,51 @@ import {
   definePlugin,
   BuildConfig,
   PrebuildOptions,
-  version,
+  version as flagshipVersion,
   globAndReplace,
   logger,
 } from '@brandingbrand/code-cli-kit';
+import type {PackageJson} from 'type-fest';
 import semver from 'semver';
 
 import {transformers} from './transformers';
 import {transforms} from './transforms';
 
-/** Type representing the available template types */
-type TemplateType = 'react-native' | 'supporting-files';
+/** Type representing the available template types for core native files */
+type RNTemplateType = 'react-native' | 'supporting-files';
+/** Type representing all template types available */
+type TemplateType = RNTemplateType | 'dependency-files';
+
+/**
+ * finds and loads the main project package.json file
+ */
+const getProjectPackageJson = (): PackageJson => {
+  const pkg = require(path.project.resolve('package.json')) as PackageJson;
+  if (!pkg) {
+    throw new Error(
+      'Unable to parse project package.json. Ensure it exists and is valid.',
+    );
+  }
+  return pkg;
+};
+
+/**
+ * Resolves the path to a template file or directory based on type and additional path parts specified.
+ *
+ * @param templateType - The type of template to locate
+ * @param pathParts - Additional path parts
+ * @returns The fully resolved path to the specified template file or directory
+ */
+const resolveTemplatePath = (
+  templateType: TemplateType,
+  ...pathParts: string[]
+) =>
+  path.join(
+    require.resolve('@brandingbrand/code-templates/package.json'),
+    '..',
+    templateType,
+    ...pathParts,
+  );
 
 /**
  * Gets the filesystem path to a template based on type, platform and version
@@ -24,8 +58,8 @@ type TemplateType = 'react-native' | 'supporting-files';
  * @param version - The version string to match
  * @returns The full filesystem path to the template
  */
-const getTemplatePath = (
-  templateType: TemplateType,
+const getRNTemplatePath = (
+  templateType: RNTemplateType,
   platform: 'ios' | 'android',
   version: string,
 ): string => {
@@ -45,13 +79,7 @@ const getTemplatePath = (
     minorVersion--
   ) {
     const tryVersion = `${semver.major(coercedVersion)}.${minorVersion}`;
-    const tryPath = path.join(
-      require.resolve('@brandingbrand/code-templates/package.json'),
-      '..',
-      templateType,
-      tryVersion,
-      platform,
-    );
+    const tryPath = resolveTemplatePath(templateType, tryVersion, platform);
 
     if (fs.existsSync(tryPath)) {
       return tryPath;
@@ -95,6 +123,30 @@ const verifyFileReady = async (filePath: string): Promise<void> => {
 };
 
 /**
+ * Applies appropriate transformations to a file based on matching rules
+ * @param destEntry - Path to the file to transform
+ * @param config - Build configuration object
+ * @param options - Prebuild options
+ */
+const applyTransform = async (
+  destEntry: string,
+  config: BuildConfig,
+  options: PrebuildOptions,
+): Promise<void> => {
+  logger.debug(`Applying transforms to ${destEntry}`);
+  const transformerEntry = transformers.find(t => t.test.test(destEntry));
+  const transformsEntry = Object.values(transforms).find(predicate =>
+    predicate.__test.test(destEntry),
+  );
+
+  if (transformerEntry && transformsEntry) {
+    logger.debug(`Found matching transformer for ${destEntry}`);
+    const {__test, ...passTransforms} = transformsEntry;
+    await transformerEntry.use(config, options, passTransforms, destEntry);
+  }
+};
+
+/**
  * Recursively walks through a directory, copying and transforming files
  * @param srcDir - Source directory path
  * @param destDir - Destination directory path
@@ -131,30 +183,6 @@ const walkAndTransform = async (
 };
 
 /**
- * Applies appropriate transformations to a file based on matching rules
- * @param destEntry - Path to the file to transform
- * @param config - Build configuration object
- * @param options - Prebuild options
- */
-const applyTransform = async (
-  destEntry: string,
-  config: BuildConfig,
-  options: PrebuildOptions,
-): Promise<void> => {
-  logger.debug(`Applying transforms to ${destEntry}`);
-  const transformerEntry = transformers.find(t => t.test.test(destEntry));
-  const transformsEntry = Object.values(transforms).find(predicate =>
-    predicate.__test.test(destEntry),
-  );
-
-  if (transformerEntry && transformsEntry) {
-    logger.debug(`Found matching transformer for ${destEntry}`);
-    const {__test, ...passTransforms} = transformsEntry;
-    await transformerEntry.use(config, options, passTransforms, destEntry);
-  }
-};
-
-/**
  * Transforms templates for a specific platform using the appropriate transformers
  * @param templateType - Type of template to transform
  * @param platform - Target platform (iOS or Android)
@@ -164,8 +192,8 @@ const applyTransform = async (
  * @param options - Prebuild options
  * @param required - Whether the template is required (throws error if not found when true)
  */
-const transformTemplates = async (
-  templateType: TemplateType,
+const transformRNTemplates = async (
+  templateType: RNTemplateType,
   platform: 'ios' | 'android',
   version: string,
   destDir: string,
@@ -174,7 +202,7 @@ const transformTemplates = async (
   required: boolean = true,
 ): Promise<void> => {
   logger.info(`Transforming ${templateType} templates for ${platform}`);
-  const templatePath = getTemplatePath(templateType, platform, version);
+  const templatePath = getRNTemplatePath(templateType, platform, version);
   if (!(await fs.exists(templatePath))) {
     if (required) {
       logger.error(`Required template not found: ${templatePath}`);
@@ -186,6 +214,65 @@ const transformTemplates = async (
     return;
   }
   await walkAndTransform(templatePath, destDir, build, options);
+};
+
+/**
+ * Locates and applies dependency-specific file templates,
+ * if the project states the dependency in it's package.json
+ *
+ * @param platform - The target platform (iOS or Android)
+ * @param destDir - Destination directory path
+ * @param build - Build configuration object
+ * @param options - Prebuild options
+ */
+const transformDependencyTemplates = async (
+  platform: 'ios' | 'android',
+  destDir: string,
+  build: BuildConfig,
+  options: PrebuildOptions,
+): Promise<void> => {
+  logger.info(`Transforming dependency file templates for ${platform}`);
+  const dependencyFilesRoot = resolveTemplatePath('dependency-files');
+  if (!(await fs.exists(dependencyFilesRoot))) {
+    logger.warn(`No dependency files directory found. Skipping.`);
+    return;
+  }
+
+  // Array of dependencies the template package has files for, where each entry is a tuple of [dependencyName, directoryName]
+  const dependencyList = (
+    await fs.readdir(dependencyFilesRoot, {withFileTypes: true})
+  )
+    .filter(it => it.isDirectory())
+    // because slashes are not allowed in file names, we encode them as "+" in the filesystem.
+    .map<[string, string]>(it => [it.name.replaceAll('+', '/'), it.name]);
+
+  const pkgJson = getProjectPackageJson();
+  const projectDependencies = [
+    ...Object.keys(pkgJson.dependencies || {}),
+    ...Object.keys(pkgJson.devDependencies || {}),
+  ];
+
+  for (const [dependencyName, dirName] of dependencyList) {
+    if (projectDependencies.includes(dependencyName)) {
+      logger.debug(`Found dependency ${dependencyName}, transforming files`);
+      const dependencyFilesPath = path.join(
+        dependencyFilesRoot,
+        dirName,
+        platform,
+      );
+      if (!(await fs.exists(dependencyFilesPath))) {
+        logger.debug(
+          `Dependency files for '${dependencyName}' does not exist for ${platform}. Skipping.`,
+        );
+        continue;
+      }
+      await walkAndTransform(dependencyFilesPath, destDir, build, options);
+    } else {
+      logger.debug(
+        `Skipping dependency ${dependencyName}, not found in project dependencies`,
+      );
+    }
+  }
 };
 
 /**
@@ -201,24 +288,25 @@ export default definePlugin({
     logger.info('Starting iOS template generation');
     const destDir = path.project.resolve('ios');
     await fs.mkdir(destDir);
-    await transformTemplates(
+    await transformRNTemplates(
       'react-native',
       'ios',
-      version.getReactNativeVersion(),
+      flagshipVersion.getReactNativeVersion(),
       destDir,
       build,
       options,
       true,
     );
-    await transformTemplates(
+    await transformRNTemplates(
       'supporting-files',
       'ios',
-      version.getReactNativeVersion(),
+      flagshipVersion.getReactNativeVersion(),
       destDir,
       build,
       options,
       false,
     );
+    await transformDependencyTemplates('ios', destDir, build, options);
     logger.info('Completed iOS template generation');
   },
 
@@ -231,24 +319,25 @@ export default definePlugin({
     logger.info('Starting Android template generation');
     const destDir = path.project.resolve('android');
     await fs.mkdir(destDir);
-    await transformTemplates(
+    await transformRNTemplates(
       'react-native',
       'android',
-      version.getReactNativeVersion(),
+      flagshipVersion.getReactNativeVersion(),
       destDir,
       build,
       options,
       true,
     );
-    await transformTemplates(
+    await transformRNTemplates(
       'supporting-files',
       'android',
-      version.getReactNativeVersion(),
+      flagshipVersion.getReactNativeVersion(),
       destDir,
       build,
       options,
       false,
     );
+    await transformDependencyTemplates('android', destDir, build, options);
 
     logger.info('Renaming Android package namespace');
     // Rename android package namespace to updated package name for both debug and main packages
