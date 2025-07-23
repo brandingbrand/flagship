@@ -1,18 +1,14 @@
-/**
- * Defines a plugin for @brandingbrand/code-cli-kit.
- * @module Plugin
- */
-
 import {
   type BuildConfig,
   type PrebuildOptions,
   definePlugin,
   fs,
-  getReactNativeVersion,
+  version,
 } from '@brandingbrand/code-cli-kit';
 
-import {android as android72} from './android-0.72';
-import {android as android73} from './android-0.73';
+import {android as android72} from './android/0.72';
+import {android as android73} from './android/0.73';
+import {android as android74} from './android/0.74';
 
 /**
  * Defines a plugin with functions for both iOS and Android platforms.
@@ -66,12 +62,12 @@ export default definePlugin({
     build: BuildConfig,
     options: PrebuildOptions,
   ): Promise<void> {
-    switch (getReactNativeVersion()) {
-      case '0.73':
-        return android73(build, options);
-      case '0.72':
-      default:
-        return android72(build, options);
-    }
+    const pluginAndroid = version.select({
+      '0.72': android72,
+      '0.73': android73,
+      '0.74': android74,
+    });
+
+    return pluginAndroid(build, options);
   },
 });

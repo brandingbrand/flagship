@@ -1,30 +1,36 @@
-import {getReactNativeVersion} from '../platform';
+import * as version from '../version';
 
-import pathRN72 from './path-0.72';
-import pathRN73 from './path-0.73';
+import path072 from './0.72';
+import path073 from './0.73';
+import path077 from './0.77';
 
-// Define the type for the version profiles
-type VersionProfiles = {
-  '0.72': typeof pathRN72;
-  '0.73': typeof pathRN73;
-};
-
-// Define the profiles object with specific types
-const profiles: VersionProfiles = {
-  '0.72': pathRN72,
-  '0.73': pathRN73,
-};
-
-// Get the React Native version
-const reactNativeVersion = getReactNativeVersion();
-
-// Ensure the version exists in the profiles object
-if (!(reactNativeVersion in profiles)) {
-  throw new Error(`Unsupported React Native version: ${reactNativeVersion}`);
-}
-
-// Select the appropriate path based on the React Native version
-const path = profiles[reactNativeVersion as keyof typeof profiles];
-
-// Export the selected path
-export default path;
+/**
+ * A version-aware path module that provides filesystem path utilities specific to React Native versions.
+ * This module automatically selects the appropriate path implementation based on the project's
+ * React Native version.
+ *
+ * @remarks
+ * The path utilities vary between React Native versions due to structural changes in the framework.
+ * For example:
+ * - 0.72.x uses Java files for Android
+ * - 0.73.x introduces Kotlin files for Android
+ * - 0.77.x updates iOS AppDelegate to Swift
+ *
+ * @example
+ * ```ts
+ * import path from './path';
+ *
+ * // Access iOS paths
+ * const iosPath = path.ios.appDelegate;
+ *
+ * // Access Android paths
+ * const androidPath = path.android.mainActivity(config);
+ * ```
+ *
+ * @returns A version-specific path module with platform-specific utilities
+ */
+export default version.select({
+  '0.72': path072,
+  '0.73': path073,
+  '0.77': path077,
+}) as typeof path072;

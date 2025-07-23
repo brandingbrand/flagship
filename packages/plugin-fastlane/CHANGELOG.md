@@ -1,5 +1,68 @@
 # @brandingbrand/code-plugin-fastlane
 
+## 4.1.0
+
+### Minor Changes
+
+- 88686c6: new firebase increment option to reset build version to 1 if version mismatch during lane increment_build_firebase
+  default behavior on iOS is to reset if new version found
+  default behavior on Android is to just increment
+
+## 4.0.0-alpha-20250306142323
+
+### Major Changes
+
+- react native <0.79 support
+
+### Patch Changes
+
+- Updated dependencies
+  - @brandingbrand/code-cli-kit@14.0.0-alpha-20250306142323
+
+## 4.0.0-alpha-20250303215025
+
+### Major Changes
+
+- react native <v0.79 support
+
+### Patch Changes
+
+- Updated dependencies
+  - @brandingbrand/code-cli-kit@14.0.0-alpha-20250303215025
+
+## 4.0.0-alpha-20250303201558
+
+### Major Changes
+
+- react native <0.79 support
+
+### Patch Changes
+
+- Updated dependencies
+  - @brandingbrand/code-cli-kit@14.0.0-alpha-20250303201558
+
+## 4.0.0-alpha-20250303200100
+
+### Major Changes
+
+- react native <v0.79 support
+
+### Patch Changes
+
+- Updated dependencies
+  - @brandingbrand/code-cli-kit@14.0.0-alpha-20250303200100
+
+## 4.0.0-alpha-20250303195416
+
+### Major Changes
+
+- react native <v0.79 support
+
+### Patch Changes
+
+- Updated dependencies
+  - @brandingbrand/code-cli-kit@14.0.0-alpha-20250303195416
+
 ## 3.1.0
 
 ### Minor Changes

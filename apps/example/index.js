@@ -1,7 +1,7 @@
 import {Navigation} from 'react-native-navigation';
 import App from './App';
 
-Navigation.registerComponent('com.myApp.WelcomeScreen', () => App);
+Navigation.registerComponent('App', () => App);
 
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setRoot({
@@ -10,7 +10,7 @@ Navigation.events().registerAppLaunchedListener(() => {
         children: [
           {
             component: {
-              name: 'com.myApp.WelcomeScreen',
+              name: 'App',
             },
           },
         ],

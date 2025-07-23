@@ -46,12 +46,23 @@ lane :increment_build_firebase do
       app: "<%= codePluginFastlane.plugin.android.firebase.appId %>",
       service_credentials_json_data: ENV["GOOGLE_SERVICE_CREDENTIALS"]
     )
-
     if version[:buildVersion]
+<% if (codePluginFastlane.plugin.android.firebase.resetBuildOnVersionChange) { -%>
+      if version[:displayVersion] != "<%- android.versioning?.version %>"
+        build_number = 1
+        sh %Q{cd .. && echo "$(awk '{sub(/versionCode [[:digit:]]+$/,"versionCode "#{build_number})}1' app/build.gradle)" > app/build.gradle && cd -}
+        puts "Fastlane: found change version reset build to #{build_number}"
+      else
+        build_number = version[:buildVersion].to_i + 1
+        sh %Q{cd .. && echo "$(awk '{sub(/versionCode [[:digit:]]+$/,"versionCode "#{build_number})}1' app/build.gradle)" > app/build.gradle && cd -}
+        puts "Fastlane: updated build number to #{build_number}"
+      end
+<% } else { -%>
       build_number = version[:buildVersion].to_i + 1
       sh %Q{cd .. && echo "$(awk '{sub(/versionCode [[:digit:]]+$/,"versionCode "#{build_number})}1' app/build.gradle)" > app/build.gradle && cd -}
       puts "Fastlane: updated build number to #{build_number}"
-    end
+<% } -%>
+    end 
   rescue StandardError => e
     puts "Fastlane: did not find any applicable versions for 'firebase_app_distribution_get_latest_release"
     puts "Fastlane: #{e.message}"

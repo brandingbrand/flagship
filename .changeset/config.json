@@ -7,6 +7,9 @@
   "access": "restricted",
   "baseBranch": "develop",
   "updateInternalDependencies": "patch",
+  "snapshot": {
+    "useCalculatedVersion": true
+  },
   "ignore": ["@brandingbrand/code-docs", "@brandingbrand/code-example"],
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true

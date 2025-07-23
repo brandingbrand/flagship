@@ -1,35 +1,37 @@
 {
   "name": "@brandingbrand/code-plugin-splash-screen",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "plugin for Flagship Code for splash screens",
   "license": "MIT",
   "main": "src/index.ts",
-  "publishConfig": {
-    "access": "public"
-  },
+  "types": "src/index.ts",
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
-    "test": "jest"
+    "lint": "eslint . --max-warnings 0"
   },
   "jest": {
     "preset": "@brandingbrand/code-jest-config"
   },
-  "types": "src/index.ts",
   "dependencies": {
     "@types/fs-extra": "^11.0.4",
     "fs-extra": "^11.2.0",
-    "react-native-bootsplash": "5.4.0"
-  },
-  "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "^13.0.0"
+    "react-native-bootsplash": "5.4.0",
+    "sharp": "^0.32.5"
   },
   "devDependencies": {
-    "@brandingbrand/code-cli-kit": "*",
-    "@brandingbrand/code-jest-config": "*",
+    "@brandingbrand/code-cli-kit": "^14.0.0",
+    "@brandingbrand/code-jest-config": "^2.0.0",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/eslint": "^8.56.1",
     "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
     "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "@brandingbrand/code-cli-kit": "^14.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

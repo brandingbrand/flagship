@@ -1,5 +1,16 @@
 # @brandingbrand/code-plugin-permissions
 
+## 3.0.0
+
+### Major Changes
+
+- react native <0.79 support
+
+### Patch Changes
+
+- Updated dependencies
+  - @brandingbrand/code-cli-kit@14.0.0
+
 ## 2.0.2
 
 ### Patch Changes
