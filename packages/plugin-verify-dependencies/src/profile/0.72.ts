@@ -24,16 +24,6 @@ export default {
     capabilities: ['@babel/core', '@babel/preset-env', '@babel/runtime'],
     devOnly: true,
   },
-  '@react-native/eslint-config': {
-    version: '^0.72.0',
-    capabilities: ['eslint', 'prettier'],
-    devOnly: true,
-  },
-  '@tsconfig/react-native': {
-    version: '^3.0.0',
-    capabilities: ['typescript'],
-    devOnly: true,
-  },
   '@babel/core': {
     version: '^7.20.0',
     devOnly: true,
@@ -83,17 +73,5 @@ export default {
   },
   'react-native-sensitive-info': {
     version: '^5.0.0',
-  },
-  '@react-native-community/cli': {
-    version: '^11.0.0',
-    devOnly: true,
-  },
-  '@react-native-community/cli-platform-android': {
-    version: '^11.0.0',
-    devOnly: true,
-  },
-  '@react-native-community/cli-platform-ios': {
-    version: '^11.0.0',
-    devOnly: true,
   },
 } satisfies Record<string, DependencyProfile>;

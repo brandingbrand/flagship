@@ -55,55 +55,6 @@ export default {
     version: '^0.75.0',
     devOnly: true,
   },
-  /**
-   * React Native ESLint configuration
-   * @property {string} version - The semantic version requirement
-   * @property {string[]} capabilities - Required ESLint dependencies
-   * @property {boolean} devOnly - Indicates this is a development-only dependency
-   */
-  '@react-native/eslint-config': {
-    version: '^0.75.0',
-    capabilities: ['eslint', 'prettier'],
-    devOnly: true,
-  },
-  /**
-   * Typescript base configuration for React Native
-   * @property {string} version - The semantic version requirement
-   * @property {string[]} capabilities - Required typescript dependencies
-   * @property {boolean} devOnly - Indicates this is a development-only dependency
-   */
-  '@react-native/typescript-config': {
-    version: '^0.75.0',
-    capabilities: ['typescript'],
-    devOnly: true,
-  },
-  /**
-   * React Native CLI Core package configuration
-   * @property {string} version - The semantic version requirement
-   * @property {boolean} devOnly - Indicates this is a development-only dependency
-   */
-  '@react-native-community/cli': {
-    version: '^14.0.0',
-    devOnly: true,
-  },
-  /**
-   * React Native CLI Android Platform package configuration
-   * @property {string} version - The semantic version requirement
-   * @property {boolean} devOnly - Indicates this is a development-only dependency
-   */
-  '@react-native-community/cli-platform-android': {
-    version: '^14.0.0',
-    devOnly: true,
-  },
-  /**
-   * React Native CLI iOS Platform package configuration
-   * @property {string} version - The semantic version requirement
-   * @property {boolean} devOnly - Indicates this is a development-only dependency
-   */
-  '@react-native-community/cli-platform-ios': {
-    version: '^14.0.0',
-    devOnly: true,
-  },
   '@types/react': {
     version: '^18.2.6',
     devOnly: true,

@@ -56,72 +56,12 @@ export default {
     devOnly: true,
   },
   /**
-   * React Native ESLint configuration
-   * @property {string} version - Target version ^0.73.0
-   * @property {string[]} capabilities - Required ESLint dependencies
-   * @property {boolean} devOnly - Development-only dependency
-   */
-  '@react-native/eslint-config': {
-    version: '^0.73.0',
-    capabilities: ['eslint', 'prettier'],
-    devOnly: true,
-  },
-  /**
-   * Typescript base configuration for React Native
-   * @property {string} version - Target version ^0.73.0
-   * @property {string[]} capabilities - Required typescript dependencies
-   * @property {boolean} devOnly - Development-only dependency
-   */
-  '@react-native/typescript-config': {
-    version: '^0.73.0',
-    capabilities: ['typescript'],
-    devOnly: true,
-  },
-  /**
-   * React Native CLI Core package configuration
-   * @property {string} version - Target version ^12.0.0
-   * @property {boolean} devOnly - Development-only dependency
-   */
-  '@react-native-community/cli': {
-    version: '^12.0.0',
-    devOnly: true,
-  },
-  /**
-   * React Native CLI Android Platform package configuration
-   * @property {string} version - Target version ^12.0.0
-   * @property {boolean} devOnly - Development-only dependency
-   */
-  '@react-native-community/cli-platform-android': {
-    version: '^12.0.0',
-    devOnly: true,
-  },
-  /**
-   * React Native CLI iOS Platform package configuration
-   * @property {string} version - Target version ^12.0.0
-   * @property {boolean} devOnly - Development-only dependency
-   */
-  '@react-native-community/cli-platform-ios': {
-    version: '^12.0.0',
-    devOnly: true,
-  },
-  /**
    * Legacy Metro React Native Babel preset
    * @property {string} version - Artificially high version to prevent usage
    * @property {boolean} devOnly - Development-only dependency
    * @property {boolean} banned - Indicates this package should not be used
    */
   'metro-react-native-babel-preset': {
-    version: '1000.0.0',
-    devOnly: true,
-    banned: true,
-  },
-  /**
-   * Legacy react-native typescript configuration preset.
-   * @property {string} version - Artificially high version to prevent usage
-   * @property {boolean} devOnly - Development-only dependency
-   * @property {boolean} banned - Indicates this package should not be used
-   */
-  '@tsconfig/react-native': {
     version: '1000.0.0',
     devOnly: true,
     banned: true,

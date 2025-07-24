@@ -43,26 +43,4 @@ export default {
     version: '^0.77.0',
     devOnly: true,
   },
-  /**
-   * React Native ESLint configuration
-   * @property {string} version - The semantic version requirement
-   * @property {string[]} capabilities - Required ESLint dependencies
-   * @property {boolean} devOnly - Indicates this is a development-only dependency
-   */
-  '@react-native/eslint-config': {
-    version: '^0.77.0',
-    capabilities: ['eslint', 'prettier'],
-    devOnly: true,
-  },
-  /**
-   * Typescript base configuration for React Native
-   * @property {string} version - The semantic version requirement
-   * @property {string[]} capabilities - Required typescript dependencies
-   * @property {boolean} devOnly - Indicates this is a development-only dependency
-   */
-  '@react-native/typescript-config': {
-    version: '^0.77.0',
-    capabilities: ['typescript'],
-    devOnly: true,
-  },
 } satisfies Record<string, DependencyProfile>;
