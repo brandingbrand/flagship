@@ -2327,8 +2327,8 @@ __metadata:
     typescript: "npm:^5.3.3"
   peerDependencies:
     "@brandingbrand/code-cli-kit": ^14.0.0
-    react: ">=18.2.0 <18.4.0"
-    react-native: ">=0.72.0 <0.79.0"
+    react: ">=18.2.0 <19.2.0"
+    react-native: ">=0.72.0 <0.81.0"
   bin:
     flagship-code: ./bin/flagship-code
   languageName: unknown

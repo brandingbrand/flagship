@@ -120,7 +120,8 @@ export type AlignDepsOptions = {
     | '0.76'
     | '0.77'
     | '0.78'
-    | '0.79';
+    | '0.79'
+    | '0.80';
 
   /**
    * The cli command.
