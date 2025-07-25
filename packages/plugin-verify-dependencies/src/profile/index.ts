@@ -1,5 +1,7 @@
 import {version} from '@brandingbrand/code-cli-kit';
 
+import type {DependencyProfile} from '../types';
+
 import profile072 from './0.72';
 import profile073 from './0.73';
 import profile074 from './0.74';
@@ -7,8 +9,7 @@ import profile075 from './0.75';
 import profile076 from './0.76';
 import profile077 from './0.77';
 import profile078 from './0.78';
-
-export type {Profile} from './0.72';
+import profile079 from './0.79';
 
 /**
  * A version-aware profile module that provides dependency configurations specific to React Native versions.
@@ -40,7 +41,8 @@ export const profiles = {
   '0.76': profile076,
   '0.77': profile077,
   '0.78': profile078,
-} as const;
+  '0.79': profile079,
+} as const satisfies Record<string, Record<string, DependencyProfile>>;
 
 export function getProfile(version: string) {
   return profiles[version as keyof typeof profiles] || undefined;
