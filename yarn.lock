@@ -2312,6 +2312,7 @@ __metadata:
     bundle-require: "npm:^4.0.2"
     chalk: "npm:^4.1.2"
     commander: "npm:11.1.0"
+    esbuild: "npm:^0.19.2"
     eslint: "npm:^8.56.0"
     eslint-config-turbo: "npm:^1.11.3"
     fp-ts: "npm:^2.16.2"
