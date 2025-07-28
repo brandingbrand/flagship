@@ -14,24 +14,12 @@ import semver from 'semver';
 
 import {transformers} from './transformers';
 import {transforms} from './transforms';
+import {getAllProjectDependencies} from './utils/project-package';
 
 /** Type representing the available template types for core native files */
 type RNTemplateType = 'react-native' | 'supporting-files';
 /** Type representing all template types available */
 type TemplateType = RNTemplateType | 'dependency-files';
-
-/**
- * finds and loads the main project package.json file
- */
-const getProjectPackageJson = (): PackageJson => {
-  const pkg = require(path.project.resolve('package.json')) as PackageJson;
-  if (!pkg) {
-    throw new Error(
-      'Unable to parse project package.json. Ensure it exists and is valid.',
-    );
-  }
-  return pkg;
-};
 
 /**
  * Resolves the path to a template file or directory based on type and additional path parts specified.
@@ -130,18 +118,25 @@ const verifyFileReady = async (filePath: string): Promise<void> => {
  */
 const applyTransform = async (
   destEntry: string,
+  projectDependencies: string[],
   config: BuildConfig,
   options: PrebuildOptions,
 ): Promise<void> => {
   logger.debug(`Applying transforms to ${destEntry}`);
   const transformerEntry = transformers.find(t => t.test.test(destEntry));
-  const transformsEntry = Object.values(transforms).find(predicate =>
-    predicate.__test.test(destEntry),
+  const transformsEntries = Object.values(transforms).filter(predicate =>
+    // Test could be a function or RegExp, so check function type first.
+    typeof predicate.__test === 'function'
+      ? predicate.__test(destEntry, projectDependencies, config, options)
+      : predicate.__test.test(destEntry),
   );
 
-  if (transformerEntry && transformsEntry) {
-    logger.debug(`Found matching transformer for ${destEntry}`);
-    const {__test, ...passTransforms} = transformsEntry;
+  if (transformerEntry && transformsEntries.length > 0) {
+    logger.debug(`Found matching transformers for ${destEntry}`);
+    const {__test, ...passTransforms} = transformsEntries.reduce(
+      (acc, curr) => ({...acc, ...curr}),
+      {},
+    );
     await transformerEntry.use(config, options, passTransforms, destEntry);
   }
 };
@@ -150,12 +145,14 @@ const applyTransform = async (
  * Recursively walks through a directory, copying and transforming files
  * @param srcDir - Source directory path
  * @param destDir - Destination directory path
+ * @param projectDependencies - List of project dependencies
  * @param config - Build configuration object
  * @param options - Prebuild options
  */
 const walkAndTransform = async (
   srcDir: string,
   destDir: string,
+  projectDependencies: string[],
   config: BuildConfig,
   options: PrebuildOptions,
 ): Promise<void> => {
@@ -169,14 +166,20 @@ const walkAndTransform = async (
       if (stat.isDirectory()) {
         logger.debug(`Creating directory ${destEntry}`);
         await fs.mkdir(destEntry, {recursive: true});
-        await walkAndTransform(srcEntry, destEntry, config, options);
+        await walkAndTransform(
+          srcEntry,
+          destEntry,
+          projectDependencies,
+          config,
+          options,
+        );
       } else {
         logger.debug(
           `Copying and transforming file ${srcEntry} to ${destEntry}`,
         );
         await fs.copyFile(srcEntry, destEntry);
         await verifyFileReady(destEntry);
-        await applyTransform(destEntry, config, options);
+        await applyTransform(destEntry, projectDependencies, config, options);
       }
     }),
   );
@@ -188,6 +191,7 @@ const walkAndTransform = async (
  * @param platform - Target platform (iOS or Android)
  * @param version - Version string to match
  * @param destDir - Destination directory path
+ * @param projectDependencies - List of project dependencies
  * @param build - Build configuration object
  * @param options - Prebuild options
  * @param required - Whether the template is required (throws error if not found when true)
@@ -197,6 +201,7 @@ const transformRNTemplates = async (
   platform: 'ios' | 'android',
   version: string,
   destDir: string,
+  projectDependencies: string[],
   build: BuildConfig,
   options: PrebuildOptions,
   required: boolean = true,
@@ -213,7 +218,13 @@ const transformRNTemplates = async (
     logger.warn(`Optional template not found: ${templatePath}`);
     return;
   }
-  await walkAndTransform(templatePath, destDir, build, options);
+  await walkAndTransform(
+    templatePath,
+    destDir,
+    projectDependencies,
+    build,
+    options,
+  );
 };
 
 /**
@@ -228,6 +239,7 @@ const transformRNTemplates = async (
 const transformDependencyTemplates = async (
   platform: 'ios' | 'android',
   destDir: string,
+  projectDependencies: string[],
   build: BuildConfig,
   options: PrebuildOptions,
 ): Promise<void> => {
@@ -246,12 +258,6 @@ const transformDependencyTemplates = async (
     // because slashes are not allowed in file names, we encode them as "+" in the filesystem.
     .map<[string, string]>(it => [it.name.replaceAll('+', '/'), it.name]);
 
-  const pkgJson = getProjectPackageJson();
-  const projectDependencies = [
-    ...Object.keys(pkgJson.dependencies || {}),
-    ...Object.keys(pkgJson.devDependencies || {}),
-  ];
-
   for (const [dependencyName, dirName] of dependencyList) {
     if (projectDependencies.includes(dependencyName)) {
       logger.debug(`Found dependency ${dependencyName}, transforming files`);
@@ -266,7 +272,13 @@ const transformDependencyTemplates = async (
         );
         continue;
       }
-      await walkAndTransform(dependencyFilesPath, destDir, build, options);
+      await walkAndTransform(
+        dependencyFilesPath,
+        destDir,
+        projectDependencies,
+        build,
+        options,
+      );
     } else {
       logger.debug(
         `Skipping dependency ${dependencyName}, not found in project dependencies`,
@@ -286,6 +298,7 @@ export default definePlugin({
    */
   ios: async (build: BuildConfig, options: PrebuildOptions) => {
     logger.info('Starting iOS template generation');
+    const projectDependencies = getAllProjectDependencies();
     const destDir = path.project.resolve('ios');
     await fs.mkdir(destDir);
     await transformRNTemplates(
@@ -293,6 +306,7 @@ export default definePlugin({
       'ios',
       flagshipVersion.getReactNativeVersion(),
       destDir,
+      projectDependencies,
       build,
       options,
       true,
@@ -302,11 +316,18 @@ export default definePlugin({
       'ios',
       flagshipVersion.getReactNativeVersion(),
       destDir,
+      projectDependencies,
       build,
       options,
       false,
     );
-    await transformDependencyTemplates('ios', destDir, build, options);
+    await transformDependencyTemplates(
+      'ios',
+      destDir,
+      projectDependencies,
+      build,
+      options,
+    );
     logger.info('Completed iOS template generation');
   },
 
@@ -317,6 +338,7 @@ export default definePlugin({
    */
   android: async (build: BuildConfig, options: PrebuildOptions) => {
     logger.info('Starting Android template generation');
+    const projectDependencies = getAllProjectDependencies();
     const destDir = path.project.resolve('android');
     await fs.mkdir(destDir);
     await transformRNTemplates(
@@ -324,6 +346,7 @@ export default definePlugin({
       'android',
       flagshipVersion.getReactNativeVersion(),
       destDir,
+      projectDependencies,
       build,
       options,
       true,
@@ -333,11 +356,18 @@ export default definePlugin({
       'android',
       flagshipVersion.getReactNativeVersion(),
       destDir,
+      projectDependencies,
       build,
       options,
       false,
     );
-    await transformDependencyTemplates('android', destDir, build, options);
+    await transformDependencyTemplates(
+      'android',
+      destDir,
+      projectDependencies,
+      build,
+      options,
+    );
 
     logger.info('Renaming Android package namespace');
     // Rename android package namespace to updated package name for both debug and main packages

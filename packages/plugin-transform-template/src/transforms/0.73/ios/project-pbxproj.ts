@@ -24,8 +24,6 @@ export default {
     // These files exist as extras and need to be added to pbxproj file as
     // source files or header files
     project.addSourceFile('app/app.swift', opt, groupKey);
-    project.addSourceFile('app/EnvSwitcher.m', opt, groupKey);
-    project.addSourceFile('app/NativeConstants.m', opt, groupKey);
     project.addHeaderFile('app/app-Bridging-Header.h', opt, groupKey);
 
     // PrivacyInfo.xcprivacy is already included in the React Native 0.73 template from

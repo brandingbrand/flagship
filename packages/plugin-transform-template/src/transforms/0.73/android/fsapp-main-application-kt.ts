@@ -4,15 +4,16 @@ import {
   string,
 } from '@brandingbrand/code-cli-kit';
 
+const MainApplicationRegex = /\bMainApplication\.kt$/gm;
+
 /**
  * Configuration object for modifying MainApplication.kt files
  */
 export default {
-  /**
-   * Regular expression pattern to match MainApplication.kt files
-   * @type {RegExp} Regular expression matching MainApplication.kt files
-   */
-  __test: /\bMainApplication\.kt$/gm,
+  /** Test to match MainApplication.kt files in projects that use FSApp */
+  __test: (destFile: string, deps: string[]) =>
+    MainApplicationRegex.test(destFile) &&
+    deps.includes('@brandingbrand/fsapp'),
 
   /**
    * Function to add packages to the MainApplication.kt file
@@ -21,7 +22,7 @@ export default {
    * @param {PrebuildOptions} options - Prebuild configuration options
    * @returns {string} Modified file content with additional packages added
    */
-  packages: (
+  addFSAppPackages: (
     content: string,
     config: BuildConfig,
     options: PrebuildOptions,
