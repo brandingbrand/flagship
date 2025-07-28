@@ -2,7 +2,7 @@ import {PrebuildOptions, logger} from '@brandingbrand/code-cli-kit';
 
 import {findBuildConfigFiles} from '../core/config/buildConfig';
 import {loadFlagshipCodeConfig} from '../core/config/flagshipConfig';
-import {renderStatus} from '../ui/inkRenderer';
+import {renderStatus} from '../ui/progressRenderer';
 import {globalEmitter} from '../core';
 
 /**
@@ -45,6 +45,7 @@ import {globalEmitter} from '../core';
 export async function executePrebuild(options: PrebuildOptions) {
   const buildConfig = await findBuildConfigFiles(process.cwd(), options.build);
   const {plugins} = await loadFlagshipCodeConfig();
+  let statusPromise = null;
 
   const pluginCount = plugins.reduce((acc, curr) => {
     return acc + Object.keys(curr.plugin).length;
@@ -52,7 +53,7 @@ export async function executePrebuild(options: PrebuildOptions) {
 
   logger.setLogLevel(logger.getLogLevelFromString(options.logLevel));
   if (!options.verbose) {
-    await renderStatus({
+    statusPromise = renderStatus({
       numberOfPlugins: pluginCount,
       cmd: 'prebuild',
     });
@@ -126,4 +127,7 @@ export async function executePrebuild(options: PrebuildOptions) {
   await logger.flush();
   logger.resume();
   globalEmitter.emit('onEnd');
+  if (statusPromise) {
+    await statusPromise;
+  }
 }
