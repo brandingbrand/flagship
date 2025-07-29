@@ -246,7 +246,7 @@ const transformDependencyTemplates = async (
   logger.info(`Transforming dependency file templates for ${platform}`);
   const dependencyFilesRoot = resolveTemplatePath('dependency-files');
   if (!(await fs.exists(dependencyFilesRoot))) {
-    logger.warn(`No dependency files directory found. Skipping.`);
+    logger.debug(`No dependency files directory found. Skipping.`);
     return;
   }
 
