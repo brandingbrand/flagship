@@ -6,7 +6,7 @@ import {
 } from '../core/config/flagshipConfig';
 import {globalEmitter} from '../core';
 
-import {renderStatus} from '@/ui/inkRenderer';
+import {renderStatus} from '@/ui/progressRenderer';
 
 /**
  * Executes the align-deps process to verify and optionally fix dependency versions.
@@ -32,7 +32,7 @@ import {renderStatus} from '@/ui/inkRenderer';
  * @emits {globalEmitter#onEnd} When process completes
  */
 export async function generatePlugin(str: string, options: GenerateOptions) {
-  let hasError = false;
+  let statusPromise = null;
   const {config} = await loadFlagshipCodeConfig();
 
   const pluginGeneratePlugin = await loadPlugin(
@@ -44,7 +44,7 @@ export async function generatePlugin(str: string, options: GenerateOptions) {
     throw new Error('Generate Plugin plugin not found');
   }
 
-  await renderStatus({
+  statusPromise = renderStatus({
     numberOfPlugins: 1,
     cmd: 'align-deps',
   });
@@ -74,5 +74,8 @@ export async function generatePlugin(str: string, options: GenerateOptions) {
     await logger.flush();
     logger.resume();
     globalEmitter.emit('onEnd');
+    if (statusPromise) {
+      await statusPromise;
+    }
   }
 }

@@ -30,13 +30,12 @@
     "ansi-align": "^3.0.1",
     "bundle-require": "^4.0.2",
     "chalk": "^4.1.2",
+    "cli-progress": "^3.12.0",
     "commander": "11.1.0",
     "esbuild": "^0.19.2",
     "fp-ts": "^2.16.2",
     "glob": "10.3.10",
-    "ink": "^4.4.1",
     "io-ts": "^2.2.21",
-    "react-async": "^10.0.1",
     "type-fest": "^4.10.2",
     "typescript": "^5.3.3"
   },
@@ -46,20 +45,17 @@
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/ansi-align": "3.0.5",
+    "@types/cli-progress": "^3.11.6",
     "@types/eslint": "^8.56.1",
     "@types/node": "^20.10.6",
-    "@types/react": "^18.2.55",
     "eslint": "^8.56.0",
     "eslint-config-turbo": "^1.11.3",
     "jest": "^29.7.0",
-    "react": "18.2.0",
     "ts-jest": "^29.1.2",
     "tsup": "^8.0.1"
   },
   "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "^14.0.0",
-    "react": ">=18.2.0 <19.2.0",
-    "react-native": ">=0.72.0 <0.81.0"
+    "@brandingbrand/code-cli-kit": "^14.0.0"
   },
   "publishConfig": {
     "access": "public"
