@@ -50,20 +50,22 @@ export default definePlugin({
       );
     }
 
-    await Promise.allSettled(
-      activePlugins.map(it => it.common?.(build, options)),
-    );
+    for (const transformName of activeTransforms) {
+      await packageTransforms[transformName].common?.(build, options);
+    }
   },
+
   // 'common' is always ran before platform specific functions, so we use the common function determine active plugin
   // and ensure it's set before running platform specific functions, if they exist. We silently skip if no function exists.
   ios: async (build, options) => {
-    await Promise.allSettled(
-      activePlugins?.map(it => it.ios?.(build, options)) || [],
-    );
+    for (const transformName of activeTransforms) {
+      await packageTransforms[transformName].ios?.(build, options);
+    }
   },
+
   android: async (build, options) => {
-    await Promise.allSettled(
-      activePlugins?.map(it => it.android?.(build, options)) || [],
-    );
+    for (const transformName of activeTransforms) {
+      await packageTransforms[transformName].android?.(build, options);
+    }
   },
 });
