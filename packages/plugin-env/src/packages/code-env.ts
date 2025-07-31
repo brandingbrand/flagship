@@ -2,6 +2,7 @@ import {
   BuildConfig,
   CodeConfig,
   PrebuildOptions,
+  definePlugin,
   fs,
   logger,
   path,
@@ -10,7 +11,7 @@ import {
 } from '@brandingbrand/code-cli-kit';
 
 import {CodePluginEnvironment} from '../types';
-import {definePackagePlugin, getCodeConfig, validateEnvPaths} from '../utils';
+import {getCodeConfig, validateEnvPaths} from '../utils';
 
 /**
  * Helper function to write the environment configuration file.
@@ -34,8 +35,7 @@ async function writeEnvConfig(
 /**
  * Defines a plugin for both iOS and Android platforms.
  */
-export default definePackagePlugin({
-  package: '@brandingbrand/code-app-env',
+export default definePlugin<CodePluginEnvironment>({
   common: async (build, options) => {
     logger.debug('Linking runtime environments to Flagship™ Code App ENV.');
     const codeConfig = await getCodeConfig();
@@ -44,11 +44,11 @@ export default definePackagePlugin({
   },
   ios: async (_, options): Promise<void> => {
     logger.debug('Configuring iOS environment settings.');
-    await withInfoPlist(plist => ({
-      ...plist,
-      FlagshipEnv: options.env,
-      FlagshipDevMenu: !options.release,
-    }));
+    await withInfoPlist(plist => {
+      plist.FlagshipEnv = options.env;
+      plist.FlagshipDevMenu = !options.release;
+      return plist;
+    });
   },
   android: async (_, options): Promise<void> => {
     logger.debug('Configuring Android environment settings.');

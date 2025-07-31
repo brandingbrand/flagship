@@ -1,8 +1,9 @@
-import {fs, logger, path} from '@brandingbrand/code-cli-kit';
+import {definePlugin, fs, logger, path} from '@brandingbrand/code-cli-kit';
 import {bundleRequire} from 'bundle-require';
 import semver from 'semver';
 
-import {definePackagePlugin, getCodeConfig, validateEnvPaths} from '../utils';
+import {CodePluginEnvironment} from '../types';
+import {getCodeConfig, validateEnvPaths} from '../utils';
 
 const ENV_FILE_PATTERN = /env\.(.*)\.ts/;
 
@@ -113,8 +114,7 @@ const getFsappVersion = async () => {
 /**
  * Defines a plugin that manages multi-tenant environment configuration for FSApp projects
  */
-export default definePackagePlugin({
-  package: '@brandingbrand/fsapp',
+export default definePlugin<CodePluginEnvironment>({
   common: async (build, options) => {
     logger.debug('Configuring FSApp runtime environments.');
     const codeConfig = await getCodeConfig();
