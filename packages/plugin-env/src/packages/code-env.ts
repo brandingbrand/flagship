@@ -22,10 +22,11 @@ async function writeEnvConfig(
   config: CodeConfig,
 ) {
   const configPath = path.join(process.cwd(), '.flagshipappenvrc');
+  const hiddenEnvs = build.codePluginEnvironment?.plugin.hiddenEnvs;
   const configData = {
-    hiddenEnvs: build.codePluginEnvironment?.plugin.hiddenEnvs || [],
-    singleEnv: options.release,
     dir: config.envPath,
+    hiddenEnvs: hiddenEnvs?.length ? hiddenEnvs : undefined,
+    singleEnv: options.release ? options.env : undefined,
   };
 
   await fs.writeFile(configPath, JSON.stringify(configData, null, 2) + '\n');
