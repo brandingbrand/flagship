@@ -25,7 +25,7 @@ export function SetEnvironmentButton() {
       disabled={isActiveSelected}
       type={isActiveSelected ? 'primaryDisabled' : 'primary'}
       onPress={handleSetEnv}>
-      {isActiveSelected ? 'Current Environment' : `Activate Environment`}
+      {isActiveSelected ? 'Current Environment' : `Set Environment`}
     </Button>
   );
 }
