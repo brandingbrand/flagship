@@ -20,14 +20,15 @@ const loadProjectDependencyList = (): string[] => {
   ];
 };
 
-const projectDeps = loadProjectDependencyList();
-const activeTransforms = (
-  Object.keys(packageTransforms) as (keyof typeof packageTransforms)[]
-).filter(it => projectDeps.includes(it));
-
+let activeTransforms: (keyof typeof packageTransforms)[] = [];
 export default definePlugin({
   common: async (build, options) => {
     logger.info('Configuring runtime environment provider.');
+
+    const projectDeps = loadProjectDependencyList();
+    activeTransforms = (
+      Object.keys(packageTransforms) as (keyof typeof packageTransforms)[]
+    ).filter(it => projectDeps.includes(it));
 
     // Ensure we have exactly one plugin candidate
     // If none are found, then we don't need to take any further action
