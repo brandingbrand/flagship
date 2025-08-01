@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/code-plugin-env",
   "version": "1.0.0",
-  "description": "code plugin that handles environments for fsapp package",
+  "description": "Code plugin that handles environment setup for supported app env providers",
   "repository": {
     "type": "git",
     "url": "https://github.com/brandingbrand/flagship"

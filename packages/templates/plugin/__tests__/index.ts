@@ -7,6 +7,12 @@
 import plugin from '../src';
 
 describe('plugin', () => {
+  it('common', async () => {
+    await plugin.common?.({} as any, {} as any);
+
+    expect(true).toBeTruthy();
+  });
+
   it('ios', async () => {
     await plugin.ios?.({} as any, {} as any);
 
