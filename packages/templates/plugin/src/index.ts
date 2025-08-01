@@ -25,13 +25,13 @@ export default definePlugin({
   /**
    * Common function to be executed for all platforms
    */
-  common: async function (build, options, codeConfig): Promise<void> {},
+  common: async function (build, options): Promise<void> {},
   /**
    * Function to be executed for iOS platform.
    */
-  ios: async function (build, options, codeConfig): Promise<void> {},
+  ios: async function (build, options): Promise<void> {},
   /**
    * Function to be executed for Android platform.
    */
-  android: async function (build, options, codeConfig): Promise<void> {},
+  android: async function (build, options): Promise<void> {},
 });
