@@ -72,15 +72,9 @@ export const envs = process.env.FLAGSHIP_APP_ENV as unknown as Record<
 export const env = envs?.[envName] as AppEnvironment;
 
 /**
- * Displays the developer menu if available.
- * @example
- * ```typescript
- * showDevMenu();
- * ```
+ * Whether show dev menu flag is set
  */
-export function showDevMenu(): void {
-  FlagshipEnv.showDevMenu();
-}
+export const showDevMenu: boolean = FlagshipEnv.showDevMenu;
 
 /**
  * Sets the environment name for the app.
