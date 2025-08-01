@@ -1,7 +1,15 @@
 import {Navigation} from 'react-native-navigation';
 import App from './App';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-Navigation.registerComponent('App', () => App);
+const ProvidedApp = (props) => {
+  return (
+    <SafeAreaProvider>
+      <App {...props} />
+    </SafeAreaProvider>
+  )
+}
+Navigation.registerComponent('App', () => ProvidedApp);
 
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setRoot({

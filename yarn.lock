@@ -2428,7 +2428,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@brandingbrand/code-app-env@npm:^0.0.1, @brandingbrand/code-app-env@workspace:packages/app-env":
+"@brandingbrand/code-app-env@npm:*, @brandingbrand/code-app-env@workspace:packages/app-env":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-app-env@workspace:packages/app-env"
   dependencies:
@@ -2447,14 +2447,13 @@ __metadata:
     tsup: "npm:^8.0.1"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@babel/core": ^7
     "@brandingbrand/react-native-app-restart": "*"
     react: "*"
     react-native: "*"
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-cli-kit@npm:^14.0.0, @brandingbrand/code-cli-kit@workspace:packages/cli-kit":
+"@brandingbrand/code-cli-kit@npm:*, @brandingbrand/code-cli-kit@npm:^14.0.0, @brandingbrand/code-cli-kit@workspace:packages/cli-kit":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-cli-kit@workspace:packages/cli-kit"
   dependencies:
@@ -2484,7 +2483,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-cli@npm:^14.0.1, @brandingbrand/code-cli@workspace:packages/cli":
+"@brandingbrand/code-cli@npm:*, @brandingbrand/code-cli@workspace:packages/cli":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-cli@workspace:packages/cli"
   dependencies:
@@ -2542,16 +2541,17 @@ __metadata:
     "@babel/core": "npm:^7.25.2"
     "@babel/preset-env": "npm:^7.25.3"
     "@babel/runtime": "npm:^7.25.0"
-    "@brandingbrand/code-app-env": "npm:^0.0.1"
-    "@brandingbrand/code-cli": "npm:^14.0.1"
-    "@brandingbrand/code-cli-kit": "npm:^14.0.0"
-    "@brandingbrand/code-jest-config": "npm:^2.0.0"
-    "@brandingbrand/code-plugin-app-icon": "npm:^3.0.0"
-    "@brandingbrand/code-plugin-asset": "npm:^3.0.0"
+    "@brandingbrand/code-app-env": "npm:*"
+    "@brandingbrand/code-cli": "npm:*"
+    "@brandingbrand/code-cli-kit": "npm:*"
+    "@brandingbrand/code-jest-config": "npm:*"
+    "@brandingbrand/code-plugin-app-icon": "npm:*"
+    "@brandingbrand/code-plugin-asset": "npm:*"
     "@brandingbrand/code-plugin-monorepo": "link:./coderc/plugins/plugin-monorepo"
-    "@brandingbrand/code-plugin-native-navigation": "npm:^3.0.0"
-    "@brandingbrand/code-plugin-splash-screen": "npm:^3.0.0"
-    "@brandingbrand/code-preset-react-native": "npm:^1.0.2"
+    "@brandingbrand/code-plugin-native-navigation": "npm:*"
+    "@brandingbrand/code-plugin-splash-screen": "npm:*"
+    "@brandingbrand/code-preset-react-native": "npm:*"
+    "@brandingbrand/react-native-app-restart": "npm:^0.4.0"
     "@react-native-async-storage/async-storage": "npm:^2.2.0"
     "@react-native-community/cli": "npm:15.0.1"
     "@react-native-community/cli-platform-android": "npm:15.0.1"
@@ -2576,7 +2576,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-jest-config@npm:^2.0.0, @brandingbrand/code-jest-config@workspace:packages/jest-config":
+"@brandingbrand/code-jest-config@npm:*, @brandingbrand/code-jest-config@npm:^2.0.0, @brandingbrand/code-jest-config@workspace:packages/jest-config":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-jest-config@workspace:packages/jest-config"
   dependencies:
@@ -2591,7 +2591,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-app-icon@npm:^3.0.0, @brandingbrand/code-plugin-app-icon@workspace:packages/plugin-app-icon":
+"@brandingbrand/code-plugin-app-icon@npm:*, @brandingbrand/code-plugin-app-icon@workspace:packages/plugin-app-icon":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-app-icon@workspace:packages/plugin-app-icon"
   dependencies:
@@ -2610,7 +2610,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-asset@npm:^3.0.0, @brandingbrand/code-plugin-asset@workspace:packages/plugin-asset":
+"@brandingbrand/code-plugin-asset@npm:*, @brandingbrand/code-plugin-asset@workspace:packages/plugin-asset":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-asset@workspace:packages/plugin-asset"
   dependencies:
@@ -2713,7 +2713,7 @@ __metadata:
   languageName: node
   linkType: soft
 
-"@brandingbrand/code-plugin-native-navigation@npm:^3.0.0, @brandingbrand/code-plugin-native-navigation@workspace:packages/plugin-native-navigation":
+"@brandingbrand/code-plugin-native-navigation@npm:*, @brandingbrand/code-plugin-native-navigation@workspace:packages/plugin-native-navigation":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-native-navigation@workspace:packages/plugin-native-navigation"
   dependencies:
@@ -2770,7 +2770,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-splash-screen@npm:^3.0.0, @brandingbrand/code-plugin-splash-screen@workspace:packages/plugin-splash-screen":
+"@brandingbrand/code-plugin-splash-screen@npm:*, @brandingbrand/code-plugin-splash-screen@workspace:packages/plugin-splash-screen":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-splash-screen@workspace:packages/plugin-splash-screen"
   dependencies:
@@ -2850,7 +2850,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-preset-react-native@npm:^1.0.2, @brandingbrand/code-preset-react-native@workspace:packages/preset-react-native":
+"@brandingbrand/code-preset-react-native@npm:*, @brandingbrand/code-preset-react-native@workspace:packages/preset-react-native":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-preset-react-native@workspace:packages/preset-react-native"
   dependencies:

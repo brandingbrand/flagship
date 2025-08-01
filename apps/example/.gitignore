@@ -1,0 +1,7 @@
+# Node
+node_modules/
+
+# Flagship™ Code / React Native
+android/
+ios/
+.flagshipappenvrc
