@@ -69,3 +69,5 @@ export default definePlugin({
     }
   },
 });
+
+export * from './types';
