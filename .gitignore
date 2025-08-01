@@ -30,6 +30,7 @@ dist
 # Yarn 2+
 .pnp.*
 .yarn/*
+.install-state.gz
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
