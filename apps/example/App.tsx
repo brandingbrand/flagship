@@ -16,7 +16,10 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 
 import {
   Colors,
@@ -120,4 +123,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+const AppProvider = (props: any) => {
+  return (
+    <SafeAreaProvider>
+      <App {...props} />
+    </SafeAreaProvider>
+  );
+};
+
+export default AppProvider;
