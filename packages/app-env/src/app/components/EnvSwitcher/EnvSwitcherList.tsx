@@ -4,7 +4,6 @@ import {FlatList, ListRenderItem, StyleSheet, View} from 'react-native';
 import {useEnvSwitcher} from '../../lib/context';
 import {palette} from '../../lib/theme';
 import {Button, Text} from '../ui';
-import {envName} from '../../lib/env';
 
 export interface EnvSwitcherListProps {
   environments: string[];
@@ -39,7 +38,6 @@ function EnvSwitcherListItem({name}: {name: string}) {
   }
 
   const isSelected = env === name;
-  const isActive = envName === name;
   return (
     <Button
       type={isSelected ? 'primary' : 'secondary'}

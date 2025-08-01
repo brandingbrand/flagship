@@ -52,9 +52,6 @@ function DevMenuListItemSeparatorComponent() {
 }
 
 const styles = StyleSheet.create({
-  safeAreaContainer: {
-    flex: 1,
-  },
   container: {
     flex: 1,
   },
