@@ -12,9 +12,12 @@ import {DevMenuModal} from './DevMenuModal';
 import {EnvSwitcher} from './EnvSwitcher';
 import {VersionOverlay, VersionOverlayProps} from './VersionOverlay';
 
-export type DevMenuProps = Partial<DevMenuContextType> &
-  VersionOverlayProps &
-  PropsWithChildren;
+export type DevMenuProps = PropsWithChildren<
+  Partial<DevMenuContextType> & VersionOverlayProps
+>;
+export type PresetDevMenuProps = PropsWithChildren<
+  Partial<VersionOverlayProps>
+>;
 
 export function DevMenu({
   children,
@@ -50,14 +53,18 @@ export function DevMenu({
 }
 
 /**
- * Generates a prebuilt dev menu component with the provided options.
+ * Generates a pre-built dev menu component with the provided options.
  *
  * This generator is intended for static layout navigation systems
  * where top-level context providers must be supplied as components, instead of rendered elements.
  */
-export function makeDevMenu(opts: Omit<DevMenuProps, 'children'>) {
-  function WrappedDevMenu({children}: PropsWithChildren) {
-    return <DevMenu {...opts}>{children}</DevMenu>;
+export function createDevMenu(opts: Omit<DevMenuProps, 'children'>) {
+  function WrappedDevMenu({children, ...restProps}: PresetDevMenuProps) {
+    return (
+      <DevMenu {...opts} {...restProps}>
+        {children}
+      </DevMenu>
+    );
   }
   WrappedDevMenu.displayName = 'DevMenu';
   return WrappedDevMenu;
