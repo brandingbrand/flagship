@@ -1,0 +1,67 @@
+{
+  "name": "@brandingbrand/code-app-env",
+  "version": "0.0.1",
+  "description": "Runtime environment and developer menu provider for React Native applications",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brandingbrand/flagship"
+  },
+  "bugs": "https://github.com/brandingbrand/flagship/issues",
+  "homepage": "https://brandingbrand.github.io/flagship/packages/app-env/",
+  "author": "Branding Brand <info@brandingbrand.com> (https://github.com/brandingbrand)",
+  "license": "MIT",
+  "main": "src/app/index",
+  "types": "src/app/index",
+  "exports": {
+    ".": {
+      "types": "./src/app/index.ts",
+      "default": "./src/app/index.ts"
+    },
+    "./screens/*": {
+      "types": "./src/app/screens/*.tsx",
+      "default": "./src/app/screens/*.tsx"
+    },
+    "./metro": {
+      "types": "./dist/metro.d.ts",
+      "default": "./dist/metro.js"
+    },
+    "./babel": {
+      "types": "./dist/babel.d.ts",
+      "default": "./dist/babel.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "dependencies": {
+    "cosmiconfig": "^9.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.25.2",
+    "@brandingbrand/react-native-app-restart": "^0.4.0",
+    "@react-native-async-storage/async-storage": "^1.24.0",
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/babel__core": "^7.20.5",
+    "@types/node": "^22.3.0",
+    "@types/react": "18.2.79",
+    "react": "18.2.0",
+    "react-native": "^0.75.0",
+    "react-native-sensitive-info": "^5.5.8",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "@brandingbrand/react-native-app-restart": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "create-react-native-library": {
+    "type": "module-legacy",
+    "languages": "kotlin-swift",
+    "version": "0.40.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
