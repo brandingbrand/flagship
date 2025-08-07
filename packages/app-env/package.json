@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-app-env",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Runtime environment and developer menu provider for React Native applications",
   "repository": {
     "type": "git",

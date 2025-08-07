@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-cli",
-  "version": "14.0.1",
+  "version": "14.1.0",
   "description": "cli for Flagship Code applications",
   "repository": {
     "type": "git",
@@ -40,7 +40,7 @@
     "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "@brandingbrand/code-cli-kit": "^14.0.0",
+    "@brandingbrand/code-cli-kit": "^14.1.0",
     "@brandingbrand/code-jest-config": "^2.0.0",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
