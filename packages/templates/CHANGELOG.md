@@ -1,5 +1,14 @@
 # @brandingbrand/code-templates
 
+## 14.1.0
+
+### Minor Changes
+
+- 621cd02: React Native 0.80 support
+- 4fbeb64: React Native 0.79 support
+- e3a3081: FSApp-specific native code is now conditionally injected based on project dependencies
+- 2a8972d: Add common function, and update plugin template's inline documentation
+
 ## 14.0.0
 
 ### Major Changes

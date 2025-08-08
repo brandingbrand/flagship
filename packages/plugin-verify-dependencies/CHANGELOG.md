@@ -1,5 +1,12 @@
 # @brandingbrand/code-plugin-verify-dependencies
 
+## 1.1.0
+
+### Minor Changes
+
+- 621cd02: React Native 0.80 support
+- 4fbeb64: React Native 0.79 support
+
 ## 1.0.0
 
 ### Major Changes

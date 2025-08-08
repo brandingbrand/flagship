@@ -1,5 +1,11 @@
 # @brandingbrand/code-plugin-transform-template
 
+## 1.1.0
+
+### Minor Changes
+
+- e3a3081: FSApp-specific native code is now conditionally injected based on project dependencies
+
 ## 1.0.2
 
 ### Patch Changes
