@@ -27,8 +27,8 @@ class FlagshipEnvModule(reactContext: ReactApplicationContext) :
 
     @RequiresApi(Build.VERSION_CODES.P)
     @SuppressLint("DiscouragedApi")
-    override fun getConstants(): Map<String, Any> {
-        val constants = HashMap<String, Any>()
+    override fun getConstants(): Map<String, Any?> {
+        val constants = HashMap<String, Any?>()
         val context = reactApplicationContext
 
         val envNameResourceId = resources.getIdentifier("flagship_env", "string", context.packageName)
