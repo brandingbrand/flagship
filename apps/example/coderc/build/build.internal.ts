@@ -20,10 +20,18 @@ export default defineBuild<
         scheme: 'app',
       },
     },
+    podfile: {
+      newArchEnabled: true,
+    },
   },
   android: {
     packageName: 'com.brandingbrand',
     displayName: 'Branding Brand',
+    gradle: {
+      properties: {
+        newArchEnabled: true,
+      },
+    },
   },
   codePluginAsset: {
     plugin: {

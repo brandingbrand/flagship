@@ -23,15 +23,7 @@ export default definePlugin({
    * @param {Object} _options - The options object for iOS.
    * @returns {Promise<void>} A promise that resolves when the process completes.
    */
-  ios: async function (_build: object, _options: object): Promise<void> {
-    await withUTF8(path.ios.projectPbxProj, content => {
-      return string.replace(
-        content,
-        /(..\/)+?node_modules\/react-native/gm,
-        '${REACT_NATIVE_PATH}',
-      );
-    });
-  },
+  ios: async function (_build: object, _options: object): Promise<void> {},
 
   /**
    * Function to be executed for Android platform.
@@ -55,13 +47,13 @@ export default definePlugin({
       content = string.replace(
         content,
         /(react\s+{\n(\s+))/gm,
-        '$1reactNativeDir = file("../../../../node_modules/react-native")\n$2',
+        '$1codegenDir = file("../../../../node_modules/@react-native/codegen")\n$2',
       );
 
       content = string.replace(
         content,
-        /(..\/)+?(node_modules\/@react-native-community)/gm,
-        '../../../../$2',
+        /(react\s+{\n(\s+))/gm,
+        '$1reactNativeDir = file("../../../../node_modules/react-native")\n$2',
       );
 
       return content;
