@@ -2892,8 +2892,6 @@ __metadata:
     "@types/node": "npm:^22.3.0"
     "@types/react": "npm:18.2.79"
     cosmiconfig: "npm:^9.0.0"
-    react: "npm:18.2.0"
-    react-native: "npm:^0.75.0"
     react-native-sensitive-info: "npm:^5.5.8"
     tsup: "npm:^8.0.1"
     typescript: "npm:^5.3.3"
