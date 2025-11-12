@@ -4,9 +4,9 @@ const { getCacheVersion } = require('@brandingbrand/code-app-env/metro');
 
 /**
  * Metro configuration
- * https://reactnative.dev/docs/metro
+ * https://facebook.github.io/metro/docs/configuration
  *
- * @type {import('@react-native/metro-config').MetroConfig}
+ * @type {import('metro-config').MetroConfig}
  */
 const config = {
   cacheVersion: getCacheVersion(),
