@@ -17,29 +17,9 @@ import {
  * @param {Object} options - The options object.
  */
 export default definePlugin({
-  /**
-   * Function to be executed for iOS platform.
-   * @param {Object} _build - The build configuration object for iOS.
-   * @param {Object} _options - The options object for iOS.
-   * @returns {Promise<void>} A promise that resolves when the process completes.
-   */
-  ios: async function (_build: object, _options: object): Promise<void> {
-    await withUTF8(path.ios.projectPbxProj, content => {
-      return string.replace(
-        content,
-        /(..\/)+?node_modules\/react-native/gm,
-        '${REACT_NATIVE_PATH}',
-      );
-    });
-  },
+  ios: async function (): Promise<void> {},
 
-  /**
-   * Function to be executed for Android platform.
-   * @param {Object} _build - The build configuration object for Android.
-   * @param {Object} _options - The options object for Android.
-   * @returns {Promise<void>} A promise that resolves when the process completes.
-   */
-  android: async function (_build: object, _options: object): Promise<void> {
+  android: async function (): Promise<void> {
     await withUTF8(
       path.project.resolve('android', 'settings.gradle'),
       content => {
@@ -60,8 +40,8 @@ export default definePlugin({
 
       content = string.replace(
         content,
-        /(..\/)+?(node_modules\/@react-native-community)/gm,
-        '../../../../$2',
+        /(react\s+{\n(\s+))/gm,
+        '$1codegenDir = file("../../../../node_modules/@react-native/codegen")\n$2',
       );
 
       return content;
