@@ -17,7 +17,7 @@
     "@react-native-async-storage/async-storage": "^2.2.0",
     "react": "18.2.0",
     "react-native": "^0.75.0",
-    "react-native-navigation": "7.40.3",
+    "react-native-navigation": "patch:react-native-navigation@npm%3A7.40.3#~/.yarn/patches/react-native-navigation-npm-7.40.3-e9d2e85996.patch",
     "react-native-safe-area-context": "5.5.2"
   },
   "devDependencies": {

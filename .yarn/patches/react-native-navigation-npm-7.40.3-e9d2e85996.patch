@@ -1,0 +1,106 @@
+diff --git a/lib/android/app/src/main/java/com/reactnativenavigation/utils/ReactTypefaceUtils.java b/lib/android/app/src/main/java/com/reactnativenavigation/utils/ReactTypefaceUtils.java
+index 834d734f154a9e25cbf53a8ae20de6b9f7e215b7..3fc00c3ba06b2881b4ccddf86f9083646d785b89 100644
+--- a/lib/android/app/src/main/java/com/reactnativenavigation/utils/ReactTypefaceUtils.java
++++ b/lib/android/app/src/main/java/com/reactnativenavigation/utils/ReactTypefaceUtils.java
+@@ -96,12 +96,12 @@ public class ReactTypefaceUtils {
+
+     int want = 0;
+     if ((weight == Typeface.BOLD)
+-        || ((oldStyle & Typeface.BOLD) != 0 && weight == ReactTextShadowNode.UNSET)) {
++        || ((oldStyle & Typeface.BOLD) != 0 && weight == -1)) {
+       want |= Typeface.BOLD;
+     }
+
+     if ((style == Typeface.ITALIC)
+-        || ((oldStyle & Typeface.ITALIC) != 0 && style == ReactTextShadowNode.UNSET)) {
++        || ((oldStyle & Typeface.ITALIC) != 0 && style == -1)) {
+       want |= Typeface.ITALIC;
+     }
+
+diff --git a/lib/android/app/src/main/java/com/reactnativenavigation/utils/ReactViewGroup.kt b/lib/android/app/src/main/java/com/reactnativenavigation/utils/ReactViewGroup.kt
+index f92580c7a80a5eaac3e04c58bb4726056f0d9cff..9809d88d4ce979610dabcac929a5727cdaaafe66 100644
+--- a/lib/android/app/src/main/java/com/reactnativenavigation/utils/ReactViewGroup.kt
++++ b/lib/android/app/src/main/java/com/reactnativenavigation/utils/ReactViewGroup.kt
+@@ -4,4 +4,4 @@ import com.facebook.react.views.view.ReactViewBackgroundDrawable
+ import com.facebook.react.views.view.ReactViewGroup
+
+ val ReactViewGroup.borderRadius: Float
+-    get() = (background as? ReactViewBackgroundDrawable)?.fullBorderRadius ?: 0f
+\ No newline at end of file
++    get() = 0f
+diff --git a/lib/android/app/src/main/java/com/reactnativenavigation/viewcontrollers/viewcontroller/LayoutDirectionApplier.kt b/lib/android/app/src/main/java/com/reactnativenavigation/viewcontrollers/viewcontroller/LayoutDirectionApplier.kt
+index 89216ae0c6be89049f450c737f68d1510fcf25f1..f7125a81d523e1eb6b2c3dc4d9f168e509e5ca2c 100644
+--- a/lib/android/app/src/main/java/com/reactnativenavigation/viewcontrollers/viewcontroller/LayoutDirectionApplier.kt
++++ b/lib/android/app/src/main/java/com/reactnativenavigation/viewcontrollers/viewcontroller/LayoutDirectionApplier.kt
+@@ -3,13 +3,16 @@ package com.reactnativenavigation.viewcontrollers.viewcontroller
+ import com.facebook.react.ReactInstanceManager
+ import com.facebook.react.modules.i18nmanager.I18nUtil
+ import com.reactnativenavigation.options.Options
++import com.facebook.react.bridge.ReactContext
+
+ class LayoutDirectionApplier {
+     fun apply(root: ViewController<*>, options: Options, instanceManager: ReactInstanceManager) {
+-        if (options.layout.direction.hasValue() && instanceManager.currentReactContext != null) {
++        // currentReactContext'in null olup olmadığını kontrol ediyoruz
++        val reactContext = instanceManager.currentReactContext as? ReactContext
++        if (options.layout.direction.hasValue() && reactContext != null) {
+             root.activity.window.decorView.layoutDirection = options.layout.direction.get()
+-            I18nUtil.getInstance().allowRTL(instanceManager.currentReactContext, options.layout.direction.isRtl)
+-            I18nUtil.getInstance().forceRTL(instanceManager.currentReactContext, options.layout.direction.isRtl)
++            I18nUtil.getInstance().allowRTL(reactContext, options.layout.direction.isRtl)
++            I18nUtil.getInstance().forceRTL(reactContext, options.layout.direction.isRtl)
+         }
+     }
+ }
+diff --git a/lib/android/app/src/reactNative71/java/com/reactnativenavigation/react/modal/ModalContentLayout.kt b/lib/android/app/src/reactNative71/java/com/reactnativenavigation/react/modal/ModalContentLayout.kt
+index ea8516fee7fb1f06bf8760c74db373bc4add8e41..a1f47b2301f5517a3744bd6b05428dc1fb4eb5bc 100644
+--- a/lib/android/app/src/reactNative71/java/com/reactnativenavigation/react/modal/ModalContentLayout.kt
++++ b/lib/android/app/src/reactNative71/java/com/reactnativenavigation/react/modal/ModalContentLayout.kt
+@@ -50,18 +50,24 @@ class ModalContentLayout(context: Context?) : ReactViewGroup(context), RootView{
+         }
+     }
+     override fun onChildStartedNativeGesture(child: View, androidEvent: MotionEvent?) {
+-        mJSTouchDispatcher.onChildStartedNativeGesture(androidEvent, this.getEventDispatcher())
++        androidEvent?.let {
++            mJSTouchDispatcher.onChildStartedNativeGesture(it, this.getEventDispatcher()!!)
++        }
+     }
+     override fun onChildStartedNativeGesture(androidEvent: MotionEvent?) {
+-        mJSTouchDispatcher.onChildStartedNativeGesture(androidEvent, this.getEventDispatcher())
++        androidEvent?.let {
++            mJSTouchDispatcher.onChildStartedNativeGesture(it, this.getEventDispatcher()!!)
++        }
+     }
+     override fun onChildEndedNativeGesture(child: View, androidEvent: MotionEvent?) {
+-        mJSTouchDispatcher.onChildEndedNativeGesture(androidEvent, this.getEventDispatcher())
++        androidEvent?.let {
++            mJSTouchDispatcher.onChildEndedNativeGesture(it, this.getEventDispatcher()!!)
++        }
+     }
+     override fun requestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
+     private fun getEventDispatcher(): EventDispatcher? {
+         val reactContext: ReactContext = this.getReactContext()
+-        return reactContext.getNativeModule(UIManagerModule::class.java)!!.eventDispatcher
++        return reactContext.getNativeModule(UIManagerModule::class.java)?.eventDispatcher
+     }
+
+
+@@ -74,12 +80,16 @@ class ModalContentLayout(context: Context?) : ReactViewGroup(context), RootView{
+     }
+
+     override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {
+-        mJSTouchDispatcher.handleTouchEvent(event, getEventDispatcher())
++        event?.let {
++            mJSTouchDispatcher.handleTouchEvent(it, getEventDispatcher()!!)
++        }
+         return super.onInterceptTouchEvent(event)
+     }
+
+     override fun onTouchEvent(event: MotionEvent?): Boolean {
+-        mJSTouchDispatcher.handleTouchEvent(event, getEventDispatcher())
++        event?.let {
++            mJSTouchDispatcher.handleTouchEvent(it, getEventDispatcher()!!)
++        }
+         super.onTouchEvent(event)
+         return true
+     }
