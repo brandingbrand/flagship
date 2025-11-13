@@ -20,7 +20,7 @@
     "@types/eslint": "^8.56.1",
     "eslint": "^8.56.0",
     "jest": "^29.7.0",
-    "react-native-navigation": "patch:react-native-navigation@npm%3A7.40.3#~/.yarn/patches/react-native-navigation-npm-7.40.3-e9d2e85996.patch",
+    "react-native-navigation": "8.4.3",
     "ts-jest": "^29.1.2",
     "typescript": "^5.3.3"
   },

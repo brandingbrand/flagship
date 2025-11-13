@@ -3021,6 +3021,7 @@ __metadata:
     react: "npm:19.0.0"
     react-native: "npm:0.78.3"
     react-native-bootsplash: "npm:^5.4.0"
+    react-native-navigation: "npm:8.4.3"
     react-native-safe-area-context: "npm:5.5.2"
     react-test-renderer: "npm:19.0.0"
     typescript: "npm:5.0.4"
@@ -3175,7 +3176,7 @@ __metadata:
     "@types/eslint": "npm:^8.56.1"
     eslint: "npm:^8.56.0"
     jest: "npm:^29.7.0"
-    react-native-navigation: "patch:react-native-navigation@npm%3A7.40.3#~/.yarn/patches/react-native-navigation-npm-7.40.3-e9d2e85996.patch"
+    react-native-navigation: "npm:8.4.3"
     ts-jest: "npm:^29.1.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
@@ -6693,6 +6694,13 @@ __metadata:
   dependencies:
     event-target-shim: "npm:^5.0.0"
   checksum: 10c0/90ccc50f010250152509a344eb2e71977fbf8db0ab8f1061197e3275ddf6c61a41a6edfd7b9409c664513131dd96e962065415325ef23efa5db931b382d24ca5
+  languageName: node
+  linkType: hard
+
+"abs-svg-path@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "abs-svg-path@npm:0.1.1"
+  checksum: 10c0/aa763f3843cd4d7c3eabcddc91834ab27def4c1f470b98a3bf01ebe82928629c5aeaa97766252781449e0c722e1785f8e512fea79f86d3d10f8eca220d6aa292
   languageName: node
   linkType: hard
 
@@ -14706,6 +14714,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"normalize-svg-path@npm:^1.0.1":
+  version: 1.1.0
+  resolution: "normalize-svg-path@npm:1.1.0"
+  dependencies:
+    svg-arc-to-cubic-bezier: "npm:^3.0.0"
+  checksum: 10c0/2e24e1d0a9ca7f172cec161d9c14fef616c57040664d82f6077d97c42e6e8a113f288dc0cb55e19fc4873baa0c5ddc7857d24d4a1b6df594924451d1adbb1b41
+  languageName: node
+  linkType: hard
+
 "not@npm:^0.1.0":
   version: 0.1.0
   resolution: "not@npm:0.1.0"
@@ -15236,6 +15253,13 @@ __metadata:
   version: 4.0.0
   resolution: "parse-ms@npm:4.0.0"
   checksum: 10c0/a7900f4f1ebac24cbf5e9708c16fb2fd482517fad353aecd7aefb8c2ba2f85ce017913ccb8925d231770404780df46244ea6fec598b3bde6490882358b4d2d16
+  languageName: node
+  linkType: hard
+
+"parse-svg-path@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "parse-svg-path@npm:0.1.2"
+  checksum: 10c0/005af72d535f47bbe4673108e51d657b81cb19dcc4f10ab425dd9f824066ef300ddbc83640607ef318f853a9fce7065114705531dcf88fb87fe58c287b562f2b
   languageName: node
   linkType: hard
 
@@ -15780,10 +15804,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-lifecycles-compat@npm:2.0.0":
-  version: 2.0.0
-  resolution: "react-lifecycles-compat@npm:2.0.0"
-  checksum: 10c0/fcf79779d7651370ecf5669923dcdcf9c6062997f7ad00cd72b4e4f6df1d190df502bbea70ad068689e8f90f172b8d7d86b7e098cd7e2cefef28ce0e33b06e13
+"react-lifecycles-compat@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "react-lifecycles-compat@npm:3.0.4"
+  checksum: 10c0/1d0df3c85af79df720524780f00c064d53a9dd1899d785eddb7264b378026979acbddb58a4b7e06e7d0d12aa1494fd5754562ee55d32907b15601068dae82c27
   languageName: node
   linkType: hard
 
@@ -15825,14 +15849,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-navigation@npm:7.40.3":
-  version: 7.40.3
-  resolution: "react-native-navigation@npm:7.40.3"
+"react-native-navigation@npm:8.4.3":
+  version: 8.4.3
+  resolution: "react-native-navigation@npm:8.4.3"
   dependencies:
     hoist-non-react-statics: "npm:3.x.x"
     lodash: "npm:4.17.x"
     prop-types: "npm:15.x.x"
-    react-lifecycles-compat: "npm:2.0.0"
+    react-lifecycles-compat: "npm:^3.0.4"
+    react-native-redash: "npm:^12.6.1"
+    reanimated-color-picker: "npm:^3.0.6"
+    ssim.js: "npm:^3.5.0"
     tslib: "npm:1.9.3"
   peerDependencies:
     react: "*"
@@ -15843,29 +15870,7 @@ __metadata:
       optional: true
   bin:
     rnn-link: autolink/postlink/run.js
-  checksum: 10c0/e15b0b345edc3a0fd2349f58e4000b953e797021d4b8751bc7a4e078faadeb63172302dfafc44fa29a55666cd60914fa07b0509dc6b0af16debf4bafb9d2c4e8
-  languageName: node
-  linkType: hard
-
-"react-native-navigation@patch:react-native-navigation@npm%3A7.40.3#~/.yarn/patches/react-native-navigation-npm-7.40.3-e9d2e85996.patch":
-  version: 7.40.3
-  resolution: "react-native-navigation@patch:react-native-navigation@npm%3A7.40.3#~/.yarn/patches/react-native-navigation-npm-7.40.3-e9d2e85996.patch::version=7.40.3&hash=3207df"
-  dependencies:
-    hoist-non-react-statics: "npm:3.x.x"
-    lodash: "npm:4.17.x"
-    prop-types: "npm:15.x.x"
-    react-lifecycles-compat: "npm:2.0.0"
-    tslib: "npm:1.9.3"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-    remx: "*"
-  peerDependenciesMeta:
-    remx:
-      optional: true
-  bin:
-    rnn-link: autolink/postlink/run.js
-  checksum: 10c0/de906de1890b389ab19c05cad8e28ad6bd5dce99c4c963def5b055cfd8ec2b48ced79b1b0daff4d8400daad36555be5fa3172508c046f51e786f3a4d6fafd2d2
+  checksum: 10c0/a21e4ccc6cac7ffeb7521c7b79af9e5d6ee1a61c93820a7491457e209accfccfeabbdcba9656edcd615ad88c17fed4e31a76d107d0a45ad56cf5afe02a40c439
   languageName: node
   linkType: hard
 
@@ -15880,6 +15885,23 @@ __metadata:
     react-native-windows:
       optional: true
   checksum: 10c0/168445f74a2d4e83a7e0c22e7b3402c0738d6c17856e911e10614006d639fbff2081ca6be95909a22fd282851fdefccb393669b508bb2e5e1574ded0b9d15e69
+  languageName: node
+  linkType: hard
+
+"react-native-redash@npm:^12.6.1":
+  version: 12.6.1
+  resolution: "react-native-redash@npm:12.6.1"
+  dependencies:
+    abs-svg-path: "npm:^0.1.1"
+    normalize-svg-path: "npm:^1.0.1"
+    parse-svg-path: "npm:^0.1.2"
+    use-memo-one: "npm:^1.1.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: "*"
+    react-native-reanimated: "*"
+  checksum: 10c0/1c6cd987fc215396914e4fa3b979fb31e30dafb1cbf87170740665ef9beeee3f610854c234d68421136e0de88ac784a5b856ef3eaee8d58768476748005c9ed1
   languageName: node
   linkType: hard
 
@@ -16052,6 +16074,22 @@ __metadata:
   version: 1.3.0
   resolution: "readline@npm:1.3.0"
   checksum: 10c0/7404c9edc3fd29430221ef1830867c8d87e50612e4ce70f84ecd55686f7db1c81d67c6a4dcb407839f4c459ad05dd34524a2c7a97681e91878367c68d0e38665
+  languageName: node
+  linkType: hard
+
+"reanimated-color-picker@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "reanimated-color-picker@npm:3.0.6"
+  peerDependencies:
+    expo: ">=44.0.0"
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: ">=2.0.0"
+    react-native-reanimated: ^2.0.0 || ^3.0.0
+  peerDependenciesMeta:
+    expo:
+      optional: true
+  checksum: 10c0/06a52913c33361f10757379a34a234f0cdb40dc157e016e0b87bc051a3ceb0d94e3f656aa89c39f079af7bcb977588830e7440ee5dbcc0203494b50238983343
   languageName: node
   linkType: hard
 
@@ -17642,6 +17680,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ssim.js@npm:^3.5.0":
+  version: 3.5.0
+  resolution: "ssim.js@npm:3.5.0"
+  checksum: 10c0/9e7101da17395d3acbd417aac712d8f156522e79059a27cb38882eedd5a8868e31871c8f58bec3a150f8cf0660883cf22310cbd2fd63b408c1fd0ab02fda9fbc
+  languageName: node
+  linkType: hard
+
 "ssri@npm:^12.0.0":
   version: 12.0.0
   resolution: "ssri@npm:12.0.0"
@@ -18062,6 +18107,13 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 10c0/6c4032340701a9950865f7ae8ef38578d8d7053f5e10518076e6554a9381fa91bd9c6850193695c141f32b21f979c985db07265a758867bac95de05f7d8aeb39
+  languageName: node
+  linkType: hard
+
+"svg-arc-to-cubic-bezier@npm:^3.0.0":
+  version: 3.2.0
+  resolution: "svg-arc-to-cubic-bezier@npm:3.2.0"
+  checksum: 10c0/6dddbaff9defa55a891593b48ba6bd5f1b3c89d747cf818a8342ec4cac10b06de6cd37478dc9483cba5e8d1a7d3dac2d0bbab47858d207a2d1a6a61b5acdd442
   languageName: node
   linkType: hard
 
@@ -19131,6 +19183,15 @@ __metadata:
   dependencies:
     punycode: "npm:^2.1.0"
   checksum: 10c0/4ef57b45aa820d7ac6496e9208559986c665e49447cb072744c13b66925a362d96dd5a46c4530a6b8e203e5db5fe849369444440cb22ecfc26c679359e5dfa3c
+  languageName: node
+  linkType: hard
+
+"use-memo-one@npm:^1.1.1":
+  version: 1.1.3
+  resolution: "use-memo-one@npm:1.1.3"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/3d596e65a6b47b2f1818061599738e00daad1f9a9bb4e5ce1f014b20a35b297e50fe4bf1d8c1699ab43ea97f01f84649a736c15ceff96de83bfa696925f6cc6b
   languageName: node
   linkType: hard
 

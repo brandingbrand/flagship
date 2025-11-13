@@ -2,13 +2,15 @@ import {
   type BuildConfig,
   type PrebuildOptions,
   definePlugin,
-  fs,
   version,
 } from '@brandingbrand/code-cli-kit';
 
+import {ios as ios72} from './ios/0.72';
+import {ios as ios77} from './ios/0.77';
 import {android as android72} from './android/0.72';
 import {android as android73} from './android/0.73';
 import {android as android74} from './android/0.74';
+import {android as android77} from './android/0.77';
 
 /**
  * Defines a plugin with functions for both iOS and Android platforms.
@@ -27,29 +29,12 @@ export default definePlugin({
     build: BuildConfig,
     options: PrebuildOptions,
   ): Promise<void> {
-    // Resolve path to react-native-navigation postlink path module
-    const rnnPath = require.resolve(
-      'react-native-navigation/autolink/postlink/path.js',
-      {paths: [process.cwd()]},
-    );
+    const pluginIOS = version.select({
+      '0.72': ios72,
+      '0.77': ios77,
+    });
 
-    // Update mainApplicationJava in postlink path module
-    await fs.update(rnnPath, /(mainApplicationJava)\S*(replace)/, `$1?.$2`);
-
-    // Resolve path to react-native-navigation postlink IOS script
-    const scriptPath = require.resolve(
-      'react-native-navigation/autolink/postlink/postLinkIOS.js',
-      {paths: [process.cwd()]},
-    );
-
-    // Set executable permission for postlink IOS script
-    await fs.chmod(scriptPath, '755');
-
-    // Require postlink IOS script
-    const rnnIOSLink = require(scriptPath);
-
-    // Execute postlink IOS script
-    await rnnIOSLink();
+    return pluginIOS(build, options);
   },
 
   /**
@@ -66,6 +51,7 @@ export default definePlugin({
       '0.72': android72,
       '0.73': android73,
       '0.74': android74,
+      '0.77': android77,
     });
 
     return pluginAndroid(build, options);
