@@ -2890,8 +2890,10 @@ __metadata:
     "@repo/typescript-config": "npm:*"
     "@types/babel__core": "npm:^7.20.5"
     "@types/node": "npm:^22.3.0"
-    "@types/react": "npm:18.2.79"
+    "@types/react": "npm:^19.0.0"
     cosmiconfig: "npm:^9.0.0"
+    react: "npm:19.0.0"
+    react-native: "npm:0.78.3"
     react-native-sensitive-info: "npm:^5.5.8"
     tsup: "npm:^8.0.1"
     typescript: "npm:^5.3.3"
@@ -6154,16 +6156,6 @@ __metadata:
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
   checksum: 10c0/6b1c73beafbbc582dc54ffd92b3779f6d850e8f6b5ce5d04b31e9498a3d77bfc416bb08f0d8d63ab4f4649ccd6639996472416871c01c74a528b16a55faeaf38
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:18.2.79":
-  version: 18.2.79
-  resolution: "@types/react@npm:18.2.79"
-  dependencies:
-    "@types/prop-types": "npm:*"
-    csstype: "npm:^3.0.2"
-  checksum: 10c0/c8a8a005d8830a48cc1ef93c3510c4935a2a03e5557dbecaa8f1038450cbfcb18eb206fa7fba7077d54b8da21faeb25577e897a333392770a7797f625b62c78a
   languageName: node
   linkType: hard
 
