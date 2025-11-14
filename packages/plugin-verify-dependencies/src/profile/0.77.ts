@@ -24,6 +24,13 @@ export default {
     required: true,
   },
   /**
+   * React Native Navigation package configuration
+   * @property {string} version - Target version ^8.0.0
+   */
+  'react-native-navigation': {
+    version: '^8.0.0',
+  },
+  /**
    * React Native Babel preset configuration
    * @property {string} version - The semantic version requirement
    * @property {string[]} capabilities - Required Babel dependencies
