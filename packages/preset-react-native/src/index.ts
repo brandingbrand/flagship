@@ -17,4 +17,5 @@ export default [
     '@brandingbrand/code-plugin-packager-install',
     {index: Number.MAX_SAFE_INTEGER},
   ],
+  '@brandingbrand/code-plugin-network-security-config',
 ];
