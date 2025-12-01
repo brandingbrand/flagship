@@ -3185,6 +3185,24 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@brandingbrand/code-plugin-network-security-config@npm:^1.0.0, @brandingbrand/code-plugin-network-security-config@workspace:packages/plugin-network-security-config":
+  version: 0.0.0-use.local
+  resolution: "@brandingbrand/code-plugin-network-security-config@workspace:packages/plugin-network-security-config"
+  dependencies:
+    "@brandingbrand/code-cli-kit": "npm:^14.0.0"
+    "@brandingbrand/code-jest-config": "npm:^2.0.0"
+    "@repo/eslint-config": "npm:*"
+    "@repo/typescript-config": "npm:*"
+    "@types/eslint": "npm:^8.56.1"
+    eslint: "npm:^8.56.0"
+    jest: "npm:^29.7.0"
+    ts-jest: "npm:^29.1.2"
+    typescript: "npm:^5.3.3"
+  peerDependencies:
+    "@brandingbrand/code-cli-kit": ^14.2.0
+  languageName: unknown
+  linkType: soft
+
 "@brandingbrand/code-plugin-packager-install@npm:^1.0.0, @brandingbrand/code-plugin-packager-install@workspace:packages/plugin-packager-install":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-packager-install@workspace:packages/plugin-packager-install"
@@ -3308,6 +3326,7 @@ __metadata:
   dependencies:
     "@brandingbrand/code-plugin-clean": "npm:^1.0.0"
     "@brandingbrand/code-plugin-env": "npm:^1.1.0"
+    "@brandingbrand/code-plugin-network-security-config": "npm:^1.0.0"
     "@brandingbrand/code-plugin-packager-install": "npm:^1.0.0"
     "@brandingbrand/code-plugin-transform-template": "npm:^1.1.0"
     "@brandingbrand/code-plugin-verify-dependencies": "npm:^1.1.0"
