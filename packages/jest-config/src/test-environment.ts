@@ -121,6 +121,13 @@ export default class CustomEnvironment extends TestEnvironment {
     await fse.copy(android, path.resolve(dir, 'android'));
     await fse.copy(supportFiles, dir);
 
+    // Create a package.json file in the temporary directory
+    // This is necessary for some code-cli-kit tools which read the project package.json
+    await fse.writeFile(
+      path.resolve(dir, 'package.json'),
+      JSON.stringify({name: 'test-project', version: '1.0.0'}, null, 2),
+    );
+
     // Copy fixtures if provided
     if (fixtures && typeof fixtures === 'string') {
       await fse.copy(path.resolve(path.dirname(this.testPath), fixtures), dir);
