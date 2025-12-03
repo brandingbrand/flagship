@@ -4,7 +4,6 @@
  */
 
 import {
-  NetworkSecurityCertificates,
   NetworkSecurityConfigXML,
   definePlugin,
   fs,
@@ -45,20 +44,6 @@ const baseConfigs: Record<
   },
 };
 
-function normalizeCertificates(
-  certificates: (NetworkSecurityCertificates | `@raw/${string}`)[],
-): NetworkSecurityCertificates[] {
-  return certificates.map<NetworkSecurityCertificates>(it => {
-    if (typeof it === 'string') {
-      return {
-        $: {src: it},
-      };
-    } else {
-      return it;
-    }
-  });
-}
-
 export default definePlugin<CodePluginNetworkSecurityConfig>({
   android: async build => {
     const {
@@ -95,27 +80,27 @@ export default definePlugin<CodePluginNetworkSecurityConfig>({
         ...presetConfig,
       };
 
-      if (certificates && certificates.length > 0) {
+      if (certificates) {
         config['base-config'] = {
           ...config['base-config'],
           'trust-anchors': {
             certificates: [
               ...(presetConfig['base-config']?.['trust-anchors']
                 ?.certificates ?? []),
-              ...normalizeCertificates(certificates),
+              ...certificates,
             ],
           },
         };
       }
 
-      if (debugCertificates && debugCertificates.length > 0) {
+      if (debugCertificates) {
         config['debug-overrides'] = {
           ...config['debug-overrides'],
           'trust-anchors': {
             certificates: [
               ...(presetConfig['debug-overrides']?.['trust-anchors']
                 ?.certificates ?? []),
-              ...normalizeCertificates(debugCertificates),
+              ...debugCertificates,
             ],
           },
         };

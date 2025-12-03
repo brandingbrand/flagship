@@ -1,8 +1,11 @@
 import type {
   NetworkSecurityCertificates,
   NetworkSecurityDomainConfig,
+  NetworkSecurityPin,
   Plugin,
 } from '@brandingbrand/code-cli-kit';
+
+export type CertificateEntry = NetworkSecurityCertificates;
 
 export type NetworkSecurityConfigKind = 'debug' | 'release';
 
@@ -21,32 +24,24 @@ export type CodePluginNetworkSecurityConfig = {
     /**
      * Directory containing custom certificates to include in the network security config.
      *
-     * **IMPORTANT:** configuring this option will only copy the certificates to the `res/raw` directory.
+     * **IMPORTANT:** configuring this option will only copy the contents of the specified directory to the `res/raw` directory.
      * To include the certificate in the network security config, you must also include the certificate through the `certificates`, `debugCertificates`, or `domainConfig` options.
-     *
      */
     certificatesDir?: string;
 
     /**
-     * Additional custom certificates to include in the `base-config` section of the network security config.
+     * Additional custom certificates elements to include in the `base-config` section of the network security config.
      *
      * This option will not overwrite the default certificates configuration included by the `preset` option.
      */
-    certificates?: (NetworkSecurityCertificates | `@raw/${string}`)[];
+    certificates?: NetworkSecurityCertificates[];
 
     /**
-     * Additional custom certificates to include in the `debug-overrides` section of the network security config.
+     * Additional custom certificates elements to include in the `debug-overrides` section of the network security config.
      *
      * This option will not overwrite the default certificates configuration included by the `preset` option.
-     *
-     * If the value is a string, it is treated as the resource ID of the certificate.
-     *
-     * @example ```ts
-     * debugCertificates: [
-     *   '@raw/cert.pem',
-     *   { src: '@raw/another-cert.pem' }
      */
-    debugCertificates?: (NetworkSecurityCertificates | `@raw/${string}`)[];
+    debugCertificates?: NetworkSecurityCertificates[];
 
     /**
      * Custom domain configuration to include in the network security config.
