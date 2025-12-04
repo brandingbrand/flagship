@@ -193,8 +193,8 @@ declare module '@brandingbrand/code-app-env' {
 Create environment configuration files in your project. These files define environment-specific settings, and are named using the pattern **`env.<mode>.ts`**. For example:
 
 ```typescript title="env.development.ts"
-import type {AppEnvironment} from '@brandingbrand/code-app-env';
-import {defineEnv} from '@brandingbrand/code-cli-kit';
+import { defineEnv } from "@brandingbrand/code-cli-kit";
+import { type AppEnvironment } from "@brandingbrand/code-app-env";
 
 export default defineEnv<AppEnvironment>({
   apiUrl: 'https://api-dev.example.com',
@@ -203,8 +203,8 @@ export default defineEnv<AppEnvironment>({
 ```
 
 ```typescript title="env.staging.ts"
-import type {AppEnvironment} from '@brandingbrand/code-app-env';
-import {defineEnv} from '@brandingbrand/code-cli-kit';
+import { defineEnv } from "@brandingbrand/code-cli-kit";
+import { type AppEnvironment } from "@brandingbrand/code-app-env";
 
 export default defineEnv<AppEnvironment>({
   apiUrl: 'https://api-staging.example.com',
@@ -213,8 +213,8 @@ export default defineEnv<AppEnvironment>({
 ```
 
 ```typescript title="env.production.ts"
-import type {AppEnvironment} from '@brandingbrand/code-app-env';
-import {defineEnv} from '@brandingbrand/code-cli-kit';
+import { defineEnv } from "@brandingbrand/code-cli-kit";
+import { type AppEnvironment } from "@brandingbrand/code-app-env";
 
 export default defineEnv<AppEnvironment>({
   apiUrl: 'https://api.example.com',
@@ -255,7 +255,7 @@ In your `android/app/src/main/res/values/strings.xml`, add the following entries
   <string name="flagship_env">development</string> <!-- or 'staging', 'production', etc. -->
   <string name="flagship_dev_menu">true</string> <!-- or 'false' to disable -->
 </resources>
-
+```
 
 ### **`.flagshipappenvrc` Configuration**
 
@@ -366,7 +366,7 @@ The `FlagshipEnv` module provides constants and methods to manage environment se
 - **`appVersion`**: The current app version.
 
     ```typescript
-    import {FlagshipEnv} from '@brandingbrand/code-app-env';
+    import { FlagshipEnv } from "@brandingbrand/code-app-env";
 
     console.log(FlagshipEnv.appVersion); // '1.0.0'
     ```
@@ -374,7 +374,7 @@ The `FlagshipEnv` module provides constants and methods to manage environment se
 - **`buildNumber`**: The current build number.
 
     ```typescript
-    import {FlagshipEnv} from '@brandingbrand/code-app-env';
+    import { FlagshipEnv } from "@brandingbrand/code-app-env";
 
     console.log(FlagshipEnv.buildNumber); // '42'
     ```
@@ -382,7 +382,7 @@ The `FlagshipEnv` module provides constants and methods to manage environment se
 - **`envName`**: Current environment name.
 
     ```typescript
-    import {FlagshipEnv} from '@brandingbrand/code-app-env';
+    import { FlagshipEnv } from "@brandingbrand/code-app-env";
 
     console.log(FlagshipEnv.envName); // 'development'
     ```
@@ -390,7 +390,7 @@ The `FlagshipEnv` module provides constants and methods to manage environment se
 - **`showDevMenu`**: Boolean indicating if the developer menu is enabled.
 
     ```typescript
-    import {FlagshipEnv} from '@brandingbrand/code-app-env';
+    import { FlagshipEnv } from "@brandingbrand/code-app-env";
 
     console.log(FlagshipEnv.showDevMenu); // true or false
     ```
@@ -401,7 +401,7 @@ The `FlagshipEnv` module provides constants and methods to manage environment se
     - `env` is available as both a direct import, and as a property of `FlagshipEnv`.
 
     ```typescript
-    import {env, FlagshipEnv} from '@brandingbrand/code-app-env';
+    import { env, FlagshipEnv } from "@brandingbrand/code-app-env";
 
     console.log(env.apiUrl); // 'https://api-dev.example.com'
 
@@ -412,7 +412,7 @@ The `FlagshipEnv` module provides constants and methods to manage environment se
 - **`envs`**: Map of all available environments.
 
     ```typescript
-    import {FlagshipEnv} from '@brandingbrand/code-app-env';
+    import { FlagshipEnv } from "@brandingbrand/code-app-env";
 
     console.log(FlagshipEnv.envs); // Map with keys 'development', 'staging', 'production'
     ```
@@ -423,8 +423,8 @@ The `FlagshipEnv` module provides constants and methods to manage environment se
     - Note: This method requires a restart to apply changes.
 
     ```typescript
-    import AppRestart from '@brandingbrand/react-native-app-restart';
-    import {FlagshipEnv} from '@brandingbrand/code-app-env';
+    import AppRestart from "@brandingbrand/react-native-app-restart";
+    import { FlagshipEnv } from "@brandingbrand/code-app-env";
 
     await FlagshipEnv.setEnv('staging');
     AppRestart.restartApplication(); // Restart the app to apply changes
@@ -451,8 +451,8 @@ The `DevMenu` component provides a developer menu for managing environments and 
 #### **Example**
 
 ```tsx
-import {DevMenu} from '@brandingbrand/code-app-env';
-import {DebugScreen} from './DebugScreen';
+import { DevMenu } from "@brandingbrand/code-app-env";
+import { DebugScreen } from "./DebugScreen";
 
 // We recommend creating a static array to avoid potentially-expensive re-renders.
 const devMenuScreens = [DebugScreen];
@@ -479,9 +479,9 @@ You may create custom screens for the `DevMenu` to add additional debugging or t
 You can use the `defineDevMenuScreen` utility to ensure your screen is always configured properly.
 
 ```tsx title="DebugScreen.tsx"
-import React from 'react';
-import {View, Text, Button} from 'react-native';
-import {defineDevMenuScreen} from '@brandingbrand/code-app-env';
+import React from "react";
+import { View, Text, Button } from "react-native";
+import { defineDevMenuScreen } from "@brandingbrand/code-app-env";
 
 export const DebugScreen = defineDevMenuScreen('DebugScreen', () => (
   <View>
