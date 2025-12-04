@@ -1,0 +1,384 @@
+---
+title: plugin-network-security-config
+---
+
+The "plugin-network-security-config" package is an essential component within the Flagship Code ecosystem, meticulously crafted to simplify the creation of splash screens for iOS and Android projects. Leveraging its robust functionality, developers can effortlessly generate a personalized splash screen using a logo or link pre-defined assets, which are then seamlessly copied to their native projects. This plugin streamlines the entire process, enabling developers to create captivating splash screens with ease while ensuring consistency across platforms.
+
+## Install
+
+Add `@brandingbrand/code-plugin-network-security-config` as a development dependency to your React Native project.
+
+:::caution
+This package is included in `@brandingbrand/code-preset-react-native`.
+
+If you are using this preset, skip this step and avoid installing this package directly.
+:::
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+<Tabs syncKey="pkgmgr-run">
+<TabItem label="yarn">
+
+```sh
+yarn add --dev @brandingbrand/code-plugin-network-security-config
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npm install --save-dev @brandingbrand/code-plugin-network-security-config
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+pnpm add --save-dev @brandingbrand/code-plugin-network-security-config
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bun add --dev @brandingbrand/code-plugin-network-security-config
+```
+
+</TabItem>
+</Tabs>
+
+Your package.json should now be updated, `@brandingbrand/code-plugin-network-security-config` should be listed as a `devDependency`.
+
+```json title="package.json" ins={10}
+{
+  "name": "my-awesome-app",
+  "version": "1.0.0",
+  "author": "Your Name <email@example.com>",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-native": "~0.72.0"
+  },
+  "devDependencies": {
+    "@brandingbrand/code-plugin-network-security-config": "2.0.0"
+  }
+}
+```
+
+## Configure
+
+### Flagship Code Configuration
+
+Upon installing the dependency, it is imperative to update the `flagship-code.config.ts` file. Specifically, ensure that the `plugins` array includes the newly installed dependency. This step is crucial, as Flagship Code will only invoke the plugin if it is listed within this array. By including the dependency in the `plugins` array, you enable Flagship Code to recognize and utilize the functionality provided by the plugin during project execution.
+
+:::caution
+This plugin is included in `@brandingbrand/code-preset-react-native`.
+
+If you are using this preset, you should skip this step.
+:::
+<Tabs syncKey="flagship-configure-preset">
+<TabItem label="Standalone">
+
+```ts title="flagship-code.config.ts" ins={9}
+import { defineConfig } from "@brandingbrand/code-cli-kit";
+
+export default defineConfig({
+  buildPath: "./coderc/build",
+  envPath: "./coderc/env",
+  pluginPath: "./coderc/plugins",
+  plugins: [
+    // other plugins
+    "@brandingbrand/code-plugin-network-security-config",
+  ],
+});
+```
+</TabItem>
+<TabItem label="With code-preset-react-native">
+
+```ts title="flagship-code.config.ts"
+import { defineConfig } from "@brandingbrand/code-cli-kit";
+
+export default defineConfig({
+  buildPath: "./coderc/build",
+  envPath: "./coderc/env",
+  pluginPath: "./coderc/plugins",
+  preset: "@brandingbrand/code-preset-react-native",
+  plugins: [
+    // other plugins
+  ],
+});
+```
+</TabItem>
+</Tabs>
+
+For more detailed guidance and information, please refer to the [Flagship Code Configuration](/guides/config) guide. This resource offers comprehensive instructions and insights to assist you in configuring Flagship Code effectively.
+
+### Build Configuration
+
+Depending on the plugin being utilized, additional configuration may be required. In the case of the `plugin-network-security-config`, additional configuration to generate a production-ready `network_security_config.xml` is not required.
+
+Generating a debuggable `network_security_config.xml` in development or internal builds does require additional configuration.
+
+<Tabs syncKey="flagship-configure-preset">
+<TabItem label="Standalone">
+
+```ts title="build.internal.ts" ins={2,13-17} ins="<CodePluginNetworkSecurityConfig>"
+import { defineBuild } from "@brandingbrand/code-cli-kit";
+import { type CodePluginNetworkSecurityConfig } from "@brandingbrand/code-plugin-network-security-config";
+
+export default defineBuild<CodePresetReactNative & CodePluginNetworkSecurityConfig>({
+  ios: {
+    bundleId: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  android: {
+    packageName: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  codePluginNetworkSecurityConfig: {
+    plugin: {
+      preset: 'debug', // or 'release' for production builds
+    },
+  },
+});
+```
+</TabItem>
+<TabItem label="With code-preset-react-native">
+
+```ts title="build.internal.ts" ins={13-17}
+import { defineBuild } from "@brandingbrand/code-cli-kit";
+import { type CodePresetReactNative } from "@brandingbrand/code-preset-react-native";
+
+export default defineBuild<CodePresetReactNative>({
+  ios: {
+    bundleId: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  android: {
+    packageName: "com.brandingbrand",
+    displayName: "Branding Brand",
+  },
+  codePluginNetworkSecurityConfig: {
+    plugin: {
+      preset: 'debug', // or 'release' for production builds
+    },
+  },
+});
+```
+</TabItem>
+</Tabs>
+
+#### Options
+
+##### `preset`
+
+**type:** `'debug' | 'release'`
+
+**default:** `'release'`
+
+Determines the base configuration for the generated network security config.
+
+<Tabs>
+<TabItem label="Release">
+
+```xml title="network_security_config.xml"
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config>
+        <trust-anchors>
+            <certificates src="system"/>
+        </trust-anchors>
+    </base-config>
+</network-security-config>
+```
+</TabItem>
+<TabItem label="Debug">
+
+```xml title="network_security_config.xml"
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <debug-overrides>
+        <trust-anchors>
+            <certificates src="user"/>
+            <certificates src="system"/>
+        </trust-anchors>
+    </debug-overrides>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system"/>
+            <certificates src="user"/>
+        </trust-anchors>
+    </base-config>
+</network-security-config>
+```
+</TabItem>
+</Tabs>
+
+##### `certificatesDir`
+
+**type:** `string`
+
+Optional path to a directory, relative to the project root, which contains custom certificates to define within the network security config.
+
+For more information on defining custom certificate authorities, see [Android Developer Docs](https://developer.android.com/privacy-and-security/security-config#CustomTrust)
+
+:::caution
+Configuring this option will only copy the certificates to the `res/raw` directory.
+
+To include the certificate in the network security config, you must also include the certificate through the `certificates`, `debugCertificates`, or `domainConfig` options.
+:::
+
+
+##### `certificates`,
+
+**type:** [`NetworkSecurityCertificates[]`](#networksecuritycertificates)
+
+`certificates` xml elements to append to the `base-config` section of the network security config.
+
+This option will not overwrite the default configuration included by the `preset` option.
+
+Elements are expressed as JSON objects. See the [type definition](#networksecuritycertificates) below for more details.
+
+##### `debugCertificates`,
+
+**type:** [`NetworkSecurityCertificates[]`](#networksecuritycertificates)
+
+`certificates` xml elements to append to the `debug-overrides` section of the network security config.
+
+This option will not overwrite the default configuration included by the `preset` option.
+
+Elements are expressed as JSON objects. See the [type definition](#networksecuritycertificates) below for more details.
+
+##### `domainConfig`
+
+**type:** [`NetworkSecurityDomainConfig[]`](#networksecuritydomainconfig)
+
+
+`domain-config` XML elements to append to the network security config.
+
+This option allows for full customization of the `domain-config` section of the network security config.
+
+### Type Definitions
+
+##### `NetworkSecurityCertificates`
+
+The JSON representation of a `certificates` xml element, as defined in `code-cli-kit`.
+
+```ts
+export type NetworkSecurityCertificates = {
+  $: {
+    /** The source of the certificates. Can be 'system', 'user', or a raw resource path. */
+    src: 'system' | 'user' | `@raw/${string}`;
+    /** Indicates whether to override existing pins for the certificates. */
+    overridePins?: boolean;
+  }
+};
+```
+
+**Example:**
+
+<Tabs>
+<TabItem label="Source">
+```ts
+{ $: { src: 'system', overridePins: true, } };
+```
+</TabItem>
+<TabItem label="Generated XML">
+```xml
+<certificates src="system" overridePins="true"/>
+```
+</TabItem>
+</Tabs>
+
+##### `NetworkSecurityDomainConfig`
+
+The JSON representation of a `domain-config` xml element, as defined in `code-cli-kit`.
+
+Domain configurations allow for granular control over network security settings for specific domains, including cleartext traffic permissions, root certificate trust anchors, and server certificate pinning.
+
+```ts
+type NetworkSecurityDomainConfig = {
+  $?: {
+    /** Indicates whether cleartext traffic is permitted for the domain configuration. */
+    cleartextTrafficPermitted?: boolean;
+  }
+  /** Array of domain entries. Must have at least one domain. */
+  domain: {
+    $?: {
+      /** Indicates whether subdomains are included. */
+      includeSubdomains?: boolean;
+    };
+    /** The domain string. */
+    _: string;
+  }[];
+  /** Optional: Certificate transparency validation configuration. */
+  certificateTransparency?: {
+    /** Indicates whether certificate validation through Certificate Transparency logs is enabled. */
+    $: { enabled: boolean; };
+  };
+  /** Optional: Trust anchors section in the domain configuration. */
+  ['trust-anchors']?: {
+    certificates: NetworkSecurityCertificates[];
+  };
+  /** Optional: Pin set in the domain configuration. Enables SSL certificate pinning */
+  ['pin-set']?: {
+    $?: {
+      /** Optional: Expiration date for the pin set in ISO 8601 format (YYYY-MM-DD). */
+      expiration?: string;
+    }
+    pin: {
+      $: {
+        /** The hash algorithm used for the pin. Currently, only SHA-256 is supported by Android */
+        digest: 'SHA-256';
+      };
+      /** The public key pin value */
+      _: string;
+    }[]
+  };
+  /** Optional: Nested domain configurations. */
+  ['domain-config']?: NetworkSecurityDomainConfig[];
+};
+```
+
+**Example:**
+<Tabs>
+<TabItem label="Source">
+```ts
+export const exampleDomainConfig = {
+  $: { cleartextTrafficPermitted: true },
+  'domain': [{ $: { includeSubdomains: true }, _: "example.com" }],
+  'trust-anchors': {
+    certificates: [
+      { $: { src: 'system' } },
+      { $: { src: 'user' } }
+    ]
+  },
+  'pin-set': {
+    $: { expiration: "2025-12-31" },
+    pin: [
+      { $: { digest: 'SHA-256' }, _: 'Base64EncodedPinValueHere==' }
+    ]
+  }
+}
+```
+</TabItem>
+<TabItem label="Generated XML">
+```xml
+<domain-config
+  cleartextTrafficPermitted="true">
+  <domain includeSubdomains="true">example.com</domain>
+  <trust-anchors>
+
+    <certificates src="system"/>
+    <certificates src="user"/>
+
+  </trust-anchors>
+  <pin-set
+    expiration="2025-12-31">
+
+    <pin digest="SHA-256">Base64EncodedPinValueHere==</pin>
+
+  </pin-set>
+</domain-config>
+```
+</TabItem>
+</Tabs>

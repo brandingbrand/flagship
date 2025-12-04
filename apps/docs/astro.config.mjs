@@ -75,6 +75,10 @@ export default defineConfig({
               link: "/packages/plugin-native-navigation/",
             },
             {
+              label: "plugin-network-security-config",
+              link: "/packages/plugin-network-security-config/",
+            },
+            {
               label: "plugin-permissions",
               link: "/packages/plugin-permissions/",
             },
