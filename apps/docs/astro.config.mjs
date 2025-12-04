@@ -9,9 +9,13 @@ export default defineConfig({
       logo: {
         src: "./src/assets/logo.svg",
       },
-      social: {
-        github: "https://github.com/brandingbrand/flagship",
-      },
+      social: [
+        {
+          href: "https://github.com/brandingbrand/flagship",
+          icon: "github",
+          label: "GitHub",
+        }
+      ],
       customCss: ["./src/styles.css"],
       sidebar: [
         {
