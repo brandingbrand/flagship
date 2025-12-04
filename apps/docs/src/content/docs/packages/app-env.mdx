@@ -20,7 +20,7 @@ To add the **`code-app-env`** package to your project, follow these steps:
 
 import {Tabs, TabItem} from '@astrojs/starlight/components';
 
-<Tabs>
+<Tabs syncKey="pkgmgr-run">
 <TabItem label="yarn">
 
 ```sh
@@ -86,7 +86,7 @@ If you are using **React Native 0.60+**, auto-linking should handle the native d
 
 3. Update **`MainApplication`** to include the package:
 
-    <Tabs>
+    <Tabs syncKey="android-lang">
     <TabItem label="Java">
       ```java title="MainApplication.java" ins={1,7}
       import com.brandingbrand.flagshipenv;

@@ -36,7 +36,7 @@ There are two core packages that Flagship Code depends on for ephermal native co
 
 import {Tabs, TabItem} from '@astrojs/starlight/components';
 
-<Tabs>
+<Tabs syncKey="pkgmgr-run">
 <TabItem label="yarn">
 
 ```sh
@@ -185,7 +185,7 @@ android
 
 You can now safely execute the prebuild command to generate your native iOS and Android projects. Ensure to run this command from the root directory of your project.
 
-<Tabs>
+<Tabs syncKey="pkgmgr-run">
 <TabItem label="yarn">
 
 ```sh
@@ -220,7 +220,7 @@ bunx flagship-code prebuild --build internal --env dev
 
 The directories for both iOS and Android projects should now be available. You can proceed to utilize the standard methods for running the iOS and Android applications.
 
-<Tabs>
+<Tabs syncKey="pkgmgr-run">
 <TabItem label="yarn">
 
 ```sh
