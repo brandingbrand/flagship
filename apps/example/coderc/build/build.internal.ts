@@ -67,4 +67,9 @@ export default defineBuild<
       hiddenEnvs: ['store'],
     },
   },
+  codePluginNetworkSecurityConfig: {
+    plugin: {
+      preset: 'debug',
+    },
+  },
 });
