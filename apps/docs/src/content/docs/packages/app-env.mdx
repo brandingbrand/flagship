@@ -300,19 +300,20 @@ During `prebuild`, the CLI will generate the `.flagshipappenvrc` file in your pr
 
 ##### Configuring `hiddenEnvs`
 
-You can configure the `hiddenEnvs` property within each build config via the `code-plugin-env` plugin. This allows you to exclude certain environments from the resulting app bundle, which is useful for preventing production environments from use in internal builds.
+You can configure the `hiddenEnvs` property within each build config via the `@brandingbrand/code-plugin-env` plugin. This allows you to exclude certain environments from the resulting app bundle, which is useful for preventing production environments from use in internal builds.
 
-```typescript title="build.internal.ts" ins={4,12-16}
-import {defineBuild} from '@brandingbrand/code-cli-kit';
-import type {CodePluginAsset} from '@brandingbrand/code-plugin-asset';
-import type {CodePluginAppIcon} from '@brandingbrand/code-plugin-app-icon';
-import type {CodePluginEnvironment} from '@brandingbrand/code-plugin-env';
+:::note
+This plugin is included by default with the `@brandingbrand/code-preset-react-native` preset.
+:::
 
-export default defineBuild<
-  CodePluginAsset &
-    CodePluginAppIcon &
-    CodePluginEnvironment
->({
+<Tabs syncKey="flagship-configure-preset">
+<TabItem label="Standalone">
+
+```ts title="build.internal.ts" ins={6-10} ins="<CodePluginEnvironment>"
+import { defineBuild } from "@brandingbrand/code-cli-kit";
+import { type CodePluginEnvironment } from "@brandingbrand/code-plugin-env";
+
+export default defineBuild<CodePluginEnvironment>({
   // ...
   codePluginEnvironment: {
     plugin: {
@@ -321,6 +322,23 @@ export default defineBuild<
   },
 });
 ```
+</TabItem>
+<TabItem label="With code-preset-react-native">
+```ts title="build.internal.ts" ins={6-10}
+import { defineBuild } from "@brandingbrand/code-cli-kit";
+import { type CodePresetReactNative } from "@brandingbrand/code-preset-react-native";
+
+export default defineBuild<CodePresetReactNative>({
+  // ...
+  codePluginEnvironment: {
+    plugin: {
+      hiddenEnvs: ['production'],
+    },
+  },
+});
+```
+</TabItem>
+</Tabs>
 
 
 #### Generating the `.flagshipappenvrc` file manually

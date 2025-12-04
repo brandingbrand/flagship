@@ -122,11 +122,12 @@ export default defineBuild<CodePluginSplashScreen>({
 
 For the purpose of illustration, the `build.internal.ts` configuration shall be presented as follows with the legacy splash screen:
 
-```ts title="build.internal.ts"
+```ts title="build.internal.ts" ins={14-31} ins=" & CodePluginSplashScreen" ins={3}
 import { defineBuild } from "@brandingbrand/code-cli-kit";
+import { type CodePresetReactNative } from "@brandingbrand/code-preset-react-native";
 import { type CodePluginSplashScreen } from "@brandingbrand/code-plugin-splash-screen";
 
-export default defineBuild<CodePluginSplashScreen>({
+export default defineBuild<CodePresetReactNative & CodePluginSplashScreen>({
   ios: {
     bundleId: "com.brandingbrand",
     displayName: "Branding Brand",

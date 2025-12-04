@@ -64,13 +64,14 @@ Your package.json should now be updated, `@brandingbrand/code-plugin-app-icon` s
 
 Upon installing the dependency, it is imperative to update the `flagship-code.config.ts` file. Specifically, ensure that the `plugins` array includes the newly installed dependency. This step is crucial, as Flagship Code will only invoke the plugin if it is listed within this array. By including the dependency in the `plugins` array, you enable Flagship Code to recognize and utilize the functionality provided by the plugin during project execution.
 
-```ts title="flagship-code.config.ts" ins={9}
+```ts title="flagship-code.config.ts" ins={10}
 import { defineConfig } from "@brandingbrand/code-cli-kit";
 
 export default defineConfig({
   buildPath: "./coderc/build",
   envPath: "./coderc/env",
   pluginPath: "./coderc/plugins",
+  preset: "@brandingbrand/code-preset-react-native",
   plugins: [
     // other plugins
     "@brandingbrand/code-plugin-app-icon",
@@ -88,11 +89,12 @@ This plugin follows a standard naming convention for each app icon file. In the 
 
 For the purpose of illustration, the `build.internal.ts` configuration shall be presented as follows:
 
-```ts title="build.internal.ts"
+```ts title="build.internal.ts" ins={14-19} ins=" & CodePluginAppIcon" ins={3}
 import { defineBuild } from "@brandingbrand/code-cli-kit";
+import { type CodePresetReactNative } from "@brandingbrand/code-preset-react-native";
 import { type CodePluginAppIcon } from "@brandingbrand/code-plugin-app-icon";
 
-export default defineBuild<CodePluginAppIcon>({
+export default defineBuild<CodePresetReactNative & CodePluginAppIcon>({
   ios: {
     bundleId: "com.brandingbrand",
     displayName: "Branding Brand",
