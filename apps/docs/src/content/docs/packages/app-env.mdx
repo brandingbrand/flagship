@@ -1,0 +1,495 @@
+---
+title: Flagship™ Code App Env
+---
+
+## **Introduction**
+
+The **`code-app-env`** package provides a comprehensive solution for managing environment configurations in React Native applications. It currently supports both iOS and Android platforms. With **`app-env`**, developers can:
+
+- Define environment-specific settings.
+- Switch between development, staging, and production environments.
+- Access native environment modules and developer tools.
+
+---
+
+## **Installation**
+
+To add the **`code-app-env`** package to your project, follow these steps:
+
+### **Step 1: Install the Package**
+
+import {Tabs, TabItem} from '@astrojs/starlight/components';
+
+<Tabs>
+<TabItem label="yarn">
+
+```sh
+yarn add @brandingbrand/code-app-env
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npm install @brandingbrand/code-app-env
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+pnpm add @brandingbrand/code-app-env
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bun add @brandingbrand/code-app-env
+```
+
+</TabItem>
+</Tabs>
+
+### **Step 2: Link Native Modules (OPTIONAL)**
+
+If you are using **React Native 0.60+**, auto-linking should handle the native dependencies. However, for manual linking or troubleshooting, follow these steps:
+
+#### **For iOS**
+
+1. **Install CocoaPods dependencies**:
+
+    ```bash
+    cd ios && pod install && cd ..
+    ```
+
+2. Ensure the **`react-native-flagship-env`** module is included in your `Podfile`:
+
+    ```ruby
+    pod 'react-native-flagship-env', :path => '../node_modules/@brandingbrand/code-app-env'
+    ```
+
+#### **For Android**
+
+1. Add the module to your **`settings.gradle`**:
+
+    ```gradle
+    include ':react-native-flagship-env'
+    project(':react-native-flagship-env').projectDir = new File(rootProject.projectDir, '../node_modules/@brandingbrand/code-app-env/android')
+    ```
+
+2. Add the dependency in your **`app/build.gradle`**:
+
+    ```gradle
+    implementation project(':react-native-flagship-env')
+    ```
+
+3. Update **`MainApplication`** to include the package:
+
+    <Tabs>
+    <TabItem label="Java">
+      ```java title="MainApplication.java" ins={1,7}
+      import com.brandingbrand.flagshipenv;
+
+      @Override
+      protected List<ReactPackage> getPackages() {
+        return Arrays.<ReactPackage>asList(
+          new MainReactPackage(),
+          new FlagshipEnvPackage()
+        );
+      }
+      ```
+    </TabItem>
+    <TabItem label="Kotlin">
+      ```kotlin title="MainApplication.kt" ins={1,5}
+      import com.brandingbrand.flagshipenv
+
+    override fun getPackages(): List<ReactPackage> =
+        PackageList(this).packages.apply {
+          add(FlagshipEnvPackage())
+        }
+    ```
+    </TabItem>
+    </Tabs>
+
+### **Step 3: Verify Installation**
+
+Run the following command to ensure the package is properly linked:
+
+```bash
+npx react-native run-ios
+# or
+npx react-native run-android
+```
+
+If you encounter errors related to missing modules, follow the linking instructions above or clean your build:
+
+```bash
+cd ios && pod install --repo-update && cd ..
+npx react-native start --reset-cache
+```
+
+---
+
+## **Configuration**
+
+### **Configure Build Tooling**
+
+`code-app-env` operates by injecting your environments into the bundle during the build process. In order to expose your environment to the app, you will need to configure Babel and Metro Bundler.
+
+#### Babel
+
+Add the `code-app-env` babel plugin to your Babel configuration file. This plugin will inject your environments into the app at build time.
+
+```js title="babel.config.js" ins={4}
+module.exports = {
+  presets: ['module:@react-native/babel-preset'],
+  plugins: [
+    '@brandingbrand/code-app-env/babel'
+  ],
+};
+```
+
+#### Metro Bundler
+
+In order for Metro to correctly recognize when environment files have changed, You must supply a `cacheVersion` string in your Metro config. `code-app-env` provides a generator function for you.
+
+```js title="metro.config.js" ins={2,8}
+const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
+const {getCacheVersion} = require('@brandingbrand/code-app-env/metro');
+
+/**
+ * @type {import('metro-config').MetroConfig}
+ */
+const config = {
+  cacheVersion: getCacheVersion(),
+};
+
+module.exports = mergeConfig(getDefaultConfig(__dirname), config);
+
+```
+
+### **Environment Types**
+
+To ensure type safety, you may define your environment types in a TypeScript declaration file. This allows you to specify the structure of your environment variables, and ensures that they are consumed correctly throughout your application.
+
+create a `code-app-env.d.ts` file within your project. These are typically placed in a `types` directory, or alongside your other TypeScript declaration files.
+
+Within this file, you can extend the `AppEnvironment` interface provided by `@brandingbrand/code-app-env` to fit your environment shape.
+
+```typescript title="@types/code-app-env.d.ts"
+import '@brandingbrand/code-app-env';
+
+declare module '@brandingbrand/code-app-env' {
+  interface AppEnvironment {
+    apiUrl: string;
+    featureFlag: boolean;
+  }
+}
+```
+
+### **Environment Configuration Files**
+
+Create environment configuration files in your project. These files define environment-specific settings, and are named using the pattern **`env.<mode>.ts`**. For example:
+
+```typescript title="env.development.ts"
+import type {AppEnvironment} from '@brandingbrand/code-app-env';
+import {defineEnv} from '@brandingbrand/code-cli-kit';
+
+export default defineEnv<AppEnvironment>({
+  apiUrl: 'https://api-dev.example.com',
+  featureFlag: true,
+});
+```
+
+```typescript title="env.staging.ts"
+import type {AppEnvironment} from '@brandingbrand/code-app-env';
+import {defineEnv} from '@brandingbrand/code-cli-kit';
+
+export default defineEnv<AppEnvironment>({
+  apiUrl: 'https://api-staging.example.com',
+  featureFlag: false,
+};
+```
+
+```typescript title="env.production.ts"
+import type {AppEnvironment} from '@brandingbrand/code-app-env';
+import {defineEnv} from '@brandingbrand/code-cli-kit';
+
+export default defineEnv<AppEnvironment>({
+  apiUrl: 'https://api.example.com',
+  featureFlag: false,
+};
+```
+
+### **Native Module Configuration**
+
+The `FlagshipEnv` bridge module requires some native-side configuration to operate correctly. This is typically handled automatically by the Flagship™ Code CLI, but if you are not using the CLI, you may need to configure it manually. The native configuration controls the visibility of the `DevMenu` and `VersionOverlay` components, and the initial environment loaded by the app.
+
+#### Via the Flagship™ Code CLI
+
+If your app is using `@brandingbrand/code-preset-react-native`, or the `@brandingbrand/code-plugin-env` plugin individually, the native module will be automatically configured during the `flagship-code prebuild` command.
+
+#### Manually
+
+##### For iOS
+
+in your `ios/app/Info.plist`, add the following keys:
+
+```xml title="Info.plist"
+<!-- controls initial environment -->
+<key>FlagshipEnv</key>
+<string>development</string> <!-- or 'staging', 'production', etc. -->
+
+<!-- controls visibility of the DevMenu -->
+<key>FlagshipDevMenu</key>
+<true/> <!-- or <false/> to disable -->
+```
+
+##### For Android
+
+In your `android/app/src/main/res/values/strings.xml`, add the following entries:
+
+```xml title="strings.xml"
+<resources>
+  <string name="flagship_env">development</string> <!-- or 'staging', 'production', etc. -->
+  <string name="flagship_dev_menu">true</string> <!-- or 'false' to disable -->
+</resources>
+
+
+### **`.flagshipappenvrc` Configuration**
+
+`code-app-env` uses a configuration file named **`.flagshipappenvrc`** to manage environment settings. This file is used to specify the directory containing your environment files, as well as any hidden environments or single environment settings.
+
+Depending on your build pipeline, this file may be generated automatically or you may need to create it manually.
+
+#### **Options:**
+
+- **`dir`**: (Required) Path to the directory containing your environment files.
+- **`hiddenEnvs`**: Array of environments to exclude from selection.
+    - Useful in development or testing builds to prevent accidental use of production settings.
+- **`singleEnv`**: Specify a single environment to use.
+    - Useful in production builds to avoid leaking lower environment details.
+    - `hiddenEnvs` will be ignored if set.
+
+
+#### Via the Flagship™ Code CLI
+
+If your app is using `@brandingbrand/code-preset-react-native`, or the `@brandingbrand/code-plugin-env` plugin individually, The `.flagshipappenvrc` file will be generated automatically during `flagship-code prebuild`.
+
+Since this is an auto-generated file based on your CLI arguments, we recommend adding this file to your `.gitignore`:
+```txt title=".gitignore" ins={4}
+node_modules/
+android/
+ios/
+.flagshipappenvrc
+```
+
+During `prebuild`, the CLI will generate the `.flagshipappenvrc` file in your project root, which contains the configuration for your environment files. Allowing Flagship™ Code to manage this file ensures that your runtime environments always reflect your `prebuild` config settings.
+
+```json title=".flagshipappenvrc"
+{
+  // Reflects the `envPath` property of `flagship-code.config.js`
+  "dir": "./coderc/env",
+  // `hiddenEnvs` may be configured in your `build.<mode>.ts` files.
+  "hiddenEnvs": ["production"],
+  // The `singleEnv` property will be set to the value of the `--env` CLI argument, but only in `--release` builds.
+  "singleEnv": "production"
+}
+```
+
+##### Configuring `hiddenEnvs`
+
+You can configure the `hiddenEnvs` property within each build config via the `code-plugin-env` plugin. This allows you to exclude certain environments from the resulting app bundle, which is useful for preventing production environments from use in internal builds.
+
+```typescript title="build.internal.ts" ins={4,12-16}
+import {defineBuild} from '@brandingbrand/code-cli-kit';
+import type {CodePluginAsset} from '@brandingbrand/code-plugin-asset';
+import type {CodePluginAppIcon} from '@brandingbrand/code-plugin-app-icon';
+import type {CodePluginEnvironment} from '@brandingbrand/code-plugin-env';
+
+export default defineBuild<
+  CodePluginAsset &
+    CodePluginAppIcon &
+    CodePluginEnvironment
+>({
+  // ...
+  codePluginEnvironment: {
+    plugin: {
+      hiddenEnvs: ['production'],
+    },
+  },
+});
+```
+
+
+#### Generating the `.flagshipappenvrc` file manually
+
+If you are not using Flagship™ Code CLI, You may still statically generate your app env config.
+
+Create a **`.flagshipappenvrc`** file in your project root:
+
+```json title=".flagshipappenvrc"
+{
+  "dir": "./config/environments",
+  "hiddenEnvs": ["test"],
+  "singleEnv": "production"
+}
+```
+
+---
+
+## **Using the `FlagshipEnv` Native Module**
+
+The `FlagshipEnv` module provides constants and methods to manage environment settings at runtime.
+
+### **Constants**
+
+- **`appVersion`**: The current app version.
+
+    ```typescript
+    import {FlagshipEnv} from '@brandingbrand/code-app-env';
+
+    console.log(FlagshipEnv.appVersion); // '1.0.0'
+    ```
+
+- **`buildNumber`**: The current build number.
+
+    ```typescript
+    import {FlagshipEnv} from '@brandingbrand/code-app-env';
+
+    console.log(FlagshipEnv.buildNumber); // '42'
+    ```
+
+- **`envName`**: Current environment name.
+
+    ```typescript
+    import {FlagshipEnv} from '@brandingbrand/code-app-env';
+
+    console.log(FlagshipEnv.envName); // 'development'
+    ```
+
+- **`showDevMenu`**: Boolean indicating if the developer menu is enabled.
+
+    ```typescript
+    import {FlagshipEnv} from '@brandingbrand/code-app-env';
+
+    console.log(FlagshipEnv.showDevMenu); // true or false
+    ```
+
+### **Environments**
+
+- **`env`**: Object containing the current environment variables.
+    - `env` is available as both a direct import, and as a property of `FlagshipEnv`.
+
+    ```typescript
+    import {env, FlagshipEnv} from '@brandingbrand/code-app-env';
+
+    console.log(env.apiUrl); // 'https://api-dev.example.com'
+
+    // `env` is also available as a property of `FlagshipEnv`
+    console.logF(flagshipEnv.env.apiUrl); // 'https://api-dev.example.com'
+    ```
+
+- **`envs`**: Map of all available environments.
+
+    ```typescript
+    import {FlagshipEnv} from '@brandingbrand/code-app-env';
+
+    console.log(FlagshipEnv.envs); // Map with keys 'development', 'staging', 'production'
+    ```
+
+### **Methods**
+
+- **`setEnv(name: string)`**: Set the current environment and update configurations.
+    - Note: This method requires a restart to apply changes.
+
+    ```typescript
+    import AppRestart from '@brandingbrand/react-native-app-restart';
+    import {FlagshipEnv} from '@brandingbrand/code-app-env';
+
+    await FlagshipEnv.setEnv('staging');
+    AppRestart.restartApplication(); // Restart the app to apply changes
+    ```
+
+---
+
+## **Components**
+
+### **`DevMenu`**
+
+The `DevMenu` component provides a developer menu for managing environments and performing common tasks.
+
+`DevMenu` wraps your application, and provides both a "Version Overlay" and a "Developer Menu" modal that can be accessed by pressing the "Version Overlay".
+
+#### **Props**
+
+- **`screens`**: Array of React components for additional screens in the menu.
+- **`onRestart`**: Function to restart the app.
+- **`onEnvChange`**: Function to handle environment changes.
+- **`location`**: Position of the Version Overlay (`'topLeft'`, `'topRight'`, `'bottomLeft'`, `'bottomRight'`).
+- **`style`**: Custom styles for the Version Overlay container.
+
+#### **Example**
+
+```tsx
+import {DevMenu} from '@brandingbrand/code-app-env';
+import {DebugScreen} from './DebugScreen';
+
+// We recommend creating a static array to avoid potentially-expensive re-renders.
+const devMenuScreens = [DebugScreen];
+const handleRestart = () => console.log('Restarting...');
+const handleEnvChange = (env: string) => console.log(`Switched to ${env}`);
+
+export default function App() {
+  return (
+    <DevMenu
+      screens={devMenuScreens}
+      onRestart={handleRestart}
+      onEnvChange={handleEnvChange}
+      location="bottomRight">
+      <Text>Welcome to the app!</Text>
+    </DevMenu>
+  );
+}
+```
+
+## Creating Custom DevMenu Screens
+
+You may create custom screens for the `DevMenu` to add additional debugging or testing tools. `DevMenu` screen components may be any valid React component, but must have a `displayName` property set to a unique string.
+
+You can use the `defineDevMenuScreen` utility to ensure your screen is always configured properly.
+
+```tsx title="DebugScreen.tsx"
+import React from 'react';
+import {View, Text, Button} from 'react-native';
+import {defineDevMenuScreen} from '@brandingbrand/code-app-env';
+
+export const DebugScreen = defineDevMenuScreen('DebugScreen', () => (
+  <View>
+    <Text>Debug Screen</Text>
+    <Button title="Log Message" onPress={() => console.log('Debug button pressed')} />
+  </View>
+));
+```
+
+---
+
+## **Troubleshooting**
+
+### **Common Issues**
+
+1. **Native Module Not Linked**:
+
+   - Ensure you've run `pod install` for iOS.
+   - Check that `MainApplication.kt` includes `FlagshipEnvPackage` for Android.
+
+2. **Configuration File Not Found**:
+
+   - Verify that `.flagshipappenvrc` exists in your project root.
+   - Ensure the `dir` field in `.flagshipappenvrc` points to the correct path.
+
+3. **Environment Not Switching**:
+
+   - Check if `setEnv` is called correctly.
+   - Restart the app after changing environments.

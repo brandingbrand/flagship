@@ -1,5 +1,11 @@
 # @brandingbrand/code-preset-react-native
 
+## 1.1.0
+
+### Minor Changes
+
+- 855c897: reorder env plugin to be executed after transform-template as it may rely on template files 
+
 ## 1.0.2
 
 ### Patch Changes

@@ -12,25 +12,7 @@ import semver from 'semver';
  * @see ./profile
  */
 import profile, {getProfile} from './profile';
-
-/**
- * Interface representing the structure of a package.json file.
- */
-interface PackageJsonType {
-  name: string;
-  version: string;
-  dependencies: Record<string, unknown>;
-  devDependencies: Record<string, unknown>;
-  [key: string]: unknown;
-}
-
-interface DependencyConfig {
-  version: string;
-  capabilities?: string[];
-  required?: boolean;
-  devOnly?: boolean;
-  banned?: boolean;
-}
+import type {DependencyProfile, PackageJsonType} from './types';
 
 async function getPackageJson(
   packageName: string,
@@ -117,7 +99,7 @@ export default definePlugin<{}, AlignDepsOptions>({
 
     // First handle capabilities for required or existing dependencies
     for (const [packageName, depConfig] of Object.entries(rnProfile)) {
-      const config = depConfig as DependencyConfig;
+      const config = depConfig as DependencyProfile;
       // Only process capabilities if the package is required or already exists
       if (
         config.capabilities?.length &&
@@ -126,7 +108,7 @@ export default definePlugin<{}, AlignDepsOptions>({
         for (const capability of config.capabilities) {
           const capabilityConfig = (rnProfile as any)[
             capability
-          ] as DependencyConfig;
+          ] as DependencyProfile;
           if (capabilityConfig && !rootDeps[capability]) {
             logger.warn(
               `Missing capability ${capability} required by ${packageName}`,
@@ -171,34 +153,34 @@ export default definePlugin<{}, AlignDepsOptions>({
           coercedInstalledVersion &&
           !satisfies(
             coercedInstalledVersion,
-            (depConfig as DependencyConfig).version,
+            (depConfig as DependencyProfile).version,
           )
         ) {
           logger.warn(
             `Dependency version mismatch for ${packageName}: expected ${
-              (depConfig as DependencyConfig).version
+              (depConfig as DependencyProfile).version
             }, found ${installedVersion}. Updating...`,
           );
           updateDependency(
             rootPkgJson,
             packageName,
-            (depConfig as DependencyConfig).version,
-            (depConfig as DependencyConfig).devOnly,
+            (depConfig as DependencyProfile).version,
+            (depConfig as DependencyProfile).devOnly,
           );
         }
 
-        if ((depConfig as DependencyConfig).banned) {
+        if ((depConfig as DependencyProfile).banned) {
           logger.warn(`Banned package found: ${packageName}. Removing...`);
           removeDependency(rootPkgJson, packageName);
         }
 
-        if ((depConfig as DependencyConfig).required && !installedVersion) {
+        if ((depConfig as DependencyProfile).required && !installedVersion) {
           logger.warn(`Required dependency missing: ${packageName}.`);
           updateDependency(
             rootPkgJson,
             packageName,
-            (depConfig as DependencyConfig).version,
-            (depConfig as DependencyConfig).devOnly,
+            (depConfig as DependencyProfile).version,
+            (depConfig as DependencyProfile).devOnly,
           );
         }
       } catch (error) {

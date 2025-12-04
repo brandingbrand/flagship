@@ -3,7 +3,9 @@
  * @module ProfileConfig073
  */
 
-import {default as profile072, type Profile} from './0.72';
+import type {DependencyProfile} from '../types';
+
+import {default as profile072} from './0.72';
 
 /**
  * Default export containing dependency configurations
@@ -64,4 +66,4 @@ export default {
     devOnly: true,
     banned: true,
   },
-} satisfies Record<string, Profile>;
+} satisfies Record<string, DependencyProfile>;

@@ -42,14 +42,17 @@ export default defineConfig({
         {
           label: "Packages",
           items: [
-            { label: "cli", link: "/packages/cli/" },
+            {
+              label: "cli",
+              link: "/packages/cli/"
+            },
             {
               label: "cli-kit",
               link: "/packages/cli-kit/",
             },
             {
-              label: "jest-config",
-              link: "/packages/jest-config/",
+              label: "app-env",
+              link: "/packages/app-env/"
             },
             {
               label: "plugin-app-icon",
@@ -78,6 +81,10 @@ export default defineConfig({
             {
               label: "plugin-target-extension",
               link: "/packages/plugin-target-extension/",
+            },
+            {
+              label: "jest-config",
+              link: "/packages/jest-config/",
             },
           ],
         },

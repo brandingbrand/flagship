@@ -112,7 +112,16 @@ export type AlignDepsOptions = {
   /**
    * React Native profile based on React Native version.
    */
-  profile: '0.72' | '0.73' | '0.74' | '0.75' | '0.76' | '0.77' | '0.78';
+  profile:
+    | '0.72'
+    | '0.73'
+    | '0.74'
+    | '0.75'
+    | '0.76'
+    | '0.77'
+    | '0.78'
+    | '0.79'
+    | '0.80';
 
   /**
    * The cli command.

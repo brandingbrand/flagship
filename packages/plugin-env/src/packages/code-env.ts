@@ -1,0 +1,64 @@
+import {
+  BuildConfig,
+  CodeConfig,
+  PrebuildOptions,
+  definePlugin,
+  fs,
+  logger,
+  path,
+  withInfoPlist,
+  withStrings,
+} from '@brandingbrand/code-cli-kit';
+
+import {CodePluginEnvironment} from '../types';
+import {getCodeConfig, validateEnvPaths} from '../utils';
+
+/**
+ * Helper function to write the environment configuration file.
+ */
+async function writeEnvConfig(
+  build: BuildConfig & CodePluginEnvironment,
+  options: PrebuildOptions,
+  config: CodeConfig,
+) {
+  const configPath = path.join(process.cwd(), '.flagshipappenvrc');
+  const hiddenEnvs = build.codePluginEnvironment?.plugin.hiddenEnvs;
+  const configData = {
+    dir: config.envPath,
+    hiddenEnvs: hiddenEnvs?.length ? hiddenEnvs : undefined,
+    singleEnv: options.release ? options.env : undefined,
+  };
+
+  await fs.writeFile(configPath, JSON.stringify(configData, null, 2) + '\n');
+  logger.debug(`App environment configuration written to ${configPath}`);
+}
+
+/**
+ * Defines a plugin for both iOS and Android platforms.
+ */
+export default definePlugin<CodePluginEnvironment>({
+  common: async (build, options) => {
+    logger.debug('Linking runtime environments to Flagship™ Code App ENV.');
+    const codeConfig = await getCodeConfig();
+    await validateEnvPaths(codeConfig.envPath, options.env);
+    await writeEnvConfig(build, options, codeConfig);
+  },
+  ios: async (_, options): Promise<void> => {
+    logger.debug('Configuring iOS environment settings.');
+    await withInfoPlist(plist => {
+      plist.FlagshipEnv = options.env;
+      plist.FlagshipDevMenu = !options.release;
+      return plist;
+    });
+  },
+  android: async (_, options): Promise<void> => {
+    logger.debug('Configuring Android environment settings.');
+    await withStrings(xml => {
+      xml.resources.string?.push(
+        {$: {name: 'flagship_env'}, _: options.env},
+        {$: {name: 'flagship_dev_menu'}, _: `${!options.release}`},
+      );
+      return xml;
+    });
+  },
+});

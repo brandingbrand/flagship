@@ -3,7 +3,7 @@ import {AlignDepsOptions, logger} from '@brandingbrand/code-cli-kit';
 import {loadPlugin} from '../core/config/flagshipConfig';
 import {globalEmitter} from '../core';
 
-import {renderStatus} from '@/ui/inkRenderer';
+import {renderStatus} from '@/ui/progressRenderer';
 
 /**
  * Executes the align-deps process to verify and optionally fix dependency versions.
@@ -40,7 +40,7 @@ import {renderStatus} from '@/ui/inkRenderer';
  * ```
  */
 export async function executeAlignDeps(options: AlignDepsOptions) {
-  let hasError = false;
+  let statusPromise = null;
   const verifyDepsPlugin = await loadPlugin(
     '@brandingbrand/code-plugin-verify-dependencies',
     process.cwd(),
@@ -49,8 +49,7 @@ export async function executeAlignDeps(options: AlignDepsOptions) {
   if (!verifyDepsPlugin) {
     throw new Error('Verify dependencies plugin not found');
   }
-
-  await renderStatus({
+  statusPromise = renderStatus({
     numberOfPlugins: 1,
     cmd: 'align-deps',
   });
@@ -79,5 +78,8 @@ export async function executeAlignDeps(options: AlignDepsOptions) {
     await logger.flush();
     logger.resume();
     globalEmitter.emit('onEnd');
+    if (statusPromise) {
+      await statusPromise;
+    }
   }
 }

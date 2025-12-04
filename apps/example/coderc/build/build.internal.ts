@@ -3,12 +3,14 @@ import type {CodePluginAsset} from '@brandingbrand/code-plugin-asset';
 import type {CodePluginAppIcon} from '@brandingbrand/code-plugin-app-icon';
 import type {CodePluginPermissions} from '@brandingbrand/code-plugin-permissions';
 import type {CodePluginSplashScreen} from '@brandingbrand/code-plugin-splash-screen';
+import type {CodePluginEnvironment} from '@brandingbrand/code-plugin-env';
 
 export default defineBuild<
   CodePluginAsset &
     CodePluginAppIcon &
     CodePluginPermissions &
-    CodePluginSplashScreen
+    CodePluginSplashScreen &
+    CodePluginEnvironment
 >({
   ios: {
     bundleId: 'com.brandingbrand',
@@ -50,6 +52,11 @@ export default defineBuild<
   codePluginSplashScreen: {
     plugin: {
       splashImage: './coderc/assets/splash.png',
+    },
+  },
+  codePluginEnvironment: {
+    plugin: {
+      hiddenEnvs: ['store'],
     },
   },
 });

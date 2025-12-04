@@ -1,6 +1,5 @@
-/**
- * Imports the base profile configuration from version 0.73
- */
+import type {DependencyProfile} from '../types';
+
 import {default as profile076} from './0.76';
 
 /**
@@ -44,4 +43,4 @@ export default {
     version: '^0.77.0',
     devOnly: true,
   },
-};
+} satisfies Record<string, DependencyProfile>;

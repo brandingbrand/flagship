@@ -21,11 +21,6 @@ export default {
       throw Error(`[PbxprojTransformerError]: cannot find group "app" uuid`);
     }
 
-    // These files exist as extras and need to be added to pbxproj file as
-    // source files or header files
-    project.addSourceFile('app/EnvSwitcher.m', opt, groupKey);
-    project.addSourceFile('app/NativeConstants.m', opt, groupKey);
-
     // PrivacyInfo.xcprivacy is already included in the React Native 0.73 template from
     // https://github.com/facebook/react-native/blob/v0.73.9/packages/react-native/template/ios/HelloWorld/PrivacyInfo.xcprivacy
 

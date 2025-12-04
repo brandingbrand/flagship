@@ -1,7 +1,7 @@
 {
   "name": "@brandingbrand/code-plugin-env",
-  "version": "1.0.0",
-  "description": "code plugin that handles environments for fsapp package",
+  "version": "1.1.0",
+  "description": "Code plugin that handles environment setup for supported app env providers",
   "repository": {
     "type": "git",
     "url": "https://github.com/brandingbrand/flagship"
@@ -23,7 +23,7 @@
     "semver": "^7.6.2"
   },
   "devDependencies": {
-    "@brandingbrand/code-cli-kit": "^14.0.0",
+    "@brandingbrand/code-cli-kit": "^14.1.0",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "eslint": "^8.56.0",
