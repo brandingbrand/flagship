@@ -1,16 +1,36 @@
 /**
+ * Represents the attributes of the certificate transparency configuration.
+ */
+type CertificateTransparencyAttributes = {
+  /**
+   * Indicates whether certificate validation through Certificate Transparency logs is enabled.
+   */
+  enabled: boolean;
+};
+
+/**
+ * Represents the certificate transparency configuration, which indicates whether validation through Certificate Transparency logs is enabled.
+ */
+type CertificateTransparency = {
+  /**
+   * Attributes of the certificate transparency configuration.
+   */
+  $: CertificateTransparencyAttributes;
+};
+
+/**
  * Represents the attributes of a certificate entry.
  */
 type CertificatesAttributes = {
   /**
-   * Source of the certificate, can be "system," "user," or "raw resource."
+   * Source of the certificate, can be "system," "user," or a raw resource ID.
    */
-  src: 'system' | 'user' | 'raw resource';
+  src: 'system' | 'user' | `@raw/${string}`;
 
   /**
-   * Indicates whether to override pins for the certificate.
+   * Optional: Indicates whether to override pins for the certificate.
    */
-  overridePins: boolean;
+  overridePins?: boolean;
 };
 
 /**
@@ -43,9 +63,14 @@ type TrustAnchors = TrustAnchorsElements;
  */
 type BaseConfigElements = {
   /**
+   * Optional: Certificate transparency validation configuration.
+   */
+  certificateTransparency?: CertificateTransparency;
+
+  /**
    * Trust anchors section in the base configuration.
    */
-  ['trust-anchors']: TrustAnchors;
+  ['trust-anchors']?: TrustAnchors;
 };
 
 /**
@@ -53,9 +78,9 @@ type BaseConfigElements = {
  */
 type BaseConfigAttributes = {
   /**
-   * Indicates whether cleartext traffic is permitted.
+   * Optional: Indicates whether cleartext traffic is permitted.
    */
-  cleartextTrafficPermitted: boolean;
+  cleartextTrafficPermitted?: boolean;
 };
 
 /**
@@ -65,7 +90,7 @@ type BaseConfig = BaseConfigElements & {
   /**
    * Attributes of the base configuration.
    */
-  $: BaseConfigAttributes;
+  $?: BaseConfigAttributes;
 };
 
 /**
@@ -75,7 +100,7 @@ type DomainAttributes = {
   /**
    * Indicates whether subdomains are included.
    */
-  includeSubdomains: boolean;
+  includeSubdomains?: boolean;
 };
 
 /**
@@ -85,7 +110,7 @@ type Domain = {
   /**
    * Attributes of the domain entry.
    */
-  $: DomainAttributes;
+  $?: DomainAttributes;
 
   /**
    * The domain string.
@@ -125,7 +150,7 @@ type PinSetElements = {
   /**
    * Pin entry.
    */
-  pin: Pin;
+  pin: Pin[];
 };
 
 /**
@@ -135,7 +160,7 @@ type PinSetAttributes = {
   /**
    * Expiration string for the pin set.
    */
-  expiration: string;
+  expiration?: string;
 };
 
 /**
@@ -145,7 +170,7 @@ type PinSet = PinSetElements & {
   /**
    * Attributes of the pin set.
    */
-  $: PinSetAttributes;
+  $?: PinSetAttributes;
 };
 
 /**
@@ -154,8 +179,15 @@ type PinSet = PinSetElements & {
 type DomainConfigElements = {
   /**
    * Array of domain entries.
+   *
+   * Must have at least one domain.
    */
   domain: Domain[];
+
+  /**
+   * Optional: Certificate transparency validation configuration.
+   */
+  certificateTransparency?: CertificateTransparency;
 
   /**
    * Optional: Trust anchors section in the domain configuration.
@@ -180,7 +212,7 @@ type DomainConfigAttributes = {
   /**
    * Indicates whether cleartext traffic is permitted for the domain configuration.
    */
-  cleartextTrafficPermitted: boolean;
+  cleartextTrafficPermitted?: boolean;
 };
 
 /**
@@ -190,7 +222,7 @@ type DomainConfig = DomainConfigElements & {
   /**
    * Attributes of the domain configuration.
    */
-  $: DomainConfigAttributes;
+  $?: DomainConfigAttributes;
 };
 
 /**
@@ -236,4 +268,16 @@ export type NetworkSecurityConfigXML = {
    * Root element, containing elements for network security configuration.
    */
   ['network-security-config']: NetworkSecurityConfigElements;
+};
+
+export {
+  type BaseConfig as NetworkSecurityBaseConfig,
+  type DomainConfig as NetworkSecurityDomainConfig,
+  type Domain as NetworkSecurityDomain,
+  type CertificateTransparency as NetworkSecurityCertificateTransparency,
+  type DebugOverrides as NetworkSecurityDebugOverrides,
+  type TrustAnchors as NetworkSecurityTrustAnchors,
+  type Certificates as NetworkSecurityCertificates,
+  type PinSet as NetworkSecurityPinSet,
+  type Pin as NetworkSecurityPin,
 };

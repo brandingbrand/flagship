@@ -9,9 +9,13 @@ export default defineConfig({
       logo: {
         src: "./src/assets/logo.svg",
       },
-      social: {
-        github: "https://github.com/brandingbrand/flagship",
-      },
+      social: [
+        {
+          href: "https://github.com/brandingbrand/flagship",
+          icon: "github",
+          label: "GitHub",
+        }
+      ],
       customCss: ["./src/styles.css"],
       sidebar: [
         {
@@ -69,6 +73,10 @@ export default defineConfig({
             {
               label: "plugin-native-navigation",
               link: "/packages/plugin-native-navigation/",
+            },
+            {
+              label: "plugin-network-security-config",
+              link: "/packages/plugin-network-security-config/",
             },
             {
               label: "plugin-permissions",

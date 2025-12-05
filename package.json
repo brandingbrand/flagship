@@ -8,6 +8,7 @@
   "scripts": {
     "build": "turbo build --concurrency 100",
     "dev": "turbo dev --concurrency 100",
+    "dev-docs": "turbo dev --filter=@brandingbrand/code-docs",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "lint": "turbo lint --",
     "prepare": "husky install",
