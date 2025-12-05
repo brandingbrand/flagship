@@ -11,6 +11,11 @@ Navigation.events().registerAppLaunchedListener(() => {
           {
             component: {
               name: 'App',
+              options: {
+                topBar: {
+                  visible: false,
+                },
+              },
             },
           },
         ],
