@@ -74,3 +74,7 @@ cp -R "./app/ios" "$NEW_TEMPLATE_DIR/"
 rm -rf "$TEMP_DIR"
 
 echo "React-Native version template for $RN_VERSION generated successfully at $NEW_TEMPLATE_DIR"
+echo ""
+echo "Updating CLI tools to recognize the new version ..."
+
+npx tsx ./scripts/add-rn-version-codemods.ts "$RN_VERSION"

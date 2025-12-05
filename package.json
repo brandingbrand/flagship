@@ -13,7 +13,7 @@
     "lint": "turbo lint --",
     "prepare": "husky install",
     "test": "turbo test",
-    "generate-rn-version-template": "./scripts/generate-rn-version-template"
+    "add-rn-version": "./scripts/add-rn-version"
   },
   "lint-staged": {
     "*.{ts,tsx}": "prettier --write"
