@@ -1,7 +1,6 @@
 import type {
   NetworkSecurityCertificates,
   NetworkSecurityDomainConfig,
-  NetworkSecurityPin,
   Plugin,
 } from '@brandingbrand/code-cli-kit';
 
