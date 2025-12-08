@@ -1,6 +1,6 @@
 import {BuildConfig, string} from '@brandingbrand/code-cli-kit';
 
-import gradleProperties077 from '../../0.77/android/gradle-properties';
+import {transforms079} from '../../0.79';
 
 /**
  * Configuration object for managing Android Gradle properties, extending properties from React Native 0.72
@@ -10,7 +10,7 @@ import gradleProperties077 from '../../0.77/android/gradle-properties';
  * specific Android build features and settings
  */
 export default {
-  ...gradleProperties077,
+  ...transforms079.androidGradlePropertiesTransform,
 
   /**
    * Updates the edgeToEdgeEnabled property in gradle.properties to enable/disable the new edge-to-edge display mode.

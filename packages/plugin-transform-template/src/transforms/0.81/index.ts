@@ -1,8 +1,8 @@
-import {transforms077} from '../0.77';
+import {transforms079} from '../0.79';
 
 import {default as androidGradlePropertiesTransform} from './android/gradle-properties';
 
 export const transforms081 = {
-  ...transforms077,
+  ...transforms079,
   androidGradlePropertiesTransform,
 };
