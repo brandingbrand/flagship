@@ -1,9 +1,7 @@
 import {
-  BuildConfig,
   fs,
-  path,
-  PrebuildOptions,
-  withUTF8,
+  type BuildConfig,
+  type PrebuildOptions,
 } from '@brandingbrand/code-cli-kit';
 
 /**

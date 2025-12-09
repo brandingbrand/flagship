@@ -1,4 +1,5 @@
 import {
+  path,
   fs,
   type BuildConfig,
   type PrebuildOptions,
@@ -13,25 +14,39 @@ import {
  */
 export async function ios(build: BuildConfig, options: PrebuildOptions) {
   // Resolve path to react-native-navigation postlink path module
-  const rnnPath = require.resolve(
-    'react-native-navigation/autolink/postlink/path.js',
-    {paths: [process.cwd()]},
+  const rnnBasePath = path.dirname(
+    require.resolve('react-native-navigation/package.json', {
+      paths: [process.cwd()],
+    }),
+  );
+
+  const rnnPathFilePath = path.resolve(
+    rnnBasePath,
+    'autolink',
+    'postlink',
+    'path.js',
   );
 
   // Update mainApplicationJava in postlink path module
-  await fs.update(rnnPath, /(mainApplicationKotlin)\S*(replace)/, `$1?.$2`);
+  await fs.update(
+    rnnPathFilePath,
+    /(mainApplicationKotlin)\S*(replace)/,
+    `$1?.$2`,
+  );
 
   // Resolve path to react-native-navigation postlink IOS script
-  const scriptPath = require.resolve(
-    'react-native-navigation/autolink/postlink/postLinkIOS.js',
-    {paths: [process.cwd()]},
+  const rnnPostLinkScriptPath = path.resolve(
+    rnnBasePath,
+    'autolink',
+    'postlink',
+    'postLinkIOS.js',
   );
 
   // Set executable permission for postlink IOS script
-  await fs.chmod(scriptPath, '755');
+  await fs.chmod(rnnPostLinkScriptPath, '755');
 
   // Require postlink IOS script
-  const rnnIOSLink = require(scriptPath);
+  const rnnIOSLink = require(rnnPostLinkScriptPath);
 
   // Execute postlink IOS script
   await rnnIOSLink();
