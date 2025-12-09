@@ -2317,7 +2317,7 @@ __metadata:
     type-fest: "npm:^4.10.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@brandingbrand/code-cli-kit": ^14.0.0
+    "@brandingbrand/code-cli-kit": ^14.2.0
   bin:
     flagship-code: ./bin/flagship-code
   languageName: unknown
@@ -2649,7 +2649,7 @@ __metadata:
     type-fest: "npm:4.34.1"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@brandingbrand/code-cli-kit": ^14.0.0
+    "@brandingbrand/code-cli-kit": ^14.2.0
   languageName: unknown
   linkType: soft
 
@@ -2666,7 +2666,7 @@ __metadata:
     ts-jest: "npm:^29.1.2"
     typescript: "npm:^5.3.3"
   peerDependencies:
-    "@brandingbrand/code-cli-kit": ^14.0.0
+    "@brandingbrand/code-cli-kit": ^14.2.0
   languageName: unknown
   linkType: soft
 
