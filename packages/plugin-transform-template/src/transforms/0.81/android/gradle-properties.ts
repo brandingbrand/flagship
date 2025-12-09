@@ -19,7 +19,7 @@ export default {
    * @param config - Build configuration object containing Android settings
    * @param config.android.gradle.properties.edgeToEdgeEnabled - Boolean flag indicating whether edge-to-edge mode should be enabled.
    *                                                             Defaults to false if not specified.
-   * @returns Updated gradle.properties content with modified newArchEnabled setting
+   * @returns Updated gradle.properties content with modified edgeToEdgeEnabled setting
    *
    * @example
    * ```ts
