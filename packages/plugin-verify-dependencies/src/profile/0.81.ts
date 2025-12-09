@@ -96,26 +96,4 @@ export default {
     version: '^20.0.0',
     devOnly: true,
   },
-  /**
-   * React core library configuration
-   * @property {string} version - The semantic version requirement
-   * @property {string[]} capabilities - Required type definitions
-   * @property {boolean} required - Indicates this is a required dependency
-   * @see {@link https://reactjs.org/}
-   */
-  react: {
-    version: '19.1.0',
-    capabilities: ['@types/react'],
-    required: true,
-  },
-  /**
-   * TypeScript definitions for React
-   * @property {string} version - The semantic version requirement
-   * @property {boolean} devOnly - Indicates this is a development-only dependency
-   * @see {@link https://www.npmjs.com/package/@types/react}
-   */
-  '@types/react': {
-    version: '^19.1.0',
-    devOnly: true,
-  },
 } satisfies Record<string, DependencyProfile>;
