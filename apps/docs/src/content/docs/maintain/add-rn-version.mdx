@@ -124,13 +124,25 @@ Update the Example app to use the new React Native version.
 
     If all has gone well, the example app's `package.json` should now reflect the new React Native version and aligned dependencies.
 
-3. Attempt to run the `prebuild` command with verbose logging.
+3. Update the `devDependencies` of the `code-app-env` package.
+
+    Due to the way the example app is included within the monorepo, the `devDependencies` of the `code-app-env`'s `package.json` must be manually updated to reflect the new React Native version. Failure to do so will lead to duplicate installations of `react` and `react-native`, which will cause runtime errors.
+
+    In `./packages/app-env/package.json`, update the version range of `react` and `react-native` within the `devDependencies` section to match the same version ranges used in the example app. leave `peerDependencies` unchanged.
+
+4. Install the updated dependencies from the monorepo root, then return to the example app and run `prebuild` with verbose logging enabled.
 
     ```bash
+    cd ../../
+    yarn install
+    ```
+
+    ```bash
+    cd apps/example
     yarn flagship-code prebuild -b internal -e prod -l debug --verbose
     ```
 
-4. From the log output. identify any plugin warnings or errors. if any are found, address them as necessary. A successful prebuild will contain no plugin warnings or errors.
+5. From the log output. identify any plugin warnings or errors. if any are found, address them as necessary. A successful prebuild will contain no plugin warnings or errors.
     * Refer to the [Conditional updates](#conditional-updates) section below for more information on how to address common issues.
 
     :::caution
@@ -139,7 +151,7 @@ Update the Example app to use the new React Native version.
         This message is caused by the example project itself, and may be ignored.
     :::
 
-5. Once all prebuild issues are resolved, attempt to build and run the Example app on both Android and iOS simulators/devices to ensure full compatibility with the new React Native version. Address any build or runtime issues as necessary.
+6. Once all prebuild issues are resolved, attempt to build and run the Example app on both Android and iOS simulators/devices to ensure full compatibility with the new React Native version. Address any build or runtime issues as necessary.
 
     ```bash
     yarn run ios
@@ -172,11 +184,15 @@ This changeset, at time of release, will version bump the version of each packag
 
 ### 6. Update peer dependencies
 
-At time of release, the `changesets` tool will update the `version` and `dependencies` of each package which was selected in the changeset. However, it will not update the `peerDependencies` of any packages.
+At time of release, the `changesets` tool will update the `version` and `dependencies` of each package which was selected in the changeset. It will not, however, update the `peerDependencies` of any packages.
 
-Review the packages you selected in the changeset. For the following packages, the peer dependency on `code-cli-kit` **must** updated to the new pending version, and **not** the currently live version. For instance if the current published version is `14.1` and the new version _will be_ `14.2`, the peer dependency should be updated to `^14.2.0`.
+For the following packages, the peer dependency on `code-cli-kit` **must** updated to the new pending version, and **not** the currently live version. For instance if the current published version is `14.1.0` and the new version will be `14.2.0`, the peer dependency should be updated to `^14.2.0`.
 
 1. `@brandingbrand/code-cli`.
+2. `@brandingbrand/code-plugin-transform-template`
+3. `@brandingbrand/code-plugin-verify-dependencies`
+
+Review the remaining packages you selected for the changeset. Any package which relies on new functionality from `code-cli-kit` introduced as part of this process should also have their peer dependency updated accordingly. Plugins which have not been modified, or maintain backwards compatibility with the previous versions of `code-cli-kit` do not require updates.
 
 
 
