@@ -1,0 +1,302 @@
+---
+title: Adding React Native Version Support
+---
+
+This guide is intended to guide maintainers through the process of adding support for a new React Native version to Flagship Code™.
+
+The process is partially automated, but still requires manual intervention to ensure all dependencies and configurations are correctly aligned for the new version.
+
+## Prerequisites
+
+1. Ensure your working environment is setup for development:
+    1. Base your working branch off of the latest changes in `develop`, unless told otherwise.
+    2. Install dependencies and and build the monorepo through:
+        ```bash
+        yarn install && yarn build
+        ```
+2. Be generally familiar with the concept of how Flagship Code™ generates projects, and the role of key packages such as:
+    - `code-cli`
+    - `code-cli-kit`
+    - `code-templates`
+    - `code-plugin-verify-dependencies`
+    - `code-plugin-transform-template`
+3. Have the [React Native Upgrade Helper] open for your reference.
+    - Use the highest minor version Flagship Code™ supports as the "from" version, and the new version you are adding as the "to" version.
+    - In both cases it's recommended to use the latest patch for each minor version.
+    - Avoid jumping multiple minor versions at once, as this introduces significant complexity and increases the likelihood of errors.
+4. If this is your first time adding version support, read through this guide in full before starting. Contact your manager or another maintainer if you have any questions.
+
+## Basic Steps
+
+### 1. Generate Native Templates
+
+To add support for a new React Native version, run the `add-rn-version` script from the monorepo root. This script will automatically:
+
+- Generate a new native template for the specified React Native version.
+    - It will be located in: `./packages/templates/react-native/<rn-version>`
+- Update the `code-plugin-verify-dependencies` package with a new dependency profile for the new React Native version. This file will require manual updates, which are outlined in the next step.
+- Update `code-cli` and `code-cli-kit` to recognize the new React Native version.
+
+Run the full command below. Be sure to replace `<rn-version>` with the desired version. For purposes of demonstration, we will use React Native `0.81` throughout this guide.
+
+```bash
+  yarn add-rn-version <rn-version>
+```
+
+### 2. Update the new `code-plugin-verify-dependencies` profile
+
+Within a Flagship Code™ project, Updating `react-native` and it's related dependencies may be handled automatically through the `flagship-code align-deps` command.
+This command parses and updates the project's `package.json` according to a "dependency profile" associated with each supported React Native version.
+
+Within `./packages/plugin-verify-dependencies/src/profile`, a new profile has been generated from the step above.
+
+Example:
+
+```ts title="0.81.ts"
+import type {DependencyProfile} from '../types';
+
+import {default as profile080} from './0.80';
+
+export default {
+  ...profile080,
+  // Override dependencies as needed for the new React Native version here.
+} satisfies Record<string, DependencyProfile>;
+```
+
+Using the previous version profiles as a base, update this new profile to ensure all dependencies are correctly updated aligned for the new React Native version.
+
+When adding or updating dependencies in the new profile, follow the guidelines below for each category of version-aligned dependencies:
+
+- ["React Native version aligned core packages"](#react-native-version-aligned-core-packages)
+    - **All** packages in this list should be updated to align with the new React Native version.
+    - The version properties for these packages **should** use a caret (`^`) range specifier, and **should not** have a minimum patch version. (e.g., `^0.81.0`, **NOT** `0.81.5`).
+- ["React Native version dependent core packages"](#react-native-version-dependent-core-packages)
+    - Use the [React Native Upgrade Helper] to identify any version changes for these packages.
+    - The `@react-native-community/cli*` packages **must** be updated to correspond to the new React Native version. The CLI is tightly coupled to the React Native version in which it supports. These packages should use a caret (`^`) range specifier, and not require a specific minor or patch version. (e.g., `^20.0.0`, **NOT** `20.0.2`).
+    - `react` is strictly version pinned by React Native. Refer to the [React Native Upgrade Helper] to determine the correct version for the new React Native version. This package **should not** use a range specifier, and must remain fixed.
+- ["3rd party packages"](#3rd-party-packages-required-or-supported-by-flagship-code-plugins)
+    - Should be individually reviewed for updates which include support for the new React Native version.
+    - Not all of these packages will require updates, but if any given package's release notes or documentation indicates a minimum support version for the new React Native version, the package should be updated to the minimum supported version.
+    - The `@types/react` package specifically should always be aligned to the `react` version in use, and should use a caret (`^`) range specifier.
+- ["Peer Dependencies"](#peer-dependencies-of-other-aligned-packages) should be reviewed for updates as necessary.
+    - These packages are not necessarily dependent on React Native, but are dependencies of other aligned packages (e.g., `@babel/core` is a peer dependency of `@react-native/babel-preset`).
+    - Use the [React Native Upgrade Helper] and specific package release notes to determine if any of these packages require updates. most of the time, however, they will not.
+- If the [React Native Upgrade Helper] indicates new dependencies that were not previously installed, determine if the package falls into one of the existing dependency categories [detailed below](#version-aligned-dependencies).
+    - If it does, add the package to the new profile with the appropriate version and capabilities.
+    - If it does not, discuss with the maintenance team to determine if it should be added as a new aligned dependency.
+- If an existing package has been deprecated and is no longer required, be sure to add a `banned` entry in the new profile.
+    - The `version` property of this entry should be `1000.0.0` to ensure all versions are captured
+    - the `banned` property should be set to `true`
+
+### 3. Evaluate updates within managed configuration files.
+
+Using the [React Native Upgrade Helper], evaluate any significant changes to configuration or source files that are managed by Flagship Code™. These files may include, but are not limited to:
+
+- `build.gradle`
+- `Podfile`
+- `settings.gradle`
+- `gradle.properties`
+- `Info.plist`
+- `AppDelegate.m` / `AppDelegate.swift`
+- `MainActivity.java` / `MainActivity.kt`
+- `AndroidManifest.xml`
+
+Changes to these files are likely to indicate that new code transforms will be required within `code-plugin-transform-template`. Updates to object schemas defined within `code-cli-kit` may need updating as well.
+
+Keep note of these changes as you go through the next testing steps. Not all changes will be breaking, but the easiest way to confirm is through testing through our example app.
+
+### 4. Update the example app
+
+Update the Example app to use the new React Native version.
+
+1. In the monorepo root, rebuild all packages to ensure the new profile is included, then navigate to the example app.
+
+    ```bash
+    yarn build
+    cd apps/example
+    ```
+
+2. In `./apps/example`, run the `align-deps` command from the `flagship-code` cli. Be sure to replace `<rn-version>` with the new React Native version.
+
+    ```bash
+    yarn flagship-code align-deps --profile <rn-version> --fix
+    ```
+
+    If all has gone well, the example app's `package.json` should now reflect the new React Native version and aligned dependencies.
+
+3. Attempt to run the `prebuild` command with verbose logging.
+
+    ```bash
+    yarn flagship-code prebuild -b internal -e prod -l debug --verbose
+    ```
+
+4. From the log output. identify any plugin warnings or errors. if any are found, address them as necessary. A successful prebuild will contain no plugin warnings or errors.
+    * Refer to the [Conditional updates](#conditional-updates) section below for more information on how to address common issues.
+
+    :::caution
+        `code-plugin-splashscreen` will warn about an improper Image size with the message: `Image should be 1242x2208px for optimal results`.
+
+        This message is caused by the example project itself, and may be ignored.
+    :::
+
+5. Once all prebuild issues are resolved, attempt to build and run the Example app on both Android and iOS simulators/devices to ensure full compatibility with the new React Native version. Address any build or runtime issues as necessary.
+
+    ```bash
+    yarn run ios
+    ```
+    ```bash
+    yarn run android
+    ```
+
+### 5. Add a Changeset
+
+In the monorepo root, add a changeset to document the addition of the new React Native version.
+
+```bash
+yarn changeset add
+```
+
+Be sure to select all packages which were modified as part of this process. At minimum, you **must** select:
+    - `@brandingbrand/code-cli`
+    - `@brandingbrand/code-cli-kit`
+    - `@brandingbrand/code-plugin-verify-dependencies`
+    - `@brandingbrand/code-templates`
+    - `@brandingbrand/code-plugin-transform-template`
+    - `@brandingbrand/code-preset-react-native`
+        - **always include this package in the changeset, even if unchanged otherwise.** This package must be bumped to pull the new version of `code-plugin-transform-template`, which in turn pulls `code-templates`
+    - Any other plugins which were modified as part of this process.
+
+All selected packages should be **minor** version releases **at minimum**. Discuss with the maintenance team about any breaking changes that must be introduced, as this would then require a **major** version release.
+
+This changeset, at time of release, will version bump the version of each package, and their corresponding `dependencies` references in dependant packages within this repo. Peer dependencies must still be updated manually, however.
+
+### 6. Update peer dependencies
+
+At time of release, the `changesets` tool will update the `version` and `dependencies` of each package which was selected in the changeset. However, it will not update the `peerDependencies` of any packages.
+
+Review the packages you selected in the changeset. For the following packages, the peer dependency on `code-cli-kit` **must** updated to the new pending version, and **not** the currently live version. For instance if the current published version is `14.1` and the new version _will be_ `14.2`, the peer dependency should be updated to `^14.2.0`.
+
+1. `@brandingbrand/code-cli`.
+
+
+
+## Conditional updates
+
+
+
+### Build Configuration Schemas
+
+Occasionally, the React Native team will implement or deprecate build configuration options within native projects. most commonly these are found within `gradle.properties` for Android projects, and `Podfile` or `Info.plist` for iOS projects.
+
+When such changes occur, the corresponding build configuration schemas, or the associated transforms to apply the build options, will require updates.
+
+
+Refer to the implementation around the `newArchEnabled` property as a basic example to familiarize yourself with how build configuration options are defined and applied during code generation.
+
+You will find this property's build config definitions within:
+
+```
+./packages/code-cli-kit/src/schemas/build-config.ts
+```
+
+The transforms which apply the option have multiple implementations, depending on the active React Native version. for example:
+    - Android:
+        - `./packages/plugin-transform-template/src/transforms/0.72/android/gradle-properties.ts`
+        - `./packages/plugin-transform-template/src/transforms/0.77/android/gradle-properties.ts`
+    - iOS:
+        - `./packages/plugin-transform-template/src/transforms/0.77/ios/podfile.ts`
+
+
+### Code Transforms
+
+The `code-plugin-transform-template` package contains core code transformations which are applied on top of the generated native code during `prebuild`. These transforms may require updates between React Native versions to ensure generated projects are correctly configured.
+
+The most straightforward way to identify required updates is to check the output of `yarn flagship-code prebuild`, as outlined in the upgrade steps above. Any warnings similar to:
+
+```
+cannot find keyword: <some_keyword> in file path: <path>
+```
+
+are usually a sign that the underlying native code has changed, and an existing transform must be updated. If you encounter similar warnings, determine which package is causing the error to identify the best next steps.
+
+- If the root cause is code from within a plugin **other than `code-plugin-transform-template`**, the plugin likely need to define differing behavior based on react-native version, and be updated to handle the new native code. An example of this in practice may be found in the `code-plugin-native-navigation` package.
+- If the root cause is from within `code-plugin-transform-template`, review the existing transforms for the closest previous React Native version in `./packages/plugin-transform-template/src/transforms/<version>`. One or more of these transforms likely require updates.
+    - Create a new directory for the new React Native version in `./packages/plugin-transform-template/src/transforms/`. It should be named after the new React Native version (e.g., `0.81`).
+    - Use previous transform sets as a reference to structure your new transform set.
+    - Since most of the time your goal will be to overwrite existing transforms for compatibility, maintaining the same object property keys as the first version which introduced the transform is required.
+    - Modify any transforms as necessary to support the new React Native version.
+    - Be sure to include your new transform set within the main `./packages/plugin-transform-template/src/index.ts` file, following the existing structure used for previous versions.
+
+### Supporting Files
+
+The `supporting-files` directory within `./packages/templates` contains additional files that are not included in the default React Native template, but are required for Flagship Code™ projects to function correctly.
+
+Each sub-directory within `supporting-files` is named after a specific React Native version. During code generation, The contents of the closest matching version will be applied on top of the base template files.
+:::tip[Example]
+A project using React Native `0.74.x` through `0.76.x` will apply files from the `0.74` directory.
+
+A project using React Native `0.77.x` or `0.78.x` will apply files from the `0.77` directory.
+:::
+
+:::caution
+Only one `supporting-files` version directory will be applied, and older versions will be ignored. This is important to remember, as most files from previous versions are still likely to be required for newer versions.
+
+Failure to include necessary files may lead to build failures in generated projects.
+:::
+
+Review the latest version directory within `supporting-files` to determine if any files require updates for the new React Native version.
+
+Not all updates will be clear upfront. Some updates may only become apparent when testing the Example app with the new React Native version. This will come at a later step. The [React Native Upgrade Helper] may help with some files, such as the `gemfile`.
+
+If any updates are required, **do not** modify the current latest version directory. Instead, create a new directory for the new React Native version.
+
+1. Copy the latest version directory within `supporting-files` to a new directory, and name it after the new React Native version.
+    - For example, if `0.77` is the highest version in `supporting-files` and you are adding support for `0.81`, copy `./packages/templates/supporting-files/0.77` to `./packages/templates/supporting-files/0.81`.
+2. Modify the contents of the new directory as necessary to support the new React Native version. Make sure to retain all unmodified files. Removal of any files, unless explicitly no longer required, is likely to lead to build failures in generated projects.
+
+
+## Version Aligned Dependencies
+
+Below is a comprehensive list of all packages currently aligned through `code-plugin-verify-dependencies`. When adding support for a new React Native version, review and update these dependencies as necessary in the new profile.
+
+If you believe a new package should be tracked through `code-plugin-verify-dependencies`, it should fit into one of the existing categories. If it does not, discuss with the maintenance team to determine the best approach.
+
+##### React Native version aligned core packages
+- `react-native`
+- `@react-native/babel-preset`
+- `@react-native/metro-config`
+- `@react-native/eslint-config`
+- `@react-native/typescript-config`
+
+
+##### React Native version dependent core packages
+- `@types/react`
+- `react`
+- `@react-native-community/cli`
+- `@react-native-community/cli-platform-android`
+- `@react-native-community/cli-platform-ios`
+
+##### 3rd party packages required or supported by Flagship Code™ plugins
+- `@brandingbrand/fsapp`
+- `@brandingbrand/react-native-app-restart`
+- `@react-native-async-storage/async-storage`
+- `react-native-navigation`
+- `react-native-device-info`
+- `react-native-sensitive-info`
+
+##### Peer dependencies of other aligned packages
+- `@babel/core`
+- `@babel/preset-env`
+- `@babel/runtime`
+
+##### Deprecated packages previously required
+:::note
+  Packages in this section should have a "banned" entry in the first React Native version which deprecated them.
+:::
+- `metro-react-native-babel-preset`
+- `@types/react-native`
+
+
+
+[React Native Upgrade Helper]: https://react-native-community.github.io/upgrade-helper/
+
