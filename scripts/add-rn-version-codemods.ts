@@ -251,7 +251,6 @@ async function updateDependencyProfilesIndex() {
       const objLit =
         varDecl?.initializer && stripTypeCasts(varDecl.initializer);
 
-      console.log('VAR DECL', varDecl, objLit, objLit);
       if (!objLit || !TS.isObjectLiteralExpression(objLit)) {
         return {pos: -1, str: '', exists: false};
       }
@@ -269,7 +268,6 @@ async function updateDependencyProfilesIndex() {
       const commaMatch = content.slice(last.end, objLit.end).match(/^\s*,/);
       const versionNum = newVersion.replaceAll('.', '');
 
-      console.log('WE GOT HEREEEEE', last, commaMatch);
       return {
         pos: last.end + (commaMatch ? commaMatch[0].length : 0),
         str: `${commaMatch ? '' : ','}\n  '${newVersion}': ${newVersionProfileIdent},`,
