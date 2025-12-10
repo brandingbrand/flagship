@@ -55,7 +55,7 @@
     "tsup": "^8.0.1"
   },
   "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "^14.0.0"
+    "@brandingbrand/code-cli-kit": "^14.2.0"
   },
   "publishConfig": {
     "access": "public"

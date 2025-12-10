@@ -581,6 +581,15 @@ const PropertiesSchema = t.partial({
   newArchEnabled: t.boolean,
 
   /**
+   * Optional flag to enable edge-to-edge display mode.
+   *
+   * Supported in React Native 0.81 and higher.
+   *
+   * @default false
+   */
+  edgeToEdgeEnabled: t.boolean,
+
+  /**
    * Optional flag to enable Hermes JS engine.
    *
    * @default true

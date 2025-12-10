@@ -96,6 +96,15 @@ export default defineConfig({
             },
           ],
         },
+        {
+          label: "Maintainer Docs",
+          items: [
+            {
+              label: "Add New React-Native Version",
+              link: "/maintain/add-rn-version/",
+            },
+          ],
+        }
       ],
     }),
   ],
