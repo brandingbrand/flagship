@@ -7,7 +7,6 @@ export interface SectionProps extends PropsWithChildren {
 }
 
 export default function Section({children, title}: SectionProps): ReactNode {
-  console.log(typeof children, children);
   return (
     <View style={styles.sectionContainer}>
       <Text type="primary" style={styles.sectionTitle}>

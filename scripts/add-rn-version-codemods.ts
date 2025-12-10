@@ -266,7 +266,6 @@ async function updateDependencyProfilesIndex() {
 
       const last = objLit.properties[objLit.properties.length - 1]!;
       const commaMatch = content.slice(last.end, objLit.end).match(/^\s*,/);
-      const versionNum = newVersion.replaceAll('.', '');
 
       return {
         pos: last.end + (commaMatch ? commaMatch[0].length : 0),

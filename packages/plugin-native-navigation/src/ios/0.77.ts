@@ -27,7 +27,7 @@ export async function ios(build: BuildConfig, options: PrebuildOptions) {
     'path.js',
   );
 
-  // Update mainApplicationJava in postlink path module
+  // Update mainApplicationKotlin in postlink path module
   await fs.update(
     rnnPathFilePath,
     /(mainApplicationKotlin)\S*(replace)/,
