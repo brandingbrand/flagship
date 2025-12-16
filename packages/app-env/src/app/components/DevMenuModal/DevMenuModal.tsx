@@ -1,5 +1,6 @@
 import React from 'react';
-import {Modal, ModalProps, SafeAreaView, StyleSheet} from 'react-native';
+import {Modal, ModalProps, StyleSheet} from 'react-native';
+import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 
 import {useModal, useScreen} from '../../lib/context';
 
@@ -29,12 +30,14 @@ export function DevMenuModal() {
 
   return (
     <Modal {...DEFAULT_MODAL_PROPS} visible={visible}>
-      <SafeAreaView style={styles.safeAreaContainer}>
-        <DevMenuModalHeader />
-        {activeScreen ? <activeScreen.Component /> : null}
-        <DevMenuList />
-        <DevMenuModalFooter />
-      </SafeAreaView>
+      <SafeAreaProvider>
+        <SafeAreaView style={styles.safeAreaContainer}>
+          <DevMenuModalHeader />
+          {activeScreen ? <activeScreen.Component /> : null}
+          <DevMenuList />
+          <DevMenuModalFooter />
+        </SafeAreaView>
+      </SafeAreaProvider>
     </Modal>
   );
 }
