@@ -20,7 +20,7 @@
   "dependencies": {
     "@brandingbrand/code-plugin-clean": "^1.0.0",
     "@brandingbrand/code-plugin-env": "^1.1.0",
-    "@brandingbrand/code-plugin-network-security-config": "^1.0.0",
+    "@brandingbrand/code-plugin-network-security-config": "^0.0.1",
     "@brandingbrand/code-plugin-packager-install": "^1.0.0",
     "@brandingbrand/code-plugin-transform-template": "^1.1.0",
     "@brandingbrand/code-plugin-verify-dependencies": "^1.1.0"
