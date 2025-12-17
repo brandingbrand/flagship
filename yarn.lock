@@ -2245,6 +2245,7 @@ __metadata:
     cosmiconfig: "npm:^9.0.0"
     react: "npm:19.1.0"
     react-native: "npm:^0.81.0"
+    react-native-safe-area-context: "npm:^5.6.2"
     react-native-sensitive-info: "npm:^5.5.8"
     tsup: "npm:^8.0.1"
     typescript: "npm:^5.3.3"
@@ -2252,6 +2253,7 @@ __metadata:
     "@brandingbrand/react-native-app-restart": "*"
     react: "*"
     react-native: "*"
+    react-native-safe-area-context: ">=5"
   languageName: unknown
   linkType: soft
 
@@ -2535,7 +2537,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-network-security-config@npm:^1.0.0, @brandingbrand/code-plugin-network-security-config@workspace:packages/plugin-network-security-config":
+"@brandingbrand/code-plugin-network-security-config@npm:^0.0.1, @brandingbrand/code-plugin-network-security-config@workspace:packages/plugin-network-security-config":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-network-security-config@workspace:packages/plugin-network-security-config"
   dependencies:
@@ -2676,7 +2678,7 @@ __metadata:
   dependencies:
     "@brandingbrand/code-plugin-clean": "npm:^1.0.0"
     "@brandingbrand/code-plugin-env": "npm:^1.1.0"
-    "@brandingbrand/code-plugin-network-security-config": "npm:^1.0.0"
+    "@brandingbrand/code-plugin-network-security-config": "npm:^0.0.1"
     "@brandingbrand/code-plugin-packager-install": "npm:^1.0.0"
     "@brandingbrand/code-plugin-transform-template": "npm:^1.1.0"
     "@brandingbrand/code-plugin-verify-dependencies": "npm:^1.1.0"

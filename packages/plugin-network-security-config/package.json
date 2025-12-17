@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-network-security-config",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "plugin for Flagship Code to generate the network security configuration XML file for Android applications.",
   "license": "MIT",
   "main": "src/index.ts",
