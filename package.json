@@ -24,7 +24,7 @@
     "@react-native-async-storage/async-storage": "^1.24.0",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
-    "husky": ">=9.1.7",
+    "husky": ">=7",
     "lint-staged": ">=10",
     "prettier": "^3.1.1",
     "react": "19.1.1",
