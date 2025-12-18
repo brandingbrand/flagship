@@ -88,4 +88,11 @@ export default {
     version: '^19.1.1',
     devOnly: true,
   },
-} satisfies Record<string, DependencyProfile>;
+  /**
+   * React Native Metro bundler configuration
+   * @property {string} version - The semantic version requirement
+   */
+  '@brandingbrand/react-native-app-restart': {
+    version: '^0.5.0',
+  },
+} satisfies DependencyProfile;

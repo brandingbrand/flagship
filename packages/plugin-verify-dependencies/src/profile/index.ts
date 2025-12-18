@@ -48,10 +48,10 @@ export const profiles = {
   '0.80': profile080,
   '0.81': profile081,
   '0.82': profile082,
-} as const satisfies Record<string, Record<string, DependencyProfile>>;
+} as const satisfies Record<string, DependencyProfile>;
 
-export function getProfile(version: string) {
-  return profiles[version as keyof typeof profiles] || undefined;
+export function getProfile(rnVersion: string): DependencyProfile | undefined {
+  return profiles[rnVersion as keyof typeof profiles] || undefined;
 }
 
-export default version.select(profiles) as typeof profile072;
+export default version.select(profiles) as DependencyProfile;

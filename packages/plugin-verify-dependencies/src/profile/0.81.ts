@@ -96,4 +96,4 @@ export default {
     version: '^20.0.0',
     devOnly: true,
   },
-} satisfies Record<string, DependencyProfile>;
+} satisfies DependencyProfile;

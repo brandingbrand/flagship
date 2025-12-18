@@ -43,4 +43,13 @@ export default {
     version: '^0.74.87',
     devOnly: true,
   },
-} satisfies Record<string, DependencyProfile>;
+  /**
+   * React Native Metro bundler configuration
+   * @property {string} version - The semantic version requirement
+   * @property {string} updateVersion - Indicates the version to install if dependency is out of range
+   */
+  '@brandingbrand/react-native-app-restart': {
+    version: '^0.4.0 || ^0.5.0',
+    updateVersion: '^0.4.0',
+  },
+} satisfies DependencyProfile;
