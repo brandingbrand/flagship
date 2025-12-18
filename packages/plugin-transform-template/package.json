@@ -24,7 +24,7 @@
     "semver": "^7.6.2"
   },
   "devDependencies": {
-    "@brandingbrand/code-cli-kit": "^14.1.0",
+    "@brandingbrand/code-cli-kit": "*",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "eslint": "^8.56.0",

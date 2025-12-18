@@ -38,25 +38,29 @@
   },
   "devDependencies": {
     "@babel/core": "7.25.2",
-    "@brandingbrand/react-native-app-restart": "^0.4.0",
-    "@react-native-async-storage/async-storage": "^1.24.0",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/babel__core": "^7.20.5",
     "@types/node": "^22.3.0",
     "@types/react": "^19.1.1",
-    "react": "19.1.1",
-    "react-native": "^0.82.1",
-    "react-native-safe-area-context": "^5.6.2",
-    "react-native-sensitive-info": "^5.5.8",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
     "@brandingbrand/react-native-app-restart": "*",
+    "@react-native-async-storage/async-storage": "^1 || ^2",
     "react": "*",
     "react-native": "*",
-    "react-native-safe-area-context": ">=5"
+    "react-native-safe-area-context": ">=5",
+    "react-native-sensitive-info": ">=5"
+  },
+  "peerDependenciesMeta": {
+    "@react-native-async-storage/async-storage": {
+      "optional": true
+    },
+    "react-native-sensitive-info": {
+      "optional": true
+    }
   },
   "create-react-native-library": {
     "type": "module-legacy",
