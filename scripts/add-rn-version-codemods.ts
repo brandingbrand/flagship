@@ -198,7 +198,7 @@ import {default as ${lastVersionProfileIdent}} from './${lastVersion}';
 
 export default {
   ...${lastVersionProfileIdent},
-} satisfies Record<string, DependencyProfile>;
+} satisfies DependencyProfile;
 `;
 
   await fsp.writeFile(profilePath, content, 'utf-8');
