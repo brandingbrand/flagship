@@ -2295,7 +2295,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-cli-kit@workspace:packages/cli-kit"
   dependencies:
-    "@brandingbrand/code-jest-config": "npm:^2.0.0"
+    "@brandingbrand/code-jest-config": "npm:^3.0.0"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     "@types/eslint": "npm:^8.56.1"
@@ -2420,7 +2420,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-jest-config@npm:*, @brandingbrand/code-jest-config@npm:^2.0.0, @brandingbrand/code-jest-config@workspace:packages/jest-config":
+"@brandingbrand/code-jest-config@npm:*, @brandingbrand/code-jest-config@npm:^3.0.0, @brandingbrand/code-jest-config@workspace:packages/jest-config":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-jest-config@workspace:packages/jest-config"
   dependencies:
@@ -2491,7 +2491,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-env@npm:^1.1.0, @brandingbrand/code-plugin-env@workspace:packages/plugin-env":
+"@brandingbrand/code-plugin-env@npm:^1.2.0, @brandingbrand/code-plugin-env@workspace:packages/plugin-env":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-env@workspace:packages/plugin-env"
   dependencies:
@@ -2578,7 +2578,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-network-security-config@npm:^0.0.1, @brandingbrand/code-plugin-network-security-config@workspace:packages/plugin-network-security-config":
+"@brandingbrand/code-plugin-network-security-config@npm:^1.0.0, @brandingbrand/code-plugin-network-security-config@workspace:packages/plugin-network-security-config":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-network-security-config@workspace:packages/plugin-network-security-config"
   dependencies:
@@ -2675,12 +2675,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-transform-template@npm:^1.1.0, @brandingbrand/code-plugin-transform-template@workspace:packages/plugin-transform-template":
+"@brandingbrand/code-plugin-transform-template@npm:^1.2.0, @brandingbrand/code-plugin-transform-template@workspace:packages/plugin-transform-template":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-transform-template@workspace:packages/plugin-transform-template"
   dependencies:
     "@brandingbrand/code-cli-kit": "npm:*"
-    "@brandingbrand/code-templates": "npm:^14.1.0"
+    "@brandingbrand/code-templates": "npm:^14.2.0"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     eslint: "npm:^8.56.0"
@@ -2696,7 +2696,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-verify-dependencies@npm:^1.1.0, @brandingbrand/code-plugin-verify-dependencies@workspace:packages/plugin-verify-dependencies":
+"@brandingbrand/code-plugin-verify-dependencies@npm:^1.2.0, @brandingbrand/code-plugin-verify-dependencies@workspace:packages/plugin-verify-dependencies":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-verify-dependencies@workspace:packages/plugin-verify-dependencies"
   dependencies:
@@ -2718,11 +2718,11 @@ __metadata:
   resolution: "@brandingbrand/code-preset-react-native@workspace:packages/preset-react-native"
   dependencies:
     "@brandingbrand/code-plugin-clean": "npm:^1.0.0"
-    "@brandingbrand/code-plugin-env": "npm:^1.1.0"
-    "@brandingbrand/code-plugin-network-security-config": "npm:^0.0.1"
+    "@brandingbrand/code-plugin-env": "npm:^1.2.0"
+    "@brandingbrand/code-plugin-network-security-config": "npm:^1.0.0"
     "@brandingbrand/code-plugin-packager-install": "npm:^1.0.0"
-    "@brandingbrand/code-plugin-transform-template": "npm:^1.1.0"
-    "@brandingbrand/code-plugin-verify-dependencies": "npm:^1.1.0"
+    "@brandingbrand/code-plugin-transform-template": "npm:^1.2.0"
+    "@brandingbrand/code-plugin-verify-dependencies": "npm:^1.2.0"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     eslint: "npm:^8.56.0"
@@ -2732,7 +2732,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-templates@npm:^14.1.0, @brandingbrand/code-templates@workspace:packages/templates":
+"@brandingbrand/code-templates@npm:^14.2.0, @brandingbrand/code-templates@workspace:packages/templates":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-templates@workspace:packages/templates"
   languageName: unknown
