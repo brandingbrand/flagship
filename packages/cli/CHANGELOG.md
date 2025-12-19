@@ -1,5 +1,12 @@
 # @brandingbrand/code-cli
 
+## 14.2.0
+
+### Minor Changes
+
+- 83646f8: React Native 0.82 Support
+- c5f263b: React Native 0.81 Support
+
 ## 14.1.0
 
 ### Minor Changes
