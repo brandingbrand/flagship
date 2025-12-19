@@ -97,7 +97,7 @@ export default {
     devOnly: true,
   },
   /**
-   * React Native Metro bundler configuration
+   * React Native App Restart configuration
    * @property {string} version - The semantic version requirement
    */
   '@brandingbrand/react-native-app-restart': {

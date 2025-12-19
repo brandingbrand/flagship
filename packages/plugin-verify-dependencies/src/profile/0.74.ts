@@ -44,7 +44,7 @@ export default {
     devOnly: true,
   },
   /**
-   * React Native Metro bundler configuration
+   * React Native App Restart configuration
    * @property {string} version - The semantic version requirement
    * @property {string} updateVersion - Indicates the version to install if dependency is out of range
    */
