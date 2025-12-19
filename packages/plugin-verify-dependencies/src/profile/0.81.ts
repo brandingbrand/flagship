@@ -96,4 +96,11 @@ export default {
     version: '^20.0.0',
     devOnly: true,
   },
-} satisfies Record<string, DependencyProfile>;
+  /**
+   * React Native App Restart configuration
+   * @property {string} version - The semantic version requirement
+   */
+  '@brandingbrand/react-native-app-restart': {
+    version: '^0.5.0',
+  },
+} satisfies DependencyProfile;

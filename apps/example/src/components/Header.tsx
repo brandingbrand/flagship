@@ -12,8 +12,6 @@ const Header = (props: HeaderProps): ReactNode => {
   const styles = useStyles();
   return (
     <ImageBackground
-      accessibilityRole="image"
-      testID="new-app-screen-header"
       source={assets.logo}
       style={[styles.background, props.style]}
       imageStyle={styles.logo}>

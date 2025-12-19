@@ -43,4 +43,4 @@ export default {
     version: '^0.76.0',
     devOnly: true,
   },
-} satisfies Record<string, DependencyProfile>;
+} satisfies DependencyProfile;

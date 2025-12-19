@@ -60,7 +60,7 @@ import {default as profile080} from './0.80';
 export default {
   ...profile080,
   // Override dependencies as needed for the new React Native version here.
-} satisfies Record<string, DependencyProfile>;
+} satisfies DependencyProfile;
 ```
 
 Using the previous version profiles as a base, update this new profile to ensure all dependencies are correctly updated aligned for the new React Native version.
@@ -124,11 +124,11 @@ Update the Example app to use the new React Native version.
 
     If all has gone well, the example app's `package.json` should now reflect the new React Native version and aligned dependencies.
 
-3. Update the `devDependencies` of the `code-app-env` package.
+3. Update the monorepo's `devDependencies`
 
-    Due to the way the example app is included within the monorepo, the `devDependencies` of the `code-app-env`'s `package.json` must be manually updated to reflect the new React Native version. Failure to do so will lead to duplicate installations of `react` and `react-native`, which will cause runtime errors.
+    Because many of the packages in this monorepo depend on `react` and `react-native`, it's important to keep the monorepo's root level `devDependencies` in sync with the example app. Failure to do so will lead to duplicate installations of `react` and `react-native`, which will cause runtime errors.
 
-    In `./packages/app-env/package.json`, update the version range of `react` and `react-native` within the `devDependencies` section to match the same version ranges used in the example app. leave `peerDependencies` unchanged.
+    In the top level `package.json`, update the version range of `react` and `react-native` within the `devDependencies` section to match the same version ranges used in the example app.
 
 4. Install the updated dependencies from the monorepo root, then return to the example app and run `prebuild` with verbose logging enabled.
 
