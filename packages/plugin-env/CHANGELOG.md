@@ -1,5 +1,11 @@
 # @brandingbrand/code-plugin-env
 
+## 1.2.0
+
+### Minor Changes
+
+- 39e4507: Add missing `esbuild` as a dependency
+
 ## 1.1.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-jest-config",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "license": "MIT",
   "types": "./index.d.ts",
   "files": [
@@ -13,17 +13,17 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "jest": "^29.7.0",
     "ts-jest": "^29.1.2"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
     "@types/temp": "^0.9.4",
+    "jest": "^29.7.0",
     "temp": "^0.9.4",
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "@brandingbrand/code-cli": "^14.0.0"
+    "jest": ">=29.0.0"
   },
   "publishConfig": {
     "access": "public"

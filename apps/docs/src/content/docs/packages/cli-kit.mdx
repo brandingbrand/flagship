@@ -10,7 +10,7 @@ Add `@brandingbrand/code-cli-kit` as a development dependency to your React Nati
 
 import {Tabs, TabItem} from '@astrojs/starlight/components';
 
-<Tabs>
+<Tabs syncKey="pkgmgr-run">
 <TabItem label="yarn">
 
 ```sh
@@ -101,7 +101,7 @@ A callback function is implemented to accept the parsed file as a string and ant
 Below is an illustrative example demonstrating the utilization of the UTF-8 parser to parse the `build.gradle` file and subsequently update the `compileSdkVersion`:
 
 ```ts title="build-gradle-transform.ts"
-import {path, withUTF8} from '@brandingbrand/code-cli-kit';
+import { path, withUTF8 } from "@brandingbrand/code-cli-kit";
 
 // config supplied by @brandingbrand/cli
 
@@ -157,7 +157,7 @@ A callback function is implemented to accept the parsed file as a generic object
 Below is an illustrative example demonstrating the utilization of the XML parser to parse the `colors.xml` file and subsequently add a color:
 
 ```ts title="colors-xml-transform.ts"
-import {path, withXML} from '@brandingbrand/code-cli-kit';
+import { path, withXML } from "@brandingbrand/code-cli-kit";
 
 // config supplied by @brandingbrand/cli
 
@@ -245,7 +245,7 @@ A callback function is implemented to accept the parsed plist file as a generic 
 Below is an illustrative example demonstrating the utilization of the plist parser to parse the `info.plist` file and subsequently update the the bundle identifier and display name.
 
 ```ts title="info-plist-transform.ts"
-import {path, withPlist} from '@brandingbrand/code-cli-kit';
+import { path, withPlist } from "@brandingbrand/code-cli-kit";
 
 // config supplied by @brandingbrand/cli
 
@@ -302,7 +302,7 @@ A callback function is established to receive the parsed file as a XcodeProject 
 Below is an illustrative example demonstrating the utilization of the pbxproj parser to parse the `project.pbxproj` file and subsequently update the `IPHONEOS_DEPLOYMENT_TARGET`:
 
 ```ts title="build-gradle-transform.ts"
-import {withPbxproj} from '@brandingbrand/code-cli-kit';
+import { withPbxproj } from "@brandingbrand/code-cli-kit";
 
 // config supplied by @brandingbrand/cli
 
@@ -359,7 +359,7 @@ The parameter for this function represents either a string or a regular expressi
 Below is an illustrative example demonstrating the utilization of the `doesKeywordExist` lib.
 
 ```ts
-import {fs} from '@brandingbrand/code-cli-kit';
+import { fs } from "@brandingbrand/code-cli-kit";
 // file content at ./my_file.txt
 // "This is someKeyword content."
 
@@ -396,7 +396,7 @@ The path of the file relative to the project root.
 Below is an illustrative example demonstrating the utilization of the `doesPathExist` lib.
 
 ```ts
-import {fs, path} from '@brandingbrand/code-cli-kit';
+import { fs, path } from "@brandingbrand/code-cli-kit";
 
 // file system has a file at ./ios/app/MyFile.swift
 
@@ -446,7 +446,7 @@ The parameter for this function represents the string to replace the old string.
 Below is an illustrative example demonstrating the utilization of the `update` lib.
 
 ```ts
-import {fs, path} from '@brandingbrand/code-cli-kit';
+import { fs, path } from "@brandingbrand/code-cli-kit";
 // file content at ./my_file.txt
 // "This is someKeyword content."
 
@@ -487,12 +487,13 @@ The parameter for this function represents the Flagship Code configuration, whic
 Below is an illustrative example demonstrating the utilization of the `defineConfig` guard.
 
 ```ts title="flagship-code.config.ts"
-import {defineConfig} from '@brandingbrand/code-cli-kit';
+import { defineConfig } from "@brandingbrand/code-cli-kit";
 
 export default defineConfig({
   buildPath: './coderc/build',
   envPath: './coderc/env',
   pluginPath: './coderc/plugins',
+  preset: "@brandingbrand/code-preset-react-native",
   plugins: [
     '@brandingbrand/code-plugin-native-navigation',
     '@brandingbrand/code-plugin-splash-screen',
@@ -524,7 +525,7 @@ The parameter for this function represents the build configuration configuration
 Below is an illustrative example demonstrating the utilization of the `defineBuild` guard. Utilizing `build.internal.ts` purely as an example.
 
 ```ts title="build.internal.ts"
-import {defineBuild} from '@brandingbrand/code-cli-kit';
+import { defineBuild } from "@brandingbrand/code-cli-kit";
 
 export default defineBuild({
   ios: {
@@ -539,7 +540,7 @@ export default defineBuild({
 ```
 
 ```ts title="build.internal.ts"
-import {defineBuild} from '@brandingbrand/code-cli-kit';
+import { defineBuild } from "@brandingbrand/code-cli-kit";
 
 export default defineBuild(pkg => ({
   ios: {
@@ -584,7 +585,7 @@ The parameter for this function represents the environment configuration, which 
 Below is an illustrative example demonstrating the utilization of the `defineEnv` guard. Utilizing `env.dev.ts` purely as an example.
 
 ```ts title="env.dev.ts"
-import {defineEnv} from '@brandingbrand/code-cli-kit';
+import { defineEnv } from "@brandingbrand/code-cli-kit";
 
 export default defineEnv<Env>({
   id: 'abc12345',
@@ -619,7 +620,7 @@ import {
   definePlugin,
   type BuildConfig,
   type PrebuildOptions,
-} from '@brandingbrand/code-cli-kit';
+} from "@brandingbrand/code-cli-kit";
 
 export default definePlugin({
   ios: async function (build, options): Promise<void> {
@@ -658,7 +659,7 @@ An array of strings representing a path relative to the root of the project.
 Below is an illustrative example demonstrating the utilization of the `path.project.resolve` to generate the absolute path to the Podfile.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 const podfilePath = path.project.resolve('ios', 'Podfile');
 ```
@@ -676,7 +677,7 @@ Generates the absolute path to the iOS Podfile file.
 Below is an illustrative example demonstrating the utilization of the `path.ios.podfile` to generate the absolute path to the Podfile.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 const podfilePath = path.ios.podfile;
 ```
@@ -694,7 +695,7 @@ Generates the absolute path to the iOS Info.plist file.
 Below is an illustrative example demonstrating the utilization of the `path.ios.infoPlist` to generate the absolute path to the Info.plist.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 const infoPlistPath = path.ios.infoPlist;
 ```
@@ -712,7 +713,7 @@ Generates the absolute path to the iOS Gemfile.
 Below is an illustrative example demonstrating the utilization of the `path.ios.gemfile` to generate the absolute path to the Gemfile.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 const gemfilePath = path.ios.gemfile;
 ```
@@ -730,7 +731,7 @@ Generates the absolute path to the iOS EnvSwitcher.m.
 Below is an illustrative example demonstrating the utilization of the `path.ios.envSwitcher` to generate the absolute path to the EnvSwitcher.m.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 const envSwitcherPath = path.ios.envSwitcher;
 ```
@@ -748,7 +749,7 @@ Generates the absolute path to the iOS app.entitlements.
 Below is an illustrative example demonstrating the utilization of the `path.ios.entitlements` to generate the absolute path to the app.entitlements.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 const entitlementsPath = path.ios.entitlements;
 ```
@@ -766,7 +767,7 @@ Generates the absolute path to the iOS PrivacyInfo.xcprivacy.
 Below is an illustrative example demonstrating the utilization of the `path.ios.privacyManifest` to generate the absolute path to the PrivacyInfo.xcprivacy.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 const privacyManifestPath = path.ios.privacyManifest;
 ```
@@ -784,7 +785,7 @@ Generates the absolute path to the iOS NativeConstants.m.
 Below is an illustrative example demonstrating the utilization of the `path.ios.nativeConstants` to generate the absolute path to the NativeConstants.m.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 const nativeConstantsPath = path.ios.nativeConstants;
 ```
@@ -802,7 +803,7 @@ Generates the absolute path to the iOS project.pbxproj.
 Below is an illustrative example demonstrating the utilization of the `path.ios.projectPbxProj` to generate the absolute path to the project.pbxproj.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 const projectPbxProjPath = path.ios.projectPbxProj;
 ```
@@ -820,7 +821,7 @@ Generates the absolute path to the Android build.gradle.
 Below is an illustrative example demonstrating the utilization of the `path.android.buildGradle` to generate the absolute path to the build.gradle.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 const buildGradlePath = path.android.buildGradle;
 ```
@@ -838,7 +839,7 @@ Generates the absolute path to the Android Gemfile.
 Below is an illustrative example demonstrating the utilization of the `path.android.gemfile` to generate the absolute path to the Gemfile.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 const gemfilePath = path.android.gemfile;
 ```
@@ -856,7 +857,7 @@ Generates the absolute path to the Android gradle.properties.
 Below is an illustrative example demonstrating the utilization of the `path.android.gradleProperties` to generate the absolute path to the gradle.properties.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 const gradlePropertiesPath = path.android.gradleProperties;
 ```
@@ -874,7 +875,7 @@ Generates the absolute path to the Android app module build.gradle.
 Below is an illustrative example demonstrating the utilization of the `path.android.appBuildGradle` to generate the absolute path to the app module build.gradle.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 const appBuildGradlePath = path.android.appBuildGradle;
 ```
@@ -892,7 +893,7 @@ Generates the absolute path to the Android AndroidManifest.xml.
 Below is an illustrative example demonstrating the utilization of the `path.android.androidManifest` to generate the absolute path to the AndroidManifest.xml.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 const androidManifestPath = path.android.androidManifest;
 ```
@@ -910,7 +911,7 @@ Generates the absolute path to the Android colors.xml.
 Below is an illustrative example demonstrating the utilization of the `path.android.colors` to generate the absolute path to the colors.xml.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 const colorsPath = path.android.colors;
 ```
@@ -928,7 +929,7 @@ Generates the absolute path to the Android network_security_config.xml.
 Below is an illustrative example demonstrating the utilization of the `path.android.networkSecurityConfig` to generate the absolute path to the network_security_config.xml.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 const networkSecurityConfigPath = path.android.networkSecurityConfig;
 ```
@@ -946,7 +947,7 @@ Generates the absolute path to the Android strings.xml.
 Below is an illustrative example demonstrating the utilization of the `path.android.strings` to generate the absolute path to the strings.xml.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 const stringsPath = path.android.strings;
 ```
@@ -964,7 +965,7 @@ Generates the absolute path to the Android styles.xml.
 Below is an illustrative example demonstrating the utilization of the `path.android.styles` to generate the absolute path to the styles.xml.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 const stylesPath = path.android.styles;
 ```
@@ -992,7 +993,7 @@ The build configuration consumed by Flagship Code represented by `build.<mode>.t
 Below is an illustrative example demonstrating the utilization of the `path.android.mainApplication` to generate the absolute path to the MainApplication.java.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 // config aggregated from @brandingbrand/cli
 
@@ -1022,7 +1023,7 @@ The build configuration consumed by Flagship Code represented by `build.<mode>.t
 Below is an illustrative example demonstrating the utilization of the `path.android.mainActivity` to generate the absolute path to the MainActivity.java.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 // config aggregated from @brandingbrand/cli
 
@@ -1052,7 +1053,7 @@ The build configuration consumed by Flagship Code represented by `build.<mode>.t
 Below is an illustrative example demonstrating the utilization of the `path.android.envSwitcher` to generate the absolute path to the EnvSwitcher.java.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 // config aggregated from @brandingbrand/cli
 
@@ -1082,7 +1083,7 @@ The build configuration consumed by Flagship Code represented by `build.<mode>.t
 Below is an illustrative example demonstrating the utilization of the `path.android.nativeConstants` to generate the absolute path to the NativeConstants.java.
 
 ```ts
-import {path} from '@brandingbrand/code-cli-kit';
+import { path } from "@brandingbrand/code-cli-kit";
 
 // config aggregated from @brandingbrand/cli
 
@@ -1132,7 +1133,7 @@ A string of text that will replace the old text.
 Below is an illustrative example demonstrating the utilization of the `replace` to update a string.
 
 ```ts
-import {string} from '@brandingbrand/code-cli-kit';
+import { string } from "@brandingbrand/code-cli-kit";
 
 const originalContent = 'Hello, world!';
 const newText = replace(originalContent, /world/i, 'there');

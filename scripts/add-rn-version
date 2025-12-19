@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+# Script to generate React-Native native code for a specific version template.
+
+CMDNAME=$(basename "$0")
+ORIG_DIR=$(pwd)
+TEMP_DIR=$(mktemp -d 2>/dev/null || mktemp -d -t 'rn-template')
+TEMPLATE_REL_DIR="./packages/templates/react-native"
+TEMPLATE_DIR=$(realpath "$TEMPLATE_REL_DIR")
+
+__print_help () {
+  echo "Usage: $CMDNAME <react-native-version>"
+  echo ""
+  echo "Generates React-Native native code templates for the specified version."
+  echo "The generated templates will be placed in '$TEMPLATE_REL_DIR'"
+  echo ""
+  echo "Arguments:"
+  echo "  <react-native-version>   The React-Native version to generate templates for (e.g., 0.71)"
+  echo "                           Must be in the format '0.XX' (e.g., 0.71, 0.72)."
+  echo ""
+  echo "Options:"
+  echo "  -h, --help               Show this help message and exit."
+  echo "Example: $CMDNAME 0.71"
+}
+
+# Print help and exist if
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+  __print_help
+  exit 0
+fi
+
+RN_VERSION=$1
+if [ -z "$RN_VERSION" ]; then
+  echo "Error: React-Native version argument is required."
+  __print_help
+  exit 1
+fi
+
+# Ensure RN_VERSION follows pattern: 0.XX, and NOT 0.XX.0 or 0.XX.XX
+# This is because we want to generate templates for minor versions only, not specific patch versions.
+# We also reuse this version string for the template directory name, which must be in this format for FSCode.
+if ! [[ "$RN_VERSION" =~ ^0\.[0-9]{2}$ ]]; then
+  echo "Error: React-Native version must be in the format '0.XX' (e.g., 0.71, 0.72)."
+  exit 1
+fi
+
+
+#set CWD to the temp dir to avoid polluting the main project
+mkdir -p "$TEMP_DIR"
+if ! cd "$TEMP_DIR"
+then
+  echo "Failed to change directory to $TEMP_DIR"
+  exit 1
+fi
+
+# Run the React-Native CLI to generate a new project with the specified version.
+if ! npx @react-native-community/cli@latest init app --version "$RN_VERSION" --skip-install --skip-git-init
+then
+  echo "Failed to generate React-Native project with version $RN_VERSION"
+  exit 1
+fi
+
+# Generate the new template directory in the template path
+NEW_TEMPLATE_DIR="$TEMPLATE_DIR/$RN_VERSION"
+if ! mkdir -p "$NEW_TEMPLATE_DIR"
+then
+  echo "Failed to create template directory at $NEW_TEMPLATE_DIR"
+  exit 1
+fi
+
+# Copy the "android" and "ios" directories to the new template directory. We are not interested in the JS code for the native templates.
+cp -R "./app/android" "$NEW_TEMPLATE_DIR/"
+cp -R "./app/ios" "$NEW_TEMPLATE_DIR/"
+
+# Delete the temporary project directory
+rm -rf "$TEMP_DIR"
+
+echo "React-Native version template for $RN_VERSION generated successfully at $NEW_TEMPLATE_DIR"
+echo ""
+echo "Updating CLI tools to recognize the new version ..."
+
+## Echo CWD
+if ! cd "$ORIG_DIR"
+then
+  echo "Failed to change directory back to $ORIG_DIR"
+  exit 1
+fi
+
+npx tsx ./scripts/add-rn-version-codemods.ts "$RN_VERSION"

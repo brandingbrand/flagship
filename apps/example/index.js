@@ -1,20 +1,4 @@
-import {Navigation} from 'react-native-navigation';
-import App from './App';
+import { AppRegistry } from 'react-native';
+import App from './src/App';
 
-Navigation.registerComponent('App', () => App);
-
-Navigation.events().registerAppLaunchedListener(() => {
-  Navigation.setRoot({
-    root: {
-      stack: {
-        children: [
-          {
-            component: {
-              name: 'App',
-            },
-          },
-        ],
-      },
-    },
-  });
-});
+AppRegistry.registerComponent('app', () => App);

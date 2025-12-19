@@ -8,25 +8,33 @@
   "scripts": {
     "build": "turbo build --concurrency 100",
     "dev": "turbo dev --concurrency 100",
+    "dev-docs": "turbo dev --filter=@brandingbrand/code-docs",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "lint": "turbo lint --",
     "prepare": "husky install",
-    "test": "turbo test"
+    "test": "turbo test",
+    "add-rn-version": "./scripts/add-rn-version"
   },
   "lint-staged": {
     "*.{ts,tsx}": "prettier --write"
   },
   "devDependencies": {
+    "@brandingbrand/react-native-app-restart": ">=0.5.0",
     "@changesets/cli": "^2.27.1",
+    "@react-native-async-storage/async-storage": "^1.24.0",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "husky": ">=7",
     "lint-staged": ">=10",
     "prettier": "^3.1.1",
+    "react": "19.1.1",
+    "react-native": "0.82.1",
+    "react-native-safe-area-context": "^5.6.2",
+    "react-native-sensitive-info": "^5.5.8",
     "turbo": "^1.0.0"
   },
-  "packageManager": "yarn@4.7.0",
+  "packageManager": "yarn@4.12.0",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-cli",
-  "version": "14.1.0",
+  "version": "14.2.0",
   "description": "cli for Flagship Code applications",
   "repository": {
     "type": "git",
@@ -40,8 +40,8 @@
     "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "@brandingbrand/code-cli-kit": "^14.1.0",
-    "@brandingbrand/code-jest-config": "^2.0.0",
+    "@brandingbrand/code-cli-kit": "*",
+    "@brandingbrand/code-jest-config": "*",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/ansi-align": "3.0.5",
@@ -55,7 +55,7 @@
     "tsup": "^8.0.1"
   },
   "peerDependencies": {
-    "@brandingbrand/code-cli-kit": "^14.0.0"
+    "@brandingbrand/code-cli-kit": "^14.2.0"
   },
   "publishConfig": {
     "access": "public"

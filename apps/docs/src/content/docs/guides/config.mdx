@@ -23,6 +23,7 @@ export default defineConfig({
   buildPath: "./coderc/build",
   envPath: "./coderc/env",
   pluginPath: "./coderc/plugins",
+  preset: "@brandingbrand/code-preset-react-native",
   plugins: [
     "@brandingbrand/code-plugin-native-navigation",
     "@brandingbrand/code-plugin-splash-screen",
@@ -34,6 +35,8 @@ export default defineConfig({
 :::caution
 In the documentation and configurations provided within `flagship-code.config.ts`, `build.<mode>.ts`, and `env.<mode>.ts`, it is assumed that all paths are relative to the root directory of the project.
 :::
+
+## Configuration Options
 
 You can pass the following options to the `flagship-code` configuration.
 
@@ -60,6 +63,17 @@ The relative path from the root of your project to the location where your envir
 _required_
 
 The relative path from the root of your project to the location where your local plugin packages are defined.
+
+
+#### `preset`
+
+**type:** `string`
+
+_required_
+
+The package name of the preset that Flagship Code will utilize - this corresponds to the package name listed under `devDependencies` in your `package.json`.
+
+It is highly recommended to use the `@brandingbrand/code-preset-react-native` preset for React Native applications, as it provides a comprehensive set of default configurations and plugins tailored for React Native development.
 
 #### `plugins`
 

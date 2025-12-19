@@ -1,9 +1,9 @@
 import {
-  logger,
+  AlignDepsOptions,
   definePlugin,
   fs,
+  logger,
   path,
-  AlignDepsOptions,
 } from '@brandingbrand/code-cli-kit';
 import semver from 'semver';
 
@@ -11,8 +11,8 @@ import semver from 'semver';
  * Profile configuration containing dependency requirements and restrictions based on React Native version.
  * @see ./profile
  */
-import profile, {getProfile} from './profile';
-import type {DependencyProfile, PackageJsonType} from './types';
+import profile, { getProfile } from './profile';
+import type { DependencySpec, PackageJsonType } from './types';
 
 async function getPackageJson(
   packageName: string,
@@ -61,12 +61,11 @@ function getPackageKey(
 function updateDependency(
   pkgJson: PackageJsonType,
   packageName: string,
-  requiredVersion: string,
-  devOnly: boolean = false,
+  profile: DependencySpec,
 ): void {
-  const key = getPackageKey(devOnly);
+  const key = getPackageKey(profile.devOnly);
   pkgJson[key] = pkgJson[key] || {};
-  pkgJson[key][packageName] = requiredVersion;
+  pkgJson[key][packageName] = profile.updateVersion ?? profile.version;
 }
 
 function removeDependency(pkgJson: PackageJsonType, packageName: string): void {
@@ -99,16 +98,16 @@ export default definePlugin<{}, AlignDepsOptions>({
 
     // First handle capabilities for required or existing dependencies
     for (const [packageName, depConfig] of Object.entries(rnProfile)) {
-      const config = depConfig as DependencyProfile;
+      const config = depConfig;
       // Only process capabilities if the package is required or already exists
       if (
         config.capabilities?.length &&
         (config.required || rootDeps[packageName])
       ) {
         for (const capability of config.capabilities) {
-          const capabilityConfig = (rnProfile as any)[
+          const capabilityConfig = rnProfile[
             capability
-          ] as DependencyProfile;
+          ];
           if (capabilityConfig && !rootDeps[capability]) {
             logger.warn(
               `Missing capability ${capability} required by ${packageName}`,
@@ -118,8 +117,7 @@ export default definePlugin<{}, AlignDepsOptions>({
               updateDependency(
                 rootPkgJson,
                 capability,
-                capabilityConfig.version,
-                capabilityConfig.devOnly,
+                capabilityConfig,
               );
               logger.info(
                 `Added ${capability} with version ${capabilityConfig.version}`,
@@ -132,18 +130,18 @@ export default definePlugin<{}, AlignDepsOptions>({
     }
 
     // Then handle regular dependency checks
-    for (const [packageName, depConfig] of Object.entries(rnProfile)) {
-      if (!rootDeps[packageName]) {
+    for (const [depName, depConfig] of Object.entries(rnProfile)) {
+      if (!rootDeps[depName]) {
         logger.debug(
-          `Skipping ${packageName} - not found in root dependencies`,
+          `Skipping ${depName} - not found in root dependencies`,
         );
         continue;
       }
 
       try {
-        logger.debug(`Checking package: ${packageName}`);
-        const pkgData = await getPackageJson(packageName);
-        const installedVersion = pkgData?.version;
+        logger.debug(`Checking package: ${depName}`);
+        const depPkgData = await getPackageJson(depName);
+        const installedVersion = depPkgData?.version;
         const coercedInstalledVersion = installedVersion
           ? semver.coerce(installedVersion)?.version
           : null;
@@ -153,39 +151,36 @@ export default definePlugin<{}, AlignDepsOptions>({
           coercedInstalledVersion &&
           !satisfies(
             coercedInstalledVersion,
-            (depConfig as DependencyProfile).version,
+            depConfig.version,
           )
         ) {
           logger.warn(
-            `Dependency version mismatch for ${packageName}: expected ${
-              (depConfig as DependencyProfile).version
+            `Dependency version mismatch for ${depName}: expected ${depConfig.version
             }, found ${installedVersion}. Updating...`,
           );
           updateDependency(
             rootPkgJson,
-            packageName,
-            (depConfig as DependencyProfile).version,
-            (depConfig as DependencyProfile).devOnly,
+            depName,
+            depConfig,
           );
         }
 
-        if ((depConfig as DependencyProfile).banned) {
-          logger.warn(`Banned package found: ${packageName}. Removing...`);
-          removeDependency(rootPkgJson, packageName);
+        if (depConfig.banned) {
+          logger.warn(`Banned package found: ${depName}. Removing...`);
+          removeDependency(rootPkgJson, depName);
         }
 
-        if ((depConfig as DependencyProfile).required && !installedVersion) {
-          logger.warn(`Required dependency missing: ${packageName}.`);
+        if (depConfig.required && !installedVersion) {
+          logger.warn(`Required dependency missing: ${depName}.`);
           updateDependency(
             rootPkgJson,
-            packageName,
-            (depConfig as DependencyProfile).version,
-            (depConfig as DependencyProfile).devOnly,
+            depName,
+            depConfig,
           );
         }
       } catch (error) {
         logger.error(
-          `Error checking package: ${packageName} - ${(error as any).message}`,
+          `Error checking package: ${depName} - ${(error as any).message}`,
         );
       }
     }
