@@ -10,7 +10,7 @@ Add `@brandingbrand/code-plugin-splash-screen` as a development dependency to yo
 
 import { Tabs, TabItem } from "@astrojs/starlight/components";
 
-<Tabs>
+<Tabs syncKey="pkgmgr-run">
 <TabItem label="yarn">
 
 ```sh
@@ -64,13 +64,14 @@ Your package.json should now be updated, `@brandingbrand/code-plugin-splash-scre
 
 Upon installing the dependency, it is imperative to update the `flagship-code.config.ts` file. Specifically, ensure that the `plugins` array includes the newly installed dependency. This step is crucial, as Flagship Code will only invoke the plugin if it is listed within this array. By including the dependency in the `plugins` array, you enable Flagship Code to recognize and utilize the functionality provided by the plugin during project execution.
 
-```ts title="flagship-code.config.ts" ins={9}
+```ts title="flagship-code.config.ts" ins={10}
 import { defineConfig } from "@brandingbrand/code-cli-kit";
 
 export default defineConfig({
   buildPath: "./coderc/build",
   envPath: "./coderc/env",
   pluginPath: "./coderc/plugins",
+  preset: "@brandingbrand/code-preset-react-native",
   plugins: [
     // other plugins
     "@brandingbrand/code-plugin-splash-screen",
@@ -86,11 +87,12 @@ Depending on the plugin being utilized, additional configuration may be required
 
 For the purpose of illustration, the `build.internal.ts` configuration shall be presented as follows with the generated splash screen:
 
-```ts title="build.internal.ts"
+```ts title="build.internal.ts" ins={14-31} ins=" & CodePluginSplashScreen" ins={3}
 import { defineBuild } from "@brandingbrand/code-cli-kit";
+import { type CodePresetReactNative } from "@brandingbrand/code-preset-react-native";
 import { type CodePluginSplashScreen } from "@brandingbrand/code-plugin-splash-screen";
 
-export default defineBuild<CodePluginSplashScreen>({
+export default defineBuild<CodePresetReactNative & CodePluginSplashScreen>({
   ios: {
     bundleId: "com.brandingbrand",
     displayName: "Branding Brand",
@@ -122,11 +124,12 @@ export default defineBuild<CodePluginSplashScreen>({
 
 For the purpose of illustration, the `build.internal.ts` configuration shall be presented as follows with the legacy splash screen:
 
-```ts title="build.internal.ts"
+```ts title="build.internal.ts" ins={14-31} ins=" & CodePluginSplashScreen" ins={3}
 import { defineBuild } from "@brandingbrand/code-cli-kit";
+import { type CodePresetReactNative } from "@brandingbrand/code-preset-react-native";
 import { type CodePluginSplashScreen } from "@brandingbrand/code-plugin-splash-screen";
 
-export default defineBuild<CodePluginSplashScreen>({
+export default defineBuild<CodePresetReactNative & CodePluginSplashScreen>({
   ios: {
     bundleId: "com.brandingbrand",
     displayName: "Branding Brand",

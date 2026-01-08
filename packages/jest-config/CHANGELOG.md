@@ -1,5 +1,19 @@
 # @brandingbrand/code-jest-config
 
+## 3.0.0
+
+### Major Changes
+
+- 39e4507: Jest is now a peer dependency
+
+### Minor Changes
+
+- 8c66c43: Add global function to reset the built-in fixture when it's enabled
+
+### Patch Changes
+
+- 39e8241: Generate simple package.json in template fixture
+
 ## 2.0.0
 
 ### Major Changes

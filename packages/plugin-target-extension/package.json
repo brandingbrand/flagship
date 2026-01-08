@@ -17,8 +17,8 @@
     "fs-extra": "^11.2.0"
   },
   "devDependencies": {
-    "@brandingbrand/code-cli-kit": "^14.0.0",
-    "@brandingbrand/code-jest-config": "^2.0.0",
+    "@brandingbrand/code-cli-kit": "*",
+    "@brandingbrand/code-jest-config": "*",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/eslint": "^8.56.1",

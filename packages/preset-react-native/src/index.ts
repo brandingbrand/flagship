@@ -1,3 +1,6 @@
+import type {CodePluginEnvironment} from '@brandingbrand/code-plugin-env';
+import type {CodePluginNetworkSecurityConfig} from '@brandingbrand/code-plugin-network-security-config';
+
 /**
  * Array of plugins for the Branding Brand code system
  * @type {(string | [string, Object])[]} Array of plugin names or tuples of [pluginName, pluginOptions]
@@ -17,4 +20,8 @@ export default [
     '@brandingbrand/code-plugin-packager-install',
     {index: Number.MAX_SAFE_INTEGER},
   ],
+  '@brandingbrand/code-plugin-network-security-config',
 ];
+
+export type CodePresetReactNative = CodePluginEnvironment &
+  CodePluginNetworkSecurityConfig;

@@ -74,4 +74,4 @@ export default {
   'react-native-sensitive-info': {
     version: '^5.0.0',
   },
-} satisfies Record<string, DependencyProfile>;
+} satisfies DependencyProfile;

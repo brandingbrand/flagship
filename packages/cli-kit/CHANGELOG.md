@@ -1,5 +1,14 @@
 # @brandingbrand/code-cli-kit
 
+## 14.2.0
+
+### Minor Changes
+
+- a7826f5: Add support for edgeToEdgeEnabled gradle property in RN81+
+- 83646f8: React Native 0.82 Support
+- c5f263b: React Native 0.81 Support
+- 7c0e713: fix inaccuracies in NetworkSecurityConfig XML types, and add missing XML elements.
+
 ## 14.1.0
 
 ### Minor Changes

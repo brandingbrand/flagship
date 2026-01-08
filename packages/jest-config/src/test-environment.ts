@@ -44,17 +44,11 @@ export default class CustomEnvironment extends TestEnvironment {
     temp.track();
   }
 
-  /**
-   * Perform additional setup before each test suite.
-   *
-   * @returns {Promise<void>} A Promise that resolves once the setup is complete.
-   */
-  async setup() {
-    const {
-      requireTemplate,
-      fixtures,
-      reactNativeVersion = '0.72',
-    } = this.options;
+  async setupTemplate(dir: string) {
+    const {fixtures, reactNativeVersion = '0.72'} = this.options;
+
+    // Override the getReactNativeVersion logic to early exit with provided version
+    this.global.FLAGSHIP_CODE_REACT_NATIVE_VERSION = reactNativeVersion;
 
     const getTemplatePath = (
       templateType: string,
@@ -102,13 +96,6 @@ export default class CustomEnvironment extends TestEnvironment {
       );
     };
 
-    if (!requireTemplate) return super.setup();
-
-    // Override the getReactNativeVersion logic to early exit with provided version
-    this.global.FLAGSHIP_CODE_REACT_NATIVE_VERSION = reactNativeVersion;
-
-    // Create a temporary directory
-    const dir = temp.mkdirSync();
     const ios = getTemplatePath(
       'react-native',
       'ios',
@@ -134,13 +121,46 @@ export default class CustomEnvironment extends TestEnvironment {
     await fse.copy(android, path.resolve(dir, 'android'));
     await fse.copy(supportFiles, dir);
 
+    // Create a package.json file in the temporary directory
+    // This is necessary for some code-cli-kit tools which read the project package.json
+    await fse.writeFile(
+      path.resolve(dir, 'package.json'),
+      JSON.stringify({name: 'test-project', version: '1.0.0'}, null, 2),
+    );
+
     // Copy fixtures if provided
     if (fixtures && typeof fixtures === 'string') {
       await fse.copy(path.resolve(path.dirname(this.testPath), fixtures), dir);
     }
+  }
+
+  /**
+   * Perform additional setup before each test suite.
+   *
+   * @returns {Promise<void>} A Promise that resolves once the setup is complete.
+   */
+  async setup() {
+    const {requireTemplate} = this.options;
+
+    if (!requireTemplate) return super.setup();
+
+    // Create a temporary directory
+    const dir = temp.mkdirSync();
 
     // Set a global variable to store the fixture path
     this.global.__flagship_code_fixture_path = dir;
+
+    // Set a global function to reset the fixture
+    this.global.resetFixture = async () => {
+      // Do this step outside of the perview of `temp` to avoid issues with changing the project root dir.
+      // code-cli-kit caches the project root path independently, so we need to make sure it stays consistent.
+      await fse.rm(dir, {recursive: true, force: true});
+      await fse.mkdir(dir, {recursive: true});
+      await this.setupTemplate(dir);
+    };
+
+    // Set up the template in the temporary directory
+    await this.setupTemplate(dir);
 
     // Continue with the regular Jest setup
     await super.setup();

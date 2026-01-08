@@ -66,4 +66,4 @@ export default {
     devOnly: true,
     banned: true,
   },
-} satisfies Record<string, DependencyProfile>;
+} satisfies DependencyProfile;

@@ -9,9 +9,13 @@ export default defineConfig({
       logo: {
         src: "./src/assets/logo.svg",
       },
-      social: {
-        github: "https://github.com/brandingbrand/flagship",
-      },
+      social: [
+        {
+          href: "https://github.com/brandingbrand/flagship",
+          icon: "github",
+          label: "GitHub",
+        }
+      ],
       customCss: ["./src/styles.css"],
       sidebar: [
         {
@@ -71,6 +75,10 @@ export default defineConfig({
               link: "/packages/plugin-native-navigation/",
             },
             {
+              label: "plugin-network-security-config",
+              link: "/packages/plugin-network-security-config/",
+            },
+            {
               label: "plugin-permissions",
               link: "/packages/plugin-permissions/",
             },
@@ -88,6 +96,15 @@ export default defineConfig({
             },
           ],
         },
+        {
+          label: "Maintainer Docs",
+          items: [
+            {
+              label: "Add New React-Native Version",
+              link: "/maintain/add-rn-version/",
+            },
+          ],
+        }
       ],
     }),
   ],

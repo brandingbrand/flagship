@@ -1,5 +1,20 @@
 # @brandingbrand/code-plugin-transform-template
 
+## 1.2.0
+
+### Minor Changes
+
+- a7826f5: Add support for edgeToEdgeEnabled gradle property in RN81+
+- 83646f8: React Native 0.82 Support
+- c5f263b: React Native 0.81 Support
+
+### Patch Changes
+
+- Updated dependencies [83646f8]
+- Updated dependencies [c5f263b]
+  - @brandingbrand/code-templates@14.2.0
+- added linkingDelegate method for RN 0.79 and above - [a88403e]
+
 ## 1.1.0
 
 ### Minor Changes

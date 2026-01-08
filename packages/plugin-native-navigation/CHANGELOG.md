@@ -1,5 +1,12 @@
 # @brandingbrand/code-plugin-native-navigation
 
+## 3.1.0
+
+### Minor Changes
+
+- c5f263b: React Native 0.81 Support
+- de811d1: updated to support version 8 with newArch
+
 ## 3.0.0
 
 ### Major Changes

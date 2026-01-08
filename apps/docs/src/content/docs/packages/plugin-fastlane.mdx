@@ -10,7 +10,7 @@ Add `@brandingbrand/code-plugin-fastlane` as a development dependency to your Re
 
 import { Tabs, TabItem } from "@astrojs/starlight/components";
 
-<Tabs>
+<Tabs syncKey="pkgmgr-run">
 <TabItem label="yarn">
 
 ```sh
@@ -64,13 +64,14 @@ Your package.json should now be updated, `@brandingbrand/code-plugin-fastlane` s
 
 Upon installing the dependency, it is imperative to update the `flagship-code.config.ts` file. Specifically, ensure that the `plugins` array includes the newly installed dependency. This step is crucial, as Flagship Code will only invoke the plugin if it is listed within this array. By including the dependency in the `plugins` array, you enable Flagship Code to recognize and utilize the functionality provided by the plugin during project execution.
 
-```ts title="flagship-code.config.ts" ins={9}
+```ts title="flagship-code.config.ts" ins={10}
 import { defineConfig } from "@brandingbrand/code-cli-kit";
 
 export default defineConfig({
   buildPath: "./coderc/build",
   envPath: "./coderc/env",
   pluginPath: "./coderc/plugins",
+  preset: "@brandingbrand/code-preset-react-native",
   plugins: [
     // other plugins
     "@brandingbrand/code-plugin-fastlane",
@@ -86,11 +87,12 @@ Depending on the plugin, there might be additional configuration required. Regar
 
 For the purpose of illustration, the `build.internal.ts` configuration shall be presented as follows if you want to include both AppCenter and Firebase App Distribution uploads:
 
-```ts title="build.internal.ts"
+```ts title="build.internal.ts" ins={14-41} ins=" & CodePluginFastlane" ins={3}
 import { defineBuild } from "@brandingbrand/code-cli-kit";
+import { type CodePresetReactNative } from "@brandingbrand/code-preset-react-native";
 import { type CodePluginFastlane } from "@brandingbrand/code-plugin-fastlane";
 
-export default defineBuild<CodePluginFastlane>({
+export default defineBuild<CodePresetReactNative & CodePluginFastlane>({
   ios: {
     bundleId: "com.brandingbrand",
     displayName: "Branding Brand",

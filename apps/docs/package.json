@@ -6,12 +6,13 @@
   "scripts": {
     "astro": "astro",
     "preview": "astro preview",
-    "start": "astro dev"
+    "start": "astro dev",
+    "dev": "astro dev"
   },
   "dependencies": {
-    "@astrojs/check": "^0.4.1",
-    "@astrojs/starlight": "^0.17.0",
-    "astro": "^4.16.17",
+    "@astrojs/check": "^0.9.6",
+    "@astrojs/starlight": "^0.37.0",
+    "astro": "^5.16.4",
     "lottie-web": "^5.12.2",
     "sharp": "^0.32.5",
     "typescript": "^5.3.3"

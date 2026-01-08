@@ -15,7 +15,7 @@
     "recast": "^0.23.5"
   },
   "devDependencies": {
-    "@brandingbrand/code-cli-kit": "^14.0.0",
+    "@brandingbrand/code-cli-kit": "*",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "eslint": "^8.56.0",

@@ -118,4 +118,4 @@ export default {
     version: '^19.1.0',
     devOnly: true,
   },
-} satisfies Record<string, DependencyProfile>;
+} satisfies DependencyProfile;
