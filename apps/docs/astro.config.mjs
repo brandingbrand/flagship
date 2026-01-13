@@ -83,6 +83,10 @@ export default defineConfig({
               link: "/packages/plugin-permissions/",
             },
             {
+              label: "plugin-react-navigation",
+              link: "/packages/plugin-react-navigation/",
+            },
+            {
               label: "plugin-splash-screen",
               link: "/packages/plugin-splash-screen/",
             },
