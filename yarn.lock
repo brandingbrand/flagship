@@ -2633,6 +2633,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@brandingbrand/code-plugin-react-navigation@workspace:packages/plugin-react-navigation":
+  version: 0.0.0-use.local
+  resolution: "@brandingbrand/code-plugin-react-navigation@workspace:packages/plugin-react-navigation"
+  dependencies:
+    "@brandingbrand/code-cli-kit": "npm:*"
+    "@brandingbrand/code-jest-config": "npm:*"
+    "@repo/eslint-config": "npm:*"
+    "@repo/typescript-config": "npm:*"
+    "@types/eslint": "npm:^8.56.1"
+    eslint: "npm:^8.56.0"
+    jest: "npm:^29.7.0"
+    ts-jest: "npm:^29.1.2"
+    typescript: "npm:^5.3.3"
+  peerDependencies:
+    "@brandingbrand/code-cli-kit": ^14.0.0
+    "@react-navigation/native": ^7
+    react-native: ">=0.73.0"
+  languageName: unknown
+  linkType: soft
+
 "@brandingbrand/code-plugin-splash-screen@npm:*, @brandingbrand/code-plugin-splash-screen@workspace:packages/plugin-splash-screen":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-splash-screen@workspace:packages/plugin-splash-screen"

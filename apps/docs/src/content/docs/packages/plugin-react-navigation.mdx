@@ -1,0 +1,87 @@
+---
+title: plugin-react-navigation
+---
+
+The `code-plugin-react-navigation` package is an essential plugin for projects utilizing React Navigation within the Flagship Code framework. This plugin streamlines the native code configuration process, ensuring seamless integration and proper operation of React Navigation in your React Native applications.
+
+## Install
+
+Follow [React Navigation's installation guide](https://reactnavigation.org/docs/getting-started) to install `react-navigation` for your project.
+
+Skip the "Configuring react-native-screens on Android", as these changes are handled by this plugin.
+
+Add `@brandingbrand/code-plugin-react-navigation` as a development dependency to your React Native project.
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+<Tabs syncKey="pkgmgr-run">
+<TabItem label="yarn">
+
+```sh
+yarn add --dev @brandingbrand/code-plugin-react-navigation
+```
+
+</TabItem>
+<TabItem label="npm">
+
+```sh
+npm install --save-dev @brandingbrand/code-plugin-react-navigation
+```
+
+</TabItem>
+<TabItem label="pnpm">
+
+```sh
+pnpm add --save-dev @brandingbrand/code-plugin-react-navigation
+```
+
+</TabItem>
+<TabItem label="bun">
+
+```sh
+bun add --dev @brandingbrand/code-plugin-react-navigation
+```
+
+</TabItem>
+</Tabs>
+
+Your package.json should now be updated, `@brandingbrand/code-plugin-react-navigation` should be listed as a `devDependency`.
+
+```json title="package.json" ins={10, 13}
+{
+  "name": "my-awesome-app",
+  "version": "1.0.0",
+  "author": "Your Name <email@example.com>",
+  "dependencies": {
+    "@react-navigation/native": "7.37.2",
+    "react": "^18.2.0",
+    "react-native": "~0.73.0"
+  },
+  "devDependencies": {
+    "@brandingbrand/code-plugin-react-navigation": "2.0.0"
+  }
+}
+```
+
+## Configure
+
+### Flagship Code Configuration
+
+Upon installing the dependency, it is imperative to update the `flagship-code.config.ts` file. Specifically, ensure that the `plugins` array includes the newly installed dependency. This step is crucial, as Flagship Code will only invoke the plugin if it is listed within this array. By including the dependency in the `plugins` array, you enable Flagship Code to recognize and utilize the functionality provided by the plugin during project execution.
+
+```ts title="flagship-code.config.ts" ins={10}
+import { defineConfig } from "@brandingbrand/code-cli-kit";
+
+export default defineConfig({
+  buildPath: "./coderc/build",
+  envPath: "./coderc/env",
+  pluginPath: "./coderc/plugins",
+  preset: "@brandingbrand/code-preset-react-native",
+  plugins: [
+    // other plugins
+    "@brandingbrand/code-plugin-react-navigation",
+  ],
+});
+```
+
+For more detailed guidance and information, please refer to the [Flagship Code Configuration](/guides/config) guide. This resource offers comprehensive instructions and insights to assist you in configuring Flagship Code effectively.
