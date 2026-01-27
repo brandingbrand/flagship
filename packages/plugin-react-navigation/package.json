@@ -26,8 +26,8 @@
   "peerDependencies": {
     "@brandingbrand/code-cli-kit": "^14.2.1",
     "@react-navigation/native": "^7",
-    "react-native-screens": "^4",
-    "react-native": ">=0.73.0"
+    "react-native": ">=0.73.0",
+    "react-native-screens": "^4"
   },
   "publishConfig": {
     "access": "public"
