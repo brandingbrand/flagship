@@ -1,36 +1,5 @@
 import semver from 'semver';
 
-export function getReactNativeVersion(): string {
-  if (
-    typeof (global as any).FLAGSHIP_CODE_REACT_NATIVE_VERSION === 'string' &&
-    /^\d+\.\d+$/.test((global as any).FLAGSHIP_CODE_REACT_NATIVE_VERSION)
-  ) {
-    return (global as any).FLAGSHIP_CODE_REACT_NATIVE_VERSION;
-  }
-
-  try {
-    const packageJsonPath = require.resolve('react-native/package.json', {
-      paths: [process.cwd()],
-    });
-    const {version} = require(packageJsonPath);
-
-    if (!version) {
-      throw new Error('React Native version is undefined in package.json.');
-    }
-
-    const coercedVersion = semver.coerce(version);
-    if (!coercedVersion) {
-      throw new Error(`Invalid React Native version: ${version}`);
-    }
-
-    return `${coercedVersion.major}.${coercedVersion.minor}`;
-  } catch (error) {
-    throw new Error(
-      `Failed to determine React Native version: ${(error as any).message}`,
-    );
-  }
-}
-
 interface VersionParts {
   major: number;
   minor: number;
@@ -55,6 +24,41 @@ function compareVersions(a: string, b: string): -1 | 0 | 1 {
     return verA.minor > verB.minor ? 1 : -1;
   }
   return 0;
+}
+
+export function getPackageVersion (packageName: string): string  {
+  try {
+    const packageJsonPath = require.resolve(`${packageName}/package.json`, {
+      paths: [process.cwd()],
+    });
+    const { version } = require(packageJsonPath);
+
+    if (!version) {
+      throw new Error('Version is undefined in package.json.');
+    }
+
+    const coercedVersion = semver.coerce(version);
+    if (!coercedVersion) {
+      throw new Error(`Invalid version: ${version}`);
+    }
+
+    return `${coercedVersion.major}.${coercedVersion.minor}`;
+  } catch (error) {
+    throw new Error(
+      `Failed to determine ${packageName} version: ${(error as any).message}`,
+    );
+  }
+};
+
+export function getReactNativeVersion(): string {
+  if (
+    typeof (global as any).FLAGSHIP_CODE_REACT_NATIVE_VERSION === 'string' &&
+    /^\d+\.\d+$/.test((global as any).FLAGSHIP_CODE_REACT_NATIVE_VERSION)
+  ) {
+    return (global as any).FLAGSHIP_CODE_REACT_NATIVE_VERSION;
+  }
+
+  return getPackageVersion('react-native');
 }
 
 export function selectWithVersion<T>(
