@@ -4,61 +4,26 @@
  */
 
 import {
-  type BuildConfig,
   definePlugin,
-  path,
-  string,
+  version,
   withManifest,
-  withUTF8,
+  type BuildConfig
 } from '@brandingbrand/code-cli-kit';
 
+import { rnScreens40 } from './rn-screens-android/4.0';
+import { rnScreens416 } from './rn-screens-android/4.16';
 
 export default definePlugin({
   android: async function (
     build: BuildConfig,
   ): Promise<void> {
+    const rnScreensVersion = version.getPackageVersion('react-native-screens');
+    const activityTransformer = version.selectWithVersion({
+      '4.0': rnScreens40,
+      '4.16': rnScreens416,
+    }, rnScreensVersion, 'react-native-screens');
 
-    const mainActivityPath = path.android.mainActivity(build);
-
-    await withUTF8(
-      mainActivityPath,
-      (content) => {
-
-        const imports = [
-          'android.os.Bundle',
-          'com.swmansion.rnscreens.fragment.restoration.RNScreensFragmentFactory',
-        ].filter((imp) => !content.includes(`import ${imp}`));
-        if (imports.length > 0) {
-          content = string.replace(
-            content,
-            /(package.*?\n\n)/m,
-            `$1import ${imports.join('\nimport ')}\n`,
-          );
-        }
-
-        if (!content.includes('super.onCreate(')) {
-            content = string.replace(
-              content,
-              /(class MainActivity.*\{)/,
-              `$1
-  override fun onCreate(savedInstanceState: Bundle?) {
-      super.onCreate(savedInstanceState)
-  }`,
-            );
-        }
-
-        if (!content.includes('supportFragmentManager.fragmentFactory =')) {
-          content = string.replace(
-            content,
-            /(super\.onCreate\(.+\))/,
-             `supportFragmentManager.fragmentFactory = RNScreensFragmentFactory()
-      $1`,
-          );
-        }
-
-        return content;
-      },
-    );
+    await activityTransformer(build);
 
     await withManifest((xml) => {
       const mainApplication = xml.manifest.application?.find(it => it.$['android:name'] === '.MainApplication');
