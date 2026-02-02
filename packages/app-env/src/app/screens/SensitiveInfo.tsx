@@ -21,7 +21,8 @@ function SensitiveInfo({keychainService}: SensitiveInfoDevScreenProps) {
     await Promise.all(
       keys.map(async key => deleteItem(key, {keychainService})),
     );
-  }, [keychainService]);
+    fetchContent();
+  }, [fetchContent, keychainService]);
 
   useEffect(() => {
     fetchContent();

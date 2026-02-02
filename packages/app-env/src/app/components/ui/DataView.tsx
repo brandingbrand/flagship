@@ -52,7 +52,6 @@ export function DataView({
     if (typeof content === 'string') {
       return content;
     }
-    [];
     return JSON.stringify(content, null, contentIndent);
   }, [content, contentIndent]);
   return (
