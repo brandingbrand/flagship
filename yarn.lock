@@ -2268,6 +2268,7 @@ __metadata:
   resolution: "@brandingbrand/code-app-env@workspace:packages/app-env"
   dependencies:
     "@babel/core": "npm:7.25.2"
+    "@react-native/typescript-config": "npm:~0.82.1"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     "@types/babel__core": "npm:^7.20.5"
@@ -2282,7 +2283,7 @@ __metadata:
     react: "*"
     react-native: "*"
     react-native-safe-area-context: ">=5"
-    react-native-sensitive-info: ">=5"
+    react-native-sensitive-info: ^5.6.0
   peerDependenciesMeta:
     "@react-native-async-storage/async-storage":
       optional: true
@@ -2774,7 +2775,7 @@ __metadata:
     react: "npm:19.1.1"
     react-native: "npm:0.82.1"
     react-native-safe-area-context: "npm:^5.6.2"
-    react-native-sensitive-info: "npm:^5.5.8"
+    react-native-sensitive-info: "npm:^5.6.2"
     turbo: "npm:^1.0.0"
   languageName: unknown
   linkType: soft
@@ -5150,7 +5151,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native/typescript-config@npm:^0.82.1":
+"@react-native/typescript-config@npm:^0.82.1, @react-native/typescript-config@npm:~0.82.1":
   version: 0.82.1
   resolution: "@react-native/typescript-config@npm:0.82.1"
   checksum: 10c0/9f6c1501bf3961d0da7a4bb13fc3860d3f619e9b5446d3eb4735873ef9cfc316c349e765503deca2331d7c600cf29eaaf30816f6ee98afc1ae43e9f5abc59447
@@ -16462,10 +16463,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-sensitive-info@npm:^5.5.8":
-  version: 5.5.8
-  resolution: "react-native-sensitive-info@npm:5.5.8"
-  checksum: 10c0/e171eb70aec1263a6988668399fc6db936739de2eb48fc5e1aa53fe7ebd2db87672705039dac7ddffc581051796d5037b8996e4f87124e7dfee307c8cc3cf1b9
+"react-native-sensitive-info@npm:^5.6.2":
+  version: 5.6.2
+  resolution: "react-native-sensitive-info@npm:5.6.2"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/d1c7891488fd77f3924037799d27ed21d460cd5937a5ba0ceed324209222a9200e500a8c61f86f26be4613b214bf98c6b0b12a683650ba99ad8b9d6dd1be2760
   languageName: node
   linkType: hard
 

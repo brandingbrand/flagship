@@ -1,0 +1,4 @@
+{
+  "__comment__": "Files in this directory are not built using the base TS config. Instead RN projects import these files as source. This config is only for editor support.",
+  "extends": "@react-native/typescript-config",
+}
