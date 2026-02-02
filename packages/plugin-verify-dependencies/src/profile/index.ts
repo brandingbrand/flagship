@@ -13,6 +13,7 @@ import profile079 from './0.79';
 import profile080 from './0.80';
 import profile081 from './0.81';
 import profile082 from './0.82';
+import profile083 from './0.83';
 
 /**
  * A version-aware profile module that provides dependency configurations specific to React Native versions.
@@ -48,6 +49,7 @@ export const profiles = {
   '0.80': profile080,
   '0.81': profile081,
   '0.82': profile082,
+  '0.83': profile083,
 } as const satisfies Record<string, DependencyProfile>;
 
 export function getProfile(rnVersion: string): DependencyProfile | undefined {
