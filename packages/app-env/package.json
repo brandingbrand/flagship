@@ -21,6 +21,10 @@
       "types": "./src/app/screens/*.tsx",
       "default": "./src/app/screens/*.tsx"
     },
+    "./ui": {
+      "types": "./src/app/ui.ts",
+      "default": "./src/app/ui.ts"
+    },
     "./metro": {
       "types": "./dist/metro.d.ts",
       "default": "./dist/metro.js"
