@@ -27,11 +27,6 @@ export default defineBuild<
   android: {
     packageName: 'com.brandingbrand',
     displayName: 'Branding Brand',
-    gradle: {
-      properties: {
-        newArchEnabled: true,
-      },
-    },
   },
   codePluginAsset: {
     plugin: {
