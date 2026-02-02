@@ -478,15 +478,20 @@ You may create custom screens for the `DevMenu` to add additional debugging or t
 
 You can use the `defineDevMenuScreen` utility to ensure your screen is always configured properly.
 
+The `@brandingbrand/code-app-env/ui` sub-module also provides pre-built UI components that match the style of the default `DevMenu` screens.
+
 ```tsx title="DebugScreen.tsx"
 import React from "react";
-import { View, Text, Button } from "react-native";
+import { View } from "react-native";
 import { defineDevMenuScreen } from "@brandingbrand/code-app-env";
+import { Text, Button } from "@brandingbrand/code-app-env/ui";
 
 export const DebugScreen = defineDevMenuScreen('DebugScreen', () => (
   <View>
-    <Text>Debug Screen</Text>
-    <Button title="Log Message" onPress={() => console.log('Debug button pressed')} />
+    <Text type="titleSm">Debug Screen</Text>
+    <Button onPress={() => console.log('Debug button pressed')}>
+      Log Message
+    </Button>
   </View>
 ));
 ```

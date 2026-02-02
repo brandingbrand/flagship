@@ -21,6 +21,10 @@
       "types": "./src/app/screens/*.tsx",
       "default": "./src/app/screens/*.tsx"
     },
+    "./ui": {
+      "types": "./src/app/ui.ts",
+      "default": "./src/app/ui.ts"
+    },
     "./metro": {
       "types": "./dist/metro.d.ts",
       "default": "./dist/metro.js"
@@ -38,6 +42,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.25.2",
+    "@react-native/typescript-config": "~0.82.1",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@types/babel__core": "^7.20.5",
@@ -52,7 +57,7 @@
     "react": "*",
     "react-native": "*",
     "react-native-safe-area-context": ">=5",
-    "react-native-sensitive-info": ">=5"
+    "react-native-sensitive-info": "^5.6.0"
   },
   "peerDependenciesMeta": {
     "@react-native-async-storage/async-storage": {

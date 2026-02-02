@@ -1,50 +1,40 @@
 import storage from '@react-native-async-storage/async-storage';
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
-import {Button, CodeBlock} from '../components/ui';
+import {DataView} from '../components/ui';
 import {defineDevMenuScreen} from '../lib/define-screen';
 
-export const AsyncStorage = defineDevMenuScreen(
+export const AsyncStorageDevScreen = defineDevMenuScreen(
   'AsyncStorage',
-  function AsyncStorage() {
+  function AsyncStorageDevScreen() {
     const [content, setContent] = useState('Loading...');
 
-    async function fetchContent() {
+    const fetchContent = useCallback(async () => {
       const keys = await storage.getAllKeys();
       const data = await storage.multiGet(keys);
       setContent(JSON.stringify(data, null, 2));
-    }
+    }, []);
+
+    const deleteAll = useCallback(async () => {
+      const keys = await storage.getAllKeys();
+      await storage.multiRemove(keys);
+      await fetchContent();
+    }, [fetchContent]);
 
     useEffect(() => {
       fetchContent();
     }, []);
 
-    async function handleClear() {
-      const keys = await storage.getAllKeys();
-      await storage.multiRemove(keys);
-      await fetchContent();
-    }
-
-    return (
-      <View style={styles.container}>
-        <CodeBlock>{content}</CodeBlock>
-        <View style={styles.buttonContainer}>
-          <Button onPress={handleClear}>Clear AsyncStorage</Button>
-        </View>
-      </View>
+    const actions = useMemo(
+      () => [
+        {
+          label: 'Clear AsyncStorage',
+          onPress: deleteAll,
+        },
+      ],
+      [],
     );
+
+    return <DataView content={content} actions={actions} />;
   },
 );
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    gap: 16,
-  },
-  buttonContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

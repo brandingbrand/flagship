@@ -1,64 +1,64 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {
-  RNSensitiveInfoOptions,
-  SensitiveInfoEntry,
-  deleteItem,
-  getAllItems,
-} from 'react-native-sensitive-info';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {deleteItem, getAllItems} from 'react-native-sensitive-info';
 
-import {Button, CodeBlock} from '../components/ui';
+import {DataView} from '../components/ui';
 import {defineDevMenuScreen} from '../lib/define-screen';
 
-export function createSensitiveInfoDevScreen(
-  options: RNSensitiveInfoOptions = {},
-) {
-  return defineDevMenuScreen('SensitiveInfo', function SensitiveInfo() {
-    const [content, setContent] = useState<SensitiveInfoEntry[]>([]);
-
-    const contentStr = useMemo(
-      () => JSON.stringify(content, null, 2),
-      [content],
-    );
-
-    async function fetchContent() {
-      const data = await getAllItems(options);
-      setContent(data as unknown as SensitiveInfoEntry[]);
-    }
-
-    useEffect(() => {
-      fetchContent();
-    }, []);
-
-    async function handleClearInfo() {
-      if (!content.length) return;
-
-      for (const item of content) {
-        await deleteItem(item.key, options);
-      }
-
-      await fetchContent();
-    }
-
-    return (
-      <View style={styles.container}>
-        <CodeBlock>{contentStr}</CodeBlock>
-        <View style={styles.buttonContainer}>
-          <Button onPress={handleClearInfo}>Clear SensitiveInfo</Button>
-        </View>
-      </View>
-    );
-  });
+export interface SensitiveInfoDevScreenProps {
+  keychainService?: string;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    gap: 16,
-  },
-  buttonContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+function SensitiveInfo({keychainService}: SensitiveInfoDevScreenProps) {
+  const [content, setContent] = useState<string | string[]>('loading...');
+
+  const fetchContent = useCallback(async () => {
+    const keys = await getAllItems({keychainService});
+    setContent(keys);
+  }, [keychainService]);
+
+  const deleteAll = useCallback(async () => {
+    const keys = await getAllItems({keychainService});
+    await Promise.all(
+      keys.map(async key => deleteItem(key, {keychainService})),
+    );
+    fetchContent();
+  }, [fetchContent, keychainService]);
+
+  useEffect(() => {
+    fetchContent();
+  }, [fetchContent]);
+
+  const actions = useMemo(
+    () => [
+      {
+        label: `Clear SensitiveInfo${keychainService ? ` (${keychainService})` : ''}`,
+        onPress: deleteAll,
+      },
+    ],
+    [deleteAll, keychainService],
+  );
+
+  return (
+    <DataView
+      title={`Known Keys${keychainService ? ` (${keychainService})` : ''}`}
+      content={content}
+      actions={actions}
+    />
+  );
+}
+
+export const SensitiveInfoDevScreen =
+  defineDevMenuScreen<SensitiveInfoDevScreenProps>(
+    'SensitiveInfo',
+    SensitiveInfo,
+  );
+
+export const createSensitiveInfoDevScreen = (
+  props: SensitiveInfoDevScreenProps,
+) =>
+  defineDevMenuScreen(
+    `SensitiveInfo${props.keychainService ? ` (${props.keychainService})` : ''}`,
+    function ConfiguredSensitiveInfoDevScreen() {
+      return <SensitiveInfo {...props} />;
+    },
+  );
