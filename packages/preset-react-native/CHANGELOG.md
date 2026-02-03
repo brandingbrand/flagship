@@ -1,5 +1,19 @@
 # @brandingbrand/code-preset-react-native
 
+## 1.3.0
+
+### Minor Changes
+
+- add React Native 0.83 support
+
+### Patch Changes
+
+- Updated dependencies [45b584c]
+- Updated dependencies
+- Updated dependencies [6d74f27]
+  - @brandingbrand/code-plugin-verify-dependencies@1.3.0
+  - @brandingbrand/code-plugin-transform-template@1.3.0
+
 ## 1.2.0
 
 ### Minor Changes
