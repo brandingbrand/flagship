@@ -2844,12 +2844,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-transform-template@npm:^1.2.0, @brandingbrand/code-plugin-transform-template@workspace:packages/plugin-transform-template":
+"@brandingbrand/code-plugin-transform-template@npm:^1.3.0, @brandingbrand/code-plugin-transform-template@workspace:packages/plugin-transform-template":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-transform-template@workspace:packages/plugin-transform-template"
   dependencies:
     "@brandingbrand/code-cli-kit": "npm:*"
-    "@brandingbrand/code-templates": "npm:^14.2.0"
+    "@brandingbrand/code-templates": "npm:^14.3.0"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     eslint: "npm:^8.56.0"
@@ -2865,7 +2865,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-plugin-verify-dependencies@npm:^1.2.0, @brandingbrand/code-plugin-verify-dependencies@workspace:packages/plugin-verify-dependencies":
+"@brandingbrand/code-plugin-verify-dependencies@npm:^1.3.0, @brandingbrand/code-plugin-verify-dependencies@workspace:packages/plugin-verify-dependencies":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-plugin-verify-dependencies@workspace:packages/plugin-verify-dependencies"
   dependencies:
@@ -2890,8 +2890,8 @@ __metadata:
     "@brandingbrand/code-plugin-env": "npm:^1.2.0"
     "@brandingbrand/code-plugin-network-security-config": "npm:^1.0.0"
     "@brandingbrand/code-plugin-packager-install": "npm:^1.0.0"
-    "@brandingbrand/code-plugin-transform-template": "npm:^1.2.0"
-    "@brandingbrand/code-plugin-verify-dependencies": "npm:^1.2.0"
+    "@brandingbrand/code-plugin-transform-template": "npm:^1.3.0"
+    "@brandingbrand/code-plugin-verify-dependencies": "npm:^1.3.0"
     "@repo/eslint-config": "npm:*"
     "@repo/typescript-config": "npm:*"
     eslint: "npm:^8.56.0"
@@ -2901,7 +2901,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brandingbrand/code-templates@npm:^14.2.0, @brandingbrand/code-templates@workspace:packages/templates":
+"@brandingbrand/code-templates@npm:^14.3.0, @brandingbrand/code-templates@workspace:packages/templates":
   version: 0.0.0-use.local
   resolution: "@brandingbrand/code-templates@workspace:packages/templates"
   languageName: unknown

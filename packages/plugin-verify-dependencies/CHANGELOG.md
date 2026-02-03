@@ -1,5 +1,11 @@
 # @brandingbrand/code-plugin-verify-dependencies
 
+## 1.3.0
+
+### Minor Changes
+
+- 45b584c: add support for react-native 0.83
+
 ## 1.2.0
 
 ### Minor Changes
