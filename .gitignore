@@ -58,3 +58,4 @@ apps/example/android
 
 .gradle
 !**/plugin-native-navigation/__tests__/**/node_modules
+!**/plugin-react-navigation/__tests__/**/node_modules

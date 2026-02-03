@@ -1,5 +1,18 @@
 # @brandingbrand/code-cli-kit
 
+## 14.3.0
+
+### Minor Changes
+
+- 45b584c: add support for react-native 0.83
+
+## 14.2.1
+
+### Patch Changes
+
+- 9c1ceac: fix variable shadow in selectWithVersion helper
+- 0b2accb: update version utilities to allow version checking any dependency
+
 ## 14.2.0
 
 ### Minor Changes

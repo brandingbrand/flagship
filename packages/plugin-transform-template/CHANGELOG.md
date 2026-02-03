@@ -1,5 +1,18 @@
 # @brandingbrand/code-plugin-transform-template
 
+## 1.3.0
+
+### Minor Changes
+
+- add React Native 0.83 support
+
+### Patch Changes
+
+- 6d74f27: fix defaults for newArchEnabled to be tied to template
+  add warning for usage of newArchEnabled above RN 0.82+ as it's ignored
+- Updated dependencies [45b584c]
+  - @brandingbrand/code-templates@14.3.0
+
 ## 1.2.0
 
 ### Minor Changes

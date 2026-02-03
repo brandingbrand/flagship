@@ -1,4 +1,10 @@
-import {DevMenu, env, FlagshipEnv} from '@brandingbrand/code-app-env';
+import {
+  defineDevMenuScreen,
+  DevMenu,
+  env,
+  FlagshipEnv,
+} from '@brandingbrand/code-app-env';
+import {DataView} from '@brandingbrand/code-app-env/ui';
 import React from 'react';
 import {ScrollView, View} from 'react-native';
 import {
@@ -13,7 +19,7 @@ function App(): React.JSX.Element {
   const styles = useStyles();
 
   return (
-    <DevMenu style={{marginBottom: safeArea.bottom}}>
+    <DevMenu style={{marginBottom: safeArea.bottom + 48}} screens={screens}>
       <ScrollView
         contentInsetAdjustmentBehavior="never"
         style={styles.background}
@@ -33,6 +39,21 @@ function App(): React.JSX.Element {
     </DevMenu>
   );
 }
+
+const screens = [
+  defineDevMenuScreen('Example Custom Screen', () => {
+    return (
+      <DataView
+        title="Custom Title"
+        content={{
+          testProp: 'This is some data to display.',
+          about: 'Anything could go in this code block!',
+        }}
+        actions={[{label: 'Test Button', onPress: () => {}}]}
+      />
+    );
+  }),
+];
 
 const useStyles = createStyleSheet(palette => ({
   background: {

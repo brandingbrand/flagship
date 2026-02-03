@@ -1,5 +1,11 @@
 # @brandingbrand/code-templates
 
+## 14.3.0
+
+### Minor Changes
+
+- 45b584c: add support for react-native 0.83
+
 ## 14.2.0
 
 ### Minor Changes

@@ -1,5 +1,5 @@
 /**
- * @jest-environment-options {"requireTemplate": true, "reactNativeVersion": "0.73"}
+ * @jest-environment-options {"requireTemplate": true, "reactNativeVersion": "0.73", "fixtures": "fixtures/rnscreens-4.0"}
  */
 
 /// <reference types="@brandingbrand/code-jest-config" />
@@ -17,12 +17,11 @@ describe('plugin-react-navigation', () => {
     expect(mainActivity).toContain(`package com.app
 
 import android.os.Bundle
-import com.swmansion.rnscreens.fragment.restoration.RNScreensFragmentFactory
 import com.facebook.react.ReactActivity`);
+
     expect(mainActivity).toContain(`class MainActivity : ReactActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
-      supportFragmentManager.fragmentFactory = RNScreensFragmentFactory()
-      super.onCreate(savedInstanceState)
+      super.onCreate(null)
   }`);
 
 

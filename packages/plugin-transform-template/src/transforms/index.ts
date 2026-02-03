@@ -6,6 +6,7 @@ import {transforms075} from './0.75';
 import {transforms077} from './0.77';
 import {transforms079} from './0.79';
 import {transforms081} from './0.81';
+import {transforms082} from './0.82';
 
 /**
  * Export version-specific transforms object that selects correct transforms based on version
@@ -17,4 +18,5 @@ export const transforms = version.select({
   '0.77': transforms077,
   '0.79': transforms079,
   '0.81': transforms081,
+  '0.82': transforms082,
 });
