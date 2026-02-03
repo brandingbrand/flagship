@@ -20,9 +20,6 @@ export default defineBuild<
         scheme: 'app',
       },
     },
-    podfile: {
-      newArchEnabled: true,
-    },
   },
   android: {
     packageName: 'com.brandingbrand',
