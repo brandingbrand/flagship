@@ -54,4 +54,21 @@ export default {
       `$1'${config.ios.deploymentTarget}'`,
     );
   },
+
+  /**
+   * Controls whether the new React Native architecture is enabled in the iOS Podfile
+   * @param content - The contents of the Podfile as a string
+   * @param config - The build configuration object
+   * @returns The modified Podfile contents with new architecture setting applied,
+   *          or unchanged if newArchEnabled is not defined
+   */
+  newArchEnabled: (content: string, config: BuildConfig): string => {
+    if (config.ios.podfile?.newArchEnabled === undefined) return content;
+
+    return string.replace(
+      content,
+      /(use_react_native!\(+?)(\s+)/,
+      `$1$2:new_arch_enabled => ${config.ios.podfile.newArchEnabled},\n$2`,
+    );
+  },
 };
