@@ -18,7 +18,7 @@
     "@types/node": "^20.10.6",
     "chalk": "^4.1.2",
     "dayjs": "^1.11.12",
-    "fast-xml-parser": "^4.4.1",
+    "fast-xml-parser": "^5.3.6",
     "fp-ts": "^2.16.2",
     "fs-extra": "^11.2.0",
     "glob": "10.3.10",
