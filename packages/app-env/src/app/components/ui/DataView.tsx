@@ -58,7 +58,7 @@ export function DataView({
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         {title ? <Text type="titleSm">{title}</Text> : null}
-        <CodeBlock>{contentStr}</CodeBlock>
+        <CodeBlock content={contentStr} />
       </View>
       {actions?.length ? (
         <View style={styles.buttonContainer}>

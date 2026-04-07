@@ -13,5 +13,5 @@ export function EnvSwitcherContentPreview() {
     return JSON.stringify(data, null, 2);
   }, [env]);
 
-  return <CodeBlock>{content}</CodeBlock>;
+  return <CodeBlock content={content} />;
 }

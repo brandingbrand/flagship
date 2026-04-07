@@ -1,28 +1,100 @@
-import React from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import React, {useCallback, useMemo, useState} from 'react';
+import {
+  FlatList,
+  ListRenderItemInfo,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 
 import {palette} from '../../lib/theme';
 
 import {Text} from './Text';
 
 export interface CodeBlockProps {
-  children: string;
+  content: string | string[];
 }
 
-export function CodeBlock({children}: CodeBlockProps) {
+// pre-calculated approximates used to prevent excessive layout shifts.
+// These may differ slightly between devices, but should be close enough as a starting point.
+const CHAR_DIMS_DEFAULT = Platform.select({
+  ios: {
+    width: 7.333332,
+    height: 13.666672,
+  },
+  default: {
+    width: 7.111111,
+    height: 16.444443,
+  },
+});
+
+export function CodeBlock({content}: CodeBlockProps) {
+  const data = useMemo(() => {
+    const lines = Array.isArray(content) ? content : content.split('\n');
+
+    // New Arch doesn't handle extremely long lines as well as before,
+    // so we truncate lines over 1000 characters to avoid performance issues.
+    return lines.map(line => truncateLine(line));
+  }, [content]);
+
+  const [charDims, setCharDims] = useState<{
+    width: number;
+    height: number;
+  }>(CHAR_DIMS_DEFAULT);
+
+  const onLineLayout = useCallback((event: any) => {
+    const {width, height} = event.nativeEvent.layout;
+    setCharDims({width, height});
+  }, []);
+
+  const getItemLayout = useCallback(
+    (_: any, index: number) => ({
+      length: charDims.height,
+      offset: charDims.height * index,
+      index,
+    }),
+    [charDims.height],
+  );
+
+  const renderLine = useCallback(
+    ({item, index}: ListRenderItemInfo<string>) => {
+      return (
+        <View style={styles.codeBlock__line}>
+          <Text
+            type="code"
+            style={styles.codeBlock__lineContent}
+            onLayout={index === 0 ?onLineLayout : undefined}
+            numberOfLines={1}>
+            {item}
+          </Text>
+        </View>
+      );
+    },
+    [],
+  );
+
   return (
-    <ScrollView style={styles.codeBlock}>
-      <ScrollView
-        horizontal
-        contentContainerStyle={styles.codeBlock__contentContainer}
-        showsHorizontalScrollIndicator={false}>
-        <Text type="code" style={styles.codeBlock__text}>
-          {children}
-        </Text>
-      </ScrollView>
+    <ScrollView
+      horizontal
+      style={styles.codeBlock}
+      showsHorizontalScrollIndicator={false}>
+      <FlatList
+        data={data}
+        renderItem={renderLine}
+        keyExtractor={keyExtractor}
+        showsVerticalScrollIndicator={false}
+        getItemLayout={getItemLayout}
+        maxToRenderPerBatch={24}
+        contentContainerStyle={styles.codeBlock__contentContainer}></FlatList>
     </ScrollView>
   );
 }
+
+const keyExtractor = (_: string, index: number) => String(index);
+
+const truncateLine = (line: string, maxLength: number = 1000) =>
+  line.length <= maxLength ? line : `${line.slice(0, maxLength - 3)}...`;
 
 const styles = StyleSheet.create({
   codeBlock: {
@@ -34,7 +106,17 @@ const styles = StyleSheet.create({
   codeBlock__contentContainer: {
     padding: 8,
   },
-  codeBlock__text: {
+  codeBlock__line: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    gap: 12,
+  },
+  codeBlock__lineGutter: {
+    alignItems: 'flex-end',
+    opacity: 0.55,
+  },
+  codeBlock__lineContent: {
     flex: 1,
+    flexDirection: 'row',
   },
 });
