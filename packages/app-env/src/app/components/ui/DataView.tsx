@@ -79,11 +79,13 @@ export function DataView({
         <CodeBlock content={contentStr} />
       </View>
       {actions?.length ? (
-        <View style={styles.buttonContainer}>
-          {actions.map(({label, onPress}) => (
-            <Button key={label} onPress={onPress}>
-              {label}
-            </Button>
+        <View style={styles.actionRow}>
+          {actions.map(({label, onPress}, index) => (
+            <View key={index} style={styles.actionRow__column}>
+              <Button onPress={onPress}>
+                {label}
+              </Button>
+            </View>
           ))}
         </View>
       ) : null}
@@ -101,8 +103,13 @@ const styles = StyleSheet.create({
     gap: 8,
     flex: 1,
   },
-  buttonContainer: {
-    justifyContent: 'center',
+  actionRow: {
+    flexDirection: 'row',
+    gap: 8,
+    justifyContent: 'space-around',
     alignItems: 'center',
   },
+  actionRow__column: {
+    flex: 1,
+  }
 });
