@@ -18,6 +18,12 @@ export interface DataViewAction {
    * The function to call when the action button is pressed.
    */
   onPress: () => void;
+  /**
+   * Whether the action button should be disabled.
+   *
+   * @default false
+   */
+  disabled?: boolean;
 }
 
 export interface DataViewProps {
@@ -80,9 +86,9 @@ export function DataView({
       </View>
       {actions?.length ? (
         <View style={styles.actionRow}>
-          {actions.map(({label, onPress}, index) => (
+          {actions.map(({label, onPress, disabled}, index) => (
             <View key={index} style={styles.actionRow__column}>
-              <Button onPress={onPress}>
+              <Button type={disabled ? 'primaryDisabled' : 'primary'} disabled={disabled} onPress={onPress}>
                 {label}
               </Button>
             </View>
