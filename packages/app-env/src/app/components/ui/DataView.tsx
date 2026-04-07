@@ -1,6 +1,8 @@
 import {useMemo} from 'react';
 import {StyleSheet, View} from 'react-native';
 
+import {tryDeepJSONParse} from '../../lib/data-parser';
+
 import {Button} from './Button';
 import {CodeBlock} from './CodeBlock';
 import {Text} from './Text';
@@ -37,6 +39,13 @@ export interface DataViewProps {
    */
   contentIndent?: number;
   /**
+   * Whether to attempt to deeply parse any JSON strings found within the content
+   * before formatting it for display.
+   *
+   * @default true
+   */
+  deepParse?: boolean;
+  /**
    * Optional title to display above the content.
    */
   title?: string;
@@ -46,14 +55,23 @@ export function DataView({
   actions,
   content,
   contentIndent = 2,
+  deepParse,
   title,
 }: DataViewProps) {
   const contentStr = useMemo(() => {
-    if (typeof content === 'string') {
+    // non-object primitives should be returned as-is
+    if (typeof content !== 'object') {
       return content;
     }
-    return JSON.stringify(content, null, contentIndent);
-  }, [content, contentIndent]);
+
+    // objects should be traversed so that any unparsed JSON strings within them are formatted with consistent indentation.
+    return JSON.stringify(
+      deepParse ? tryDeepJSONParse(content) : content,
+      null,
+      contentIndent,
+    );
+  }, [content, contentIndent, deepParse]);
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
