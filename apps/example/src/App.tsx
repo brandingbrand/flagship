@@ -4,8 +4,8 @@ import {
   env,
   FlagshipEnv,
 } from '@brandingbrand/code-app-env';
-import {DataView} from '@brandingbrand/code-app-env/ui';
-import React from 'react';
+import {DataView, DataViewAction} from '@brandingbrand/code-app-env/ui';
+import React, {useMemo, useState} from 'react';
 import {ScrollView, View} from 'react-native';
 import {
   SafeAreaProvider,
@@ -42,18 +42,48 @@ function App(): React.JSX.Element {
 
 const screens = [
   defineDevMenuScreen('Example Custom Screen', () => {
+    const [deepParse, setDeepParse] = useState(false);
+    const [secondButtonDisabled, setSecondButtonDisabled] = useState(false);
+
+    const actions = useMemo<DataViewAction[]>(
+      () => [
+        {
+          label: deepParse ? 'Disable Deep Parse' : 'Enable Deep Parse',
+          onPress: () => {
+            setDeepParse(prev => !prev);
+          },
+        },
+        {
+          label: 'Test Button\nPlease Ignore',
+          onPress: () => {
+            console.log('Test Button Pressed');
+            setSecondButtonDisabled(true);
+          },
+          disabled: secondButtonDisabled,
+        }
+      ],
+      [deepParse, secondButtonDisabled],
+    );
+
     return (
       <DataView
         title="Custom Title"
-        content={{
-          testProp: 'This is some data to display.',
-          about: 'Anything could go in this code block!',
-        }}
-        actions={[{label: 'Test Button', onPress: () => {}}]}
+        deepParse={deepParse}
+        content={exampleCustomScreenContent}
+        actions={actions}
       />
     );
   }),
 ];
+
+const exampleCustomScreenContent = {
+  testProp: 'This is some data to display.',
+  about: 'Anything could go in this code block!',
+  nestedJSONStr: `{
+    "nestedProp": "In code, this property is within a JSON object string. It should appear to be an object when displayed in the data viewer",
+    "doubleNestedJSONStr": "{\\"doubleNestedProp\\": \\"This is a double nested JSON object inside the first nested JSON string.\\"}"
+  }`,
+};
 
 const useStyles = createStyleSheet(palette => ({
   background: {
