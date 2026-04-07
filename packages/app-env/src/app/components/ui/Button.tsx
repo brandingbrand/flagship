@@ -32,7 +32,7 @@ export function Button({
       style={[styles.button, typeStyles[type], sizeStyles[size], style]}
       {...restProps}>
       {typeof children === 'string' ? (
-        <Text type={textPresetMap[type]} style={textStyle}>
+        <Text type={textPresetMap[type]} style={[styles.button__text, textStyle]}>
           {children}
         </Text>
       ) : (
@@ -83,4 +83,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 1000,
   },
+  button__text: {
+    textAlign: 'center',
+  }
 });
