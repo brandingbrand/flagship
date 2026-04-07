@@ -43,7 +43,9 @@ export function CodeBlock({content}: CodeBlockProps) {
     height: number;
   }>(CHAR_DIMS_DEFAULT);
 
-  const onLineLayout = useCallback((event: any) => {
+  const onLineNumberLayout = useCallback((event: any) => {
+    // Normally we'd want to div this by the length of the text content, but because we only
+    // hook this to the first line, we'll always measure the width of the `1` character.
     const {width, height} = event.nativeEvent.layout;
     setCharDims({width, height});
   }, []);
@@ -57,21 +59,38 @@ export function CodeBlock({content}: CodeBlockProps) {
     [charDims.height],
   );
 
+  const lineGutterStyle = useMemo(
+    () => [
+      styles.codeBlock__lineGutter,
+      {
+        width: getLineGutterWidth(data.length, charDims.width),
+      },
+    ],
+    [data.length, charDims.width],
+  );
+
   const renderLine = useCallback(
     ({item, index}: ListRenderItemInfo<string>) => {
       return (
         <View style={styles.codeBlock__line}>
+          <View style={lineGutterStyle}>
+            <Text
+              type="code"
+              onLayout={index === 0 ? onLineNumberLayout : undefined}
+              numberOfLines={1}>
+              {index + 1}
+            </Text>
+          </View>
           <Text
             type="code"
             style={styles.codeBlock__lineContent}
-            onLayout={index === 0 ?onLineLayout : undefined}
             numberOfLines={1}>
             {item}
           </Text>
         </View>
       );
     },
-    [],
+    [lineGutterStyle],
   );
 
   return (
@@ -92,6 +111,9 @@ export function CodeBlock({content}: CodeBlockProps) {
 }
 
 const keyExtractor = (_: string, index: number) => String(index);
+
+const getLineGutterWidth = (totalLines: number, charWidth: number) =>
+  Math.ceil(String(totalLines).length * charWidth);
 
 const truncateLine = (line: string, maxLength: number = 1000) =>
   line.length <= maxLength ? line : `${line.slice(0, maxLength - 3)}...`;
