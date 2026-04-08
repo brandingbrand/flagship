@@ -5,7 +5,10 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {DataView} from '../components/ui';
 import {defineDevMenuScreen} from '../lib/define-screen';
 
-interface AsyncStorageDevScreenProps {
+
+export type AsyncStorageKeyFilterPredicate = (key: string) => boolean;
+
+export interface AsyncStorageDevScreenProps {
   /**
    * If true, AsyncStorage values that are detected as
    * JSON strings will be parsed and formatted for display.
@@ -13,24 +16,56 @@ interface AsyncStorageDevScreenProps {
    * @default true
    */
   parseValues?: boolean;
+
+  /**
+   * A filter predicate function that determines whether the given AsyncStorage
+   * key should be displayed in the AsyncStorage dev screen.
+   *
+   * If `undefined`, all AsyncStorage keys will be displayed in the dev screen.
+   *
+   * This filter **does not** affect which keys are removed when the "Clear AsyncStorage"
+   * action is invoked. It only controls which keys are displayed in the dev screen.
+   */
+  displayKeyFilter?: AsyncStorageKeyFilterPredicate;
+
+  /**
+   * A filter predicate function that determines whether the given AsyncStorage
+   * key should be removed when the "Clear AsyncStorage" action is invoked.
+   *
+   * if `undefined`, all keys will be removed when the "Clear AsyncStorage" action
+   * is invoked, even if the keys are hidden by the `displayKeyFilter`.
+   */
+  clearKeyFilter?: AsyncStorageKeyFilterPredicate;
 }
 
-function AsyncStorageDevScreenImpl({parseValues = true}: AsyncStorageDevScreenProps) {
+function AsyncStorageDevScreenImpl({
+  parseValues = true,
+  displayKeyFilter,
+  clearKeyFilter,
+}: AsyncStorageDevScreenProps) {
   const [content, setContent] = useState<string | readonly KeyValuePair[]>(
     'Loading...',
   );
 
   const fetchContent = useCallback(async () => {
-    const keys = await storage.getAllKeys();
+    let keys = await storage.getAllKeys();
+    if (displayKeyFilter) {
+      keys = keys.filter(displayKeyFilter);
+    }
+
     const data = await storage.multiGet(keys);
     setContent(data);
-  }, []);
+  }, [displayKeyFilter]);
 
-  const deleteAll = useCallback(async () => {
-    const keys = await storage.getAllKeys();
+  const clearContent = useCallback(async () => {
+    let keys = await storage.getAllKeys();
+    if (clearKeyFilter) {
+      keys = keys.filter(clearKeyFilter);
+    }
+
     await storage.multiRemove(keys);
     await fetchContent();
-  }, [fetchContent]);
+  }, [fetchContent, clearKeyFilter]);
 
   useEffect(() => {
     fetchContent();
@@ -40,13 +75,15 @@ function AsyncStorageDevScreenImpl({parseValues = true}: AsyncStorageDevScreenPr
     () => [
       {
         label: 'Clear AsyncStorage',
-        onPress: deleteAll,
+        onPress: clearContent,
       },
     ],
-    [],
+    [clearContent],
   );
 
-  return <DataView deepParse={parseValues} content={content} actions={actions} />;
+  return (
+    <DataView deepParse={parseValues} content={content} actions={actions} />
+  );
 }
 
 export const AsyncStorageDevScreen =
