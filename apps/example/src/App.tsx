@@ -4,7 +4,10 @@ import {
   env,
   FlagshipEnv,
 } from '@brandingbrand/code-app-env';
+import {AsyncStorageDevScreen} from '@brandingbrand/code-app-env/screens/AsyncStorage';
+import {createDataViewerDevScreen} from '@brandingbrand/code-app-env/screens/DataViewer';
 import {DataView, DataViewAction} from '@brandingbrand/code-app-env/ui';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useMemo, useState} from 'react';
 import {ScrollView, View} from 'react-native';
 import {
@@ -41,9 +44,9 @@ function App(): React.JSX.Element {
 }
 
 const screens = [
+  AsyncStorageDevScreen,
   defineDevMenuScreen('Example Custom Screen', () => {
     const [deepParse, setDeepParse] = useState(false);
-    const [secondButtonDisabled, setSecondButtonDisabled] = useState(false);
 
     const actions = useMemo<DataViewAction[]>(
       () => [
@@ -54,29 +57,39 @@ const screens = [
           },
         },
         {
-          label: 'Test Button\nPlease Ignore',
+          label: 'Set Testing\nAsyncStorage Data',
           onPress: () => {
-            console.log('Test Button Pressed');
-            setSecondButtonDisabled(true);
+            AsyncStorage.setItem('testKey', JSON.stringify(exampleDevScreenData))
+              .then(() => {
+                console.log('AsyncStorage setItem succeeded');
+              })
+              .catch(error => {
+                console.error('AsyncStorage setItem failed', error);
+              });
           },
-          disabled: secondButtonDisabled,
-        }
+        },
       ],
-      [deepParse, secondButtonDisabled],
+      [deepParse],
     );
 
     return (
       <DataView
         title="Custom Title"
         deepParse={deepParse}
-        content={exampleCustomScreenContent}
+        content={exampleDevScreenData}
         actions={actions}
       />
     );
   }),
+  createDataViewerDevScreen<any>({
+    title: 'Example Generic Data Viewer',
+    initialContent: 'loading...',
+    deepParseContent: true,
+    onGetContent: async () => exampleDevScreenData,
+  }),
 ];
 
-const exampleCustomScreenContent = {
+const exampleDevScreenData = {
   testProp: 'This is some data to display.',
   about: 'Anything could go in this code block!',
   nestedJSONStr: `{
