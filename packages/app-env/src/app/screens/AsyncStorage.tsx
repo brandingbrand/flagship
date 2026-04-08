@@ -5,7 +5,6 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {DataView} from '../components/ui';
 import {defineDevMenuScreen} from '../lib/define-screen';
 
-
 export type AsyncStorageKeyFilterPredicate = (key: string) => boolean;
 
 export interface AsyncStorageDevScreenProps {
@@ -93,10 +92,17 @@ export const AsyncStorageDevScreen =
   );
 
 export const createAsyncStorageDevScreen = (
-  props: AsyncStorageDevScreenProps,
+  props: AsyncStorageDevScreenProps & {
+    /**
+     * The title to display within the Dev Menu.
+     *
+     * @default 'AsyncStorage'
+     */
+    title?: string;
+  },
 ) =>
   defineDevMenuScreen(
-    `AsyncStorage`,
+    props.title ?? 'AsyncStorage',
     function ConfiguredAsyncStorageDevScreen() {
       return <AsyncStorageDevScreenImpl {...props} />;
     },

@@ -5,10 +5,16 @@ import {DataView} from '../components/ui';
 import {defineDevMenuScreen} from '../lib/define-screen';
 
 export interface SensitiveInfoDevScreenProps {
+  /**
+   * The keychain service to use when querying SensitiveInfo.
+   * If undefined, the default keychain service will be used.
+   */
   keychainService?: string;
 }
 
-function SensitiveInfo({keychainService}: SensitiveInfoDevScreenProps) {
+function SensitiveInfoDevScreenImpl({
+  keychainService,
+}: SensitiveInfoDevScreenProps) {
   const [content, setContent] = useState<string | string[]>('loading...');
 
   const fetchContent = useCallback(async () => {
@@ -50,15 +56,23 @@ function SensitiveInfo({keychainService}: SensitiveInfoDevScreenProps) {
 export const SensitiveInfoDevScreen =
   defineDevMenuScreen<SensitiveInfoDevScreenProps>(
     'SensitiveInfo',
-    SensitiveInfo,
+    SensitiveInfoDevScreenImpl,
   );
 
 export const createSensitiveInfoDevScreen = (
-  props: SensitiveInfoDevScreenProps,
+  props: SensitiveInfoDevScreenProps & {
+    /**
+     * The title to display within the Dev Menu.
+     *
+     * @default 'SensitiveInfo (<keychainService>)'
+     */
+    title?: string;
+  },
 ) =>
   defineDevMenuScreen(
-    `SensitiveInfo${props.keychainService ? ` (${props.keychainService})` : ''}`,
+    props.title ??
+      `SensitiveInfo${props.keychainService ? ` (${props.keychainService})` : ''}`,
     function ConfiguredSensitiveInfoDevScreen() {
-      return <SensitiveInfo {...props} />;
+      return <SensitiveInfoDevScreenImpl {...props} />;
     },
   );
