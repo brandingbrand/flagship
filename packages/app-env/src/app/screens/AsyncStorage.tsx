@@ -1,13 +1,18 @@
 import storage from '@react-native-async-storage/async-storage';
 import {KeyValuePair} from '@react-native-async-storage/async-storage/lib/typescript/types';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
-import {DataView} from '../components/ui';
-import {defineDevMenuScreen} from '../lib/define-screen';
+import {createDataViewerDevScreen} from './DataViewer';
 
 export type AsyncStorageKeyFilterPredicate = (key: string) => boolean;
 
-export interface AsyncStorageDevScreenProps {
+export interface AsyncStorageDevScreenOpts {
+  /**
+   * The title to display within the Dev Menu.
+   *
+   * @default 'AsyncStorage'
+   */
+  title?: string;
+
   /**
    * If true, AsyncStorage values that are detected as
    * JSON strings will be parsed and formatted for display.
@@ -37,73 +42,45 @@ export interface AsyncStorageDevScreenProps {
   clearKeyFilter?: AsyncStorageKeyFilterPredicate;
 }
 
-function AsyncStorageDevScreenImpl({
-  parseValues = true,
-  displayKeyFilter,
-  clearKeyFilter,
-}: AsyncStorageDevScreenProps) {
-  const [content, setContent] = useState<string | readonly KeyValuePair[]>(
-    'Loading...',
-  );
-
-  const fetchContent = useCallback(async () => {
-    let keys = await storage.getAllKeys();
-    if (displayKeyFilter) {
-      keys = keys.filter(displayKeyFilter);
-    }
-
-    const data = await storage.multiGet(keys);
-    setContent(data);
-  }, [displayKeyFilter]);
-
-  const clearContent = useCallback(async () => {
-    let keys = await storage.getAllKeys();
-    if (clearKeyFilter) {
-      keys = keys.filter(clearKeyFilter);
-    }
-
-    await storage.multiRemove(keys);
-    await fetchContent();
-  }, [fetchContent, clearKeyFilter]);
-
-  useEffect(() => {
-    fetchContent();
-  }, []);
-
-  const actions = useMemo(
-    () => [
+export const createAsyncStorageDevScreen = (
+  opts: AsyncStorageDevScreenOpts,
+) => {
+  const {
+    clearKeyFilter,
+    displayKeyFilter,
+    parseValues = true,
+    title,
+  } = opts
+  return createDataViewerDevScreen<string | readonly { key: string; value: any }[]>({
+    title: title ?? 'AsyncStorage',
+    initialContent: 'Loading...',
+    deepParseContent: parseValues,
+    onGetContent: async () => {
+      let keys = await storage.getAllKeys();
+      if (displayKeyFilter) {
+        keys = keys.filter(displayKeyFilter);
+      }
+      return (await storage.multiGet(keys)).map(it => ({
+        key: it[0],
+        value: it[1],
+      }));
+    },
+    actions: ctx => [
       {
-        label: 'Clear AsyncStorage',
-        onPress: clearContent,
+        label: `Clear AsyncStorage${Array.isArray(ctx.content) && ctx.content.length > 0 ? ` (${ctx.content.length} items)` : ''}`,
+        onPress: async () => {
+          let keys = await storage.getAllKeys();
+          if (clearKeyFilter) {
+            keys = keys.filter(clearKeyFilter);
+          }
+
+          await storage.multiRemove(keys);
+          await ctx.refetch();
+        },
+        disabled: Array.isArray(ctx.content) ? ctx.content.length === 0 : true,
       },
     ],
-    [clearContent],
-  );
+  });
+};
 
-  return (
-    <DataView deepParse={parseValues} content={content} actions={actions} />
-  );
-}
-
-export const AsyncStorageDevScreen =
-  defineDevMenuScreen<AsyncStorageDevScreenProps>(
-    'AsyncStorage',
-    AsyncStorageDevScreenImpl,
-  );
-
-export const createAsyncStorageDevScreen = (
-  props: AsyncStorageDevScreenProps & {
-    /**
-     * The title to display within the Dev Menu.
-     *
-     * @default 'AsyncStorage'
-     */
-    title?: string;
-  },
-) =>
-  defineDevMenuScreen(
-    props.title ?? 'AsyncStorage',
-    function ConfiguredAsyncStorageDevScreen() {
-      return <AsyncStorageDevScreenImpl {...props} />;
-    },
-  );
+export const AsyncStorageDevScreen = createAsyncStorageDevScreen({});
