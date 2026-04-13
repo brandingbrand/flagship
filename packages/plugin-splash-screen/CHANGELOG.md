@@ -1,5 +1,11 @@
 # @brandingbrand/code-plugin-splash-screen
 
+## 3.0.1
+
+### Patch Changes
+
+- e16cb00: Remove unused `react-native-bootsplash` dependency
+
 ## 3.0.0
 
 ### Major Changes

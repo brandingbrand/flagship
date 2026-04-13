@@ -1,6 +1,6 @@
 {
   "name": "@brandingbrand/code-plugin-splash-screen",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "plugin for Flagship Code for splash screens",
   "license": "MIT",
   "main": "src/index.ts",
