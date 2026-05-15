@@ -1,5 +1,4 @@
 import storage from '@react-native-async-storage/async-storage';
-import {KeyValuePair} from '@react-native-async-storage/async-storage/lib/typescript/types';
 
 import {createDataViewerDevScreen} from './DataViewer';
 
@@ -45,13 +44,10 @@ export interface AsyncStorageDevScreenOpts {
 export const createAsyncStorageDevScreen = (
   opts: AsyncStorageDevScreenOpts,
 ) => {
-  const {
-    clearKeyFilter,
-    displayKeyFilter,
-    parseValues = true,
-    title,
-  } = opts
-  return createDataViewerDevScreen<string | readonly { key: string; value: any }[]>({
+  const {clearKeyFilter, displayKeyFilter, parseValues = true, title} = opts;
+  return createDataViewerDevScreen<
+    string | readonly {key: string; value: any}[]
+  >({
     title: title ?? 'AsyncStorage',
     initialContent: 'Loading...',
     deepParseContent: parseValues,
