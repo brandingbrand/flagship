@@ -276,6 +276,81 @@ async function updateDependencyProfilesIndex() {
   );
 }
 
+async function updateReactNativePins() {
+  const newRange = `^${newVersion}.0`;
+  const newMinor = parseInt(newVersion.split('.')[1]!, 10);
+
+  const bump = async (
+    filePath: string,
+    group: 'dependencies' | 'devDependencies',
+    names: string[],
+  ) => {
+    const relPath = path.relative(process.cwd(), filePath);
+    try {
+      const content = await fsp.readFile(filePath, 'utf-8');
+      const pkg = JSON.parse(content);
+      const deps = pkg[group];
+      if (!deps) {
+        console.error(`Could not find ${group} in ${relPath}.`);
+        return;
+      }
+
+      let changed = false;
+      for (const name of names) {
+        const current = deps[name];
+        if (current === undefined) {
+          console.error(`Could not find ${group}.${name} in ${relPath}.`);
+          continue;
+        }
+        if (current === newRange) continue;
+
+        // The example app and root always pin the newest supported version;
+        // adding an older version must never downgrade them.
+        const currentMinor = parseInt(
+          current.match(/^\^?0\.(\d+)\./)?.[1] ?? '0',
+          10,
+        );
+        if (currentMinor >= newMinor) {
+          console.log(
+            `Leaving ${name} at ${current} in ${relPath} (newer than or equal to ${newVersion}).`,
+          );
+          continue;
+        }
+
+        deps[name] = newRange;
+        changed = true;
+      }
+
+      if (changed) {
+        await fsp.writeFile(filePath, `${JSON.stringify(pkg, null, 2)}\n`);
+        console.log(`Updated react-native pins in ${relPath} to ${newRange}`);
+      }
+    } catch (error) {
+      console.error(`Error updating react-native pins in ${relPath}:`, error);
+      process.exit(1);
+    }
+  };
+
+  await bump(path.resolve(process.cwd(), './package.json'), 'devDependencies', [
+    'react-native',
+  ]);
+  await bump(
+    path.resolve(process.cwd(), './apps/example/package.json'),
+    'dependencies',
+    ['react-native'],
+  );
+  await bump(
+    path.resolve(process.cwd(), './apps/example/package.json'),
+    'devDependencies',
+    [
+      '@react-native/babel-preset',
+      '@react-native/eslint-config',
+      '@react-native/metro-config',
+      '@react-native/typescript-config',
+    ],
+  );
+}
+
 (async function () {
   console.log();
   console.log(
@@ -286,6 +361,7 @@ async function updateDependencyProfilesIndex() {
   await updateMessagingConstants();
   await createShellDependenciesProfile();
   await updateDependencyProfilesIndex();
+  await updateReactNativePins();
   console.log();
   console.log('Updates complete!');
 })();
