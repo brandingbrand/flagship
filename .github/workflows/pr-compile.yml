@@ -1,0 +1,61 @@
+name: PR Compile
+
+on:
+  pull_request:
+    paths:
+      - 'packages/templates/**'
+      - 'apps/example/**'
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - name: Use Node.js
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
+        with:
+          node-version: 20
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@f26937343756480a8cb3ae1f623b9c8d89ed6984
+        with:
+          ruby-version: '3.1'
+      - name: Setup Java
+        uses: actions/setup-java@6a0805fcefea3d4657a47ac4c165951e33482018
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Install dependencies
+        run: yarn
+      - name: Build packages
+        run: yarn build
+      - name: Initialize react native app
+        run: yarn workspace @brandingbrand/code-example prebuild --build internal --env prod --platform android --verbose
+      - name: Compile Android app
+        run: ./gradlew assembleDebug
+        working-directory: apps/example/android
+
+  ios:
+    runs-on: macos-15
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - name: Use Node.js
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
+        with:
+          node-version: 20
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@f26937343756480a8cb3ae1f623b9c8d89ed6984
+        with:
+          ruby-version: '3.1'
+      - name: Install dependencies
+        run: yarn
+      - name: Build packages
+        run: yarn build
+      - name: Initialize react native app
+        run: yarn workspace @brandingbrand/code-example prebuild --build internal --env prod --platform ios --verbose
+      - name: Compile iOS app
+        run: xcodebuild -workspace app.xcworkspace -scheme app -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build
+        working-directory: apps/example/ios
