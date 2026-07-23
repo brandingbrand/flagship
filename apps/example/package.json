@@ -29,6 +29,8 @@
     "@brandingbrand/code-plugin-app-icon": "*",
     "@brandingbrand/code-plugin-asset": "*",
     "@brandingbrand/code-plugin-monorepo": "link:./coderc/plugins/plugin-monorepo",
+    "@brandingbrand/code-plugin-permissions": "*",
+    "@brandingbrand/code-plugin-react-navigation": "*",
     "@brandingbrand/code-plugin-splash-screen": "*",
     "@brandingbrand/code-preset-react-native": "*",
     "@react-native-community/cli": "^20.0.2",
@@ -53,6 +55,7 @@
     "jest": "^29.2.1",
     "prettier": "^3.1.1",
     "react-native-bootsplash": "^5.4.0",
+    "react-native-screens": "^4.26.2",
     "react-test-renderer": "19.0.0",
     "typescript": "5.9.3"
   }
