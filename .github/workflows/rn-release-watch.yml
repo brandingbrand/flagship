@@ -1,0 +1,91 @@
+name: RN Release Watch
+
+on:
+  schedule:
+    # 1st of every month at 13:00 UTC.
+    - cron: '0 13 1 * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+
+      - name: Watch npm for a newly-stable RN minor and file an adoption issue
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3
+        with:
+          script: |
+            const fs = require('fs');
+
+            // Highest RN minor this repo currently ships native templates for.
+            const templateDir = 'packages/templates/react-native';
+            const adopted = fs
+              .readdirSync(templateDir)
+              .filter((name) => /^\d+\.\d+$/.test(name))
+              .map((name) => name.split('.').map(Number))
+              .sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+            const [highestMajor, highestMinor] = adopted[adopted.length - 1];
+            const highest = `${highestMajor}.${highestMinor}`;
+            core.info(`Highest adopted RN minor: ${highest}`);
+
+            // The next minor in line for adoption.
+            const nextMinor = `${highestMajor}.${highestMinor + 1}`;
+            const dotZero = `${nextMinor}.0`;
+
+            const res = await fetch('https://registry.npmjs.org/react-native');
+            if (!res.ok) {
+              core.setFailed(`npm registry lookup failed: ${res.status} ${res.statusText}`);
+              return;
+            }
+            const { time } = await res.json();
+            const releasedAt = time[dotZero];
+            if (!releasedAt) {
+              core.info(`${dotZero} has not been published yet; nothing to do.`);
+              return;
+            }
+
+            const ageDays = Math.floor((Date.now() - new Date(releasedAt).getTime()) / 86_400_000);
+            core.info(`${dotZero} published ${releasedAt} (${ageDays} days ago).`);
+
+            const STABILITY_WINDOW_DAYS = 14;
+            if (ageDays < STABILITY_WINDOW_DAYS) {
+              core.info(`Younger than the ${STABILITY_WINDOW_DAYS}-day stability window; nothing to do.`);
+              return;
+            }
+
+            const title = `RN ${nextMinor} adoption tracking`;
+            const { data: existing } = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${context.repo.owner}/${context.repo.repo} is:issue in:title "${title}"`,
+            });
+            if (existing.total_count > 0) {
+              core.info(`Tracking issue already exists: ${existing.items[0].html_url}`);
+              return;
+            }
+
+            const body = [
+              `React Native ${dotZero} shipped on ${releasedAt} and has now cleared the ${STABILITY_WINDOW_DAYS}-day stability window (${ageDays} days old).`,
+              '',
+              `This repo currently ships native templates through ${highest} (\`packages/templates/react-native\`); ${nextMinor} is not yet supported.`,
+              '',
+              'This issue only *tracks* adoption — it is not automated (spec §10 non-goals). To adopt:',
+              '',
+              `1. \`yarn add-rn-version ${nextMinor}\` to generate the native templates and run the codemods (\`scripts/add-rn-version\`).`,
+              '2. Review the generated diff, update changelogs, and open a PR through the usual process.',
+              '',
+              '_Filed automatically by `.github/workflows/rn-release-watch.yml` (§3.4)._',
+            ].join('\n');
+
+            const created = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              body,
+              labels: ['rn-adoption'],
+            });
+            core.info(`Filed ${created.data.html_url}`);
