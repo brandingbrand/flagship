@@ -49,7 +49,7 @@ fi
 # which upstream no longer publishes reliably, so we resolve the exact patch
 # version ourselves and pass that to `init`.
 EXACT_VERSION=$(npm view "react-native@${RN_VERSION}.x" version --json 2>/dev/null \
-  | node -e "let i='';process.stdin.on('data',d=>i+=d).on('end',()=>{const v=i.trim()?JSON.parse(i):[];const out=Array.isArray(v)?(v[v.length-1]??''):(typeof v==='string'?v:'');console.log(/^\d+\.\d+\.\d+$/.test(out)?out:'')})")
+  | node -e "let i='';process.stdin.on('data',d=>i+=d).on('end',()=>{const v=i.trim()?JSON.parse(i):[];const list=(Array.isArray(v)?v:typeof v==='string'?[v]:[]).filter(s=>/^\d+\.\d+\.\d+$/.test(s)).sort((a,b)=>{const x=a.split('.').map(Number),y=b.split('.').map(Number);return x[0]-y[0]||x[1]-y[1]||x[2]-y[2]});console.log(list[list.length-1]??'')})")
 if [ -z "$EXACT_VERSION" ]; then
   echo "Error: no stable react-native release found for version $RN_VERSION."
   exit 1
