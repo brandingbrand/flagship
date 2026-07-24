@@ -43,6 +43,12 @@ describe('dependency profiles', () => {
         name.startsWith('@react-native/'),
       );
 
+      // 0.72 predates the scoped @react-native/* packages; every profile
+      // after it must track at least one so this check cannot pass vacuously.
+      if (parseInt(version.split('.')[1]!, 10) >= 73) {
+        expect(scoped.length).toBeGreaterThan(0);
+      }
+
       for (const [name, spec] of scoped) {
         expect({name, version: spec.version}).toEqual({
           name,
