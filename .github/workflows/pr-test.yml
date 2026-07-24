@@ -4,7 +4,7 @@ on: [pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: arc-rs-small
     timeout-minutes: 25
 
     steps:
