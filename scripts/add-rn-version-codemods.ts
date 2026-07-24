@@ -294,7 +294,7 @@ async function updateRootReactNativePin() {
       console.error(
         `Could not find devDependencies.react-native in ${relPath}.`,
       );
-      return;
+      process.exit(1);
     }
     if (current === newRange) return;
 
