@@ -1,10 +1,12 @@
 name: PR Compile
 
 on:
+  workflow_dispatch:
   pull_request:
     paths:
       - 'packages/templates/**'
       - 'apps/example/**'
+      - '.github/workflows/pr-compile.yml'
 
 jobs:
   android:
