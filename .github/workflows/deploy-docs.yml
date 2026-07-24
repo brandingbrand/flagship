@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: arc-rs-small
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
@@ -24,7 +24,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: arc-rs-small
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
