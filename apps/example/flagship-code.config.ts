@@ -44,20 +44,18 @@ export default defineConfig({
   /**
    * An array of plugin names to load and enable for the application.
    * Each plugin provides specific functionality:
+   * - native-navigation: Handles navigation configuration
    * - asset: Manages static assets
    * - app-icon: Configures application icons
-   * - splash-screen: Handles splash screen configuration
    * - permissions: Manages app permissions
-   * - react-navigation: Configures native pieces for React Navigation
-   * - monorepo: Provides example implementations
+   * - splash-screen: Handles splash screen configuration
+   * - example: Provides example implementations
    * @type {string[]}
    */
   plugins: [
     '@brandingbrand/code-plugin-asset',
     '@brandingbrand/code-plugin-app-icon',
     '@brandingbrand/code-plugin-splash-screen',
-    '@brandingbrand/code-plugin-permissions',
-    '@brandingbrand/code-plugin-react-navigation',
     '@brandingbrand/code-plugin-monorepo',
   ],
 });
