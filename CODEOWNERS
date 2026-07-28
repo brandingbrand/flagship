@@ -1,0 +1,4 @@
+# AGENTS.md and skills/ are agent-executed instructions, not documentation.
+# Changes require review from the reviewer group before merge.
+/AGENTS.md @brandingbrand/code-review-team-rw
+/skills/ @brandingbrand/code-review-team-rw
