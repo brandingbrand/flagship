@@ -4,8 +4,11 @@ import {
   env,
   FlagshipEnv,
 } from '@brandingbrand/code-app-env';
-import {DataView} from '@brandingbrand/code-app-env/ui';
-import React from 'react';
+import {AsyncStorageDevScreen} from '@brandingbrand/code-app-env/screens/AsyncStorage';
+import {createDataViewerDevScreen} from '@brandingbrand/code-app-env/screens/DataViewer';
+import {DataView, DataViewAction} from '@brandingbrand/code-app-env/ui';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, {useMemo, useState} from 'react';
 import {ScrollView, View} from 'react-native';
 import {
   SafeAreaProvider,
@@ -41,19 +44,59 @@ function App(): React.JSX.Element {
 }
 
 const screens = [
+  AsyncStorageDevScreen,
   defineDevMenuScreen('Example Custom Screen', () => {
+    const [deepParse, setDeepParse] = useState(false);
+
+    const actions = useMemo<DataViewAction[]>(
+      () => [
+        {
+          label: deepParse ? 'Disable Deep Parse' : 'Enable Deep Parse',
+          onPress: () => {
+            setDeepParse(prev => !prev);
+          },
+        },
+        {
+          label: 'Set Testing\nAsyncStorage Data',
+          onPress: () => {
+            AsyncStorage.setItem('testKey', JSON.stringify(exampleDevScreenData))
+              .then(() => {
+                console.log('AsyncStorage setItem succeeded');
+              })
+              .catch(error => {
+                console.error('AsyncStorage setItem failed', error);
+              });
+          },
+        },
+      ],
+      [deepParse],
+    );
+
     return (
       <DataView
         title="Custom Title"
-        content={{
-          testProp: 'This is some data to display.',
-          about: 'Anything could go in this code block!',
-        }}
-        actions={[{label: 'Test Button', onPress: () => {}}]}
+        deepParse={deepParse}
+        content={exampleDevScreenData}
+        actions={actions}
       />
     );
   }),
+  createDataViewerDevScreen<any>({
+    title: 'Example Generic Data Viewer',
+    initialContent: 'loading...',
+    deepParseContent: true,
+    onGetContent: async () => exampleDevScreenData,
+  }),
 ];
+
+const exampleDevScreenData = {
+  testProp: 'This is some data to display.',
+  about: 'Anything could go in this code block!',
+  nestedJSONStr: `{
+    "nestedProp": "In code, this property is within a JSON object string. It should appear to be an object when displayed in the data viewer",
+    "doubleNestedJSONStr": "{\\"doubleNestedProp\\": \\"This is a double nested JSON object inside the first nested JSON string.\\"}"
+  }`,
+};
 
 const useStyles = createStyleSheet(palette => ({
   background: {

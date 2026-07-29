@@ -1,6 +1,8 @@
 import {useMemo} from 'react';
 import {StyleSheet, View} from 'react-native';
 
+import {tryDeepJSONParse} from '../../lib/data-parser';
+
 import {Button} from './Button';
 import {CodeBlock} from './CodeBlock';
 import {Text} from './Text';
@@ -16,6 +18,12 @@ export interface DataViewAction {
    * The function to call when the action button is pressed.
    */
   onPress: () => void;
+  /**
+   * Whether the action button should be disabled.
+   *
+   * @default false
+   */
+  disabled?: boolean;
 }
 
 export interface DataViewProps {
@@ -37,6 +45,13 @@ export interface DataViewProps {
    */
   contentIndent?: number;
   /**
+   * Whether to attempt to deeply parse any JSON strings found within the content
+   * before formatting it for display.
+   *
+   * @default true
+   */
+  deepParse?: boolean;
+  /**
    * Optional title to display above the content.
    */
   title?: string;
@@ -46,26 +61,37 @@ export function DataView({
   actions,
   content,
   contentIndent = 2,
+  deepParse,
   title,
 }: DataViewProps) {
   const contentStr = useMemo(() => {
-    if (typeof content === 'string') {
+    // non-object primitives should be returned as-is
+    if (typeof content !== 'object') {
       return content;
     }
-    return JSON.stringify(content, null, contentIndent);
-  }, [content, contentIndent]);
+
+    // objects should be traversed so that any unparsed JSON strings within them are formatted with consistent indentation.
+    return JSON.stringify(
+      deepParse ? tryDeepJSONParse(content) : content,
+      null,
+      contentIndent,
+    );
+  }, [content, contentIndent, deepParse]);
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         {title ? <Text type="titleSm">{title}</Text> : null}
-        <CodeBlock>{contentStr}</CodeBlock>
+        <CodeBlock content={contentStr} />
       </View>
       {actions?.length ? (
-        <View style={styles.buttonContainer}>
-          {actions.map(({label, onPress}) => (
-            <Button key={label} onPress={onPress}>
-              {label}
-            </Button>
+        <View style={styles.actionRow}>
+          {actions.map(({label, onPress, disabled}, index) => (
+            <View key={index} style={styles.actionRow__column}>
+              <Button type={disabled ? 'primaryDisabled' : 'primary'} disabled={disabled} onPress={onPress}>
+                {label}
+              </Button>
+            </View>
           ))}
         </View>
       ) : null}
@@ -83,8 +109,13 @@ const styles = StyleSheet.create({
     gap: 8,
     flex: 1,
   },
-  buttonContainer: {
-    justifyContent: 'center',
+  actionRow: {
+    flexDirection: 'row',
+    gap: 8,
+    justifyContent: 'space-around',
     alignItems: 'center',
   },
+  actionRow__column: {
+    flex: 1,
+  }
 });

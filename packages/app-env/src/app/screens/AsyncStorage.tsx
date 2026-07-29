@@ -1,40 +1,82 @@
 import storage from '@react-native-async-storage/async-storage';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
-import {DataView} from '../components/ui';
-import {defineDevMenuScreen} from '../lib/define-screen';
+import {createDataViewerDevScreen} from './DataViewer';
 
-export const AsyncStorageDevScreen = defineDevMenuScreen(
-  'AsyncStorage',
-  function AsyncStorageDevScreen() {
-    const [content, setContent] = useState('Loading...');
+export type AsyncStorageKeyFilterPredicate = (key: string) => boolean;
 
-    const fetchContent = useCallback(async () => {
-      const keys = await storage.getAllKeys();
-      const data = await storage.multiGet(keys);
-      setContent(JSON.stringify(data, null, 2));
-    }, []);
+export interface AsyncStorageDevScreenOpts {
+  /**
+   * The title to display within the Dev Menu.
+   *
+   * @default 'AsyncStorage'
+   */
+  title?: string;
 
-    const deleteAll = useCallback(async () => {
-      const keys = await storage.getAllKeys();
-      await storage.multiRemove(keys);
-      await fetchContent();
-    }, [fetchContent]);
+  /**
+   * If true, AsyncStorage values that are detected as
+   * JSON strings will be parsed and formatted for display.
+   *
+   * @default true
+   */
+  parseValues?: boolean;
 
-    useEffect(() => {
-      fetchContent();
-    }, []);
+  /**
+   * A filter predicate function that determines whether the given AsyncStorage
+   * key should be displayed in the AsyncStorage dev screen.
+   *
+   * If `undefined`, all AsyncStorage keys will be displayed in the dev screen.
+   *
+   * This filter **does not** affect which keys are removed when the "Clear AsyncStorage"
+   * action is invoked. It only controls which keys are displayed in the dev screen.
+   */
+  displayKeyFilter?: AsyncStorageKeyFilterPredicate;
 
-    const actions = useMemo(
-      () => [
-        {
-          label: 'Clear AsyncStorage',
-          onPress: deleteAll,
+  /**
+   * A filter predicate function that determines whether the given AsyncStorage
+   * key should be removed when the "Clear AsyncStorage" action is invoked.
+   *
+   * if `undefined`, all keys will be removed when the "Clear AsyncStorage" action
+   * is invoked, even if the keys are hidden by the `displayKeyFilter`.
+   */
+  clearKeyFilter?: AsyncStorageKeyFilterPredicate;
+}
+
+export const createAsyncStorageDevScreen = (
+  opts: AsyncStorageDevScreenOpts,
+) => {
+  const {clearKeyFilter, displayKeyFilter, parseValues = true, title} = opts;
+  return createDataViewerDevScreen<
+    string | readonly {key: string; value: any}[]
+  >({
+    title: title ?? 'AsyncStorage',
+    initialContent: 'Loading...',
+    deepParseContent: parseValues,
+    onGetContent: async () => {
+      let keys = await storage.getAllKeys();
+      if (displayKeyFilter) {
+        keys = keys.filter(displayKeyFilter);
+      }
+      return (await storage.multiGet(keys)).map(it => ({
+        key: it[0],
+        value: it[1],
+      }));
+    },
+    actions: ctx => [
+      {
+        label: `Clear AsyncStorage${Array.isArray(ctx.content) && ctx.content.length > 0 ? ` (${ctx.content.length} items)` : ''}`,
+        onPress: async () => {
+          let keys = await storage.getAllKeys();
+          if (clearKeyFilter) {
+            keys = keys.filter(clearKeyFilter);
+          }
+
+          await storage.multiRemove(keys);
+          await ctx.refetch();
         },
-      ],
-      [],
-    );
+        disabled: Array.isArray(ctx.content) ? ctx.content.length === 0 : true,
+      },
+    ],
+  });
+};
 
-    return <DataView content={content} actions={actions} />;
-  },
-);
+export const AsyncStorageDevScreen = createAsyncStorageDevScreen({});
