@@ -8,7 +8,7 @@ Flagship Code: a React Native app framework. A CLI, per-version native templates
 
 ## Before you touch anything
 
-- Install and verify with `yarn install`, `yarn build`, `yarn lint`, `yarn test` (Yarn 4.12 via the committed `yarnPath`, Node 20).
+- Install and verify with `yarn install`, `yarn build`, `yarn lint`, `yarn test` (Yarn 4.12 via the committed `yarnPath`, Node 22).
 - Every user-facing change needs a changeset (`.changeset/`) declaring every affected package and its bump type.
 - Read the version's template and the maintainer docs before changing anything native. Native behavior changes between React Native versions; do not assume a pattern from one version holds in another.
 

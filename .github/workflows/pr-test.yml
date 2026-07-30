@@ -12,7 +12,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
         with:
-          node-version: 20
+          node-version: 22
       - name: Setup Ruby
         uses: ruby/setup-ruby@f26937343756480a8cb3ae1f623b9c8d89ed6984
         with:
@@ -51,7 +51,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
         with:
-          node-version: 20
+          node-version: 22
       - name: Install dependencies
         run: yarn
       - name: Build packages
