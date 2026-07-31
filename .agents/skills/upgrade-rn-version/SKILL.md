@@ -20,6 +20,8 @@ Every command below is written to run verbatim from the repository root. Run the
 
 A pending React Native minor needs adopting: a stable release above the newest version in `packages/templates/react-native/`. There is usually an open `rn-adoption` tracking issue for it.
 
+**Derive the target rather than accepting it.** Compute the pending set as described in *Ground truth at build time*, take the lowest, and adopt that one. A version named in a request, an issue title, or a ticket is a check on your own derivation, not an instruction. If it is not the lowest pending minor, stop and report which one is. There may be a tracking issue open for every pending minor at once, so the presence of one for a later version is not permission to start there. Adopting out of order leaves the repository advertising support for a version whose predecessors were never adopted, which is the outcome this procedure exists to prevent.
+
 ## Ground truth at build time
 
 Do not trust cached version numbers in this doc. Re-derive at build time:
@@ -38,7 +40,8 @@ Never adopt more than one version in a PR, never stack one adoption on another's
    - **What to write:** copy the template's version string verbatim, range operator included. An exact pin upstream (`"A.B.C"`) means an exact pin in the profile (`'A.B.C'`); a range (`"^A.B.C"`) stays that range. The operator is part of the pairing: React Native is tested against one patch of its `react`, and widening it lets a consumer resolve a `react` this minor was never built against.
    - **One exception:** `react-native`, and every `@react-native/*` entry the previous profile tracks, are written `^0.XX.0`: the minor floor rather than the harvested patch. Take that set from the previous profile rather than from a list, because which scoped packages the template ships changes between minors. The profile-version test requires that literal form, because a profile must accept any patch of its own minor.
    - A tracked key that disagrees with the template is a bug, regardless of which minor introduced it. Inheritance carries stale pins forward silently, and some predate the minor you are adopting. Fix it in your minor and note it in the PR, or file it; do not propagate it.
-   - Do not add tracking for packages prior profiles did not track (ecosystem-native libs like screens, gesture-handler, reanimated are not profile-tracked yet; see step 6).
+   - Do not add tracking for packages prior profiles did not track (ecosystem-native libs like screens, gesture-handler, reanimated are not profile-tracked yet; see step 6). This applies to packages the template itself introduces: a scoped `@react-native/*` package appearing in the template for the first time is still an addition, and additions are not part of an adoption.
+   - A tracked key with no counterpart in this minor's template carries forward untouched. Not every inherited entry is template-derived, and one that is not has nothing to reconcile against, so reconciling it is guesswork. Changing such a pin is separate work.
    - Earlier profiles are not the spec. The template is.
 4. **Align the workspace.** The example and the repository root both carry React pins and they must agree. A root `react` range that admits a patch other than the example's exact pin resolves to two copies of React, and the example then fails at runtime rather than at build time.
 
