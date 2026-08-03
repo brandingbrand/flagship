@@ -149,13 +149,18 @@ test('findExistingIssue: no match against an empty issue list', () => {
   );
 });
 
-test('buildIssueBody: links the maintainer guide and the upstream template diff', () => {
+test('buildIssueBody: links the skill, the maintainer guide and the upstream template diff', () => {
   const body = buildIssueBody({
     minorLabel: '0.84',
     dotZeroVersion: '0.84.0',
     releasedAt: '2026-02-11T16:04:19.627Z',
     highest: {major: 0, minor: 83, label: '0.83'},
+    repository: 'brandingbrand/flagship',
   });
+  assert.match(
+    body,
+    /\[`\.agents\/skills\/upgrade-rn-version\/SKILL\.md`\]\(https:\/\/github\.com\/brandingbrand\/flagship\/blob\/HEAD\/\.agents\/skills\/upgrade-rn-version\/SKILL\.md\)/,
+  );
   assert.match(
     body,
     /\[Adding React Native Version Support\]\(https:\/\/brandingbrand\.github\.io\/flagship\/maintain\/add-rn-version\/\)/,
