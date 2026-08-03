@@ -87,7 +87,15 @@ Never adopt more than one version in a PR, never stack one adoption on another's
    - `test` is a cached task and the variable is not part of its cache key, so a run following a plain `yarn test` can replay the earlier result. `--force` is what prevents that.
 
    The proof is the `test-templates (0.XX)` job on the pull request, which cannot exist unless the template directory does. The two native builds in step 5 are part of this gate and are not implied by these four commands.
-8. **Changeset.** One file, message `add support for react-native 0.XX`, minor bump on the packages an adoption touches: `code-plugin-verify-dependencies`, `code-templates`, `code-cli-kit`, `code-cli`. Read the previous minor's changeset rather than this list if the two disagree. Declare another package only if this adoption actually modified it; do not declare one because it seems related.
+8. **Changeset.** One file, message `add support for react-native 0.XX`, minor bump on the packages an adoption touches: `code-plugin-verify-dependencies`, `code-templates`, `code-cli-kit`, `code-cli`. Declare another package only if this adoption actually modified it; do not declare one because it seems related.
+
+   Check that list against what the previous adoption actually bumped rather than trusting it:
+
+   ```sh
+   grep -rl "add support for react-native 0.YY" packages/*/CHANGELOG.md
+   ```
+
+   where `0.YY` is the minor below the one you are adopting. Those four packages are what it should name. If it names a different set, follow the CHANGELOGs and say so in the PR. Do not look for the previous minor's file in `.changeset/`: changesets are consumed when the release publishes, so the directory holds only unreleased ones and its absence there means nothing.
 9. **PR.** Draft from the first commit against `develop`. Mark ready once every item in the definition of done is satisfied, and request review from the repository's code owners. Carry the gate evidence in the PR description: the commands run, their results, and a link to the `PR Compile` run.
 
 ### Out of bounds, and when to stop
@@ -118,7 +126,7 @@ Stopping means: leave the pull request as a draft, record the step and the exact
 - [ ] The `test-templates (0.XX)` job exists on this pull request and is green. It appears only once `packages/templates/react-native/0.XX/` exists, because `PR Test` derives its matrix from that directory listing. A local run with `FLAGSHIP_CODE_TEST_RN_VERSION` set does not substitute for it.
 - [ ] `apps/example` and the root `package.json` agree on `react` and `react-native`, and `yarn why react` reports one resolved version.
 - [ ] The `PR Compile` workflow has run on this PR and both its `android` and `ios` jobs are green. Link the run in the PR description. A local build does not substitute for it, and neither does an expectation that it would pass.
-- [ ] Changeset present, correct packages and bump type.
+- [ ] Changeset present, correct packages and bump type, checked against the previous minor's CHANGELOG entries.
 - [ ] No placeholder implementations, no commented-out assertions, no partially-filled dependency profile.
 
 ### Anti-fake-test rules
