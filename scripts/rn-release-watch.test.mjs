@@ -149,22 +149,42 @@ test('findExistingIssue: no match against an empty issue list', () => {
   );
 });
 
-test('buildIssueBody: links the maintainer guide and the upstream template diff', () => {
+test('buildIssueBody: links the adoption skill, the maintainer guide and the upstream template diff', () => {
   const body = buildIssueBody({
     minorLabel: '0.84',
     dotZeroVersion: '0.84.0',
     releasedAt: '2026-02-11T16:04:19.627Z',
     highest: {major: 0, minor: 83, label: '0.83'},
+    repository: 'brandingbrand/flagship',
   });
   assert.match(
     body,
-    /\[Adding React Native Version Support\]\(https:\/\/brandingbrand\.github\.io\/flagship\/maintain\/add-rn-version\/\)/,
+    /\[`\.agents\/skills\/upgrade-rn-version\/SKILL\.md`\]\(https:\/\/github\.com\/brandingbrand\/flagship\/blob\/HEAD\/\.agents\/skills\/upgrade-rn-version\/SKILL\.md\)/,
+  );
+  assert.match(
+    body,
+    /\[maintainer guide\]\(https:\/\/brandingbrand\.github\.io\/flagship\/maintain\/add-rn-version\/\)/,
   );
   assert.match(
     body,
     /https:\/\/react-native-community\.github\.io\/upgrade-helper\/\?from=0\.83\.0&to=0\.84\.0/,
   );
   assert.doesNotMatch(body, /yarn add-rn-version/);
+});
+
+test('buildIssueBody: puts the skill ahead of the maintainer guide and says which governs', () => {
+  const body = buildIssueBody({
+    minorLabel: '0.84',
+    dotZeroVersion: '0.84.0',
+    releasedAt: '2026-02-11T16:04:19.627Z',
+    highest: {major: 0, minor: 83, label: '0.83'},
+    repository: 'brandingbrand/flagship',
+  });
+  assert.ok(
+    body.indexOf('SKILL.md') < body.indexOf('maintainer guide'),
+    'the skill must be the first procedure the reader meets',
+  );
+  assert.match(body, /the procedure above governs/);
 });
 
 test('run(): end-to-end dry run files one issue per pending minor, ascending, deduped', async () => {

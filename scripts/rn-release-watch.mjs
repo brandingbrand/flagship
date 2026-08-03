@@ -15,6 +15,8 @@ const TEMPLATE_DIR = new URL(
 const MAINTAINER_GUIDE_URL =
   'https://brandingbrand.github.io/flagship/maintain/add-rn-version/';
 
+const SKILL_PATH = '.agents/skills/upgrade-rn-version/SKILL.md';
+
 /**
  * Given the directory names under packages/templates/react-native, return
  * the highest adopted React Native minor.
@@ -91,14 +93,25 @@ export function findExistingIssue({existingIssues, title}) {
   return existingIssues.find(issue => issue.title === title) ?? null;
 }
 
-export function buildIssueBody({minorLabel, dotZeroVersion, releasedAt, highest}) {
+export function buildIssueBody({
+  minorLabel,
+  dotZeroVersion,
+  releasedAt,
+  highest,
+  repository,
+}) {
   const diffUrl = `https://react-native-community.github.io/upgrade-helper/?from=${highest.label}.0&to=${dotZeroVersion}`;
+  const skillUrl = `https://github.com/${repository}/blob/HEAD/${SKILL_PATH}`;
   return [
     `React Native ${dotZeroVersion} shipped on ${releasedAt}.`,
     '',
     `This repo currently ships native templates through ${highest.label} (\`packages/templates/react-native\`); ${minorLabel} is not yet supported.`,
     '',
-    `Follow the [Adding React Native Version Support](${MAINTAINER_GUIDE_URL}) guide for the full adoption process -- this issue only tracks that ${minorLabel} is ready to adopt.`,
+    `The adoption procedure is [\`${SKILL_PATH}\`](${skillUrl}). Read it in full and follow it; it is the process of record and it names which trees an adoption may not touch.`,
+    '',
+    `The [maintainer guide](${MAINTAINER_GUIDE_URL}) is human-facing background on the same process. Where the two differ, the procedure above governs.`,
+    '',
+    `This issue only tracks that ${minorLabel} is ready to adopt.`,
     '',
     `Upstream template diff: ${diffUrl}`,
     '',
@@ -197,6 +210,7 @@ export async function run({
       dotZeroVersion: minor.version,
       releasedAt: minor.releasedAt,
       highest,
+      repository,
     });
 
     if (dryRun) {
