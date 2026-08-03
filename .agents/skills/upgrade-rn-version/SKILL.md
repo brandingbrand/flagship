@@ -96,7 +96,11 @@ Never adopt more than one version in a PR, never stack one adoption on another's
    ```
 
    where `0.YY` is the minor below the one you are adopting. Those four packages are what it should name. If it names a different set, follow the CHANGELOGs and say so in the PR. Do not look for the previous minor's file in `.changeset/`: changesets are consumed when the release publishes, so the directory holds only unreleased ones and its absence there means nothing.
-9. **PR.** Draft from the first commit against `develop`. Mark ready once every item in the definition of done is satisfied, and request review from the repository's code owners. Carry the gate evidence in the PR description: the commands run, their results, and a link to the `PR Compile` run.
+9. **PR.** Draft from the first commit against `develop`. Mark ready once every item in the definition of done is satisfied. Carry the gate evidence in the PR description: the commands run, their results, and a link to the `PR Compile` run.
+
+   If a tracking issue exists for this minor, write `Closes #<issue>` in the PR description. `develop` is the default branch, so that closes the issue on merge instead of leaving a manual follow-up.
+
+   Do not add reviewers. This repository has no `CODEOWNERS` file, so there is nobody to derive; assignment is a maintainer's step.
 
 ### Out of bounds, and when to stop
 
@@ -127,6 +131,7 @@ Stopping means: leave the pull request as a draft, record the step and the exact
 - [ ] `apps/example` and the root `package.json` agree on `react` and `react-native`, and `yarn why react` reports one resolved version.
 - [ ] The `PR Compile` workflow has run on this PR and both its `android` and `ios` jobs are green. Link the run in the PR description. A local build does not substitute for it, and neither does an expectation that it would pass.
 - [ ] Changeset present, correct packages and bump type, checked against the previous minor's CHANGELOG entries.
+- [ ] `Closes #<issue>` in the PR description when a tracking issue exists for this minor.
 - [ ] No placeholder implementations, no commented-out assertions, no partially-filled dependency profile.
 
 ### Anti-fake-test rules
