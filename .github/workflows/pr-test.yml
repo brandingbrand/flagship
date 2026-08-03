@@ -12,7 +12,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
         with:
-          node-version: 20
+          node-version: 22
       - name: Setup Ruby
         uses: ruby/setup-ruby@f26937343756480a8cb3ae1f623b9c8d89ed6984
         with:
@@ -27,3 +27,36 @@ jobs:
         run: yarn test
       - name: Initialize react native app
         run: yarn workspace @brandingbrand/code-example prebuild --build internal --env prod --platform android --verbose
+
+  template-versions:
+    runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.list.outputs.versions }}
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - name: List supported react-native template versions
+        id: list
+        run: echo "versions=$(ls packages/templates/react-native | jq --raw-input --slurp --compact-output 'split("\n") | map(select(length > 0))')" >> "$GITHUB_OUTPUT"
+
+  test-templates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    needs: template-versions
+    strategy:
+      fail-fast: false
+      matrix:
+        rn-version: ${{ fromJSON(needs.template-versions.outputs.versions) }}
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - name: Use Node.js
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: yarn
+      - name: Build packages
+        run: yarn build
+      - name: Run tests against react-native ${{ matrix.rn-version }} template
+        run: yarn test
+        env:
+          FLAGSHIP_CODE_TEST_RN_VERSION: ${{ matrix.rn-version }}

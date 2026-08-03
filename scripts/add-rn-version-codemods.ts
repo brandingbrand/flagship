@@ -276,6 +276,50 @@ async function updateDependencyProfilesIndex() {
   );
 }
 
+async function updateRootReactNativePin() {
+  // Only the monorepo root pin is updated here. App workspaces (the example
+  // app) are aligned separately via `flagship-code align-deps --fix` once the
+  // new dependency profile is filled in; the profile is the source of truth
+  // for app-level versions.
+  const newRange = `^${newVersion}.0`;
+  const newMinor = parseInt(newVersion.split('.')[1]!, 10);
+  const filePath = path.resolve(process.cwd(), './package.json');
+  const relPath = path.relative(process.cwd(), filePath);
+
+  try {
+    const content = await fsp.readFile(filePath, 'utf-8');
+    const pkg = JSON.parse(content);
+    const current = pkg.devDependencies?.['react-native'];
+    if (current === undefined) {
+      console.error(
+        `Could not find devDependencies.react-native in ${relPath}.`,
+      );
+      process.exit(1);
+    }
+    if (current === newRange) return;
+
+    // The root always pins the newest supported version; adding an older
+    // version must never downgrade it.
+    const currentMinor = parseInt(
+      current.match(/^\^?0\.(\d+)\./)?.[1] ?? '0',
+      10,
+    );
+    if (currentMinor >= newMinor) {
+      console.log(
+        `Leaving react-native at ${current} in ${relPath} (newer than or equal to ${newVersion}).`,
+      );
+      return;
+    }
+
+    pkg.devDependencies['react-native'] = newRange;
+    await fsp.writeFile(filePath, `${JSON.stringify(pkg, null, 2)}\n`);
+    console.log(`Updated react-native pin in ${relPath} to ${newRange}`);
+  } catch (error) {
+    console.error(`Error updating react-native pin in ${relPath}:`, error);
+    process.exit(1);
+  }
+}
+
 (async function () {
   console.log();
   console.log(
@@ -286,6 +330,7 @@ async function updateDependencyProfilesIndex() {
   await updateMessagingConstants();
   await createShellDependenciesProfile();
   await updateDependencyProfilesIndex();
+  await updateRootReactNativePin();
   console.log();
   console.log('Updates complete!');
 })();

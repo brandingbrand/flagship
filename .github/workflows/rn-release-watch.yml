@@ -1,0 +1,48 @@
+name: RN Release Watch
+
+on:
+  schedule:
+    # Every Thursday at 13:00 UTC.
+    - cron: '0 13 * * 4'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Log the outcome without filing an issue'
+        type: boolean
+        default: false
+  pull_request:
+    paths:
+      - 'scripts/rn-release-watch.mjs'
+      - 'scripts/rn-release-watch.test.mjs'
+      - '.github/workflows/rn-release-watch.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - name: Use Node.js
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
+        with:
+          node-version: 22
+      - name: Unit-test the release-watch detection logic
+        run: node --test scripts/rn-release-watch.test.mjs
+
+  watch:
+    needs: test
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - name: Use Node.js
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
+        with:
+          node-version: 22
+      - name: Watch npm for a newly-stable RN minor and file an adoption issue
+        run: node scripts/rn-release-watch.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
