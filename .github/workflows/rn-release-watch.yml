@@ -24,7 +24,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
         with:
-          node-version: 20
+          node-version: 22
       - name: Unit-test the release-watch detection logic
         run: node --test scripts/rn-release-watch.test.mjs
 
@@ -40,7 +40,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
         with:
-          node-version: 20
+          node-version: 22
       - name: Watch npm for a newly-stable RN minor and file an adoption issue
         run: node scripts/rn-release-watch.mjs
         env:
