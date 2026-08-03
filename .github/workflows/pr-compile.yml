@@ -19,7 +19,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
         with:
-          node-version: 20
+          node-version: 22
           package-manager-cache: false
       - name: Setup Ruby
         uses: ruby/setup-ruby@f26937343756480a8cb3ae1f623b9c8d89ed6984
@@ -50,7 +50,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
         with:
-          node-version: 20
+          node-version: 22
           package-manager-cache: false
       - name: Setup Ruby
         uses: ruby/setup-ruby@f26937343756480a8cb3ae1f623b9c8d89ed6984
