@@ -1,5 +1,7 @@
 import I18n from 'i18n-js';
 
+import { hardenI18n } from './hardenI18n';
+
 const currentLocale = getLanguageFromBrowser() || I18n.currentLocale();
 I18n.locale = currentLocale;
 
@@ -22,4 +24,4 @@ function getLanguageFromBrowser(): string | undefined {
   return undefined;
 }
 
-export { default } from 'i18n-js';
+export default hardenI18n(I18n);
