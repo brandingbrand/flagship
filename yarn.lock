@@ -2976,7 +2976,7 @@ __metadata:
     prettier: "npm:^3.1.1"
     react: "npm:19.2.3"
     react-native: "npm:^0.87.0"
-    react-native-safe-area-context: "npm:^5.6.2"
+    react-native-safe-area-context: "npm:^5.8.0"
     react-native-sensitive-info: "npm:^5.6.2"
     turbo: "npm:^1.0.0"
   languageName: unknown
@@ -16943,16 +16943,6 @@ __metadata:
     react-native-gesture-handler: "*"
     react-native-reanimated: "*"
   checksum: 10c0/1c6cd987fc215396914e4fa3b979fb31e30dafb1cbf87170740665ef9beeee3f610854c234d68421136e0de88ac784a5b856ef3eaee8d58768476748005c9ed1
-  languageName: node
-  linkType: hard
-
-"react-native-safe-area-context@npm:^5.6.2":
-  version: 5.6.2
-  resolution: "react-native-safe-area-context@npm:5.6.2"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10c0/3c8df21a1dbac83116b9c9bd5d20b7c1bb7649ecef44a111af6fb6b237241f5f4d692189eec30a69f5701b857249257da3621b9e17165460a2bb71faac7b92ae
   languageName: node
   linkType: hard
 
