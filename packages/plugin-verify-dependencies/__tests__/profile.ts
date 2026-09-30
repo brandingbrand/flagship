@@ -37,6 +37,19 @@ describe('dependency profiles', () => {
   );
 
   it.each(entries)(
+    'profile %s pins react exactly, with no range operator',
+    (_version, profile) => {
+      // Every React Native minor is built and tested against one patch of
+      // react, and the community template pins it exactly for that reason.
+      // A range here lets a consumer resolve a react the minor was never
+      // built against, and `verify-dependencies` will not flag it because
+      // the installed version still satisfies the range.
+      expect(profile.react).toBeDefined();
+      expect(profile.react!.version).toMatch(/^\d+\.\d+\.\d+$/);
+    },
+  );
+
+  it.each(entries)(
     'profile %s pins @react-native scoped packages to its own version',
     (version, profile) => {
       const scoped = Object.entries(profile).filter(([name]) =>
