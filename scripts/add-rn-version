@@ -44,6 +44,18 @@ if ! [[ "$RN_VERSION" =~ ^0\.[0-9]{2}$ ]]; then
 fi
 
 
+# Resolve the latest stable patch release for the requested minor version.
+# The CLI resolves a minor-only version through the `0.XX-stable` npm dist-tag,
+# which upstream no longer publishes reliably, so we resolve the exact patch
+# version ourselves and pass that to `init`.
+EXACT_VERSION=$(npm view "react-native@${RN_VERSION}.x" version --json 2>/dev/null \
+  | node -e "let i='';process.stdin.on('data',d=>i+=d).on('end',()=>{const v=i.trim()?JSON.parse(i):[];const list=(Array.isArray(v)?v:typeof v==='string'?[v]:[]).filter(s=>/^\d+\.\d+\.\d+$/.test(s)).sort((a,b)=>{const x=a.split('.').map(Number),y=b.split('.').map(Number);return x[0]-y[0]||x[1]-y[1]||x[2]-y[2]});console.log(list[list.length-1]??'')})")
+if [ -z "$EXACT_VERSION" ]; then
+  echo "Error: no stable react-native release found for version $RN_VERSION."
+  exit 1
+fi
+echo "Resolved react-native@$RN_VERSION to react-native@$EXACT_VERSION"
+
 #set CWD to the temp dir to avoid polluting the main project
 mkdir -p "$TEMP_DIR"
 if ! cd "$TEMP_DIR"
@@ -53,9 +65,9 @@ then
 fi
 
 # Run the React-Native CLI to generate a new project with the specified version.
-if ! npx @react-native-community/cli@latest init app --version "$RN_VERSION" --skip-install --skip-git-init
+if ! npx @react-native-community/cli@latest init app --version "$EXACT_VERSION" --skip-install --skip-git-init
 then
-  echo "Failed to generate React-Native project with version $RN_VERSION"
+  echo "Failed to generate React-Native project with version $EXACT_VERSION"
   exit 1
 fi
 

@@ -1,0 +1,29 @@
+name: Notify on ready-to-ship
+
+# When an issue is labeled `ready-to-ship`, POST its number and title to a
+# webhook (stored in the DISPATCH_WEBHOOK_URL secret) so a downstream
+# automation can pick the issue up. No repo write access is used.
+
+on:
+  issues:
+    types: [labeled]
+
+permissions: {}
+
+jobs:
+  notify:
+    if: github.event.label.name == 'ready-to-ship'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post issue to dispatch webhook
+        env:
+          DISPATCH_WEBHOOK_URL: ${{ secrets.DISPATCH_WEBHOOK_URL }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+        run: |
+          payload=$(jq -n \
+            --arg n "$ISSUE_NUMBER" \
+            --arg t "$ISSUE_TITLE" \
+            '{issue_number: $n, issue_title: $t}')
+          curl -sf -X POST -H "Content-Type: application/json" \
+            --data "$payload" "$DISPATCH_WEBHOOK_URL"

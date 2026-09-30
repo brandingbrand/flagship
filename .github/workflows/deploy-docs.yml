@@ -19,6 +19,7 @@ jobs:
       - name: Install, build, and upload your site
         uses: withastro/action@acfe56dffc635abfb9506c77d51ce097030360d1
         with:
+          node-version: 22
           path: ./apps/docs
           package-manager: yarn@latest
 

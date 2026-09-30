@@ -10,25 +10,25 @@ Flagship Code is a comprehensive Configuration as Code (CaC) toolkit designed to
 
 In your `package.json` verify you are using matching the versions of `react-native` and `react` packages noted below.
 
-```json '"react": "^18.2.0",' '"react-native": "~0.72.0"' title="package.json"
+```json '"react": "^19.2.0",' '"react-native": "^0.83.0"' title="package.json"
 {
   "name": "my-awesome-app",
   "version": "1.0.0",
   "author": "Your Name <email@example.com>",
   "dependencies": {
-    "react": "^18.2.0",
-    "react-native": "~0.72.0"
+    "react": "^19.2.0",
+    "react-native": "^0.83.0"
   }
 }
 ```
 
-This Flagship Code v13 currently supports React Native version 0.72.+. Each major version of Flagship Code supports a new minor version of React Native.
+Each major version of Flagship Code supports a range of recent React Native minor versions. The CLI validates your project’s React Native version during `prebuild` and lists the currently supported versions when it encounters one it does not recognize.
 
 ### React Native Support
 
 Flagship Code™ is committed to maintaining compatibility with the latest versions of React Native. Recognizing the need for gradual migration in complex projects, we are implementing multi-version React Native support. This feature allows developers to seamlessly upgrade to newer versions of React Native while maintaining support for legacy versions within the same codebase.
 
-Currently, Flagship Code™ is fully compatible with React Native versions 0.72 and 0.73, and we are continuously expanding support to include new releases as they become available. The framework intelligently detects the installed version of React Native in your project and automatically selects the appropriate compatibility profile, ensuring that your development experience remains consistent and stable across different React Native versions. This approach enables teams to adopt new technologies at their own pace without compromising the functionality of existing code.
+Flagship Code™ supports a range of recent React Native minor versions: support for new releases is added shortly after they ship, and older versions are periodically retired in major releases. The framework intelligently detects the installed version of React Native in your project and automatically selects the appropriate compatibility profile, ensuring that your development experience remains consistent and stable across different React Native versions. This approach enables teams to adopt new technologies at their own pace without compromising the functionality of existing code.
 
 ### Dependencies
 
@@ -75,8 +75,8 @@ These should now be reflected in your `package.json`.
   "version": "1.0.0",
   "author": "Your Name <email@example.com>",
   "dependencies": {
-    "react": "~18.2.0",
-    "react-native": ">=0.72.0 <0.74.0"
+    "react": "^19.2.0",
+    "react-native": "^0.83.0"
   },
   "devDependencies": {
     "@brandingbrand/code-cli": "^14.0.0",

@@ -1,5 +1,11 @@
 # @brandingbrand/code-app-env
 
+## 3.0.1
+
+### Patch Changes
+
+- e9f3b60: fix: ensure showDevMenu is casted to boolean on Android
+
 ## 3.0.0
 
 ### Major Changes

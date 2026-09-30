@@ -1,41 +1,41 @@
-import {
-  defineDevMenuScreen,
-  DevMenu,
-  env,
-  FlagshipEnv,
-} from '@brandingbrand/code-app-env';
+import {defineDevMenuScreen, DevMenu} from '@brandingbrand/code-app-env';
 import {DataView} from '@brandingbrand/code-app-env/ui';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {ScrollView, View} from 'react-native';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import {Header, Section, Text} from './components';
-import {createStyleSheet} from './lib/theme';
+
+import {HomeScreen, PermissionsScreen} from './screens';
+
+export type RootStackParamList = {
+  Home: undefined;
+  Permissions: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): React.JSX.Element {
   const safeArea = useSafeAreaInsets();
-  const styles = useStyles();
 
   return (
     <DevMenu style={{marginBottom: safeArea.bottom + 48}} screens={screens}>
-      <ScrollView
-        contentInsetAdjustmentBehavior="never"
-        style={styles.background}
-        contentContainerStyle={styles.contentContainer}>
-        <Header style={{paddingTop: safeArea.top + 64}} />
-        <View style={styles.content}>
-          <Section title="Next Steps...">
-            {`Edit `}
-            <Text style={styles.highlight}>src/App.tsx</Text>
-            {` to change this screen.\nYour changes will be automatically applied after saving.`}
-          </Section>
-          <Section title="Env Details">
-            {`App Environment: ${FlagshipEnv.envName}\nID: ${env.id}\nDomain: ${env.domain}`}
-          </Section>
-        </View>
-      </ScrollView>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Permissions"
+            component={PermissionsScreen}
+            options={{title: 'Permissions'}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     </DevMenu>
   );
 }
@@ -54,24 +54,6 @@ const screens = [
     );
   }),
 ];
-
-const useStyles = createStyleSheet(palette => ({
-  background: {
-    backgroundColor: palette.bg,
-    flex: 1,
-  },
-  contentContainer: {
-    backgroundColor: palette.bgSecondary,
-    flex: 1,
-  },
-  content: {
-    paddingVertical: 24,
-    gap: 24,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-}));
 
 const AppProvider = (props: any) => {
   return (

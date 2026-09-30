@@ -1,5 +1,5 @@
 /**
- * @jest-environment-options {"requireTemplate": true, "fixtures": "fixtures"}
+ * @jest-environment-options {"requireTemplate": true, "fixtures": "fixtures", "reactNativeVersion": "0.72"}
  */
 
 /// <reference types="@brandingbrand/code-jest-config" />

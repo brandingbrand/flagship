@@ -37,7 +37,7 @@ class FlagshipEnvModule(reactContext: ReactApplicationContext) :
         val showDevMenu = resources.getString(showDevMenuResourceId)
 
         constants["envName"] = sharedPref.getString("envName", envName) ?: envName
-        constants["showDevMenu"] = showDevMenu
+        constants["showDevMenu"] = showDevMenu.toBoolean()
         constants["appVersion"] = getPackageInfo().versionName
         constants["buildNumber"] = getPackageInfo().longVersionCode.toString()
 

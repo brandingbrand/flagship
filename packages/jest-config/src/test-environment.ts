@@ -45,7 +45,13 @@ export default class CustomEnvironment extends TestEnvironment {
   }
 
   async setupTemplate(dir: string) {
-    const {fixtures, reactNativeVersion = '0.72'} = this.options;
+    // The default template version can be overridden through the environment
+    // so CI can run the same suites against every supported template version.
+    // An explicit per-file `reactNativeVersion` option always wins.
+    const {
+      fixtures,
+      reactNativeVersion = process.env.FLAGSHIP_CODE_TEST_RN_VERSION ?? '0.72',
+    } = this.options;
 
     // Override the getReactNativeVersion logic to early exit with provided version
     this.global.FLAGSHIP_CODE_REACT_NATIVE_VERSION = reactNativeVersion;

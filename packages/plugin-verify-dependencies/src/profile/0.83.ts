@@ -74,7 +74,7 @@ export default {
    * @see {@link https://reactjs.org/}
    */
   react: {
-    version: '^19.2.0',
+    version: '19.2.0',
     capabilities: ['@types/react'],
     required: true,
   },
