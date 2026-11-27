@@ -133,7 +133,7 @@ Two focused attempts, then stop. Do not weaken the gate, skip the test, or merge
 
 ## Writing rules
 
-Commit messages, PR titles, and PR bodies are professional open-source contributions: what changed, why, and how it was verified. Conventional Commits, one logical change per commit. No AI attribution of any kind. The PR body carries the gate evidence.
+Commit messages, PR titles, and PR bodies are professional open-source contributions: what changed, why, and how it was verified. Conventional Commits, one logical change per commit. The PR body carries the gate evidence.
 
 ## Reference
 
